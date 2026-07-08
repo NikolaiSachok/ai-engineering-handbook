@@ -42,7 +42,7 @@ Two independent constraints force the split:
 
 ### The key tradeoff: large chunk vs. small chunk
 
-The heart of the whole topic is a single table that everything else grows out of:
+Everything in this section comes down to one table:
 
 | | Chunk too **large** | Chunk too **small** |
 |---|---|---|
@@ -92,7 +92,7 @@ against metrics.
 
 :::
 
-### Chunk metadata — where the enterprise angle turns into quality
+### Chunk metadata — where enterprise specifics turn into search quality
 
 A chunk isn't just text. You attach **metadata** to it: the source (file/URL), the title, the section
 path, the date, the version and — critically for enterprise — **access control** (who is allowed to see
@@ -146,7 +146,7 @@ land far apart. Search is then "find the vectors nearest to the query's vector."
 The main consequence follows: **retrieval quality is capped by embedding quality.** If the vector of the
 chunk you need didn't land near the query's vector, there's almost nothing further down the pipeline that
 can save it (hybrid search only softens the blow — more on that in the retrieval layer). That's why
-picking a model isn't a detail, it's the foundation.
+the choice of model lays the foundation for all of retrieval.
 
 :::tip[▶ Video]
 
