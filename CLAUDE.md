@@ -18,18 +18,47 @@ diagrams, offline local search).
 - Structure: **Part I — RAG** → **Part II — Agents**, a single-definition **Glossary**, and (later)
   per-topic case-study pages kept separate from the industry-general theory pages.
 
-## Editorial standard (required gate before a page is "done")
-Conversational drafts may contain **calques** — literal translations that read unnaturally in the target
-language (e.g. RU "Центральное напряжение" for *central tension*, "по возрастанию ума", "Семя на
-будущее"). Fine for a fast draft, **not** fine on a published page.
+## Editorial standard (required gate before a page or article is "done")
+Conversational drafts are fine as **input**. Before publishing, run an **independent editorial pass per
+language** (not just the translation — the original needs it too). Treat it like a build that must pass.
+The editor(s) verify THREE things:
 
-**Before publishing, run a dedicated literary-editing pass for EACH language independently** — not just
-the translation; the original needs it too. The pass:
-- removes calques and unnatural phrasing; rewrites into idiomatic prose in that language;
-- preserves technical meaning exactly — no drift, no invented claims;
-- keeps industry terms-of-art in English where that's the norm (*chunking*, *reranking*, *access
-  control*) but frames the surrounding sentence naturally.
-Treat this like a build that must pass: a page with raw calques is not ready to publish.
+**1. No AI tells — it must read as written by a human.** This is the hard bar for anything public (LinkedIn,
+articles). Reject and rewrite these machine-text patterns (sources: editor/HR guides on spotting AI text):
+- **Uniform rhythm** — sentences all a similar length. Vary it; mix short, blunt lines with longer ones.
+- **Over-signposting / meta-narration** — "In this section we'll explore…", "In conclusion…", "It's worth
+  noting that", "Important to note". Cut them and just say the thing. (RU: «Стоит отметить», «Важно
+  понимать», «В заключение».)
+- **Rule-of-three everywhere & forced parallelism**; the "not just X, but Y" cliché; fake hooks ("Here's
+  the kicker", "But here's the thing").
+- **Listicle uniformity** — every bullet as "**Bold header:** one explanatory sentence." Mix bullet shapes;
+  use prose where prose fits.
+- **Hedging seesaw** — a claim then immediately softened ("however", "to some extent", "generally"). Take a
+  stance.
+- **AI vocabulary** — delve, tapestry, leverage (as a verb), underscore, pivotal, realm, beacon,
+  multifaceted, meticulous, intricate, harness, facilitate, bolster, testament, symphony, "in today's
+  fast-paced world". (RU: «в современном мире», «играет ключевую роль», «неотъемлемая часть».)
+- **Tonal flatness & abstraction** — evenly polite, no opinion, abstract where a concrete example belongs.
+  Keep the author's voice, concrete specifics, the occasional take.
+- **Treadmill** — circling the same idea without adding information. Every paragraph earns its place.
+
+**2. Idiomatic target language, zero anglicisms (especially RU).** Phrasing a native writer would actually
+use; no calques (e.g. RU "Центральное напряжение" ← *central tension*, "покрывает" ← *covers*, "адресует
+проблему" ← *addresses*). Keep industry terms-of-art in English where that's the norm (*chunking*,
+*reranking*, *access control*) but frame the surrounding sentence naturally.
+
+**3. Factual integrity preserved.** Editing must NOT change technical meaning, drop nuance, or invent
+claims. A dedicated fact-integrity check diffs the edited version's claims against the source. When style
+and fidelity conflict, **fidelity wins** — flag it, don't smooth it into something false.
+
+**Pipeline — scale editorial effort to the stakes:**
+- **Handbook page (default):** two independent passes per language — (a) literary / de-AI / anti-anglicism
+  editor, then (b) fact-integrity + proofread verifier.
+- **Flagship / LinkedIn / article extract:** a small **editorial team** — literary editor → technical
+  (fact) editor → proofreader, coordinated by a chief editor who adjudicates conflicts. Independence is the
+  point: each gets the text fresh; a rubber-stamp pass is worthless.
+- **Translation** is its own step (RU→EN); the EN output then goes through the same passes independently — a
+  translation isn't "done" until it also passes the AI-tell + idiom checks in English.
 
 ## Honesty & scope
 - **General, vendor-neutral theory only.** No confidential, employer-internal, or client-specific
