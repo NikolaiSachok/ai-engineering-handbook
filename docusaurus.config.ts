@@ -14,10 +14,9 @@ const config: Config = {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-  // TODO: set before first public deploy (real domain + GitHub org/user).
-  url: 'https://example.com',
+  url: 'https://nikolaisachok.github.io',
   baseUrl: '/enterprise-rag-agents-handbook/',
-  organizationName: 'PLACEHOLDER', // TODO: GitHub org/user name — set before first public deploy
+  organizationName: 'NikolaiSachok', // GitHub user/org
   projectName: 'enterprise-rag-agents-handbook',
 
   onBrokenLinks: 'throw',
@@ -64,8 +63,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Serve the docs (the handbook) at the site root.
           routeBasePath: '/',
-          // TODO: set editUrl to the real repo before first public deploy.
-          // editUrl: 'https://github.com/PLACEHOLDER/enterprise-rag-agents-handbook/tree/main/',
+          editUrl: 'https://github.com/NikolaiSachok/enterprise-rag-agents-handbook/tree/main/',
         },
         blog: {
           showReadingTime: true,
@@ -73,7 +71,7 @@ const config: Config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          // TODO: set editUrl to the real repo before first public deploy.
+          editUrl: 'https://github.com/NikolaiSachok/enterprise-rag-agents-handbook/tree/main/',
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
@@ -108,8 +106,7 @@ const config: Config = {
           type: 'localeDropdown',
           position: 'right',
         },
-        // TODO: set GitHub URL before first public deploy.
-        // {href: 'https://github.com/PLACEHOLDER/enterprise-rag-agents-handbook', label: 'GitHub', position: 'right'},
+        {href: 'https://github.com/NikolaiSachok/enterprise-rag-agents-handbook', label: 'GitHub', position: 'right'},
       ],
     },
     footer: {
