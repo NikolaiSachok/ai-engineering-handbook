@@ -21,7 +21,8 @@ latency, cost, and debugging difficulty. The engineering job isn't to "make it m
 - **[Agentic RAG](./agentic-rag.md)** — retrieval turns from a step into an action inside a loop; the
   spectrum from router to full loop.
 - **[Tool use](./tool-use.md)** — how the model calls external functions: search, SQL, APIs, a calculator.
-- **Planning & loops** 🚧 — ReAct and its alternatives, task decomposition, breaking out of loops.
+- **[Planning & loops](./planning-loops.md)** — ReAct and plan-and-execute, task decomposition, termination
+  criteria, and breaking out of loops.
 - **Multi-agent systems** 🚧 — several specialized agents, roles, handoff.
 - **Orchestration frameworks** 🚧 — LangGraph, LangChain, Semantic Kernel, AutoGen, CrewAI: what they add
   on top of a bare loop.
@@ -34,7 +35,7 @@ concerns** — here eval and observability move from nice-to-have to mandatory.
 
 :::note[Status]
 
-🚧 The part is growing. The first lessons — Agentic RAG and tool use — are published; the rest arrive as we
-work through them.
+🚧 The part is growing. The first lessons — Agentic RAG, tool use, and planning & loops — are published; the
+rest arrive as we work through them.
 
 :::

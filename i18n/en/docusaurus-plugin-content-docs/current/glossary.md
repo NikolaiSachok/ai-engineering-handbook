@@ -255,3 +255,35 @@ parameters and narrows what the model may emit.
 
 **Structured output** — model output in a prescribed machine-readable form (JSON to a schema) rather than
 free text; the basis for reliable tool calling.
+
+## Agents — planning & loops
+
+**Planning** — how the agent arranges the sequence of steps toward a goal; the plan may be fixed up front or
+emerge as the loop runs.
+
+**Task decomposition** — breaking a goal into subtasks the agent tackles one at a time, either explicitly (a
+written plan / todo list) or implicitly (emerging as it reasons in the loop).
+
+**Plan-and-execute** — a strategy that plans the whole sequence of steps up front and then executes it,
+re-planning when a step fails; more structured and cheaper than ReAct, but more rigid.
+
+**Re-planning** — revising the plan when a step fails or an observation breaks it; the mechanism
+plan-and-execute cannot work without.
+
+**Reflection / self-critique** — a dedicated step where the agent judges its own trajectory ("am I making
+progress?") and decides to stop, re-plan, or continue; the main lever against drift and silent looping.
+
+**Termination criterion** — a defined condition for "done" that ends the loop; often implemented as a
+"finish" tool the model calls.
+
+**Step budget / iteration limit** — a hard cap on steps, calls, tokens, cost, or time; the backstop that
+guarantees the loop stops in production.
+
+**Loop detection** — watching for the same action repeated (same call, arguments, result) and intervening
+when the agent spins in place.
+
+**Scratchpad / working memory** — a working space where the agent keeps only what's relevant to the current
+trajectory (intermediate notes, a list of what's done), so the context doesn't bloat.
+
+**Non-termination** — the signature failure of the agent loop: it never stops, gets stuck repeating an
+action, or drifts from the goal.
