@@ -50,15 +50,14 @@ pipeline offers a fixed one.
 
 At the core is a simple loop. It spins until the model decides it's ready to answer:
 
-```text
-    ┌──────────────────────────────────────────────┐
-    ▼                                              │
-[  Reason  ] → [  Decide:  ] → [  Act  ] → [  Observe  ]
-  what I know    which          call a       result
-  what I lack    action         retrieval/   returns to
-                                tool          the context
-    │                                            │
-    └── enough? → yes → [ Answer ] ◄──────────────┘
+```mermaid
+flowchart LR
+    R["Reason<br/>what I know, what I lack"] --> Q{"enough?"}
+    Q -- "yes" --> Ans["Answer"]
+    Q -- "no" --> D["Decide<br/>which action"]
+    D --> A["Act<br/>a retrieval / tool call"]
+    A --> O["Observe<br/>result returns to the context"]
+    O --> R
 ```
 
 - **Reason** — the model assesses what it has gathered and what's missing.
