@@ -50,12 +50,14 @@ Break it into parts. It's the same loop as in agentic RAG, only the action is no
   message.
 - The model **continues**: seeing the result, it either calls another tool or answers.
 
-```text
-[ tool definitions ] → model → [ tool call: sql_query(...) ]
-                                        │
-                        your code runs the query
-                                        │
-             [ tool result: 42 rows ] → model → answer or next call
+```mermaid
+flowchart LR
+    Defs["tool definitions"] --> M["model"]
+    M --> TC["tool call: sql_query(...)"]
+    TC --> X["your code runs the query"]
+    X --> TR["tool result: 42 rows"]
+    TR --> M
+    M --> Ans["answer"]
 ```
 
 ## A tool definition is a prompt, not just a signature
