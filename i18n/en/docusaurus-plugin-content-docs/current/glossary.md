@@ -201,3 +201,27 @@ key one.
 
 **Feedback loop (observability → eval)** — production failures and user feedback become new golden-set
 cases.
+
+## Agents — agentic RAG
+
+**Agentic RAG** — RAG in which retrieval becomes an action the model chooses inside a loop, rather than a
+fixed pipeline step. The model owns the control flow, not the code.
+
+**Agent loop** — the repeating "reason → decide → act → observe" cycle that runs until the model judges it
+has enough to answer.
+
+**Reasoning–action–observation (ReAct)** — a pattern where the model interleaves reasoning steps with
+actions (tool calls), feeding each action's result back into the context.
+
+**Routing / query router** — the lightest level of agency: the model makes one choice — where to send the
+query (which index/tool, or "no retrieval needed") — and the flow is static after that.
+
+**Multi-hop retrieval** — an answer that needs several dependent searches, where the next query is built
+from the previous result.
+
+**Query planning** — decomposing a complex question into sub-queries before searching.
+
+**Self-correction / self-reflection** — the agent evaluates intermediate results, notices they're off, and
+reformulates the query or searches again.
+
+**Iterative retrieval** — searching in a loop with refinement, rather than one fixed call.

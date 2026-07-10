@@ -42,7 +42,9 @@ When a layer's *base* is finished, do all of this before moving on:
 2. **On-page pointer** — a brief `:::note[Дальше — углубление слоя]` / `[Next — going deeper]` at the page
    bottom (deepening topics only; no issue/milestone refs on the public page).
 3. **Glossary** — add the layer's new terms to the Glossary (RU + EN).
-4. Publish (PR → CI → merge → deploy) and run the editorial pass.
+4. **Managing-editor pass** — run the structure checklist in "Structure & presentation" below: update the
+   part opener's TOC/status, keep `intro.md` + the milestone plan in sync, and check page uniformity.
+5. Publish (PR → CI → merge → deploy) and run the editorial pass.
 A `🚧` note must mean *next-pass deepening*, never *unfinished base* — if something base is unwritten, the
 layer isn't closed.
 
@@ -113,6 +115,39 @@ and fidelity conflict, **fidelity wins** — flag it, don't smooth it into somet
   canonical link at the end of its definition — `↗ [Wikipedia](…)` for classics (BM25, cosine similarity,
   precision/recall, nDCG, MRR), `↗ [arXiv](…)` for techniques from papers (HyDE, ColBERT). Verify every URL
   (like video links) — never from memory. External links live only in the Glossary; lessons link to it.
+
+## Structure & presentation (managing-editor gate)
+The handbook is one book, not a pile of pages — its structure and framing must stay uniform as it grows. A
+dedicated **managing-editor pass** (the `editorial-team` skill's managing-editor role) owns this; it runs at
+every layer-close, alongside the prose editorial pass.
+
+**Part-opener convention (uniform across ALL parts).** Every Part is fronted by a written opener page, never
+a bare auto-index:
+- `docs/part-N-<slug>/overview.md` — `id: overview`, `sidebar_label: "Обзор части"` (EN `"Part overview"`),
+  and **no** `sidebar_position` (it is the category index, not a child in the list).
+- `_category_.json` points at it: `{"label": "…", "position": N, "link": {"type": "doc", "id":
+  "part-N-<slug>/overview"}}` — so the part label itself opens the opener and the doc is pulled out of the
+  child list (no duplicate). Mirror it in **both** locales.
+- The opener carries: a 1–2-paragraph **framing** (what the part is, why, how it builds on the previous part
+  — the through-line); a **«Что внутри» / "What's inside"** TOC (one hook per lesson — link published
+  lessons as `.md`, mark unpublished ones with 🚧); **«Предпосылки» / "Prerequisites"**; and a
+  `:::note[Статус]` with an honest 🚧 while the part is still growing.
+- **Sub-categories** (e.g. cross-cutting) stay lighter: a `generated-index` with a framing `description` is
+  fine. The written-opener rule is for **parts**, not every sub-folder. Caveat: don't link a bare
+  `./sub-folder/` path from prose — the broken-link checker rejects generated-index routes; link the
+  sub-pages' `.md` files individually instead.
+
+**Keep the frame current (managing-editor checklist, run at each layer-close):**
+1. **Part opener** — add the new lesson to its «Что внутри» TOC; flip its 🚧 → a live `.md` link once
+   published; refresh the status note.
+2. **Intro** (`intro.md`, both locales) — the Structure list matches the parts that actually exist; no stale
+   "🚧 заглушка" language once real content ships.
+3. **Curriculum ↔ milestones** — the part TOC reflects the GitHub milestone/issue plan; seed each part's TOC
+   from its milestone up front, and move it when issues are added or the plan shifts.
+4. **Uniformity** — a new page matches the established skeleton (frontmatter, «Что забрать из урока», «Новые
+   термины» → glossary, deepening `:::note`) and the admonition/link/video conventions above, in the
+   RU-primary + EN-parallel layout.
+A `🚧` anywhere must mean *planned next*, never *silently missing*.
 
 ## Engineering workflow (SDLC)
 The handbook is itself a demonstration of engineering maturity, so it follows a real workflow — kept

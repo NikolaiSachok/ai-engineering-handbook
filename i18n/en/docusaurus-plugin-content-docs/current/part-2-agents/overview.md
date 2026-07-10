@@ -1,17 +1,40 @@
 ---
 id: overview
-title: Overview
-sidebar_position: 1
+title: Part II — Agents
+sidebar_label: Part overview
 ---
 
-# Agents — overview
+# Part II — Agents
 
-🚧 **Coming soon.**
+In Part I you assembled a **static pipeline**: a document runs a fixed path, `retrieve → generate`, and the
+code owns that path. Part II hands control to the model. The pipeline becomes a **loop the LLM itself
+drives**: it decides whether to search, what to search for, which tool to use, and when to stop. That is an
+agent.
 
-Intended scope:
+Hold one line through the whole part: we keep giving the model more freedom — from a single routing
+decision to a full loop with planning and several agents — and at every step we pay for that freedom in
+latency, cost, and debugging difficulty. The engineering job isn't "make it more agentic," it's taking the
+**minimum degree of agency the task needs**.
 
-- Agentic RAG
-- Tool use
-- Loops
-- Planning
-- Multi-agent systems
+## What's inside
+
+- **[Agentic RAG](./agentic-rag.md)** — retrieval turns from a step into an action inside a loop; the
+  spectrum from router to full loop.
+- **Tool use** 🚧 — how the model calls external functions: search, SQL, APIs, a calculator.
+- **Planning & loops** 🚧 — ReAct and its alternatives, task decomposition, breaking out of loops.
+- **Multi-agent systems** 🚧 — several specialized agents, roles, handoff.
+- **Orchestration frameworks** 🚧 — LangGraph, LangChain, Semantic Kernel, AutoGen, CrewAI: what they add
+  on top of a bare loop.
+- **MCP and agent protocols** 🚧 — a standardized way for an agent to reach tools and data.
+
+## Prerequisites
+
+All of Part I, especially the **Retrieval** layer (the agent calls it as a tool) and the **cross-cutting
+concerns** — here eval and observability move from nice-to-have to mandatory.
+
+:::note[Status]
+
+🚧 The part is growing. The first lesson — Agentic RAG — is published; the rest arrive as we work through
+them.
+
+:::

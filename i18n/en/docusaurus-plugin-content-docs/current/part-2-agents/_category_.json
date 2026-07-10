@@ -2,8 +2,7 @@
   "label": "Part II — Agents",
   "position": 3,
   "link": {
-    "type": "generated-index",
-    "title": "Part II — Agents",
-    "description": "🚧 Work in progress. Agentic RAG, tool use, loops, planning, multi-agent."
+    "type": "doc",
+    "id": "part-2-agents/overview"
   }
 }
