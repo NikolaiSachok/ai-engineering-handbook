@@ -2,8 +2,7 @@
   "label": "Часть I — RAG",
   "position": 2,
   "link": {
-    "type": "generated-index",
-    "title": "Часть I — RAG",
-    "description": "🚧 В разработке. Ingestion, retrieval, generation и сквозные аспекты production-RAG."
+    "type": "doc",
+    "id": "part-1-rag/overview"
   }
 }
