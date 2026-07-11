@@ -1,4 +1,28 @@
 {
+  "link.title.Contents": {
+    "message": "Содержание",
+    "description": "The title of the footer links column with title=Contents in the footer"
+  },
+  "link.title.Reference": {
+    "message": "Справочник",
+    "description": "The title of the footer links column with title=Reference in the footer"
+  },
+  "link.title.Project": {
+    "message": "Проект",
+    "description": "The title of the footer links column with title=Project in the footer"
+  },
+  "link.item.label.Part I — RAG": {
+    "message": "Часть I — RAG",
+    "description": "The label of footer link with label=Part I — RAG linking to /part-1-rag/overview"
+  },
+  "link.item.label.Part II — Agents": {
+    "message": "Часть II — Агенты",
+    "description": "The label of footer link with label=Part II — Agents linking to /part-2-agents/overview"
+  },
+  "link.item.label.Part III — Production & LLMOps": {
+    "message": "Часть III — Production и LLMOps",
+    "description": "The label of footer link with label=Part III — Production & LLMOps linking to /part-3-production/overview"
+  },
   "link.item.label.Introduction": {
     "message": "Введение",
     "description": "The label of footer link with label=Introduction linking to /"
@@ -6,5 +30,13 @@
   "link.item.label.Glossary": {
     "message": "Глоссарий",
     "description": "The label of footer link with label=Glossary linking to /glossary"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/NikolaiSachok/enterprise-rag-agents-handbook"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 Nikolai Sachok. Built with Docusaurus.",
+    "description": "The footer copyright"
   }
 }
