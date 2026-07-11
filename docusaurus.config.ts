@@ -158,7 +158,8 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Serve the docs (the handbook) at the site root.
           routeBasePath: '/',
-          editUrl: 'https://github.com/NikolaiSachok/enterprise-rag-agents-handbook/tree/main/',
+          // No "Edit this page" link: the site is read-only for visitors (no auth),
+          // and the source is a click away on GitHub for the one person who edits it.
         },
         blog: {
           showReadingTime: true,
@@ -166,7 +167,6 @@ const config: Config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          editUrl: 'https://github.com/NikolaiSachok/enterprise-rag-agents-handbook/tree/main/',
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
@@ -205,19 +205,29 @@ const config: Config = {
       ],
     },
     footer: {
+      // A compact sitemap — most useful on phones, where the sidebar is hidden
+      // behind the burger, so the footer is the only always-visible navigation.
       style: 'dark',
       links: [
         {
-          title: 'Handbook',
+          title: 'Contents',
+          items: [
+            {label: 'Part I — RAG', to: '/part-1-rag/overview'},
+            {label: 'Part II — Agents', to: '/part-2-agents/overview'},
+            {label: 'Part III — Production & LLMOps', to: '/part-3-production/overview'},
+          ],
+        },
+        {
+          title: 'Reference',
           items: [
             {label: 'Introduction', to: '/'},
             {label: 'Glossary', to: '/glossary'},
           ],
         },
         {
-          title: 'More',
+          title: 'Project',
           items: [
-            {label: 'Blog', to: '/blog'},
+            {label: 'GitHub', href: 'https://github.com/NikolaiSachok/enterprise-rag-agents-handbook'},
           ],
         },
       ],
