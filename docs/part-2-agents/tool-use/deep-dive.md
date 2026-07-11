@@ -1,6 +1,6 @@
 ---
 title: Tool use — deep dive
-sidebar_label: "Part 2 — Deep dive"
+sidebar_label: "Reliability & scale"
 sidebar_position: 2
 ---
 
