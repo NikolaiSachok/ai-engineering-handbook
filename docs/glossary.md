@@ -362,6 +362,7 @@ AutoGen), CrewAI.
 
 **A2A (Agent-to-Agent)** — развивающийся стандарт (создан Google, с июня 2025 — проект Linux Foundation)
 для связи агента с агентом; MCP — это агент ↔ инструменты, A2A — агент ↔ агент.
+↗ [a2a-protocol.org](https://a2a-protocol.org)
 
 ## Production — сервинг
 

@@ -21,7 +21,7 @@ the new attack surface it opens.
 
 :::tip[▶ Video]
 
-<YouTube id="g9JIUM0MHgQ" title="CLI vs MCP: How AI Agents Choose the Right Tool for the Job — IBM Technology" />
+<YouTube id="g9JIUM0MHgQ" title="CLI vs [MCP](https://modelcontextprotocol.io): How AI Agents Choose the Right Tool for the Job — IBM Technology" />
 
 Watch this before the Swagger section below — it sets up the same question head-on: when the CLI and the API
 spec already describe what a tool does, what does MCP actually add?
@@ -117,7 +117,7 @@ to *agent*, the communication you needed the moment you built [multi-agent](./mu
 one agent hands off to another, what protocol carries that? MCP is the wrong tool; it connects an agent to
 its tools, not an agent to a peer.
 
-**A2A (Agent-to-Agent)** is the emerging answer — a standard proposed by Google and since moved under the
+**[A2A](https://a2a-protocol.org) (Agent-to-Agent)** is the emerging answer — a standard proposed by Google and since moved under the
 Linux Foundation — and it is not the only contender. The distinction worth committing to memory is clean:
 **MCP is agent-to-tools/context; A2A is agent-to-agent.** This corner of the field moves fast and the roster of contenders will have changed by the
 time you read this, so learn the *distinction* rather than the names. The two axes are real and durable; any

@@ -9,8 +9,8 @@ sidebar_position: 5
 The lessons so far built agents up from primitives: the loop in [agentic-rag](./agentic-rag.md), the tools it
 calls in [tool-use](./tool-use.md), planning and termination over that loop in
 [planning-loops](./planning-loops.md), and teams of agents in [multi-agent](./multi-agent.md). In practice
-you don't hand-roll all of that. You reach for an **orchestration framework** — LangChain, LangGraph,
-LlamaIndex, and their neighbors. This lesson is about what a framework actually adds on top of the bare loop,
+you don't hand-roll all of that. You reach for an **orchestration framework** — [LangChain](https://www.langchain.com), [LangGraph](https://www.langchain.com/langgraph),
+[LlamaIndex](https://www.llamaindex.ai), and their neighbors. This lesson is about what a framework actually adds on top of the bare loop,
 so you can choose one and use it well: not reimplement what it already gives you, and not hide behind it when
 something breaks.
 
@@ -76,14 +76,14 @@ The **control-flow and state layer** is where the graph idea lives: LangGraph, a
 Framework, Microsoft's enterprise-oriented entry. This is the layer that owns the state machine of the
 previous section.
 
-The **multi-agent layer** packages the multi-agent lesson's topologies. CrewAI organizes work into
-role-based "crews" of agents with assigned jobs; Microsoft Agent Framework ships prebuilt multi-agent
-orchestrations, inherited from AutoGen — agents that converse with one another. When the thing you want to
+The **multi-agent layer** packages the multi-agent lesson's topologies. [CrewAI](https://www.crewai.com) organizes work into
+role-based "crews" of agents with assigned jobs; [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/) ships prebuilt multi-agent
+orchestrations, inherited from [AutoGen](https://github.com/microsoft/autogen) — agents that converse with one another. When the thing you want to
 model *is* a team, you start here.
 
 One caveat, and it matters more than the taxonomy. These borders blur — LangChain does control flow too,
 frameworks copy each other's good ideas within a release or two, and the whole ecosystem churns fast —
-Microsoft Agent Framework 1.0 (GA April 2026) absorbed Semantic Kernel and AutoGen, both now in maintenance
+Microsoft Agent Framework 1.0 (GA April 2026) absorbed [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/) and AutoGen, both now in maintenance
 mode. Read the three layers as a snapshot of philosophies, not a durable leaderboard. Learn the categories; the version
 numbers will have moved by the time you ship.
 
@@ -104,7 +104,7 @@ first-class node in the graph instead of a manual stop button.
 
 For teams, the framework hands you a **supervisor or crew construct** — the multi-agent lesson's orchestrator, prebuilt,
 so you configure the topology rather than code it. And running through all of it is **tracing integration**,
-LangSmith being the obvious example: the observability layer that lets you see what the graph actually did.
+[LangSmith](https://www.langchain.com/langsmith) being the obvious example: the observability layer that lets you see what the graph actually did.
 That's [Part III](../part-3-production/overview.md)'s subject, and it plugs in here.
 
 ## When NOT to — the tradeoffs

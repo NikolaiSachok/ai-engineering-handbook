@@ -19,25 +19,25 @@ One rule organizes everything below. Each of the three cross-cutting concerns ha
 category, but the concepts are durable and the tools are snapshots — so judge a tool by which concept it
 implements and where it sits in your loop, not by the length of its feature list.
 
-Expect the categories to blur, too. The observability platforms — LangSmith, Langfuse, Phoenix — all ship
+Expect the categories to blur, too. The observability platforms — [LangSmith](https://www.langchain.com/langsmith), [Langfuse](https://langfuse.com), [Phoenix](https://arize.com/phoenix) — all ship
 eval features as well: datasets, judges, scoring runs. That is the **feedback loop** from the observability
 lesson turned into product. A production trace becoming an eval case is one workflow, and the tools grew to
 cover both ends of it.
 
 ## Eval tools
 
-**Ragas** is an open-source library of RAG-specific metrics: faithfulness, response relevancy, context
+**[Ragas](https://ragas.io)** is an open-source library of RAG-specific metrics: faithfulness, response relevancy, context
 precision, context recall — most of them computed LLM-as-a-judge-style. A mapping note: response
 relevancy is the metric that used to be called answer relevancy — Ragas's name for the answer relevance you
 know from the evaluation lesson. The names land straight on Part I's vocabulary, the retrieval-vs-generation
 split included: context precision and context recall score the retrieval side, faithfulness and response
 relevancy the generation side. Ragas can also generate a candidate test set over your corpus.
 
-**DeepEval** is open source too, and its angle is pytest: an eval case is a unit test — `assert_test`, a
+**[DeepEval](https://deepeval.com)** is open source too, and its angle is pytest: an eval case is a unit test — `assert_test`, a
 metric, a threshold — so running your evals in CI works the way running any other test suite does. If your
 team already lives in pytest, the adoption cost is close to zero.
 
-The third tool, **promptfoo**, is open source and config-driven: YAML files describe prompts, models, and assertions, and
+The third tool, **[promptfoo](https://www.promptfoo.dev)**, is open source and config-driven: YAML files describe prompts, models, and assertions, and
 the tool renders side-by-side prompt/model comparison matrices and runs in CI. It also ships red-teaming
 features — hold that thought for the guardrails section.
 
@@ -48,16 +48,16 @@ you, but human review remains the quality gate.
 
 ## Observability platforms
 
-**LangSmith** is the LangChain ecosystem's tracing-and-eval platform — SaaS first, with a self-hosted
-option reserved for enterprise plans. If you're already on LangChain or LangGraph, this is the tightest
+**LangSmith** is the [LangChain](https://www.langchain.com) ecosystem's tracing-and-eval platform — SaaS first, with a self-hosted
+option reserved for enterprise plans. If you're already on LangChain or [LangGraph](https://www.langchain.com/langgraph), this is the tightest
 integration you'll get.
 
 **Langfuse** is open source (MIT core; some enterprise features are license-gated) and self-hostable with
 Docker or Kubernetes — the default choice when data must not leave your perimeter. It covers tracing,
 prompt management, datasets and evals, and cost dashboards.
 
-**Arize Phoenix** is self-hostable tracing and eval, "built on top of OpenTelemetry and powered by
-OpenInference instrumentation," as its own docs put it. One licensing note worth being precise about:
+**Arize Phoenix** is self-hostable tracing and eval, "built on top of [OpenTelemetry](https://opentelemetry.io) and powered by
+[OpenInference](https://github.com/Arize-ai/openinference) instrumentation," as its own docs put it. One licensing note worth being precise about:
 Phoenix ships under ELv2 — source-available, free to run yourself, but not open source in the OSI sense —
 so don't file it next to MIT-licensed Langfuse without the asterisk.
 
@@ -67,7 +67,7 @@ tool calls — so your **instrumentation**, the code hooks that emit traces and 
 can outlive any one vendor: instrument once, point the exporter wherever you like. One caveat, because it
 matters: as of mid-2026 these conventions are still in Development status — experimental and moving. They
 now live in a dedicated repository, `open-telemetry/semantic-conventions-genai`, which also covers
-conventions for MCP — the protocol from [MCP and agent protocols](../part-2-agents/mcp.md) getting its
+conventions for [MCP](https://modelcontextprotocol.io) — the protocol from [MCP and agent protocols](../part-2-agents/mcp.md) getting its
 observability vocabulary.
 
 Strip the branding and all three platforms implement exactly one thing: the primitive from the
@@ -89,12 +89,12 @@ categories in motion.
 ## Guardrails tools
 
 Guardrails products come in two shapes. The first is frameworks that wrap your input and output with
-programmable checks: **Guardrails AI** — a Python validator library plus the Guardrails Hub, including
-structured-output validation — and **NVIDIA NeMo Guardrails**, where dialogue "rails" are defined in a
+programmable checks: **[Guardrails AI](https://www.guardrailsai.com)** — a Python validator library plus the Guardrails Hub, including
+structured-output validation — and **NVIDIA [NeMo Guardrails](https://developer.nvidia.com/nemo-guardrails)**, where dialogue "rails" are defined in a
 configuration language called Colang.
 
 The second shape is the **safety classifier** — a model that scores text for risk categories: **Llama
-Guard** from Meta and **Granite Guardian** from IBM, compact specialized models you place on the input, the
+Guard** from Meta and **[Granite Guardian](https://github.com/ibm-granite/granite-guardian)** from IBM, compact specialized models you place on the input, the
 output, or both. Frameworks orchestrate; classifier models judge. And the two shapes compose: a framework
 rail can call a classifier model as one of its checks.
 

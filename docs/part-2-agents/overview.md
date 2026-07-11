@@ -26,10 +26,10 @@ sidebar_label: Обзор части
   задачи, критерий остановки и борьба с зацикливанием.
 - **[Мультиагентные системы (multi-agent)](./multi-agent.md)** — несколько специализированных агентов,
   роли, передача управления; топологии и когда НЕ дробить одного агента.
-- **[Фреймворки оркестрации](./orchestration-frameworks.md)** — LangGraph, LangChain, Microsoft Agent
-  Framework, CrewAI: что они дают поверх голого цикла и когда лучше без них.
-- **[MCP и протоколы агентов](./mcp.md)** — стандартизованный доступ агента к инструментам и данным; MCP
-  против A2A.
+- **[Фреймворки оркестрации](./orchestration-frameworks.md)** — [LangGraph](https://www.langchain.com/langgraph), [LangChain](https://www.langchain.com), Microsoft Agent
+  Framework, [CrewAI](https://www.crewai.com): что они дают поверх голого цикла и когда лучше без них.
+- **[MCP и протоколы агентов](./mcp.md)** — стандартизованный доступ агента к инструментам и данным; [MCP](https://modelcontextprotocol.io)
+  против [A2A](https://a2a-protocol.org).
 
 ## Предпосылки
 
