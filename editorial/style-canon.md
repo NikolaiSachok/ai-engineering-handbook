@@ -354,20 +354,20 @@ milestone-проход.
 
 | Страница | Последняя полная сверка | Дельты после неё |
 |---|---|---|
-| intro | #58 | #77, #78, milestone-проход #TBD |
-| part-1-rag/overview | #58 | milestone-проход #TBD |
-| part-1-rag/ingestion | #58 | #71, milestone-проход #TBD |
-| part-1-rag/retrieval | #58 | milestone-проход #TBD |
-| part-1-rag/generation | #58 | milestone-проход #TBD |
-| cross-cutting/evaluation | #58 | milestone-проход #TBD |
-| cross-cutting/guardrails | #58 | #71, milestone-проход #TBD |
-| cross-cutting/observability | #58 | milestone-проход #TBD |
-| part-2-agents/overview | #58 | #59, #63, #67, #72, milestone-проход #TBD |
-| part-2-agents/agentic-rag | #58 | #60, milestone-проход #TBD |
-| part-2-agents/tool-use | #63 | #71, #80, milestone-проход #TBD |
-| part-2-agents/planning-loops | #68 / #70 | milestone-проход #TBD |
-| part-2-agents/multi-agent | #72 (авторский гейт) | milestone-проход #TBD |
-| part-2-agents/orchestration-frameworks | #72 (авторский гейт) | milestone-проход #TBD |
-| part-2-agents/mcp | #80 | milestone-проход #TBD |
-| glossary | #58 | #59, #67, #69, #72, #78, milestone-проход #TBD |
-| part-3-production/overview | #78 (заглушка) | #79, milestone-проход #TBD |
+| intro | #58 | #77, #78, milestone-проход #81 |
+| part-1-rag/overview | #58 | milestone-проход #81 |
+| part-1-rag/ingestion | #58 | #71, milestone-проход #81 |
+| part-1-rag/retrieval | #58 | milestone-проход #81 |
+| part-1-rag/generation | #58 | milestone-проход #81 |
+| cross-cutting/evaluation | #58 | milestone-проход #81 |
+| cross-cutting/guardrails | #58 | #71, milestone-проход #81 |
+| cross-cutting/observability | #58 | milestone-проход #81 |
+| part-2-agents/overview | #58 | #59, #63, #67, #72, milestone-проход #81 |
+| part-2-agents/agentic-rag | #58 | #60, milestone-проход #81 |
+| part-2-agents/tool-use | #63 | #71, #80, milestone-проход #81 |
+| part-2-agents/planning-loops | #68 / #70 | milestone-проход #81 |
+| part-2-agents/multi-agent | #72 (авторский гейт) | milestone-проход #81 |
+| part-2-agents/orchestration-frameworks | #72 (авторский гейт) | milestone-проход #81 |
+| part-2-agents/mcp | #80 | milestone-проход #81 |
+| glossary | #58 | #59, #67, #69, #72, #78, milestone-проход #81 |
+| part-3-production/overview | #78 (заглушка) | #79, milestone-проход #81 |
