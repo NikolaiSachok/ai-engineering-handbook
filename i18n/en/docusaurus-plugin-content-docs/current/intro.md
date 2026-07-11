@@ -29,10 +29,10 @@ scratch — instead we show the **AI delta**, what actually changes when you app
 - **[Part I — RAG](./part-1-rag/overview.md):** ingestion, retrieval, generation, and the cross-cutting
   concerns (eval, guardrails, observability) of the static pipeline.
 - **[Part II — Agents](./part-2-agents/overview.md):** agentic RAG, tool use, planning and loops,
-  multi-agent systems, orchestration frameworks, MCP.
-- **[Part III — Production & LLMOps](./part-3-production/overview.md):** serving on FastAPI + Docker,
-  cloud AI platforms (Azure OpenAI, Amazon Bedrock, Google Cloud Gemini Enterprise Agent Platform —
-  formerly Vertex AI), the tooling ecosystem (eval, guardrails, observability), and LLMOps — deploy,
+  multi-agent systems, orchestration frameworks, [MCP](https://modelcontextprotocol.io).
+- **[Part III — Production & LLMOps](./part-3-production/overview.md):** serving on [FastAPI](https://fastapi.tiangolo.com) + Docker,
+  cloud AI platforms ([Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service), [Amazon Bedrock](https://aws.amazon.com/bedrock/), Google Cloud Gemini Enterprise Agent Platform —
+  formerly [Vertex AI](https://cloud.google.com/vertex-ai)), the tooling ecosystem (eval, guardrails, observability), and LLMOps — deploy,
   monitor, cost. The applied layer the job market names by tool.
 - **[Glossary](./glossary.md):** single definitions for the terms the pages link to.
 

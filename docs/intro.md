@@ -29,9 +29,9 @@ slug: /
 - **[Часть I — RAG](./part-1-rag/overview.md):** ingestion, retrieval, generation и сквозные аспекты (eval,
   guardrails, observability) статического конвейера.
 - **[Часть II — Агенты](./part-2-agents/overview.md):** agentic RAG, использование инструментов, планирование
-  и циклы, мультиагентные системы, фреймворки оркестрации, MCP.
-- **[Часть III — Production и LLMOps](./part-3-production/overview.md):** сервинг на FastAPI + Docker,
-  облачные AI-платформы (Azure OpenAI, Amazon Bedrock, Google Cloud Gemini Enterprise Agent Platform —
+  и циклы, мультиагентные системы, фреймворки оркестрации, [MCP](https://modelcontextprotocol.io).
+- **[Часть III — Production и LLMOps](./part-3-production/overview.md):** сервинг на [FastAPI](https://fastapi.tiangolo.com) + Docker,
+  облачные AI-платформы ([Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service), [Amazon Bedrock](https://aws.amazon.com/bedrock/), Google Cloud Gemini Enterprise Agent Platform —
   экс-Vertex AI), экосистема инструментов (eval, guardrails, observability) и LLMOps — деплой, мониторинг,
   стоимость. Прикладной слой, который рынок называет по инструментам.
 - **[Глоссарий](./glossary.md):** единые определения терминов, на которые ссылаются страницы.

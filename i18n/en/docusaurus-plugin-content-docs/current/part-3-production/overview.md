@@ -15,8 +15,8 @@ observably, and on budget."
 
 - **[Serving — FastAPI + Docker](./serving.md)** — wrapping a model or agent in a service: API, streaming,
   container, inference servers.
-- **[Cloud AI platforms](./cloud-platforms.md)** — Azure OpenAI, Amazon Bedrock, Google Cloud Gemini
-  Enterprise Agent Platform (formerly Vertex AI): what they offer and how they differ.
+- **[Cloud AI platforms](./cloud-platforms.md)** — [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service), [Amazon Bedrock](https://aws.amazon.com/bedrock/), Google Cloud Gemini
+  Enterprise Agent Platform (formerly [Vertex AI](https://cloud.google.com/vertex-ai)): what they offer and how they differ.
 - **[The tooling ecosystem](./tooling-ecosystem.md)** — eval, guardrails, observability in production:
   what to measure, what to guard, what to see.
 - **[LLMOps — deploy, monitor, cost](./llmops.md)** — the LLM system's life after release.

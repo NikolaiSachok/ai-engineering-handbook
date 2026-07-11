@@ -62,7 +62,7 @@ flowchart LR
 
 The gate at the front is **eval in CI**. Every change to a prompt, model, index, or config runs the golden
 set; if the metrics fall below threshold, the merge is blocked. This is Part I's regression eval promoted
-to a pipeline stage — the same promptfoo / DeepEval / Ragas stack you met in
+to a pipeline stage — the same [promptfoo](https://www.promptfoo.dev) / [DeepEval](https://deepeval.com) / [Ragas](https://ragas.io) stack you met in
 [the tooling ecosystem](./tooling-ecosystem.md), now wired into CI with a red-green verdict. A prompt tweak
 that quietly drops faithfulness by ten points gets caught the same way a broken build does.
 
@@ -70,7 +70,7 @@ that quietly drops faithfulness by ten points gets caught the same way a broken 
 
 Prompts live a double life. They are code: keep them in version control, where a prompt change arrives as
 a reviewable diff and rolls back like any other commit. And they are config: when product teams iterate on
-wording daily, a **prompt registry** — the prompt management in LangSmith or Langfuse — lets them ship
+wording daily, a **prompt registry** — the prompt management in [LangSmith](https://www.langchain.com/langsmith) or [Langfuse](https://langfuse.com) — lets them ship
 prompt versions without a code deploy. Either home is fine. The invariant is attribution: every production
 answer must trace back to an exact prompt version, which is why the trace records it.
 
@@ -165,7 +165,7 @@ Provider outages and 429s aren't incidents; they're weather. Production keeps a 
 same model in another region, another provider, a cheaper model in degraded mode — tried in order when
 the primary errors or rate-limits. The natural home for all of this is an **LLM gateway**: one
 OpenAI-compatible interface in front of every model you use, centralizing routing, fallbacks, API keys,
-budgets, and per-team rate limits. LiteLLM is the open-source example; OpenRouter, the hosted one.
+budgets, and per-team rate limits. [LiteLLM](https://www.litellm.ai) is the open-source example; [OpenRouter](https://openrouter.ai), the hosted one.
 
 ### Caching — twice
 

@@ -44,7 +44,7 @@ is all they do. That fit between async-first design and an I/O-bound workload is
 community default for LLM services.
 
 Three of its features earn their keep daily. Native `async`/`await` route handlers make the interleaving
-above simply the way you write. Pydantic models validate request and response shapes at the boundary —
+above simply the way you write. [Pydantic](https://pydantic.dev) models validate request and response shapes at the boundary —
 which pairs directly with structured output from [tool-use](../part-2-agents/tool-use.md): the schema the
 model was asked to produce gets checked before anything leaves your service. And the auto-generated
 OpenAPI docs keep the contract your service exposes current without anyone maintaining it.
@@ -157,7 +157,7 @@ out a cold start.
 
 Serving an LLM well is a specialized systems problem, not a web problem. The throughput wins live at the
 level of GPU scheduling: **continuous batching**, where new requests join the running batch at token
-granularity instead of waiting for the whole batch to finish, and memory management like vLLM's
+granularity instead of waiting for the whole batch to finish, and memory management like [vLLM](https://docs.vllm.ai)'s
 **PagedAttention**, which pages the KV cache the way an operating system pages virtual memory, cutting the
 fragmentation that otherwise wastes GPU memory. No web framework provides any of this. Put naive
 per-request `transformers` inference behind FastAPI and the code will work — while leaving most of the
@@ -172,10 +172,10 @@ vLLM itself.
 
 :::
 
-The names, as of this writing: **vLLM** is the open-source standard for GPU serving; **SGLang** is the
-other major open-source GPU server; **Ollama** is the convenience option for local and dev use — not a
+The names, as of this writing: **vLLM** is the open-source standard for GPU serving; **[SGLang](https://docs.sglang.io)** is the
+other major open-source GPU server; **[Ollama](https://ollama.com)** is the convenience option for local and dev use — not a
 production-class server. (Hugging
-Face's TGI, once a peer of these, was put into maintenance mode in December 2025 and its repository
+Face's [TGI](https://github.com/huggingface/text-generation-inference), once a peer of these, was put into maintenance mode in December 2025 and its repository
 archived — made read-only — in March 2026; Hugging Face itself now points users to vLLM or SGLang.) Treat
 the roster as a 2026 snapshot and the category as the durable thing: whichever names win, "inference
 server" is the box your architecture needs.

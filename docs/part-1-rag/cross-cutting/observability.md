@@ -50,7 +50,7 @@ Observability обязана считать cost-per-request и латентно
 регрессии. Круг замыкается: eval мерит, guardrails защищают, observability видит и возвращает найденное в
 eval. Весь сквозной слой — это одна связка.
 
-*(Инструменты — LangSmith, Langfuse, Arize Phoenix, OpenTelemetry — отдельный слой: см. [урок про
+*(Инструменты — [LangSmith](https://www.langchain.com/langsmith), [Langfuse](https://langfuse.com), [Arize Phoenix](https://arize.com/phoenix), [OpenTelemetry](https://opentelemetry.io) — отдельный слой: см. [урок про
 экосистему инструментов](../../part-3-production/tooling-ecosystem.md); здесь мы про принцип.)*
 
 ---

@@ -58,11 +58,11 @@ things to the model.
 
 ## The three platforms — and a lesson about names
 
-As of mid-2026 the big three look like this. **Azure OpenAI** is Microsoft's offering, historically the way
+As of mid-2026 the big three look like this. **[Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)** is Microsoft's offering, historically the way
 to consume OpenAI models as a first-party Azure service; the platform around it was renamed from Azure AI
 Foundry to Microsoft Foundry at Ignite in November 2025, and models in it are now offered as "Foundry
-Models," split between "Models sold by Azure" and marketplace listings. **AWS Bedrock** is Amazon's — the
-one name of the three that has held still. **Vertex AI** is Google Cloud's, and it is mid-rename as this
+Models," split between "Models sold by Azure" and marketplace listings. **[AWS Bedrock](https://aws.amazon.com/bedrock/)** is Amazon's — the
+one name of the three that has held still. **[Vertex AI](https://cloud.google.com/vertex-ai)** is Google Cloud's, and it is mid-rename as this
 page is written: the Gemini Enterprise Agent Platform, announced in April 2026. The console migration
 finished in May 2026, the API endpoints didn't move, and the documentation is genuinely caught between the
 two names.
@@ -193,7 +193,7 @@ provisioned-capacity economics look like at your load.
 
 Whichever platform wins, keep one architectural hedge: leave the application layer provider-agnostic.
 OpenAI-compatible clients and a gateway or router layer — the pattern [LLMOps](./llmops.md) develops with
-LiteLLM and friends — preserve the option to move. Note where the **vendor lock-in** actually lives: the
+[LiteLLM](https://www.litellm.ai) and friends — preserve the option to move. Note where the **vendor lock-in** actually lives: the
 endpoints are increasingly interchangeable, while the platform SDKs and managed tiers are the sticky parts.
 Lock-in lives in the batteries, not in the endpoint.
 

@@ -344,6 +344,7 @@ N+M. ↗ [modelcontextprotocol.io](https://modelcontextprotocol.io)
 
 **A2A (Agent-to-Agent)** — an emerging standard (created by Google, a Linux Foundation project since
 June 2025) for agent-to-agent communication; MCP is agent-to-tools, A2A is agent-to-agent.
+↗ [a2a-protocol.org](https://a2a-protocol.org)
 
 ## Production — serving
 
