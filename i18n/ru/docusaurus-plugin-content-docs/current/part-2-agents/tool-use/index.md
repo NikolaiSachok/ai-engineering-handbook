@@ -129,6 +129,6 @@ tool result, tool selection, JSON Schema, structured output.
 инструментов.
 
 См. также: как подключать инструменты по общему стандарту — [MCP и протоколы агентов](../mcp.md); как это
-устроено у Claude, OpenAI и Gemini — [капстоун части](../real-agents.md).
+устроено у Claude, OpenAI и Gemini — [завершающий урок части](../real-agents.md).
 
 :::
