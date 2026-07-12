@@ -21,7 +21,7 @@ looking at.
 
 - **[Ingestion](./ingestion.md)** — the offline preparation of documents: chunking and embeddings,
   metadata. This is where the ceiling on all of search quality gets set.
-- **[Retrieval](./retrieval.md)** — how to turn "nearest vectors" into genuinely relevant results: query
+- **[Retrieval](./retrieval/index.md)** — how to turn "nearest vectors" into genuinely relevant results: query
   transformation, hybrid search, reranking, filters and access control.
 - **[Generation](./generation.md)** — how to ground the answer in the retrieved context: grounding,
   citations, an honest refusal instead of invention.

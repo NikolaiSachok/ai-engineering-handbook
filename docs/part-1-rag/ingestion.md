@@ -113,7 +113,7 @@ to get it from later.
 ### Looking ahead: a chunk has two roles — you can split them apart
 
 Back to the fact that a chunk is both searched over and fed to the LLM. An advanced idea (in detail — in
-the [retrieval](./retrieval.md) layer): it doesn't have to be the same piece of text. You can *search*
+the [retrieval](./retrieval/index.md) layer): it doesn't have to be the same piece of text. You can *search*
 over small, sharp chunks (a good embedding) and *feed the LLM* a larger parent fragment around the match
 (full context). This family of techniques is *parent-document / small-to-big retrieval*. For now it's
 enough to remember that splitting a chunk's two roles apart is possible.
@@ -172,7 +172,7 @@ The key distinction that both vector search and reranking grow out of.
 
 The "accuracy vs. speed" conflict is resolved by combining the two: the bi-encoder quickly pulls the
 top-K out of millions (recall), the cross-encoder re-scores those K (precision). That re-scoring step is
-exactly what **reranking** is. More in the [retrieval](./retrieval.md) layer.
+exactly what **reranking** is. More in the [retrieval](./retrieval/index.md) layer.
 
 ### How you pick an embedding model
 

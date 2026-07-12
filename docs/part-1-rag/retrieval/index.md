@@ -1,7 +1,6 @@
 ---
-id: retrieval
 title: Retrieval
-sidebar_position: 2
+slug: /part-1-rag/retrieval/
 ---
 
 # Finding the right context for the query
@@ -67,7 +66,7 @@ missed alone.
 The first stage — dense or hybrid search — is tuned for **recall**: drag the chunk you need somewhere into
 the top-K, where K is 50–100. But the ordering inside that hundred is crude, and only a few chunks fit
 into the model's context. So the second stage works on **precision**: a cross-encoder from the [previous
-lesson](./ingestion.md) re-scores every candidate against the query and re-sorts the list, floating the
+lesson](../ingestion.md) re-scores every candidate against the query and re-sorts the list, floating the
 best to the top. Only the top few reach generation.
 
 This is the canonical two-stage scheme: cheap and wide (a bi-encoder or hybrid — recall), then expensive
@@ -95,7 +94,7 @@ query → [transform] → [hybrid: dense + BM25, metadata filter + ACL]
 ```
 
 Every stage drives retrieval failure down. By exactly how much is something you **measure**: Recall@K,
-Precision@K, MRR, nDCG. We formalize the metrics in the [Evaluation](./cross-cutting/evaluation.md) layer.
+Precision@K, MRR, nDCG. We formalize the metrics in the [Evaluation](../cross-cutting/evaluation.md) layer.
 
 ## What to take away
 
@@ -106,16 +105,21 @@ Precision@K, MRR, nDCG. We formalize the metrics in the [Evaluation](./cross-cut
 - Reranking (a cross-encoder) fixes the ordering: a recall stage, then a precision stage.
 - Filters and access control give you relevance together with permissions; ACL is a security requirement.
 
-**New terms** → [Glossary](../glossary.md): retrieval failure / generation failure, dense retrieval,
+**New terms** → [Glossary](../../glossary.md): retrieval failure / generation failure, dense retrieval,
 top-K, query transformation, multi-query, HyDE, hybrid search, BM25 / sparse retrieval, Reciprocal Rank
 Fusion (RRF), reranking, two-stage retrieval, metadata filtering, access control (ACL), Recall@K, Precision@K,
 nDCG, MRR.
 
 ---
 
-:::note[Next — going deeper]
+:::note[Next — part 2 of the lesson]
 
-🚧 Second pass: HyDE mechanics, hybrid-fusion internals (RRF), reranker choice (cross-encoder vs LLM),
-parent-document retrieval, late interaction (ColBERT), query routing.
+**[Fusion, ranking & metrics](./deep-dive.md)** — the retrieval layer's second pass: HyDE mechanics and when
+it backfires, hybrid-fusion internals (RRF weighting and score normalization), reranker choice (cross-encoder
+vs LLM), parent-document and late-interaction (ColBERT) retrieval, query routing, pre- vs post-filter, and
+the ranking metrics (nDCG, MRR) spelled out.
+
+See also: where the chunks come from — [Ingestion](../ingestion.md); what happens to what you retrieve —
+[Generation](../generation.md); and how the whole layer is measured — [Evaluation](../cross-cutting/evaluation.md).
 
 :::
