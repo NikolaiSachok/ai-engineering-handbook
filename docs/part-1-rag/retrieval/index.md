@@ -120,6 +120,6 @@ vs LLM), parent-document and late-interaction (ColBERT) retrieval, query routing
 the ranking metrics (nDCG, MRR) spelled out.
 
 See also: where the chunks come from — [Ingestion](../ingestion/index.md); what happens to what you retrieve —
-[Generation](../generation.md); and how the whole layer is measured — [Evaluation](../cross-cutting/evaluation.md).
+[Generation](../generation/index.md); and how the whole layer is measured — [Evaluation](../cross-cutting/evaluation.md).
 
 :::

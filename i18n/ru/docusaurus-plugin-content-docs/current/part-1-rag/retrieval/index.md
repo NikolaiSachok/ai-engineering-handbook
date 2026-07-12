@@ -118,6 +118,6 @@ nDCG, MRR.
 индексам, pre- и post-filter, метрики ранжирования (nDCG, MRR) в деталях.
 
 См. также: откуда берутся чанки — [Ingestion](../ingestion/index.md); что происходит с найденным —
-[Generation](../generation.md); как измеряют весь слой — [Evaluation](../cross-cutting/evaluation.md).
+[Generation](../generation/index.md); как измеряют весь слой — [Evaluation](../cross-cutting/evaluation.md).
 
 :::

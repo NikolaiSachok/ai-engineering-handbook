@@ -233,6 +233,6 @@ neighbors quickly.
 embeddings), and embedding depth (fine-tuning, Matryoshka dimensionality truncation, multilingual models).
 
 See also: what happens to the chunks next — [Retrieval](../retrieval/index.md); how the answer is composed —
-[Generation](../generation.md); and how the whole layer is measured — [Evaluation](../cross-cutting/evaluation.md).
+[Generation](../generation/index.md); and how the whole layer is measured — [Evaluation](../cross-cutting/evaluation.md).
 
 :::
