@@ -7,6 +7,10 @@
     "message": "Часть I — RAG",
     "description": "The label for category 'Part I — RAG' in sidebar 'handbookSidebar'"
   },
+  "sidebar.handbookSidebar.category.Retrieval": {
+    "message": "Retrieval",
+    "description": "The label for category 'Retrieval' in sidebar 'handbookSidebar'"
+  },
   "sidebar.handbookSidebar.category.Cross-cutting": {
     "message": "Сквозные аспекты",
     "description": "The label for category 'Cross-cutting' in sidebar 'handbookSidebar'"

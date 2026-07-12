@@ -85,13 +85,41 @@ blind spot.
 each ranking, without reconciling their different score scales.
 ↗ [SIGIR'09](https://cormack.uwaterloo.ca/cormacksigir09-rrf.pdf)
 
+**Score fusion / score normalization** — merging retrievers by their raw scores: normalize each onto a
+common scale (min-max, z-score), then weighted-sum. Keeps score magnitude but is fragile to outliers and
+per-query distribution shifts — the score-based alternative to rank-based RRF.
+
 **Reranking** — re-scoring the top-K candidates with a cross-encoder and re-sorting them so the best rises
 to the top. The second stage; it works on precision.
+
+**LLM reranker** — reranking by prompting a general LLM to judge relevance — pointwise, pairwise, or
+listwise. Zero-shot and instruction-followable, but costly, high-latency, and nondeterministic, versus a
+purpose-trained cross-encoder.
 
 **Two-stage retrieval** — cheap and wide for recall (bi-encoder / hybrid), then expensive and precise for
 precision (cross-encoder). The canonical retrieval scheme.
 
+**Late interaction / ColBERT** — encode query and document into per-token vectors, precompute the document
+side, and score at query time with MaxSim: for each query token, the max cosine to any document token,
+summed over query tokens. Keeps cross-encoder-like token matching while staying precomputable and
+corpus-searchable; the cost is storage — a vector per token. ↗ [arXiv](https://arxiv.org/abs/2004.12832)
+
+**Multi-vector retrieval** — representing a chunk by many vectors (one per token) instead of one; the
+representation late interaction searches over.
+
+**Contextual retrieval** — prepend a short, LLM-generated blurb situating each chunk in its whole document
+before embedding and BM25-indexing it, so the chunk carries context a bare chunk loses; prompt caching
+makes generating it cheap. ↗ [Anthropic](https://www.anthropic.com/news/contextual-retrieval)
+
+**Query routing** — the up-front choice of where and how to search a query: which index or collection,
+whether to retrieve at all, dense vs hybrid, which metadata scope. The top of the funnel — a wrong route
+drops the answer from the candidate set for good.
+
 **Metadata filtering** — narrowing search by a chunk's fields: date, department, type, language.
+
+**Pre-filter / post-filter** — whether a metadata/ACL predicate runs before the vector search (only passing
+vectors are candidates — correct, and mandatory for ACL, but a selective filter can fight the ANN index) or
+after it (fast, but a selective filter can leave fewer than K results, even zero).
 
 **Access control (ACL)** — cutting chunks by access rights before results go out, so a user never gets what
 they aren't entitled to. A security requirement, not an option.
