@@ -181,6 +181,21 @@ suppresses it in favor of the context.
 
 **Hallucination** — a confidently stated fact that isn't in the sources, or is wrong.
 
+**Self-consistency** — instead of a single greedy chain-of-thought decode, sample several reasoning paths and
+take the majority vote on the final answer; applies only where the answer is a discrete, votable value.
+↗ [arXiv](https://arxiv.org/abs/2203.11171)
+
+**Chain-of-verification (CoVe)** — a self-checking loop: draft an answer, plan verification questions, answer
+them *independently* of the draft (so the model can't rubber-stamp its own mistake), then revise the draft
+against the checks. ↗ [arXiv](https://arxiv.org/abs/2309.11495)
+
+**Knowledge conflict (context–memory conflict)** — when the retrieved context contradicts the model's
+parametric prior; the model doesn't always defer to the context, especially when the prior is entrenched or
+the context looks implausible. Faithfulness is what measures whether it did.
+
+**Answer-shaping** — controlling the answer's format, tone, and length. A real quality lever, but subordinate
+to grounding: shaping must never drop a citation, a caveat, or an honest refusal.
+
 ## Evaluation
 
 **Evaluation** — measuring pipeline quality with metrics instead of by feel. It makes the pipeline tunable.

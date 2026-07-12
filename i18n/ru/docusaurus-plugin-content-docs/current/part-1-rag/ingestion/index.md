@@ -223,6 +223,6 @@ self-hosted vs API embeddings.
 модели).
 
 См. также: что происходит с чанками дальше — [Retrieval](../retrieval/index.md); как собирается ответ —
-[Generation](../generation.md); как измеряют весь слой — [Evaluation](../cross-cutting/evaluation.md).
+[Generation](../generation/index.md); как измеряют весь слой — [Evaluation](../cross-cutting/evaluation.md).
 
 :::

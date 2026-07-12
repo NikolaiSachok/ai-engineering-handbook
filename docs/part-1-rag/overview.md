@@ -23,7 +23,7 @@ looking at.
   metadata. This is where the ceiling on all of search quality gets set.
 - **[Retrieval](./retrieval/index.md)** — how to turn "nearest vectors" into genuinely relevant results: query
   transformation, hybrid search, reranking, filters and access control.
-- **[Generation](./generation.md)** — how to ground the answer in the retrieved context: grounding,
+- **[Generation](./generation/index.md)** — how to ground the answer in the retrieved context: grounding,
   citations, an honest refusal instead of invention.
 - **Cross-cutting concerns** — what doesn't reduce to a single step: [eval](./cross-cutting/evaluation.md)
   (knowing the system works), [guardrails](./cross-cutting/guardrails.md) (keeping it safe),

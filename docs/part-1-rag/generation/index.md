@@ -1,7 +1,6 @@
 ---
-id: generation
 title: Generation
-sidebar_position: 3
+slug: /part-1-rag/generation/
 ---
 
 # Composing a grounded answer from the context
@@ -72,7 +71,7 @@ if it were fact, and a single error travels further — into a report, into some
 Even with instructions, a model will sometimes override the context with its own knowledge, or stumble when
 the context contradicts what it "believes." How far the answer actually rests on the sources is something you
 **measure** — with the faithfulness / groundedness metric. We formalize it in the
-[Evaluation](./cross-cutting/evaluation.md) layer; for now, hold on to the idea that "the model behaves well" isn't a
+[Evaluation](../cross-cutting/evaluation.md) layer; for now, hold on to the idea that "the model behaves well" isn't a
 feeling, it's a number.
 
 ## Fixing generation failure, class by class
@@ -95,15 +94,21 @@ feeling, it's a number.
 - **Refusal** is normal behavior, not a malfunction.
 - Faithfulness to the context is something you **measure** → the bridge to Evaluation.
 
-**New terms** → [Glossary](../glossary.md): grounding, grounding instructions, context packing,
+**New terms** → [Glossary](../../glossary.md): grounding, grounding instructions, context packing,
 lost-in-the-middle, citations / attribution, refusal / abstention, faithfulness / groundedness, parametric
 knowledge, hallucination.
 
 ---
 
-:::note[Next — going deeper]
+:::note[Next — part 2 of the lesson]
 
-🚧 Second pass: advanced generation schemes (chain-of-verification, self-consistency), structured output and
-forced citation, tackling the conflict between context and parametric knowledge.
+**[Self-verification & structured output](./deep-dive.md)** — the generation layer's second pass:
+self-verification loops (chain-of-verification, self-consistency), structured output and forced/inline
+citations via constrained decoding, the conflict between the context and the model's parametric knowledge,
+long-context packing beyond lost-in-the-middle, and answer-shaping (format, tone, length).
+
+See also: what feeds this layer — [Retrieval](../retrieval/index.md); where the chunks come from —
+[Ingestion](../ingestion/index.md); and how faithfulness is actually measured —
+[Evaluation](../cross-cutting/evaluation.md).
 
 :::

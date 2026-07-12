@@ -1,7 +1,6 @@
 ---
-id: generation
 title: Generation — генерация ответа
-sidebar_position: 3
+slug: /part-1-rag/generation/
 ---
 
 # Обоснованный ответ из найденного контекста
@@ -72,7 +71,7 @@ Retrieval отдал хороший, разрешённый контекст. Т
 
 Даже с инструкциями модель иногда перебивает контекст своими знаниями или спотыкается, когда контекст
 противоречит тому, во что она «верит». Насколько ответ действительно опирается на источники — это
-**измеряют** метрикой faithfulness / groundedness. Формализуем её в слое [Evaluation](./cross-cutting/evaluation.md);
+**измеряют** метрикой faithfulness / groundedness. Формализуем её в слое [Evaluation](../cross-cutting/evaluation.md);
 пока держи в голове, что за «модель ведёт себя хорошо» должно стоять число.
 
 ## Как generation failure чинится по классам
@@ -93,15 +92,20 @@ Retrieval отдал хороший, разрешённый контекст. Т
 - **Отказ** — штатное поведение системы.
 - Верность контексту (faithfulness) **измеряют** → мостик к Evaluation.
 
-**Новые термины** → [Глоссарий](../glossary.md): grounding, grounding instructions, context packing,
+**Новые термины** → [Глоссарий](../../glossary.md): grounding, grounding instructions, context packing,
 lost-in-the-middle, citations / attribution, refusal / abstention, faithfulness / groundedness, parametric
 knowledge, hallucination.
 
 ---
 
-:::note[Дальше — углубление слоя]
+:::note[Дальше — вторая часть урока]
 
-🚧 Второй проход: продвинутые схемы генерации (chain-of-verification, self-consistency), структурированный
-вывод и принудительное цитирование, борьба с конфликтом «контекст против параметрических знаний».
+**[Самопроверка и структурированный вывод](./deep-dive.md)** — второй проход слоя генерации: циклы
+самопроверки (chain-of-verification, self-consistency), структурированный вывод и принудительное
+цитирование через строгий (constrained) декодинг, конфликт между контекстом и параметрическими знаниями
+модели, упаковка длинного контекста за пределами lost-in-the-middle и форма ответа (формат, тон, длина).
+
+См. также: что подаёт этот слой на вход — [Retrieval](../retrieval/index.md); откуда берутся чанки —
+[Ingestion](../ingestion/index.md); как измеряют faithfulness — [Evaluation](../cross-cutting/evaluation.md).
 
 :::
