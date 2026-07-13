@@ -89,12 +89,16 @@ názov termínu.
 - **Trieda 2 — všeobecné koncepty s prirodzeným slovenským ekvivalentom:** **slovensky vedené**, anglický
   originál raz v zátvorke pri prvom výskyte, ďalej už len slovensky: **prísny režim (strict mode)**,
   **obmedzené dekódovanie (constrained decoding)**, **idempotencia (idempotency)**, **kľúč idempotencie
-  (idempotency key)**, **validácia argumentov (argument validation)**. *(Toto VRACIA skoršie rozhodnutie
+  (idempotency key)**, **validácia argumentov (argument validation)**; od v4 aj **štruktúrovaný výstup
+  (structured output)**, **skúšobné spustenie (dry-run)**, **princíp najnižších oprávnení (least
+  privilege)** a **dynamický výber nástrojov (dynamic tool loadout)** — pozri Fázu 4. *(Toto VRACIA skoršie rozhodnutie
   Fázy 2b, ktoré tieto termíny držalo kept-EN — recenzia v2 potvrdila, že vývojárska slovenčina tu domáci
   tvar má a kept-EN pôsobil ako nedôvera k vlastnému jazyku. Jedno rozhodnutie, celý korpus.)*
 - **Trieda 3 — vedome ponechané anglické dev-termíny (kept-EN, §1.1):** neskloňovaný anglický tvar
   pripojený k slovenskej hlave („nástroj v strict mode“ ✗ → po novom Trieda 2; „krok fan-out“, „blok
-  `tool_use`“ ✓), slovenský glos raz pri prvom výskyte. Sem patrí aj **race condition** — pozri poznámku
+  `tool_use`“ ✓), slovenský glos raz pri prvom výskyte. Trieda 3 je vždy **vedomá, v ledgeri zapísaná
+  výnimka** — pri každom člene stojí poznámka, prečo ostáva anglicky vedený. K v4 sem patrí **race
+  condition** (zaužívaný dev-termín; „súbehová chyba“ čaká na kontrolu rodeným Slovákom) — pozri poznámku
   pod §1.2.
 
 **Čistota glosu (gloss purity).** Anglický originál v zátvorke pri slovensky vedenom termíne musí byť
@@ -129,9 +133,9 @@ RAG (CRAG), adaptive RAG, plan-and-execute, Tree of Thoughts (ToT), Graph of Tho
 Self-Refine, Reflexion, MemGPT, chain-of-thought, chain-of-verification (CoVe), self-consistency, scratchpad,
 context precision, context recall, reference-free, reference-based, pointwise, pairwise, IAA, kappa, active
 sampling, prompt injection, jailbreak, spotlighting, delimiting, datamarking, encoding (technika spotlightingu),
-instruction hierarchy, PII, red-teaming, defence-in-depth, least privilege, ASR, tool poisoning, rug pull,
-confused deputy, roots, sampling (MCP), elicitation, stdio, streamable HTTP, JSON Schema, structured output,
-Structured Outputs (branded fičúra OpenAI — Trieda 1), race condition, tool-RAG, dynamic tool loadout,
+instruction hierarchy, PII, red-teaming, defence-in-depth, ASR, tool poisoning, rug pull,
+confused deputy, roots, sampling (MCP), elicitation, stdio, streamable HTTP, JSON Schema,
+Structured Outputs (branded fičúra OpenAI — Trieda 1), race condition (Trieda 3 — vedomá výnimka, §1.0/§1.2), tool-RAG,
 lost-in-the-middle, HITL (human-in-the-loop), checkpointing, checkpointer, checkpoint, StateGraph, store,
 durable execution, super-step, thread (thread_id), A2A, FIPA ACL, blackboard, Agent Card, TTFT, SSE,
 PagedAttention, continuous batching, prefill, decode, chunked prefill, prefix caching, KV-cache, FP8/INT8/INT4,
@@ -150,12 +154,16 @@ cap / hard cap, alert (alerting), dashboard, Matryoshka (MRL), OCR, layout-aware
 contrastive learning, hard negatives, extended thinking, interleaved thinking, reasoning effort, thinking
 budget, hooks, callbacks, permission modes.*
 
+*(Vo v4 preklasifikované do Triedy 2 a presunuté do §1.2: structured output, dry-run, least privilege,
+dynamic tool loadout — pozri Fázu 4.)*
+
 **Termíny s povinným slovenským glosom pri prvom výskyte** (termín ostáva anglický, glos ho dekóduje): fine-tuning
 „(doladenie modelu)“, guardrails „(bezpečnostné mantinely)“, grounding „(opretie odpovede o kontext)“, store
 „(dlhodobá pamäť frameworku)“, OCR „(optické rozpoznávanie znakov)“, scale-to-zero „(škálovanie na nulu)“,
 on-demand „(platba za tokeny)“, zero-shot „(bez trénovacích príkladov)“, backpressure „(ochrana pred
 zahltením)“, load shedding „(zhadzovanie záťaže)“, race condition „(súbehová chyba)“ — glos smie byť aj
-rozvitý vetou („dve súbežné volania siahnu na to isté a výsledok závisí od náhodného časovania“), nikdy však
+rozvitý vetou („dve súbežné volania pristupujú k rovnakému zdieľanému prostriedku a výsledok závisí od
+náhodného časovania“ — kolokácia „siahnu na to isté“ vyradená vo v4, §1.4), nikdy však
 holé „(súbeh)“. V glosári smie kept-EN heslo niesť aj ustálený domáci
 ekvivalent pred funkčným glosom: „**Backpressure (protitlak — ochrana pred zahltením)**“. Kvantizácia (quantisation) má ustálený **slovenský** tvar
 **kvantizácia** — píše sa slovensky, nie kept-EN.
@@ -229,7 +237,7 @@ Stĺpec „Odmietnuté“ drží konkrétne varianty, ktoré sa razili a zamietl
 | výber nástroja | tool selection | „smerovanie“ ako synonymum (iná úroveň — výber trasy/indexu, nie výber nástroja modelom v cykle; §Karta 8) |
 | paralelné volania nástrojov | parallel tool calls | flagy ako kód (`parallel_tool_calls`, `disable_parallel_tool_use`) |
 | sada nástrojov; zoznam nástrojov | tool set | **„súbor nástrojov“ ✗** — „súbor“ = file; rezervuj „súbor“ pre súbor |
-| dynamicky vybraná sada nástrojov | dynamic tool loadout | „loadout“ (herné) ✗; „dynamický súbor nástrojov“ ✗ („súbor“ = file). Termín ostáva kept-EN „dynamic tool loadout“ (§1.1) ako most; telo ide natívne |
+| dynamický výber nástrojov | dynamic tool loadout | Trieda 2 (v4): slovensky vedené, most raz. „loadout“ (herné) ✗; „dynamický súbor nástrojov“ ✗ („súbor“ = file); „dynamicky vybraná sada nástrojov“ (v3) nahradená kratším tvarom |
 | limit opakovaní; maximálny počet pokusov | retry budget | (zrkadlí „rozpočet krokov“; most `(retry budget)` raz; kept-EN len pre presne pomenovaný koncept) |
 | vedľajší účinok | side effect | „sajd-efekt“ ✗ |
 | viacvrstvová ochrana | defence-in-depth | (most; termín ostáva kept-EN, §1.1; „obrana do hĺbky“ v opisnej próze, §Fáza 2) |
@@ -239,7 +247,9 @@ Stĺpec „Odmietnuté“ drží konkrétne varianty, ktoré sa razili a zamietl
 | idempotencia | idempotency | (Trieda 2, §1.0 — predtým kept-EN, zvrátené) |
 | kľúč idempotencie | idempotency key | („kľúč“ aj „idempotencia“ natívne) |
 | validácia argumentov | argument validation | |
-| kľúč idempotencie | idempotency key | (idempotency ostáva kept-EN, §1.1; „kľúč“ je natívny) |
+| štruktúrovaný výstup | structured output | Trieda 2 (v4) — „structured output“ ako vedený tvar v tele ✗; branded **Structured Outputs** ostáva EN (Trieda 1) |
+| skúšobné spustenie | dry-run | Trieda 2 (v4) — predtým kept-EN s glosom; presný tvar `dry-run` ostáva v kóde/UI a v moste |
+| princíp najnižších oprávnení | least privilege | Trieda 2 (v4) — predtým kept-EN §1.1; webom overené (sk.wikipedia „princíp najnižšieho privilégia“, smernice NBÚ/SAAVS); „princíp najmenších oprávnení“ ✗ (slabé slovenské doklady) |
 | race condition (súbehová chyba) | race condition | **kept-EN primárny tvar** (Trieda 3, §1.0); bare **„súbeh“ = concurrency, NIE chyba** — sémanticky nesprávny názov chyby (§1.3, blocklist); v1 záložný tvar „súbeh (race condition)“ **zrušený** — pozri poznámku pod tabuľkou |
 
 Ustálené prijaté prevzatia, ktoré ostávajú (dev-úzus, ako „chunking“): **dashboard** (nie „nástenka“ ako
@@ -262,8 +272,9 @@ odporúčanie prekrýva s ustáleným kept-EN termínom, drží sa **kept-EN ter
 - **retry budget** — kept-EN len ako presne pomenovaný koncept; v tele natívne „limit opakovaní / maximálny
   počet pokusov“ (§1.2).
 - **backoff** — kept-EN termín; glos „(postupné predlžovanie intervalu medzi pokusmi)“.
-- **dry run** — pre zhodu s UI/dokumentáciou drž `dry-run`; v próze „skúšobné spustenie / režim nanečisto“
-  (obe overené ako slovenské).
+- **dry-run → Trieda 2 (v4): slovensky vedené „skúšobné spustenie (dry-run)“** — most raz pri prvom
+  výskyte, ďalej slovensky; presný tvar `dry-run` ostáva v kóde a UI. „Režim nanečisto“ žije v bežnej
+  vete, nie ako názov termínu (obe podoby overené ako slovenské).
 - **human-in-the-loop / HITL** — kept-EN (§1.1); v próze „schválenie človekom / človek v rozhodovacom procese“.
   **Nepoužívaj mechanické „človek v slučke“** ako predvolený preklad (§1.3, blocklist).
 - **router** — most „router **(smerovač)**“ pri prvom výskyte, potom projektový termín; pozor, „smerovač“ môže
@@ -280,7 +291,10 @@ odporúčanie prekrýva s ustáleným kept-EN termínom, drží sa **kept-EN ter
 >   je „súbehová chyba“ stále novotvar bez jasných webových dokladov (dominuje české „souběh“) — **čaká na
 >   kontrolu rodeným Slovákom**; dovtedy sa nepíše samostatne, iba ako glos pri kept-EN termíne.
 > - **„postupné predlžovanie intervalu (medzi pokusmi)“** (backoff) je opisný glos, prirodzený, ale dlhý —
->   znenie tiež overí rodený Slovák. Všetky ostatné tvary vyššie (definícia/volanie/výsledok/výber nástroja,
+>   znenie tiež overí rodený Slovák.
+> - **„zotaviteľná chyba (recoverable error)“** — prípona -teľný sa tvorí od prechodných slovies, „zotaviť
+>   sa“ je zvratné; tvar je zaužívaný v CS/SK učebniciach, ale morfologicky sporný — čaká na kontrolu
+>   rodeným Slovákom (studený prechod v4 ho spochybnil, v texte zatiaľ ostáva s glosom). Všetky ostatné tvary vyššie (definícia/volanie/výsledok/výber nástroja,
 >   sada nástrojov, vedľajší účinok, chyba počas behu, skúšobné spustenie, schválenie človekom, viacvrstvová
 >   ochrana) sú morfologicky čisto slovenské alebo webom overené a vedú sa ako **usadené**.
 
@@ -353,7 +367,7 @@ výslovne neschváli:
 - **„modelom čitateľný“** (kalk *model-readable*) → „formulované tak, aby to model pochopil“
 - **„časovo ohraničený fakt“** (umelá nominalizácia) → „fakt, ktorý sa môže časom zmeniť“
 - **„defekt v behu“** → „chyba počas behu / runtime chyba“ (§1.2)
-- **„dynamický loadout“** → „dynamicky vybraná sada nástrojov“ (§1.2)
+- **„dynamický loadout“** → „dynamický výber nástrojov“ (§1.2, v4)
 - **„človek v slučke“** ako **predvolený** preklad *human-in-the-loop* → „schválenie človekom“ (§1.2 konvencie)
 - **„menu nástrojov“** ako opakovaná vysvetľujúca metafora → „sada nástrojov“ / „zoznam nástrojov“
 - ad-hoc skloňovanie EN termínov: **`tool callu`, `tool cally`, „úspešná injection“** → skloňuj natívny tvar
@@ -404,6 +418,20 @@ neprejde**. Oprava nikdy nie je náhrada slov vo vnútri šablóny — veta sa *
 - `zdržanlivosť/opatrnosť platí aj opačne` (aj „rovnaká opatrnosť platí aj v opačnom smere“)
 - `držať sadu malú a pri téme`
 - `minúť cieľ a skryť nástroj`
+
+**Slabé kolokácie a nesprávny sémantický aktor (v4 — grep-zoznam).** Podmet vety musí byť prirodzeným
+vykonávateľom deja (slučka sa neopravuje sama — volanie opravuje model; volanie sa nezotavuje — zotavuje sa
+slučka po ňom; validácia „neodmieta“ — argument validáciou neprejde). Tieto dvojice sa flagujú:
+
+- dostať nezmysel ✗ → dostať neplatné/nezmyselné argumenty
+- opraviť predpoklad ✗ → predpoklad výslovne obmedziť/usmerniť (v systémovom prompte)
+- zdvojiť vedľajší účinok ✗ → vykonať tú istú operáciu dvakrát
+- zlyhané volanie sa zotaví ✗ → slučka sa po zlyhanom volaní zotaví
+- validácia odmietne argument ✗ → argument neprejde validáciou
+- požiadavka nájde výsledok v cache ✗ → pri ďalších požiadavkách sa použije výsledok z cache
+- slučka sa opraví sama ✗ → model volanie opraví a zopakuje
+- (volania) siahnu na to isté ✗ → pristupujú k rovnakému zdieľanému prostriedku
+- stála daň ✗ → stála réžia / priebežné náklady — figúra „daň“ vyradená (ruší potvrdenie Fázy 2)
 
 ### §1.5 Sloveso podľa predmetu (verb-by-object — koniec univerzálneho „vydať“)
 
@@ -623,8 +651,12 @@ lenže zdrojom je angličtina EN-skeletu:
 - domýšľať si **nad** výsledkom ✗ → **domyslieť si, čo vo výsledku nie je** (sporná väzba „nad + inštr.“; preformuluj)
 
 **Figúry — výsledok skúšobnej doby (studený prechod ×2, naivný čitateľ dekódoval bez angličtiny).**
-- POTVRDENÉ (dekódované pri prvom kontakte): **chyba ako prompt**; **fan-out / fan-in** v tvare „jeden ťah sa
-  rozvetví na N … N výsledkov sa zloží späť“; **stála daň**; **cena kompilácie / kompilačná daň**;
+- POTVRDENÉ (dekódované pri prvom kontakte): **chyba ako prompt**; **fan-out / fan-in** *(pôvodný tvar
+  „jeden ťah sa rozvetví na N … N výsledkov sa zloží späť“ preformulovaný vo Fáze 3: „jeden krok sa
+  rozvetví na N paralelných volaní … N výsledkov sa spojí do jednej správy“ — „ťah“ je v §1.3 blockliste,
+  „zloží späť“ je kalk fold back)*; ~~**stála daň**~~ — *ZRUŠENÉ v4: figúra „daň“ pre priebežnú
+  réžiu vyradená → „stála réžia“ / „priebežné náklady“ (§1.4, Fáza 4)*; **cena kompilácie** *(variant
+  „kompilačná daň“ vyradený spolu s figúrou „daň“, v4)*;
   **bezpečnostná hranica**; **kruh sa uzatvára**; ~~**súbeh (race condition)**~~ — *ZRUŠENÉ v3: „súbeh“ je
   sémanticky nesprávny názov chyby (= concurrency); platí kept-EN „race condition (súbehová chyba)“, §1.0/§1.2.*
 - ODMIETNUTÉ (→ odmietnuté varianty): **„zápisy, ktoré zanechajú stopu“** (naivný čitateľ číta „stopu“ ako
@@ -719,13 +751,17 @@ zakázaných šablón ako write-filter) žije v `editorial-team` skille; tento k
   vedomé doplnenie).
 - **Figúra fan-out/fan-in preformulovaná:** „jeden krok sa rozvetví na N paralelných volaní“ ostáva;
   „N výsledkov **sa zloží späť**“ **ZRUŠENÉ** (kalk *fold back*, §1.4) → „N výsledkov sa spojí do jednej
-  správy“; aplikácia volania „rozošle (fan-out)… pozbiera (fan-in)“ *(tvar „rozošle“ na skúšobnej dobe —
-  prišiel až po studenom prechode)*.
+  správy“; aplikácia volania „rozdelí a spustí súbežne (fan-out)… pozbiera (fan-in)“ *(v4; tvar „rozošle“
+  zo skúšobnej doby VYRADENÝ — „rozoslať“ číta ako sieťové odoslanie správ, nie súbežné spustenie)*.
 - **Figúra „vzorkuje len z toho, čo prežije“ ZRUŠENÁ** (importovaná metafora prežitia) → „vyberá už len
   spomedzi tokenov, ktoré ostali povolené“.
-- **dry-run — glos v próze usadený: „(skúšobné spustenie)“** (ruší ad-hoc „(nanečisto)“).
-- **dynamic tool loadout — glos = natívny tvar §1.2:** „**Dynamic tool loadout** (dynamicky vybraná sada
-  nástrojov)“; opisné „dynamický výber nástrojov“ smie žiť v bežnej vete, nie ako glos termínu.
+- ~~**dry-run — glos v próze usadený: „(skúšobné spustenie)“** (ruší ad-hoc „(nanečisto)“).~~ *Smer
+  OBRÁTENÝ vo v4: termín je Trieda 2, slovensky vedené „skúšobné spustenie (dry-run)“ (§1.0/§1.2, Fáza 4).*
+- ~~**dynamic tool loadout — glos = natívny tvar §1.2:** „**Dynamic tool loadout** (dynamicky vybraná sada
+  nástrojov)“; opisné „dynamický výber nástrojov“ smie žiť v bežnej vete, nie ako glos termínu.~~
+  *ZVRÁTENÉ v4 (Trieda 2): slovensky vedené **„dynamický výber nástrojov (dynamic tool loadout)“** —
+  kratšie než „dynamicky vybraná sada nástrojov“ a zodpovedá významu v próze. Pätička „Nové pojmy“ ostáva
+  zrkadlom glosára („tool-RAG / dynamic tool loadout“) až do vlny flipov glosára.*
 - **signatúra funkcie** (function signature) — namiesto „podpis funkcie“ ✗ (číta sa ako podpisovanie /
   code signing); webom doložené v slovenských VŠ-materiáloch (TUKE FP, UK FMFI) *(na skúšobnej dobe do
   kontroly rodeným Slovákom)*.
@@ -740,3 +776,40 @@ zakázaných šablón ako write-filter) žije v `editorial-team` skille; tento k
 - **Pätička „Nové pojmy“ ↔ glosár:** trojtriedne flipy (prísny režim, obmedzené dekódovanie, idempotencia,
   kľúč idempotencie, validácia argumentov) sa premietnu do hesiel glosára a AŽ POTOM do pätičiek — v jednej
   neskoršej vlne; dovtedy pätičky ostávajú zrkadlom anglických hesiel glosára.
+
+### Fáza 4 — v4 finálny polish pilotu „tool use“: rozhodnutia kánonu
+
+Cielená záverečná úprava, nie prepis — štruktúra v3 sa zachovala; menili sa iba konkrétne nálezy a ich
+súrodenci (slabá kolokácia / nejasný referent / nesprávny sémantický aktor / kolísanie smeru termínu).
+
+- **Smer termínu je EXPLICITNÝ per termín (§1.0) — už nikdy ad hoc po vetách.** Rozhodnutia v4:
+  **štruktúrovaný výstup (structured output)** — Trieda 2; **skúšobné spustenie (dry-run)** — Trieda 2;
+  **princíp najnižších oprávnení (least privilege)** — Trieda 2 (podoba „najnižších“ podľa slovenských
+  dokladov — sk.wikipedia „princíp najnižšieho privilégia“, smernice NBÚ/SAAVS; „princíp najmenších
+  oprávnení“ zamietnuté ako slabo doložené); **dynamický výber nástrojov (dynamic tool loadout)** —
+  Trieda 2; **race condition** — Trieda 3, vedomá zapísaná výnimka.
+- **Figúra „daň“ vyradená:** „stála daň“ → **„stála réžia“** (variant „priebežné náklady“); nadväzná veta
+  „Daň nie je len finančná“ → „Réžia nie je len finančná“. Ruší potvrdenie Fázy 2; „réžia“ pre overhead je
+  bežný slovenský IT-úzus.
+- **„rozošle (fan-out)“ vyradené** → „volania rozdelí a spustí súbežne (fan-out)“ (Fáza 3 poznámka
+  aktualizovaná).
+- **Slabé kolokácie a nesprávni sémantickí aktori** → grep-zoznam v §1.4.
+- **Meta-text (sprievodné listy, dotazníky) prechádza tými istými bránami ako lekcie:** „pilotná lekcia“
+  (nie „pilot lekcia“); „prirodzené podoby“ (nie „natívne tvary“); „názov v bočnom paneli“ (nie „bočný
+  štítok“); „pre slovenského vývojára“ (nie apozícia „kamarát vývojár“). Dotazník: jedna otázka = jeden
+  jav; citované termíny v nominatíve slovníkovej podoby.
+- **„pasáž“ v meta-texte je prípustná** pre súvislú časť textu (bežný význam — „otázky k pasážam“); riadok
+  §1.2 „úryvok | passage“ viaže TERMÍN *passage* ako jednotku retrievalu — register viaže význam, nie
+  reťazec.
+- **Spätné odkazy:** verbatim citát „málo nástrojov, bez prekryvov“ sa drží (Fáza 3); opravilo sa iba
+  sloveso — časť knihy „odporúča“, nie „žiada“ (sémantika aktora). Návrh recenzie „v celej druhej časti
+  príručky“ zamietnutý — koliduje s „prvá/druhá časť“ tejto lekcie; ostáva „v celej Časti II príručky“
+  (Fáza 3).
+- **Žatva studeného prechodu v4 (nové pasce — over kolokáciu):** konsekutívne „je tak“ po slovese ✗ →
+  „je teda“ (bohemizmus podľa stavby); „spustiť volanie“ ✗ → „vykonať volanie“ (volanie sa vykonáva,
+  spúšťa sa nástroj/kód/dopyt); „ticho zahodiť“ ✗ (kalk *silently drop*) → „zahodiť bez ohlásenia“;
+  „volanie sa zvrhne na slučku“ ✗ → „opakovanie volania sa zvrhne na slučku“ (aktor); adjektívny tvar
+  „samoopravná slučka“ ✗ (súrodenec „slučka sa opraví sama“) → „slučka zotavenia“; „patrí medzi okamih X
+  a okamih Y“ ✗ (číta sa ako členstvo) → „má svoje miesto medzi okamihom X a okamihom Y“; „X môže zhoršiť
+  až na výpadok“ ✗ → „X môže prerásť do výpadku“ (natívna eskalácia). Takeaway nesmie protirečiť telu:
+  „nezávislosť musí overiť tvoja aplikácia“ sa píše spolu s faktom „nič to automaticky nekontroluje“.
