@@ -813,3 +813,183 @@ súrodenci (slabá kolokácia / nejasný referent / nesprávny sémantický akto
   a okamih Y“ ✗ (číta sa ako členstvo) → „má svoje miesto medzi okamihom X a okamihom Y“; „X môže zhoršiť
   až na výpadok“ ✗ → „X môže prerásť do výpadku“ (natívna eskalácia). Takeaway nesmie protirečiť telu:
   „nezávislosť musí overiť tvoja aplikácia“ sa píše spolu s faktom „nič to automaticky nekontroluje“.
+
+### Fáza 5 — vlna 1, lekcia Ingestion: rozhodnutia kánonu
+
+Prvá lekcia vlny 1 (Ingestion index + prehĺbenie), plný redakčný tím + studený prechod ×2. Zapisuje sa,
+aby ďalšie lekcie vlny (Retrieval a ďalej) dedili už rozhodnuté.
+
+**Nové riadky Triedy 2 (slovensky vedené, anglický originál raz v zátvorke) → dopĺňajú §1.2:**
+
+| Kánon | Originál | Poznámka |
+|---|---|---|
+| delenie na pevnú veľkosť | fixed-size (chunking) | |
+| delenie s ohľadom na štruktúru dokumentu | document-structure-aware | dlhý, ale presný tvar; neskracovať na „štruktúrne delenie“ (to je recursive/structural) |
+| posuvné okno | sliding window | webom overené (UPJŠ: „metóda sliding window – posuvné okno“) |
+| vektorová databáza | vector database | heslo glosára zatiaľ neexistuje (kandidát na doplnenie) |
+| karta modelu | model card | |
+| syntetické dopyty | synthetic queries | drží riadok „dopyt \| query“ |
+| spoločný medzijazykový vektorový priestor | shared cross-lingual space | |
+| rozmernosť | dimensionality | heslo glosára → vlna flipov; pätičky dovtedy zrkadlia EN heslo |
+| kosínusová podobnosť | cosine similarity | heslo glosára → vlna flipov |
+| skalárny súčin | dot product | |
+| viacjazyčné embeddingy | multilingual embeddings | heslo glosára → vlna flipov |
+| parsovanie dokumentov | document parsing | |
+| cesta po sekciách | heading path | |
+| metadáta chunku | chunk metadata | |
+
+**Potvrdenie:** „prevádzka u seba (self-hosted)“ sa používa presne podľa riadku §1.2 — bez zmeny.
+
+**Kept-EN doplnky (→ §1.1):** **late chunking** — glos „(neskoré delenie)“; **adaptive retrieval** — glos
+„(adaptívne vyhľadávanie)“ („vyhľadávanie“ = retrieval, Karta 3 drží); **parent-document / small-to-big
+retrieval** — názov rodiny postupov, nulový zátvorkový glos, význam sa rozvádza v próze; **makro-chunk**
+(macro-chunks) — skloňuje sa ako chunk, bez glosu (priehľadný kompaund); **self-attention** — kept-EN BEZ
+zátvorkového glosu, význam sa pri prvom výskyte rozvedie v próze („self-attention prebehne nad celým
+textom, takže…“); **mean-pooling** — natívne sloveso „spriemerovať (vektory tokenov)“ nesie vetu, most
+„(mean-pooling)“ raz. **BM25** ostáva holé meno bez glosu (§1.1), ale pri prvom výskyte na stránke smie
+dostať opisnú hlavu „fulltextové vyhľadávanie BM25“ (vzor „krok fan-out“ — hlava dekóduje, meno identifikuje).
+**top-K** pri prvom výskyte v bunke tabuľky (bunky sa čitateľovi renderujú!) dostáva inline dekód
+„top-K (K najlepších kandidátov)“ — tabuľková bunka sa počíta za prvý výskyt, na rozdiel od video-popisu.
+
+**GIGO — ustálené znenie:** „zo smetí na vstupe nevznikne nič iné než smeti na výstupe (garbage in,
+garbage out)“ — slovenská veta vedie, EN originál raz v zátvorke; nikdy holá skratka „GIGO“ v tele.
+
+**Karta 9 — strop: dva významy (dopĺňa §2, viaže §7.1).** (1) **Rozpočtová politika** — VÝHRADNE pár
+„tvrdý strop / mäkký strop“ (hard cap / soft cap, §7.1). (2) **Obyčajná horná hranica** — „strop kvality“:
+prostý jazyk, nie razená figúra; smie žiť IBA s prívlastkom („strop kvality“) alebo slovesne („zhora
+ohraničuje“); holý „strop“ sa nepíše tam, kde je v okolí rozpočtový rámec. Na stránke drž JEDEN nominálny
+rámec: keď H2 razí „strop kvality“, takeaway ho opakuje („strop kvality“, nie „horná hranica“). Sloveso
+„zhora ohraničuje“ neopakovať viac než ~2× na stránku — tretí výskyt preformuluj („je stropom kvality“).
+
+**fine-tuning / doladenie — usporiadanie (spresňuje §1.1):** termín-podstatné meno v próze je VŽDY kept-EN
+**fine-tuning** (glos „(doladenie modelu)“ raz na stránku); natívne **sloveso „doladiť / dolaďovať“** nesie
+bežné deje („model dolaďuj až vtedy…“); natívne podstatné meno **„doladenie“ smie stáť iba v nadpisoch**
+(opisná formulácia, duch pravidla H1) a v glose. Kolísanie smeru v próze je defekt (§1.0).
+
+**Karta 5 — doplnok:** štvrtý viazaný význam „textová vrstva“ (text layer PDF/skenu) — iba v tomto
+kompaunde, rámec skenovaných dokumentov; nikdy holá „vrstva“ pre text layer.
+
+**Prijaté obraty a slová (webom/kodifikáciou overené, nechávajú sa):** „prehnať X cez Y“ (varianty cez
+evaluáciu, dokument cez transformer — idiomatický rámec „pustiť cez stroj“, nie univerzálne sloveso §1.5);
+„posuvné okno“; „poruke“ (kodifikovaná príslovka); „a spol.“; „popretkávané“; „zosypať sa“; „hotový model“
+(off-the-shelf; pri prvom výskyte opísať „taký, aký ponúka výrobca“); „bezpečnostný perimeter“ (prvý
+výskyt ukotviť prívlastkom, potom „v perimetri“); „nanič“ (predikatívne, expresívne); „väčšmi“ (KSSJ, ale
+nie v konštrukcii miery pri mennom prísudku); „napokon“; „úzke hrdlo“; „páka“ (tri páky na embeddingu);
+„rebríček náročnosti“ ✗ — pozri nižšie („rebríček“ má jeden význam).
+
+**Nové kalkové pasce a slabé kolokácie (žatva Ingestion — do grep-zoznamov §1.3/§1.4):**
+
+- „X je (presne) to, čo…“ / „je zároveň to, nad čím…, aj to, čo…“ — cleft-rodina aj v takeawayoch ✗
+- „Práve tu sa A mení na B“ ✗ (rodina „X is where“) → „Práve cez A sa B premieta do C“ / povedz priamo
+- „stráži úplnosť“ / „dodá presnosť“ ✗ (guards recall / adds precision) → účel vetou („aby sa nič
+  podstatné nestratilo — úplnosť (recall)“) alebo „zodpovedá za úplnosť“
+- „konflikt X proti Y“ ✗ → „konflikt medzi X a Y“
+- „navrch + genitív“ v abstraktnom zmysle (on top of any strategy) ✗ → „v kombinácii s…“
+- „línia rezu“ ✗ (len krovinorezy/CNC) → „hranica medzi dvoma chunkami“
+- „klásť/položiť metadáta“ ✗ → „pripájať/pripojiť metadáta“; „položia sa hranice“ ✗ → „hranice sa
+  vyznačia“ (zosúladené s heslom glosára Late chunking)
+- „metadáta napájajú filtrovanie“ ✗ → „umožňujú filtrovanie“
+- „odkaz cestuje s chunkom“ ✗ → „chunk nesie odkaz“
+- „hodí sa zle“ ✗ → „poriadne sa nehodí / takmer nesedí“
+- „podnikové súkromie“ ✗ → „dôvernosť firemných dát“
+- „maximálne ‚o jednej veci‘“ ✗ (dvojznačné „nanajvýš“) → „čo najviac ‚o jednej veci‘“
+- „metrika číta smer“ ✗ → „zohľadňuje smer“
+- „kľúčové rozlíšenie“ ✗ (rozlíšenie = displej) → „kľúčový rozdiel“
+- „a tým sa končí“ (bez podmetu) ✗ → „a viac X nepovie“
+- „krajina nástrojov“ / „mená vyznačujú krajinu“ ✗ (tooling landscape) → „v nástrojoch sa zorientuješ
+  podľa mien“
+- „meno stojí za myšlienku“ (stands for, s akuzatívom) ✗ — falošná väzba („stáť za niečo“ = byť hodný)
+  → „reprezentuje / za menom stojí (inštr. rámec)“
+- „voľba stojí takto“ ✗ → „Strategická voľba: …“ (dvojbodka)
+- „fakt nakláňa rozhodnutie“ ✗ → „okolnosť hovorí v prospech…“
+- „techniky útočia na stratu“ ✗ → „riešia stratu“
+- „preradenie krokov“ ✗ → „obrátené poradie krokov“
+- „zoškrabávanie glyfov“ ✗ (scraping; „zoškrabávať“ len fyzicky) → opísať („pozbierať glyfy v poradí…“)
+- „ukazovacie spojenia“ ✗ (vymyslený termín) → „spojenia s ukazovacím zámenom“; „ukazovacie zámená“ je
+  lingvistický termín
+- „výpočtový účet“ ✗ (compute bill) → „výpočtové náklady“
+- „za cenu peňazí“ ✗ → „za cenu vyšších nákladov“
+- „pamäťovo lacno“ ✗ → „pamäťovo úsporne“; „tokenizovať neúsporne“ ✗ (CZ doklady) → „v tokenizácii
+  dopadnúť zle“
+- „pristane na vektoroch / pristane ďaleko“ ✗ (lands; koliduje s „pristane ti“) → „skončí na blízkych
+  vektoroch / skončí ďaleko od seba“
+- „skóre priemeruje jazyky“ ✗ → „do skóre sa spriemerujú aj jazyky“; „priemeruje cez jazyky“ →
+  „naprieč jazykmi“
+- „model poklesne“ ✗ (aktor) → „model stratí na kvalite“
+- „úprimný zoznam“ ✗ (zoznam nemôže byť úprimný) a „poradie víťazov“ ✗ (len šport) → „zoznam, nie rebríček“
+- „štartovací bod“ ✗ → „východisko / na začiatok“
+- „výhoda zadarmo“ ✗ (free lunch) → „nie je zadarmo / má svoju cenu“
+- „po poradí“ ✗ → „po poriadku“ (a signposty „Pôjdeme…“ / „Rozoberieme…“ radšej škrtať — výpočet je mapa
+  sám osebe)
+- „stránka si berie na starosť“ ✗ → „stránke sa venuje / stránka rieši“
+- „hotový výrobok“ (o modeli) ✗ → jednotne „hotový (model)“
+- „etapa sa dotkne textu“ ✗ → „text spracuje ďalší krok pipeline“
+- „prúd sa láme (spôsobmi)“ ✗ (breaks in ways; pletie sa so zalamovaním riadkov) → „rozpadá sa potichu
+  a predvídateľne“
+- „predvolené riešenie“ (o nástroji) ✗ → „univerzálna prvá voľba“
+- „celé pole vyrástlo“ ✗ (field) → „celý odbor“
+- „spočítať vektory“ (compute) ✗ → „vypočítať/predpočítať“ („spočítať“ = sčítať/zrátať)
+
+**„rebríček“ má v korpuse JEDEN význam:** zverejnený rebríček výsledkov (leaderboard). „rebríček
+náročnosti“ (ladder) ✗ → „odstupňovaný rad / zoraď podľa stúpajúcej náročnosti“.
+
+**Figúry — skúšobná doba (potvrdí najbližší studený prechod):** „ostrý vektor / rozmazaný priemer“ (holé
+prídavné mená, index) — usadené; „pracovný bod“ (MRL) — s inline dekódom „rôzne pomery rýchlosti
+a presnosti“; „naplno udrie dôsledok“ — na skúšobnej dobe.
+
+**Mostíky a štruktúra:** úvodný rekapitulačný odsek prehĺbenia („Časť 1 postavila…“) je legitímna
+kontinuita — mostíky rodiny termínov z prvej časti sa v prehĺbení osviežujú pri prvom VÝKLADOVOM výskyte,
+nie v rekapitulácii. Prehĺbenie bez videa: keď EN prehĺbenie video nemá, absencia JE čestné „nie“ —
+poznámka na stránku sa nepíše (precedens pilot + Ingestion).
+
+**Žatva studeného prechodu ×2 (Ingestion) — ďalšie pasce do grep-zoznamov:**
+
+- „bodový fakt“ ✗ (pinpoint fact) → „otázka na jeden konkrétny údaj“
+- „chunk je jednotka vyhľadávania aj jednotka toho, čo model uvidí“ ✗ (unit-of-what kostra) → „chunk hrá
+  dve roly naraz“ + rozviesť
+- „X stojí na jednom kľúčovom rozdiele“ ✗ (builds on) → „za X stojí jeden kľúčový rozdiel“
+- „rež po hraniciach“ ✗ → „rež na hraniciach“; „mostík na vrstvu“ ✗ → **„mostík k vrstve“** (aktualizuje
+  znenie z Karty 5; stránky zjednotené na „k“)
+- „principiálny mechanizmus“ ✗ (bookish/rusizmus) → „základný mechanizmus“
+- „ústredné napätie“ ✗ (central tension — zrkadlí ruský zákaz) → „základný problém“
+- „vyhradený model“ ✗ (dedicated) → „špecializovaný model“
+- „popisy obrázkov“ ✗ (v rozložení strany) → „popisky obrázkov“ (caption = popisok)
+- „prikladať metadáta“ ✗ → „priradiť / pridať metadáta“
+- „zložiť premenu do jediného modelu“ ✗ (folded into) → „premenu zvládol jediný model sám“
+- „konštrukčná myšlienka“ ✗ (design idea, bez úzu) → „konštrukčný prístup“
+- kompaund „MRL-tréning“ ✗ (nemecko-česká stavba) → „tréning pre MRL“
+- „vnorená ruská bábika“ ✗ → „matrioška — bábika, v ktorej sú menšie vložené do väčších“
+- „zaväzujú ťa menej“ ✗ (commit you less) → „záväzok je menší“
+- „na tomto predpoklade sa stráca kvalita“ ✗ → „tento predpoklad neplatí — a kvalita sa stráca“
+- „Presne to robí X použiteľným“ ✗ (cleft-rodina) → „Vďaka tomu je X použiteľný“
+- „zásada, ktorá celú sekciu spája“ ✗ (§1.4 rodina „pravidlo, ktoré viaže“) → „pre celú sekciu platí
+  jedna zásada“
+- „vlastnosť, ktorá sa najľahšie predpokladá a najzriedkavejšie overuje“ ✗ (aforizmus 1:1) → „vlastnosť,
+  ktorú každý predpokladá a málokto overí“
+- „(278M)“ holé ✗ → „(278 mil. parametrov)“ — pri veľkosti modelu vždy jednotka
+- „v OpenAI“ (o parametri) ✗ → „v modeloch OpenAI“
+- „správa/veta pristane“ (potvrdené aj druhým prechodom) → „skončí na…“
+- Na skúšobnej dobe: **„preskórovať / preskórovanie“** — priehľadná odvodenina od kanonického „skóre“
+  (naivní čitatelia dekódovali ×2), webové doklady nulové — čaká na kontrolu rodeným Slovákom.
+
+**Konflikty s usadenými riadkami — FLAGNUTÉ, čakajú na rozhodnutie autora (nerozhodnuté týmto prechodom):**
+1. Pravopis slovesnej rodiny „(za)embeddovať“: korpus 14× dvojité d (obe lekcie, glosár) vs jediné
+   „zaembeduješ“ v príklade hlasu tohto kánonu — zosúladiť (dôkazy favorizujú dvojité d).
+2. „contrastive learning / hard negatives“: §1.1 kept-EN (lekcia zosúladená na kept-EN) vs glosár vedie
+   slovensky („kontrastným učením… tvrdými negatívmi“) — jedno rozhodnutie, celý korpus.
+3. Glos §1.1 „fine-tuning (doladenie modelu)“ vs heslo glosára „Embedding fine-tuning (doladenie
+   embeddingov)“ — zosúladiť alebo rozdiel zapísať do §1.1.
+4. Heslo glosára „Least privilege … (princíp najmenších oprávnení)“ vs rozhodnutie Fázy 4 „princíp
+   najnižších oprávnení“ — do vlny flipov glosára.
+5. Inštrumentál plurálu „chunkami“ (glosár + obe lekcie) vs pravidelná paradigma mužských neživotných
+   („vlakmi“ → „chunkmi“) — jeden flip pre celý korpus vrátane glosára; čaká na kontrolu rodeným Slovákom.
+6. „rozmernosť | dimensionality“ (riadok Fázy 5) spochybnil studený čitateľ („dimenzia/rozmer“ je bežnejší
+   matematický úzus) — riadok zatiaľ platí, zaradiť do kontroly rodeným Slovákom.
+7. EN zdroj: takeaway „contrastive learning on query–passage pairs“ protirečí vlastnému telu („triples“);
+   SK takeaway zosúladený s telom na „trojice“ — opraviť aj v EN/RU zdroji (mimo rozsah tejto vlny).
+8. „prehĺbenie vrstvy X“ — obaja naivní jednojazyční čitatelia hlásia nedekódovateľný obraz („vrstvu niekto
+   prehlbuje?“); korpusový termín (Karta 5, §4) sa touto vlnou nemení, ale kandidát na korpusové
+   prehodnotenie (napr. „druhá časť lekcie / kapitola X — do hĺbky“).
+
+**Backlog glosára (nie defekt stránok):** heslá pre vektorovú databázu a adaptive retrieval (na stránke
+je tučná kotva bez hesla — doplniť heslo, alebo kotvu odtučniť vo vlne flipov).
