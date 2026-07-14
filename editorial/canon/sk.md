@@ -1754,3 +1754,136 @@ a hodnotenie" (byte-for-byte). Frontmatter/H1/H2/Mermaid (IDs zachované) nedotk
    a slučky**.
 
 **Stav:** Wave 2 lekcia 1 (Agentic RAG) redakčne uzavretá; SK ostáva **gated**.
+
+### Fáza 13 — vlna 2, lekcia Plánovanie a slučky: rozhodnutia kánonu
+
+Druhá lekcia vlny 2 (Part II), stránky `index` + prehĺbenie „Prehľadávanie plánov a pamäť". Plný redakčný
+tím (literárny, naivný jednojazyčný čitateľ, technický/fakt, korektor, konzistenčný), adjudikácia, oprava a
+**studený prechod ×2** (naivný + literárny na KAŽDEJ stránke, zdroj skrytý). Prezentačná lokalita bez ľudskej
+poistky — brány niesli plnú váhu. Fakt-integrita proti SKELETONU (C1–C44): **nula pohybu tvrdenia**. Zapisuje
+termíny, ktoré táto lekcia usadzuje, a rieši oba hand-offy Fázy 12.
+
+**STEP-0 — vyriešené oba hand-offy Agentic RAG (Fáza 12 backlog), web-overené, aplikované korpusovo v tomto PR:**
+
+1. **Rodina rozpočtov — SMER ROZHODNUTÝ: slovensky vedená „rozpočet <čoho>".** Fáza 12 rozpočtovú rodinu
+   nechala rozštiepenú (`retrieval budget` EN-vedený, `step/token budget` SK-vedené) a smer delegovala tejto
+   lekcii. **Rozhodnutie: celá rodina generických slučkových rozpočtov je slovensky vedená v tele** — „rozpočet
+   krokov (step budget)", „rozpočet tokenov (token budget)", „rozpočet vyhľadávania (retrieval budget)". Dôvod:
+   zrkadlí už publikované SK-vedené tvary „rozpočet chýb" (error budget, Fáza 10/11) a „rozpočet latencie"
+   (latency budget, Fáza 10); „rozpočet" je čistá slovenská hlava a „vyhľadávania" je korpusový modifikátor pre
+   retrieval (Karta 3; presne vzor „metriky vyhľadávania" z Fázy 12, ktorý zamietol hybrid „retrievalové
+   metriky"). **Retrofit v tomto PR:** Agentic RAG prehĺbenie L61 „retrieval budget (rozpočet vyhľadávania)" →
+   **„rozpočet vyhľadávania (retrieval budget)"** (obrátený most, teraz SK-vedený) a L110 takeaway „tvrdý
+   retrieval budget" → „tvrdý rozpočet vyhľadávania". **Glosár sa nemení:** rozpočtová rodina je v glosári
+   jednotne katalogizovaná pod anglickou lemmou „English budget (rozpočet X)" (nájditeľnosť; celá rodina —
+   error/latency/step/retry/thinking/retrieval — má rovnaký tvar hesla), pričom **telo vedie slovensky** —
+   presne ako to Fáza 12 klasifikovala pre step/token budget. Toto NIE je kolísanie smeru (§1.0): celá rodina
+   zdieľa vzor „glosár katalogizuje pod EN lemmou, telo vedie SK". **Výnimka — `thinking budget` ostáva kept-EN
+   (§1.1, rodina extended-thinking):** „thinking budget (rozpočet uvažovania)", výslovne oddelený od generických
+   slučkových rozpočtov krokov/tokenov (skeleton D24). „pevný strop" = 0; pár „tvrdý strop / mäkký strop"
+   (Karta 9) drží.
+
+2. **Glosárové flipy (Fáza 12 backlog #1) — hotové.**
+   - **„Agent loop (cyklus agenta)" → „Slučka agenta (agent loop)"**, def. „opakujúci sa cyklus" → „opakujúca
+     sa slučka" (rod: slučka = ž., „ktorá beží"). Zjednocuje heslo s korpusovým telom (loop = **slučka**,
+     Fáza 3; „cyklus" iba vo viazanom „nezastavenie cyklu"). Heslo bolo EN-vedené, teraz SK-vedené (telo je
+     SK-vedené: „slučka agenta (agent loop)"); slug sa mení, no žiadna stránka naň neodkazuje kotvou (pätičky
+     mieria na `../../glossary.md` bez kotvy), flip je bezpečný.
+   - **Self-RAG heslo: „vydával špeciálne reflexné tokeny" → „vkladal …"** (§1.5 sloveso podľa predmetu —
+     tokeny sú výstup generovania → model ich vkladá/produkuje, NIE univerzálne „vydával"). Zosúlaďuje heslo
+     s telom Agentic RAG (Fáza 12 L17 „vkladá").
+
+**reflexia vs sebaoprava — rezervácia potvrdená a rozšírená.** **reflexia (reflection)** = posúdenie CELEJ
+trajektórie/plánu (táto lekcia, SK-vedené, naturalizované ako „evaluácia"); **sebaoprava (self-correction)** =
+posúdenie JEDNÉHO úryvku/kvality vyhľadávania (Agentic RAG). Obidve žijú v tele tejto lekcie vedome odlíšené
+(„príbuzná sebaopravy … mierená o úroveň vyššie"). **Reflexion** (framework, veľké R) ostáva kept-EN a je
+výslovne odlíšený od „reflexie ako pojmu" (skeleton, glosár).
+
+**Nové SK-vedené termíny (most raz `(anglický originál)`, ďalej slovensky) — dopĺňajú §1.2/§1.1 pre vrstvu
+Plánovanie:** dekompozícia úlohy (task decomposition), preplánovanie (re-planning), kritérium zastavenia
+(termination criterion), detekcia zacyklenia (loop detection), sledovanie postupu (progress tracking),
+**prehľadávanie stromu / grafu plánov (plan search)** (Karta 3 — SEARCH nad plánmi = „prehľadávanie", NIKDY
+„vyhľadávanie"; sloveso „prehľadávať/prechádzať strom"), rozpočet krokov / rozpočet tokenov (step/token
+budget), pracovná pamäť (working memory/scratchpad), epizodická / sémantická / procedurálna pamäť (Karta 4),
+virtuálna správa kontextu (virtual context management), hodnotenie trajektórie (trajectory evaluation),
+výsledok verzus proces (outcome vs process), úspešnosť pri úlohe (task success rate), efektívnosť po krokoch
+(step efficiency), správnosť volaní nástrojov (tool-call accuracy).
+
+**Kept-EN v tejto lekcii (§1.1; holé mená bez zátvorkového glosu, význam rozvádza próza):** ReAct (rozpis
+Reasoning + Acting), **plan-and-execute (plánovanie a vykonanie)**, Tree of Thoughts (ToT), Graph of Thoughts
+(GoT), LATS, **Monte Carlo Tree Search (MCTS)** (glos „(prehľadávanie stromu metódou Monte Carlo)"),
+Self-Refine, Reflexion, MemGPT, chain-of-thought (reťazec úvah), **thinking budget (rozpočet uvažovania)**,
+lost-in-the-middle (strata uprostred), LLM-as-a-judge (LLM ako sudca), **human-in-the-loop (schválenie
+človekom)** — NIKDY „človek v slučke" (§1.2/§1.3), pass@1 / pass^k, τ-bench, Game of 24, Generative Agents,
+Observability (pozorovateľnosť). extended thinking / reasoning effort — ľahký EN glos-klaster vnútri vety o
+thinking budgete, bez coinovania SK.
+
+**Karty (potvrdené na tejto lekcii).**
+- **Karta 1:** nezastavujúca sa slučka / jednotlivý incident / lokalizovaný bod zlyhania = **„chyba"**, NIE
+  „zlyhanie" (kategória-etapa). Studený prechod + konzistenčný redaktor opravili 3 miesta: index „to zlyhanie
+  si už videl" → „tú chybu"; prehĺbenie „pripichnú zlyhanie ku kroku" → „chybu" (ladí s „lokalizuje chybu na
+  krok"). H2 „Základná chyba: slučka, ktorá sa nezastaví" drží rámec.
+- **Karta 2:** číslo (skóre, 74 %, pass-rate) = **skóre / číslo**; disciplína/akt = **evaluácia/hodnotenie**;
+  hodnotiteľ/funkcia **VRÁTI** skóre (§1.5). „hodnotenie" pre číslo = 0.
+- **Karta 3 (rozšírená):** **prehľadávanie** = prechod stromom/grafom plánov (ToT/GoT/LATS/plan search);
+  **vyhľadávanie** = retrieval. Na tejto stránke drží: „prehľadávanie plánov", „prehľadať niekoľko ciest",
+  „strom, ktorý agent prechádza" — nikde „vyhľadávanie" pre plán search.
+- **Karta 9:** „tvrdý strop / mäkký strop" (hard/soft cap); „pevný strop" = 0.
+
+**Figúry — studený prechod ×2 (naivný čitateľ dekódoval pri prvom kontakte):** žiadna vyradená.
+Dekódované a ponechané: „hodnotiteľ stavu" (zrkadlí usadené „hodnotiteľ vyhľadávania", Fáza 12), „hodnotová
+funkcia" (štandardný RL termín, glosár LATS), „kĺb medzi nimi", „držať mešec", „utrhne z reťaze", „zliať dve
+polovičné odpovede", „páka" (usadená figúra). „iný rád schopnosti" (kalk „a different order of X",
+nedekódovateľný) → **„úplne iná úroveň schopností"** (2×, do §1.4).
+
+**Nové kalkové pasce a slabé kolokácie (žatva Plánovanie — do grep-zoznamov §1.3/§1.4):**
+- „iný rád schopnosti" ✗ (a different order of capability) → **„úplne iná úroveň schopností"**
+- „silnejší ťah / Ťah, ktorý…" ✗ (move; „ťah" blocklist §1.3) → **„silnejšia možnosť" / „dvojúrovňové rozdelenie"**
+- „známkovanie procesu je to, čo spraví…" ✗ (cleft §1.4) → priama väzba
+- „Ako cestu oznámkuješ, je LLM-as-a-judge" ✗ (wh-cleft) → **„Cestu oznámkuješ cez LLM-as-a-judge"**
+- „je to práve to, čo … umožňuje" ✗ (pseudo-cleft) → **„práve ona … umožňuje"**
+- „rolujú sa mu jeho reťaz" ✗ (rolovať; dvojité privlastnenie) → **„odvíjajú sa … reťaz"**
+- „čo si vopred tipla" ✗ (register — hovorové) → **„čo vopred odhadla"**
+
+**Em-dash metronóm + straight-quote (Fáza 2/6/9/10/12).** Studené čítania hlásili prehustené bloky a opakovaný
+opener „Prvá časť + sloveso" (4 zo 6 H2 v prehĺbení) — variované (opener cez bold-kotvu / „V prvej časti…").
+Em-dash: index ~40 prozaických, prehĺbenie ~59 (1,9/100 slov, pod sesterskými tool-use 2,37 / agentic-rag
+2,19); MemGPT-veta so 4 pomlčkami stíšená na zátvorky. Zákaz „— ," = 0. **Straight-quote checkpoint:** grep
+prozaických rovných `"` (U+0022) mimo markupu = 0 na oboch stránkach (párovanie „…"); ASCII `"` len v YouTube
+`title`, Mermaid `["…"]`, frontmatter.
+
+**Odkazy (Part II, nevnorená lekcia — zrkadlí agentic-rag).** Glosár **„../../glossary.md"**; v rámci lekcie
+„./index.md", „./deep-dive.md"; SK súrodenci s `.md`: **agentic-rag „../agentic-rag/index.md" a
+„../agentic-rag/deep-dive.md", tool-use „../tool-use/index.md"**; nepreložený kapstoun real-agents = EN-fallback
+holou cestou: **z indexu „../real-agents/", z prehĺbenia „../real-agents/"** (Docusaurus s predvoleným `trailingSlash` dáva prehĺbeniu `.../planning-loops/deep-dive` rovnaký
+základný adresár `.../planning-loops/` ako indexu, takže obe stránky mieria rovnako; `.md` na nepreložený
+cieľ by z preloženej stránky rozbil i18n-link-check — preto holá URL-cesta. Overené buildom: „../../real-agents/“
+mierilo mylne na /sk/real-agents/). Text odkazu na prehĺbenie == `sidebar_label` „Prehľadávanie plánov
+a pamäť" (byte-for-byte). Tri Mermaidy (IDs zachované, desatinná čiarka 0,8; ✗). Video: index D37Ijn2o5U0,
+prehĺbenie BacJ6sEhqMo — obe „(Video je v angličtine.)".
+
+**Sibling-link retrofit (Fáza 11 konvencia — SK-existujúci súrodenci idú s `.md`).** Keď táto lekcia vznikla,
+Agentic RAG na ňu mieril holým EN-fallback `../planning-loops/` (Fáza 12, vtedy nepreložená). Teraz SK existuje
+→ **9 odkazov flipnutých na „../planning-loops/index.md"** (index ×1, prehĺbenie ×8), validované
+`onBrokenLinks:'throw'`, zhodné s EN/RU. `_category_.json` (label „Plánovanie a slučky") už existoval — nemení
+sa; `current.json` netreba (kategória existuje z bootstrapu Part II).
+
+**Backlog — stav.** Fáza 12 backlog VYRIEŠENÝ (oba: budget-family smer + Agent-loop/Self-RAG glosárové flipy).
+Ostáva glossary-flip backlog z Fázy 11 (HITL „(človek v slučke)" v glosári porušuje §1.2/§1.3; kosínus /
+viacjazyčné embeddingy / rozmernosť heslá; pätičky „Nové pojmy" ↔ trojtriedne flipy) + native-check track
+(ansámbel behov, Skórer, chunkami vs chunkmi …) — samostatná neskoršia vlna.
+
+**Pre lekciu Multiagentové systémy (odovzdanie):**
+- **Rozpočet prideľuje a získava späť supervízor/orchestrátor** („supervízor drží mešec", táto lekcia D20) —
+  Multi-agent to rozvádza; rodina rozpočtov je **SK-vedená „rozpočet <čoho>"** (Fáza 13). agent chain = **reťaz
+  agentov**, handoff = **odovzdanie riadenia** (§1.2, glosár).
+- **reflexia (celá trajektória) vs sebaoprava (jeden úryvok)** — drž oddelené; **Reflexion** (framework) ≠
+  reflexia (pojem).
+- Karta 1 (chyba vs zlyhanie), Karta 2 (skóre), Karta 3 (prehľadávanie ≠ vyhľadávanie), Karta 9 (tvrdý/mäkký
+  strop) platia ďalej. Verb-by-object §1.5 (žiadne univerzálne „vydať").
+- **Em-dash metronóm + zákaz „— ,"** + **straight-quote checkpoint** (grep prozaických `"` = 0) platia ďalej.
+- Odkazy: SK teraz existuje pre agentic-rag, tool-use, **planning-loops** (index aj prehĺbenie) → mieri naň
+  cez „../planning-loops/index.md", „../planning-loops/deep-dive.md"; na nepreložené (multi-agent susedia,
+  real-agents, mcp, orchestration-frameworks) holou EN-fallback cestou; glosár „../../glossary.md".
+
+**Stav:** Wave 2 lekcia 2 (Plánovanie a slučky) redakčne uzavretá; SK ostáva **gated** (mimo plain buildu).
