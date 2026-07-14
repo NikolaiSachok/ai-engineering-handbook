@@ -18,7 +18,7 @@ Chrbtica po poriadku: minúť výpočtový výkon pri inferencii na zachytenie v
 
 ### Self-consistency: navzorkuj viac ciest, hlasuj raz
 
-**Self-consistency** (navzorkuj viac ciest a hlasuj) nahradí jediné hladné (greedy) dekódovanie chain-of-thought (reťazec úvah) malým ansámblom behov (Wang a spol., „Self-Consistency Improves Chain of Thought Reasoning in Language Models“, arXiv 2203.11171, marec 2022; ICLR 2023). Pri teplote nad nulou navzorkuješ rozmanitú množinu ciest úvah, tie potom marginalizuješ (odmyslíš si konkrétnu cestu) a na finálnej odpovedi spravíš väčšinové hlasovanie.
+**Self-consistency** (navzorkuj viac ciest a hlasuj) nahradí jediné hladné (greedy) dekódovanie chain-of-thought (reťazec úvah) malým ansámblom behov (Wang a kol., „Self-Consistency Improves Chain of Thought Reasoning in Language Models“, arXiv 2203.11171, marec 2022; ICLR 2023). Pri teplote nad nulou navzorkuješ rozmanitú množinu ciest úvah, tie potom marginalizuješ (odmyslíš si konkrétnu cestu) a na finálnej odpovedi spravíš väčšinové hlasovanie.
 
 Intuícia: naozaj ťažký problém pripúšťa viac platných ciest, ktoré sa zbiehajú k tej istej správnej odpovedi, kým nesprávne odpovede sa rozutekajú — zhoda je teda dôkaz a ojedinelý odlišný hlas väčšina prehlasuje.
 
@@ -30,7 +30,7 @@ To ti zároveň povie, kedy po nej nesiahať. Otvorená, dlhá odpoveď nemá je
 
 ### Chain-of-verification: najprv návrh, potom výsluch návrhu
 
-**Chain-of-verification (CoVe)** (Dhuliawala a spol., „Chain-of-Verification Reduces Hallucination in Large Language Models“, arXiv 2309.11495, september 2023) je výslovná slučka, v ktorej si model sám kladie kontrolné otázky, v štyroch krokoch: napíš základný návrh odpovede; naplánuj sadu overovacích otázok, ktoré ten návrh faktograficky preveria; na každú overovaciu otázku odpovedz nezávisle; a nakoniec vygeneruj finálnu overenú odpoveď, v ktorej návrh prepracuješ podľa toho, čo kontroly ukázali.
+**Chain-of-verification (CoVe)** (Dhuliawala a kol., „Chain-of-Verification Reduces Hallucination in Large Language Models“, arXiv 2309.11495, september 2023) je výslovná slučka, v ktorej si model sám kladie kontrolné otázky, v štyroch krokoch: napíš základný návrh odpovede; naplánuj sadu overovacích otázok, ktoré ten návrh faktograficky preveria; na každú overovaciu otázku odpovedz nezávisle; a nakoniec vygeneruj finálnu overenú odpoveď, v ktorej návrh prepracuješ podľa toho, čo kontroly ukázali.
 
 Nosný je tretí krok a rozhoduje pri ňom nezávislosť — v článku „faktorizované“ overovanie. Overovacie otázky sa zodpovedajú bez základného návrhu v kontexte, takže model nemôže potichu zopakovať práve tú chybu, ktorú má odhaliť. Nechaj ho pri „overovaní“ znova čítať vlastný nesprávny návrh a chybu len odobrí: sebavedomá formulácia návrhu sa stane východiskom jeho vlastnej kontroly a vráti sa mu ako ozvena. Izolovať každú overovaciu otázku tú ozvenu preruší.
 
@@ -96,7 +96,7 @@ Ostáva jedna úprimná hranica. Nijaký prompt nespraví grounding absolútnym 
 
 ## Skladanie dlhého kontextu za hranicou lost-in-the-middle
 
-Použi kánonový termín, netreba ho vymýšľať nanovo: **lost-in-the-middle** (strata uprostred) (Liu a spol., arXiv 2307.03172, TACL 2023). Časť 1 ti dala orientačné pravidlo — málo najlepších chunkov, najrelevantnejšie na okraje. Tu je mechanizmus a disciplína za ním.
+Použi kánonový termín, netreba ho vymýšľať nanovo: **lost-in-the-middle** (strata uprostred) (Liu a kol., arXiv 2307.03172, TACL 2023). Časť 1 ti dala orientačné pravidlo — málo najlepších chunkov, najrelevantnejšie na okraje. Tu je mechanizmus a disciplína za ním.
 
 Presne: model využíva informáciu najlepšie, keď sedí na začiatku alebo na konci vstupu, a najhoršie, keď je zahrabaná uprostred — pozičná krivka v tvare U, meraná na viacdokumentovom QA a na vyhľadávaní typu kľúč-hodnota. Čo ľudí zaskočí: platí to aj pre modely stavané a predávané ako long-context. Veľké kontextové okno nie je rovnomerne využiteľné okno; práve v jeho strede sa signál stráca.
 
