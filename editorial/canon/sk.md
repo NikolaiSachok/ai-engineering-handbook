@@ -2017,3 +2017,118 @@ Ostáva glossary-flip backlog z Fázy 11 (HITL, kosínus, viacjazyčné embeddin
 trojtriedne flipy) + native-check track — samostatná neskoršia vlna.
 
 **Stav:** Wave 2 lekcia 3 (Multiagentové systémy) redakčne uzavretá; SK ostáva **gated** (mimo plain buildu).
+
+### Fáza 15 — vlna 2, lekcia Orchestračné frameworky: rozhodnutia kánonu
+
+Štvrtá lekcia vlny 2 (Part II), stránky `index` + prehĺbenie „Grafy a odolné vykonávanie". Plný redakčný
+tím (literárny, naivný jednojazyčný čitateľ, technický/fakt, korektor, konzistenčný, riadiaci) rozdelený po
+stránkach, adjudikácia, oprava a **studený prechod ×2** na KAŽDEJ stránke (zdroj skrytý, čítané nahlas).
+Prezentačná lokalita bez ľudskej poistky — brány niesli plnú váhu. **Fakty nehýbané** — faktová brána proti
+EN-skeletu (C1–C73) čistá: Microsoft Agent Framework 1.0 GA apríl 2026 (vstrebal Semantic Kernel + AutoGen,
+oba v režime údržby), `langgraph-checkpoint-sqlite`/`-postgres` v3.1.0 (máj 2026), `-redis`, saver-triedy
+`InMemorySaver`/`SqliteSaver`/`PostgresSaver`/`RedisSaver`, `durability` „exit"/„async"/„sync", k júlu 2026,
+tridsaťkrokový agent / krok 28 / 27 volaní, OTel GenAI konvencie v stave „Development", CrewAI `Memory` (júl
+2026). Jediný faktový nález (naivný C9 „three turns ago" → „pred tromi krokmi") **ponechaný**: EN-skelet mieša
+„across steps" a „three turns ago", *turn* a *krok* sú tu zameniteľné, číslo tri zachované; „ťah"/„otočka"
+zakázané/neprirodzené.
+
+**Smer termínu — dve rozhodnutia (§1.0):**
+- **durable execution → Trieda 2 / SK-vedené „odolné vykonávanie (durable execution)".** Zrkadlí vzor
+  „orchestračný framework" (§1.2, riadok 35 skeletonu): glosár **katalogizuje anglickú lemmu**
+  („Durable execution (odolné vykonávanie)"), ale **telo vedie slovensky**. SK tvar je priehľadný kompaund a
+  sidebar_label lekcie („Grafy a odolné vykonávanie") ho aj tak fixuje — telo je s ním konzistentné. **Presunúť
+  v §1.1/§1.2:** vyňať „durable execution" zo zoznamu kept-EN §1.1 a viesť ako Trieda 2 (most raz, ďalej SK).
+- **vendor lock-in — kept-EN (§1.1) drží; ALE v próze ponechaný SK-vedený most „viazanosť na framework
+  (vendor lock-in)"** (per skeleton) — ide o opisnú prózu, nie o razenie súperiaceho SK **názvu** termínu, a
+  termín je glosovaný. Nie je to kotva pri prvej definícii (nie polotučné), preto smerová výnimka §8 neplatí.
+  Poznámka, nie defekt.
+
+**Termíny — glos/dekódovanie (§1.0 čistota + prvý výskyt na stránke):**
+- **„hooks" (§1.1 kept-EN) v priebežnom zozname → opisne „napojenia na trasovanie"**, NIE „háčiky"
+  (falošný obraz rybárskeho háčika + odklon od ledgeru §1.1) a NIE razenie súperiaceho SK názvu. Kept-EN
+  „hooky" ostáva vyhradené tam, kde je *hooks* skutočným predmetom (lekcia Observability). Back-ref
+  v prehĺbení zladený („napojení na trasovanie").
+- **checkpointing** — telový glos rozvitý na „(priebežné ukladanie stavu)" (index) namiesto kruhového
+  „(ukladanie checkpointov)"; glosár drží krátku lemmu. V prehĺbení SK-vedené „ukladanie checkpointov
+  (checkpointing)".
+- **streaming** (kept-EN, Karta 7) — doplnený glos pri prvom výskyte na stránke „(priebežné odosielanie
+  výstupu)".
+- **GA** — ostáva ako faktová nálepka, raz glosovaná „(GA — všeobecná dostupnosť)".
+- **trace / span / tracer** (kept-EN, §1.1/Fáza 10) — per-page glosy: „trace (záznam trasovania)",
+  „span — úsek trasovania —", „tracer (nástroj na trasovanie)". „pairwise" (kept-EN §1.1) glos „(párové)".
+- **primitíva** — glos pri prvom výskyte „(základné stavebné bloky)" (falošný priateľ *primitív* = hrubý
+  človek).
+
+**Verb-by-object (§1.5):** žiadne univerzálne „vydať". Graf → **„framework vie trace vytvoriť"** / „z grafu
+vznikne trace" (nie „vydá"); framework **trace zachytí**; model **vytvorí volanie**. „vydáme sa na prechádzku"
+/ „vydal sa cestou" = idiomatické zvratné sloveso pohybu (iný lexém), mimo zákazu §1.5 — ponechané.
+
+**Karty (potvrdené na tejto lekcii).**
+- **Karta 1:** jednotlivý pád / nezastavená slučka = „pád" / „chyba" / „slučka, ktorá sa nezastaví"; „chyba
+  návrhu" (siahnuť po supervízorovi „pre pamäť"). Žiadne „zlyhanie" ako názov jednotlivého incidentu.
+- **Karta 2:** CrewAI „**skóruje** vybavovanie z pamäte podľa relevancie, čerstvosti a dôležitosti" — *recall*
+  = vybavovanie z pamäte (verb), NIE retrieval; číslo = skóre, nie „hodnotenie".
+- **Karta 4:** pamäť frameworku = **jedna os** (checkpoint viazaný na thread vs store); multiagentové
+  konštrukcie = „úplne INÁ os" (rozdelenie práce vs perzistencia stavu).
+- **Karta 7 — náprava (bare „tok"):** štyri výskyty holého „tok/toky/riadiaci tok" pre *control flow*
+  opravené na plný kompaund **„tok riadenia"** (index L81/L85/L99, prehĺbenie L88). „streaming" nikdy „tok".
+- **Karta 9:** deklaratívny „ceiling" = **„hranica"** („musíš siahnuť po kóde"), NIE „strop" — bez kolízie
+  s rozpočtovým rámcom.
+
+**Figúry — studený prechod ×2 (naivný čitateľ rozhodol pri prvom kontakte):**
+- **ZAMIETNUTÉ (naivný decode zlyhal) → prostá próza:**
+  - **„šev" (seam)** — obaja naivní čitatelia + literárny: *šev* spája dva kusy, ale graf je **bod, na ktorý
+    sa všetko napája** (hub), nie šev; v samostatnej odrážke záveru stál bez dekódu. Nahradené **„jediné
+    miesto, na ktoré sa napája každá produkčná starosť"**. Zapísané ako zamietnutá figúra (nezrkadlí sa z EN).
+  - **„produkčný chvost" / „chvost" (production tail)** — bafľujúce na prvý kontakt (*chvost* = zvierací
+    chvost, žiadna slovenská opora). Nahradené **„produkčná výbava"** (potvrdené: dekóduje ako „kit/výbava").
+- **POTVRDENÉ → usadené:** **„produkčná výbava"** (production kit); **„cestovanie v čase"** (time-travel —
+  mechanika rozpísaná pred nálepkou, glosárom už krytá); **„momentka filozofií"**, **„odlúpneš značky"**,
+  **„so všetkým v balení"**, **„nakupuješ v tejto vrstve"** (kúp/nákup vrstvy — zrkadlí sesterské „kupujú
+  kvalitu", Fáza 14), **„zrkadlový obraz výhod"**, **„legacy — zastaraná príťaž"** (kept-EN nesený SK glosom).
+- **„vlastní" (stránka/vrstva vlastní X)** — NIE kalk, **usadený korpusový obrat** (zrkadlí „stránka vlastní
+  vrstvu", Fáza 14). Ponechané na oboch stránkach.
+
+**Nové kalkové pasce a rekčné/aktorové chyby (žatva Orchestrácia — studený prechod ×2 — do §1.4/§1.3):**
+- „X je (presne) to, čo…" (cleft) → povedz priamo („presne ten graf … budeš trasovať")
+- „Čím platí, je X" (what it pays with) → „Háčik je X"
+- „Prečo X záleží, je Y" (why X matters is Y) → „Prečo na tom záleží? Opäť Y."
+- „robí možným X" (makes X possible) → „vďaka X je možné…"
+- „s kľúčom podľa" (keyed by) → „jeho kľúčom je / kľúčuje sa podľa"
+- „padáš späť do kódu" (fall back into code) → „musíš siahnuť po kóde"
+- „lacný NA PRIDANIE" (cheap to add) → „pridať … je lacné" (peňažný rámec cena/zadarmo OK; kalk je väzba „na pridanie")
+- „stojí abstrakciu" (echoes „stojí tokeny", §1.4) → „tou cenou je abstrakcia"
+- „pristáť na myšlienke / zísť sa na myšlienke" (land on an idea) → „zhodnúť sa na (myšlienke)"
+- „API má vyhranené názory" (opinionated API) → „nakoľko API diktuje spôsob použitia"
+- „reže na obe strany" (cuts both ways) → „má dve strany"
+- „byť o niečom" (kód je o správaní) → „v kóde riešiš správanie"
+- „servírovanie" (serving — falošný priateľ, jedlo) → „obsluha modelov"
+- „Čo sa pekne uzatvára:" (fragment „which nicely closes") → „A tým sa kruh uzatvára:"
+- „Voľba je rozhodnutie" (tautológia) → „Je to rozhodnutie…"
+- „majstrovstvo, ktoré si zapneš" (zmiešaná metafora) → „schopnosti, ktoré si zapneš"
+- **rekcia/aktér:** *záležať* žiada **na** („na tom záleží", nie „to záleží"); *zaplatiť* žiada **za**
+  („zaplatiť za 27 volaní"); *požiadať* žiada **o** („čo si model vyžiadal"); „**Pýtal si** model nástroj?"
+  (garden-path so zvratným „pýtal si sa") → „**Žiada** model nástroj?"; explicitný predmet „aby **to**
+  schválil / kým **to** schváli"; „**zbiehať sa**" (zvratné); zhoda „jedno sedenie nevidí stav druhého".
+
+**§8 polotučné + em-dash + straight-quote.** Polotučné v rozpočte; jediné emfázové polotučné („Microsoft
+Agent Framework" v prehĺbení) **prevedené na odkaz** (zrkadlí EN, odstraňuje zvýraznenie). Em-dash v
+sesterskom pásme, zákaz „— ," = **0**. **Straight-quote checkpoint:** prozaických rovných `"` mimo markupu =
+**0** (párovanie „…"); ASCII `"` len v Mermaid `["…"]` / edge-label „hotovo", YouTube `title`, frontmatter,
+kódových literáloch (`"exit"`/`"async"`/`"sync"`).
+
+**Odkazy + retrofit.** SK súrodenci s `.md` (agentic-rag, tool-use, planning-loops, multi-agent — index aj
+prehĺbenia; glosár); nepreložené holou zložkovou cestou bez `.md`: „../mcp/", „../real-agents/",
+„../../part-3-production/overview/". **Doplnené vypadnuté externé odkazy z EN zdroja** (over. proti `docs/`):
+Microsoft Agent Framework `learn.microsoft.com/en-us/agent-framework/`, AutoGen `github.com/microsoft/autogen`,
+Semantic Kernel `learn.microsoft.com/en-us/semantic-kernel/`. **Retrofit (Fáza 11 konvencia):**
+`multi-agent/deep-dive.md` L11 `../orchestration-frameworks/` → `../orchestration-frameworks/index.md` (SK
+teraz existuje). Pätičky „Nové pojmy" zrkadlia anglické heslá glosára (bez SK glosu); index-note text „Grafy a
+odolné vykonávanie" == deep-dive `sidebar_label` byte-for-byte; frontmatter nedotknutý.
+
+**Backlog — stav.** (1) Pri najbližšej úprave §1.1/§1.2: **presunúť „durable execution" z kept-EN §1.1 do
+Triedy 2 §1.2** (SK-vedené „odolné vykonávanie"). (2) Glossary-flip backlog z Fázy 11 stále otvorený: heslo
+glosára **HITL** nesie „(človek v slučke)" — telo lekcie ho **nikdy nepoužíva** („schválenie človekom"),
+pätička zrkadlí len anglické heslo. Žiadny nový hand-off.
+
+**Stav:** Wave 2 lekcia 4 (Orchestračné frameworky) redakčne uzavretá; SK ostáva **gated** (mimo plain buildu).
