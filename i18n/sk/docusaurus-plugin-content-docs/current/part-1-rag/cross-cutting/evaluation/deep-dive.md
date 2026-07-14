@@ -18,7 +18,7 @@ A myšlienka, na ktorej celá stránka stojí a ktorú Časť 1 iba naznačila: 
 
 V Časti 1 boli názvy metrík čierne skrinky — „faithfulness“, „answer relevance“ a pár ďalších, menovky, ktorým si veril bez toho, aby si videl dovnútra. Na pokročilej úrovni potrebuješ vedieť, čo každá z nich počíta, lebo výpočet ti povie, čo dané číslo dokáže a čo nedokáže zachytiť. A každá z týchto metrík má zdokumentované slepé miesto, ktoré jej názov zakrýva.
 
-Referenčná implementácia, o ktorej sa oplatí uvažovať, je **Ragas** — framework, ktorý zaviedol tento rozklad evaluácie RAG na pomenované, samostatne počítané metriky (Es a spol., „Ragas: Automated Evaluation of Retrieval Augmented Generation“, arXiv 2309.15217, september 2023). Že to pomenúvame, nie je formalita: tieto štyri metriky sú štandardný spôsob, akým odbor problém rozkrája — rozklad, na ktorom sa zhodol, nie súkromný recept jedného dodávateľa.
+Referenčná implementácia, o ktorej sa oplatí uvažovať, je **Ragas** — framework, ktorý zaviedol tento rozklad evaluácie RAG na pomenované, samostatne počítané metriky (Es a kol., „Ragas: Automated Evaluation of Retrieval Augmented Generation“, arXiv 2309.15217, september 2023). Že to pomenúvame, nie je formalita: tieto štyri metriky sú štandardný spôsob, akým odbor problém rozkrája — rozklad, na ktorom sa zhodol, nie súkromný recept jedného dodávateľa.
 
 Pozeraj sa na tú štvoricu cez dve osi. **Os 1** (Časť 1 ju už načrtla): ktorú etapu metrika sleduje — context precision (presnosť kontextu) a context recall (úplnosť kontextu) hodnotia vyhľadávanie, faithfulness a answer relevance hodnotia generovanie. **Os 2** (Časť 1 ju nechala nevypovedanú, hoci v praxi rozhoduje): či metrika potrebuje referenciu — človekom napísanú správnu odpoveď — alebo si vystačí so samotnou otázkou, kontextom a odpoveďou.
 
@@ -31,7 +31,7 @@ Ten rozdiel poriadne zaváži. Faithfulness a answer relevance bežia na živej 
 
 ### Faithfulness — grounding ako podiel podložených tvrdení
 
-**Faithfulness** je to číslo, ktoré Časť 1 aj vrstva Generation stále sľubovali sformalizovať: opiera sa odpoveď o nájdený kontext, alebo sa model zatúlal späť do vlastnej pamäte? Ragas ho počíta v troch krokoch:
+**Faithfulness** je práve to číslo, ktoré Časť 1 aj vrstva Generation stále sľubovali sformalizovať: opiera sa odpoveď o nájdený kontext, alebo sa model zatúlal späť do vlastnej pamäte? Ragas ho počíta v troch krokoch:
 
 1. jeden LLM rozloží vygenerovanú odpoveď na **atomárne tvrdenia** — jednotlivé faktické výroky, ktoré odpoveď obsahuje;
 2. druhý prechod LLM overí každé tvrdenie voči nájdenému kontextu jedinou otázkou áno/nie: dá sa toto tvrdenie odvodiť z toho, čo sme našli?;
@@ -96,7 +96,7 @@ Odstúp o krok a všimni si vzor v tej štvorici — v ňom je celá pointa. Tri
 
 Časť 1 dala pokyn — sudca má zaujatosti, over ho voči ľuďom — ale nechala ho ako číre „čo“. Táto sekcia je „ako“: zaujatosti majú mená aj mechanizmy, existujú dva protokoly skórovania s odlišnými profilmi zlyhania a „over ho voči ľuďom“ je konkrétny postup podložený číslom.
 
-Vychádzame tu z práce, ktorá LLM-as-a-judge ustanovila ako metódu a spísala jej spôsoby zlyhania (Zheng a spol., „Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena“, arXiv 2306.05685, jún 2023).
+Vychádzame tu z práce, ktorá LLM-as-a-judge ustanovila ako metódu a spísala jej spôsoby zlyhania (Zheng a kol., „Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena“, arXiv 2306.05685, jún 2023).
 
 ### Zaujatosti majú mená a každá má svoju nápravu
 

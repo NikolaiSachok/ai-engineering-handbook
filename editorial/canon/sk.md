@@ -871,7 +871,7 @@ kompaunde, rámec skenovaných dokumentov; nikdy holá „vrstva“ pre text lay
 
 **Prijaté obraty a slová (webom/kodifikáciou overené, nechávajú sa):** „prehnať X cez Y“ (varianty cez
 evaluáciu, dokument cez transformer — idiomatický rámec „pustiť cez stroj“, nie univerzálne sloveso §1.5);
-„posuvné okno“; „poruke“ (kodifikovaná príslovka); „a spol.“; „popretkávané“; „zosypať sa“; „hotový model“
+„posuvné okno“; „poruke“ (kodifikovaná príslovka); „a kol.“ (citačná skratka „et al.“ — flip z „a spol.“, Fáza 10 STEP-0 / Fáza 11; „a spol.“ číta ako „& Co.“); „popretkávané“; „zosypať sa“; „hotový model“
 (off-the-shelf; pri prvom výskyte opísať „taký, aký ponúka výrobca“); „bezpečnostný perimeter“ (prvý
 výskyt ukotviť prívlastkom, potom „v perimetri“); „nanič“ (predikatívne, expresívne); „väčšmi“ (KSSJ, ale
 nie v konštrukcii miery pri mennom prísudku); „napokon“; „úzke hrdlo“; „páka“ (tri páky na embeddingu);
@@ -1571,3 +1571,71 @@ skoršie odložené flipy Fáz 5–9 (glosárové flipy hesiel: HITL „(človek
 embeddingy; pätičky „Nové pojmy" ↔ trojtriedne flipy glosára) a všetky figúry na skúšobnej dobe čakajúce na
 potvrdenie / kontrolu rodeným Slovákom (Skórer, allowlisty, preskórovať, signatúra funkcie, ansámbel behov,
 meradlo, „prehĺbenie vrstvy X" ako nedekódovateľný obraz).
+
+### Fáza 11 — milestone-prechod vlny 1 (uzávierka #95): reconciliácia a rozhodnutia
+
+Delta-driven milestone-prechod nad všetkými 12 SK stránkami + glosárom + kánonom (nie re-preklad). Aplikoval
+usadené korpusové flipy, dal každej figúre na skúšobnej dobe čerstvý naivný decode, prebehol konzistenčný a
+managing-editor prechod, studený spätný prechod 4 strán, a zosúladil kánon s korpusom (bidirekčne).
+
+**Usadené korpusové flipy — APLIKOVANÉ (retrofit z Fázy 10 STEP-0 hotový).**
+- **«a spol.» → «a kol.»** (STN ISO 690 „et al.") — 8 citačných výskytov: Hines, Wallace (Guardrails); Es,
+  Zheng (Evaluation); Wang, Dhuliawala, Liu (Generation); Gao (Retrieval). Grep SK: „a spol." 9→0; „a kol."
+  teraz 9 (8 flipnutých + skôr existujúci „Kusupati a kol."). **Výnimka — Ingestion „pypdf a spol.":** NIE je
+  citácia „et al.", ale „a jemu podobné" (zoznam nástrojov) — „a kol." (= a kolektív/spoluautori) by bol
+  sémanticky nesprávny → prepísané na **„pypdf a podobné"**, nie „a kol.". §1.2 „Prijaté obraty" riadok
+  zosúladený.
+- **«kvalita úlohy» → «kvalita výstupu»** (doložený SK AI-úzus) — 6 výskytov, všetky Guardrails prehĺbenie
+  (telo + Mermaid). Grep SK: „kvalita úlohy" 6→0; „kvalita výstupu" 6.
+- **«najnižších» (least privilege)** — POTVRDENÉ, žiadny flip; „najmenších" v SK = 0.
+- **«spôsob zlyhania» (failure mode)** — flip Generation z Fázy 8 drží; „chybový režim" v SK = 0.
+- **Zákaz „— ,"** — grep „— ," = 0; navyše 3 výskyty „—," (dash-inset tesne pred čiarkou) v Ingestion
+  prehĺbení prepísané na zátvorku / „a" (§Fáza 6). Glosár flipy nepotreboval (grep «a spol.»/«kvalita úlohy» = 0).
+
+**Figúry na skúšobnej dobe — čerstvý naivný decode (jednojazyčný SK čitateľ, zdroj skrytý, bez čítania dopredu).**
+- **POTVRDENÉ → usadené (marker „na skúšobnej dobe" retirovaný):** „naplno udrie dôsledok" (Ingestion);
+  „vrchol lievika", „rovnaká choroba, dve miesta zásahu", „stratové úzke hrdlo" (Retrieval); „meradlo" (Evaluation).
+- **POTVRDENÉ s podmienkou glosu:** „pracovný bod" (Ingestion/MRL) — dekóduje IBA vďaka inline dekódu „—
+  rôznymi pomermi rýchlosti a presnosti" pri prvom výskyte; usadené s pravidlom, že inline dekód pri prvom
+  výskyte ostáva (bez neho je to kalk *operating point*).
+- **POTVRDENÉ (naive-decode) + native-check pending:** „ansámbel behov" (Generation) — najtenší margin sady
+  (naivný čitateľ dorozumel z okolitého výkladu; „ansámbel" ťahá mierne k hudobnému telesu); decode PASS, ale
+  ostáva na native-check track (webové doklady, §1.1).
+- **STRUCK (už nie je v texte):** „odhalucinovať (ťa mimo cieľa)" (Retrieval, Fáza 6) — v merged texte sa
+  nevyskytuje, nahradené prostou prózou („kde si model vymyslí dokument mieriaci preč od tvojho korpusu");
+  medzi odmietnuté coinage — prostá próza vyhrala.
+
+**Konzistenčný prechod (12 strán) — 1 defekt, opravený.** Observability prehĺbenie, error-budget gloss:
+znel „koľko **zlyhania**… množstvo **zlyhania**" pri kanonickom „rozpočet **chýb**" — rozpočet míňajú
+JEDNOTLIVÉ chyby (Karta 1: incident = „chyba", nie kategória „zlyhanie") → opravené na „koľko **chýb**…
+množstvo **chýb**". Inak korpus čistý: PII smer „PII (osobné údaje)" jednotný, Karta 1/2 dodržané všade, §4
+reťazce byte-identické, žiadne ř/ě/ů.
+
+**Managing editor — 4 linky zosúladené na SK `.md`.** Súrodenecké prehĺbenia part-1 (SK existuje) linkované
+bare-slug bez `.md` na 4 miestach (Ingestion prehĺbenie → „../retrieval/deep-dive" ×2; Observability prehĺbenie
+→ „../guardrails/deep-dive", „../evaluation/deep-dive"). **EN (`docs/`) aj RU (`i18n/ru/`) tie isté linky vedú
+s `.md`** — SK bola jediná odchýlka → zosúladené na „…/deep-dive.md". **Korekcia kánonu:** poznámka Fázy 9/10
+„súrodenecké prehĺbenia bez .md/lomky" platí IBA pre genuinely nepreložené ciele (part-2/part-3 EN-fallback);
+part-1 súrodenci, ktorí v SK existujú, idú s `.md` (validované `onBrokenLinks:'throw'`, konvencia zvyšných 75
+linkov). Hĺbky ciest inak správne, žiadne stale 🚧, index-pätičky „druhá časť lekcie" živé, frontmatter jednotný.
+
+**Studený spätný prechod (4 strany, naivný + literárny, nahlas).** Ingestion prehĺbenie — em-dash metronóm
+(„klauza — a/však") ostal najsilnejší prežívajúci tell; stíšený 5 cielenými prepismi (bodka/dvojbodka/„a") na
+L11/L13/L19/L47 (em-dash 84→79). Ostatné 3 strany publikačne čisté; 2 nízkosignálové kalky opravené:
+„Faithfulness je to číslo" → „je práve to číslo" (mierny cleft, §1.4); „mal oboje zadarmo" → „mal oboje bez
+kompromisu" (free-lunch kalk, §Fáza 2/5).
+
+**Residual — NERIEŠENÉ touto vlnou.**
+- **Human-friend naturalness packet** (`editorial/sk-pilot-naturalness-check.md`) je paralelne u slovenských
+  priateľov autora; nálezy pri wave-close NEDORAZILI. Vlnu na nich nedržíme — poskladajú sa neskôr malým
+  follow-up PR do kánonu + dotknutých strán.
+- **Native-check track (rodený Slovák):** preskórovať/preskórovanie, ansámbel behov, Skórer, allowlisty,
+  signatúra funkcie, inštrumentál „chunkami" vs „chunkmi", rozmernosť vs dimenzia.
+- **Glossary-flip backlog (samostatná neskoršia vlna):** HITL „(človek v slučke)" v glosári porušuje
+  §1.2/§1.3; kosínusová podobnosť / viacjazyčné embeddingy / rozmernosť heslá; pätičky „Nové pojmy" ↔
+  trojtriedne flipy glosára.
+- **EN/RU zdrojová chyba (mimo vlny):** takeaway „contrastive learning on query–passage pairs" vs telo
+  „triples" (Fáza 5 #7) — SK zosúladený na „trojice"; EN/RU zdroj čaká na samostatný `docs:` commit.
+
+**Stav locale:** SK ostáva **gated** (mimo plain buildu; launch až podľa roadmapy). Táto vlna uzatvára **#95**
+(Part I SK). Ďalej: Wave 2 — Part II (#96).
