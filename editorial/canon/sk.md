@@ -1887,3 +1887,133 @@ viacjazyčné embeddingy / rozmernosť heslá; pätičky „Nové pojmy" ↔ tro
   real-agents, mcp, orchestration-frameworks) holou EN-fallback cestou; glosár „../../glossary.md".
 
 **Stav:** Wave 2 lekcia 2 (Plánovanie a slučky) redakčne uzavretá; SK ostáva **gated** (mimo plain buildu).
+
+
+### Fáza 14 — vlna 2, lekcia Multiagentové systémy: rozhodnutia kánonu
+
+Tretia lekcia vlny 2 (Part II), stránky `index` + prehĺbenie „Protokoly a koordinácia". Plný redakčný tím
+(literárny, naivný jednojazyčný čitateľ, technický/fakt, korektor, konzistenčný, riadiaci), adjudikácia,
+oprava a **studený prechod ×2** na KAŽDEJ stránke (zdroj skrytý, čítané nahlas). Prezentačná lokalita bez
+ľudskej poistky — brány niesli plnú váhu. Oba hand-offy Fázy 13 dodržané bez odchýlky (rozpočet-rodina
+SK-vedená „rozpočet <čoho>"; agent chain = reťaz agentov; handoff = odovzdanie riadenia). Fakty nehýbané —
+faktová brána proti EN-skeletu čistá (FIPA 1996/2002/2005, Smith IEEE Trans. Computers C-29 č. 12 dec. 1980,
+KQML zač. 90. rokov, A2A 9. apr. 2025 / vyše 50 / Apache 2.0, Hearsay-II CMU 1971–1976, Nii AI Magazine roč. 7
+1986, arXiv:2305.14325, MAST arXiv:2503.13657 κ = 0,88 / 14 spôsobov / 3 kategórie, Anthropic 13. jún 2025
+4×/15×/~80 %).
+
+**Nové kept-EN termíny — doplniť do §1.1 ako vedomé výnimky (latinkou, slovenský glos raz pri prvom výskyte):**
+- **contract net protocol** — glos „(protokol kontraktných sietí)"; **KQML**; **MAST** (Multi-Agent System
+  failure Taxonomy, glos „(taxonómia zlyhaní multiagentových systémov)"); **performatív (performative)** —
+  naturalizovaná koncovka, dekóduje sa inline („komunikačný akt, ktorý správa vykonáva"); **BDI
+  (belief–desire–intention)** s rozpisom „presvedčenie–túžba–zámer". FIPA ACL, blackboard, A2A, Agent Card už
+  boli v §1.1 — teraz použité a potvrdené.
+- **deadlock — NOVÉ do §1.1:** kept-EN, glos „(vzájomné uviaznutie)". Index dekóduje SK-vedene („uviaznuť
+  jeden na druhom (deadlock)"), prehĺbenie pri prvom výskyte dostáva glos „deadlock (vzájomné uviaznutie)"
+  (studený naivný čitateľ ho bez glosu NEDEKÓDOVAL — §7 viaže každú stránku, gloss doplnený).
+
+**Nové Trieda-2 / SK-vedené termíny (most raz „(anglický originál)", ďalej slovensky):**
+- **spôsob zlyhania (failure mode)** — POZOR Karta 1: názov KATEGÓRIE (MAST taxonómia), nie jednotlivý incident.
+- **šírenie chýb (error propagation)** — jednotlivý incident = „chyba" (Karta 1), nie „zlyhanie".
+- **chyba pri súbežnom zápise (concurrent-write error)** — Karta 1 incident = „chyba"; „súbežný zápis" je
+  čistá SK (NIE kept-EN „race condition" — iný jav, §1.2).
+- **korelačné ID (correlation id)**; **distribuované trasovanie (distributed tracing)** — ALE „trace" a „span"
+  ostávajú kept-EN (§1.1, Fáza 10): „tracu/tracov", „spany (úseky trace)", „span orchestrátora"; sloveso
+  „trasovať/trasovanie" je SK. Trace na prehĺbení RE-glosovaný „trace (záznam behu)" (per-page samostatnosť).
+- **nepriehľadní agenti (opaque agents)** — dekódované inline „ani jeden neodhalí svoj vnútorný stav ani sadu
+  nástrojov" (rámec A2A).
+- **súperivý tlak (adversarial/competitive pressure)** — autorský obrat, dekódoval pri prvom kontakte —
+  **usadený**.
+- **znalostné zdroje (knowledge sources)**, **riadiaca zložka (control)** — blackboard-rámec.
+- **statické roly (static roles)**, **dynamické prideľovanie (dynamic assignment)**, **multiagentová debata
+  (multi-agent debate)**.
+- Rozpočtová vrstva (zrkadlí Fázu 13, celá SK-vedená): **rozpočet celej úlohy (whole-task budget)**, **strop
+  rozvetvenia (fan-out cap)**, **strop hĺbky (depth cap)**, **odstupňovanie modelov (model tiering)**, pár
+  **mäkký strop / tvrdý strop (soft cap / hard cap)**. „pevný strop" = 0 (Karta 9).
+
+**Smer termínu — dva nálezy z prechodu (§1.0, kolísanie smeru = defekt):**
+- **contract net gloss ZLADENÝ S GLOSÁROM.** Telo prehĺbenia razilo „(protokol dohodovacej siete)" (podľa
+  skeletonu), ale heslo glosára znie „**protokol kontraktných sietí**". Glosár je jednotný zdroj termínu →
+  telo opravené na „(protokol kontraktných sietí)". (Ak neskorší native-check uprednostní „dohodovacej", flip
+  ide cez glosár, nie cez lekciu.)
+- **LLM-as-a-judge — kept-EN-vedené (§1.1).** Telo malo SK-vedený tvar „LLM ako sudca (LLM-as-a-judge)" →
+  obrátené na kept-EN-vedené „**LLM-as-a-judge (LLM ako sudca)**" (§1.1 uvádza „LLM-as-a-judge", most = SK glos).
+
+**Karty (potvrdené na tejto lekcii).**
+- **Karta 1:** incident (worker zle prečíta odovzdanie, deadlock, chyba pri súbežnom zápise, „ktorý agent to
+  pokazil") = **„chyba" / „šírenie chýb"**; kategória (MAST „spôsoby zlyhania", „taxonómia zlyhaní",
+  „zlyhanie medziagentovej nezladenosti" ako názov triedy) = **„zlyhanie"**. Kánonický vzor „incident je chyba,
+  klasifikuje sa DO kategórie zlyhania" dodržaný.
+- **Karta 2:** disciplína/akt = „hodnotenie" / „známkovanie" / „oznámkovať tím"; žiadne číslo nenazvané
+  „hodnotenie". „známkovanie" (vivid rámec sekcie) a „hodnotenie" (disciplína) koexistujú vedome — pomenúvajú
+  AKT, nie číslo; bidy contract netu = „ponuka", nie mis-skóre. „skóre" sa nevyskytuje, lebo žiadny sudca/bid
+  na týchto stránkach nevydá holé číslo — správne, nie medzera.
+- **Karta 3:** „vyhľadávač" (deep-research retriever) = retrieval; žiadne plán-„prehľadávanie" na stránke.
+- **Karta 9:** „mäkký/tvrdý strop", „strop rozvetvenia", „strop hĺbky"; „pevný strop" = 0.
+
+**Verb-by-object (§1.5):** žiadne univerzálne „vydať" pre model/sudcu/agenta. Jediné „vydala" = „FIPA vydala
+sadu na komunikáciu" (organizácia publikuje normu) — mimo zákazu §1.5, ponechané. Vykonávateľ/hodnotiteľ
+**VRÁTI**, orchestrátor **rozloží/nasmeruje/spojí (syntetizuje)**, agent **odošle/vytvorí** správu.
+
+**Figúry — studený prechod ×2 (naivný čitateľ dekódoval pri prvom kontakte):**
+- POTVRDENÉ → usadené: **„súperivý tlak"** (na kvalitu); **„odovzdávacia správa je prompt"** (z prvej časti,
+  zrkadlí „definícia nástroja je prompt"); **„spoločná tabuľa"** ako glos blackboardu (dekóduje inline
+  „predstav si tím okolo skutočnej tabule"); **„držať na uzde"** (rodený idióm); **„utrhnutý vykonávateľ /
+  nespáli celý mešec"** (zrkadlí „utrhne z reťaze", Fáza 13); **„Schéma je iba potrubie; disciplína pri náklade
+  je zručnosť."** a **„Tabuľa priťahuje napúchanie kontextu"** (obe dekódované, ponechané).
+- **REVIDOVANÉ na studenom prechode: „čestná brzda" → „úprimná brzda".** Literárny studený prechod: „čestný"
+  = *honorable/fair* (čestná hra, čestné slovo), NIE *candid/honest-admission*; „úprimná brzda" nesie správny
+  význam a drží zavedené opakujúce sa zariadenie (index aj prehĺbenie). „čestná brzda" → medzi odmietnuté.
+- **„zdieľaný" vs „spoločný" — vedomá koexistencia, nie defekt.** Blackboard-metafora = „spoločná tabuľa /
+  spoločný stav"; moderné framework-primitívum = „zdieľaný stav / zdieľaná pamäť / zdieľaný scratchpad"
+  (§1.2 výslovne PONECHÁVA „zdieľaná pamäť / zdieľaný objekt stavu" ako ustálený SK IT-úzus — prebíja
+  bohemizmovú výhradu slepého recenzenta). Rámce sa nezamieňajú.
+
+**§8 polotučné — nález a náprava.** index: 20 → **16** po odtučnení štyroch CELOVETNÝCH zvýraznení v sekcii
+„Cena — a kedy to nerobiť" (L62–65 „Cena aj latencia sa násobia." atď. — rečnícke celé vety; §8 zakazuje
+„celé vety a viacčlenné klauzy"); po náprave 16/48 = 0,33 (v rozpočte). prehĺbenie: 27 úsekov, všetky kotvy
+termínu pri prvom výskyte + „Nové pojmy" — per-slovo 1/106 slov, žiadne zakázané zvýraznenie.
+
+**Em-dash metronóm + straight-quote (Fáza 2/6/9/10/12/13).** Po dampingu: index ~2,50/100 slov (33 pomlčiek),
+prehĺbenie **1,96/100 slov** (59) — obe v sesterskom pásme (planning-loops 2,02 / agentic-rag 2,19 / tool-use
+index 2,70), prehĺbenie stíšené pod sestru. Konvertované na zátvorky/bodky/čiarky: A2A spec (gRPC/HTTP/REST),
+BDI apozícia, „15× — a v hodnotení" (bodka), „Málo — priveľa" varírované na čiarky (odlíšené od indexu).
+Zákaz „— ," = **0**. **Straight-quote checkpoint:** prozaických rovných `"` (U+0022) mimo markupu = **0** na
+oboch stránkach (párovanie „…"); ASCII `"` len v YouTube `title`, Mermaid `["…"]`, frontmatter.
+
+**Nové kalkové pasce a slabé kolokácie (žatva Multiagent — studený prechod ×2 — do grep-zoznamov §1.3/§1.4):**
+- „tvrdo smerovať / tvrdo smeruje" ✗ (hard-route; „tvrdo" = harshly) → **„napevno smerovať / smeruj napevno"**
+- „postaviť dôvody za aj proti" ✗ (build/lay out the case) → **„zvážiť dôvody za aj proti"**
+- „orámovať X ako Y" / „rámcovať podľa Y" ✗ (frame as / frame after) → **„predstaviť X ako Y" / „modelovať
+  podľa Y"**
+- „prispievať príležitostne" ✗ (opportunistically — falošný priateľ, znamená *occasionally*) → **„prispieť
+  vždy, keď…"**
+- „niesť to, na čom má agent konať" ✗ (act on) → **„niesť to, čo má agent urobiť"**
+- „páka návrhu" ✗ (the design's lever) → **„kľúčové rozhodnutie pri návrhu"** („páky" v pluráli = knobs OK)
+- „existuje X rokov staršej práce" ✗ (partitívny genitív po *existuje*) → **„jestvuje X rokov stará práca"**
+- „nad neho/niečo pridať" ✗ (add on top of) → **„k nemu/tomu pridať"**
+- „čisto sa premietať NA" ✗ (map cleanly onto; rekcia) → **„priamo sa premietať DO"**
+- „tu spravená konkrétnou" ✗ (here made concrete — participiálny kalk) → **„tu už celkom konkrétna"**
+- „stretnúť incident" ✗ (meet an incident) → **„naraziť na incident"**
+- „pozývať napúchanie/problém" ✗ (invite bloat) → **„priťahovať napúchanie"** (zladené s L66)
+- „bohatší koniec (bez „spektra")" ✗ (dangling „the richer end") → **„bohatší koniec spektra"**
+- „predpokladáme celý čas" ✗ (the whole time) → **„predpokladáme po celý čas"**
+- „brať orchestrátor" ✗ (neživotný akuz.) → **„brať orchestrátora"** (životné maskulínum); „Zvádza to brať" →
+  „Je lákavé brať"
+- register: „vyrábať príručku" ✗ (manufacture) → **„tvoriť príručku"**; „faktový redaktor" (kalk) →
+  **„overovateľ faktov"**; „na kúsok, čo…" (hovorové) → „…, ktorý…"
+
+**Back-reference fidelity (prehĺbenie ↔ index).** „odovzdávacia správa je prompt" (prehĺbenie L21) ⇒ index
+verbatim ✓; „observability musí jednotlivé kúsky pozošívať" (L88) doplnené „jednotlivé" na zhodu s indexom;
+„~N×" (L102) = notačná skratka indexového „približne N×", OK.
+
+**Odkazy (Part II, nevnorená lekcia — zrkadlí planning-loops).** Glosár „../../glossary.md"; v rámci lekcie
+„./index.md" / „./deep-dive.md"; SK súrodenci s `.md`: planning-loops (index+prehĺbenie), agentic-rag
+(index+prehĺbenie), tool-use (index); nepreložené holou EN-fallback cestou: „../real-agents/", „../mcp/",
+„../orchestration-frameworks/". Pätička „Nové pojmy" zrkadlí anglické heslá glosára (bez SK glosu).
+
+**Backlog — stav.** Žiadny nový hand-off. Doplniť do §1.1 pri najbližšej úprave kánonu: **contract net
+protocol, KQML, MAST, deadlock (glos „vzájomné uviaznutie"), performatív, BDI** ako vedomé kept-EN výnimky.
+Ostáva glossary-flip backlog z Fázy 11 (HITL, kosínus, viacjazyčné embeddingy, rozmernosť; pätičky ↔
+trojtriedne flipy) + native-check track — samostatná neskoršia vlna.
+
+**Stav:** Wave 2 lekcia 3 (Multiagentové systémy) redakčne uzavretá; SK ostáva **gated** (mimo plain buildu).
