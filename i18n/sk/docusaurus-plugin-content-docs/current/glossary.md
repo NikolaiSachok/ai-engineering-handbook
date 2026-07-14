@@ -401,7 +401,7 @@ kontext).
 
 **Agentic RAG** — RAG, v ktorom sa vyhľadávanie stáva akciou, ktorú si model volí vnútri slučky, namiesto pevne daného kroku v reťazci spracovania. Tok riadenia patrí modelu, nie kódu.
 
-**Agent loop (cyklus agenta)** — opakujúci sa cyklus „úvaha → rozhodnutie → akcia → pozorovanie“, ktorý beží, kým model neusúdi, že má dosť na odpoveď.
+**Slučka agenta (agent loop)** — opakujúca sa slučka „úvaha → rozhodnutie → akcia → pozorovanie“, ktorá beží, kým model neusúdi, že má dosť na odpoveď.
 
 **ReAct (Reasoning + Acting)** — vzor „úvaha → akcia → pozorovanie“: model strieda kroky uvažovania s akciami (volaniami nástrojov) a výsledok každej akcie vracia späť do kontextu.
 ↗ [arXiv](https://arxiv.org/abs/2210.03629)
@@ -416,7 +416,7 @@ kontext).
 
 **Iterative retrieval (iteratívne vyhľadávanie)** — vyhľadávanie v slučke so spresňovaním namiesto jedného pevného volania.
 
-**Self-RAG (sebareflexívny RAG)** — model je dotrénovaný tak, aby počas generovania vydával špeciálne reflexné tokeny, ktoré na požiadanie rozhodujú, či pre daný úsek vyhľadávať, či je každý nájdený úryvok relevantný a či oň odpoveď opiera (a nakoľko je užitočný). Rozhodnutia o „vyhľadaní / relevantnosti / podložení“ sú zabudované priamo do generovania, nie prilepené zvonku ako oddelená nadstavba. ↗ [arXiv](https://arxiv.org/abs/2310.11511)
+**Self-RAG (sebareflexívny RAG)** — model je dotrénovaný tak, aby počas generovania vkladal špeciálne reflexné tokeny, ktoré na požiadanie rozhodujú, či pre daný úsek vyhľadávať, či je každý nájdený úryvok relevantný a či oň odpoveď opiera (a nakoľko je užitočný). Rozhodnutia o „vyhľadaní / relevantnosti / podložení“ sú zabudované priamo do generovania, nie prilepené zvonku ako oddelená nadstavba. ↗ [arXiv](https://arxiv.org/abs/2310.11511)
 
 **Corrective RAG, CRAG (korektívny RAG)** — nadstavba nad ľubovoľným RAG: ľahký hodnotiteľ vyhľadávania (retrieval evaluator) ohodnotí nájdené dokumenty a zaradí svoje skóre dôvery do troch priehradok: Correct → spresniť (ponechať iba relevantné fragmenty), Incorrect → zahodiť a prejsť na webové vyhľadávanie, Ambiguous → skombinovať oboje. Funguje nad hociktorým RAG bez úprav. ↗ [arXiv](https://arxiv.org/abs/2401.15884)
 
