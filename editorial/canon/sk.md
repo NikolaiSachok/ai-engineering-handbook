@@ -1434,3 +1434,140 @@ red-teaming"); existujúce `_category_.json` + `current.json` (label „Guardrai
   **„../../{ingestion,retrieval,generation}/"** + **„../evaluation/"** + **„../guardrails/"** (SK teraz existuje);
   v rámci lekcie „./index.md", „./deep-dive.md". „Observability" ako názov lekcie ostáva kept-EN; v próze glos
   „(pozorovateľnosť)".
+
+### Fáza 10 — vlna 1, lekcia Observability: rozhodnutia kánonu
+
+Šiesta a POSLEDNÁ lekcia vlny 1 (Observability index + prehĺbenie „Vzorkovanie, SLO a rozpočty"),
+plný redakčný tím + studený prechod ×2. Tretia **vnorená** lekcia (pod prierezovou kategóriou), odkazy
++1 hĺbka. Prezentačná lokalita bez ľudskej poistky — brány niesli plnú váhu (naivný jednojazyčný čitateľ,
+anti-bohemizmus, web-overenie kolokácií, Gate 2a). Zapisuje sa ako uzávierka slovenskej vlny 1.
+
+**STEP-0: tri korpusové flipy nahlásené Guardrails (Fáza 9) — ROZHODNUTÉ a web-overené; retrofit už
+publikovaných stránok je ODLOŽENÝ na milestone-prechod vlny (nemení sa touto lekciou):**
+
+1. **«a spol.» → «a kol.» pre „et al." — FLIP, celý korpus.** Web-overené: slovenská citačná norma
+   (STN ISO 690:2012) vedie **„a kol."** (a kolektív) pri viac ako troch autoroch domáceho diela, resp.
+   „et al." pri zahraničnom; **„a spol."** sa číta ako „a spoločnosť / & Co." (obchodná entita) — presne
+   ako to hlásil studený prechod Guardrails. Ruší usadenie Fázy 5 („a spol."). **Observability sa flipu
+   nezúčastňuje** (žiadna „et al." citácia na stránke). **Retrofit (odložený na milestone-prechod):**
+   Evaluation prehĺbenie („Es a spol." → „Es a kol.", „Zheng a spol." → „Zheng a kol."), Ingestion
+   prehĺbenie („a spol."), Guardrails prehĺbenie („Hines a spol.", „Wallace a spol.") — a §1.2 „Prijaté
+   obraty" riadok „a spol." prepísať na „a kol.".
+2. **«kvalita úlohy» → «kvalita výstupu» — FLIP, celý korpus.** Web-overené ako doložený slovenský AI-úzus
+   („kvalita výstupu", „kvalitnejšie odpovede od modelu"); „kvalita úlohy" pripisuje kvalitu úlohe, nie
+   výsledku (mierna translationese, hlásil literárny čitateľ Guardrails). **Observability vedie „prepad
+   kvality / regresia kvality / kvalita" — „kvalita úlohy" sa nevyskytla, adoptované automaticky.**
+   **Retrofit (odložený):** Guardrails prehĺbenie (spotlighting — „za cenu nižšej kvality úlohy",
+   „takmer nulová strata na kvalite úlohy", „kvalitu úlohy si vymenil za bezpečnosť", Mermaid „cena za
+   kvalitu úlohy ↑") → „kvalita výstupu".
+3. **«najnižšie / najnižších oprávnení» (least privilege) — POTVRDENÉ (resolve = žiadny flip).** Fáza 4/6/9
+   už rozhodli „princíp **najnižších** oprávnení" web-dokladmi (sk.wikipedia „princíp najnižšieho
+   privilégia", smernice NBÚ/SAAVS); návrhy „najmenších / najmenšie" zamietnuté. Held-stav uzavretý:
+   ostáva „najnižších". Observability termín nepoužíva.
+
+**Smer termínu podľa glosára / §1.1 (potvrdené, celý korpus).** Observability = kept-EN názov; v próze
+**KAŽDEJ stránky** glos „(pozorovateľnosť)" pri prvom výkladovom výskyte (nie v rekapitulácii), v see-also
+zoznamoch holé vlastné meno (zrkadlí Evaluation/Guardrails, Fáza 9). Kept-EN s glosom raz na stránku:
+**SLI „(service level indicator — čo meriaš)", SLO „(service level objective — cieľ na SLI)", error budget
+„(rozpočet chýb)", golden signals „(zlaté signály SRE)", burn-rate „(rýchlosť míňania rozpočtu chýb)",
+alert fatigue „(únava z upozornení)", cost attribution „(priradenie nákladov)", token accounting „(účtovanie
+tokenov)", TTFT „(time-to-first-token — čas do prvého tokenu)", retention „(uchovávanie)", model pinning
+„(pripnutie verzie modelu)", re-ingest „(opätovné načítanie do indexu)".** Rozpis akronymu v angličtine +
+slovenský glos (SLI/SLO/TTFT) je prijatý vzor dekódovania, nie hybridný glos.
+
+**Trieda 2 / natívne rendery (potvrdené):** **úrovne uchovávania (retention tiers)** (SK-vedené),
+**rozpočet latencie (latency budget)** (most raz, aby ladil s rodinou „rozpočet chýb"), **mäkký strop
+(soft cap) / tvrdý strop (hard cap)** (Karta 9), **posun rozloženia vstupov (input distribution shift)**,
+**triáž regresie (regression triage)** (SK-vedené), **regresia kvality** (quality drop/regression).
+`head-based sampling (vzorkovanie na začiatku tracu)`, `tail-based sampling (vzorkovanie na konci tracu)`,
+`priority/hybrid sampling (prioritné/hybridné vzorkovanie)`; generický akt nesie natívne „vzorkovanie".
+
+**„trace" — jeden slovenský tvar, „trasa" ZAMIETNUTÁ ako glosové slovo.** Kept-EN „trace" sa skloňuje
+slovensky **tracu/tracov/tracy/tracoch** (§1.1/§3). Glosy prvej verzie stránky použili **„trasa"** (na
+začiatku/konci **trasy**, jeden krok **trasy**, úložisko/UI/zberač **tras**) — „trasa" = cesta/route je iné
+slovo a v korpuse sa nevyskytuje inde; studený prechod ×2 hlásil zámenu trace/tracy/trasa. **Zjednotené na
+trace-rodinu:** „na začiatku/konci **tracu**", „jeden krok **tracu**" (span), „úložisko/UI/zberač **tracov**".
+
+**Súkromie a maskovanie (naväzuje na Guardrails, Fáza 9).** Vrstva odstránenia PII pred úložiskom =
+**„de-identifikácia"** (Fáza 9 term); **„redakcia" pre *redaction* ZAMIETNUTÁ** — je to falošný priateľ
+(slovenská „redakcia" = redakčná miestnosť / znenie textu), hlásili ju literárny redaktor aj **obaja** studení
+čitatelia prehĺbenia. Operátory maskovania ostávajú kept-EN identifikátory s ľahkým slovenským glosom (Fáza 9):
+**hash (odtlačok), redact (začiernenie), replace (náhrada), encrypt (šifrovanie).** Os **vratné verzus nevratné
+(reversible vs irreversible)**; **pseudonymizácia/anonymizácia** natívne (Fáza 9), most = čistá angličtina.
+**PII** kept-EN-vedené „PII (osobné údaje)" (Fáza 9, celý korpus).
+
+**Karty (potvrdené na tejto lekcii).**
+- **Karta 1:** „zlyhanie vyhľadávania / zlyhanie generovania" = kategória-etapa; jednotlivá zlá odpoveď /
+  halucinácia so stavom 200 OK = **„chyba"**, nie „zlyhanie". „failure mode" = **„spôsob zlyhania"** (Fáza 8),
+  „chybový režim" ✗. **„zlyhávajúce tracy / dopyty" PONECHANÉ** — prítomné činné príčastie opisuje *správanie*
+  („ktoré zlyhávajú"), nie rezervované podstatné meno kategórie; naivný čitateľ, konzistenčný aj literárny
+  redaktor sa zhodli, že sa nečíta ako kategória „zlyhanie".
+- **Karta 2:** číslo (skóre evaluácie, pass-rate) = **„skóre"**; proces/disciplína = **„online evaluácia /
+  hodnotenie"**. „hodnotenie" pre číslo ✗.
+- **Karta 4:** trace/observability store = natívne **„úložisko tracov / úložisko"**, NIE kept-EN „store"
+  (ten je rezervovaný pre pamäť frameworku).
+- **Karta 9:** rozpočtová politika = pár **„mäkký strop / tvrdý strop"**; sloveso **„zastropovať"** je prijaté
+  (webom overené — „zastropovať ceny/sumy"; naivný čitateľ dekódoval ×3), rovnako H2 „Zastropovať, koľko
+  požiadavka minie". „pevný strop" ✗ (rozbíja pár).
+
+**Verb-by-object (§1.5) potvrdené:** „model **vráti** výstup", „meranie **vráti** skóre"; **„vyprodukovať
+odpoveď" ✗ → „z dopytu **vyšla** odpoveď"**; **„robiť rozhodnutia" ✗ → „**rozhodovať**"**.
+
+**Figúry — výsledok skúšobnej doby (studený prechod ×2, naivný čitateľ dekódoval pri prvom kontakte):**
+- **POTVRDENÉ:** **„divadlo dostupnosti"** (uptime theatre — „robiť divadlo" = predstierať), **„stena zelených
+  dashboardov"** (wall of green dashboards), **„účet ti ujde"** (bill escapes you — idióm „niečo ti ujde"),
+  **„anonymizér"** (produktívna prípona -ér; podporené susedným Analyzer → Anonymizer), **„zastropovať"**
+  (viď Karta 9). **„kruh sa uzatvára"** znovupoužité (Fáza 2).
+- **ZAMIETNUTÉ:** **„rúra beží oboma smermi"** (pipe runs both ways) → **„tá väzba funguje oboma smermi"**;
+  „rúra" = rúra na pečenie / potrubie (falošný priateľ) a odtŕha sa od kept-EN „pipeline" použitého inde.
+
+**Nové kalkové pasce a slabé kolokácie (žatva Observability — do grep-zoznamov §1.3/§1.4):**
+- „prevaliť verziu / prevalil model / prevaliť pod rukami" ✗ (roll out a version — NULOVÉ slovenské webové
+  doklady; „prevaliť" = prevrátiť/pretlačiť; „pod rukami" ≠ idióm „pod rukou") → **„potichu vymeniť verziu /
+  vymenil model"**
+- „zodpovednosť" pre *liability* ✗ (= responsibility/accountability) → **„riziko / príťaž / záväzok"**
+- „kvalitatívny prepad" ✗ (= qualitative, významový posun) → **„prepad kvality"** (drž jednotne s „regresia
+  kvality")
+- „ovisne / metrika ovisne" ✗ (fyzické ovisnutie) → **„prepadne sa / klesne"**
+- „redakcia" pre *redaction* ✗ (falošný priateľ) → **„de-identifikácia"** (§ vyššie)
+- „dátové telá" ✗ (data bodies/payloads) → **„telá správ / samotné dáta"**
+- „idú prvé" ✗ (come first) → **„sú prvoradé"**
+- „dostáva to isté zaobchádzanie" ✗ (gets the same treatment) → **„to isté urobíš s…"**
+- „má rovnaký tvar ako" ✗ (§1.4 zakázaná šablóna „X má tvar, s ktorým si sa už stretol") → **„funguje rovnako
+  ako"**
+- „hlásenie po fakte" ✗ (report after the fact) → **„dodatočné hlásenie"**
+- „proti ktorým agent beží" ✗ (budgets an agent runs against) → **„ktoré agent nesmie prekročiť"**
+- „ovládací prvok" ✗ (control — číta sa ako GUI widget) → **„páka"** (usadená figúra) / „nástroj riadenia"
+- „zníži na (lacnejší model)" ✗ → **„prepne na (lacnejší model)"**
+- „sa obracia k tomu" ✗ (turns to) → **„sa venuje tomu"**
+- „predvídateľný na bajt" ✗ (predictable to the byte) → **„predvídateľný do posledného bajtu"**
+- „príde pochovaná v šume" ✗ (arrives buried) → **„zapadne v šume"**
+- „musí prežiť rozsah" ✗ (survive scale) → **„obstáť pri veľkom rozsahu/objeme"**
+- „vyzreté tímy" ✗ (mature = zrelé/o víne) → **„skúsené tímy"**
+- „skončil na niečom" (came to grief — dvojznačné) → **„popálil sa na niečom"**
+- „incident, ktorý čaká na svoj dátum" ✗ (waiting for its date) → **„incident, ktorý raz určite príde"**
+- „vzory" pre opakujúce sa vzorce správania → **„vzorce"** (vzor = návrhový vzor; recurring behaviour = vzorce)
+- „držať X merateľným" ✗ (keep measurable) → **„udržiavať X merateľným"**
+- šípka „→" ako „teda/vedie k" v súvislej PRÓZE ✗ → spojky („takže… a"); „→" ostáva v Mermaid, v diagnostických
+  odrážkach a v pomenovaných reťazcoch (Analyzer → Anonymizer)
+
+**Em-dash metronóm + AI-tells (potvrdenie Fázy 2/6/9).** Em-dash je naďalej vsuvková značka locale (Fáza 2),
+ale studené čítania hlásili **prehustenie** — stíšené v najhustejšom bloku prevodom na dvojbodku / bodku /
+zátvorku / čiarku. Vedome striedať aj: sentence-final „— twist" a opakovaný opener **„Časť 1 / Prvá časť /
+Táto stránka + sloveso** v susedných odsekoch (obidva znova hlásené ako AI-tell).
+
+**Štruktúra / Gate 4 (overené).** Frontmatter (index slug, deep-dive `sidebar_label`/`sidebar_position`),
+§4 reťazce, pätičky „Nové pojmy", text odkazu na prehĺbenie == `sidebar_label` „Vzorkovanie, SLO a rozpočty"
+(byte-for-byte), odkazy +1 hĺbky (glosár „../../../glossary.md"; SK súrodenci „../../{ingestion,retrieval,
+generation}/", „../evaluation/", „../guardrails/"; prehĺbenia súrodencov „../guardrails/deep-dive",
+„../evaluation/deep-dive" bez .md/lomky; EN-fallback folder-slash pre part-3 + „../../../part-2-agents/
+overview" bez .md/lomky), dva Mermaidy (IDs zachované, `gen_ai.response.model` ako kód). Žiadne video
+(čestné „nie"). `_category_.json` + `current.json` (label „Observability", kept-EN) nerekreované.
+
+**Odovzdanie milestone-prechodu vlny (čo musí zosúladiť korpusový prechod):** oba flipy STEP-0 vyššie
+(„a spol." → „a kol." a „kvalita úlohy" → „kvalita výstupu" na už publikovaných stránkach) plus všetky
+skoršie odložené flipy Fáz 5–9 (glosárové flipy hesiel: HITL „(človek v slučke)" v glosári porušuje §1.2/§1.3;
+„least privilege / najmenších" doklady; rozmernosť/dimenzionalita; kosínusová podobnosť; viacjazyčné
+embeddingy; pätičky „Nové pojmy" ↔ trojtriedne flipy glosára) a všetky figúry na skúšobnej dobe čakajúce na
+potvrdenie / kontrolu rodeným Slovákom (Skórer, allowlisty, preskórovať, signatúra funkcie, ansámbel behov,
+meradlo, „prehĺbenie vrstvy X" ako nedekódovateľný obraz).
