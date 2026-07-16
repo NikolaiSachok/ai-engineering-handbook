@@ -37,8 +37,9 @@ Output is generated into `build/` and can be served with any static host.
   Part II — Agents, Part III — Production & LLMOps, Glossary.
 - `i18n/ru/`, `i18n/sk/` — the Russian and Slovak locale trees (docs + theme strings), served at `/ru/`
   and `/sk/`. Both are audience-primary: written natively, never machine-translated.
-- `editorial/` — the style canon: a thin cross-language router plus a per-language term ledger
-  (`canon/ru.md`, `canon/sk.md`).
+- `editorial/` — the style canon: a thin cross-language router (`style-canon.md`) plus a per-language folder
+  `canon/<lang>/`, each holding the shared course-independent language rules (`_language.md`) and one
+  per-course term ledger (`rag.md`, `ai-sdlc.md`, …).
 
 ## Contributing / workflow
 
