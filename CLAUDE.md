@@ -14,7 +14,7 @@ natively per the workflow below, never machine-translated).
   content PR that adds or changes an EN/RU page **either updates the SK counterpart in the same PR or files
   a parity issue** — the deployed build now runs `onBrokenLinks: 'throw'` with `sk` included, so a broken or
   missing SK link fails the deploy. Authoring a new lesson means all three languages via the authoring-team
-  skill, then the SK canon (`editorial/canon/sk.md`) + `scripts/i18n-link-check.sh` gate it. The gated-
+  skill, then the SK canon (`editorial/canon/sk/`) + `scripts/i18n-link-check.sh` gate it. The gated-
   visibility infra (`RELEASED_LOCALES`/`UNRELEASED_LOCALES` in `docusaurus.config.ts`) stays in place for the
   NEXT locale: add it to `UNRELEASED_LOCALES` to build+validate it in CI while hidden on deploy, then move it
   to `RELEASED_LOCALES` to launch. A first visitor's browser language is
@@ -83,14 +83,20 @@ layer isn't closed.
 The editorial **rules** live in the `editorial-team` skill — that is the single source of truth. This section
 holds only what's specific to THIS project, which the skill consumes:
 - Primary language **RU**; translation target **EN**. Voice: second-person «ты».
-- **Style canon — per-language, behind a router.** `editorial/style-canon.md` is a thin **router**: the
+- **Style canon — language × course, behind a router.** `editorial/style-canon.md` is a thin **router**: the
   cross-language spine (what a canon is; bridge-rule principle; bold & metaphor budgets; figure-probation;
-  sense-card + book-unit concepts; ledger-binds-sense-not-string) + a pointer table. The actual term ledger
-  (rejected variants, semantic reservations, casing, recurring-block strings, voice) lives **per language**:
-  **`editorial/canon/ru.md`** (RU audience-primary + EN canonical source) and **`editorial/canon/sk.md`**
-  (Slovak). An editor loads the router **plus its target language's file only**. All of it is normative for
-  every page; canon updates ship **in the same PR** as the page that motivates them. (Add a language → add
-  `editorial/canon/<lang>.md` + a router row.)
+  sense-card + book-unit concepts; ledger-binds-sense-not-string) + a pointer table. Under it, each language
+  has a folder `editorial/canon/<lang>/` split two ways: **`_language.md`** — the course-independent language
+  rules (spelling/register, voice, bridge, bold; for SK also anti-bohemism, calque templates, verb-by-object),
+  shared by every course — and one **per-course term ledger** (`rag.md` — frozen — , `ai-sdlc.md`, …) holding
+  that course's rejected variants, semantic reservations, casing, recurring-block strings. RU is
+  audience-primary + EN canonical source; SK is the Slovak locale. **Loading contract:** load `_language.md`
+  (always) + the target course's ledger; **peek-don't-load** across sibling ledgers — for a shared
+  AI-engineering term, do a targeted read-only lookup, reuse a matching decision verbatim and cite it, or
+  FLAG a genuine sense-difference; never load a whole sibling ledger and never edit a frozen one. All of it is
+  normative for every page; canon updates ship **in the same PR** as the page that motivates them. (Add a
+  language → add `editorial/canon/<lang>/_language.md` + a `<course>.md` ledger + a router row. Add a course →
+  add `editorial/canon/<lang>/<course>.md` per language.)
 - **Terms this project keeps in English** (no crisp RU equivalent): *grounding*, *bi-encoder*,
   *cross-encoder*, *prompt injection*, *spotlighting*, *HyDE*, *BM25*, *ReAct*, *faithfulness*, *top-K*.
   (*Chunking* is NOT on this list: «чанкинг» is an established Cyrillic term — write «чанкинг», bridged as
@@ -189,7 +195,7 @@ Deep dive"** page. The convention (piloted on Tool use, #64):
   tool-use's Часть 2 is labelled «Надёжность и масштаб» / "Reliability & scale" (precedent). The page still
   identifies itself as the deep second pass in its own H1/intro and the Часть 1 backlink; the sidebar label is
   just the descriptor a reader scans in the tree. (`title:` frontmatter is unchanged — it keeps the lesson's
-  short name for breadcrumbs/tab per `canon/ru.md` §4.)
+  short name for breadcrumbs/tab per `canon/ru/rag.md` §4.)
 - **A lesson becomes a group ONLY once its Часть 2 exists.** Un-deepened lessons stay flat single `.md`
   files; do not pre-create empty folders.
 - **Inbound links follow the move.** Every `.md` link to the base becomes `./<lesson>/index.md` (or
