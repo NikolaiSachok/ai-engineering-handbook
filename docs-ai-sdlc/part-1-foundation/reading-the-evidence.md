@@ -179,4 +179,4 @@ Grading evidence is a universal skill; only the stakes scale.
   that cuts against whoever published it.
 
 **New terms:** evidence grade (the `MEASURED` / `REPORTED` / `ASSERTED` ladder), conflict of interest named
-inline, the against-interest finding, going to the primary.
+inline, going to the primary.
