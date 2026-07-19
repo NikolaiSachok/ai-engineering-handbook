@@ -3,7 +3,7 @@ title: "Pamäť projektu a vrstvenie znalostí"
 sidebar_position: 5
 ---
 
-# Pamäť projektu a vrstvenie znalostí
+# Veľmi múdry priateľ s amnéziou
 
 Medzi jednotlivými spusteniami si agenti nič nepamätajú. Keď ukončíš reláciu, všetko, k čomu model dospel — dohodnuté obmedzenia, zavrhnuté slepé uličky aj dôvody, prečo má funkcia práve takú podobu — sa vytratí. Zostanú iba súbory na disku. Trvalá pamäť projektu je nevyhnutná, aby sa vôbec dalo pracovať s celou skupinou zábudlivých agentov. Táto pamäť však prináša priebežné náklady: súbor s pravidlami sa nezapíše raz a neotvára iba podľa potreby. Model ho dostáva znova pri každom kroku a jediné dôkladné meranie ukázalo, že náklady na jeden krok vzrástli o viac ako 20%. Zdanlivo samozrejmé riešenie — zapisovať toho viac — sa tak samo stáva zdrojom problémov. Táto lekcia ukazuje východisko: rozvrstviť znalosti podľa toho, ako často ich agent pri konkrétnej úlohe skutočne potrebuje, namiesto vytvárania ďalších materiálov. Stupne dôveryhodnosti z Lekcie 2 — `MEASURED` (namerané), `REPORTED` (hlásené), `ASSERTED` (tvrdené) — používame aj tu. Navyše nimi hodnotíme ústredné tvrdenie tejto lekcie: pochádza od nás, opiera sa o jediný zdroj a zatajovať to by bolo nepoctivé.
 

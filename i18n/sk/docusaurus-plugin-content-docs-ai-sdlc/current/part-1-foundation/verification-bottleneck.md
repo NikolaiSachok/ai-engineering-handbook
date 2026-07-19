@@ -1,11 +1,11 @@
 ---
-title: Overovanie je úzke miesto
+title: "Úzke miesto overovania"
 sidebar_position: 1
 ---
 
-# Overovanie je úzke miesto
+# Generovanie zlacnelo, kontrola nie
 
-Generovanie zlacnelo, kontrola nie. Na tejto jedinej nerovnováhe stojí celý kurz. A dôkazy sú v tomto prípade nezvyčajne presvedčivé — presvedčivejšie než pri takmer všetkom ostatnom, čo sa tvrdí o AI a softvéri. Keď sa pozrieš na pôvodné štúdie, jedna polovica príbehu je dobre zmeraná, druhá takmer vôbec. Nezávislé merania spoľahlivo ukazujú, že objem odovzdanej práce rastie. Či je však výsledok aj *dobrý*, sa nemeria. Keď tieto dve zistenia spojíš, dostaneš hlavnú tézu tejto lekcie: nekontrolované generovanie je riziko, nie skutočný pracovný výkon.
+Na tejto jedinej nerovnováhe stojí celý kurz. A dôkazy sú v tomto prípade nezvyčajne presvedčivé — presvedčivejšie než pri takmer všetkom ostatnom, čo sa tvrdí o AI a softvéri. Keď sa pozrieš na pôvodné štúdie, jedna polovica príbehu je dobre zmeraná, druhá takmer vôbec. Nezávislé merania spoľahlivo ukazujú, že objem odovzdanej práce rastie. Či je však výsledok aj *dobrý*, sa nemeria. Keď tieto dve zistenia spojíš, dostaneš hlavnú tézu tejto lekcie: nekontrolované generovanie je riziko, nie skutočný pracovný výkon.
 
 Najprv krátko k hodnoteniu tvrdení, pretože táto lekcia sa oň výrazne opiera. `MEASURED` (namerané) znamená, že účinok preukázala kontrolovaná štúdia alebo randomizovaný experiment; `REPORTED` (uvádzané) znamená, že ho opisujú ľudia z praxe, ale nikto ho samostatne neoddelil od ostatných vplyvov; `ASSERTED` (tvrdené) znamená, že ho niekto obhajuje bez merania. Pri každom čísle nižšie uvádzame aj tento stupeň dôkazu. Celú hierarchiu dôkazov vysvetľuje 2. lekcia.
 

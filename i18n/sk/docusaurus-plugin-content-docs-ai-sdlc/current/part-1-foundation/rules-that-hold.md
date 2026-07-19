@@ -3,7 +3,7 @@ title: "Pravidlá, ktoré vydržia"
 sidebar_position: 6
 ---
 
-# Pravidlá, ktoré vydržia
+# Pokyn nie je kontrola
 
 Pravidlo, o ktorého dodržiavanie agenta iba *požiadaš*, je odporúčanie. Pravidlo, ktoré *nedokáže obísť*, je zábrana. Na tomto jedinom rozdiele stojí celá lekcia. Ide pritom o jedno z mála tvrdení v tomto kurze, ktoré podporujú až tri nezávislé zdroje: názory popredných odborníkov v odbore, záznamy podnikových incidentov a skutočný súbor produkčných pravidiel. Všetky dospeli k rovnakému záveru rôznymi cestami bez toho, aby sa navzájom citovali. Keď sa nezávislé zdroje takto jednoznačne zhodujú, treba to otvorene povedať a ukázať všetky tri. Stupne dôkazov z 2. lekcie — `MEASURED` (namerané), `REPORTED` (hlásené), `ASSERTED` (tvrdené) — používame aj tu. Záleží na nich viac než zvyčajne, pretože najsilnejším zdrojom je súbor správ o incidentoch a najslabšia je samotná zhoda názorov.
 

@@ -1,11 +1,11 @@
 ---
-title: Verification is the bottleneck
+title: "The verification bottleneck"
 sidebar_position: 1
 ---
 
-# Verification is the bottleneck
+# Generation got cheap; checking didn't
 
-Generation got cheap; checking did not. That single asymmetry is the spine of this whole course. And the
+That single asymmetry is the spine of this whole course. And the
 evidence for it is unusually clean — cleaner, in fact, than for almost anything else people claim about AI and
 software. Go to the primary studies and one half of the story is measured cleanly, the other barely at all.
 Output rises, reliably, across independent measurements; whether the output is any *good* stays unmeasured. Put

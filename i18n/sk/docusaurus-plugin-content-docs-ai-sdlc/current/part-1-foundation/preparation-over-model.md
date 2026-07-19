@@ -3,7 +3,7 @@ title: "Príprava je dôležitejšia než model"
 sidebar_position: 4
 ---
 
-# Príprava je dôležitejšia než model
+# Rozhoduje príprava, nie model
 
 V debatách o programovacích agentoch dominujú dve otázky: ktorý model použiť a ako sformulovať prompt. Ani jedna však nie je tým správnym miestom, kde hľadať najväčšie zlepšenie. Najpresvedčivejšie dôkazy v tejto lekcii ukazujú na niečo menej očividné: na *rozsah úlohy*, ktorú agentovi zveríš, a na *prostredie*, ktoré mu pripravíš ešte predtým, než napíše prvý riadok kódu. Ak toto urobíš správne, aj bežný model prekoná najvyspelejší model, ktorý bez potrebných podmienok tápe.
 
