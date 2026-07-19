@@ -3,7 +3,7 @@ title: "Rules that hold"
 sidebar_position: 6
 ---
 
-# Rules that hold
+# An instruction is not a control
 
 A rule the agent is *asked* to follow is a suggestion. A rule it *cannot bypass* is a control. That single
 distinction is the whole of this lesson, and it is the rare claim in this course that arrives over-determined:

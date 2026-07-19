@@ -1,9 +1,9 @@
 ---
-title: "Reading the field's evidence"
+title: "Reading the evidence"
 sidebar_position: 3
 ---
 
-# Reading the field's evidence
+# Go to the primary, then say the grade out loud
 
 Lesson 1 leaned on a grade attached to every number — `MEASURED`, `REPORTED`, `ASSERTED`. This lesson is
 where that grade comes from — the one instrument this course hands you and carries into every other lesson. You arrive

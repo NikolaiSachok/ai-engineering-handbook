@@ -3,7 +3,7 @@ title: "Preparation over model"
 sidebar_position: 4
 ---
 
-# Preparation over model
+# The setup beats the model
 
 Two questions dominate most conversations about coding agents: which model, and how to word the prompt.
 Both are the wrong lever. The strongest evidence in this lesson points somewhere less obvious: the *scope* you

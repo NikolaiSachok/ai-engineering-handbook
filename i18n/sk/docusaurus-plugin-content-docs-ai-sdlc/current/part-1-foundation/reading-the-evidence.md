@@ -1,9 +1,9 @@
 ---
-title: "Ako posudzovať dôkazy v odbore"
+title: "Ako posudzovať dôkazy"
 sidebar_position: 3
 ---
 
-# Ako posudzovať dôkazy v odbore
+# Choď k prvotnému zdroju a nahlas pomenuj stupeň dôkazu
 
 V 1. lekcii mal každý údaj priradený stupeň dôkazu — `MEASURED` / `REPORTED` / `ASSERTED` (namerané / hlásené / tvrdené). V tejto lekcii sa dozvieš, ako tento stupeň určiť. Je to jediný nástroj, ktorý dostaneš v tomto kurze a budeš ho používať vo všetkých ďalších lekciách. Do kurzu si možno prinášaš aj tvrdenia, ktoré nie sú pravdivé — nie preto, že by niekto klamal, ale preto, že druhotné zdroje skresľujú údaje oboma smermi, keď ich preberajú jeden od druhého. Nadšenci ich zveličujú jedným smerom, skeptici druhým. A keď si ľudia údaj posúvajú z ruky do ruky, stratí sa práve kontext, ktorý mu dával výpovednú hodnotu. Postup je preto jednoduchý a nijako zvlášť pôsobivý: nájdi prvotný zdroj, urči stupeň toho, čo si našiel, a otvorene ho uveď.
 

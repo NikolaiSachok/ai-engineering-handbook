@@ -3,7 +3,7 @@ title: "Project memory and tiering"
 sidebar_position: 5
 ---
 
-# Project memory and tiering
+# A very smart friend with amnesia
 
 Agents keep nothing between runs. End a session and everything the model worked out — the constraints you
 agreed, the dead ends you ruled out, why a function is shaped the way it is — evaporates, leaving only the files
