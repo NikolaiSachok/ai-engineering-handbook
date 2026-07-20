@@ -133,6 +133,13 @@ Použitie v kurze:
   zvinú do „Kurz sa tento nedostatok snaží napraviť" / «Курс старается исправить этот недостаток». EN si „not a
   boast" zámerne ponecháva. **Pri RE-RENDERI intra disclaimer NEVRACAJ** — je to stance-veta, nie fakt (pozri
   pravidlo „stance vs information"). Tiež „Väčšina/Most" → „Mnohé/Многие" (owner). PR #203.
+- **observability — REUSE RAG-kánon, sense-scoped (owner 2026-07-20).** Koncept/termín = **„pozorovateľnosť" /
+  kept-EN „observability"** (ako v `rag.md`; RU zrkadlí «наблюдаемость»/«observability»). **„monitoring" IBA pre
+  bežný zmysel** „sledovať produkciu / dashboardy", NIE ako názov konceptu. Dôvod: (1) konzistencia s RAG kurzom
+  na tom istom webe; (2) zachovať rozdiel monitoring (známe signály/dashboardy, known-unknowns) vs observability
+  (vlastnosť — klásť ľubovoľné otázky, unknown-unknowns), na ktorom stojí kľúčový insight lekcie OPERATE
+  („nefunkčný systém nevytvára žiadne dáta"). SK OPS-blok mermaid v intre je už „pozorovanie" (akt) — správne,
+  nemení sa. (RU-strana: OPS-blok „прод + наблюдаемость" → „прод + мониторинг", lebo tam je EN sloveso "observe".)
 
 
 ## Pilot Intro+L1 — rozhodnutia tohto behu (2026-07-16)
