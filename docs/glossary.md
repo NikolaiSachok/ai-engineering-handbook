@@ -10,6 +10,8 @@ Single definitions for the terms the handbook pages link to. Each one is defined
 list grows as we work through the layers. Where a term has a canonical source for its formulas and history,
 a link follows the definition (↗ Wikipedia for classics, ↗ arXiv for techniques from papers).
 
+<a id="ingestion-chunking"></a>
+
 ## Ingestion — chunking
 
 **Chunk** — a fragment of a document, the unit of indexing. It is at once the unit of search and the unit
@@ -41,6 +43,8 @@ that has no text layer. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Optical_ch
 **Late chunking** — run the whole long document through the embedding model first, then apply chunk
 boundaries and pool the token vectors per chunk, so each chunk vector carries context from the full
 document. Needs a long-context embedding model. ↗ [arXiv](https://arxiv.org/abs/2409.04701)
+
+<a id="ingestion-embeddings"></a>
 
 ## Ingestion — embeddings
 
@@ -78,6 +82,8 @@ of the corpus, since query and document must share one model version.
 **Matryoshka Representation Learning (MRL)** — training embeddings so information is packed coarse-to-fine
 into nested prefixes, so a vector can be truncated to fewer dimensions and stay usable — a size/accuracy
 dial with no re-embedding. ↗ [arXiv](https://arxiv.org/abs/2205.13147)
+
+<a id="retrieval"></a>
 
 ## Retrieval
 
@@ -154,6 +160,8 @@ relevant documents are found but for their positions (higher is worth more).
 **MRR (mean reciprocal rank)** — the reciprocal position of the first relevant result, averaged over
 queries. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Mean_reciprocal_rank)
 
+<a id="generation"></a>
+
 ## Generation
 
 **Grounding** — tying the answer to the supplied context rather than the model's parametric memory.
@@ -195,6 +203,8 @@ the context looks implausible. Faithfulness is what measures whether it did.
 
 **Answer-shaping** — controlling the answer's format, tone, and length. A real quality lever, but subordinate
 to grounding: shaping must never drop a citation, a caveat, or an honest refusal.
+
+<a id="evaluation"></a>
 
 ## Evaluation
 
@@ -270,6 +280,8 @@ agreement is a signal to sharpen the rubric, not to overrule a dissenter.
 informative (where the judge is least confident, where judges disagree, or where production surfaced a
 failure) instead of labelling at random.
 
+<a id="guardrails"></a>
+
 ## Guardrails
 
 **Guardrails** — a safety layer on the input and output of an LLM system: against attacks, leaks, and harmful output.
@@ -295,6 +307,8 @@ failure) instead of labelling at random.
 **Attack success rate (ASR)** — the share of successful attacks over a set; a guardrails quality metric.
 
 **Defence-in-depth** — layered defence: no single layer is complete; they work together.
+
+<a id="observability"></a>
 
 ## Observability
 
@@ -371,6 +385,8 @@ TTFT vs total) so a breach points at the slow stage.
 **Soft cap / hard cap** — a budget policy: a soft cap warns (alert, red dashboard) and lets the request
 through; a hard cap enforces at runtime (reject, downgrade to a cheaper model, truncate context).
 
+<a id="agentic-rag"></a>
+
 ## Agents — agentic RAG
 
 **Agentic RAG** — RAG in which retrieval becomes an action the model chooses inside a loop, rather than a
@@ -419,6 +435,8 @@ budget.
 Stopping too early under-retrieves (unsupported answers); never stopping over-retrieves (cost +
 lost-in-the-middle). Self-RAG's support / usefulness tokens are one implementation.
 
+<a id="tools"></a>
+
 ## Agents — tools
 
 **Tool use / function calling** — the general mechanism by which the model calls an external function: the
@@ -466,6 +484,8 @@ and tool-selection errors on large tool sets.
 
 **Retry budget** — a hard ceiling on retry attempts, per call and per run; without it a deterministically
 failing call becomes a non-terminating retry loop. Mirrors the step budget and token budget.
+
+<a id="planning-loops"></a>
 
 ## Agents — planning & loops
 
@@ -540,6 +560,8 @@ success) versus process (was each step and tool call sound), plus step efficienc
 **pass^k** — the fraction of tasks an agent solves on all k independent attempts; a reliability metric that
 exposes the run-to-run variance a single pass@1 hides. ↗ [arXiv](https://arxiv.org/abs/2406.12045)
 
+<a id="multi-agent"></a>
+
 ## Agents — multi-agent systems
 
 **Multi-agent system** — several specialised agents collaborating instead of one agent; motivated by
@@ -581,6 +603,8 @@ form of the critic/debate topology. ↗ [arXiv](https://arxiv.org/abs/2305.14325
 message so the per-agent traces reassemble into one parent–child trace you can grade end-to-end; the
 precondition for evaluating a team.
 
+<a id="orchestration-frameworks"></a>
+
 ## Agents — orchestration frameworks
 
 **Orchestration framework** — a library that packages the agent loop, tool-calling glue, state, control
@@ -620,6 +644,8 @@ workflows) versus building the graph in code (add_node / add_edge).
 
 **Human-in-the-loop (HITL)** — a pause point where a human approves or intervenes before the loop continues;
 in a framework, a first-class interrupt node.
+
+<a id="mcp"></a>
 
 ## Agents — MCP and agent protocols
 
@@ -680,6 +706,8 @@ on change.
 **Confused deputy** — a privileged component tricked into misusing its authority on an attacker's behalf; a
 classic risk in remote-MCP OAuth token handling. Least privilege and tight token scoping are the counter.
 
+<a id="real-agents"></a>
+
 ## Agents — real agents (capstone)
 
 **Extended thinking** — the visible reasoning blocks a model emits before answering; in Claude they surface
@@ -704,6 +732,8 @@ tool); returning an object from a callback short-circuits the call.
 **Permission modes** — modes that decide what an agent may do without confirmation
 (`default`/`acceptEdits`/`plan`/`bypassPermissions`…), evaluated in a fixed order where a `deny` rule blocks
 even under `bypassPermissions`.
+
+<a id="serving"></a>
 
 ## Production — serving
 
@@ -811,6 +841,8 @@ including scale-to-zero and concurrency-based scaling.
 RunPod, Replicate, Baseten, Cloud Run with a GPU); its central problem is the cold-start tax, softened by
 memory snapshots and warm pools.
 
+<a id="cloud-platforms"></a>
+
 ## Production — cloud platforms
 
 **Managed endpoint** — a model served by a cloud AI platform behind your IAM, billing, and network
@@ -888,6 +920,8 @@ Sovereign Cloud, Google Distributed Cloud).
 **Air-gapped** — an environment fully disconnected from the public internet, for regulated or defence
 workloads; frontier models often lag or are absent there.
 
+<a id="tooling-ecosystem"></a>
+
 ## Production — the tooling ecosystem
 
 **Instrumentation** — adding the code or SDK hooks that emit traces, spans, and metrics from the pipeline;
@@ -902,6 +936,8 @@ mid-2026. ↗ [GitHub](https://github.com/open-telemetry/semantic-conventions-ge
 
 **Red-teaming** — deliberately attacking your own system to measure its defences (attack success rate);
 productized in eval tools and platform red-team features.
+
+<a id="llmops"></a>
 
 ## Production — LLMOps
 
