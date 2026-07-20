@@ -31,19 +31,19 @@ three openings are not decoration. They are the grade, spoken.
 
 Once a claim has a grade, four checks decide whether the number survives contact.
 
-**Denominators first.** The same Google telemetry yields either `28.7%` or `70.6%` for "share of code written
+**Denominators first.** The same [Google telemetry](https://arxiv.org/abs/2601.19964) yields either `28.7%` or `70.6%` for "share of code written
 by AI," and the only thing that moves between them is whether copy-paste sits in the denominator (`MEASURED`;
 Google prints both figures side by side, on one dataset). Any "X% of our code is AI-written" headline is a
 denominator choice, not a fact. Ask what the bottom of the fraction is before you repeat the top.
 
 **Then the conflict of interest — and name it inline, not in a footnote.** "GitHub researchers measuring
 GitHub's product" is part of the finding. The structural rule underneath it: whoever sells the tool cannot
-measure it. The organisation with nothing to sell tends to publish the useful number — Meta printed its own
-unflattering `19.7%`; the vendor prints the flattering one.
+measure it. The organisation with nothing to sell tends to publish the useful number — [Meta printed its own
+unflattering `19.7%`](https://arxiv.org/abs/2507.13499); the vendor prints the flattering one.
 
 **Then currency.** A live number can be stale or withdrawn and still circulate. Google quietly retracted a 2022
 context-switch benefit for lack of statistical significance; a web search repeated it as fact in 2026 anyway.
-METR's "19% slower" has been superseded by METR's own hand. A number does not stop travelling when it stops
+[METR's "19% slower"](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) has been superseded by METR's own hand. A number does not stop travelling when it stops
 being true.
 
 **And above all, go to the primary.** During the research behind this course, search snippets were wrong
@@ -53,7 +53,7 @@ The fix was never a better snippet. It was opening the paper.
 ## Percentage points are not percent
 
 One check earns the course the right to teach the rest, and it is the one most outlets get wrong. When
-comprehension falls from `67%` to `50%` (`MEASURED`), that is a drop of **17 percentage points** — a 25%
+[comprehension falls from `67%` to `50%`](https://www.anthropic.com/research/AI-assistance-coding-skills) (`MEASURED`), that is a drop of **17 percentage points** — a 25%
 relative decline — not "17% lower." METR's self-assessment error is **40 percentage points**, not 40%. And a
 relative increase is not a share: "+31.3% more PRs merge without review" does not mean 31% of PRs go
 unreviewed. These are different quantities. Blurring them is exactly the sloppiness this lesson exists to
@@ -62,7 +62,7 @@ correct — get it wrong once and you forfeit the right to teach it.
 ## The most-repeated number in the genre — and why you can't use it
 
 Put those checks to work on the single most-quoted statistic in the "AI hurts code quality" genre: block
-duplication up `81%` since 2023, copy-paste from `9.4%` to `15.7%`. It comes from GitClear, a vendor that sells
+duplication up `81%` since 2023, copy-paste from `9.4%` to `15.7%`. It comes from [GitClear](https://www.gitclear.com/the_ai_code_quality_maintainability_gap), a vendor that sells
 code-quality analysis. Run the four checks and it dissolves in your hands. No author is listed. The page
 carries no date. The corpus is private, so no one outside can reproduce it. No method is stated, there are no
 controls, and — the load-bearing flaw — there is no per-line AI attribution at all. It is a time-series across
@@ -75,8 +75,8 @@ Five targeted searches turned up no credible methodological rebuttal either — 
 reproduction, nothing. The weakness is that **you can't check it.** There is nothing to reproduce. That is a
 different and quieter failure than being wrong, and it is the more common one.
 
-Meanwhile the honest version of the claim survives. The only independent causal test — a Carnegie Mellon
-matched difference-in-differences, 401 treated repos against 606 controls — finds duplication up `7.92%` in
+Meanwhile the honest version of the claim survives. The only independent causal test — a [Carnegie Mellon
+matched difference-in-differences](https://arxiv.org/abs/2601.13597), 401 treated repos against 606 controls — finds duplication up `7.92%` in
 agent-first repos, not statistically significant, and `−0.94%`, also not significant, for IDE-first. What
 *is* strongly significant is complexity (`+34.85%`) and static-analysis warnings (`+17.73%`). So "AI degrades
 maintainability" holds — but through complexity, not clones. The most-repeated number in the genre is the one
@@ -122,15 +122,15 @@ this lesson trains, one field over.
 
 Some distorted claims are common enough to name and set down.
 
-- The **"441% review-time"** figure is Faros AI, not DORA — and it is +441.5%, and the "+31.3%" beside it is a
+- The **"441% review-time"** figure is [Faros AI](https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways), not DORA — and it is +441.5%, and the "+31.3%" beside it is a
   relative increase in unreviewed PRs, not a 31% share.
 - The **"Stanford 100,000-developer study"** has no published paper. The numbers travel through talks and slide
   decks; the method is unpublished. Cite it, if at all, as "a Stanford group reports, in talks but not a
   paper."
-- **"Copilot makes developers 55% faster"** is GitHub researchers, on GitHub's product, timing one toy
+- **"[Copilot makes developers 55% faster](https://arxiv.org/abs/2302.06590)"** is GitHub researchers, on GitHub's product, timing one toy
   HTTP-server task, in 2023. It is a marketing artefact, not a finding about your work.
-- **"AI capability doubles every 7 months"** is a rounding of METR's own fit — 207 days — and METR's 2026
-  revision puts the recent rate at 131 days. It is a regression through twelve models on tasks METR itself
+- **"AI capability doubles every 7 months"** is a rounding of [METR's own fit](https://arxiv.org/abs/2503.14499) — 207 days — and [METR's 2026
+  revision](https://metr.org/blog/2026-1-29-time-horizon-1-1/) puts the recent rate at 131 days. It is a regression through twelve models on tasks METR itself
   calls "unpunishing" and "static." Cite the fit; don't cite it as a law.
 
 ## How to state a finding honestly
@@ -138,7 +138,7 @@ Some distorted claims are common enough to name and set down.
 The failure mode on both sides is identical: a real number, stripped of its population and its proxy. The
 repair is a sentence shape. State the number, then attach what most retellings drop — who it was measured on,
 what proxy stood in for value, who paid, and whether it is still current. "Across tens of thousands of
-Microsoft engineers compared against themselves, adopting a CLI agent came with ~24% more merged pull requests
+Microsoft engineers compared against themselves, adopting a CLI agent came with [~24% more merged pull requests](https://arxiv.org/abs/2607.01418)
 over four months — and a merged PR is not the value it delivers." One sentence, and it carries the number, the
 population, the proxy, and the conflict. It reads no worse for it.
 
