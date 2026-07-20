@@ -36,7 +36,7 @@ difference-in-differences design over 36,000 treated and 18,000 control develope
 self-select into using the tool.
 
 A third number circulates and is worth citing only with its caveat attached (`MEASURED`): one enterprise that
-*mandated* a "2×" target reached **2.09×** per-capita merged PRs. That is a textbook Goodhart case — a single
+*mandated* a "2×" target reached [**2.09×**](https://arxiv.org/abs/2607.01904) per-capita merged PRs. That is a textbook Goodhart case — a single
 company that mandated the exact metric it then measured. When the metric is the target, it stops measuring
 anything.
 

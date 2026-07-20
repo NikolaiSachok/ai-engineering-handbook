@@ -17,7 +17,7 @@ Začnime tým, o čom niet pochýb. Ľudia, ktorí začali používať programov
 
 [Google zaznamenal rovnaký obraz](https://arxiv.org/abs/2601.19964) (`MEASURED`): používatelia jeho nástroja „Transform Code“ vytvorili v priemere na jedného vývojára za mesiac **+17,5% viac zoznamov zmien** (*change-lists*) a interval odhadu bol úzky. Platia rovnaké výhrady: ide o proxy metriku objemu práce a pozorovaciu štúdiu využívajúcu metódu rozdielu rozdielov (*difference-in-differences*). Porovnávala 36 000 vývojárov používajúcich nástroj s 18 000 vývojármi v kontrolnej skupine, pričom ľudia sa sami rozhodovali, či nástroj začnú používať.
 
-V obehu je aj tretie číslo, ktoré má zmysel citovať iba spolu s výhradou (`MEASURED`): jedna firma zaviedla povinný cieľ „2×“ a dosiahla **2,09×** viac zlúčených PR na osobu. Je to učebnicový príklad Goodhartovho zákona (*Goodhart’s law*): tá istá firma si teda stanovila povinný cieľ priamo v metrike, ktorú potom merala. Keď sa metrika stane cieľom, prestane čokoľvek spoľahlivo merať.
+V obehu je aj tretie číslo, ktoré má zmysel citovať iba spolu s výhradou (`MEASURED`): jedna firma zaviedla povinný cieľ „2×“ a dosiahla [**2,09×**](https://arxiv.org/abs/2607.01904) viac zlúčených PR na osobu. Je to učebnicový príklad Goodhartovho zákona (*Goodhart’s law*): tá istá firma si teda stanovila povinný cieľ priamo v metrike, ktorú potom merala. Keď sa metrika stane cieľom, prestane čokoľvek spoľahlivo merať.
 
 Pravidlo pre výklad je jednoduché a prísne: nárast uveď presne a vždy pomenuj proxy metriku. Hovor „Microsoft zaznamenal o 24% viac zlúčených PR“, nikdy nie „produktivita stúpla o 24%“.
 
