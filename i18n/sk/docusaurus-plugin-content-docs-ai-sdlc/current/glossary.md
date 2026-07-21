@@ -181,3 +181,19 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 **Skreslenie zoznamu detektorov** — tendencia detektora alebo testovacej sady pokrývať iba triedy, ktoré už v minulosti spôsobili problém, pretože zoznamy detektorov vznikajú z incidentov, ktoré si pamätáme. Triedy, ktoré sa ešte nikdy nevyskytli, preto zostávajú zo svojej podstaty mimo reťazca.
 
 **Hľadanie hrubým detektorom** — proaktívny doplnok registra: použitie zámerne hrubého detektora, ktorý sa spúšťa príliš často a ktorého nálezy sa následne posudzujú a filtrujú. Jeho cieľom je odhaliť triedu chýb, ktorú žiadny presný detektor zo svojej podstaty nedokáže identifikovať.
+
+<a id="detection-vs-mutation"></a>
+
+## Detekcia a oprava
+
+**Detekcia a oprava** — pravidlo, podľa ktorého musí byť krok, ktorý chybu *nájde*, oddelený od kroku, ktorý kód *opraví* či upraví. Audítor, ktorý môže upravovať aj to, čo kontroluje, môže nález odstrániť namiesto jeho nahlásenia, takže zoznam nálezov prestane opisovať skutočnosť.
+
+**Oddelenie zodpovedností (pri agentoch)** — klasický riadiaci mechanizmus — kto vykonáva zmenu, nesmie ju zároveň schvaľovať — prispôsobený agentom: ten, kto chyby nájde, ich neopravuje; posudzovateľ nie je autorom a nikto si nemôže udeliť schválenie sám. Ide o rovnakú nezávislosť dvoch strán, ktorú I. časť spojila so SLSA a DORA.
+
+**Vyradený trik** — skratka, ktorá dostane bránu do zeleného stavu bez vykonania skutočnej práce (potlačenie upozornenia, orezanie namiesto zmeny rozloženia) a ktorej použitie vopred znemožníš tým, že ju v zadaní na opravu pomenuješ a zakážeš. Obchádzanie brány je predvolené správanie agenta, preto treba trik vyradiť, nie iba od neho agenta odrádzať.
+
+**Usporiadaný súbor povolených postupov a zoznam zákazov** — dve časti zadania na opravu: usporiadaný rebrík legitímnych riešení (najvhodnejšie ako prvé, skratka potláčajúca príznak ako posledná možnosť alebo zakázaná) a výslovný zoznam konkrétnych trikov, ktoré sa pri tejto triede opráv nesmú použiť.
+
+**Potlačenie príznaku** — vypnutie signálu namiesto odstránenia príčiny: test, ktorý prejde aj cez mŕtvy kód, čistý výsledok lint dosiahnutý potlačením upozornenia alebo diff, ktorý skryje príznak z posudzovanej časti.
+
+**Goodhartov zákon** — „keď sa z meradla stane cieľ, prestane byť dobrým meradlom“; proxy-metrika, ktorú optimalizuješ dostatočne tvrdo (počet zlúčených PR či uzavretých ticketov), prestane sledovať hodnotu, ktorú pôvodne zastupovala.

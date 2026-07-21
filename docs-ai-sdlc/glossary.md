@@ -158,3 +158,17 @@ its section here. The list grows as the course does.
 **Probe-list bias** — the tendency of a probe or test suite to cover only classes that have burned you before, because probe lists are built from remembered incidents; it leaves classes that have never happened structurally off the chain.
 
 **Broad-probe hunt** — the proactive complement to the ledger: a deliberately coarse probe that over-reports, filtered by judgment, used to surface a defect class that every precise probe is structurally unable to name.
+
+## Detection vs mutation
+
+**Detection vs mutation** — the rule that the step which *finds* a defect must be separate from the step which *fixes* (mutates) the code. An auditor that can also edit what it audits can make a finding disappear instead of reporting it, so the finding list stops describing reality.
+
+**Separation of duties (agentic)** — the classic control — whoever makes a change cannot also certify it — restated for agents: the finder is not the fixer, the reviewer is not the author, and the sign-off is not self-granted. The same two-party independence Part I tied to SLSA and DORA.
+
+**Priced-out cheat** — a shortcut that greens the gate without doing the work (suppress the warning, clip instead of reflow), made unavailable in advance by naming and forbidding it in the fix brief. Gaming the gate is the default agent behavior, so the cheat must be priced out, not merely discouraged.
+
+**Ordered toolkit and prohibition list** — the two-part fix brief: an ordered ladder of legitimate remedies (most-correct first, the symptom-suppressing shortcut last-resort or forbidden) plus an explicit list of the specific cheats this class of fix may not use.
+
+**Symptom suppression** — turning off the signal instead of fixing the cause: a test that passes over dead code, a lint clean bought by suppressing the warning, a diff that hides the symptom from the reviewed surface.
+
+**Goodhart's law** — "when a measure becomes a target, it ceases to be a good measure"; a proxy metric optimized hard enough (merged-PR count, tickets closed) stops tracking the value it stood for.
