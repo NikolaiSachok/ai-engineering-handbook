@@ -35,11 +35,13 @@ I spend most of my time in that queue, not in generation. It's also the argument
 [the real bottleneck in agent-built software is verification, not generation](/ai-sdlc/part-1-foundation/verification-bottleneck).
 I didn't set out to prove it on myself. The project did that on its own.
 
-Some of the judgment calls have been genuinely interesting. I spent real time working out which model to trust
-for translation, and the most fluent one wasn't the most faithful — the smoothest Russian sometimes drifted
-furthest from the meaning. I found that authoring a lesson natively in each language beat translating one
-version into the others. I check every video before I embed it, because an ID recalled from memory points at the
-wrong thing often enough to matter. None of that is generation. It's deciding what's good enough to carry my
+Some of the judgment calls have been genuinely interesting. Getting each lesson to read native in three
+languages took several tries: a plain translation of the English came out full of calques, a skill I built to
+hunt those down helped only so far, and even authoring each language separately from a shared skeleton didn't
+settle it. What finally won was almost the opposite of where I'd landed — translating the finished English with a
+newer model and a prompt I spent real effort getting right, which beat the separately-authored versions. I check
+every video before I embed it, too, because an ID recalled from memory points at the wrong thing often enough to
+matter. None of that is generation. It's deciding what's good enough to carry my
 name.
 
 ## What the agents don't do
