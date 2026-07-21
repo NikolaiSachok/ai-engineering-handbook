@@ -97,6 +97,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 **Vlastník konzistencie** — rola zodpovedná za zosúlaďovanie súboru pravidiel tak, aby dva záväzné súbory nemohli predpisovať protichodné riešenia.
 
 <a id="vision-to-stages"></a>
+
 ## Od vízie k etapám
 
 **Overiteľná etapa** — jednotka plánu, ktorú určuje podmienka dokončenia, ktorú vieš potvrdiť, nie krok, ktorý vieš opísať; úsek medzi dvoma kontrolami, ktoré môžeš skutočne vykonať.
