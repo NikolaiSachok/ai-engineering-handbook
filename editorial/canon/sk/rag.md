@@ -1004,8 +1004,11 @@ Druhá lekcia vlny 1 (Retrieval index + prehĺbenie „Fúzia, radenie a metriky
 prechod ×2. Zapisuje sa, aby ďalšie lekcie vlny (Generation a ďalej) dedili už rozhodnuté.
 
 **Rodený hovorca — oprava (2026-07, po publikovaní).** Video-caption „The big picture…“ bol preložený ako
-**„Veľký obraz…“** — kalk (*big = veľký*), ktorý rodený Slovák označil za neprirodzený. Opravené na
+**„Veľký obraz…“**, čo rodený Slovák označil za neprirodzené — skalkovaný **idióm**. Opravené na
 **„Celkový obraz…“** (alternatíva „Globálny pohľad“); zapísané do §1.4 kalkovej tabuľky (`_language.md`).
+Pozor na rozsah: pasca je **kolokácia „the big picture“**, nie slovo „big“ — „big“ = „veľký“ je v iných
+kontextoch úplne správne (big file → veľký súbor). Rovnaký princíp ako tezaurus podľa slovosledu inde
+v kánone: preklad závisí od **kolokácie a kontextu**, nie od slova samého.
 Pri tejto príležitosti bola **celá lekcia Retrieval preložená nanovo cez Sol** aktualizovanými skillmi
 (authoring/editorial), keďže pôvodný preklad vznikol pred ich revíziami (incumbent-term deferencia,
 kontrola konotácie, kontrola plotnosti termínu, konzultácia s externými zdrojmi).
