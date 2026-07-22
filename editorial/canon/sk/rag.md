@@ -3650,6 +3650,7 @@ obe zmeny sa dotýkajú tej istej rodiny, teda jeden prechod).
   Nález povinného čítania nahlas (Gate 2a) — kalk, ktorý prežil tri predchádzajúce recenzie.
 
 **Zamietnuté návrhy recenzie (zapísané ako odmietnuté varianty).**
+
 - **(g) „presne na hranici, ktorú chceš strážiť“ — PONECHANÉ.** Smer recenzie („podľa toho, ktoré operácie
   chceš povoliť bez potvrdenia…“) je **posun faktu**: podsúva kritérium *potvrdenia* namiesto skutočného
   kritéria odseku (*čítanie vs zápis*) a importuje fakt zo susedného odseku o dry-run/confirm. Naivný
@@ -3668,6 +3669,7 @@ obe zmeny sa dotýkajú tej istej rodiny, teda jeden prechod).
 
 **Diagnostický nástroj — packet (`editorial/sk-pilot-naturalness-check.md`) opravený (meta-text prechádza
 tými istými bránami, Fáza 4).**
+
 - **Sprievodný text odstaralený:** SK locale je od **2026-07-15 živý** — „ešte nie sú verejne nasadené“ bolo
   **NEPRAVDIVÉ**, rovnako „pripravovanej slovenskej verzie“.
 - **„celá próza“ → „celý text“** — *próza* je žáner krásnej literatúry, pri technickej dokumentácii afektuje.
