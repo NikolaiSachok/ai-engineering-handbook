@@ -376,3 +376,19 @@ its section here. The list grows as the course does.
 **Separation of duties (between agents)** — generation and certification performed by distinct actors under distinct identities, with the record showing which was which. It has two independent justifications: it produces better verification, and it produces *defensible* verification.
 
 **Defensible verification** — verification that survives someone else's later examination. An approval rate no human could sustain fails this test even when the signature is genuine.
+
+**SLSA build levels (L1/L2/L3)** — a ladder of provenance strength: L1 the artifact carries provenance (may be unsigned, trivial to forge); L2 the provenance is signed by a hosted build platform (forging needs an attack); L3 the platform is tamper-resistant, builds are isolated, and the signing key is inaccessible to build steps. *(deep dive)*
+
+**Signing key inaccessible to build steps** — the load-bearing SLSA L3 clause for a fleet: the thing that *runs* the build cannot reach the key that *vouches* for it, so the agent that generated an artifact cannot sign the attestation for it. *(deep dive)*
+
+**SBOM dialects (SPDX / CycloneDX)** — the two dominant software-bill-of-materials standards: SPDX (Linux Foundation, ISO/IEC 5962, package-and-relationship model, compliance/licence focus) and CycloneDX (OWASP, component-centric, security/vulnerability focus). *(deep dive)*
+
+**in-toto attestation** — a signed envelope binding a subject (an artifact, by hash) to a predicate (its provenance or SBOM). SLSA provenance is itself an in-toto predicate; the envelope is format-agnostic. *(deep dive)*
+
+**Sigstore / keyless signing** — a signing layer (`cosign`) that issues a short-lived certificate bound to a workload identity via OIDC and logs the signature in a public transparency log, instead of guarding a long-lived key — least privilege applied to signing. *(deep dive)*
+
+**Transparency log** — a public, append-only, tamper-evident record of signatures, so a signature's existence can be independently verified after the fact. *(deep dive)*
+
+**Provenance vs correctness** — provenance proves an artifact came from a given source through a given process, unaltered; it says nothing about whether the artifact is any good. Supply-chain integrity and software correctness are orthogonal — a fully attested artifact can still be wrong. *(deep dive)*
+
+**Distinct-identity separation of duties** — enforcing generate-vs-certify separation by giving the actors genuinely distinct identities and credentials, with the record showing which was which — the mechanised form of the two-party rule, which survives a fleet only if the identities are real. *(deep dive)*

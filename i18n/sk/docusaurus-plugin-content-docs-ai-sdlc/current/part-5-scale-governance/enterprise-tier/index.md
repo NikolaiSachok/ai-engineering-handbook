@@ -1,13 +1,13 @@
 ---
 title: "Enterprise úroveň: audit, pôvod a čo je povinné"
-sidebar_position: 4
+slug: /part-5-scale-governance/enterprise-tier/
 ---
 
 # Na tejto úrovni sa kontrola bez dôkazu považuje za nevykonanú
 
 Každá lekcia tohto kurzu sa končila tromi úrovňami a tá enterprise prichádzala zakaždým v rovnakom tvare:
 mechanizmus nie je v skutočnosti silnejší, je *preukázateľný*. Táto záverečná lekcia je o tom rozdiele.
-[Úvod](../intro.md) to postavil ako pravidlo — čím ďalej kontrola sedí od blast radius (rozsah škôd), tým viac
+[Úvod](../../intro.md) to postavil ako pravidlo — čím ďalej kontrola sedí od blast radius (rozsah škôd), tým viac
 ide o dôkaz; čím bližšie sedí, tým viac ide o to, čomu dokáže zabrániť. Tu sme od blast radius tak ďaleko, ako
 kurz siaha, takže ide o dôkaz vo všetkom.
 
@@ -46,7 +46,7 @@ materials, SBOM)** vymenúva, čo do artefaktu vstúpilo, takže z novo zverejne
 vyhľadávanie namiesto archeologického výskumu. **Podpísané potvrdenia (signed attestations)** viažu artefakt na
 proces, ktorý ho postavil, takže veta „tento binárny súbor vznikol z toho commitu cez tú pipeline“ sa dá
 overiť, nielen tvrdiť; I. časť už spojila nezávislosť dvoch strán so
-[SLSA a DORA](../part-1-foundation/verification-bottleneck.md) a toto je druhá polovica toho istého rámca.
+[SLSA a DORA](../../part-1-foundation/verification-bottleneck.md) a toto je druhá polovica toho istého rámca.
 
 Kód od agenta pridáva otázku, pre ktorú tieto rámce stavané neboli, no zvládajú ju bez problémov: *ktorý agent
 a ktorý model ho vytvorili a podľa akých pokynov?* Zapíš to už pri generovaní. Neskoršia rekonštrukcia zo správ
@@ -56,14 +56,14 @@ licenčná otázka nad generovaným obsahom — je presne tá chvíľa, keď há
 ## Oddelenie právomocí, keď sú obe strany agentmi
 
 III. časť z toho urobila inžiniersky argument: agent, ktorý zmenu napíše,
-[ju nemôže zároveň certifikovať](../part-3-verification/detection-vs-mutation.md), pretože čokoľvek, čo
+[ju nemôže zároveň certifikovať](../../part-3-verification/detection-vs-mutation.md), pretože čokoľvek, čo
 optimalizuje na prejdenie kontroly, si nájde najlacnejší spôsob, ako ňou prejsť. Na tejto úrovni prichádza to
 isté pravidlo od požiadaviek na súlad a obe odôvodnenia sa navzájom posilňujú, namiesto aby sa opakovali —
 jedno hovorí, že oddelenie prináša lepšie overovanie, druhé, že prináša *obhájiteľné* overovanie.
 
 Pri flotile to znamená, že generujúci a revidujúci agent sú dvaja, bežia pod odlišnými identitami a zo záznamu
 vidno, kto bol kto. A znamená to, že schválenie človekom musí byť skutočné:
-[kontrola pri veľkom objeme](../part-3-verification/review-at-volume.md) z III. časti varovala, že meno na
+[kontrola pri veľkom objeme](../../part-3-verification/review-at-volume.md) z III. časti varovala, že meno na
 dokumente, ktorý ten človek nemal ako prečítať, je artefakt súladu, nie dohľad. Na enterprise úrovni znie to
 varovanie ostrejšie, pretože podpis má právne dôsledky — schvaľovať tempom, ktoré by žiadny človek reálne
 neudržal, je presne to zlyhanie, ktorému má kontrola predchádzať, oblečené do jej vlastných šiat.
@@ -99,4 +99,12 @@ ukázať, že prebehla.**
 - Tempo schvaľovania, ktoré by žiadny človek neudržal, nie je dohľad. Je to zlyhanie, ktorému má kontrola
   predchádzať, oblečené do jej vlastných šiat.
 
-**[Nové pojmy](../glossary.md#the-enterprise-tier-audit-provenance-and-whats-required)**: preukázateľná kontrola, auditný záznam, nepopierateľnosť, priradenie agenta a modelu, pôvod, SBOM, podpísané potvrdenie, oddelenie právomocí medzi agentmi, obhájiteľné overovanie.
+**[Nové pojmy](../../glossary.md#the-enterprise-tier-audit-provenance-and-whats-required)**: preukázateľná kontrola, auditný záznam, nepopierateľnosť, priradenie agenta a modelu, pôvod, SBOM, podpísané potvrdenie, oddelenie právomocí medzi agentmi, obhájiteľné overovanie.
+
+---
+
+:::note[Ďalej — druhá časť lekcie]
+
+**[SLSA, SBOM a podpísaný pôvod](./deep-dive.md)** — prehĺbenie: konkrétne rámce — rebrík pôvodu v SLSA (L1-L3), dva štandardy SBOM (SPDX a CycloneDX) a podpis cez in-toto + Sigstore, ktorý to celé robí nepopierateľným — a čestná hranica: pôvod nie je správnosť.
+
+:::

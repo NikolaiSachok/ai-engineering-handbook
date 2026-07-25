@@ -1,13 +1,13 @@
 ---
 title: "The enterprise tier: audit, provenance, and what's required"
-sidebar_position: 4
+slug: /part-5-scale-governance/enterprise-tier/
 ---
 
 # At this tier, a control that cannot be proven did not happen
 
 Every lesson in this course has ended with three tiers, and the enterprise one has been arriving with the same
 shape each time: the mechanism is not really stronger, it is *demonstrable*. This closing lesson is about that
-difference. The [introduction](../intro.md) put it as a rule — the further a control sits from the blast
+difference. The [introduction](../../intro.md) put it as a rule — the further a control sits from the blast
 radius, the more it is about proof; the closer it sits, the more it is about capability. Here we are as far
 from the blast radius as the course goes, so everything is about proof.
 
@@ -45,7 +45,7 @@ which dependencies, which agent. Two mechanisms carry it in practice. A **softwa
 what went into the artefact, so a newly-disclosed vulnerability becomes a lookup instead of an archaeology
 project. **Signed attestations** bind the artefact to the process that built it, so "this binary came from
 that commit through that pipeline" is checkable rather than asserted; Part I already tied the two-person rule
-to [SLSA and DORA](../part-1-foundation/verification-bottleneck.md), and this is the same framework's other
+to [SLSA and DORA](../../part-1-foundation/verification-bottleneck.md), and this is the same framework's other
 half.
 
 Agent-generated code adds a question these frameworks were not built for but handle cleanly: *which agent and
@@ -56,14 +56,14 @@ licensing question about generated content — is exactly the moment guesswork w
 ## Separation of duties, when both parties are agents
 
 Part III made this an engineering argument: the agent that writes a change
-[cannot be the one that certifies it](../part-3-verification/detection-vs-mutation.md), because whatever
+[cannot be the one that certifies it](../../part-3-verification/detection-vs-mutation.md), because whatever
 optimises for passing a check will find the cheapest way to pass it. At this tier the same rule arrives from
 compliance, and the two justifications reinforce rather than duplicate each other — one says separation
 produces better verification, the other says it produces *defensible* verification.
 
 Applied to a fleet, it means the generating agent and the reviewing agent are distinct, run under distinct
 identities, and the record shows which was which. And it means the human approval has to be real: Part III's
-[review at volume](../part-3-verification/review-at-volume.md) warned that a name on a document nobody could
+[review at volume](../../part-3-verification/review-at-volume.md) warned that a name on a document nobody could
 have read is a compliance artefact rather than oversight. The enterprise version of that warning is sharper,
 because the signature is legally meaningful — approving at a rate no human could actually sustain is the exact
 failure the control exists to prevent, wearing the control's own clothes.
@@ -99,4 +99,12 @@ demonstrate afterwards that it ran.**
 - An approval rate no human could sustain is not oversight. It is the failure the control exists to prevent,
   wearing the control's own clothes.
 
-**[New terms](../glossary.md#the-enterprise-tier-audit-provenance-and-whats-required)**: demonstrable control, audit trail, non-repudiation, agent/model attribution, provenance, SBOM, signed attestation, separation of duties between agents, defensible verification.
+**[New terms](../../glossary.md#the-enterprise-tier-audit-provenance-and-whats-required)**: demonstrable control, audit trail, non-repudiation, agent/model attribution, provenance, SBOM, signed attestation, separation of duties between agents, defensible verification.
+
+---
+
+:::note[Next — part 2 of the lesson]
+
+**[SLSA, SBOMs, and signed provenance](./deep-dive.md)** — the deep dive: the actual frameworks — SLSA's provenance ladder (L1-L3), the two SBOM standards (SPDX and CycloneDX), and the in-toto + Sigstore signing that makes any of it non-repudiable — and the honest limit: provenance is not correctness.
+
+:::
