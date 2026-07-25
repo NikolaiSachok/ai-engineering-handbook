@@ -421,3 +421,19 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 **Oddelenie právomocí (separation of duties, medzi agentmi)** — generovanie a certifikáciu vykonávajú odlišní aktéri pod odlišnými identitami a zo záznamu vidno, kto bol kto. Má dve nezávislé odôvodnenia: prináša lepšie overovanie a prináša *obhájiteľné* overovanie.
 
 **Obhájiteľné overovanie (defensible verification)** — overovanie, ktoré obstojí, keď ho neskôr preskúma niekto iný. Tempo schvaľovania, ktoré by žiadny človek neudržal, v tejto skúške neobstojí ani vtedy, keď je podpis pravý.
+
+**Buildové úrovne SLSA (L1/L2/L3)** — stupne sily dôkazu o pôvode buildu. Build L1 zaznamenáva, ako artefakt vznikol, no záznam môže byť nepodpísaný a ľahko sfalšovateľný; Build L2 vyžaduje podpis hostovanej buildovej platformy; Build L3 navyše izoluje buildy, chráni platformu pred manipuláciou a oddeľuje podpisový kľúč od krokov buildu. *(deep dive)*
+
+**Podpisový kľúč neprístupný krokom buildu** — požiadavka Build L3, podľa ktorej používateľom definovaný krok buildu nemôže načítať ani použiť kľúč potvrdzujúci pôvod artefaktu. Proces, ktorý artefakt vytvára, tak nedokáže sám vyrobiť dôveryhodný podpis. *(deep dive)*
+
+**Formáty SBOM (SPDX / CycloneDX)** — dva prevládajúce štandardy pre súpis softvérových súčastí. SPDX modeluje najmä balíky, ich vzťahy, licencie a súlad; CycloneDX sa sústreďuje na komponenty, bezpečnosť a zraniteľnosti. *(deep dive)*
+
+**Potvrdenie in-toto** — podpísaná obálka, ktorá spája artefakt určený hashom s tvrdením o ňom, napríklad s údajmi o pôvode alebo so SBOM. Samotná obálka nezávisí od formátu vloženého tvrdenia. *(deep dive)*
+
+**Sigstore / podpisovanie bez dlhodobého kľúča** — podpisová infraštruktúra, ktorá namiesto trvalo uloženého kľúča používa krátkodobý certifikát previazaný cez OIDC s identitou pracovného procesu. Sigstore následne zaznamená podpis do verejného transparency log. *(deep dive)*
+
+**Transparency log** — verejný, dodatočne overiteľný záznam podpisov, ktorý umožňuje odhaliť zatajenie alebo spätnú manipuláciu. Záznam podporuje audit, no sám nepotvrdzuje kvalitu podpísaného artefaktu. *(deep dive)*
+
+**Pôvod verzus správnosť** — rozlíšenie medzi dôkazom, že nezmenený artefakt vznikol z určeného zdroja daným procesom, a dôkazom, že je bezpečný a vecne správny. Mechanizmy pôvodu riešia prvú otázku; druhá patrí testom, revízii a ďalším overovacím bránam. *(deep dive)*
+
+**Oddelenie právomocí pomocou odlišných identít** — usporiadanie, v ktorom generujúci agent, revidujúci agent a schvaľujúci človek používajú samostatné identity a prihlasovacie údaje. Auditný záznam musí jednoznačne preukázať, kto artefakt vytvoril, kto ho skontroloval a kto ho schválil. *(deep dive)*
