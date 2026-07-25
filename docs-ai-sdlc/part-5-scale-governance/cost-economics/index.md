@@ -1,6 +1,6 @@
 ---
 title: "Cost and the economics of agent work"
-sidebar_position: 3
+slug: /part-5-scale-governance/cost-economics/
 ---
 
 # The unit is cost per accepted change, not cost per token
@@ -24,7 +24,7 @@ Three denominators, in increasing order of honesty:
 Under that third denominator, the intuitions from the first one often invert. Retry rate matters more than
 sticker price, because a model that succeeds on the second attempt has doubled its own cost while the price
 list stayed the same. And the failed attempts are not free in a subtler way: each one occupies a slot in the
-serial fraction from [the fleet lesson](./agent-fleets.md), which is the resource you actually cannot buy more
+serial fraction from [the fleet lesson](../agent-fleets.md), which is the resource you actually cannot buy more
 of.
 
 :::tip[▶ Video]
@@ -44,7 +44,7 @@ Four buckets, roughly in the order teams underestimate them.
 **Context.** Agents re-read. The same repository, the same rules corpus, the same task brief get re-sent
 across attempts and across agents. Context is usually the largest single line item in an agentic workload and
 the one people forget entirely when estimating from a price list — which is also why the
-[bloated rule corpus](./drift-and-rot.md) from the previous lesson has a direct bill attached, not just a
+[bloated rule corpus](../drift-and-rot.md) from the previous lesson has a direct bill attached, not just a
 quality cost.
 
 **Retries and rework.** Every failed attempt is paid for in full, and the change that lands after three tries
@@ -55,14 +55,14 @@ calls, and they scale with output rather than with team size. A fleet that gener
 as much to check it.
 
 **Human review time.** The most expensive input in the system and the only one that does not scale with
-spend. Part I's [verification bottleneck](../part-1-foundation/verification-bottleneck.md) is an economic claim
+spend. Part I's [verification bottleneck](../../part-1-foundation/verification-bottleneck.md) is an economic claim
 as much as an engineering one: the binding constraint is priced in salary, not in tokens.
 
 ## Making cost accountable
 
 Attribution comes first, because an unattributable bill cannot be managed — only worried about. The mechanism
 is already in place from Part IV: if credentials are issued
-[per task and per workload](../part-4-platform/least-privilege-sandboxing/index.md), spend can be attributed the same
+[per task and per workload](../../part-4-platform/least-privilege-sandboxing/index.md), spend can be attributed the same
 way. Tag by task, not by team, and the question "what did this feature cost" becomes answerable instead of
 rhetorical.
 
@@ -73,7 +73,7 @@ human in Part III — order the chain so the expensive judge only ever sees what
 cheaper.
 
 And keep the value side honest. The course's opening
-[method](../intro.md) applies with full force here: output is measurably up, and whether *value* is up is not
+[method](../../intro.md) applies with full force here: output is measurably up, and whether *value* is up is not
 established — Microsoft's own researchers, holding some of the largest measured throughput gains in the field,
 still write that a merged pull request is not the same as the value it delivers (`REPORTED`). A cost-per-merged
 -change metric that improves while nothing downstream improves has optimised the denominator, not the business.
@@ -109,4 +109,12 @@ before it runs away.**
 - Report unit cost **next to an outcome metric**, or you will optimise a denominator while the value stays
   unmeasured.
 
-**[New terms](../glossary.md#cost-and-the-economics-of-agent-work)**: cost per accepted change, retry rate, context cost, verification cost, per-task attribution, spend cap, unit economics, outcome metric.
+**[New terms](../../glossary.md#cost-and-the-economics-of-agent-work)**: cost per accepted change, retry rate, context cost, verification cost, per-task attribution, spend cap, unit economics, outcome metric.
+
+---
+
+:::note[Next — part 2 of the lesson]
+
+**[The arithmetic: context, caching, and the retry tax](./deep-dive.md)** — the deep dive: why context is usually the largest line item, how prompt caching and batching change the sum, and the worked numbers behind cost per accepted change.
+
+:::

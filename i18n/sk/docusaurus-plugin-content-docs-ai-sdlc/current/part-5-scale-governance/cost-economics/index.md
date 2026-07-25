@@ -1,6 +1,6 @@
 ---
 title: "Náklady a ekonomika práce agentov"
-sidebar_position: 3
+slug: /part-5-scale-governance/cost-economics/
 ---
 
 # Jednotkou sú náklady na prijatú zmenu, nie náklady na token
@@ -23,7 +23,7 @@ Tri menovatele, zoradené od najmenej po najviac poctivý:
 Pri treťom menovateli sa závery z toho prvého často obrátia. Miera opakovaných pokusov váži viac než
 cenníková cena, pretože model, ktorému to vyjde až na druhýkrát, si práve zdvojnásobil vlastné náklady, hoci
 cenník ostal nezmenený. A neúspešné pokusy nie sú zadarmo ani nenápadnejším spôsobom: každý z nich zaberie
-miesto v sériovej časti z [lekcie o flotilách](./agent-fleets.md) — a to je práve tá kapacita, ktorú si
+miesto v sériovej časti z [lekcie o flotilách](../agent-fleets.md) — a to je práve tá kapacita, ktorú si
 naozaj nemáš kde dokúpiť.
 
 :::tip[▶ Video]
@@ -43,7 +43,7 @@ ekonomike málokedy rozhodujúca práve tá polovica.
 **Kontext.** Agenti čítajú stále dokola. Ten istý repozitár, ten istý korpus pravidiel, to isté zadanie sa
 posielajú znova pri každom pokuse a za každého agenta. Pri práci agentov býva kontext najväčšou samostatnou
 položkou účtu a zároveň tou, na ktorú sa pri odhade z cenníka zabúda úplne — aj preto má
-[nafúknutý korpus pravidiel](./drift-and-rot.md) z predchádzajúcej lekcie priamu cenovku, nielen následky na
+[nafúknutý korpus pravidiel](../drift-and-rot.md) z predchádzajúcej lekcie priamu cenovku, nielen následky na
 kvalite.
 
 **Opakované pokusy a prerábanie.** Za každý neúspešný pokus platíš celú cenu a zmena, ktorá dosadne až na
@@ -54,14 +54,14 @@ modelu a rastú s objemom výstupu, nie s veľkosťou tímu. Flotila, ktorá vyg
 dvakrát toľko aj za kontrolu.
 
 **Čas ľudskej revízie.** Najdrahší vstup v celom systéme a jediný, ktorý sa výdavkami nedá zväčšiť.
-[Úzke miesto overovania](../part-1-foundation/verification-bottleneck.md) z I. časti je ekonomické tvrdenie
+[Úzke miesto overovania](../../part-1-foundation/verification-bottleneck.md) z I. časti je ekonomické tvrdenie
 rovnako ako inžinierske: rozhodujúce obmedzenie je ocenené v mzdách, nie v tokenoch.
 
 ## Ako dostať náklady pod kontrolu
 
 Prvé je priradenie, lebo účet, ktorý nevieš nikomu pripísať, sa nedá riadiť — dá sa nad ním len znepokojovať.
 Mechanizmus už máš zo IV. časti: ak sa prihlasovacie údaje vydávajú
-[na úlohu a na workload](../part-4-platform/least-privilege-sandboxing/index.md), rovnako sa dajú priradiť aj
+[na úlohu a na workload](../../part-4-platform/least-privilege-sandboxing/index.md), rovnako sa dajú priradiť aj
 výdavky. Označuj podľa úlohy, nie podľa tímu, a otázka „koľko stála táto funkcia“ prestane byť rečnícka.
 
 Potom to ohranič. Rozpočet na úlohu, ktorý zastaví utekajúcu slučku, je viac než mesačný report, ktorý ju
@@ -70,7 +70,7 @@ včas. Lacné deterministické kontroly patria pred drahé sémantické z rovnak
 patrili pred človeka — reťaz usporiadaj tak, aby drahý posudzovateľ dostal pod ruku vždy len to, čo už prešlo
 všetkým lacnejším.
 
-A poctivo drž aj druhú stranu, teda prínos. [Metóda](../intro.md) z úvodu kurzu tu platí naplno: objem výstupu
+A poctivo drž aj druhú stranu, teda prínos. [Metóda](../../intro.md) z úvodu kurzu tu platí naplno: objem výstupu
 merateľne stúpa, no či stúpa aj *hodnota*, doložené nie je — aj výskumníci Microsoftu, ktorí majú v rukách
 jedny z najväčších nameraných nárastov priepustnosti v odbore, píšu, že zlúčený pull request nie je to isté
 ako hodnota, ktorú prinesie (`REPORTED`). Metrika nákladov na zlúčenú zmenu, ktorá sa zlepšuje, kým sa ďalej
@@ -107,4 +107,12 @@ sa vymknú.**
 - Jednotkové náklady vykazuj **vedľa metriky výsledku**, inak budeš optimalizovať menovateľ, kým hodnota
   zostane nezmeraná.
 
-**[Nové pojmy](../glossary.md#cost-and-the-economics-of-agent-work)**: náklady na prijatú zmenu, miera opakovaných pokusov, náklady na kontext, náklady na overovanie, priradenie nákladov k úlohe, limit výdavkov, jednotková ekonomika, metrika výsledku.
+**[Nové pojmy](../../glossary.md#cost-and-the-economics-of-agent-work)**: náklady na prijatú zmenu, miera opakovaných pokusov, náklady na kontext, náklady na overovanie, priradenie nákladov k úlohe, limit výdavkov, jednotková ekonomika, metrika výsledku.
+
+---
+
+:::note[Ďalej — druhá časť lekcie]
+
+**[Aritmetika: kontext, cachovanie a daň za opakovania](./deep-dive.md)** — prehĺbenie: prečo je kontext zvyčajne najväčšia položka, ako prompt caching a dávkovanie menia súčet, a rozpísané čísla za nákladom na prijatú zmenu.
+
+:::
