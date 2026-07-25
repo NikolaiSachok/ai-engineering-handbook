@@ -386,6 +386,22 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Jednotková ekonomika / metrika výsledku (unit economics / outcome metric)** — jednotkové náklady vykazované *vedľa* meradla toho, čo sa naozaj dodalo. Klesajúce náklady na zmenu popri nezmeranom výsledku optimalizujú menovateľ, nie firmu.
 
+**Rozklad nákladov pokusu** — rozdelenie ceny jedného volania modelu na náklady vstupu a výstupu podľa ich objemu a príslušných sadzieb. *(deep dive)*
+
+**Asymetria vstupnej a výstupnej sadzby** — rozdiel medzi cenou vstupných a výstupných tokenov; výstup býva za token drahší, no pri práci agentov môže väčší objem vstupu vytvoriť vyšší účet. *(deep dive)*
+
+**Kvadratické opakované posielanie kontextu** — rast celkového účtovaného vstupu ako `O(N²)`, keď model pri každom z `N` krokov znova načíta celý dovtedajší kontext. *(deep dive)*
+
+**Prompt caching (stabilný prefix)** — uloženie nemennej úvodnej časti promptu do cache, aby sa pri ďalších volaniach neúčtovala plná vstupná sadzba; zľava platí iba dovtedy, kým prefix ostáva bajtovo stabilný. *(deep dive)*
+
+**Zľava za batch** — nižšia cena za požiadavky spracované odložene a hromadne výmenou za vyššiu latenciu. *(deep dive)*
+
+**Daň za opakovania** — zvýšenie nákladov na prijatú zmenu spôsobené neúspešnými pokusmi; pri pravdepodobnosti úspechu `p` je očakávaný počet pokusov `1/p`. *(deep dive)*
+
+**Hranica rentability podľa úspešnosti** — podmienka, pri ktorej nižšia cena modelu vyváži jeho nižšiu úspešnosť; lacnejší model sa oplatí iba vtedy, keď `p_cheap / p_expensive > price_cheap / price_expensive`. *(deep dive)*
+
+**Amdahlovo obmedzenie úspor na tokenoch** — horná hranica celkovej úspory určovaná podielom nákladov, ktoré cena tokenov neovplyvňuje, najmä ľudskou revíziou. *(deep dive)*
+
 <a id="the-enterprise-tier-audit-provenance-and-whats-required"></a>
 
 ## Enterprise úroveň: audit, pôvod a čo je povinné

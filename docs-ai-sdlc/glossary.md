@@ -343,6 +343,22 @@ its section here. The list grows as the course does.
 
 **Unit economics / outcome metric** — unit cost reported *next to* a measure of what shipped. A falling cost per change alongside an unmeasured outcome optimises the denominator, not the business.
 
+**Attempt-cost decomposition** — `input_tokens × input_rate + output_tokens × output_rate`. Output costs more per token, but input volume dominates in agent work, so the input stream is the larger bill. *(deep dive)*
+
+**Input/output rate asymmetry** — the pricing fact that output tokens usually cost several times more than input tokens, which misdirects attention to output when input volume is where the money goes. *(deep dive)*
+
+**Quadratic context re-send** — a stateless model re-reads the whole transcript each turn, so total input over an `N`-turn task grows as `1+2+…+N = O(N²)`. Doubling the turns roughly quadruples input cost. *(deep dive)*
+
+**Prompt caching (stable prefix)** — re-sending an unchanging prefix (system prompt, rules, settled turns) at a fraction of the input rate. It only works if the prefix stays stable, so a churning or bloated rules corpus forfeits the discount. *(deep dive)*
+
+**Batch discount** — a large price reduction for requests submitted for later, off-peak completion. It trades latency for cost, so offline work (bulk eval, corpus transforms) batches; interactive turns cannot. *(deep dive)*
+
+**Retry tax** — `cost_per_accepted ≈ attempt_cost / p`, where `p` is the first-try success rate. Failed attempts are paid in full, so the accepted change carries the cost of the ones before it. *(deep dive)*
+
+**Break-even success rate** — the bar a cheaper model must clear: it wins only when `p_cheap / p_expensive > price_cheap / price_expensive`. Half the price buys nothing below half the reliability. *(deep dive)*
+
+**Amdahl bound on token savings** — verification and human review do not move with token price, so a token discount can reduce total cost of a change by at most the fraction that is *not* review. When review dominates, the token bill is the smallest lever. *(deep dive)*
+
 ## The enterprise tier: audit, provenance, and what's required
 
 **Demonstrable control** — a control someone other than its operator can show, afterwards, to have run. At this distance from the blast radius, a control that cannot be evidenced is indistinguishable from one that never existed.
