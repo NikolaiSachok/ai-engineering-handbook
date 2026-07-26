@@ -14,7 +14,16 @@ duplicating a rule from the skill, delete it here instead.
 
 ## 1 · Palette
 
-Cards are **light-ground**, chosen deliberately: it is the register of the reference poster, it gives the
+**Two card substrates now exist, and the palette below is the generated one.** A *generated* card is a
+baked raster and is light-ground in both themes (§4 frames it). A *composed* card
+(`src/components/InfoCard/`) carries the same palette **as roles, not as literal hexes**: the values
+live in CSS custom properties on `.plate` and are overridden under `html[data-theme='dark']`, so a
+composed card is a dark card on the dark theme. Composed cards add one property the generated set
+cannot have — `rank`, an ordering ramp that tints the **icon as well as its label**. Canon for the
+composed substrate: `CSS-CARDS-PLAN.md` §"Built 2026-07-26"; icon provenance:
+`src/components/InfoCard/icons/NOTICE.md`.
+
+Generated cards are **light-ground**, chosen deliberately: it is the register of the reference poster, it gives the
 best label contrast, and the illustration reads as an explainer rather than a neon dashboard. The site's own
 brand assets (`static/img/logo.svg`, `static/img/og-card.jpg`) are dark — the cards do not have to match them,
 because `src/components/Infographic` frames them for both themes (§4).
@@ -30,7 +39,7 @@ the card as literal text (a real, observed failure).
 | Failure hue | `239 68 68` | demo-lane outline, its `DEMO` pill, its arrows, fault text — nothing else |
 | Correct hue | `20 184 166` | production-lane outline, its `PRODUCTION` pill, its arrows, accepted-result ticks |
 | Icon fill | `59 130 246` | **every** icon, uniformly — icon colour carries no meaning |
-| Coin / value fill | `240 180 41` | the one exception, on the cost card only |
+| Coin / value fill | `240 180 41` | the one exception, on the cost card only — and, on composed cards, on the `coins` icon always: it is what stops a stack of coins reading as a second database |
 | Muted / caption | `110 122 138` | the single caption line |
 
 ## 2 · Set grammar (decisions taken for `production-failures`)
@@ -81,6 +90,12 @@ actually shows: if a card is regenerated with a different composition, its `alt`
 `src/components/Infographic/` handles the responsive frame, lazy loading, the caption, and — because the cards
 are light-ground — a border plus a slight brightness reduction on the dark theme so a card reads as a
 deliberate plate rather than a white flash.
+
+**Composed cards embed as markup, not as `src`.** `InfoCard` / `Lane` / `Node` / `Flow` / `Branch` are
+registered globally in `src/theme/MDXComponents.tsx`, so any `.md` in any locale can use them with no
+import — and because every label is HTML text, a translator edits the Markdown rather than asking for a
+regenerated image. The connector vocabulary is `kind="dashed"` (normal flow), `"solid"` (tight
+adjacency) and `"fail"` (the consequence of the fault, and nothing else).
 
 ## 5 · Archive
 

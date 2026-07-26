@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="none">
+  <path d="M24 3L46 43H2z" fill="currentColor" />
+  <path d="M24 17v12" stroke="var(--ic-badge-ink, #ffffff)" stroke-width="6" stroke-linecap="round" />
+  <circle cx="24" cy="36.5" r="3.2" fill="var(--ic-badge-ink, #ffffff)" />
+</svg>

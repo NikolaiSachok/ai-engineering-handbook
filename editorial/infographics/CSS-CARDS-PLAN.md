@@ -139,7 +139,7 @@ One caveat worth writing down: ImageMagick cannot resolve `var()`, so any non-br
 (og-image generation, PDF export) will not render these. Give every custom property a literal
 fallback — `fill="var(--ic-fill, #3b82f6)"` — and treat the browser as the only supported renderer.
 
-## Superseded — the tension this replaces: generated rasters vs theme adaptation
+## Superseded (twice — kept as the record of why the card is no longer a light plate)
 
 A CSS card adapts to the dark theme for free — ground, panels, text and connectors are all CSS. **The icons do
 not.** A raster icon has a baked fill and outline: a dark outline vanishes on a dark card, a light one vanishes
@@ -232,22 +232,143 @@ authored with a substitute.
 the lane/pill grammar, the light-plate decision, and the width cap. The defects are the connector
 primitive, the branch primitive, and the lexicon's coverage.
 
-## Sequence
-
-1. Generate and slice the two icon sheets; ship as `static/img/infographics/icons/<concept>.webp`.
-2. Build `Card` / `Lane` / `Node` / `Flow` / `Brace` + `icons.ts`, with the `rank` ordering channel.
-3. **Port card 06 (the drift ladder) first** — it is the card whose encoding is currently wrong, so the port
-   demonstrates the win rather than merely reproducing a raster.
-4. Compare side by side at article width and 360px; decide whether the composed register is good enough to
-   replace the whole set.
-5. If yes: port the remaining eight, drop the rasters, and translate the labels — the RU/SK pages then carry
-   real localised diagrams. Keep `hero.webp` as a raster; a hero is an illustration, not a labelled-node
-   diagram, and it is the one image where generation genuinely wins.
-6. Update the `create-infographic` skill: composed cards become the default for labelled-node content, and
-   generation is reserved for heroes and scenes.
-
 ## What does NOT change
 
 The labelled-node discipline, the label budget (a phone is still 360px wide), the demo/production lane
 grammar, the flow-mark vocabulary, and the rule that the prose must still teach the lesson. Composition changes
 the substrate, not the method.
+
+
+---
+
+## Built 2026-07-26 — the rebuild that answers the pilot review
+
+All three named defects are fixed and the pilot page carries the comparison. Code:
+`src/components/InfoCard/` (`index.tsx`, `styles.module.css`, `icons/` + `icons/NOTICE.md`).
+
+### 1 · Connectors — fixed, as designed
+
+`Flow` is now an inline `<svg>` with a real `marker-end`. Two details make it work:
+
+- **No `viewBox`**, so user units are CSS pixels and the line can be written `x1="0" x2="100%"`. The
+  arrow therefore spans whatever slot flex gives it — the connector *is* the gap.
+  `markerUnits="strokeWidth"` keeps the head proportional to the line, so it can never detach.
+- **Vertical position is `calc(var(--ic-box) / 2 - 5px)` from the top of a top-aligned row.** The
+  offset is derived from the icon box, never from the node, so a two-line label cannot drag the
+  arrow off the icons' centre line. Verified: on card 06 `retrain the model` wraps and the arrow
+  does not move.
+- Later addition, from a label-stripped read: `max-width: 7rem`. Uncapped, a two-node lane stretched
+  one arrow to four times the length of the arrows in a four-node lane, and the disparity read as a
+  claim about distance.
+
+### 2 · The branch — fixed, but not the way the review specified
+
+`Branch` owns its children, as required. The part that changed: the review said *aim the incoming
+connector at the brace's vertical midpoint*. Built that way first, and a blind label-stripped reader
+called it **"the worst mechanical error on either card"** — a symmetric brace's midpoint sits a
+label's height below the node the arrow leaves, so the arrow appeared to start in mid-air.
+
+The fix inverts it: **the brace moves to the arrow.** It is drawn as *two independently stretched
+halves* (`viewBox="0 0 14 50"`, `preserveAspectRatio="none"`, `vector-effect="non-scaling-stroke"`),
+split at `calc(var(--ic-box) / 2)` — so the nub lands exactly on the icon centre line, the same line
+every other connector sits on. **One alignment rule now governs the whole grammar**, and the special
+case in `Lane` disappeared.
+
+Two more things a stripped read forced:
+
+- A **junction dot** at the nub. Without it the brace floats: the arrow looks like it points at the
+  first branch rather than at the fork, and the reader called the brace "structurally unanchored".
+- `Lane` wraps a `Flow`+`Branch` pair into one flex item. They are authored as siblings, and at phone
+  width the lane wrapped between them, leaving the arrow pointing off the end of the row at nothing.
+
+Node gutters: `min-width: 5.5rem` plus horizontal padding, so two labels can never share a text line.
+
+### 3 · The icon lexicon — SVG, hybrid, and a blind gate that actually failed things
+
+37 inline SVGs (29 objects + 8 badges), imported through Docusaurus's built-in svgr. **20,478 B raw,
+2,414 B gzipped**, against **110,908 B** for the 24 rasters they replace — 553 B per asset against
+4,621 B. The `mix-blend-mode` hack and `static/img/infographics/icons/` are gone.
+
+- **Vendored (20)** from **Tabler Icons (MIT)**, paths kept verbatim, wrapped in
+  `<g transform="scale(2)" stroke-width="1.5">` to land on the 48 grid at the house weight.
+- **Hand-authored (9)**: `driftCurves`, `gauge`, `funnel`, `gate`, `branchSplit`, `chainSteps`,
+  `sortedList`, `traceSpans`, `speechBubbleEmpty`.
+- **The fill-layering rule that came out of this** and is now in `icons/NOTICE.md`: every fill is
+  painted in a `stroke="none"` group *before* any stroke. That structurally prevents the failure the
+  probe hit — a later fill covering an earlier separation line, which turned a database into a drum.
+- Every `var()` carries its literal fallback, so a non-browser rasteriser still gets a drawing.
+
+**Deviations from the brief, each with its reason** (all recorded in `icons/NOTICE.md`):
+
+| Asked for | Shipped | Why |
+|---|---|---|
+| `keyLock` — a key beside an open padlock | `lockOpen` | two objects in a 48 grid are illegible at the 34 px a card renders; the concept was renamed to match the drawing rather than the drawing bent to the name |
+| one *gate beside a funnel* | `gate` **and** `funnel`, separately | same legibility reason, and `funnel` was on the lexicon's own gap list anyway |
+| `chainSteps` — four linked squares | three | four squares at stroke 3 leave 5 units of interior each and read as noise |
+| `timeline` | `traceSpans` | see below — it failed the blind gate twice under the old name |
+
+### The blind-naming gate — it earned its keep
+
+Three rounds, a fresh agent each time, no access to the intended names. What it caught:
+
+- **`timeline` failed twice.** Nested spans on a shared centre read as *"cascading pills… a lamp"*;
+  redrawn as dots on a line it read as *"three pins/nodes… tuning knobs"*. The third version —
+  staggered spans over a ticked time axis — reads as *"bar chart, descending / waterfall"*, which is
+  the observability convention for a trace, so the **concept was renamed `traceSpans` to match what
+  the drawing actually says.** Two redraws and a rename: the honest cost of one icon.
+- **`spreadsheet` drawn as Tabler `table`** read as *"table / grid layout"* and was confusable with
+  `browserPage` — both a rectangle with an internal divider. Re-sourced to `file-spreadsheet`.
+- **`coins` read as a possible second database** — both are stacked ellipses. Fixed with colour, not
+  geometry: coins now use `var(--ic-coin, #f0b429)`, the value/cost amber STYLE.md already allowed as
+  its one palette exception. Named *"coins / money"* on the next round.
+
+Residual, documented rather than hidden: `traceSpans` and `chainSteps` both go mushy at 34 px, and
+`speechBubble` vs `speechBubbleEmpty` differ only by an interior mark that is faint at that size.
+
+### What the third stripped read changed (the layout rules that only a blind reader finds)
+
+- **Lanes are left-aligned, not centred.** Centred rows put the demo lane's first node 170 px right
+  of the production lane's, and the reader reported "two unrelated diagrams" rather than one lane at
+  two maturity levels. A contrast card must share an x origin.
+- **Connectors are capped at 5 rem.** Uncapped, arrow length tracked available gap rather than
+  meaning, so the two-node demo lane's single arrow outweighed the production lane's four.
+- **Branch nodes are left-aligned inside the branch.** Centring an icon in a box as wide as its label
+  pushed the icon ~45 px away from the brace, and the brace then appeared to gather nothing.
+- **Both branch outcomes carry the same badge mechanism.** A corner tick on one and an interior glyph
+  on the other read as "two different kinds of thing"; the card's claim is that they are siblings.
+  Both now take the teal tick, which is also the card's thesis — a refusal is a *correct* outcome.
+
+One reported defect was **rejected on grounds of the project's own grammar**: the reader wanted
+arrowheads leaving the brace. The skill's flow vocabulary specifies a brace *instead of* N arrows
+from a point, so the brace stays and the junction dot carries the anchoring.
+
+### Theme adaptation and the ordering ramp
+
+The whole palette is CSS custom properties on `.plate`, overridden under `html[data-theme='dark']` —
+ground, panels, ink, hairline, both icon fills, and the coin exception. The **light-plate decision is
+dead**: a composed card is now a dark card on the dark theme.
+
+`rank` drives **two monotone channels**: colour (a desaturating teal → slate ramp) applied to the
+icon *and* its label, plus a descending icon opacity. Both were needed. A first attempt ran
+teal → cyan → **amber** → grey; a stripped reader called the amber node "a palette outlier… it makes
+the third rung look like the important one" — a hue excursion reads as emphasis, not as position.
+And `ranklast` is tinted rather than dead grey, because flat grey reads as *disabled*, not *last
+resort*.
+
+### Verdict and what is still open
+
+The composed cards now beat the rasters on encoding (the ramp tints the icon), on theme, on weight,
+on localisation and on reviewability, and they match on register. **Not yet migrated** — the ten
+rasters still ship. Open items for whoever takes the decision:
+
+1. A branch leaves visible whitespace under the nodes preceding it. Inherent to a stacked branch in
+   a flex row; the alternative (a slanted connector) needs geometry CSS cannot express.
+2. Card 06's shipped caption says *"Three drifts"* and the card draws one. A stripped reader caught
+   it in the raster's own wording — a **content** defect the composed port merely inherits, and only
+   the page's author can settle it.
+3. `gauge` reads as "a number on a scale", not as "a cutoff". The threshold notch is not enough; if
+   the score-floor idea must be picture-legible, that icon wants another pass.
+4. Three icons are weak at 34 px and are documented as such rather than quietly shipped:
+   `traceSpans` and `chainSteps` both blur into "a row of rounded blobs", and `speechBubble` vs
+   `speechBubbleEmpty` differ only by an interior mark. None is used on a card where the distinction
+   is load-bearing without a label.

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 35a18 18 0 0 1 36 0z" fill="var(--ic-tint, #93c5fd)" stroke="none" />
+  <path d="M6 35a18 18 0 0 1 36 0" />
+  <path d="M6 35h36" />
+  <path d="M32.5 25L38 18" stroke="var(--ic-fill, #3b82f6)" stroke-width="4.5" />
+  <path d="M24 35l-7-9" />
+  <circle cx="24" cy="35" r="3" fill="var(--ic-fill, #3b82f6)" stroke="none" />
+  <circle cx="24" cy="35" r="3" />
+</svg>

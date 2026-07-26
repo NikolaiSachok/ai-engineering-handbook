@@ -1,14 +1,36 @@
-/* Composed infographic card. Palette mirrors editorial/infographics/STYLE.md §1 so composed and
-   generated cards sit on the same page without clashing. Values are literal rather than themed on
-   purpose: the card is a light plate in both themes, matching the raster set (see the plan doc). */
+/* Composed infographic card.
+   Palette roles come from editorial/infographics/STYLE.md §1. Unlike the generated-raster cards,
+   which are a light plate in both themes because a raster icon has a baked outline, this card is
+   theme-adaptive: the icons are inline SVG driven by `currentColor` plus two custom properties, so
+   ground, panels, ink and icon fills can all shift and stay legible. */
 
 .card {
   margin: 1.75rem 0;
 }
 
 .plate {
-  background: #eaeef6;
-  border: 1px solid var(--ifm-toc-border-color);
+  /* The whole palette, in one place, so the dark theme is an override rather than a rewrite. */
+  --ic-ground: #eaeef6;
+  --ic-panel: #ffffff;
+  --ic-ink: #1a2230;
+  --ic-muted: #6e7a8a;
+  --ic-hairline: #cfd7e6;
+  --ic-fail: #ef4444;
+  --ic-ok: #14b8a6;
+  --ic-neutral: #64748b;
+  --ic-fill: #3b82f6;
+  --ic-tint: #bfdbfe;
+  /* The one palette exception STYLE.md allows: value/cost is amber. It is also what keeps a stack
+     of coins from reading as a second database. */
+  --ic-coin: #f0b429;
+  --ic-coin-tint: #fde68a;
+  --ic-badge-ink: #ffffff;
+  /* The icon box. Every connector's vertical offset is derived from this, so an arrow stays on
+     the icons' centre line no matter how many lines a label wraps to. */
+  --ic-box: 3.4rem;
+
+  background: var(--ic-ground);
+  border: 1px solid var(--ic-hairline);
   border-radius: 10px;
   padding: 1.25rem 1.4rem 1.5rem;
   display: flex;
@@ -17,13 +39,23 @@
 }
 
 html[data-theme='dark'] .plate {
-  border-color: #33353a;
-  filter: brightness(0.94) saturate(0.97);
+  --ic-ground: #15181e;
+  --ic-panel: #1f2530;
+  --ic-ink: #e8ecf3;
+  --ic-muted: #94a3b8;
+  --ic-hairline: #2c333f;
+  --ic-fail: #f87171;
+  --ic-ok: #2dd4bf;
+  --ic-neutral: #94a3b8;
+  --ic-fill: #60a5fa;
+  --ic-tint: #2f4a70;
+  --ic-coin: #f5c451;
+  --ic-coin-tint: #5c4517;
 }
 
 .title {
   margin: 0;
-  color: #1a2230;
+  color: var(--ic-ink);
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.01em;
@@ -34,18 +66,18 @@ html[data-theme='dark'] .plate {
 
 .lane {
   position: relative;
-  background: #fff;
-  border: 2px solid;
+  background: var(--ic-panel);
+  border: 2px solid var(--lane-accent);
   border-radius: 14px;
-  padding: 1.1rem 1rem 0.9rem;
+  padding: 1.15rem 1rem 1rem;
 }
 
 .demo {
-  border-color: #ef4444;
+  --lane-accent: var(--ic-fail);
 }
 
 .production {
-  border-color: #14b8a6;
+  --lane-accent: var(--ic-ok);
 }
 
 .pill {
@@ -54,27 +86,27 @@ html[data-theme='dark'] .plate {
   left: 0.9rem;
   padding: 0.1rem 0.6rem;
   border-radius: 999px;
-  color: #fff;
+  background: var(--lane-accent);
+  color: #ffffff;
   font-family: var(--ifm-font-family-monospace);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.06em;
 }
 
-.demo .pill {
-  background: #ef4444;
-}
-
-.production .pill {
-  background: #14b8a6;
+html[data-theme='dark'] .pill {
+  color: #0d1117;
 }
 
 .laneBody {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: center;
-  gap: 0.5rem 0.35rem;
+  /* Left-aligned, not centred: on a contrast card the two lanes must start on the same x or the
+     reader cannot compare them column by column — a label-stripped read called centred rows "two
+     unrelated diagrams". */
+  justify-content: flex-start;
+  gap: 0.7rem 0.35rem;
 }
 
 /* ---- nodes ---------------------------------------------------------------------------------- */
@@ -82,38 +114,71 @@ html[data-theme='dark'] .plate {
 .node {
   margin: 0;
   flex: 0 1 auto;
-  max-width: 8.5rem;
+  /* The minimum gutter. Without it two short labels sit close enough to read as one text line,
+     which is a merged meaning, not a spacing nit. */
+  min-width: 5.5rem;
+  max-width: 9rem;
+  padding: 0 0.35rem;
+  color: var(--ic-ink);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
 .iconWrap {
   position: relative;
   display: block;
-  width: 3.4rem;
-  height: 3.4rem;
+  width: var(--ic-box);
+  height: var(--ic-box);
 }
 
 .icon {
   width: 100%;
   height: 100%;
   display: block;
-  mix-blend-mode: multiply; /* white asset ground disappears into the white lane */
 }
 
 .badge {
   position: absolute;
-  right: -0.35rem;
-  bottom: -0.25rem;
-  width: 1.45rem;
-  height: 1.45rem;
-  mix-blend-mode: multiply;
+  right: -0.3rem;
+  bottom: -0.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: block;
+}
+
+/* For icons whose own drawing owns the bottom-right corner (see BADGE_TOP_RIGHT). */
+.badgeTop {
+  bottom: auto;
+  top: -0.25rem;
+}
+
+.badge svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.badge_tick {
+  color: var(--ic-ok);
+}
+
+.badge_cross,
+.badge_bang,
+.badge_crack {
+  color: var(--ic-fail);
+}
+
+.badge_padlock,
+.badge_pin,
+.badge_tag,
+.badge_refresh {
+  color: var(--ic-neutral);
 }
 
 .nodeLabel {
-  color: #1a2230;
+  color: inherit;
   font-family: var(--ifm-font-family-monospace);
   font-size: 0.82rem;
   font-weight: 600;
@@ -122,51 +187,214 @@ html[data-theme='dark'] .plate {
   text-wrap: balance;
 }
 
-/* Ordering ramp: colour and emphasis encode position, so a reader sees the order before reading a
-   label. Use ONLY where the content genuinely is an ordering — never on peers. */
-.rank1 .nodeLabel { color: #0f766e; }
-.rank2 .nodeLabel { color: #14b8a6; }
-.rank3 .nodeLabel { color: #b45309; }
-.rank4 .nodeLabel { color: #92400e; }
-.ranklast .nodeLabel { color: #64748b; }
-.ranklast .iconWrap { opacity: 0.45; }
+/* Ordering ramp: colour encodes position on the ramp, and because the icons are currentColor-driven
+   it tints the ICON as well as the label — the encoding a raster set cannot do. Use ONLY where the
+   content genuinely is an ordering; never on peers. */
+.rank1 {
+  color: #0f766e;
+  --ic-fill: #0d9488;
+  --ic-tint: #99f6e4;
+}
+
+.rank2 {
+  color: #0e7490;
+  --ic-fill: #0891b2;
+  --ic-tint: #a5f3fc;
+}
+
+.rank3 {
+  color: #3c6076;
+  --ic-fill: #61829d;
+  --ic-tint: #cddbe6;
+}
+
+.rank4 {
+  color: #4a6980;
+  --ic-fill: #8397a9;
+  --ic-tint: #dde4ec;
+}
+
+.ranklast {
+  /* Tinted, and the OUTLINE stays confident: a flat grey icon reads as "disabled" or "not built",
+     which on the last rung says "never retrain" rather than "retrain last". Only the fills fade. */
+  color: #5f7683;
+  --ic-fill: #a8bcc5;
+  --ic-tint: #e3ecef;
+}
+
+.rank2 .iconWrap {
+  opacity: 0.96;
+}
+
+.rank3 .iconWrap {
+  opacity: 0.92;
+}
+
+.rank4 .iconWrap {
+  opacity: 0.88;
+}
+
+.ranklast .iconWrap {
+  opacity: 0.84;
+}
+
+html[data-theme='dark'] .rank1 {
+  color: #5eead4;
+  --ic-fill: #2dd4bf;
+  --ic-tint: #134e4a;
+}
+
+html[data-theme='dark'] .rank2 {
+  color: #67e8f9;
+  --ic-fill: #22d3ee;
+  --ic-tint: #164e63;
+}
+
+html[data-theme='dark'] .rank3 {
+  color: #a8c0d4;
+  --ic-fill: #7e9cb6;
+  --ic-tint: #2a3947;
+}
+
+html[data-theme='dark'] .rank4 {
+  color: #8fa2b4;
+  --ic-fill: #68809a;
+  --ic-tint: #26313d;
+}
+
+html[data-theme='dark'] .ranklast {
+  color: #8b9ea8;
+  --ic-fill: #4c5c65;
+  --ic-tint: #232c31;
+}
 
 /* ---- connectors ----------------------------------------------------------------------------- */
 
+/* A real SVG line with a real marker-end. The slot grows, so the arrow spans the gap it is given
+   instead of being a fixed-length stub; the vertical offset is half the icon box, so the arrow
+   stays on the icons' centre line even when a neighbouring label wraps. */
 .flow {
+  flex: 1 1 2rem;
+  min-width: 1.5rem;
+  /* Capped: a two-node lane would otherwise stretch one arrow to four times the length of the
+     arrows in a four-node lane, and the disparity reads as a claim about distance. */
+  max-width: 5rem;
+  align-self: flex-start;
+  margin-top: calc(var(--ic-box) / 2 - 5px);
+  display: block;
+  line-height: 0;
+}
+
+.flowSvg {
+  display: block;
+  overflow: visible;
+  width: 100%;
+}
+
+.flowSvg line {
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.dashed {
+  color: var(--ic-ok);
+}
+
+.dashed .flowSvg line {
+  stroke-dasharray: 6 5;
+}
+
+.solid {
+  color: var(--ic-ink);
+}
+
+.fail {
+  color: var(--ic-fail);
+}
+
+.fail .flowSvg line {
+  stroke-dasharray: 6 5;
+}
+
+/* A connector and the branch it feeds, kept on one line so a wrapping lane cannot separate them. */
+.flowBranch {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* ---- branch --------------------------------------------------------------------------------- */
+
+/* One input, N fates. The brace owns the branch nodes, so it can span their full height; both the
+   branch and the connector feeding it are centred on the flex line, so the arrow meets the brace's
+   midpoint whatever the branches' height. */
+.branch {
   flex: 0 0 auto;
-  align-self: center;
-  width: 2rem;
-  height: 0;
-  margin-bottom: 1.4rem;
-  border-top-width: 2px;
-  position: relative;
+  align-self: flex-start;
+  display: flex;
+  align-items: stretch;
+  gap: 0.15rem;
 }
 
-.flow::after {
-  content: '';
-  position: absolute;
-  right: -1px;
-  top: -4px;
-  border: 4px solid transparent;
-  border-left-width: 6px;
-}
-
-.dashed { border-top-style: dashed; border-color: #14b8a6; }
-.dashed::after { border-left-color: #14b8a6; }
-.solid { border-top-style: solid; border-color: #1a2230; }
-.solid::after { border-left-color: #1a2230; }
-.fail { border-top-style: dashed; border-color: #ef4444; }
-.fail::after { border-left-color: #ef4444; }
-
+/* Two stretched halves, split at the icon centre line, so the nub is exactly where every
+   connector in this system points. The bottom inset stops the lower tip overshooting past the
+   last branch's label into whitespace. */
 .brace {
+  position: relative;
   flex: 0 0 auto;
-  align-self: stretch;
-  width: 0.75rem;
-  margin: 0.2rem 0.1rem 1.4rem;
-  border: 2px solid #14b8a6;
-  border-left: none;
-  border-radius: 0 10px 10px 0;
+  width: 1.05rem;
+  padding-bottom: 1.15rem;
+  color: var(--lane-accent);
+  display: flex;
+  flex-direction: column;
+}
+
+.braceSvg {
+  width: 100%;
+  display: block;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.braceNode {
+  position: absolute;
+  left: -0.16rem;
+  top: calc(var(--ic-box) / 2);
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: -0.25rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.braceTop {
+  height: calc(var(--ic-box) / 2);
+  flex: 0 0 auto;
+}
+
+.braceBottom {
+  flex: 1 1 auto;
+  min-height: 1rem;
+}
+
+.branchNodes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* Left-aligned inside a branch: centring an icon inside a box as wide as its label pushes the icon
+   away from the brace, and the brace then appears to gather nothing. */
+.branchNodes .node {
+  align-items: flex-start;
+  padding-left: 0.15rem;
+}
+
+.branchNodes .nodeLabel {
+  text-align: left;
 }
 
 .caption {
@@ -186,7 +414,22 @@ html[data-theme='dark'] .plate {
 }
 
 @media (max-width: 480px) {
-  .iconWrap { width: 2.9rem; height: 2.9rem; }
-  .nodeLabel { font-size: 0.76rem; }
-  .flow { width: 1.1rem; }
+  .plate {
+    --ic-box: 2.9rem;
+    padding: 1.1rem 0.9rem 1.2rem;
+  }
+
+  .node {
+    min-width: 4.9rem;
+    padding: 0 0.25rem;
+  }
+
+  .nodeLabel {
+    font-size: 0.76rem;
+  }
+
+  .flow {
+    flex-basis: 1.2rem;
+    max-width: 3rem;
+  }
 }
