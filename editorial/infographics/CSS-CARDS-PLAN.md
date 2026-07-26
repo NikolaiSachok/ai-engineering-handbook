@@ -94,7 +94,52 @@ That is 24 + 8 = 32 assets covering every combination the first set needed and m
 consistent in weight, perspective and detail, which is precisely what per-card generation cannot achieve. Then
 slice into individual files. A 4×6 sheet at 2K gives ~340px per cell, ample for a ~64px render.
 
-## The open tension: generated rasters vs theme adaptation
+## Resolved 2026-07-26: icons are SVG, and no image generation is involved
+
+Measured, not assumed. Two icons hand-authored as SVG and rendered in Chromium at 2× beside the
+shipped WebP equivalents:
+
+| | Generated WebP | Hand-authored SVG |
+|---|---|---|
+| One icon (`database`) | **7052 B** | **547 B** raw · **257 B** gzipped |
+| 24-icon set | ~156 KB | ~13 KB raw · ~6 KB gzipped |
+| Theme adaptation | none — card is a light plate | **works**: one file, recoloured by CSS, verified on near-black |
+| Per-node recolouring | impossible | **works**: the same file rendered in the failure hue |
+| `rank` encoding | label colour only | label **and** icon — a stronger channel |
+| Badge overlay | second raster + `mix-blend-mode` hack | native `<svg>`, positioned exactly, recolourable |
+| Retina | fixed raster | crisp at any size |
+| Text mangling / slicing bugs | two hit us (labels, badge pitch) | structurally impossible |
+| Domain metaphors | anything generable | anything drawable |
+
+So **SVG wins decisively**, the whole generation-plus-slicing pipeline disappears for icons, and the
+light-plate compromise disappears with it. Generation stays for heroes and scenes, which is what it is
+actually good at.
+
+**But drawing quality moves onto us, and the probe proves the risk.** `driftCurves` came out well —
+two offset curves with the overlap shaded, legible at 34 px, ~450 bytes, and no icon set ships it. The
+`database` did not: three stacked discs were specified and it rendered as a single cylinder with a lid,
+because each later path's fill painted over the separations above it. Recognisable, but not what was
+asked for. Deterministic *files* are not the same thing as competent *geometry*.
+
+**Therefore: a hybrid, and this is the decision.**
+
+- **Generic objects** — document, documentStack, spreadsheet, browserPage, database, clipboard,
+  calendar, dashboard, speechBubble(s), magnifier, sliders, globe, plug, keyLock, coins, cloud,
+  codeFile, timeline: take from an established open set (Phosphor duotone, Tabler or Lucide — MIT/ISC,
+  so vendor the specific files into `src/components/InfoCard/icons/` with attribution rather than
+  adding a dependency). Professional geometry, zero authoring risk.
+- **Domain metaphors no set ships** — `driftCurves`, a gauge with a marked threshold notch, a gate
+  beside a funnel, `branchSplit` with a return arrow, `chainSteps`: hand-author these. They are few,
+  they are the ones that carry the argument, and the probe shows they are within reach.
+- Normalise everything to one 48×48 grid, one stroke width, `currentColor` for the outline and
+  `--ic-fill` / `--ic-tint` custom properties for the two fills, so a vendored icon and a
+  hand-authored one are indistinguishable in use.
+
+One caveat worth writing down: ImageMagick cannot resolve `var()`, so any non-browser rasteriser
+(og-image generation, PDF export) will not render these. Give every custom property a literal
+fallback — `fill="var(--ic-fill, #3b82f6)"` — and treat the browser as the only supported renderer.
+
+## Superseded — the tension this replaces: generated rasters vs theme adaptation
 
 A CSS card adapts to the dark theme for free — ground, panels, text and connectors are all CSS. **The icons do
 not.** A raster icon has a baked fill and outline: a dark outline vanishes on a dark card, a light one vanishes
