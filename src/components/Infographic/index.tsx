@@ -1,8 +1,14 @@
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import React from 'react';
 import styles from './styles.module.css';
 
 type InfographicProps = {
-  /** Path under `static/`, e.g. "/img/infographics/production-failures/02-retrieval.webp". */
+  /**
+   * Path under `static/`, e.g. "/img/infographics/production-failures/02-retrieval.webp".
+   * Written WITHOUT the site baseUrl — the component prepends it via `useBaseUrl`. Docusaurus
+   * rewrites absolute asset paths in Markdown images, but not a `src` string handed to a
+   * component, so a raw "/img/…" here 404s on a site served under a subpath.
+   */
   src: string;
   /**
    * What the card shows, in the page's language. Cards carry English labels in every locale
@@ -26,7 +32,7 @@ type InfographicProps = {
 export default function Infographic({src, alt, caption}: InfographicProps): React.JSX.Element {
   return (
     <figure className={styles.figure}>
-      <img className={styles.image} src={src} alt={alt} loading="lazy" decoding="async" />
+      <img className={styles.image} src={useBaseUrl(src)} alt={alt} loading="lazy" decoding="async" />
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
     </figure>
   );
