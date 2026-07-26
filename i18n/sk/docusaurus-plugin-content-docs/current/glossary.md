@@ -706,6 +706,69 @@ a nástroj); objekt vrátený z callbacku skratuje volanie.
 (`default`/`acceptEdits`/`plan`/`bypassPermissions`…); prechádzajú sa v pevnom poradí, kde pravidlo `deny`
 blokuje aj pod `bypassPermissions`.
 
+<a id="production-failures"></a>
+
+## Production — prečo AI zlyháva v produkcii
+
+**Prah skóre / prah relevantnosti (score floor / relevance floor)** — najnižšie skóre, ktoré musí vyhľadaný
+chunk dosiahnuť, aby smel vstúpiť do kontextu; uplatňuje sa **až po rerankingu**. Zlúčené hybridné skóre nemá
+porovnateľnú škálu, takže prah nad ním je svojvoľný, kým voči skóre cross-encodera sa prah dá naladiť na
+označenej sade. Pod prahom vráti vyhľadávanie zámerne prázdnu množinu — pozri **Refusal / abstention
+(odmietnutie / zdržanie sa)**.
+
+**Manifest ingestionu (ingestion manifest)** — artefakt zostavenia, ktorý vznikne pri behu ingestionu a
+vypisuje, čo sa zahrnulo, čo sa vylúčilo **a prečo**, aj to, čo beh vôbec nezachytil. Mení zahodenie bez
+ohlásenia na rozhodnutie, ktoré sa dá skontrolovať.
+
+**Slepé miesto pri ingestione (blind spot)** — časť korpusu, ku ktorej sa pipeline nikdy nedostala:
+nepodporovaný formát, chýbajúce oprávnenie, zdroj, ktorý nikto nenakonfiguroval. Bez záznamu v manifeste
+zostáva neviditeľná a pri dopyte sa nedá odlíšiť od „taký dokument neexistuje“.
+
+**Zmrazená regresná sada (frozen regression set)** — evaluačná sada zámerne držaná v nemennom stave, aby
+zmena skóre znamenala zmenu systému. Odpovedá na otázku „pokazil som niečo, čo fungovalo?“.
+
+**Rotujúca sada vzorkovaná z reálnej premávky (rotating live-sampled set)** — evaluačná sada pravidelne
+obnovovaná z reálnej premávky, aby stále odrážala, ako sa ľudia naozaj pýtajú. Odpovedá na otázku
+„zodpovedá moja evaluácia ešte realite?“. Obe sady sa dopĺňajú: nahradiť zmrazenú rotujúcou znamená stratiť
+odhaľovanie regresií.
+
+**Pokles výpovednej hodnoty benchmarku (benchmark familiarity)** — pevný benchmark stráca užitočnosť tým, že
+podľa neho tím mesiace optimalizuje: skóre ďalej stúpa, kvalita nie. Druhý dôvod na rotáciu, popri dôvode,
+ktorý prináša drift.
+
+**Logovanie na úrovni auditu (audit-grade logging)** — uchovať dosť údajov, dosť dlho a s dostatočnou
+integritou, aby sa aj po mesiacoch dalo zrekonštruovať, čo systém pri konkrétnej požiadavke vyhľadal a čo
+vrátil. Iná požiadavka než logovanie na ladenie, ktoré je podrobné, ale krátkodobé — a treba ju navrhnúť,
+nie zdediť.
+
+**Náklad na prijatú odpoveď (cost per accepted answer)** — poctivá jednotka výdavkov na LLM: náklad delený
+počtom *prijatých* výsledkov, nie počtom tokenov ani volaní. Približne `attempt_cost / p`, kde `p` je miera
+prijatia na prvý pokus.
+
+**Daň za opakovania (retry tax)** — násobok, ktorým nízka miera prijatia zdraží nominálne lacný model.
+Lacnejší model vyhráva iba vtedy, keď `p_cheap / p_expensive > price_cheap / price_expensive`.
+
+**Rebrík odpovedí na drift (drift response ladder)** — poradie, v akom sa vo vyhľadávacom systéme odpovedá na
+zhoršenú kvalitu: najprv preindexovať a zmeniť chunking, potom upraviť zloženie vyhľadávania, potom prepracovať
+prompt a až nakoniec siahnuť na váhy modelu. Je to opačné poradie, než aké volí reflex z MLOps — ten začína
+pretrénovaním — pretože príčina zvyčajne leží v korpuse alebo v dopytoch.
+
+**Korpus je vydanie (corpus as a release)** — zaobchádzať s indexovaným korpusom ako s verziovaným
+artefaktom, ktorý sa dá porovnať diffom a vrátiť späť, presne ako kód — nie ako s prostredím, ktoré sa
+potichu mení pod nemenným systémom.
+
+**Vyhľadávanie s ohľadom na oprávnenia (permission-aware retrieval)** — filtrovanie vyhľadávania podľa
+oprávnení volajúceho, aby systém nemohol citovať dokument, ktorý používateľ nikdy nesmel otvoriť. Vlastnosť
+indexu a cesty dopytu, nie filter prilepený dodatočne.
+
+**Medzijazyková medzera vo vyhľadávaní (cross-lingual retrieval gap)** — tichá strata úplnosti, keď otázka
+príde v inom jazyku, než na akom sa trénoval embeddingový model a reranker: nájde sa menej relevantných
+dokumentov a tie, ktoré sa nájdu, pôsobia vierohodne.
+
+**Riadené zhoršenie pri nástrojoch (graceful degradation)** — vrátiť výslovne horšiu odpoveď, keď nástroju
+vyprší časový limit alebo nastane chyba, namiesto toho, aby systém zostal visieť. Visiaci systém používatelia
+vnímajú ako pokazený, kým odpoveď s výhradou vnímajú len ako pomalú.
+
 <a id="serving"></a>
 
 ## Production — serving
