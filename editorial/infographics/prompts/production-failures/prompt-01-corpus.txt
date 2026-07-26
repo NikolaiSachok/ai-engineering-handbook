@@ -1,0 +1,32 @@
+A flat vector diagram card for a technical engineering handbook, light premium poster style.
+
+Use the reference image for its colour treatment, its icon style, its stroke weights, its typographic feel AND its two-lane structure. Reproduce it closely, but apply the two corrections stated in the LAYOUT section below.
+
+GROUND: a pale blue-grey field, colour 244 247 250, completely plain with no grid and no texture. Raised panels are pure white with thin 1.5px borders and 8px rounded corners.
+PALETTE: teal, colour 20 184 166, marks the correct production path — the lower lane outline, its pill badge and all its arrows. Azure, colour 59 130 246, is used for the document and data objects. Coral, colour 239 68 68, marks the broken demo path — the upper lane outline, its arrow, one falling document and its label pill. All text and all shape outlines are dark slate, colour 26 34 48. Nothing else.
+STYLE: thin-stroke flat geometry, every shape carrying a thin dark outline, flat fills, no gradients, a soft teal glow behind the lower lane's final element, generous negative space. No photorealism, no 3D render, no drop shadows, no photographs of people, no emoji.
+
+LAYOUT: the title runs across the top left in a bold geometric sans-serif, sentence case, large. Below it, two horizontal lanes stacked vertically, each lane a wide white rounded panel spanning the full width of the card.
+
+- UPPER LANE, thin coral outline: a small coral pill badge at its left edge; then a neat stack of three identical azure document pages; then a short coral arrow pointing right into a small azure cylinder near the lane's right end. Below the lane, one azure document page is tipped sideways and falling away, with a coral label pill beside it.
+
+- LOWER LANE, thin teal outline, carrying the soft glow: a small teal pill badge at its left edge; then a tight cluster of three different azure objects — a folded-corner document page, a small grid of cells, and a small browser window; then a teal arrow pointing right into a rounded box holding a page split into two blocks with a small tag attached to the lower block; then a teal arrow pointing right into a final rounded box holding a clipboard with three check rows.
+
+CORRECTION 1 — the lower lane's three elements must occupy only the UPPER TWO THIRDS of the teal panel's height, so that each element's label fits INSIDE the teal panel, centred directly beneath it, with clear space between the label and the panel's bottom border. No label may cross or sit below the teal panel's border.
+
+CORRECTION 2 — the labels must be BIG. Every label's letters are about one third as tall as the letters of the title, and roughly one third the height of the icon they sit under: big, chunky monospace, unmistakably readable when the whole card is shrunk to 360 pixels wide. This applies to the pill badges too.
+
+Each lane's pill badge carries its label inside it. Every other label sits directly beneath its element, centred, on one or two lines. Every element is labelled; no element is left blank. Compose so the diagram fills the frame, with equal top and bottom margins and no empty band along the bottom edge.
+
+Render exactly this text and no other words anywhere:
+"The corpus is the product"
+"DEMO"
+"clean uniform docs"
+"index"
+"silently dropped"
+"PRODUCTION"
+"mixed sources"
+"layout-aware chunking"
+"ingestion manifest"
+
+NEGATIVE: never render a hex colour code or any '#' character; no numbers anywhere; no watermark, no logo, no signature, no extra labels, no paragraphs, no gibberish micro-text, no misspellings, no duplicated words, no emoji, no photographic texture, no unlabelled shapes, no placeholder frames, no drop shadows.

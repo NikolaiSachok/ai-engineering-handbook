@@ -1,0 +1,25 @@
+.figure {
+  margin: 1.75rem 0;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--ifm-toc-border-color);
+}
+
+/* The cards are drawn on a light ground. On the dark theme, take a little brightness off and
+   keep the border, so a card reads as a deliberate plate instead of a glaring white block. */
+html[data-theme='dark'] .image {
+  filter: brightness(0.94) saturate(0.97);
+  border-color: #33353a;
+}
+
+.caption {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ifm-color-emphasis-700);
+}

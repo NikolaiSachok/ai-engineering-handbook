@@ -733,6 +733,60 @@ tool); returning an object from a callback short-circuits the call.
 (`default`/`acceptEdits`/`plan`/`bypassPermissions`…), evaluated in a fixed order where a `deny` rule blocks
 even under `bypassPermissions`.
 
+<a id="production-failures"></a>
+
+## Production — why AI fails in production
+
+**Score floor / relevance floor** — a minimum score a retrieved chunk must clear before it is allowed into the
+context, applied **after reranking**: fused hybrid scores are not on a comparable scale, so a threshold on them
+is arbitrary, while a cross-encoder's score can be tuned against a labelled set. Below the floor, retrieval
+returns nothing on purpose (see **Refusal / abstention**).
+
+**Ingestion manifest** — a build artefact produced by an ingestion run listing what was included, what was
+excluded **and why**, and what the run could not see at all. It turns a silent drop into a reviewable decision.
+
+**Blind spot (ingestion)** — a part of the corpus the pipeline never reached: an unsupported format, a
+permission it lacked, a source nobody configured. Invisible unless the manifest reports it, and
+indistinguishable from "no such document" at query time.
+
+**Frozen regression set** — an evaluation set deliberately held still, so that a score change means the system
+changed. Answers "did I break what worked."
+
+**Rotating live-sampled set** — an evaluation set periodically refreshed from real traffic, so it keeps
+resembling how people actually ask. Answers "does my evaluation still resemble reality." The two sets are
+complements: replacing the frozen one with a rotating one loses regression detection.
+
+**Benchmark familiarity** — the decay of a fixed benchmark's usefulness as a team optimises against it for
+months; the score keeps rising while quality does not. An argument for rotation on top of the argument from
+drift.
+
+**Audit-grade logging** — retaining enough, for long enough, and with enough integrity to reconstruct months
+later what the system retrieved and returned for a specific request. A different requirement from debug
+logging, which is verbose but short-lived, and one that has to be designed for rather than inherited.
+
+**Cost per accepted answer** — the honest unit of LLM spend: cost divided by *accepted* results rather than by
+tokens or calls. Roughly `attempt_cost / p`, where `p` is the first-try acceptance rate.
+
+**Retry tax** — the multiplier a low acceptance rate applies to a nominally cheap model. The cheaper model wins
+only when `p_cheap / p_expensive > price_cheap / price_expensive`.
+
+**Drift response ladder** — the order in which to answer decayed quality in a retrieval system: re-index and
+re-chunk, then the retrieval mix, then the prompt, and only last the model weights — the reverse of the MLOps
+reflex to retrain, because the cause is usually the corpus or the queries.
+
+**Corpus as a release** — treating the indexed corpus as a versioned, diffable, roll-back-able artefact like
+code, rather than as ambient state that changes silently under a fixed system.
+
+**Permission-aware retrieval** — filtering retrieval by the entitlements of the caller, so the index cannot
+quote a document the user was never allowed to open. A property of the index and the query path, not a filter
+bolted on afterwards.
+
+**Cross-lingual retrieval gap** — the silent recall loss when an English-trained embedder and reranker are
+queried in another language: fewer relevant documents surface, and the ones that do look plausible.
+
+**Graceful degradation (tools)** — returning an explicit worse answer when a tool times out or fails, instead
+of hanging. Users read a hang as broken and a caveated answer as merely slow.
+
 <a id="serving"></a>
 
 ## Production — serving
