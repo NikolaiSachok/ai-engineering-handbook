@@ -23,3 +23,20 @@ html[data-theme='dark'] .image {
   line-height: 1.5;
   color: var(--ifm-color-emphasis-700);
 }
+
+/* Above the mobile breakpoint, cap the card width. A 4:3 card at full article width is ~675px
+   tall on a desktop, which pushes the prose it introduces off the screen — the card stops being
+   a beacon and becomes an obstacle. Capped at 560px it is ~420px tall, so the reader sees the
+   card and the paragraph that explains it together. On a phone, full width is correct: the card
+   is the only thing on screen anyway, and the label budget is derived from 360px.
+   `wide` opts out — for a 16:9 hero, which is short enough to run full width. */
+@media (min-width: 997px) {
+  .figure {
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .wide {
+    max-width: 100%;
+  }
+}

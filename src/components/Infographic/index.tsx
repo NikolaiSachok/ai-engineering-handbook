@@ -18,6 +18,12 @@ type InfographicProps = {
   alt: string;
   /** The card's point in one line, in the page's language. Rendered under the card. */
   caption?: string;
+  /**
+   * Let the image run the full article width on desktop instead of the 560px card cap.
+   * For a 16:9 hero, which stays short enough not to crowd out the prose. A 4:3 card must not
+   * use this: at full width it is ~675px tall and pushes its own explanation off the screen.
+   */
+  wide?: boolean;
 };
 
 /**
@@ -29,9 +35,9 @@ type InfographicProps = {
  * as a deliberate plate rather than a pasted screenshot, and a touch less brightness so a light
  * card doesn't glare on a dark page (see `styles.module.css`).
  */
-export default function Infographic({src, alt, caption}: InfographicProps): React.JSX.Element {
+export default function Infographic({src, alt, caption, wide}: InfographicProps): React.JSX.Element {
   return (
-    <figure className={styles.figure}>
+    <figure className={`${styles.figure}${wide ? ` ${styles.wide}` : ''}`}>
       <img className={styles.image} src={useBaseUrl(src)} alt={alt} loading="lazy" decoding="async" />
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
     </figure>

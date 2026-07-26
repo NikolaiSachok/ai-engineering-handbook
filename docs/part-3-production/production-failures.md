@@ -11,6 +11,7 @@ sidebar_position: 0
   src="/img/infographics/production-failures/hero.webp"
   alt="A small tidy demo platform and a much larger production platform, joined by a bridge with its middle section missing and warning signs scattered across the gap"
   caption="The gap this part of the handbook exists to close — eight failures, and the shape that answers each."
+  wide
 />
 
 A demo has to win once, on a path someone chose. Production has to catch itself on the paths nobody
