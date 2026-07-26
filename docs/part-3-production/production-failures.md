@@ -274,7 +274,7 @@ Part III now builds the answers: [serving](./serving/index.md) the system, the
 [tooling ecosystem](./tooling-ecosystem/index.md) that measures and guards it, and
 [LLMOps](./llmops/index.md) for its life after release.
 
-**[New terms](../glossary.md#production-failures)**: score floor / relevance floor, ingestion manifest, blind
-spot (ingestion), frozen regression set, rotating live-sampled set, benchmark familiarity, audit-grade logging,
-cost per accepted answer, retry tax, drift response ladder, corpus as a release, permission-aware retrieval,
-cross-lingual retrieval gap, graceful degradation (tools).
+**New terms**: score floor / relevance floor, ingestion manifest, blind spot (ingestion), frozen regression
+set, rotating live-sampled set, benchmark familiarity, audit-grade logging, cost per accepted answer, retry tax,
+drift response ladder, corpus as a release, permission-aware retrieval, cross-lingual retrieval gap, graceful
+degradation (tools). All fourteen are defined in the glossary, under *Production — why AI fails in production*.
