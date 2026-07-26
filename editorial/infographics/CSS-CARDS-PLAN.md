@@ -150,9 +150,42 @@ sibling in a row cannot work; the brace has to own its branches as children so i
 Also worth fixing while in there: node labels should not be allowed to visually merge with a
 neighbour's — give each node a minimum horizontal gutter, and never let two labels share a text line.
 
-**Kept from the pilot:** the icon lexicon (24 assets, consistent, verified), the `rank` ordering ramp,
-the lane/pill grammar, the light-plate decision, and the width cap. The defects are in the connector
-and branch primitives only.
+**3 · The lexicon is too generic, and the substitution was made silently.** Card 06's concept is
+*drift*. The raster draws **two offset distribution curves** — the reader sees "the distribution
+moved" before reading the label, which is the icon doing real work. The composed version used
+`dashboard` + a `bang` badge, a monitor with bars, which says only "something is wrong with a chart".
+The lexicon had no drift icon, so a generic object was substituted and the card lost meaning.
+
+That is a **compromise report failure**, not merely a missing asset: the skill requires any content
+concession to go back to the page's author, and this one was made quietly. New rule, worth carrying
+into the skill: *where a concept has a recognisable visual metaphor, a generic stand-in is a defect.*
+An icon set built only from office objects will quietly flatten every domain idea it meets.
+
+**Lexicon gap — the domain sheet that has to exist.** The first sheet is generic containers and
+controls. These concepts, all needed by the existing ten cards, have no honest representation in it:
+
+| Needed | Metaphor |
+|---|---|
+| `driftCurves` | two offset bell curves, one shifted right, overlap shaded |
+| `coins` | a stack of coins (cost) |
+| `globe` | a globe with a speech bubble (language coverage) |
+| `plug` | a plug pulled from its socket (tool failure) |
+| `keyLock` | a key beside an open padlock (unscoped access) |
+| `scales` | a balance (an honest scoreboard) |
+| `timeline` | three connected spans (a trace) |
+| `branchSplit` | a path splitting, with a return arrow (canary / rollback) |
+| `cloudBreak` | an upload cloud with a crack (deploy failure) |
+| `codeFile` | a file with angle brackets (prompt in code) |
+| `funnel` | a funnel alone, without the barrier |
+| `chainSteps` | four linked squares (an unguarded pipeline) |
+
+Generate these as a **second sheet** in one pass, in the same style, and slice with the same
+gutter-detection slicer. Until they exist, a composed card that needs one of them must not be
+authored with a substitute.
+
+**Kept from the pilot:** the 24 generic assets (consistent, verified), the `rank` ordering ramp,
+the lane/pill grammar, the light-plate decision, and the width cap. The defects are the connector
+primitive, the branch primitive, and the lexicon's coverage.
 
 ## Sequence
 
