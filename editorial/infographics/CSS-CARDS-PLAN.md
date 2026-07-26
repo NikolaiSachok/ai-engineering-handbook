@@ -111,6 +111,49 @@ register, and leaves B/C open. If theme-adaptive icons later outweigh the sticke
 assets change; no card markup moves. Note the consequence plainly: on the dark theme a composed card is a light
 plate, not a dark card.
 
+## Pilot review — 2026-07-26: not yet good enough, two structural defects
+
+Verdict on the first pilot (cards 06 and 02 on the unlisted pilot page): **the rasters still read
+better; do not migrate yet.** The ordering ramp on card 06 works and is a genuine improvement over the
+raster's four identical peers. Two things fail, and the second is not cosmetic.
+
+**1 · Connectors are wrong.** Built as a `border-top` dash with an arrowhead faked from `border` on a
+`::after`. Symptoms: the head is undersized and reads as detached from the dash, it sits slightly off
+the dash's axis, and the length is a fixed `2rem` regardless of the gap it spans, so it looks like a
+stub next to the raster's long, confidently aimed arrows.
+
+*Fix:* draw connectors as **inline SVG** with a real `marker-end`, and let them size to their
+container (`width: 100%` inside a flex-grow slot) so the arrow spans the actual gap. Vertical centring
+should align to the **icon box**, not to the node including its label — the current
+`margin-bottom: 1.4rem` hack approximates that and drifts whenever a label wraps to two lines.
+
+**2 · The branch does not express a branch.** On card 02 the meaning is *one input, two legitimate
+fates* — `grounded answer` **or** `"no context"`. The raster draws a brace opening into two **stacked**
+outcomes. The composed version puts both outcome nodes in the same flex row, so they sit side by side,
+their two labels run together and read as a single line, and the brace is a small bracket attached to
+nothing. The card has stopped saying what it means, which by §8 of the skill is a failed card no matter
+how correct every label is.
+
+*Fix:* a real `<Branch>` component — a column of two (or N) nodes with a brace that **spans their full
+height**, and the incoming connector aimed at the brace's vertical midpoint. `Brace` as a standalone
+sibling in a row cannot work; the brace has to own its branches as children so it can size to them:
+
+```mdx
+<Node icon="gauge" label="score floor" />
+<Flow />
+<Branch>
+  <Node icon="document" badge="tick" label="grounded answer" />
+  <Node icon="speechBubble" label="or “no context”" />
+</Branch>
+```
+
+Also worth fixing while in there: node labels should not be allowed to visually merge with a
+neighbour's — give each node a minimum horizontal gutter, and never let two labels share a text line.
+
+**Kept from the pilot:** the icon lexicon (24 assets, consistent, verified), the `rank` ordering ramp,
+the lane/pill grammar, the light-plate decision, and the width cap. The defects are in the connector
+and branch primitives only.
+
 ## Sequence
 
 1. Generate and slice the two icon sheets; ship as `static/img/infographics/icons/<concept>.webp`.
