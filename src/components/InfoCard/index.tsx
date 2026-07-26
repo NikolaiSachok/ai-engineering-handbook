@@ -102,43 +102,43 @@ export function Flow({kind = 'dashed'}: {kind?: FlowKind}): React.JSX.Element {
 }
 
 /**
- * One input, N legitimate fates. The brace owns its branches as children, which is the whole
- * point: only then can it size to them. A standalone brace beside two nodes in the same flex row
- * puts the outcomes side by side, runs their labels together as one line, and leaves the brace
- * attached to nothing — the card stops saying what it means.
+ * One input, N legitimate fates. `Branch` owns its outcome nodes, which is the whole point: only
+ * then can the fork size to them. A standalone brace beside two nodes in the same flex row puts
+ * the outcomes side by side, runs their labels together as one line, and leaves the brace attached
+ * to nothing — the card stops saying what it means.
  *
- * The brace is drawn as two independently stretched halves so its **nub lands exactly on the icon
- * centre line** — the same line every connector sits on. That is why the incoming arrow needs no
- * special case: one alignment rule governs the whole grammar. Aiming the arrow at a symmetric
- * brace's midpoint instead leaves it floating a label's height below the node it comes from, which
- * a label-stripped read called the worst mechanical error on the card.
+ * The drawing is a **routed fork, not a brace glyph**: a junction dot on the incoming connector's
+ * line, a stem dropping from it, and one arm per outcome ending on that outcome's own icon centre
+ * line. A stretched `{` was tried first and read as "a thin bracket floating away from the nodes it
+ * groups" — a glyph scaled to a height it was never drawn for.
+ *
+ * The geometry is exact because the branch is a two-column grid: each arm cell is the same grid row
+ * as its node, so `calc(var(--ic-box) / 2)` inside the cell *is* that node's icon centre line,
+ * whatever its label does. Arms are drawn as borders with a corner radius — straight lines and real
+ * rounded corners, never a shape faked from border tricks.
  */
 export function Branch({children}: {children: React.ReactNode}): React.JSX.Element {
+  const outcomes = React.Children.toArray(children).filter(
+    (child) => typeof child !== 'string' || child.trim() !== '',
+  );
+  const last = outcomes.length - 1;
   return (
     <div className={styles.branch}>
-      <span className={styles.brace} aria-hidden="true">
-        {/* preserveAspectRatio="none" stretches each half to whatever height it is given;
-            vector-effect keeps the stroke at its authored width while it stretches. */}
-        <svg
-          className={cx(styles.braceSvg, styles.braceTop)}
-          focusable="false"
-          preserveAspectRatio="none"
-          viewBox="0 0 14 50">
-          <path d="M13 1.5C7 1.5 7 12 7 26c0 14-6 14-6 24" vectorEffect="non-scaling-stroke" />
-        </svg>
-        <svg
-          className={cx(styles.braceSvg, styles.braceBottom)}
-          focusable="false"
-          preserveAspectRatio="none"
-          viewBox="0 0 14 50">
-          <path d="M1 0c0 10 6 10 6 24 0 14 0 24.5 6 24.5" vectorEffect="non-scaling-stroke" />
-        </svg>
-        {/* The junction. Without it the brace floats: the arrow appears to point at the first
-            branch rather than at the fork, and a label-stripped reader called the brace
-            structurally unanchored. */}
-        <span className={styles.braceNode} />
-      </span>
-      <div className={styles.branchNodes}>{children}</div>
+      {outcomes.map((child, i) => (
+        <React.Fragment key={`branch-${i}`}>
+          <span
+            aria-hidden="true"
+            className={cx(
+              styles.arm,
+              i === 0 && styles.armFirst,
+              i === last && styles.armLast,
+              i > 0 && i < last && styles.armMiddle,
+            )}>
+            {i === 0 && <span className={styles.junction} />}
+          </span>
+          {child}
+        </React.Fragment>
+      ))}
     </div>
   );
 }

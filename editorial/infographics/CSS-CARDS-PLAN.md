@@ -372,3 +372,110 @@ rasters still ship. Open items for whoever takes the decision:
    `traceSpans` and `chainSteps` both blur into "a row of rounded blobs", and `speechBubble` vs
    `speechBubbleEmpty` differ only by an interior mark. None is used on a card where the distinction
    is load-bearing without a label.
+
+
+---
+
+## Owner review 2026-07-26 — "looks better", four fixes before it can replace the rasters
+
+### 1 · Short lanes stopped short of the right edge
+
+**Fixed by deleting the connector cap, not by centring.** The connectors are `flex: 1 1 2rem` with no
+`max-width`, so they absorb every spare pixel: a two-node lane now fills the panel edge to edge
+exactly like a four-node lane, **and both lanes still start on the same x** — the property a blind
+reader had already told us was worth protecting when it read centred lanes as "two unrelated
+diagrams". Nothing was sacrificed; the whitespace moved from the right margin into the middle of the
+lane, where a connector spans it instead of it sitting empty.
+
+What that cost, honestly: card 06's demo lane is now two icons at the extremes with a long arrow
+between them, and a stripped reader called that panel "under-populated". It is — the demo lane has
+two nodes and the production lane has four, which *is* the card's argument (the demo path is short).
+The lane was equally under-populated before; the fix only moved where the emptiness sits.
+
+**One real bug the change exposed.** With the cap gone, card 02's branch dropped onto a second row.
+Cause: a `<svg>` with no viewBox has an intrinsic width of **300 px**, so the connector's *intrinsic
+contribution* was 300 px even though its flex-basis was 2 rem — enough to break the flex line. Fixed
+by giving `.flow` a definite `width: 2rem` alongside the basis. Worth remembering: flex line-breaking
+uses intrinsic contributions, and an inline SVG lies about its.
+
+### 2 · The brace is gone; the fork is real geometry
+
+The stretched `{` was a glyph scaled to a height it was never drawn for, and it read as "a thin
+bracket floating away from the nodes it groups". Replaced with a **routed fork**: the junction dot on
+the incoming connector's line, a stem dropping from it, one arm per outcome ending on **that
+outcome's own icon centre line**.
+
+The geometry is exact because `Branch` is now a **two-column grid** — arm cell, node cell, one row per
+outcome. An arm cell is therefore always exactly as tall as the node beside it, so
+`calc(var(--ic-box) / 2)` *inside that cell* is that node's icon centre line whatever its label does.
+That is the trick worth keeping: **put the connector in the same grid row as the thing it points at,
+and the alignment stops being a guess.** Arms are borders with a corner radius — straight lines and
+real rounded corners, never a shape faked from border tricks.
+
+A blind read of that first fork confirmed the arrow *"terminates on the fork — the arrowhead's tip
+touches the dot"* and that the drawing was *"deliberate, not decorative"* — and then demolished the
+topology: with the junction **on** the first outcome's centre line, the incoming arrow, the junction
+and the first outcome were **collinear**, so it read as *"flow continues into outcome A, with outcome
+B bracketed underneath"*. The first outcome looked primary, which argues against the card's entire
+claim that a refusal is an equally legitimate ending.
+
+Fixed with a **fork lead**: the branch carries `padding-top: var(--fork-lead)`, so the junction sits
+just above the first outcome's centre line and **both** legs leave the incoming axis and elbow out to
+their node. Nothing is collinear with the arrow any more, and the junction is a real T rather than a
+dot sitting on a through-line. The same read also caught both arms stopping in the column gutter, in
+front of the icons' own transparent margin — so an outcome "was not actually attached to anything".
+Arms now run `right: -0.55rem`, into the icon's margin.
+
+Deliberately **not** done, though the reader asked for it: arrowheads on the fork's legs. The skill's
+flow grammar specifies a brace-style fan for 1→N *instead of* N arrows from a point. The fork stays
+headless and solid, which also keeps it visually distinct from the dashed pipeline — topology is not
+flow.
+
+### 5 · The uniform node pitch (not on the owner's list; the same read forced it)
+
+Nodes had a *minimum* width and were sized by their own label, so each lane centred its first icon
+somewhere different — the production row's first icon sat ~30 px left of the demo row's, on both
+cards. A blind reader called it out twice, "consistently wrong". Nodes now share **one pitch**
+(`flex: 0 1 6.2rem`), so every icon lands on the same grid and the two lanes' first icons align
+exactly. Consequences worth knowing:
+
+- Labels wrap earlier. That is fine — two-line wrap is normal per the skill — but it is a real trade.
+- A long single token would overflow the fixed pitch and collide with its neighbour, which is the
+  very defect the gutter exists to prevent, so `.nodeLabel` carries `overflow-wrap: anywhere`.
+- Four nodes plus three connectors now fit one line by ~20 px. A fifth node wraps, which is correct:
+  the label budget caps a lane well before that.
+
+### 3 · `speechBubbleEmpty` is now genuinely empty
+
+Both candidates went through blind naming. The **plain bubble** read as *"empty speech bubble… nothing
+is in there… reads as empty / no content"*. The **`∅` variant** read as *"blocked / banned message"* —
+a circle with a diagonal bar is the universal **prohibition** sign, not the empty set. Kept the plain
+bubble and deleted the other.
+
+The lesson generalises: **an absence beats a glyph that means absence.** A symbol for "nothing" is
+still something, and readers decode the something first.
+
+### 4 · Two icons redrawn to their conventions
+
+- **`gate`** now draws the boom barrier's three defining features — base plate, vertical post, striped
+  arm pivoting from the post's top on a visible hinge. Blind: *"barrier / boom gate (striped
+  roadblock arm)"*. Mushy at 34 px, which is recorded rather than hidden.
+- **`coins`** left the vendored set. Three stacked discs seen edge-on is *literally the database
+  convention*, which is why a blind reader kept offering "database disks" — the drawing was not
+  merely similar to `database`, it was the same convention. Redrawn as **two overlapping coins seen
+  face-on with a currency mark**, keeping the amber exception. Blind: *"coins / money"*, no mention of
+  discs or a database.
+
+### Blind-naming diff, this round
+
+| Intended | Blind read | Verdict |
+|---|---|---|
+| `gate` | "barrier / boom gate" | pass |
+| `coins` | "coins / money (dollar coin)" | pass — the database collision is gone |
+| `speechBubbleEmpty` (plain) | "empty speech bubble… nothing is in there" | pass — **kept** |
+| `speechBubbleEmpty` (`∅`) | "blocked / banned message" | fail — **deleted** |
+| controls: `database`, `magnifier`, `funnel`, `speechBubble` | all named correctly | — |
+
+Residual, recorded: `speechBubble` and `speechBubbleEmpty` share a silhouette and differ only by
+interior content, so at 34 px a fast scan reads both as "a comment". That is the *intended*
+relationship — one object in two states — and on the card they are adjacent and labelled.
