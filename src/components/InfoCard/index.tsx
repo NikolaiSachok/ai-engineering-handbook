@@ -102,43 +102,58 @@ export function Flow({kind = 'dashed'}: {kind?: FlowKind}): React.JSX.Element {
 }
 
 /**
+ * The vertical pitch of a branch's outcomes. It has to be a constant, not content-driven, because
+ * every other number in the fork derives from it: an outcome's centre line, the fork's axis, and
+ * the offset the rest of the lane needs so that axis meets the incoming connector. Two label lines
+ * fit; a third would overflow, which is what the label budget is for.
+ */
+const BRANCH_ROW = 'var(--branch-row)';
+const BRANCH_PITCH = `calc(${BRANCH_ROW} + var(--branch-gap))`;
+
+/** Distance from the branch's top to outcome `i`'s icon centre line. `i` may be fractional. */
+const centreLine = (i: number) => `calc(${i} * ${BRANCH_PITCH} + var(--ic-box) / 2)`;
+
+/** How far the fork's axis sits below the first outcome's centre line. */
+export const forkOffset = (count: number) => `calc(${(count - 1) / 2} * ${BRANCH_PITCH})`;
+
+/**
  * One input, N legitimate fates. `Branch` owns its outcome nodes, which is the whole point: only
- * then can the fork size to them. A standalone brace beside two nodes in the same flex row puts
- * the outcomes side by side, runs their labels together as one line, and leaves the brace attached
- * to nothing — the card stops saying what it means.
+ * then can the fork size to them. A standalone brace beside two nodes in the same flex row puts the
+ * outcomes side by side, runs their labels together as one line, and leaves the brace attached to
+ * nothing — the card stops saying what it means.
  *
- * The drawing is a **routed fork, not a brace glyph**: a junction dot on the incoming connector's
- * line, a stem dropping from it, and one arm per outcome ending on that outcome's own icon centre
- * line. A stretched `{` was tried first and read as "a thin bracket floating away from the nodes it
- * groups" — a glyph scaled to a height it was never drawn for.
+ * The fork is **symmetric about the incoming connector's axis**: with two outcomes, one sits above
+ * the line and one below, so the lane has no dead region beneath the nodes that precede the branch
+ * and — the part that matters for meaning — **neither outcome is collinear with the incoming
+ * arrow**, so neither reads as the primary path and the other as an afterthought. An earlier fork
+ * hung entirely below the axis and a blind reader duly read it as "flow continues into outcome A,
+ * with outcome B bracketed underneath".
  *
- * The geometry is exact because the branch is a two-column grid: each arm cell is the same grid row
- * as its node, so `calc(var(--ic-box) / 2)` inside the cell *is* that node's icon centre line,
- * whatever its label does. Arms are drawn as borders with a corner radius — straight lines and real
- * rounded corners, never a shape faked from border tricks.
+ * Geometry is arithmetic, not guesswork, because the outcome rows have a fixed pitch: outcome `i`'s
+ * centre line is `i × pitch + half the icon box`, and the axis is the midpoint of the first and last
+ * of those. `Lane` pushes everything else in the row down by `forkOffset` so the connector arrives
+ * exactly on that axis.
  */
 export function Branch({children}: {children: React.ReactNode}): React.JSX.Element {
   const outcomes = React.Children.toArray(children).filter(
     (child) => typeof child !== 'string' || child.trim() !== '',
   );
-  const last = outcomes.length - 1;
+  const n = outcomes.length;
+  const axis = centreLine((n - 1) / 2);
+  const half = forkOffset(n);
   return (
     <div className={styles.branch}>
-      {outcomes.map((child, i) => (
-        <React.Fragment key={`branch-${i}`}>
-          <span
-            aria-hidden="true"
-            className={cx(
-              styles.arm,
-              i === 0 && styles.armFirst,
-              i === last && styles.armLast,
-              i > 0 && i < last && styles.armMiddle,
-            )}>
-            {i === 0 && <span className={styles.junction} />}
-          </span>
-          {child}
-        </React.Fragment>
-      ))}
+      <span aria-hidden="true" className={styles.fork}>
+        {/* Up-elbow to the first outcome and down-elbow to the last, each half the fork's height —
+            the same shape mirrored, which is what makes the two outcomes read as equals. */}
+        <span className={cx(styles.elbow, styles.elbowUp)} style={{top: centreLine(0), height: half}} />
+        <span className={cx(styles.elbow, styles.elbowDown)} style={{top: axis, height: half}} />
+        {outcomes.slice(1, -1).map((_, i) => (
+          <span className={styles.tick} key={`tick-${i}`} style={{top: centreLine(i + 1)}} />
+        ))}
+        <span className={styles.junction} style={{top: axis}} />
+      </span>
+      {outcomes}
     </div>
   );
 }
@@ -148,11 +163,15 @@ export function Branch({children}: {children: React.ReactNode}): React.JSX.Eleme
  * a wrapping lane (a phone) will otherwise break the line between them and leave the arrow
  * pointing off the end of the row at nothing.
  */
-function groupFlowWithBranch(children: React.ReactNode): React.ReactNode[] {
+function groupFlowWithBranch(children: React.ReactNode): {
+  items: React.ReactNode[];
+  offset?: string;
+} {
   const items = React.Children.toArray(children).filter(
     (child) => typeof child !== 'string' || child.trim() !== '',
   );
   const out: React.ReactNode[] = [];
+  let offset: string | undefined;
   for (let i = 0; i < items.length; i += 1) {
     const child = items[i];
     const next = items[i + 1];
@@ -162,6 +181,12 @@ function groupFlowWithBranch(children: React.ReactNode): React.ReactNode[] {
       React.isValidElement(next) &&
       next.type === Branch
     ) {
+      const props = next.props as {children?: React.ReactNode};
+      offset = forkOffset(
+        React.Children.toArray(props.children).filter(
+          (c) => typeof c !== 'string' || c.trim() !== '',
+        ).length,
+      );
       out.push(
         <div className={styles.flowBranch} key={`fb-${i}`}>
           {child}
@@ -173,7 +198,7 @@ function groupFlowWithBranch(children: React.ReactNode): React.ReactNode[] {
       out.push(child);
     }
   }
-  return out;
+  return {items: out, offset};
 }
 
 export function Lane({
@@ -185,10 +210,15 @@ export function Lane({
   label: string;
   children: React.ReactNode;
 }): React.JSX.Element {
+  const {items, offset} = groupFlowWithBranch(children);
   return (
     <div className={cx(styles.lane, styles[kind])}>
       <span className={styles.pill}>{label}</span>
-      <div className={styles.laneBody}>{groupFlowWithBranch(children)}</div>
+      <div
+        className={styles.laneBody}
+        style={offset ? ({'--fork-offset': offset} as React.CSSProperties) : undefined}>
+        {items}
+      </div>
     </div>
   );
 }

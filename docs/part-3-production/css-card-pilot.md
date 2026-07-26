@@ -42,7 +42,7 @@ well as the label**, so it is visible before a single word is read.
   <Lane kind="demo" label="DEMO">
     <Node icon="driftCurves" label="drift detected" />
     <Flow kind="fail" />
-    <Node icon="chip" label="retrain the model" />
+    <Node icon="chip" badge="refresh" label="retrain the model" />
   </Lane>
   <Lane kind="production" label="PRODUCTION">
     <Node icon="database" badge="refresh" label="re-index" rank="1" />

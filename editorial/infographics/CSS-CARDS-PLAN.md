@@ -479,3 +479,75 @@ still something, and readers decode the something first.
 Residual, recorded: `speechBubble` and `speechBubbleEmpty` share a silhouette and differ only by
 interior content, so at 34 px a fast scan reads both as "a comment". That is the *intended*
 relationship — one object in two states — and on the card they are adjacent and labelled.
+
+---
+
+## Owner review round 3 — centred scheme, symmetric fork, raster proportions
+
+### 1 · Centred, and the blind read says the risk did not materialise
+
+Reverted the edge-to-edge fill: connectors are capped again (`max-width: 3.5rem`) and `.laneBody` is
+`justify-content: center`, so a short lane sits centred with equal spare space either side.
+
+This reintroduced the exact risk an earlier reader had raised — centred lanes read as *"two unrelated
+diagrams"* because the two lanes' first icons no longer share an x origin. **Re-tested on that axis,
+and the reading did not return.** A fresh label-stripped reader answered plainly: *"Both cards read
+as ONE system, two maturity levels."* What carries it is not the left edge at all — it is the
+**repeated object**: on card 06 the chip is the demo's only destination and the production ladder's
+last rung, and on card 02 the answer bubble is the shared terminal in both lanes. *"Same endpoint,
+different route… I read that before I read the headline."*
+
+So the trade is recorded and settled: **a contrast card is held together by a recurring icon, not by
+a shared left margin.** That is a more robust coupling than alignment, because it survives the two
+lanes having different numbers of nodes.
+
+The same reader did find a **missed opportunity**, and it is worth writing down for whoever decides
+the final layout: centring the short lane leaves the *repeated* icon unaligned between lanes — card
+06's demo chip sits above production's `prompt` rather than above production's chip, which *"actively
+suggests a false pairing"*. Aligning the two chips would make the card's argument land with no words
+at all. It cannot be had together with "centre a short lane": with different node counts, centring
+and endpoint-alignment are mutually exclusive. The owner has chosen centring; a future option is to
+right-align lanes instead, which aligns endpoints rather than origins.
+
+### 2 · The disabled chip, fixed at the right level
+
+Badge grammar now carries the meaning: `retrain the model` is `chip` + `refresh` (a repeat mark on a
+chip *is* retraining), and `weights last` is a bare chip drawn at full confidence.
+
+The deeper fix was in the ramp. Dropping the opacity fade was not enough — the reader still called
+the last chip *"switched off… the exact rendering convention for a disabled UI control"*, because
+`rank` was applied to the node's `color`, which the icon's **stroke** inherits. Desaturated fills plus
+a desaturated outline is what "disabled" looks like. **The ramp now reaches the icon through its
+fills only; the outline stays `--ic-ink` at every rank.** Codified in STYLE.md §10.
+
+### 3 · Symmetric fork — and yes, it deleted the fork lead
+
+The fork is now symmetric about the incoming connector's axis: with two outcomes one sits above the
+line and one below. Two things fell out of one change:
+
+- **The fork lead is gone.** It existed only to stop the first outcome being collinear with the
+  incoming arrow. Symmetry removes the collinearity by construction, so the compensating hack
+  deleted itself — the second time in this component that fixing the geometry properly removed a
+  workaround rather than adding one.
+- **The lane's dead region went with it.** The scheme now straddles the axis instead of hanging
+  below it, so the lane is no taller than the fork needs.
+
+The mechanism is `Lane` computing a `--fork-offset` from the branch's outcome count and pushing
+everything else in the row down by it, while the branch stays at the top. Outcome `i`'s centre line
+is `i × pitch + half the icon box` and the axis is the midpoint of the first and last — arithmetic,
+not guesswork, and it only works because the branch rows have a **fixed** pitch (`--branch-row`).
+
+Card width dropped to `560px`, the same cap the generated cards use, so both substrates now sit at
+identical proportions when the pilot page shows them side by side.
+
+### Residual findings from the same read, not acted on
+
+1. **The empty bubble reads as unfinished when stripped of its label.** *"Indistinguishable from a
+   rendering failure."* This is in direct tension with the blind-*naming* result that chose it
+   ("empty… nothing is in there") and with the owner's explicit instruction that emptiness is the
+   meaning. Both tests are right about different things: named in isolation it reads as empty; seen
+   as one of two peers it reads as the unfinished one. The canon records the constraint that falls
+   out — `speechBubble` and `speechBubbleEmpty` must never appear as **unlabelled** peers.
+2. **Panels are top-weighted with spare space pooled at the bottom.** Mostly an artefact of the
+   stripped test — the hidden labels reserve their space and read as emptiness — but not entirely:
+   `--branch-row` is a fixed 6.2rem, so a two-line label leaves real slack in the last outcome's row.

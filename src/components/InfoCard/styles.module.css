@@ -25,6 +25,10 @@
   --ic-coin: #f0b429;
   --ic-coin-tint: #fde68a;
   --ic-badge-ink: #ffffff;
+  /* The branch's fixed row pitch. Declared here, not on .branch, because the lane needs it too:
+     the offset that puts the connector on the fork's axis is computed from it. */
+  --branch-row: 6.2rem;
+  --branch-gap: 0.55rem;
   /* The icon box. Every connector's vertical offset is derived from this, so an arrow stays on
      the icons' centre line no matter how many lines a label wraps to. */
   --ic-box: 3.4rem;
@@ -102,10 +106,11 @@ html[data-theme='dark'] .pill {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  /* Left-aligned, not centred: on a contrast card the two lanes must start on the same x or the
-     reader cannot compare them column by column — a label-stripped read called centred rows "two
-     unrelated diagrams". */
-  justify-content: flex-start;
+  /* Centred. The owner compared both and chose this: a short lane stretched edge to edge reads as
+     semi-empty, and equal spare space either side reads as deliberate. The cost is recorded in
+     CSS-CARDS-PLAN.md — the two lanes' first icons no longer share an x origin, which a blind
+     reader had previously read as "two unrelated diagrams". */
+  justify-content: center;
   gap: 0.7rem 0.25rem;
 }
 
@@ -117,8 +122,8 @@ html[data-theme='dark'] .pill {
      different, so the first icon of a two-node lane sat ~30px right of the first icon of the lane
      below it — a stripped reader caught the ragged edge on both cards. A fixed width also *is* the
      gutter: two labels can never share a text line. */
-  flex: 0 1 6.2rem;
-  max-width: 6.2rem;
+  flex: 0 1 5.9rem;
+  max-width: 5.9rem;
   min-width: 0;
   padding: 0 0.35rem;
   color: var(--ic-ink);
@@ -126,6 +131,13 @@ html[data-theme='dark'] .pill {
   flex-direction: column;
   align-items: center;
   gap: 0.45rem;
+}
+
+/* Everything in the row except the branch itself drops by the fork offset, so the connector arrives
+   on the fork's axis and the branch straddles it instead of hanging below it. Zero when the lane has
+   no branch. */
+.laneBody > .node {
+  margin-top: var(--fork-offset, 0px);
 }
 
 .iconWrap {
@@ -195,80 +207,92 @@ html[data-theme='dark'] .pill {
 /* Ordering ramp: colour encodes position on the ramp, and because the icons are currentColor-driven
    it tints the ICON as well as the label — the encoding a raster set cannot do. Use ONLY where the
    content genuinely is an ordering; never on peers. */
-.rank1 {
+.rank1 .nodeLabel {
   color: #0f766e;
+}
+
+.rank1 {
   --ic-fill: #0d9488;
   --ic-tint: #99f6e4;
 }
 
-.rank2 {
+.rank2 .nodeLabel {
   color: #0e7490;
+}
+
+.rank2 {
   --ic-fill: #0891b2;
   --ic-tint: #a5f3fc;
 }
 
-.rank3 {
+.rank3 .nodeLabel {
   color: #3c6076;
+}
+
+.rank3 {
   --ic-fill: #61829d;
   --ic-tint: #cddbe6;
 }
 
-.rank4 {
+.rank4 .nodeLabel {
   color: #4a6980;
+}
+
+.rank4 {
   --ic-fill: #8397a9;
   --ic-tint: #dde4ec;
 }
 
 .ranklast {
-  /* Tinted, and the OUTLINE stays confident: a flat grey icon reads as "disabled" or "not built",
-     which on the last rung says "never retrain" rather than "retrain last". Only the fills fade. */
-  color: #5f7683;
-  --ic-fill: #a8bcc5;
-  --ic-tint: #e3ecef;
+  /* No fade, and no grey outline either — the ramp reaches the icon through its FILLS only. A
+     desaturated outline plus desaturated fills is the rendering convention for a disabled control,
+     and a blind reader duly called the last chip "switched off" rather than "last". */
+  color: #55707f;
+  --ic-fill: #8fa8b6;
+  --ic-tint: #d5e2e8;
 }
 
-.rank2 .iconWrap {
-  opacity: 0.96;
-}
-
-.rank3 .iconWrap {
-  opacity: 0.92;
-}
-
-.rank4 .iconWrap {
-  opacity: 0.88;
-}
-
-.ranklast .iconWrap {
-  opacity: 0.84;
+html[data-theme='dark'] .rank1 .nodeLabel {
+  color: #5eead4;
 }
 
 html[data-theme='dark'] .rank1 {
-  color: #5eead4;
   --ic-fill: #2dd4bf;
   --ic-tint: #134e4a;
 }
 
-html[data-theme='dark'] .rank2 {
+html[data-theme='dark'] .rank2 .nodeLabel {
   color: #67e8f9;
+}
+
+html[data-theme='dark'] .rank2 {
   --ic-fill: #22d3ee;
   --ic-tint: #164e63;
 }
 
-html[data-theme='dark'] .rank3 {
+html[data-theme='dark'] .rank3 .nodeLabel {
   color: #a8c0d4;
+}
+
+html[data-theme='dark'] .rank3 {
   --ic-fill: #7e9cb6;
   --ic-tint: #2a3947;
 }
 
-html[data-theme='dark'] .rank4 {
+html[data-theme='dark'] .rank4 .nodeLabel {
   color: #8fa2b4;
+}
+
+html[data-theme='dark'] .rank4 {
   --ic-fill: #68809a;
   --ic-tint: #26313d;
 }
 
-html[data-theme='dark'] .ranklast {
+html[data-theme='dark'] .ranklast .nodeLabel {
   color: #8b9ea8;
+}
+
+html[data-theme='dark'] .ranklast {
   --ic-fill: #4c5c65;
   --ic-tint: #232c31;
 }
@@ -279,18 +303,19 @@ html[data-theme='dark'] .ranklast {
    instead of being a fixed-length stub; the vertical offset is half the icon box, so the arrow
    stays on the icons' centre line even when a neighbouring label wraps. */
 .flow {
-  flex: 1 1 2rem;
+  flex: 1 1 1.25rem;
   /* A definite width as well as a basis. Without it the connector's intrinsic contribution is the
      SVG's default 300px, and a lane that would otherwise fit on one line wraps — which is how an
      uncapped connector silently broke card 02's branch onto a second row. */
-  width: 2rem;
-  min-width: 1.5rem;
-  /* Deliberately uncapped: the connectors absorb every spare pixel, so a two-node lane fills the
-     panel edge to edge exactly like a four-node lane and the first node of both still starts on the
-     shared x origin. A cap balances arrow lengths but leaves a short lane stopping halfway across,
-     which reads as unfinished; the shared origin is the property worth protecting. */
+  width: 1.25rem;
+  min-width: 1.1rem;
+  /* Capped again, and the lane centres what is left. Uncapped, the connectors absorbed every spare
+     pixel and a two-node lane spanned both edges around one very long arrow. */
+  /* 3.5rem, not 5: a two-node lane's single arrow was three times the length of the arrows in a
+     four-node lane, which made the longer chain read as crammed rather than as fuller. */
+  max-width: 3.5rem;
   align-self: flex-start;
-  margin-top: calc(var(--ic-box) / 2 - 5px);
+  margin-top: calc(var(--fork-offset, 0px) + var(--ic-box) / 2 - 5px);
   display: block;
   line-height: 0;
 }
@@ -335,29 +360,24 @@ html[data-theme='dark'] .ranklast {
 
 /* ---- branch --------------------------------------------------------------------------------- */
 
-/* A routed fork. Two columns: arms then outcome nodes, one grid row per outcome — so an arm cell is
-   always exactly as tall as the node beside it, and `var(--ic-box) / 2` inside that cell is that
-   node's icon centre line no matter how its label wraps. That is what lets the fork terminate on
-   each outcome instead of near it. */
+/* A routed fork, symmetric about the incoming connector's axis. Two columns: the fork, then the
+   outcome nodes, one grid row per outcome. The rows have a FIXED pitch, which is what makes the
+   geometry arithmetic instead of guesswork — every line in the fork is `i × pitch + half the icon
+   box`, so an arm terminates exactly on its outcome's centre line and the axis is exactly the
+   midpoint of the first and last. */
 .branch {
   flex: 0 0 auto;
   align-self: flex-start;
   display: grid;
-  /* The lead is what stops the fork reading as a pass-through: the junction sits ABOVE the first
-     outcome's centre line, so both legs leave the incoming axis and elbow out to their node. With
-     the junction ON the first outcome's line, the incoming arrow, the junction and the first
-     outcome were collinear, and a stripped reader read it as "flow continues into outcome A, with
-     outcome B bracketed underneath". */
-  --fork-lead: 0.95rem;
-
   grid-template-columns: 2.1rem auto;
-  padding-top: var(--fork-lead);
   align-items: stretch;
-  row-gap: 0.55rem;
+  row-gap: var(--branch-gap);
   color: var(--lane-accent);
 }
 
 .branch .node {
+  grid-column: 2;
+  height: var(--branch-row);
   align-self: start;
   align-items: flex-start;
   padding-left: 0.15rem;
@@ -367,77 +387,52 @@ html[data-theme='dark'] .ranklast {
   text-align: left;
 }
 
-.arm {
+.fork {
   position: relative;
+  grid-column: 1;
+  grid-row: 1 / -1;
   display: block;
 }
 
-/* Each arm is one box showing two of its borders, so the corner between stem and arm is a real
-   radius rather than two lines that nearly meet. */
-.arm::before {
-  content: '';
+/* Each elbow is one box showing two of its borders, so the turn is a real radius rather than two
+   lines that nearly meet. The two are mirror images of one another — that symmetry is the reason
+   neither outcome reads as the primary one. */
+.elbow {
   position: absolute;
   left: 0.3rem;
-  /* Past the cell edge, into the transparent margin inside the icon's own box: an arm that stops at
-     the column boundary ends in visible whitespace and the outcome reads as unattached. */
+  /* Past the column edge, into the transparent margin inside the icon's own box: an arm that stops
+     at the boundary ends in visible whitespace and its outcome reads as unattached. */
   right: -0.55rem;
   border-color: currentColor;
   border-style: solid;
   border-width: 0;
 }
 
-/* First outcome: the stem drops from the junction, elbows out to this node's centre line... */
-.armFirst::after {
-  content: '';
-  position: absolute;
-  left: 0.3rem;
-  right: -0.55rem;
-  top: calc(var(--ic-box) / 2 - var(--fork-lead));
-  height: var(--fork-lead);
-  border-color: currentColor;
-  border-style: solid;
-  border-width: 0 0 2px 2px;
-  border-bottom-left-radius: 7px;
-}
-
-/* ...and continues down past it toward the outcomes below. */
-.armFirst::before {
-  top: calc(var(--ic-box) / 2);
-  bottom: -0.28rem;
+.elbowUp {
+  border-top-width: 2px;
   border-left-width: 2px;
+  border-top-left-radius: 7px;
 }
 
-/* Last outcome: the stem arrives and turns out to this node's centre line. */
-.armLast::before {
-  top: -0.28rem;
-  height: calc(var(--ic-box) / 2 + 0.28rem);
+.elbowDown {
   border-bottom-width: 2px;
   border-left-width: 2px;
   border-bottom-left-radius: 7px;
 }
 
-/* Three or more outcomes: the stem passes through and tees off. */
-.armMiddle::before {
-  top: -0.28rem;
-  bottom: -0.28rem;
-  border-left-width: 2px;
-}
-
-.armMiddle::after {
-  content: '';
+/* Three or more outcomes: the middle ones tee off the stem. */
+.tick {
   position: absolute;
   left: 0.3rem;
   right: -0.55rem;
-  top: calc(var(--ic-box) / 2 - 1px);
   border-top: 2px solid currentColor;
 }
 
 /* Where the incoming connector lands. Without it the fork reads as unanchored and the arrow looks
-   aimed at the first outcome rather than at the split. */
+   aimed at an outcome rather than at the split. */
 .junction {
   position: absolute;
   left: 0.3rem;
-  top: calc(var(--ic-box) / 2 - var(--fork-lead));
   width: 0.55rem;
   height: 0.55rem;
   margin: -0.275rem 0 0 -0.275rem;
@@ -456,7 +451,9 @@ html[data-theme='dark'] .ranklast {
    screen; full width on a phone, where the lanes stack. */
 @media (min-width: 997px) {
   .card {
-    max-width: 620px;
+    /* The same cap as the generated cards (src/components/Infographic), so a composed card and a
+       raster one sit at identical proportions when the page shows them side by side. */
+    max-width: 560px;
     margin-inline: auto;
   }
 }
@@ -479,5 +476,6 @@ html[data-theme='dark'] .ranklast {
 
   .flow {
     flex-basis: 1.2rem;
+    max-width: 3rem;
   }
 }

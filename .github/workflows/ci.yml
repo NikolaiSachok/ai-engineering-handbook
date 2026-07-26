@@ -70,3 +70,13 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Generic leak scan
         run: bash scripts/leak-scan.sh
+
+  icon-register:
+    name: Icon register drift check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      # The icon assets must live under src/ to be importable, and the canon that documents them
+      # lives in editorial/. This asserts the two have not drifted apart.
+      - name: Icon register drift check
+        run: bash scripts/icon-register-check.sh
