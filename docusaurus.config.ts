@@ -25,7 +25,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // Launching a locale = move it from UNRELEASED_LOCALES to RELEASED_LOCALES (one
 // line); its `localeConfigs` label is already set below, so nothing else changes.
 const DEFAULT_LOCALE = 'en';
-const RELEASED_LOCALES = ['en', 'ru', 'sk']; // Slovak launched 2026-07-15 (Parts I–III complete)
+const RELEASED_LOCALES = ['en', 'ru', 'sk']; // Slovak launched 2026-07-15; both courses now ship complete in all three
 const UNRELEASED_LOCALES: string[] = []; // add the next in-progress locale here to build+validate it in CI while gated
 const INCLUDE_UNRELEASED = process.env.HANDBOOK_INCLUDE_UNRELEASED === '1';
 const LOCALES = [...RELEASED_LOCALES, ...(INCLUDE_UNRELEASED ? UNRELEASED_LOCALES : [])];
@@ -59,6 +59,14 @@ type Course = {
   languages: string[]; // locales the course is available in (landing card)
   live: boolean;       // true = content shipped; false = placeholder / in progress
   inNavbar: boolean;   // add a docSidebar item to the navbar yet?
+  // The course's slice of the footer sitemap, in order. `path` is appended to
+  // `basePath` ('' = the course intro). Courses differ in what routes they even
+  // HAVE — the RAG course gives each Part an `overview` page (its `_category_.json`
+  // carries a `link`), the AI SDLC course does not — so this is per-course data,
+  // not something the footer can guess. Only list routes that actually exist:
+  // released builds run `onBrokenLinks: 'throw'`, so an invented footer link is a
+  // build failure, and the footer is the only always-visible navigation on phones.
+  footerLinks: {label: string; path: string}[];
 };
 const COURSES: Course[] = [
   // RAG & Agents — the launched, trilingual course. It stays the DEFAULT docs
@@ -75,11 +83,19 @@ const COURSES: Course[] = [
     languages: ['English', 'Русский', 'Slovenčina'],
     live: true,
     inNavbar: true,
+    footerLinks: [
+      {label: 'Introduction', path: ''},
+      {label: 'Part I — RAG', path: 'part-1-rag/overview'},
+      {label: 'Part II — Agents', path: 'part-2-agents/overview'},
+      {label: 'Part III — Production & LLMOps', path: 'part-3-production/overview'},
+      {label: 'Glossary', path: 'glossary'},
+    ],
   },
-  // AI SDLC — in progress: Lesson 1 is written; the rest of Parts I–V are a
-  // published syllabus (placeholders with titles + what each lesson covers).
-  // Trilingual like RAG. `live: false` badges it "In progress" on the hub (still
-  // clickable → the syllabus); flip to true when the course is complete.
+  // AI SDLC — shipped complete and trilingual (July 2026): all five Parts, 22
+  // lessons plus 4 optional deep-dives, in EN/RU/SK (28 pages per locale incl.
+  // intro + glossary). `live: true` badges it "Live" on the hub, like RAG.
+  // Unlike the RAG course it has NO per-Part overview pages — its Parts are plain
+  // sidebar categories — so its footer column is Introduction + Glossary only.
   {
     id: 'ai-sdlc',
     basePath: '/ai-sdlc',
@@ -89,8 +105,12 @@ const COURSES: Course[] = [
       'The AI-assisted software development lifecycle: planning, building, reviewing and ' +
       'shipping when AI agents are part of the team.',
     languages: ['English', 'Русский', 'Slovenčina'],
-    live: false,
+    live: true,
     inNavbar: true,
+    footerLinks: [
+      {label: 'Introduction', path: ''},
+      {label: 'Glossary', path: 'glossary'},
+    ],
   },
 ];
 const DEFAULT_COURSE = COURSES[0];
@@ -369,9 +389,9 @@ const config: Config = {
       },
       items: [
         // One docSidebar item per course that's ready to show. Derived from
-        // COURSES: a course appears here only once its `inNavbar` flag is true
-        // (AI SDLC stays hidden until Part I ships). The default instance needs
-        // no `docsPluginId`; named instances reference their own id.
+        // COURSES: a course appears here only once its `inNavbar` flag is true, so
+        // a course can be authored in-tree before it is advertised. The default
+        // instance needs no `docsPluginId`; named instances reference their own id.
         ...COURSES.filter((c) => c.inNavbar).map((c) => ({
           type: 'docSidebar' as const,
           sidebarId: c.sidebarId,
@@ -389,28 +409,32 @@ const config: Config = {
       ],
     },
     footer: {
-      // A compact sitemap — most useful on phones, where the sidebar is hidden
-      // behind the burger, so the footer is the only always-visible navigation.
+      // A compact sitemap of the WHOLE site — most useful on phones, where the
+      // sidebar is hidden behind the burger, so the footer is the only
+      // always-visible navigation.
+      //
+      // One column PER COURSE, derived from COURSES (same source of truth as the
+      // navbar, the search index and the landing hub) plus a trailing "Project"
+      // column for the site-wide things that belong to no course. Columns are
+      // titled with the course name, so a link's owning course is never ambiguous
+      // — the old shape ("Contents" / "Reference") silently meant "the RAG course"
+      // and left AI SDLC and the blog unreachable from the footer entirely.
+      // Adding a course = adding it to COURSES with its `footerLinks`; no edit here.
       style: 'dark',
       links: [
+        ...COURSES.filter((c) => c.inNavbar).map((c) => ({
+          title: c.navbarLabel,
+          items: c.footerLinks.map((l) => ({
+            label: l.label,
+            to: l.path ? `${c.basePath}/${l.path}` : `${c.basePath}/`,
+          })),
+        })),
         {
-          title: 'Contents',
-          items: [
-            {label: 'Part I — RAG', to: '/rag-agents/part-1-rag/overview'},
-            {label: 'Part II — Agents', to: '/rag-agents/part-2-agents/overview'},
-            {label: 'Part III — Production & LLMOps', to: '/rag-agents/part-3-production/overview'},
-          ],
-        },
-        {
-          title: 'Reference',
-          items: [
-            {label: 'Introduction', to: '/rag-agents/'},
-            {label: 'Glossary', to: '/rag-agents/glossary'},
-          ],
-        },
-        {
+          // Site-wide, course-independent. "Field notes" is the making-of blog
+          // (English-only by design — see the preset `blog` above).
           title: 'Project',
           items: [
+            {label: 'Field notes', to: '/blog'},
             {label: 'GitHub', href: 'https://github.com/NikolaiSachok/ai-engineering-handbook'},
           ],
         },

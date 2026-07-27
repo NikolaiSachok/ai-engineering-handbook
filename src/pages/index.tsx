@@ -69,9 +69,11 @@ function CourseCard({course}: {course: LandingCourse}): ReactNode {
     </>
   );
 
-  // Every course card is clickable. A course in progress still has a real
-  // syllabus — lesson titles plus what each one covers — worth reading. The badge
-  // (Live vs In progress) is what tells the reader how complete it is.
+  // Every course card is clickable, including one that isn't finished: an
+  // in-progress course still publishes a real syllabus — lesson titles plus what
+  // each one covers — worth reading. The badge (Live vs In progress) is what tells
+  // the reader how complete it is. Both courses shipped are currently Live; the
+  // in-progress branch stays for the next course authored in the open.
   return (
     <Link to={href} className={styles.card}>
       {body}

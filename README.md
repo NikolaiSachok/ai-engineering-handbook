@@ -1,40 +1,53 @@
-# Enterprise RAG & Agents Handbook
+# AI Engineering Handbook
 
-A practical, first-principles guide to production RAG (retrieval-augmented generation)
-and agentic systems.
+A hub of first-principles courses on production AI engineering. Two courses ship today,
+each complete and each in three languages:
 
-🚧 **Work in progress.** The site is a scaffold — lesson content is being written and
-added incrementally.
+- **RAG & Agents** (`/rag-agents`) — production RAG (retrieval-augmented generation) and
+  agentic systems: ingestion, retrieval, generation, agents, plus the eval, guardrails and
+  LLMOps that keep them honest. Part I — RAG, Part II — Agents, Part III — Production & LLMOps.
+- **AI SDLC** (`/ai-sdlc`) — the AI-assisted software development lifecycle: planning,
+  building, reviewing and shipping when AI agents are part of the team. Parts I–V, plus
+  optional deep-dives.
 
-Built with [Docusaurus](https://docusaurus.io/). Bilingual: **Russian (default)** and
-**English**, with Mermaid diagrams and offline local search.
+Alongside them, **Field notes** (`/blog`) is the making-of: dated, first-person notes on
+building this handbook *using* the SDLC it teaches. Deliberately English-only — see the
+standing note on the blog index for why.
+
+Built with [Docusaurus](https://docusaurus.io/). Trilingual — **English** (default, served
+at the site root), **Russian** (`/ru/`) and **Slovak** (`/sk/`) — with Mermaid diagrams and
+offline local search in every locale.
 
 ## Run locally
 
 ```bash
 npm install
 
-# Russian (default locale)
+# English (default locale)
 npm run start
 
-# English locale
-npm run start -- --locale en
+# Another locale
+npm run start -- --locale ru
 ```
 
-Docusaurus dev server serves one locale at a time; use the `--locale` flag to preview EN.
+Docusaurus dev server serves one locale at a time; use the `--locale` flag to preview RU/SK.
 
 ## Build
 
 ```bash
-npm run build   # builds all locales (ru + en)
+npm run build   # builds every released locale (en + ru + sk)
 ```
 
 Output is generated into `build/` and can be served with any static host.
 
 ## Structure
 
-- `docs/` — the handbook in English, the canonical locale, served at the site root. Part I — RAG,
-  Part II — Agents, Part III — Production & LLMOps, Glossary.
+- `docs/` — the **RAG & Agents** course in English, the canonical locale. It is the default
+  docs instance, served at `/rag-agents`.
+- `docs-ai-sdlc/` — the **AI SDLC** course in English, its own docs instance, served at `/ai-sdlc`.
+- `blog/` — the English-only **Field notes** blog, served at `/blog`.
+- `src/pages/index.tsx` — the landing hub. Its course cards derive from the `COURSES` array in
+  `docusaurus.config.ts`, the single source of truth the navbar, footer and search index also read.
 - `i18n/ru/`, `i18n/sk/` — the Russian and Slovak locale trees (docs + theme strings), served at `/ru/`
   and `/sk/`. Both are audience-primary: written natively, never machine-translated.
 - `editorial/` — the style canon: a thin cross-language router (`style-canon.md`) plus a per-language folder
@@ -50,14 +63,14 @@ The handbook follows a small, real SDLC (kept proportionate to a docs site):
 - **Conventional Commits** for messages (`docs:`, `feat:`, `fix:`, `chore:`, `ci:`) and PR
   titles. PRs are **squash-merged**.
 - **CI gates every PR** (branch protection should require them green before merge):
-  1. `npm run build` for **both locales** — the real correctness gate (`onBrokenLinks: 'throw'`
+  1. `npm run build` for **every locale** — the real correctness gate (`onBrokenLinks: 'throw'`
      catches dead internal links; a broken i18n tree fails the build).
   2. **Markdown lint** — `npm run lint:md` (structure/format hygiene).
   3. **Generic leak scan** — `npm run leak-scan` (secrets, credentials, local paths, emails).
 - **Content PRs** additionally require a **literary-edit pass per language, independently**
   (see the editorial standard in `CLAUDE.md`) — enforced via the PR-template checklist.
-- **Issues & milestones** are the planning surface: issues track lessons/topics; milestones
-  = Part I / Part II; labels `lesson` / `editorial` / `infra` / `chore`.
+- **Issues & milestones** are the planning surface: issues track lessons/topics; a milestone
+  is a Part of a course; labels `lesson` / `editorial` / `infra` / `chore`.
 
 ### Enable the pre-commit hook (once per clone)
 
