@@ -245,6 +245,63 @@ PREDMETU**, nie podľa anglického originálu; opakované `model vydá…` sa fl
   zavedených termínov — vrátane sekcie „Čo si odniesť z lekcie“ (zhrnutie neprezvýrazňuje to, čo je už
   zvýraznené v tele). Maxima dlhá ako klauza sa dáva do úvodzoviek alebo kurzívy, nie do polotučného.
 
+### §9 Konštrukcie (ponuka pre prekladateľa, nie pravidlo)
+
+Register §1 drží **termíny**. Táto sekcia je o **konštrukciách**: o opakujúcich sa anglických vetných
+tvaroch, ktoré sa inak zakaždým rozhodujú nanovo — typicky v nadpise, kde pripadá ~1% tokenov a ~1%
+pozornosti.
+
+> **Status týchto záznamov.** Sú to **východiskové návrhy pre prekladateľa, nie substitúcia a nie zákaz.**
+> Správne znenie závisí od toho, akú myšlienku veta nesie, preto každý záznam zachytáva **podmienku voľby**
+> medzi rámcami, nie dvojicu „anglicky → slovensky“. Dobre odôvodnený odklon od ponúknutého rámca je
+> očakávané správanie, nie porušenie kánonu; neodôvodnený odklon je bežný defekt. Ak sa záznam začne čítať
+> ako prekladová tabuľka, je to zlý záznam — prepíš ho cez podmienku.
+>
+> Toto **nie je** protipól §1.4 (kalkové šablóny). §1.4 vymenúva tvary, ktoré sa **flagujú**; §9 ponúka
+> rámce, medzi ktorými sa **rozhoduje**.
+
+**`N ways X does Y`**
+
+- Rámec **„N spôsobov…"** sedí, keď je **X konateľ, ktorý Y vykonáva nejakým prostriedkom**: spôsob je
+  prostriedok, ktorým niekto niečo robí. „Osem spôsobov, ako vyriešiť problém" je idiomatické, lebo
+  problém rieši človek.
+- Rámec **„N situácií / prípadov / scenárov, v ktorých…"** sedí, keď **X dej nevykonáva, ale ho
+  podstupuje**. Inštrumentálne čítanie je vtedy natiahnuté: demo nevykonáva vlastný zánik.
+- **Test voľby:** dosaď otázku „akým spôsobom?". Ak dáva zmysel a odpovedá na ňu samo X, je to „spôsobov".
+  Ak spôsob patrí okolnostiam a nie X, je to „situácií".
+- **Precedens (2026-07, `part-3-production/production-failures`):** *Eight ways a working demo dies in
+  production* → „Osem spôsobov, ako funkčné demo neprežije produkciu" ✗ → **„Osem situácií, v ktorých
+  funkčné demo zlyhá v produkcii"** ✓. Rovnaká voľba padla nezávisle v ruskej lokalizácii
+  (`способов` → `сценариев`). Pozn.: „scenár" je pri porovnaní s „situácia" v slovenčine cítiť ako
+  prevzaté, preto je tu prvou voľbou „situácia".
+
+**`Why X fails`**
+
+- Rámec **„Prečo X zlyháva"** — keď **X funguje a prestane fungovať**: systém, služba, komponent, ktorý má
+  funkčný stav. Tu je „zlyhať" priame, nie obrazné.
+- Rámec **„prečo X nevyjde / nedopadne"** — keď **X nie je mechanizmus, ale pokus, postup alebo zámer**,
+  ktorý nemá funkčný stav, len dosiahnutý alebo nedosiahnutý cieľ.
+- **Test voľby:** dá sa o X spýtať „fungovalo to predtým?". Ak áno, „zlyháva". Ak X nemá predchádzajúci
+  funkčný stav a má len výsledok, „nevyjde".
+- **Precedens:** *Why AI systems fail in production* → **„Prečo AI-systémy zlyhávajú v produkcii"** ✓
+  (systém s funkčným stavom). Porovnaj s demom v predchádzajúcom hesle: tam nešlo o poruchu mechanizmu, ale
+  o výsledok pokusu, a preto sa celý rámec vymenil.
+
+**`X is not Y`**
+
+- **Holé priradenie „X nie je Y"** funguje, keď sú **X a Y rovnakého druhu**: dve vlastnosti, dve entity
+  jednej triedy. Elipsa sa vtedy doplní sama.
+- **Explicitné sloveso vyvodenia — „X ešte neznamená Y", „z X nevyplýva Y"** — keď sú **X a Y rôzneho
+  druhu** (signál oproti úsudku, stav služby oproti obsahu odpovede). Holá spona vtedy nechá oba členy bez
+  opory: zpodstatnené prídavné mená visia bez referenta.
+- **Test voľby:** dosaď sponu „je". „Dostupnosť je správnosť" je zmysluplné ako popretá totožnosť dvoch
+  rovnorodých vlastností → holý tvar. „Zelený indikátor je správna odpoveď" nie je totožnosť, ale chybné
+  vyvodenie → treba sloveso vyvodenia.
+- **Precedens:** *Uptime is not correctness* → **„Dostupnosť je vlastnosť služby. Správnosť je vlastnosť
+  odpovede."** ✓ (dve vlastnosti, jeden druh). *Green is not correct* → **„Zelená ešte neznamená správne"**
+  ✓ — prešlo ako natívne práve preto, že sloveso vyvodenia tam už stálo. V ruskej lokalizácii ten istý
+  reťazec bez slovesa („Зелёный — ещё не верный") neprešiel a musel sa prepísať na „ещё не значат".
+
 ### Figúry (§6)
 
 **Ruské autorské figúry sa neprenášajú.** Chránené ruské figúry (§6 ruského kánonu — `ru.md`) sú ruské novotvary

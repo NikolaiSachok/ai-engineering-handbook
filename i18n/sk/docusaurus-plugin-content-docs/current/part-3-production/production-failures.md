@@ -5,9 +5,9 @@ sidebar_label: Prečo AI zlyháva v produkcii
 sidebar_position: 0
 ---
 
-# Osem spôsobov, ako funkčné demo neprežije produkciu
+# Osem situácií, v ktorých funkčné demo zlyhá v produkcii
 
-Demo musí uspieť raz, na ceste, ktorú si niekto vybral. Produkcia musí obstáť aj na cestách, ktoré nikto nenaskriptoval — tisíckrát denne a vtedy, keď ľudia, ktorí ju postavili, spia. Sú to dva rôzne inžinierske problémy a zoznam nižšie je účtom za to, že si vyriešil iba prvý.
+Demu stačí uspieť jediný raz, na trase, ktorú niekto vybral vopred. Produkčný systém musí sám ustáť aj trasy, ktoré nikto vopred nenapísal — tisíckrát denne, aj keď ľudia, ktorí ho postavili, spia. Sú to dva rôzne inžinierske problémy a zoznam nižšie je účtom za to, že si vyriešil iba prvý.
 
 Osem kariet čítaj ako mapu, nie ako výstrahu. Každá pomenuje jedno zlyhanie, ukáže produkčné riešenie, ktoré naň odpovedá, a odkáže na lekciu, ktorá ten mechanizmus naozaj vysvetľuje. S niektorými si sa už stretol: kvalita vyhľadávania v Prvej časti príručky, chyby nástrojov v Druhej časti príručky. Ostatné sú presne to, na čo je táto časť. A ak všetky spája jedna niť, tak táto: *takmer nič z toho nie je zlyhanie modelu.* Model je jediný komponent, ktorý si nenapísal. Všetko okolo neho je tvoje.
 
@@ -41,13 +41,13 @@ Týchto osem spôsobov zlyhania koluje v diskusiách o AI v produkcii; ich uspor
 
 Korpus dema je priečinok, ktorý niekto ručne zostavil. V produkcii sú dvojstĺpcové PDF, tabuľky, ktorých význam drží hlavičkový riadok, stránky wiki spolovice prenesené z nástroja, ktorý už neexistuje, a skeny. Bežná rada — validuj schémy pri ingestione (príjme obsahu do indexu) — je správna pri záznamoch, no pri dokumentoch míňa cieľ: chybne sformované pole odpoveď RAG pokazí málokedy. Pokazí ju štruktúra. Tabuľka sploštená na súvislý text, pätička prilepená ku každému chunku (kúsku) a nadovšetko hranica chunku, ktorá oddelí fakt od podmienky, za ktorej platí. „Sadzby vzrástli o 4%“ nie je nesprávne, kým to neodrežeš od „iba v pilotnom projekte z roku 2019“.
 
-Horšie je, že prísny validátor pracuje potichu. Dokumenty, ktoré nezodpovedajú schéme, zahodí bez ohlásenia, index sa postaví a vyzerá zdravo, model odpovedá z neúplného korpusu — sebavedomo, pretože mu nikto nepovedal, že tretina zdrojov nikdy nedorazila. Produkčným riešením preto nie je prísnejšia brána, ale **manifest ingestionu**: ingestion hlási, čo *zahrnul*, čo *vylúčil a prečo* a kde má *slepé miesta*, a hlási to ako artefakt zostavenia, ktorý sa dá prečítať. Vylúčený dokument je rozhodnutie; vylúčený dokument, ktorý nikto nedokáže pomenovať, je chyba. Mechaniku — parsovanie, rozloženie, stratégie chunkingu, metadáta — rozoberá lekcia o [ingestione](../part-1-rag/ingestion/index.md).
+Prísny validátor je nebezpečný práve preto, že svoje zásahy nikde neohlási. Dokumenty, ktoré nezodpovedajú schéme, jednoducho zahodí, index sa postaví a vyzerá zdravo, model odpovedá z neúplného korpusu — sebavedomo, pretože mu nikto nepovedal, že tretina zdrojov nikdy nedorazila. Produkčným riešením preto nie je prísnejšia brána, ale **manifest ingestionu**: ingestion hlási, čo *zahrnul*, čo *vylúčil a prečo* a kde má *slepé miesta*, a hlási to ako artefakt zostavenia, ktorý sa dá prečítať. Ak dokument vylúčiš vedome a vieš to pomenovať, je to rozhodnutie; ak to nevie pomenovať nikto, je to chyba. Mechaniku — parsovanie, rozloženie, stratégie chunkingu, metadáta — rozoberá lekcia o [ingestione](../part-1-rag/ingestion/index.md).
 
 ## 2 · Vyhľadávanie musí mať možnosť povedať nie
 
 <InfoCard
   title="Vyhľadávanie smie povedať nie"
-  caption="Prah relevantnosti uplatnený po rerankingu a generátor, ktorý smie odpovedať, že nemá kontext.">
+  caption="Prah relevantnosti sa uplatní až po rerankingu a generátor smie odpovedať, že nemá kontext.">
   <Lane kind="demo" label="DEMO">
     <Node icon="retrieval" label="top-K, vždy" />
     <Flow kind="fail" />
@@ -116,11 +116,11 @@ Ponechaj si obe. **Zmrazená regresná sada** odpovedá na otázku „pokazil so
   </Lane>
 </InfoCard>
 
-Každý bežný signál môže byť zdravý, kým systém odpovedá nesprávne. Latencia je v poriadku, miera chýb nulová, beží aj samotná nasadzovacia jednotka v Kubernetes (pod) — a odpovede sú sebavedomo nesprávne, pretože obyčajný monitor nemá názor na *obsah* odpovede so stavom 200. Dostupnosť je vlastnosť služby, správnosť je vlastnosť odpovede, a z prvej druhú neodvodíš.
+Všetky bežné prevádzkové ukazovatele môžu zostať v norme, hoci systém odpovedá nesprávne. Latencia je v poriadku, miera chýb nulová, beží aj samotná nasadzovacia jednotka v Kubernetes (pod) — a odpovede sú sebavedomo nesprávne, pretože obyčajný monitor nemá názor na *obsah* odpovede so stavom 200. Dostupnosť je vlastnosť služby, správnosť je vlastnosť odpovede, a z prvej druhú neodvodíš.
 
 Medzeru zaplnia dve veci. Prvá je **trace** — záznam behu, ktorý zachytí celú cestu jednej požiadavky: dopyt, vrátené chunky aj ich skóre, odoslaný prompt, odpoveď a tokeny. Bez identifikátorov chunkov totiž nezrekonštruuješ ani to, *prečo* bola odpoveď nesprávna. Druhá je **nezávislý sudca nad vzorkou reálnej premávky** (LLM-as-a-judge), aby sa kvalita stala monitorovanou metrikou s prahom a s upozornením, nie niečím, čo sa dozvieš až z hlásenia na podpore. To je [Observability (pozorovateľnosť)](../part-1-rag/cross-cutting/observability/index.md) — aj tá slučka, ktorou sa jej zistenia vracajú do evaluácie.
 
-Jednu vec navrhni vedome a nepreberaj ju z predvolených nastavení: logovanie na ladenie nie je logovanie na dôkaz. Ladenie chce posledných niekoľko dní v takej podrobnosti, akú si vieš dovoliť. Audit — regulované odvetvie, sporná odpoveď, zákazník, ktorý sa pýta, čo mu systém povedal v marci — potrebuje po *mesiacoch* zrekonštruovať, čo sa vyhľadalo a čo sa vrátilo, a to je požiadavka na uchovávanie a integritu, nie nastavenie podrobnosti. Rozhodni sa vopred, ktoré z nich staviaš — logovanie na ladenie alebo **logovanie na úrovni auditu** — skôr než sa za teba rozhodne audítor.
+Jednu vec rozhodni vedome a nepreberaj ju z predvolených nastavení: iný návrh si žiada logovanie na ladenie, iný logovanie, ktoré má neskôr niečo dokázať. Ladenie chce posledných niekoľko dní v takej podrobnosti, akú si vieš dovoliť. Audit — regulované odvetvie, sporná odpoveď, zákazník, ktorý sa pýta, čo mu systém povedal v marci — potrebuje po *mesiacoch* zrekonštruovať, čo sa vyhľadalo a čo sa vrátilo, a to je požiadavka na uchovávanie a integritu, nie nastavenie podrobnosti. Rozhodni sa vopred, ktoré z nich staviaš — logovanie na ladenie alebo **logovanie na úrovni auditu** — skôr než sa za teba rozhodne audítor.
 
 ## 5 · Rozhoduje náklad na prijatú odpoveď
 
@@ -130,7 +130,7 @@ Jednu vec navrhni vedome a nepreberaj ju z predvolených nastavení: logovanie n
   caption="Lacnejší model sa oplatí len vtedy, keď na úspešnosti získa aspoň toľko, koľko ušetrí na cene."
 />
 
-Náklady, ktoré v deme vyzerajú ako zaokrúhľovacia chyba, sa v produkcii násobia tromi spôsobmi naraz: agenti opakujú volania, konverzácie pri každom kroku znova odošlú celú svoju históriu a používatelia vložia celé dokumenty do poľa, ktoré si dimenzoval na jednu vetu. Opakované odosielanie sa prehliada najčastejšie — model bez vlastného stavu prečíta prepis znova pri každom kroku, takže dvojnásobne dlhá úloha stojí približne štvornásobok, a skrátiť to, čo sa v kontexte prenáša, je najsilnejšia páka, akú máš. Stabilný prefix promptu, ktorý sa dá cachovať, má väčšiu hodnotu než väčšina prechodov na iný model.
+Výdavky, ktoré v deme nestoja za reč, rastú v produkcii z troch príčin naraz: agenti opakujú volania, konverzácie pri každom kroku znova odošlú celú svoju históriu a používatelia vložia celé dokumenty do poľa, ktoré si dimenzoval na jednu vetu. Opakované odosielanie sa prehliada najčastejšie — model bez vlastného stavu prečíta prepis znova pri každom kroku, takže dvojnásobne dlhá úloha stojí približne štvornásobok, a skrátiť to, čo sa v kontexte prenáša, je najsilnejšia páka, akú máš. Stabilný prefix promptu, ktorý sa dá cachovať, má väčšiu hodnotu než väčšina prechodov na iný model.
 
 A tu je druhá nezhoda: rada *smeruj rutinnú prácu na lacnejší model* má podmienku a tá sa zvyčajne vynechá. Rozhoduje náklad na prijatú odpoveď, nie náklad na token — lacnejší model, ktorý potrebuje tri pokusy tam, kde drahý potreboval jeden, lacnejší nie je. Ten rozdiel je **daň za opakovania**:
 
@@ -147,7 +147,7 @@ the cheaper model wins only when:
 
 <InfoCard
   title="Pretrénuj až nakoniec"
-  caption="Drift zvyčajne sídli v korpuse alebo v dopytoch, nie vo váhach.">
+  caption="Drift zvyčajne spôsobuje korpus alebo dopyty používateľov, nie váhy modelu.">
   <Lane kind="demo" label="DEMO">
     <Node icon="driftCurves" label="zistený drift" />
     <Flow kind="fail" />
@@ -172,7 +172,7 @@ Vo vyhľadávacom systéme drift zvyčajne pochádza z korpusu alebo z dopytov, 
 
 <InfoCard
   title="Prompt a korpus sú vydania"
-  caption="Všetko, čo mení správanie, potrebuje verziu a cestu späť.">
+  caption="Čokoľvek, čo mení správanie systému, musí mať verziu a možnosť návratu k predchádzajúcemu stavu.">
   <Lane kind="demo" label="DEMO">
     <Node icon="codeFile" label="prompt v kóde" />
     <Flow kind="fail" />
@@ -189,11 +189,11 @@ Vo vyhľadávacom systéme drift zvyčajne pochádza z korpusu alebo z dopytov, 
   </Lane>
 </InfoCard>
 
-Kým prompt sedí priamo v aplikačnom kóde, úprava jednej vety je nasadenie — a tak aj oprava formulácie nesie riziko nasadenia a nikto si ju netrúfne považovať za malú zmenu, ktorou v skutočnosti je. Presuň prompty do **konfigurácie vo verziovacom systéme** a daj im vlastné brány kvality. Prompty sa tým začnú dať porovnávať diffom a vracať späť, namiesto toho, aby si pri každej zmene len dúfal.
+Ak je prompt súčasťou aplikačného kódu, aj úprava jedinej vety znamená nasadenie — a tak aj oprava formulácie nesie riziko nasadenia a nikto si ju netrúfne považovať za malú zmenu, ktorou v skutočnosti je. Presuň prompty do **konfigurácie vo verziovacom systéme** a daj im vlastné brány kvality. Prompty sa tým začnú dať porovnávať diffom a vracať späť, namiesto toho, aby si pri každej zmene len dúfal.
 
 Potom uplatni ten istý štandard na všetko ostatné, čo mení správanie bez zmeny kódu: pripni verziu modelu, urob snímku korpusu, vydávaj cez canary release (kanárikové nasadenie) a pre každú z tých troch vecí drž samostatnú cestu rollbacku. Systém, pod ktorým sa môže nezávisle pohnúť prompt, model aj index, nemá reprodukovateľný stav vôbec, a nijaké testovanie to nenapraví. Mechanika vydávania je téma [LLMOps](./llmops/index.md).
 
-## 8 · Pipeline potrebuje brány medzi krokmi
+## 8 · Každá etapa pipeline odmieta chybný vstup
 
 <InfoCard
   title="Najlacnejšia kontrola prvá"
@@ -244,11 +244,11 @@ Ešte štyri, a každé z nich už raz vyradilo produkčný systém, kým sa vš
 - Takmer nič z toho nie je zlyhanie modelu. Model je komponent, ktorý si nenapísal; zlyhania sídlia v systéme okolo neho.
 - Ingestion nemá iba validovať, má hlásiť — čo zahrnul, čo vylúčil a prečo, a kde má slepé miesta. Zahodenie bez ohlásenia dá sebavedomú odpoveď z neúplného korpusu.
 - Vyhľadávanie potrebuje cestu k odmietnutiu: prah skóre po rerankingu, zámerne prázdnu množinu a generátor, ktorý povie, že nemá kontext.
-- Dve evaluačné sady — jedna zmrazená na regresie, jedna rotujúca z reálnej premávky na realitu. Ani jedna nenahrádza druhú.
+- Potrebuješ dve evaluačné sady: zmrazená odhaľuje regresie, rotujúca z reálnej premávky udržiava evaluáciu blízko skutočnosti; ani jedna nenahrádza druhú.
 - Dostupnosť nie je správnosť. Pridaj trace s identifikátormi chunkov a sudcu nad vzorkou premávky; a samostatne rozhodni, či máš voči niekomu povinnosť viesť audítorskú stopu.
 - Jednotkou je náklad na prijatú odpoveď: `cost ≈ attempt_cost / p`, a lacnejší model musí cenový pomer prekonať spoľahlivosťou.
 - Na drift odpovedaj preindexovaním dávno pred pretrénovaním; korpus je vydanie, s verziou aj rollbackom.
-- Prompt, verzia modelu a korpus potrebujú každý svoju verziu a cestu späť, inak systém nemá reprodukovateľný stav.
+- Prompt, model aj korpus verziuj osobitne a každému daj vlastnú možnosť návratu, inak systém nebude mať reprodukovateľný stav.
 - Brány medzi krokmi, najlacnejšia kontrola prvá — každá etapa chybný vstup odmietne, namiesto toho, aby z neho robila dôveryhodný výsledok.
 - A tie štyri, ktoré nikto nevypisuje: neobmedzený prístup, otrávené dokumenty, testovanie v jedinom jazyku a nespoľahlivé nástroje.
 
