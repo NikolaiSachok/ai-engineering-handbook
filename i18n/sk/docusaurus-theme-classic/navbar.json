@@ -1,19 +1,23 @@
 {
   "title": {
-    "message": "RAG & Agents Handbook",
+    "message": "AI Engineering Handbook",
     "description": "The title in the navbar"
   },
   "logo.alt": {
-    "message": "Enterprise RAG & Agents Handbook",
+    "message": "AI Engineering Handbook",
     "description": "The alt text of navbar logo"
   },
-  "item.label.Handbook": {
-    "message": "Príručka",
-    "description": "Navbar item with label Handbook"
+  "item.label.RAG & Agents": {
+    "message": "RAG & Agents",
+    "description": "Navbar item with label RAG & Agents"
   },
-  "item.label.Blog": {
-    "message": "Blog",
-    "description": "Navbar item with label Blog"
+  "item.label.AI SDLC": {
+    "message": "AI SDLC",
+    "description": "Navbar item with label AI SDLC"
+  },
+  "item.label.Field notes": {
+    "message": "Poznámky z praxe",
+    "description": "Navbar item with label Field notes"
   },
   "item.label.GitHub": {
     "message": "GitHub",
