@@ -1,8 +1,9 @@
 # Composed cards — migrating from generated rasters to CSS + an icon set
 
-**Status: design agreed, not built.** The ten `production-failures` cards ship as whole generated images; this
-document is the plan to replace that with cards composed in the browser from a fixed icon set. Written before
-a second card set exists, deliberately: migrating two sets costs twice as much as migrating one.
+**Status: MIGRATED (EN), 2026-07-27.** The English `production-failures` page now ships **eight composed
+cards and one raster** (`05-cost`), and no hero. The nine `.webp` files stay in git, unreferenced by EN,
+until the owner confirms the page and the RU/SK pages are migrated too. The record below is chronological:
+the plan, four review rounds, and the migration at the end.
 
 ## Why
 
@@ -114,6 +115,12 @@ shipped WebP equivalents:
 So **SVG wins decisively**, the whole generation-plus-slicing pipeline disappears for icons, and the
 light-plate compromise disappears with it. Generation stays for heroes and scenes, which is what it is
 actually good at.
+
+> **Superseded in practice, 2026-07-27 — not refuted.** The reasoning still holds: a hero *is* an
+> illustration, and generation genuinely wins there. But the page's hero was removed, because a hero has
+> **no canon** — no grammar, palette, icon register, sizing rule or verification gate, unlike a card — and
+> an unregulated one-off is how a style system drifts. **No heroes until a hero guide exists**
+> (STYLE.md §2). When someone writes that guide, this paragraph is where it starts.
 
 **But drawing quality moves onto us, and the probe proves the risk.** `driftCurves` came out well —
 two offset curves with the overlap shaded, legible at 34 px, ~450 bytes, and no icon set ships it. The
@@ -636,3 +643,159 @@ gets half the detail budget.** Take that trade only when the second object *is* 
 The usage split is now canon rather than taste (§12): **`documentStack` is a noun** (a corpus, a set
 of documents) and **`retrieval` is a verb** (the search over them). The test: a node that could be
 labelled "documents" takes the stack; one that could be labelled "find" takes `retrieval`.
+
+---
+
+## Migrated 2026-07-27 — EN ships composed cards
+
+The owner approved the approach; the English page now carries **eight composed cards, one raster and no
+hero**. What follows is what the migration actually cost and what it found, because most of it was not
+visible from the pilot.
+
+### What ported, and the two that did not
+
+| Card | Substrate | Why |
+|---|---|---|
+| 01 corpus · 02 retrieval · 03 eval sets · 04 green ≠ correct · 06 drift · 07 releases · 08 gates | **composed** | two-lane contrasts; the grammar already covered them once `Merge` existed |
+| 09 four missed | **composed**, via a new `Grid` | peers, not a flow — the shape had to exist, but it is the cheapest shape in the system |
+| **05 cost** | **stays a raster** | see below |
+| hero | **removed** | no canon for heroes (STYLE.md §2) |
+
+**Card 05 is the honest limit of this grammar, and the argument is worth keeping.** Its claim rides on
+three channels the composed system does not have and should not gain casually:
+
+1. **quantity by repetition** — three coin stacks against one, which is what "3 attempts" *means*;
+2. **magnitude by size** — the single stack is *taller*, which is what "expensive" means;
+3. **a curved arrow sweeping across a divider** — the retry tax climbing from one column to the other.
+
+A `Compare` shape could hold the two columns. It could not hold the other two channels without adding a
+size encoding and a curved connector, each of which is a **new encoding needing its own blind read** —
+and a composed 05 without them is a *weaker* drawing than the raster, not merely a different one. The
+test the decision was made on was not "can it be built" but **"does the composed version teach better"**,
+and here it does not. Recorded cost, since it is real: on the dark theme card 05 is the one light plate
+among eight dark cards, and it reads as a flash. The owner has three options — accept the seam, drop the
+card (the prose already carries the sharpest form of its argument, an explicit `cost ≈ attempt_cost / p`
+block), or commission the two encodings properly. **Not** "port it anyway".
+
+### Two new shapes, both completing the design rather than extending it
+
+**`Merge` (N→1)** was in the original architecture sketch — `<Brace>`: "1→N branch **or N→1 merge**" —
+and was simply never built, because the pilot only needed a branch. Two shipping cards need it: two eval
+sets feeding one scoreboard, three versioned artefacts feeding one canary. It is `Branch` mirrored: same
+fixed row pitch, same `i × pitch + half the icon box` arithmetic, same `forkOffset`. Canon: STYLE.md §11.
+
+**`Grid` (peers)** is the shape for content with no flow. The reasoning is in STYLE.md §17; the part
+worth repeating is that **two columns is an argument, not a layout preference** — a row of four is read
+left to right and reads as a sequence even with no arrows in it. A stripped reader confirmed the shape
+does its job: *"unordered set of peers, unambiguously"*, citing the grid (no single reading path), the
+absence of connectors, and the four cells being identical in size and border.
+
+### The gates earned their keep again — five defects, three of them pre-existing
+
+The blind-naming round and the label-stripped read between them found:
+
+1. **`documentStack` was filling an open path**, so a straight closing chord painted half the front
+   sheet in the back sheet's tint. Read as "the back sheet bleeding through — a z-order bug". Fixed by
+   closing the fill path explicitly. **Pre-existing; shipped through four review rounds unnoticed.**
+2. **`gauge`'s threshold notch read as a second needle**, and at 40 px as an "AI sparkle"; its
+   full-circle hub bulged below the base line so the dial looked "knocked off its axis". Both flagged
+   independently by two rounds. Redrawn: the threshold is now a **band on the rim** (concentric, so it
+   cannot be mistaken for a pointer — the tachometer red-line convention, which is what a score floor
+   *is*), and the hub is a half-disc sitting on the base. **Pre-existing, and CSS-CARDS-PLAN had already
+   recorded "gauge wants another pass" — this is that pass.**
+3. **Fork arms stopped inside the icon's transparent margin.** Measurably attached, visibly not: *"both
+   branch ends terminate a few pixels before the glyphs, so the lines touch nothing."* An icon's drawing
+   starts ~2 units of the card's width inside its viewBox, so the arm has to reach past the box edge, not
+   to it. `-1.571` → `-2.6`. **Pre-existing — it was in the pilot too.**
+4. **A merge's badges sat on its arms.** Three of them on card 07, so it read as systematic. New rule:
+   **a badge never sits on the side a connector arrives from** — merge inputs flip theirs to the left.
+5. **A fork group must not grow.** It used to (`flex: 1 1 auto`) and the surplus pooled at its trailing
+   edge; harmless with a branch last in a lane, but a `Merge` is *followed* by the node it feeds, so it
+   opened a gap between the arrowhead and its target. A drawing with a gap after the arrowhead says
+   nothing arrives.
+
+### Two content fixes a blind reader forced, both about badge *coverage*
+
+- **Card 01's fork had one marked outcome and one bare one**, and the reader could not tell whether the
+  fork meant "one branch works, one fails" or "the whole fork is the failure". The card means the first,
+  so the surviving branch now carries a `tick`: some documents are indexed, some vanish. The asymmetry is
+  the point here, unlike card 02, where both outcomes are equally correct and both take a `tick`.
+- **Card 09 had badges on two of four peers**, and it manufactured a severity gradient out of nothing:
+  *"the badged right column reads as worse and the bare globe reads as not actually a problem."* All four
+  badges came off. The uniform channel is the red panel each cell already has; the icons name the
+  subject and the labels name the fault. Cost, recorded: the raster's warning triangle on the poisoned
+  document is gone, and the label carries it now.
+
+The general rule that falls out, and it is the sharper cousin of §8's "one failure claim per fault":
+**badge coverage across a card's peers must be all or none.** A partial pass reads as a ranking.
+
+### Asked for a third time, and refused a third time: arrowheads on fork arms
+
+Every stripped reader so far has wanted them. This one put it hardest — *"the only arrowhead in the red
+panel points at the junction dot, not at either destination… direction is asserted for the first hop and
+then silently dropped."* The grammar's answer is unchanged (STYLE.md §11: a fork draws topology, not
+flow, and staying headless keeps it distinct from the dashed pipeline). But **three independent readers
+raising the same objection is data, not noise**, and it is recorded here as an open question for the
+owner rather than as a settled matter.
+
+### Still open
+
+1. **RU and SK are visually divergent** until their labels are translated: both pages still embed all
+   nine rasters and the hero is gone from all three. The label list is small and the strings are short.
+2. **The `.webp` files stay in git**, unreferenced by EN. They cannot go before the locales migrate.
+3. **`pin`'s glyph is a map pin** — the convention for *place*, not for *pinned version*. Unused in the
+   set for that reason (card 07's three artefacts all take `tag`, which is both correct and a stronger
+   claim). Redraw it before anything uses it. STYLE.md §8 records this.
+4. **Card titles restate their section headings** on five of the eight composed cards. Invisible while
+   the title was baked into a raster; now it is HTML text 40 px under an `##` that says nearly the same
+   words. Either is defensible — a card should be self-contained if it is ever reused — but it is now a
+   visible repetition and only the page's author can settle it.
+5. **`branchSplit` is an icon made of arrows**, sitting at the end of an arrow. A reader called the
+   arrow-on-arrow "the only node on any of the four cards that isn't clearly a *thing*".
+6. **An odd fan puts one leg on the trunk.** Card 07's middle input is collinear with the outgoing
+   connector — symmetry cannot help with an odd count. Rated "very slightly promotes the chip" by a
+   stripped reader, so it ships; the mitigation is the visible vertical stem. STYLE.md §11 records it.
+
+### The second stripped read — what the fixes bought, and the two charges that stand
+
+Re-run after the fixes above, fresh agent, zoomed crops of every junction:
+
+- **Card 01's fork now reads as intended** — *"one blessed, one rejected"*. The `tick` closed the
+  ambiguity the first read found.
+- **Card 03's merge reads as a merge**, and its two inputs read as **equals**: *"same size, symmetric
+  bracket, the junction dot exactly midway, neither on the output axis."*
+- **Card 07 is "the most consistent card"** — *"all three teal inputs carry the identical grey tag badge
+  (an attribute, not a verdict)… nothing is singled out arbitrarily."* The decision to give all three
+  artefacts the same version mark validated itself.
+- **Card 09: "unordered set of peers, decisively"** — the one thing the shape had to achieve. Cited: no
+  connectors, no numbering, four cells identical in size, border and radius, and a grid rather than a row.
+- **Connectors touch, verified at 3× zoom. No badge sits on a connector.**
+
+Two charges stand, and neither is a bug:
+
+**1 · Card 09 might not deserve to be a card at all.** *"It strips down to four empty rectangles; it
+would render identically as a plain bulleted list, which means the diagram is doing no work."* That is
+the `create-infographic` skill's own go/no-go test pointed at a peer set — and the page's §9 prose is
+already four bolded paragraphs with the same four names. The shape is correct; the question is whether
+the content wants a picture. **Owner's call**, and worth taking seriously: keep it as a scannable visual
+index, or drop it and let the prose carry four unrelated failures the way prose carries lists.
+
+**2 · Card 09's four glyphs are mixed in rhetorical register.** Two of them (an *open* padlock, a
+disconnected plug) draw their own fault; two (a document, a globe) are neutral objects that only the red
+panel accuses. There is no fully uniform option: badging all four double-marks the two that already say
+it (§8 rule 2), and badging none leaves the glyph asymmetry. Bare is the lesser fault — a red badge is a
+loud channel and a glyph's state is a quiet one — but it is recorded rather than resolved.
+
+Smaller residuals from the same read, none acted on:
+
+- **The arrowhead lands inside the junction dot** — *"two terminators stacked on the same point."* Moving
+  either would re-open a defect the other was introduced to close (an unanchored fork, a dropped
+  direction), so it stays.
+- **`branchSplit` and `scales` are optically light** next to the duotone icons, and both sit at the
+  *conclusion* of their card — *"the terminal glyph is the weakest object on the card."* `branchSplit` is
+  additionally an icon made of arrows, at the end of an arrow.
+- **The two panels of a contrast card no longer share a left margin.** True, and it is the owner's
+  explicit round-3 choice (centred lanes); the coupling that holds a contrast card together was measured
+  to be the *recurring icon*, not the shared origin.
+- **Panels look bottom-empty.** Largely an artefact of the test itself — hidden labels reserve their
+  space — plus the known fixed `--branch-row` slack, which triples on a three-input merge.

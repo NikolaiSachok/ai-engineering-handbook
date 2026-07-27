@@ -389,11 +389,25 @@ html[data-theme='dark'] .ranklast {
   stroke-dasharray: calc(1.071 * var(--ic-u)) calc(0.893 * var(--ic-u));
 }
 
-/* A connector and the branch it feeds, kept on one line so a wrapping lane cannot separate them. */
+/* A fork and the connector that meets it, kept on one line so a wrapping lane cannot separate them.
+   The group must NOT grow. It used to (`flex: 1 1 auto`), and the growth had nowhere to go: the
+   connector inside stops at its own cap, so the surplus pooled at the group's trailing edge. With a
+   branch last in the lane that only defeated the lane's centring; with a `Merge` — which is followed
+   by the node it feeds — it opened a gap between the arrowhead and the thing the arrow points at,
+   which is a drawing that says nothing arrives. Content-sized here, and the lane centres the rest. */
 .flowBranch {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   display: flex;
   align-items: flex-start;
+}
+
+/* A fork's connector cannot take part in the lane's free-space distribution — it is inside the group
+   above — so give it the cap as its basis rather than the basis a growable flow starts from. It then
+   matches a grown sibling arrow instead of rendering as the one short stub in the lane, and it can
+   still shrink (`min-width`) if a narrow lane needs the room. */
+.flowBranch .flow {
+  flex: 0 1 calc(10 * var(--ic-u));
+  width: calc(10 * var(--ic-u));
 }
 
 /* ---- branch --------------------------------------------------------------------------------- */
@@ -438,9 +452,12 @@ html[data-theme='dark'] .ranklast {
 .elbow {
   position: absolute;
   left: calc(0.857 * var(--ic-u));
-  /* Past the column edge, into the transparent margin inside the icon's own box: an arm that stops
-     at the boundary ends in visible whitespace and its outcome reads as unattached. */
-  right: calc(-1.571 * var(--ic-u));
+  /* Past the column edge and INTO the glyph, not merely into the icon's box. An icon's drawing starts
+     about 2 units of the card's width inside its viewBox, so an arm that stopped at -1.571 ended in the
+     icon's transparent margin: measurably attached, visibly not. A blind reader put it plainly — "both
+     branch ends terminate a few pixels before the glyphs, so the lines touch nothing". -2.6 clears the
+     widest inset in the lexicon. */
+  right: calc(-2.6 * var(--ic-u));
   border-color: currentColor;
   border-style: solid;
   border-width: 0;
@@ -462,7 +479,7 @@ html[data-theme='dark'] .ranklast {
 .tick {
   position: absolute;
   left: calc(0.857 * var(--ic-u));
-  right: calc(-1.571 * var(--ic-u));
+  right: calc(-2.6 * var(--ic-u));
   border-top: calc(0.357 * var(--ic-u)) solid currentColor;
 }
 
@@ -476,6 +493,107 @@ html[data-theme='dark'] .ranklast {
   margin: calc(-0.786 * var(--ic-u)) 0 0 calc(-0.786 * var(--ic-u));
   border-radius: 50%;
   background: currentColor;
+}
+
+/* ---- merge (N→1) ---------------------------------------------------------------------------- */
+
+/* `Branch` mirrored. Everything structural is inherited from `.branch` above — the fixed row pitch,
+   the arithmetic that puts an arm on its node's icon centre line, the junction on the axis — and only
+   the handedness changes: the fork column moves to the right of the nodes, the stem to that column's
+   right edge, and the arms run leftwards into the nodes' own margin. Declared AFTER `.branch` because
+   several of these selectors have the same specificity as the rules they override. */
+.merge {
+  grid-template-columns: auto calc(6 * var(--ic-u));
+}
+
+.merge .node {
+  grid-column: 1;
+  /* Right-aligned for the reason branch nodes are left-aligned: an icon centred in a box as wide as
+     its label drifts away from the fork, which then appears to gather nothing. */
+  align-items: flex-end;
+  padding-left: calc(1 * var(--ic-u));
+  padding-right: calc(0.429 * var(--ic-u));
+}
+
+.merge .nodeLabel {
+  text-align: right;
+}
+
+.merge .fork {
+  grid-column: 2;
+}
+
+.merge .elbow,
+.merge .tick {
+  left: calc(-2.6 * var(--ic-u));
+  right: calc(0.857 * var(--ic-u));
+}
+
+/* A badge never sits on the side a connector arrives from. A merge's arms come in from the right, and a
+   default bottom-right badge puts a solid disc exactly where the arm runs — three of them on card 07, so
+   a blind reader read it as a systematic collision rather than a one-off. Branch outcomes need no such
+   flip: their arms arrive from the left. */
+.merge .badge {
+  right: auto;
+  left: calc(-0.857 * var(--ic-u));
+}
+
+.merge .elbow {
+  border-left-width: 0;
+  border-right-width: calc(0.357 * var(--ic-u));
+}
+
+.merge .elbowUp {
+  border-top-left-radius: 0;
+  border-top-right-radius: calc(1.25 * var(--ic-u));
+}
+
+.merge .elbowDown {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: calc(1.25 * var(--ic-u));
+}
+
+.merge .junction {
+  left: auto;
+  right: calc(0.857 * var(--ic-u));
+  margin: calc(-0.786 * var(--ic-u)) calc(-0.786 * var(--ic-u)) 0 0;
+}
+
+/* ---- grid (peers) --------------------------------------------------------------------------- */
+
+/* A set, not a flow. Two columns at EVERY width: a row of four is read left to right and reads as a
+   sequence even with no arrows in it, and the whole point of this shape is that its members have no
+   order. So the column count is part of the argument and does not respond to the viewport. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(2.857 * var(--ic-u));
+}
+
+.tone_fail {
+  --lane-accent: var(--ic-fail);
+}
+
+.tone_ok {
+  --lane-accent: var(--ic-ok);
+}
+
+/* One panel per peer. A single shared panel would itself assert that these belong to one pipeline. */
+.cell {
+  background: var(--ic-panel);
+  border: calc(0.357 * var(--ic-u)) solid var(--lane-accent);
+  border-radius: calc(2.5 * var(--ic-u));
+  padding: calc(2.857 * var(--ic-u)) calc(2 * var(--ic-u));
+  display: flex;
+  justify-content: center;
+}
+
+/* The uniform node pitch exists to stop two labels in a row sharing a text line. Inside a cell there
+   is no neighbour to collide with — the panel border is the gutter — so the node takes the cell and a
+   long label stays on one line instead of wrapping inside a half-empty box. */
+.cell .node {
+  flex: 0 1 auto;
+  max-width: 100%;
 }
 
 /* Prose, not diagram: the caption is read at body size whatever the card is scaled to. */

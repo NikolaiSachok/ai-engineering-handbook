@@ -45,9 +45,16 @@ the card as literal text (a real, observed failure).
 ## 2 · Set grammar (decisions taken for `production-failures`)
 
 - **Two stacked lanes**, demo above production, with a small rounded **pill badge** overlapping each lane's
-  left edge reading `DEMO` / `PRODUCTION`. This is the set's spine — eight of the ten cards use it. A card
-  whose content isn't a demo-vs-production contrast (the cost comparison, the four-quadrant card, the hero)
-  may drop the lanes, but nothing else changes.
+  left edge reading `DEMO` / `PRODUCTION`. This is the set's spine — seven of the nine cards use it. A card
+  whose content isn't a demo-vs-production contrast (the cost comparison, the four-peer card) may drop the
+  lanes, but nothing else changes: the four-peer card uses `Grid` (§17) and keeps every other rule.
+- **No hero, and this is a rule rather than an omission.** The page had a `16:9` generated hero; it was
+  removed on 2026-07-27. Two reasons, and the second is the durable one: no other page in the handbook has a
+  hero, and there is **no canon for making one** — cards have a grammar, a palette, an icon register, a
+  sizing rule and a verification gate, and a hero has none of that. An unregulated one-off is how a style
+  system starts drifting. **So: no heroes until a hero guide exists.** `hero.webp` stays in git, unused,
+  and `CSS-CARDS-PLAN.md`'s "a hero is an illustration where generation genuinely wins" still holds for
+  whoever writes that guide — it is deferred, not refuted.
 - **No index badges.** The skill offers a numbered circle; this set omits it, because the page's numbered
   headings already carry the ordinal and a badge-less card stays reusable on a page that isn't numbered.
 - **Icons confined to the upper two thirds of a lane**, so labels sit *inside* the panel border. Without this
@@ -59,7 +66,7 @@ the card as literal text (a real, observed failure).
 | | Ratio | Generate | Ship |
 |---|---|---|---|
 | Card | `4:3` | `--res 2K` PNG | WebP, **1400px**, `-q 82` |
-| Hero | `16:9` | `--res 2K` PNG | WebP, **1600px**, `-q 82` |
+| ~~Hero~~ | ~~`16:9`~~ | ~~`--res 2K` PNG~~ | ~~WebP, **1600px**, `-q 82`~~ — **suspended, §2: no heroes until a hero guide exists** |
 
 ```bash
 cwebp -q 82 -resize 1400 0 raw/02-retrieval.png -o static/img/infographics/production-failures/02-retrieval.webp
@@ -68,8 +75,8 @@ cwebp -q 82 -resize 1400 0 raw/02-retrieval.png -o static/img/infographics/produ
 Budget ≤ 200 KB per card; the first set runs **42–54 KB each, 500 KB for ten**. Raw PNGs never enter git —
 they live in the session scratchpad and are reproducible from the archived batch (§5).
 
-**Naming:** `static/img/infographics/<page-slug>/NN-<slug>.webp`, `NN` = reading order on the page, plus
-`hero.webp`. The directory always matches the page slug, so a card is traceable to its page.
+**Naming:** `static/img/infographics/<page-slug>/NN-<slug>.webp`, `NN` = reading order on the page. The
+directory always matches the page slug, so a card is traceable to its page.
 
 ## 4 · Embedding
 
@@ -77,11 +84,15 @@ Use the globally-registered component — no import needed in any `.md`, in any 
 
 ```mdx
 <Infographic
-  src="/img/infographics/production-failures/02-retrieval.webp"
-  alt="Ako vyzerá vyhľadávanie, ktoré smie odmietnuť odpoveď"
-  caption="Prah relevancie sa uplatňuje po reranku — nie na fúzované skóre."
+  src="/img/infographics/production-failures/05-cost.webp"
+  alt="Tri lacné pokusy proti jednému drahému, s vyznačenou daňou za opakovanie"
+  caption="Lacnejší model vyhrá len vtedy, ak jeho úspešnosť prekoná drahší viac než rozdiel v cene."
 />
 ```
+
+`Infographic` also takes `wide`, which opts out of the desktop width cap for a `16:9` image. **It
+currently has no call site** — the only one was the hero (§2). The prop stays: it is part of the
+component's documented API and the next set that ships a wide image will want it.
 
 `src` is identical in every locale; **`alt` and `caption` are translated** (in-image labels are English-only —
 the skill explains why, and requires the prose to restate every label). `alt` must describe what the card
@@ -91,11 +102,15 @@ actually shows: if a card is regenerated with a different composition, its `alt`
 are light-ground — a border plus a slight brightness reduction on the dark theme so a card reads as a
 deliberate plate rather than a white flash.
 
-**Composed cards embed as markup, not as `src`.** `InfoCard` / `Lane` / `Node` / `Flow` / `Branch` are
-registered globally in `src/theme/MDXComponents.tsx`, so any `.md` in any locale can use them with no
-import — and because every label is HTML text, a translator edits the Markdown rather than asking for a
-regenerated image. The connector vocabulary is `kind="dashed"` (normal flow), `"solid"` (tight
-adjacency) and `"fail"` (the consequence of the fault, and nothing else).
+**Composed cards embed as markup, not as `src`.** `InfoCard` / `Lane` / `Node` / `Flow` / `Branch` /
+`Merge` / `Grid` are registered globally in `src/theme/MDXComponents.tsx`, so any `.md` in any locale can
+use them with no import — and because every label is HTML text, a translator edits the Markdown rather
+than asking for a regenerated image. The connector vocabulary is `kind="dashed"` (normal flow),
+`"solid"` (tight adjacency) and `"fail"` (the consequence of the fault, and nothing else).
+
+**Composed cards take no `alt`.** Their labels are real text in the DOM, so a screen reader already reads
+the diagram; an `alt` would be a second, drift-prone description of something the markup already says.
+`alt` belongs to `Infographic` alone.
 
 ## 5 · Archive
 
@@ -130,7 +145,11 @@ root fails the leak gate even while gitignored. (It did, on the first commit att
 
 | Set | Page | Cards | Status |
 |---|---|---|---|
-| `production-failures` | [Why AI systems fail in production](../../docs/part-3-production/production-failures.md) | 9 + hero | pending owner approval |
+| `production-failures` | [Why AI systems fail in production](../../docs/part-3-production/production-failures.md) | 9 | **8 composed, 1 raster** (`05-cost`); hero removed (§2) — EN migrated 2026-07-27, RU/SK still on rasters until the labels are translated |
+
+The nine `.webp` cards are **still in git and unreferenced by EN** — deliberately, until the owner confirms
+the migrated page. Deleting the eight that composed cards replaced is one follow-up commit, and it cannot
+happen before the RU and SK pages are migrated too, because those still embed them.
 
 ---
 
@@ -174,6 +193,18 @@ Two rules fall out, and they are what to check before adding any failure badge:
 2. **One failure claim per fault.** The lane outline, its pill, the `fail` connector and one badge
    are four channels saying the same thing; using all four on both ends of the arrow is
    over-marking, and over-marking blurs *which* thing failed.
+3. **Across peers, badge coverage is all or none.** A partial pass reads as a *ranking*. Card 09 had
+   badges on two of its four failure modes and a blind reader duly reported that *"the badged right
+   column reads as worse and the bare globe reads as not actually a problem"* — a severity gradient
+   manufactured out of nothing, on a card whose entire claim is that the four are peers. All four
+   came off; the uniform channel is the red panel each cell already carries. This is rule 1's
+   cousin: rule 1 says don't mark the wrong thing, rule 2 says don't mark one thing twice, and this
+   says **don't mark some of a set**.
+4. **A badge never sits on the side a connector arrives from.** A `Merge` gathers its inputs from the
+   right, so a default bottom-right badge lands exactly on the arm; three of them on one card read as
+   a systematic collision rather than an accident. Merge inputs flip theirs to the left. This is a
+   *third* position rule alongside the default and `BADGE_TOP_RIGHT`, and it composes with them:
+   first avoid the icon's own busy corner, then avoid the connector's side.
 
 | Badge | Means | Use it when | Colour role | Position |
 |---|---|---|---|---|
@@ -181,13 +212,27 @@ Two rules fall out, and they are what to check before adding any failure badge:
 | `cross` | rejected, does not happen | a step that is skipped, dropped or refused | failure hue | bottom-right |
 | `bang` | fault, warning | the thing that goes wrong; at most twice per card | failure hue | bottom-right |
 | `crack` | broken, degraded | a component that has failed rather than one that misbehaves | failure hue | bottom-right |
-| `padlock` | scoped, restricted | access control, secrets, redaction | neutral | bottom-right |
+| `padlock` | scoped, or sealed | access control, secrets, redaction — **and a thing deliberately held immutable**, e.g. a frozen regression set | neutral | bottom-right |
 | `pin` | fixed, pinned | a version, a snapshot, a chosen anchor | neutral | bottom-right |
 | `tag` | labelled, versioned | metadata, an ingestion tag, a release | neutral | bottom-right |
 | `refresh` | repeated, re-run | re-indexing, retraining, retrying, any repeat of the base action | neutral | bottom-right |
 
 Colour roles resolve to `--ic-ok`, `--ic-fail` and `--ic-neutral` (§9). The glyph inside is
 `--ic-badge-ink` (`#ffffff` in both themes).
+
+**Two rows earned their wording during the migration, and one is a known defect:**
+
+- **`padlock` covers "sealed", not only "scoped".** The frozen regression set on card 03 is a thing held
+  deliberately unchanging, and a padlock is the near-universal convention for exactly that. Extending the
+  use-list to the case the glyph's own convention already carries is not lexicon creep; substituting a
+  glyph that means something else would be.
+- **`pin`'s drawing says the wrong thing, and it is unused for that reason.** The asset is a **map pin** —
+  a teardrop marker with a hole — which is the convention for *place*, not for *pinned version*. The
+  documented meaning ("a version, a snapshot, a chosen anchor") and the drawing disagree. No card in the
+  shipping set uses it: the three versioned artefacts on card 07 all take `tag`, which is both correct and
+  a stronger claim (one identical version mark across three different objects *is* that card's thesis).
+  **Before `pin` is used, redraw it as a push-pin and blind-name it** — a badge whose glyph contradicts its
+  row is worse than a missing badge.
 
 **`BADGE_TOP_RIGHT` — the declared exception.** Badges sit bottom-right by default. Icons whose own
 drawing occupies that corner move theirs to the top-right, or the overlay covers the part of the icon
@@ -265,6 +310,7 @@ Four rules, each paid for by a blind reader:
 | Solid, primary ink | `solid` | tight adjacency — a step in a stack |
 | Dashed, failure hue | `fail` | **the consequence of the fault, and nothing else** |
 | Routed fork with a junction dot | `<Branch>` | 1→N — one input, N legitimate fates |
+| The same fork, mirrored | `<Merge>` | N→1 — N peers, one destination |
 
 - Every connector is one SVG line with a real `marker-end`. Heads are never faked from CSS borders.
 - **A 1→N split is a fork, not N arrows from a point.** The fork's arms carry no arrowheads: it draws
@@ -275,6 +321,25 @@ Four rules, each paid for by a blind reader:
 - **Alignment rule: a connector sits on the icon centre line, derived from the icon box, never from
   the node.** `margin-top: calc(var(--fork-offset, 0px) + var(--ic-box) / 2 - 5px)`. A node's height
   changes whenever a label wraps; the icon box does not.
+- **`Merge` is `Branch` mirrored, not a second implementation.** Same fixed row pitch, same
+  `i × pitch + half the icon box` arithmetic, same `forkOffset` pushing the rest of the lane onto the
+  axis; only the handedness changes — fork column to the right of the nodes, stem on its right edge,
+  arms running left into the nodes' own margin, node labels right-aligned so an icon never drifts away
+  from the arm that gathers it.
+- **A fork group does not grow.** The connector and the fork it meets live in one flex item so a wrapping
+  lane cannot separate them, and that item is **content-sized**. It used to grow, and the growth had
+  nowhere to go — the connector inside stops at its own cap, so the surplus pooled at the group's trailing
+  edge. Harmless while a branch was the last thing in a lane; with a `Merge`, which is followed by the node
+  it feeds, it opened a gap between the arrowhead and the thing the arrow points at. **A drawing with a gap
+  after the arrowhead says nothing arrives.** The connector inside the group takes the cap (10 × the unit)
+  as its *basis* instead of growing into it, so it matches a grown sibling arrow rather than rendering as
+  the one short stub in the lane.
+- **An odd fan puts one leg on the trunk, and nothing in CSS fixes that.** With three inputs the middle
+  one is collinear with the outgoing connector, because the axis *is* its centre line — the same
+  collinearity the symmetric `Branch` was built to remove, reappearing for the arithmetic reason symmetry
+  cannot help with an odd count. What carries the reading instead is the stem: three arms off one visible
+  vertical bus read as three taps, not as a through-line with two brackets. Prefer even fans where the
+  content allows; where it does not, check it with a stripped read rather than assuming.
 
 ## 12 · The icon register
 
@@ -288,6 +353,8 @@ Blind-naming rounds are recorded because a pass is evidence, not an opinion. Sou
 | `document` | a record | folded-corner page + text lines | Tabler | R1 pass |
 | `documentStack` | many records | offset copies of the page | Tabler | R1 pass |
 | `spreadsheet` | tabular data | page with a **cell grid** | Tabler | R1 fail as a bare grid, R2 pass |
+| `mixedSources` | **a heterogeneous corpus** — sources of different kinds, not many copies of one | two offset folded-corner pages whose **interiors differ**: four solid cells on the back sheet, text lines on the front. The difference between the sheets is the whole meaning, so both folds stay clear of the overlap | hand | R6 pass (*"two documents of different kinds… a mixed-format corpus"*), R7 pass after the cells were redrawn as solid blocks; mushy at 40 px — see the near-miss table |
+| `chunkedPage` | **layout-aware chunking** | one page whose interior is **four unequal blocks with wide gutters** — a header bar, a tall column, two stacked blocks — instead of uniform text lines. Structure, not content, is what is drawn | hand | R6 first read *"a bar chart in a document"* → redrawn; R7 pass (*"document layout / page structure / layout-aware parsing"*) **with a recorded residual**: it draws *layout*, not *the act of splitting* |
 | `browserPage` | a web page | window with a **chrome bar** | Tabler | R1 pass |
 | `database` | a store | **stacked discs** — the separations are the meaning | Tabler | R1 pass |
 | `clipboard` | a checklist | board with a clip | Tabler | R1 pass |
@@ -308,7 +375,7 @@ Blind-naming rounds are recorded because a pass is evidence, not an opinion. Sou
 | `coins` | cost | **two overlapping coins face-on + currency mark**, amber | hand | R1/R2 fail, R4 pass |
 | `lockOpen` | unscoped access | padlock, shackle open | Tabler | R1 pass |
 | `driftCurves` | distribution shift | two bell curves on one baseline, offset, overlap shaded | hand | R1 pass |
-| `gauge` | a threshold | semicircular dial, hub, needle, **radial notch across the arc** | hand | R1 pass |
+| `gauge` | a threshold | semicircular dial, **half-disc hub sitting on the base line**, needle, and the threshold as a short **band on the rim** — concentric with the arc, never radial | hand | R1 pass; **redrawn R7** after two rounds called the old radial notch "a detached blue rod… the dial appears to have two needles" and the full-circle hub "knocked off its axis" |
 | `funnel` | filtering | the filter funnel | hand | R1 pass |
 | `gate` | a quality gate | boom barrier: **base plate, post, striped arm on a hinge** | hand | R1 pass, redrawn + R4 pass |
 | `branchSplit` | canary / rollback | flow splits; one path returns with an up arrowhead | hand | R1 pass |
@@ -325,6 +392,8 @@ Blind-naming rounds are recorded because a pass is evidence, not an opinion. Sou
 | `spreadsheet` / `browserPage` | the page silhouette versus the window chrome bar; a bare rectangle with one divider reads as either |
 | `chainSteps` / `traceSpans` | the stagger and the time axis. Equal blocks in a row read as a chain; offset blocks over an axis read as a trace |
 | `documentStack` / `retrieval` | **the magnifier, and it is the whole difference** — see the usage rule below. At 40 px the stack in `retrieval` blurs and only the magnifier survives, so the pair separates reliably only at reading size or with its label |
+| `documentStack` / `mixedSources` | **whether the two sheets are the same kind of thing.** Identical silhouette by design — that is the point, one corpus drawn two ways — and the only differentiator is the interior: `documentStack`'s sheets are blank, `mixedSources` puts a block of cells on one and text lines on the other. Recorded honestly: at 40 px the interiors go and a blind reader named `mixedSources` "copies / multiple documents", i.e. as `documentStack`. The pair separates at reading size only |
+| `spreadsheet` / `chunkedPage` | **enclosed cells versus free-standing blocks.** `spreadsheet` puts one outlined grid on the page, with a cross of dividers inside it; `chunkedPage` puts four solid unequal blocks with wide gutters and no enclosing frame. Both are "a page with blue geometry inside", so this is the pair to watch when either is redrawn |
 | `retrieval` / `magnifier` | whether anything is being searched. `magnifier` is the bare instrument — a search box, a lookup; `retrieval` is the instrument **over a corpus** |
 
 ### `documentStack` or `retrieval` — the usage rule
@@ -342,9 +411,22 @@ drawn with `documentStack` it said "documents", which is not what the node does.
 
 ### Residuals, recorded rather than hidden
 
-`traceSpans`, `chainSteps`, `gate`, `branchSplit` and `retrieval` all blur at the 34 px a phone
-renders. None is used where the distinction is load-bearing without its label. Treat this as a
-budget: **do not add a sixth detailed icon** to a card that already leans on one of these.
+`traceSpans`, `chainSteps`, `gate`, `branchSplit`, `retrieval`, `mixedSources` and `chunkedPage` all
+blur at the 34 px a phone renders. None is used where the distinction is load-bearing without its
+label. Treat this as a budget: **do not add another detailed icon** to a card that already leans on
+one of these.
+
+**Card 08 spends that budget, and it is recorded rather than hidden.** It carries `chainSteps` plus
+three `gate`s — four detail-heavy icons on one card, all four mushy at phone width. It is defensible
+only because the three gates are *the same object three times*, so nothing depends on telling them
+apart: the `rank` ramp and the labels carry the ordering, and the icon only has to say "a gate".
+
+**A fill path must be closed on purpose.** `documentStack`'s front sheet was filled from an *open*
+path — right for a stroke that stops where the occlusion starts, wrong for a fill, because SVG closes
+an open fill path with a straight chord. The chord ran corner to corner and painted half the front
+sheet in the back sheet's tint; a blind reader read it as "the back sheet bleeding through the front
+one — a z-order bug", which is exactly what it looked like. This is a general trap for every
+two-object icon in the lexicon, so it belongs beside the paint-order rule in §13.
 
 `retrieval` is the newest and the clearest case of the underlying cost: **a two-object icon buys
 meaning at large sizes and spends legibility at small ones.** Each object gets about half the grid,
@@ -487,3 +569,24 @@ minus its padding. Letting labels extend under the connector slot would widen th
 the floor to roughly a 355px card — i.e. **a full lock that stays legible on a phone**. It is not
 done here because it re-opens the "two labels sharing a text line" defect that the uniform pitch was
 introduced to close, and that needs its own blind read.
+
+## 17 · `Grid` — the shape for peers
+
+A lane is a claim about **flow**. Some content has none: card 09's four failures are a *set* — no first,
+no last, nothing leading to anything. Drawing them in a lane would have been the same category of error
+as putting `rank` on peers (§10 rule 4), just committed with position instead of colour.
+
+| Channel | On a `Grid` | Why |
+|---|---|---|
+| Connectors | **none** | nothing flows between peers |
+| `rank` | **never** | a gradient asserts an order that does not exist |
+| Columns | **two, at every width** | a row of four is read left to right and reads as a sequence *even with no arrows in it*. A 2×N block reads as a set. The column count is therefore part of the argument, not a layout preference, so it does not respond to the viewport (§16) |
+| Panel | **one per peer**, `tone="fail"` or `"ok"` | a shared container is itself a claim — that these belong to one pipeline or one stage. Separate panels say "four independent things" |
+| Node width | fills its cell | the uniform pitch (§13) exists to stop two labels in a row sharing a text line; inside a cell the panel border *is* the gutter, so a long label stays on one line instead of wrapping in a half-empty box |
+
+**`tone` is a separate prop from `Lane`'s `kind`, deliberately.** A grid has no demo-vs-production
+contrast to encode, so authoring these cells as `kind="demo"` would be false in the markup even though
+it resolves to the same hue. Two vocabularies is the smaller cost.
+
+Everything else is unchanged: the same unit, the same icon box, the same badge grammar, the same label
+budget, one labelled node per cell.

@@ -7,13 +7,6 @@ sidebar_position: 0
 
 # Osem spôsobov, ako funkčné demo neprežije produkciu
 
-<Infographic
-  src="/img/infographics/production-failures/hero.webp"
-  alt="Malá úhľadná plošina s demom a oveľa väčšia produkčná plošina, medzi ktorými vedie most s chýbajúcim stredom a s výstražnými značkami roztrúsenými nad medzerou"
-  caption="Medzera, ktorú má Časť III príručky zaplniť — osem zlyhaní a produkčné riešenie, ktoré na každé z nich odpovedá."
-  wide
-/>
-
 Demo musí uspieť raz, na ceste, ktorú si niekto vybral. Produkcia musí obstáť aj na cestách, ktoré nikto nenaskriptoval — tisíckrát denne a vtedy, keď ľudia, ktorí ju postavili, spia. Sú to dva rôzne inžinierske problémy a zoznam nižšie je účtom za to, že si vyriešil iba prvý.
 
 Osem kariet čítaj ako mapu, nie ako výstrahu. Každá pomenuje jedno zlyhanie, ukáže produkčné riešenie, ktoré naň odpovedá, a odkáže na lekciu, ktorá ten mechanizmus naozaj vysvetľuje. S niektorými si sa už stretol: kvalita vyhľadávania v Prvej časti príručky, chyby nástrojov v Druhej časti príručky. Ostatné sú presne to, na čo je táto časť. A ak všetky spája jedna niť, tak táto: *takmer nič z toho nie je zlyhanie modelu.* Model je jediný komponent, ktorý si nenapísal. Všetko okolo neho je tvoje.

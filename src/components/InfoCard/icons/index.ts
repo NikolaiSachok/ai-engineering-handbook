@@ -17,6 +17,7 @@ import browserPage from './browserPage.svg';
 import calendar from './calendar.svg';
 import chainSteps from './chainSteps.svg';
 import chip from './chip.svg';
+import chunkedPage from './chunkedPage.svg';
 import clipboard from './clipboard.svg';
 import cloud from './cloud.svg';
 import codeFile from './codeFile.svg';
@@ -32,6 +33,7 @@ import gauge from './gauge.svg';
 import globe from './globe.svg';
 import lockOpen from './lockOpen.svg';
 import magnifier from './magnifier.svg';
+import mixedSources from './mixedSources.svg';
 import plug from './plug.svg';
 import retrieval from './retrieval.svg';
 import scales from './scales.svg';
@@ -59,10 +61,12 @@ export const OBJECT_ICONS = {
   documentStack,
   spreadsheet,
   browserPage,
+  mixedSources,
   database,
   clipboard,
   calendar,
   codeFile,
+  chunkedPage,
   // instruments and controls
   dashboard,
   gauge,

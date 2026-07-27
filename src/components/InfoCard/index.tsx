@@ -163,34 +163,76 @@ export function Branch({children}: {children: React.ReactNode}): React.JSX.Eleme
 }
 
 /**
- * Keep a connector and the `Branch` it feeds in one flex item. They are authored as siblings, but
+ * N inputs, one destination — the mirror of `Branch`, and the other half of the grammar the
+ * original architecture sketched (`<Brace>`: "1→N branch or N→1 merge"). Two cards in the shipping
+ * set need it: two eval sets feeding one scoreboard, and three versioned artefacts feeding one
+ * canary. Neither is a sequence, and drawing them as one would assert an order that does not exist
+ * — the same defect `rank`-on-peers is banned for.
+ *
+ * All the geometry is `Branch`'s, mirrored: the input rows keep the fixed pitch, so input `i`'s
+ * centre line is still `i × pitch + half the icon box`, the junction still sits on the midpoint of
+ * the first and last, and the outgoing connector still lands on that axis because `Lane` pushes
+ * everything after the merge down by the same `forkOffset`. The stem moves to the fork column's
+ * right edge and the arms run left into the nodes' own margin, so an input is attached to the fork
+ * rather than stopping in the gutter beside it.
+ */
+export function Merge({children}: {children: React.ReactNode}): React.JSX.Element {
+  const inputs = React.Children.toArray(children).filter(
+    (child) => typeof child !== 'string' || child.trim() !== '',
+  );
+  const n = inputs.length;
+  const axis = centreLine((n - 1) / 2);
+  const half = forkOffset(n);
+  return (
+    <div className={cx(styles.branch, styles.merge)}>
+      <span aria-hidden="true" className={styles.fork}>
+        <span className={cx(styles.elbow, styles.elbowUp)} style={{top: centreLine(0), height: half}} />
+        <span className={cx(styles.elbow, styles.elbowDown)} style={{top: axis, height: half}} />
+        {inputs.slice(1, -1).map((_, i) => (
+          <span className={styles.tick} key={`tick-${i}`} style={{top: centreLine(i + 1)}} />
+        ))}
+        <span className={styles.junction} style={{top: axis}} />
+      </span>
+      {inputs}
+    </div>
+  );
+}
+
+/**
+ * Keep a fork and the connector that meets it in one flex item. They are authored as siblings, but
  * a wrapping lane (a phone) will otherwise break the line between them and leave the arrow
  * pointing off the end of the row at nothing.
+ *
+ * `Flow` + `Branch` (the arrow arrives at the split) and `Merge` + `Flow` (the arrow leaves it) are
+ * the two orders that occur, and both return the same `forkOffset`: the fork sits at the top of the
+ * row and everything else in the lane drops onto its axis.
  */
-function groupFlowWithBranch(children: React.ReactNode): {
+function groupFlowWithFork(children: React.ReactNode): {
   items: React.ReactNode[];
   offset?: string;
 } {
   const items = React.Children.toArray(children).filter(
     (child) => typeof child !== 'string' || child.trim() !== '',
   );
+  const countOutcomes = (node: React.ReactElement) =>
+    React.Children.toArray((node.props as {children?: React.ReactNode}).children).filter(
+      (c) => typeof c !== 'string' || c.trim() !== '',
+    ).length;
   const out: React.ReactNode[] = [];
   let offset: string | undefined;
   for (let i = 0; i < items.length; i += 1) {
     const child = items[i];
     const next = items[i + 1];
-    if (
-      React.isValidElement(child) &&
-      child.type === Flow &&
-      React.isValidElement(next) &&
-      next.type === Branch
-    ) {
-      const props = next.props as {children?: React.ReactNode};
-      offset = forkOffset(
-        React.Children.toArray(props.children).filter(
-          (c) => typeof c !== 'string' || c.trim() !== '',
-        ).length,
-      );
+    const pair =
+      React.isValidElement(child) && React.isValidElement(next)
+        ? child.type === Flow && next.type === Branch
+          ? next
+          : child.type === Merge && next.type === Flow
+            ? child
+            : undefined
+        : undefined;
+    if (pair) {
+      offset = forkOffset(countOutcomes(pair));
       out.push(
         <div className={styles.flowBranch} key={`fb-${i}`}>
           {child}
@@ -214,7 +256,7 @@ export function Lane({
   label: string;
   children: React.ReactNode;
 }): React.JSX.Element {
-  const {items, offset} = groupFlowWithBranch(children);
+  const {items, offset} = groupFlowWithFork(children);
   return (
     <div className={cx(styles.lane, styles[kind])}>
       <span className={styles.pill}>{label}</span>
@@ -223,6 +265,48 @@ export function Lane({
         style={offset ? ({'--fork-offset': offset} as React.CSSProperties) : undefined}>
         {items}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Peers, not a pipeline. Four unrelated failure modes are a *set*: there is no first and no last,
+ * nothing flows between them, and any channel that implies an order is a lie about the content.
+ *
+ * So this shape spends the channels it can and pointedly leaves the rest neutral:
+ *
+ * - **No connectors**, because nothing leads to anything.
+ * - **No `rank`**, for the reason §10 rule 4 already gives — a gradient across peers asserts a
+ *   ranking that does not exist.
+ * - **Two columns at every width, never one row.** A row of four is read left to right and reads as
+ *   a sequence even with no arrows between the nodes; a 2×N block reads as a set. That is the whole
+ *   argument for the shape, so the column count does not respond to the viewport (STYLE.md §16: the
+ *   card scales, it does not re-flow).
+ * - **One panel per peer**, rather than four nodes inside one panel. A shared container is itself a
+ *   claim — that these things belong to one pipeline or one stage. Separate panels say "four
+ *   independent things", which is what the card means.
+ *
+ * `tone` is the panel accent, and it is a separate vocabulary from `Lane`'s `kind` on purpose: a
+ * grid has no demo/production contrast to encode, so labelling these cells `kind="demo"` would be
+ * a lie in the markup even though it resolves to the same hue.
+ */
+export function Grid({
+  tone = 'fail',
+  children,
+}: {
+  tone?: 'fail' | 'ok';
+  children: React.ReactNode;
+}): React.JSX.Element {
+  const cells = React.Children.toArray(children).filter(
+    (child) => typeof child !== 'string' || child.trim() !== '',
+  );
+  return (
+    <div className={cx(styles.grid, styles[`tone_${tone}`])}>
+      {cells.map((cell, i) => (
+        <div className={styles.cell} key={`cell-${i}`}>
+          {cell}
+        </div>
+      ))}
     </div>
   );
 }

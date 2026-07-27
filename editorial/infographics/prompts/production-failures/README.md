@@ -4,7 +4,14 @@ Ten cards for [Why AI systems fail in production](../../../docs/part-3-productio
 the opener of Part III. Light ground, `4:3` cards + one `16:9` hero, generated with Gemini Pro through the
 `create-infographic` skill.
 
-**Status: all ten pending owner approval** (generated 2026-07-26).
+**Status: superseded on EN, 2026-07-27.** Eight of the nine cards are now **composed** markup on the English
+page (`src/components/InfoCard/`), reusing these labels verbatim; **`05-cost` still ships as this raster**, and
+the **hero was removed** (no heroes until a hero guide exists — STYLE.md §2). RU and SK still embed all nine
+rasters until their labels are translated.
+
+This directory stays as the provenance record: it is how each card's node/edge structure and exact label
+strings were recovered for the port, and it is what would be needed to reproduce `05-cost`. **Do not delete it
+when the `.webp` files go.**
 
 ## Archive format — the exact batch, not a retyped prompt
 

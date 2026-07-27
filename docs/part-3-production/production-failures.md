@@ -7,13 +7,6 @@ sidebar_position: 0
 
 # Eight ways a working demo dies in production
 
-<Infographic
-  src="/img/infographics/production-failures/hero.webp"
-  alt="A small tidy demo platform and a much larger production platform, joined by a bridge with its middle section missing and warning signs scattered across the gap"
-  caption="The gap this part of the handbook exists to close — eight failures, and the shape that answers each."
-  wide
-/>
-
 A demo has to win once, on a path someone chose. Production has to catch itself on the paths nobody
 scripted, thousands of times a day, while the people who built it are asleep. Those are two different
 engineering problems, and the list below is the bill for having solved only the first one.
@@ -37,11 +30,25 @@ cheaper model. Each disagreement is flagged where it comes up.
 
 ## 1 · The corpus is the product
 
-<Infographic
-  src="/img/infographics/production-failures/01-corpus.webp"
-  alt="A demo lane where clean uniform documents go straight into an index, a document falling out of it marked 'silently dropped', and a production lane running mixed sources through layout-aware chunking into an ingestion manifest"
-  caption="Production ingestion reports what it took, what it dropped, and what it never saw."
-/>
+<InfoCard
+  title="The corpus is the product"
+  caption="Production ingestion reports what it took, what it dropped, and what it never saw.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="documentStack" label="clean uniform docs" />
+    <Flow kind="fail" />
+    <Branch>
+      <Node icon="database" badge="tick" label="index" />
+      <Node icon="document" badge="cross" label="silently dropped" />
+    </Branch>
+  </Lane>
+  <Lane kind="production" label="PRODUCTION">
+    <Node icon="mixedSources" label="mixed sources" />
+    <Flow />
+    <Node icon="chunkedPage" label="layout-aware chunking" />
+    <Flow />
+    <Node icon="clipboard" label="ingestion manifest" />
+  </Lane>
+</InfoCard>
 
 The demo corpus is a folder someone curated. Production is PDFs with two-column layouts, spreadsheets whose
 meaning lives in the header row, wiki pages half-migrated from a tool that died, and scans. The common advice —
@@ -60,11 +67,25 @@ enumerate is a defect. The mechanics — parsing, layout, chunking strategies, m
 
 ## 2 · Retrieval has to be allowed to say no
 
-<Infographic
-  src="/img/infographics/production-failures/02-retrieval.webp"
-  alt="A demo pipeline that always returns top-k, against a production pipeline where a score floor after reranking permits an empty result"
-  caption="A relevance floor applied after reranking, and a generator allowed to answer 'no context'."
-/>
+<InfoCard
+  title="Retrieval must be allowed to refuse"
+  caption="A relevance floor applied after reranking, and a generator allowed to answer 'no context'.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="retrieval" label="top-k, always" />
+    <Flow kind="fail" />
+    <Node icon="speechBubble" badge="bang" label="confident wrong answer" />
+  </Lane>
+  <Lane kind="production" label="PRODUCTION">
+    <Node icon="sortedList" label="rerank" />
+    <Flow />
+    <Node icon="gauge" label="score floor" />
+    <Flow />
+    <Branch>
+      <Node icon="speechBubble" badge="tick" label="grounded answer" />
+      <Node icon="speechBubbleEmpty" badge="tick" label="or “no context”" />
+    </Branch>
+  </Lane>
+</InfoCard>
 
 This is the failure that costs teams the most time, because the system looks healthy the whole way through.
 Nothing errors. The service returns 200. The wrong chunks simply arrive, and the model does what it was built
@@ -88,11 +109,23 @@ floor possible. The demo answers everything. The production system is allowed to
 
 ## 3 · One eval set is not enough
 
-<Infographic
-  src="/img/infographics/production-failures/03-eval-sets.webp"
-  alt="A demo lane where a day-one test set leads to a green dashboard labelled 'false confidence', and a production lane where a frozen set and a live sample together feed one honest scoreboard"
-  caption="Two sets, two different questions: did I break what worked, and does my eval still resemble reality?"
-/>
+<InfoCard
+  title="One eval set is not enough"
+  caption="Two sets, two different questions: did I break what worked, and does my eval still resemble reality?">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="clipboard" label="day-one test set" />
+    <Flow kind="fail" />
+    <Node icon="dashboard" badge="bang" label="false confidence" />
+  </Lane>
+  <Lane kind="production" label="PRODUCTION">
+    <Merge>
+      <Node icon="clipboard" badge="padlock" label="frozen set" />
+      <Node icon="speechBubbleGroup" label="live sample" />
+    </Merge>
+    <Flow />
+    <Node icon="scales" label="honest scoreboard" />
+  </Lane>
+</InfoCard>
 
 Test cases written in week one describe how the team imagined people would ask. Six months of real traffic
 describes how they actually ask, and the gap is where a green dashboard starts lying. The usual prescription is
@@ -109,11 +142,22 @@ benchmark. Both sets need labels, which is the part nobody budgets for —
 
 ## 4 · Green is not the same as correct
 
-<Infographic
-  src="/img/infographics/production-failures/04-green-not-correct.webp"
-  alt="A healthy dashboard beside a wrong answer, with a pipeline trace and a sampled judge added"
-  caption="Uptime is a property of the service. Correctness is a property of the answer."
-/>
+<InfoCard
+  title="Green is not correct"
+  caption="Uptime is a property of the service. Correctness is a property of the answer.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="cloud" badge="tick" label="200 OK" />
+    <Flow kind="fail" />
+    <Node icon="speechBubble" badge="bang" label="wrong answer" />
+  </Lane>
+  <Lane kind="production" label="PRODUCTION">
+    <Node icon="traceSpans" label="pipeline trace" />
+    <Flow />
+    <Node icon="scales" label="judge on sample" />
+    <Flow />
+    <Node icon="gauge" badge="tick" label="quality alert" />
+  </Lane>
+</InfoCard>
 
 Every standard signal can be healthy while the system is wrong. Latency is fine, error rate is zero, the pod
 is up — and the answers are confidently incorrect, because no ordinary monitor has an opinion about the
@@ -166,11 +210,24 @@ accepted code change.
 
 ## 6 · Re-index before you retrain
 
-<Infographic
-  src="/img/infographics/production-failures/06-drift.webp"
-  alt="A demo lane going straight from detected drift to retraining the model, and a production lane stepping through re-index, retrieval mix and prompt before reaching a greyed-out chip labelled 'weights last'"
-  caption="Three drifts, one ladder — and weights are the last rung, not the first."
-/>
+<InfoCard
+  title="Re-index before you retrain"
+  caption="Three drifts, one ladder — and weights are the last rung, not the first.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="driftCurves" label="drift detected" />
+    <Flow kind="fail" />
+    <Node icon="chip" badge="refresh" label="retrain the model" />
+  </Lane>
+  <Lane kind="production" label="PRODUCTION">
+    <Node icon="database" badge="refresh" label="re-index" rank="1" />
+    <Flow />
+    <Node icon="sliders" label="retrieval mix" rank="2" />
+    <Flow />
+    <Node icon="codeFile" label="prompt" rank="3" />
+    <Flow />
+    <Node icon="chip" label="weights last" rank="last" />
+  </Lane>
+</InfoCard>
 
 Quality decays without a deploy. Users bring new vocabulary, the documents underneath change, and a hosted
 model you didn't pin moves under you. This is the third disagreement, and the sharpest one: the standard
@@ -185,11 +242,24 @@ release**: it deserves a version, a diff, and a rollback, exactly like code.
 
 ## 7 · The prompt and the corpus are releases
 
-<Infographic
-  src="/img/infographics/production-failures/07-releases.webp"
-  alt="A versioned prompt, a pinned model and a corpus snapshot moving through a canary release with a rollback path"
-  caption="Everything that changes behaviour needs a version and a way back."
-/>
+<InfoCard
+  title="Prompt and corpus are releases"
+  caption="Everything that changes behaviour needs a version and a way back.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="codeFile" label="prompt in code" />
+    <Flow kind="fail" />
+    <Node icon="cloud" badge="bang" label="every edit ships" />
+  </Lane>
+  <Lane kind="production" label="PRODUCTION">
+    <Merge>
+      <Node icon="document" badge="tag" label="prompt config" />
+      <Node icon="chip" badge="tag" label="pinned model" />
+      <Node icon="database" badge="tag" label="corpus snapshot" />
+    </Merge>
+    <Flow />
+    <Node icon="branchSplit" label="canary, rollback" />
+  </Lane>
+</InfoCard>
 
 When a prompt lives inside application code, editing a sentence is a deployment — so a copy fix carries
 deployment risk, and nobody dares treat it as the small change it is. Lift prompts into **version-controlled
@@ -204,11 +274,22 @@ reproducible state at all, and no amount of testing fixes that. The release mech
 
 ## 8 · A pipeline needs gates between the steps
 
-<Infographic
-  src="/img/infographics/production-failures/08-gates.webp"
-  alt="A multi-step pipeline with validation gates between stages, ordered cheapest check first"
-  caption="Each stage rejects bad input, and the cheapest check runs first."
-/>
+<InfoCard
+  title="Cheapest check first"
+  caption="Each stage rejects bad input, and the cheapest check runs first.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="chainSteps" label="no checks" />
+    <Flow kind="fail" />
+    <Node icon="document" badge="crack" label="first error spreads" />
+  </Lane>
+  <Lane kind="production" label="PRODUCTION">
+    <Node icon="gate" label="schema" rank="1" />
+    <Flow />
+    <Node icon="gate" label="citations" rank="2" />
+    <Flow />
+    <Node icon="gate" label="judge" rank="last" />
+  </Lane>
+</InfoCard>
 
 In a multi-step pipeline, the first bad output becomes the next step's trusted input. A retrieval miss becomes
 a confident summary, which becomes a decision, and by the time anything looks wrong the original error is
@@ -224,11 +305,16 @@ what to guard on input, output and at ingestion — is [guardrails](../part-1-ra
 
 ## 9 · Four that rarely make the list
 
-<Infographic
-  src="/img/infographics/production-failures/09-four-missed.webp"
-  alt="Four quadrants: unscoped access, poisoned documents, one-language testing, and flaky tools"
-  caption="Four failures the standard lists skip — and the last one fails before the model does."
-/>
+<InfoCard
+  title="Four the lists miss"
+  caption="Four failures the standard lists skip — and the last one fails before the model does.">
+  <Grid tone="fail">
+    <Node icon="lockOpen" label="unscoped access" />
+    <Node icon="document" label="poisoned documents" />
+    <Node icon="globe" label="one language only" />
+    <Node icon="plug" label="flaky tools" />
+  </Grid>
+</InfoCard>
 
 Four more, each of which has taken down a production system while everyone was watching the eight above.
 
