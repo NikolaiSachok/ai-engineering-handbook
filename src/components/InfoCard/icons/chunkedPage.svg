@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="scale(2)" stroke-width="1.5">
+    <g stroke="none" fill="var(--ic-tint, #93c5fd)">
+      <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+    </g>
+    <g stroke="none" fill="var(--ic-fill, #3b82f6)">
+      <!-- Gutters are wide on purpose: a blind reader read a tighter version as "a formatted article
+           page", i.e. layout but not separation. The blocks have to look like PIECES with space
+           between them, so each gutter is about as wide as the thinnest block is tall. -->
+      <path d="M7.4 9.2h9.2v1.8h-9.2z" />
+      <path d="M7.4 12.6h3.8v6.4h-3.8z" />
+      <path d="M12.8 12.6h3.8v2.8h-3.8z" />
+      <path d="M12.8 17h3.8v2h-3.8z" />
+    </g>
+    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+  </g>
+</svg>
