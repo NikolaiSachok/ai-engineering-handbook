@@ -9,6 +9,17 @@ page (`src/components/InfoCard/`), reusing these labels verbatim; **`05-cost` st
 the **hero was removed** (no heroes until a hero guide exists — STYLE.md §2). RU and SK still embed all nine
 rasters until their labels are translated.
 
+**Four strings have since diverged from these rasters**, under the owner rulings of 2026-07-27
+(`CSS-CARDS-PLAN.md`, final section) — so the table below is the record of what the *images* say, not of what
+the English page now says:
+
+| | Raster | Composed EN |
+|---|---|---|
+| 03 title | `One eval set is not enough` | `Two eval sets, not one` |
+| 03 label | `day-one test set` | `week-one test set` (the prose said "week one") |
+| 06 title | `Re-index before you retrain` | `Retrain last` |
+| 06 caption | "Three drifts, one ladder…" | "Drift usually lives in the corpus or the query, not in the weights." — the card only ever drew one drift |
+
 This directory stays as the provenance record: it is how each card's node/edge structure and exact label
 strings were recovered for the port, and it is what would be needed to reproduce `05-cost`. **Do not delete it
 when the `.webp` files go.**

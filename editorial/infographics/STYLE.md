@@ -14,8 +14,14 @@ duplicating a rule from the skill, delete it here instead.
 
 ## 1 · Palette
 
-**Two card substrates now exist, and the palette below is the generated one.** A *generated* card is a
-baked raster and is light-ground in both themes (§4 frames it). A *composed* card
+**Two card substrates now exist, and the palette below is the generated one.** Which one a card gets is the
+skill's call, not this file's: **composed is the default and generation is the documented escape hatch**
+(`create-infographic` §1a) — taken only when a thought needs a channel the composed grammar does not have,
+because a composed card that drops an encoding its argument depends on is a *weaker* drawing, not a
+different one. This set uses the hatch exactly once, on `05-cost` (§7), and pays the declared cost: one
+light plate among eight theme-adaptive cards.
+
+A *generated* card is a baked raster and is light-ground in both themes (§4 frames it). A *composed* card
 (`src/components/InfoCard/`) carries the same palette **as roles, not as literal hexes**: the values
 live in CSS custom properties on `.plate` and are overridden under `html[data-theme='dark']`, so a
 composed card is a dark card on the dark theme. Composed cards add one property the generated set
@@ -57,6 +63,19 @@ the card as literal text (a real, observed failure).
   whoever writes that guide — it is deferred, not refuted.
 - **No index badges.** The skill offers a numbered circle; this set omits it, because the page's numbered
   headings already carry the ordinal and a badge-less card stays reusable on a page that isn't numbered.
+- **Every card keeps its own title inside the frame, even under an `##` that says nearly the same words.**
+  Settled by the owner on 2026-07-27, and the reasoning is the rule: with a title in the frame the reader
+  stays focused *within* the diagram and is reminded what it argues; without one they must look outside it
+  to a heading that "has a different layout and looks like it belongs to the section, not the diagram".
+  The repetition is real — it was invisible while the title was baked into a raster — and it is answered by
+  **shortening the title, never the heading**: the heading carries the full claim, the card title the short
+  form, on the model of an article title against its table-of-contents entry (`create-infographic` §3).
+  Where a heading is already the minimal form of its claim, an identical card title is the right outcome;
+  a title that decays into a topic label ("Drift") is worse than a duplicate, because a duplicate still
+  argues something. Applied to this set: `## 3 · One eval set is not enough` → card **"Two eval sets, not
+  one"**, and `## 6 · Re-index before you retrain` → card **"Retrain last"**. Cards 01 (`The corpus is the
+  product`), 04 (`Green is not correct`) and 07 (`Prompt and corpus are releases`) were left alone —
+  the first is already its own short form and the other two already are the compressed heading.
 - **Icons confined to the upper two thirds of a lane**, so labels sit *inside* the panel border. Without this
   the model pushes labels below the border.
 - **Monospace labels, bold geometric sans titles**, sentence case, one line.
@@ -112,6 +131,13 @@ than asking for a regenerated image. The connector vocabulary is `kind="dashed"`
 the diagram; an `alt` would be a second, drift-prone description of something the markup already says.
 `alt` belongs to `Infographic` alone.
 
+**And the prose-restates-every-label rule changes weight with the substrate.** For a raster it is a hard
+accessibility gate — unrestated in-image text is text no reader can reach. For a composed card the label
+*is* text in the page, so what remains is a **coherence** preference: a card naming something the prose
+never mentions reads as two authors. Add the anchor where it lands naturally; where it would only insert
+the card's two words into a paragraph that already makes the point in sharper ones, leave the prose alone
+and record the decision. (`create-infographic` §7.)
+
 ## 5 · Archive
 
 ```text
@@ -146,6 +172,15 @@ root fails the leak gate even while gitignored. (It did, on the first commit att
 | Set | Page | Cards | Status |
 |---|---|---|---|
 | `production-failures` | [Why AI systems fail in production](../../docs/part-3-production/production-failures.md) | 9 | **8 composed, 1 raster** (`05-cost`); hero removed (§2) — EN migrated 2026-07-27, RU/SK still on rasters until the labels are translated |
+
+**`05-cost` is this set's one use of the escape hatch, and it is declared rather than tolerated** (§1). Its
+argument needs quantity-by-repetition, magnitude-by-size and a curved connector crossing a divider; none is
+expressible in the composed grammar, and each would be a new encoding owing its own blind read. The costs
+are real and named: a light plate on the dark theme, labels that do not localise (so §4's restatement rule
+applies in full to that card), and a card that cannot be diffed. Its icons happen not to collide with the
+composed lexicon — `coins` appears on no composed card in this set — so the cross-substrate identity drift
+`create-infographic` §1a warns about is **not** exercised here. Any *future* rasterised card must pass the
+canon SVGs in as `--ref` images, per that section.
 
 The nine `.webp` cards are **still in git and unreferenced by EN** — deliberately, until the owner confirms
 the migrated page. Deleting the eight that composed cards replaced is one follow-up commit, and it cannot
@@ -315,6 +350,13 @@ Four rules, each paid for by a blind reader:
 - Every connector is one SVG line with a real `marker-end`. Heads are never faked from CSS borders.
 - **A 1→N split is a fork, not N arrows from a point.** The fork's arms carry no arrowheads: it draws
   topology, not flow, and staying headless keeps it distinct from the dashed pipeline.
+  **Closed by the owner on 2026-07-27 and not open by default** — three independent stripped readers had
+  each asked for arrowheads on the arms, which is data rather than noise, so the objection was put to the
+  owner rather than defended from the grammar. The ruling: an arm meeting an arrowhead reads as *"and this
+  leads to the following results"* — the incoming connector's head, landing on the junction, already
+  asserts the direction for the whole fan, and the arms then only have to say which destinations the fan
+  reaches. **The topology is legible as drawn.** Reopen this only with evidence that a reader misread the
+  *direction* of a fork, not with a further preference for heads.
 - **The fork is symmetric about the incoming connector's axis** — with two outcomes, one above and
   one below. Hanging both below the axis makes the first outcome collinear with the incoming arrow,
   and it then reads as the main path with the other as a side note.
@@ -590,3 +632,10 @@ it resolves to the same hue. Two vocabularies is the smaller cost.
 
 Everything else is unchanged: the same unit, the same icon box, the same badge grammar, the same label
 budget, one labelled node per cell.
+
+**A `Grid` card will always look like a list, and that is not grounds to cut it.** Card 09 was charged with
+exactly that — *"it would render identically as a plain bulleted list, so the diagram is doing no work"* —
+and kept by the owner on 2026-07-27. The card and the prose serve **different reading modes**: the grid is
+the glance, the four paragraphs underneath are the detail. `create-infographic` §1b carries the refined
+test — *does it add anything **at a glance***, not *could its content also be written as a list* — and card
+09 is its worked example.

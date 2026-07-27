@@ -1,9 +1,10 @@
 # Composed cards — migrating from generated rasters to CSS + an icon set
 
-**Status: MIGRATED (EN), 2026-07-27.** The English `production-failures` page now ships **eight composed
-cards and one raster** (`05-cost`), and no hero. The nine `.webp` files stay in git, unreferenced by EN,
-until the owner confirms the page and the RU/SK pages are migrated too. The record below is chronological:
-the plan, four review rounds, and the migration at the end.
+**Status: MIGRATED (EN), 2026-07-27; owner rulings applied the same day.** The English `production-failures`
+page ships **eight composed cards and one raster** (`05-cost`), and no hero. The nine `.webp` files stay in
+git, unreferenced by EN, until the RU/SK pages are migrated too. The record below is chronological: the plan,
+four review rounds, the migration, and **the owner's rulings in the final section** — which is where the four
+open questions (card 05's substrate, card 09's existence, fork arrowheads, card titles) are closed.
 
 ## Why
 
@@ -372,7 +373,7 @@ rasters still ship. Open items for whoever takes the decision:
    a flex row; the alternative (a slanted connector) needs geometry CSS cannot express.
 2. Card 06's shipped caption says *"Three drifts"* and the card draws one. A stripped reader caught
    it in the raster's own wording — a **content** defect the composed port merely inherits, and only
-   the page's author can settle it.
+   the page's author can settle it. **Resolved 2026-07-27 — see the owner-rulings section at the end.**
 3. `gauge` reads as "a number on a scale", not as "a cutoff". The threshold notch is not enough; if
    the score-floor idea must be picture-legible, that icon wants another pass.
 4. Three icons are weak at 34 px and are documented as such rather than quietly shipped:
@@ -736,7 +737,8 @@ panel points at the junction dot, not at either destination… direction is asse
 then silently dropped."* The grammar's answer is unchanged (STYLE.md §11: a fork draws topology, not
 flow, and staying headless keeps it distinct from the dashed pipeline). But **three independent readers
 raising the same objection is data, not noise**, and it is recorded here as an open question for the
-owner rather than as a settled matter.
+owner rather than as a settled matter. **Closed 2026-07-27 — the arms stay headless, and the reasoning is
+the owner's rather than the grammar's; see the owner-rulings section at the end.**
 
 ### Still open
 
@@ -749,7 +751,8 @@ owner rather than as a settled matter.
 4. **Card titles restate their section headings** on five of the eight composed cards. Invisible while
    the title was baked into a raster; now it is HTML text 40 px under an `##` that says nearly the same
    words. Either is defensible — a card should be self-contained if it is ever reused — but it is now a
-   visible repetition and only the page's author can settle it.
+   visible repetition and only the page's author can settle it. **Resolved 2026-07-27: the titles stay,
+   two were shortened — see the owner-rulings section at the end.**
 5. **`branchSplit` is an icon made of arrows**, sitting at the end of an arrow. A reader called the
    arrow-on-arrow "the only node on any of the four cards that isn't clearly a *thing*".
 6. **An odd fan puts one leg on the trunk.** Card 07's middle input is collinear with the outgoing
@@ -779,6 +782,7 @@ the `create-infographic` skill's own go/no-go test pointed at a peer set — and
 already four bolded paragraphs with the same four names. The shape is correct; the question is whether
 the content wants a picture. **Owner's call**, and worth taking seriously: keep it as a scannable visual
 index, or drop it and let the prose carry four unrelated failures the way prose carries lists.
+**Resolved 2026-07-27: the card stays, and the test itself was refined — see the owner-rulings section.**
 
 **2 · Card 09's four glyphs are mixed in rhetorical register.** Two of them (an *open* padlock, a
 disconnected plug) draw their own fault; two (a document, a globe) are neutral objects that only the red
@@ -799,3 +803,133 @@ Smaller residuals from the same read, none acted on:
   to be the *recurring icon*, not the shared origin.
 - **Panels look bottom-empty.** Largely an artefact of the test itself — hidden labels reserve their
   space — plus the known fixed `--branch-row` slack, which triples on a three-input merge.
+
+---
+
+## Owner rulings 2026-07-27 — four questions closed, and the content fixes they pulled in
+
+Everything the migration left for the page's author. Three of the four had been raised repeatedly by
+independent readers, and in two of those the **reader was right about the observation and wrong about the
+remedy** — which is the pattern worth carrying forward: a stripped read reports what it sees, and only the
+author knows what the card is for.
+
+### 1 · Card 05 stays a raster — and the exception became a documented escape hatch
+
+The migration argued card 05 as a one-off. It is now a **rule with a criterion**, written into
+`create-infographic` §1a and cross-referenced from STYLE.md §1 and §7:
+
+> **Substrate order is composed first, generation is the escape hatch.** Reach for it when a thought needs
+> a channel the composed grammar does not have — because **a composed version that drops an encoding the
+> argument depends on is a weaker drawing, not a different one.**
+
+Card 05 is the worked example: quantity-by-repetition, magnitude-by-size and a curved connector crossing a
+divider, none of them expressible, each a new encoding owing its own blind read. The costs are named rather
+than discovered later — a light plate among theme-adaptive cards, labels that do not localise, a card that
+cannot be diffed.
+
+Three things the skill now says that this document did not:
+
+- **The hatch is narrow.** It is for a missing *encoding* or a genuinely complex *composition* — never for
+  "the markup would be fiddly" or "generation is faster". Those trade a permanent capability for a one-off
+  convenience.
+- **A rasterised card must pass the canon SVGs in as `--ref` images**, plus an approved composed card for
+  palette and type, plus a sentence saying what each ref governs. Otherwise the hatch breaks the thing the
+  lexicon exists for: **the substrate boundary is exactly where icon identity drifts, because nothing
+  structurally prevents it there.** Stated with its limit — an image model *approximates* a reference, it
+  does not place it — so the generated card's icons still go through blind naming and any drift is recorded
+  as a residual on that card. This set does not exercise the risk (`coins` appears on no composed card),
+  which is luck, not design.
+- **Two honest exits, not three.** Build the missing encoding properly, or drop the card. A second card
+  taking the hatch for the *same* missing channel is a gap in the grammar, and the fix belongs there.
+
+### 2 · Card 09 keeps its card — and the go/no-go test needed refining, not applying
+
+The charge was the skill's own test: *"it would render identically as a plain bulleted list, which means
+the diagram is doing no work."* The ruling is that the test was too blunt, and it now reads
+(`create-infographic` §1b):
+
+> **"It would render identically as a list" is not sufficient grounds to reject a card when the card and
+> the prose serve different reading modes.**
+
+The card is the **glance**; the prose is the **detail**. A reader who skims and a reader who works through
+are not the same reader, and a page may serve both. The test rejects a card that adds nothing *at a
+glance* — not one whose content could also be written as a list, which is true of almost any diagram.
+Card 09 is the skill's worked example precisely because it passed every other check (the two-column `Grid`
+reads as *peers with no order*, confirmed by a stripped reader) and was nearly cut on this one.
+
+### 3 · Fork arms stay headless — closed, with the owner's reasoning rather than the grammar's
+
+Three independent readers asked for arrowheads. The grammar's defence ("a fork draws topology, not flow")
+was never the point at issue; what settles it is how the drawing actually reads:
+
+> An arm meeting an arrowhead reads as **"and this leads to the following results"** — the incoming
+> connector's head, landing on the junction, already asserts direction for the whole fan, so the arms only
+> have to say which destinations it reaches. **The topology is legible as drawn.**
+
+Recorded in STYLE.md §11 as closed, with the condition for reopening: evidence that a reader misread a
+fork's *direction*, not a further preference for heads. Written down because a question three readers have
+raised will otherwise reopen itself by default.
+
+### 4 · Embedded card titles stay — and the repetition is answered by shortening the title
+
+The owner's reasoning is the durable part, so it is canon now (`create-infographic` §3, STYLE.md §2):
+
+> With a title inside the frame the reader stays focused *within* the diagram and is reminded what it
+> argues. Without one they must look outside it, to an `##` that "has a different layout and looks like it
+> belongs to the section, not the diagram".
+
+The repetition is real, and the fix runs one way only: **heading = the full claim, card title = the short
+form**, on the model of an article title against its table-of-contents entry. **Never shorten the
+heading** — it is the page's contract with a reader scanning the sidebar. And **a title that decays into a
+topic label ("Drift") is worse than a duplicate**, because a duplicate still argues something.
+
+Applied, with the reasoning per card, because "leave it" is a decision too:
+
+| Card | Heading | Card title | |
+|---|---|---|---|
+| 03 | One eval set is not enough | **Two eval sets, not one** | shortened — the claim survives, and the positive form is sharper than the negative |
+| 06 | Re-index before you retrain | **Retrain last** | shortened — an imperative with the ordering intact, and it is the compressed form of the heading rather than its topic |
+| 01 | The corpus is the product | The corpus is the product | **left** — the heading is already the minimal form of its claim; "The corpus" would be a topic label |
+| 04 | Green is not the same as correct | Green is not correct | **left** — already the compressed heading |
+| 07 | The prompt and the corpus are releases | Prompt and corpus are releases | **left** — already the compressed heading; anything shorter ("Three releases") drops the subject |
+| 02 · 08 · 09 | — | Retrieval must be allowed to refuse · Cheapest check first · Four the lists miss | already distinct |
+
+Card 03's caption opened *"Two sets, two different questions…"*, which put **two** three times beside the
+new title; it now opens *"Each answers a different question…"*.
+
+### The content fixes the rulings pulled in
+
+**"Three drifts" is gone.** Card 06's caption claimed a count the card never drew — tolerable baked into a
+raster, not once it is HTML text a reader can hold against the diagram beside it. The number came from the
+prose's pointer to LLMOps ("three flavours of drift"), which is a different lesson's content. Replaced with
+the caveat the card actually argues: **"Drift usually lives in the corpus or the query, not in the
+weights."** The dropped half ("weights are the last rung") is carried by the `weights last` node, the rank
+ramp and the new title. The general rule: **a caption is a claim, and a claim about a quantity the drawing
+does not show is false precision** — the same failure mode §6 of the skill records for generated cards,
+arriving this time in hand-written text.
+
+**`day-one test set` → `week-one test set`.** The card said one thing and the prose beneath it said
+another ("Test cases written in week one"). Harmonised on the card, not the prose, deliberately: the card
+label is an EN-only surface right now, so changing it leaves RU/SK untouched and the correction propagates
+naturally when the labels are translated. The raster still says "day-one", which is the locales' existing
+state and their translation pass's problem, not a new divergence.
+
+**Prose anchors: three added, two refused.** Composed labels are DOM text, so the restatement rule is no
+longer an accessibility gate — it is a coherence preference (STYLE.md §4). Added where it lands naturally:
+`clean uniform docs` and `mixed sources` (§1's first sentence gained "clean, uniform, all of one kind" and
+its list of PDFs and scans is now introduced as "a mix of sources"), and `grounded answer` (§2 described
+only the refusal arm of the card's fork; it now describes both). Refused as padding, and recorded rather
+than quietly skipped: `false confidence` and `honest scoreboard`, both on card 03 — §3's prose already
+makes each claim in stronger words ("where a green dashboard starts lying", "Neither replaces the other"),
+and inserting the card's two-word labels would be vocabulary matching, not teaching.
+
+### Still open after this round
+
+1. **RU and SK are unmigrated** and still embed all nine rasters; their card 06 caption still says
+   *"Три вида дрейфа"* / three drifts, because the raster does. That is the translation pass's to fix
+   together with the labels — this round deliberately did not touch `i18n/**`, since the labels it would
+   translate had to be final first.
+2. **`pin`'s glyph is a map pin.** Unchanged; redraw before anything uses it.
+3. **`branchSplit` is an icon made of arrows at the end of an arrow**, and it and `scales` are optically
+   light next to the duotone icons.
+4. **An odd fan puts one leg on the trunk** (card 07). Ships, mitigated by the visible stem.

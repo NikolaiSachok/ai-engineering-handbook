@@ -50,12 +50,13 @@ cheaper model. Each disagreement is flagged where it comes up.
   </Lane>
 </InfoCard>
 
-The demo corpus is a folder someone curated. Production is PDFs with two-column layouts, spreadsheets whose
-meaning lives in the header row, wiki pages half-migrated from a tool that died, and scans. The common advice —
-validate schemas at ingestion — is right for records and misses the target for documents, because the thing
-that breaks a RAG answer is rarely a malformed field. It is **structure**: a table flattened into prose, a
-footer glued onto every chunk, and above all a chunk boundary that separates a fact from the qualifier that
-made it true. "Rates rose 4%" is not wrong until you cut it away from "in the 2019 pilot only."
+The demo corpus is a folder someone curated: clean, uniform, all of one kind. Production is a mix of sources —
+PDFs with two-column layouts, spreadsheets whose meaning lives in the header row, wiki pages half-migrated
+from a tool that died, and scans. The common advice — validate schemas at ingestion — is right for records
+and misses the target for documents, because the thing that breaks a RAG answer is rarely a malformed field.
+It is **structure**: a table flattened into prose, a footer glued onto every chunk, and above all a chunk
+boundary that separates a fact from the qualifier that made it true. "Rates rose 4%" is not wrong until you
+cut it away from "in the 2019 pilot only."
 
 Worse, a strict validator fails *quietly*. It drops the documents that don't conform, the index comes up
 looking healthy, and the model answers from a partial corpus — confidently, because nothing told it that a
@@ -99,8 +100,9 @@ similarity ranking will hand back its best five candidates whether or not any of
 So put a **score floor** after the stage whose scores mean something. Fused hybrid scores — dense and lexical
 rankings combined — are not calibrated on a comparable scale, so a threshold on a fusion score is
 approximately arbitrary; a cross-encoder reranker's score is the one you can actually tune a floor against.
-Below the floor, retrieval returns **an empty set on purpose**, and the generator says it has no supporting
-context instead of assembling something plausible from a weak batch.
+Above the floor the answer is **grounded** — every claim rests on a passage that cleared the bar. Below it,
+retrieval returns **an empty set on purpose**, and the generator says it has no supporting context instead of
+assembling something plausible from a weak batch.
 
 That last step only works if the generator was built to refuse — which
 [generation](../part-1-rag/generation/index.md) argues at length, and
@@ -110,10 +112,10 @@ floor possible. The demo answers everything. The production system is allowed to
 ## 3 · One eval set is not enough
 
 <InfoCard
-  title="One eval set is not enough"
-  caption="Two sets, two different questions: did I break what worked, and does my eval still resemble reality?">
+  title="Two eval sets, not one"
+  caption="Each answers a different question: did I break what worked, and does my eval still resemble reality?">
   <Lane kind="demo" label="DEMO">
-    <Node icon="clipboard" label="day-one test set" />
+    <Node icon="clipboard" label="week-one test set" />
     <Flow kind="fail" />
     <Node icon="dashboard" badge="bang" label="false confidence" />
   </Lane>
@@ -211,8 +213,8 @@ accepted code change.
 ## 6 · Re-index before you retrain
 
 <InfoCard
-  title="Re-index before you retrain"
-  caption="Three drifts, one ladder — and weights are the last rung, not the first.">
+  title="Retrain last"
+  caption="Drift usually lives in the corpus or the query, not in the weights.">
   <Lane kind="demo" label="DEMO">
     <Node icon="driftCurves" label="drift detected" />
     <Flow kind="fail" />
