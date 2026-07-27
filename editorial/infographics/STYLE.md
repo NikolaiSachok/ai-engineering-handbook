@@ -54,6 +54,17 @@ the card as literal text (a real, observed failure).
   left edge reading `DEMO` / `PRODUCTION`. This is the set's spine — seven of the nine cards use it. A card
   whose content isn't a demo-vs-production contrast (the cost comparison, the four-peer card) may drop the
   lanes, but nothing else changes: the four-peer card uses `Grid` (§17) and keeps every other rule.
+- **The lane pill localises, and it is a per-locale call rather than a global one.** Baked into a raster the
+  pill was English by necessity; composed, it is real text, so the question became live and was settled
+  2026-07-27 when RU and SK migrated. **RU → `ДЕМО` / `ПРОД`; SK → `DEMO` / `PRODUKCIA`.** The rule that
+  produced both: **the pill follows the page's own prose.** Neither word is on either language's kept-EN
+  list, both pages already decline the concept natively (the RU page's own H1 says «в проде»; the SK page
+  says „v produkcii", „produkčné riešenie"), and a Latin pill sitting above a caption that says
+  «Загрузка в проде…» / „Produkčný ingestion…" is a visible direction wobble. SK's `DEMO` is unchanged not
+  as a kept-EN exception but because „demo" *is* the Slovak word — the page declines it („Korpus dema",
+  „v deme"). Length is never the argument either way: both localised pairs came out shorter than the
+  English. **Canon-probation**: the first localised lane pills in the corpus; the next set either confirms
+  the rule or replaces it.
 - **No hero, and this is a rule rather than an omission.** The page had a `16:9` generated hero; it was
   removed on 2026-07-27. Two reasons, and the second is the durable one: no other page in the handbook has a
   hero, and there is **no canon for making one** — cards have a grammar, a palette, an icon register, a
@@ -171,7 +182,7 @@ root fails the leak gate even while gitignored. (It did, on the first commit att
 
 | Set | Page | Cards | Status |
 |---|---|---|---|
-| `production-failures` | [Why AI systems fail in production](../../docs/part-3-production/production-failures.md) | 9 | **8 composed, 1 raster** (`05-cost`); hero removed (§2) — EN migrated 2026-07-27, RU/SK still on rasters until the labels are translated |
+| `production-failures` | [Why AI systems fail in production](../../docs/part-3-production/production-failures.md) | 9 | **8 composed, 1 raster** (`05-cost`); hero removed (§2) — **all three locales migrated 2026-07-27** (EN, then RU + SK with translated labels) |
 
 **`05-cost` is this set's one use of the escape hatch, and it is declared rather than tolerated** (§1). Its
 argument needs quantity-by-repetition, magnitude-by-size and a curved connector crossing a divider; none is
@@ -182,9 +193,13 @@ composed lexicon — `coins` appears on no composed card in this set — so the 
 `create-infographic` §1a warns about is **not** exercised here. Any *future* rasterised card must pass the
 canon SVGs in as `--ref` images, per that section.
 
-The nine `.webp` cards are **still in git and unreferenced by EN** — deliberately, until the owner confirms
-the migrated page. Deleting the eight that composed cards replaced is one follow-up commit, and it cannot
-happen before the RU and SK pages are migrated too, because those still embed them.
+The nine `.webp` cards are **still in git**. With RU and SK migrated too, **six of the eight that composed
+cards replaced are now referenced by nothing** — `01-corpus`, `03-eval-sets`, `04-green-not-correct`,
+`07-releases`, `08-gates`, `09-four-missed` — plus the unused `hero.webp` (§2). The remaining two,
+`02-retrieval` and `06-drift`, are still embedded by `docs/part-3-production/css-card-pilot.md`, the
+unlisted comparison page whose own header says to delete it "once the approach is decided". The approach
+*is* decided, so the follow-up is one commit with an ordering: **retire the pilot page first, then the
+eight rasters**. `05-cost` stays, in all three locales.
 
 ---
 

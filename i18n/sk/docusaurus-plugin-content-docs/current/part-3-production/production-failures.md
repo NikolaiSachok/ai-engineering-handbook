@@ -19,11 +19,25 @@ Týchto osem spôsobov zlyhania koluje v diskusiách o AI v produkcii; ich uspor
 
 ## 1 · Korpus je produkt
 
-<Infographic
-  src="/img/infographics/production-failures/01-corpus.webp"
-  alt="V dráhe dema idú čisté dokumenty rovnakého formátu priamo do indexu a jeden z nich vypadáva s označením, že sa zahodil bez ohlásenia; v produkčnej dráhe prechádzajú rôzne zdroje delením, ktoré berie do úvahy rozloženie strany, až do manifestu ingestionu"
-  caption="Produkčný ingestion hlási, čo prijal, čo zahodil a čo vôbec nezachytil."
-/>
+<InfoCard
+  title="Korpus je produkt"
+  caption="Produkčný ingestion hlási, čo prijal, čo zahodil a čo vôbec nezachytil.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="documentStack" label="čisté jednotné dokumenty" />
+    <Flow kind="fail" />
+    <Branch>
+      <Node icon="database" badge="tick" label="index" />
+      <Node icon="document" badge="cross" label="potichu zahodené" />
+    </Branch>
+  </Lane>
+  <Lane kind="production" label="PRODUKCIA">
+    <Node icon="mixedSources" label="rôzne zdroje" />
+    <Flow />
+    <Node icon="chunkedPage" label="chunking podľa rozloženia" />
+    <Flow />
+    <Node icon="clipboard" label="manifest ingestionu" />
+  </Lane>
+</InfoCard>
 
 Korpus dema je priečinok, ktorý niekto ručne zostavil. V produkcii sú dvojstĺpcové PDF, tabuľky, ktorých význam drží hlavičkový riadok, stránky wiki spolovice prenesené z nástroja, ktorý už neexistuje, a skeny. Bežná rada — validuj schémy pri ingestione (príjme obsahu do indexu) — je správna pri záznamoch, no pri dokumentoch míňa cieľ: chybne sformované pole odpoveď RAG pokazí málokedy. Pokazí ju štruktúra. Tabuľka sploštená na súvislý text, pätička prilepená ku každému chunku (kúsku) a nadovšetko hranica chunku, ktorá oddelí fakt od podmienky, za ktorej platí. „Sadzby vzrástli o 4%“ nie je nesprávne, kým to neodrežeš od „iba v pilotnom projekte z roku 2019“.
 
@@ -31,11 +45,25 @@ Horšie je, že prísny validátor pracuje potichu. Dokumenty, ktoré nezodpoved
 
 ## 2 · Vyhľadávanie musí mať možnosť povedať nie
 
-<Infographic
-  src="/img/infographics/production-failures/02-retrieval.webp"
-  alt="Pipeline dema, ktorá vždy vráti top-K, oproti produkčnej pipeline, kde prah skóre po rerankingu dovolí aj prázdny výsledok"
-  caption="Prah relevantnosti uplatnený po rerankingu a generátor, ktorý smie odpovedať, že nemá kontext."
-/>
+<InfoCard
+  title="Vyhľadávanie smie povedať nie"
+  caption="Prah relevantnosti uplatnený po rerankingu a generátor, ktorý smie odpovedať, že nemá kontext.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="retrieval" label="top-K, vždy" />
+    <Flow kind="fail" />
+    <Node icon="speechBubble" badge="bang" label="sebavedomo nesprávna odpoveď" />
+  </Lane>
+  <Lane kind="production" label="PRODUKCIA">
+    <Node icon="sortedList" label="reranking" />
+    <Flow />
+    <Node icon="gauge" label="prah skóre" />
+    <Flow />
+    <Branch>
+      <Node icon="speechBubble" badge="tick" label="odpoveď s oporou" />
+      <Node icon="speechBubbleEmpty" badge="tick" label="alebo „bez kontextu“" />
+    </Branch>
+  </Lane>
+</InfoCard>
 
 Toto je zlyhanie, ktoré tímy stojí najviac času, pretože systém vyzerá zdravo od začiatku do konca. Nič neohlási chybu. Služba vráti stav 200. Jednoducho prídu nesprávne chunky a model urobí to, na čo bol postavený — z toho, čo dostal, napíše plynulú odpoveď.
 
@@ -47,11 +75,23 @@ Ten posledný krok funguje iba vtedy, keď je generátor postavený tak, že smi
 
 ## 3 · Jedna evaluačná sada nestačí
 
-<Infographic
-  src="/img/infographics/production-failures/03-eval-sets.webp"
-  alt="V dráhe dema vedie testovacia sada z prvého dňa k zelenému panelu s označením falošnej istoty; v produkčnej dráhe skladajú zmrazená sada a živá vzorka spolu jeden poctivý prehľad skóre"
-  caption="Dve sady, dve rôzne otázky: „pokazil som niečo, čo fungovalo?“ a „zodpovedá moja evaluácia ešte realite?“"
-/>
+<InfoCard
+  title="Dve evaluačné sady, nie jedna"
+  caption="Každá odpovedá na inú otázku: „pokazil som niečo, čo fungovalo?“ a „zodpovedá moja evaluácia ešte realite?“">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="clipboard" label="sada prvého týždňa" />
+    <Flow kind="fail" />
+    <Node icon="dashboard" badge="bang" label="falošná istota" />
+  </Lane>
+  <Lane kind="production" label="PRODUKCIA">
+    <Merge>
+      <Node icon="clipboard" badge="padlock" label="zmrazená sada" />
+      <Node icon="speechBubbleGroup" label="živá vzorka" />
+    </Merge>
+    <Flow />
+    <Node icon="scales" label="poctivý prehľad skóre" />
+  </Lane>
+</InfoCard>
 
 Testovacie prípady napísané v prvom týždni opisujú, ako si tím predstavoval, že sa ľudia budú pýtať. Šesť mesiacov reálnej premávky opisuje, ako sa pýtajú naozaj — a v tej medzere začína zelený panel klamať. Bežné odporúčanie žiada vzorkovať živú premávku každý týždeň a používať ju ako benchmark (meradlo, voči ktorému sa porovnávaš). Tu je naša prvá nezhoda: *nahradiť* stálu sadu znamená vymeniť jedno slepé miesto za druhé. Benchmark, ktorý sa mení každý týždeň, ti nepovie, či zmena z tohto týždňa pokazila niečo, čo minulý týždeň fungovalo; presne na to je zmrazená sada.
 
@@ -59,11 +99,22 @@ Ponechaj si obe. **Zmrazená regresná sada** odpovedá na otázku „pokazil so
 
 ## 4 · Zelená ešte neznamená správne
 
-<Infographic
-  src="/img/infographics/production-failures/04-green-not-correct.webp"
-  alt="Zdravý monitorovací panel vedľa nesprávnej odpovede, doplnený o trace (záznam celej cesty požiadavky) a o sudcu (LLM-as-a-judge) nad vzorkou premávky"
-  caption="Dostupnosť je vlastnosť služby. Správnosť je vlastnosť odpovede."
-/>
+<InfoCard
+  title="Zelená ešte neznamená správne"
+  caption="Dostupnosť je vlastnosť služby. Správnosť je vlastnosť odpovede.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="cloud" badge="tick" label="200 OK" />
+    <Flow kind="fail" />
+    <Node icon="speechBubble" badge="bang" label="nesprávna odpoveď" />
+  </Lane>
+  <Lane kind="production" label="PRODUKCIA">
+    <Node icon="traceSpans" label="trace požiadavky" />
+    <Flow />
+    <Node icon="scales" label="sudca nad vzorkou" />
+    <Flow />
+    <Node icon="gauge" badge="tick" label="alert na kvalitu" />
+  </Lane>
+</InfoCard>
 
 Každý bežný signál môže byť zdravý, kým systém odpovedá nesprávne. Latencia je v poriadku, miera chýb nulová, beží aj samotná nasadzovacia jednotka v Kubernetes (pod) — a odpovede sú sebavedomo nesprávne, pretože obyčajný monitor nemá názor na *obsah* odpovede so stavom 200. Dostupnosť je vlastnosť služby, správnosť je vlastnosť odpovede, a z prvej druhú neodvodíš.
 
@@ -94,11 +145,24 @@ the cheaper model wins only when:
 
 ## 6 · Pred pretrénovaním preindexuj
 
-<Infographic
-  src="/img/infographics/production-failures/06-drift.webp"
-  alt="Dráha dema vedie priamo od zisteného driftu k pretrénovaniu modelu; produkčná dráha prechádza preindexovaním, zložením vyhľadávania a promptom, až potom dorazí k zosivenej nálepke s nápisom „váhy nakoniec“"
-  caption="Tri drifty, jeden rebrík — a váhy sú jeho poslednou priečkou, nie prvou."
-/>
+<InfoCard
+  title="Pretrénuj až nakoniec"
+  caption="Drift zvyčajne sídli v korpuse alebo v dopytoch, nie vo váhach.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="driftCurves" label="zistený drift" />
+    <Flow kind="fail" />
+    <Node icon="chip" badge="refresh" label="pretrénuj model" />
+  </Lane>
+  <Lane kind="production" label="PRODUKCIA">
+    <Node icon="database" badge="refresh" label="preindexuj" rank="1" />
+    <Flow />
+    <Node icon="sliders" label="zloženie retrievalu" rank="2" />
+    <Flow />
+    <Node icon="codeFile" label="prompt" rank="3" />
+    <Flow />
+    <Node icon="chip" label="váhy nakoniec" rank="last" />
+  </Lane>
+</InfoCard>
 
 Kvalita sa kazí aj bez nasadenia. Používatelia prinesú novú slovnú zásobu, dokumenty pod systémom sa zmenia a hostovaný model, ktorý si nepripol, sa pohne pod tebou. Toto je tretia nezhoda a najostrejšia: bežný reflex — zapojiť prahy driftu (posunu) tak, aby spúšťali **pretrénovanie** — je odpoveď z MLOps prenesená do systému, ktorého váhy takmer nikdy nie sú tým problémom.
 
@@ -106,11 +170,24 @@ Vo vyhľadávacom systéme drift zvyčajne pochádza z korpusu alebo z dopytov, 
 
 ## 7 · Prompt a korpus sú vydania
 
-<Infographic
-  src="/img/infographics/production-failures/07-releases.webp"
-  alt="Verziovaný prompt, pripnutý model a snímka korpusu prechádzajú cez canary release (kanárikové nasadenie) s pripravenou cestou rollbacku"
-  caption="Všetko, čo mení správanie, potrebuje verziu a cestu späť."
-/>
+<InfoCard
+  title="Prompt a korpus sú vydania"
+  caption="Všetko, čo mení správanie, potrebuje verziu a cestu späť.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="codeFile" label="prompt v kóde" />
+    <Flow kind="fail" />
+    <Node icon="cloud" badge="bang" label="každá úprava je nasadenie" />
+  </Lane>
+  <Lane kind="production" label="PRODUKCIA">
+    <Merge>
+      <Node icon="document" badge="tag" label="verziovaný prompt" />
+      <Node icon="chip" badge="tag" label="pripnutý model" />
+      <Node icon="database" badge="tag" label="snímka korpusu" />
+    </Merge>
+    <Flow />
+    <Node icon="branchSplit" label="canary, rollback" />
+  </Lane>
+</InfoCard>
 
 Kým prompt sedí priamo v aplikačnom kóde, úprava jednej vety je nasadenie — a tak aj oprava formulácie nesie riziko nasadenia a nikto si ju netrúfne považovať za malú zmenu, ktorou v skutočnosti je. Presuň prompty do **konfigurácie vo verziovacom systéme** a daj im vlastné brány kvality. Prompty sa tým začnú dať porovnávať diffom a vracať späť, namiesto toho, aby si pri každej zmene len dúfal.
 
@@ -118,11 +195,22 @@ Potom uplatni ten istý štandard na všetko ostatné, čo mení správanie bez 
 
 ## 8 · Pipeline potrebuje brány medzi krokmi
 
-<Infographic
-  src="/img/infographics/production-failures/08-gates.webp"
-  alt="Dráha bez kontrol, v ktorej sa prvá chyba šíri ďalej, oproti viackrokovej pipeline s validačnými bránami medzi etapami — schéma, citácie, sudca — zoradenými tak, že najlacnejšia kontrola ide prvá"
-  caption="Každá etapa odmietne chybný vstup a najlacnejšia kontrola beží prvá."
-/>
+<InfoCard
+  title="Najlacnejšia kontrola prvá"
+  caption="Každá etapa odmietne chybný vstup a najlacnejšia kontrola beží prvá.">
+  <Lane kind="demo" label="DEMO">
+    <Node icon="chainSteps" label="bez kontrol" />
+    <Flow kind="fail" />
+    <Node icon="document" badge="crack" label="prvá chyba sa šíri" />
+  </Lane>
+  <Lane kind="production" label="PRODUKCIA">
+    <Node icon="gate" label="schéma" rank="1" />
+    <Flow />
+    <Node icon="gate" label="citácie" rank="2" />
+    <Flow />
+    <Node icon="gate" label="sudca" rank="last" />
+  </Lane>
+</InfoCard>
 
 Vo viackrokovej pipeline sa prvý chybný výstup stane dôveryhodným vstupom ďalšieho kroku. Zlyhanie vyhľadávania sa zmení na sebavedomý súhrn, súhrn na rozhodnutie — a kým si niekto všimne, že je niečo v neporiadku, pôvodná chyba leží o niekoľko transformácií dozadu. Odpoveďou je validácia medzi krokmi a každá etapa má byť postavená tak, aby chybný vstup odmietla, nie aby s ním urobila, čo sa dá: etapa, ktorá nikdy neodmietne, robí z chyby dôveryhodný výsledok.
 
@@ -130,11 +218,16 @@ Doplniť sa oplatí ešte jedno: poradie. Brány nie sú rovnako drahé. Kontrol
 
 ## 9 · Štyri zlyhania, ktoré v zoznamoch zvyčajne chýbajú
 
-<Infographic
-  src="/img/infographics/production-failures/09-four-missed.webp"
-  alt="Štyri polia: neobmedzený prístup, otrávené dokumenty, testovanie v jedinom jazyku a nespoľahlivé nástroje"
-  caption="Štyri zlyhania, ktoré bežné zoznamy vynechávajú — a pri poslednom zlyhá nástroj skôr než model."
-/>
+<InfoCard
+  title="Štyri prehliadané zlyhania"
+  caption="Štyri zlyhania, ktoré bežné zoznamy vynechávajú — a pri poslednom zlyhá nástroj skôr než model.">
+  <Grid tone="fail">
+    <Node icon="lockOpen" label="neobmedzený prístup" />
+    <Node icon="document" label="otrávené dokumenty" />
+    <Node icon="globe" label="jediný jazyk" />
+    <Node icon="plug" label="nespoľahlivé nástroje" />
+  </Grid>
+</InfoCard>
 
 Ešte štyri, a každé z nich už raz vyradilo produkčný systém, kým sa všetci pozerali na predchádzajúcich osem.
 

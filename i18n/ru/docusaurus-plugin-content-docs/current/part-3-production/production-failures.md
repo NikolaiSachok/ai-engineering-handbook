@@ -30,11 +30,25 @@ sidebar_position: 0
 
 ## 1 · Корпус — это и есть продукт
 
-<Infographic
-  src="/img/infographics/production-failures/01-corpus.webp"
-  alt="Верхний блок с меткой DEMO (демо): чистые однородные документы, clean uniform docs, идут прямо в индекс (index), а один документ выпадает с пометкой silently dropped — отброшен незаметно. Нижний блок с меткой PRODUCTION (прод): смешанные источники, mixed sources, проходят layout-aware chunking — чанкинг с учётом вёрстки — и попадают в ingestion manifest, манифест загрузки"
-  caption="Загрузка в проде отчитывается: что взяла, что отбросила и чего вообще не увидела."
-/>
+<InfoCard
+  title="Корпус — это и есть продукт"
+  caption="Загрузка в проде отчитывается: что взяла, что отбросила и чего вообще не увидела.">
+  <Lane kind="demo" label="ДЕМО">
+    <Node icon="documentStack" label="чистые однородные документы" />
+    <Flow kind="fail" />
+    <Branch>
+      <Node icon="database" badge="tick" label="индекс" />
+      <Node icon="document" badge="cross" label="отброшен незаметно" />
+    </Branch>
+  </Lane>
+  <Lane kind="production" label="ПРОД">
+    <Node icon="mixedSources" label="смешанные источники" />
+    <Flow />
+    <Node icon="chunkedPage" label="чанкинг с учётом вёрстки" />
+    <Flow />
+    <Node icon="clipboard" label="манифест загрузки" />
+  </Lane>
+</InfoCard>
 
 Корпус для демо — папка, которую кто-то собрал вручную. В проде это PDF с двухколоночной вёрсткой, таблицы,
 где смысл живёт в строке заголовков, вики-страницы, наполовину переехавшие из инструмента, которым больше
@@ -54,11 +68,25 @@ sidebar_position: 0
 
 ## 2 · Поиску нужно право сказать «нет»
 
-<Infographic
-  src="/img/infographics/production-failures/02-retrieval.webp"
-  alt="Блок с меткой DEMO (демо): поиск всегда отдаёт top-k, always — top-K при любом запросе, и получается confident wrong answer, уверенный неверный ответ. Блок с меткой PRODUCTION (прод): после rerank (реранкинга) стоит score floor — порог по score, и дальше либо grounded answer, ответ с опорой на найденный контекст, либо честное or «no context» — контекста нет"
-  caption="Порог релевантности стоит после реранкинга, а генератору разрешено ответить: контекста нет."
-/>
+<InfoCard
+  title="Поиску разрешено отказать"
+  caption="Порог релевантности стоит после реранкинга, а генератору разрешено ответить: контекста нет.">
+  <Lane kind="demo" label="ДЕМО">
+    <Node icon="retrieval" label="top-K, всегда" />
+    <Flow kind="fail" />
+    <Node icon="speechBubble" badge="bang" label="уверенный неверный ответ" />
+  </Lane>
+  <Lane kind="production" label="ПРОД">
+    <Node icon="sortedList" label="реранк" />
+    <Flow />
+    <Node icon="gauge" label="порог по score" />
+    <Flow />
+    <Branch>
+      <Node icon="speechBubble" badge="tick" label="ответ с опорой" />
+      <Node icon="speechBubbleEmpty" badge="tick" label="«контекста нет»" />
+    </Branch>
+  </Lane>
+</InfoCard>
 
 На этот провал команды тратят больше всего времени, потому что система на всём пути выглядит здоровой. Ничего
 не падает. Сервис отвечает 200. Просто приходят не те чанки, а модель делает то, для чего её и позвали: пишет
@@ -83,11 +111,23 @@ score не откалиброваны по сопоставимой шкале, 
 
 ## 3 · Одного eval-набора мало
 
-<Infographic
-  src="/img/infographics/production-failures/03-eval-sets.webp"
-  alt="Блок с меткой DEMO (демо): day-one test set — тестовый набор первого дня — ведёт к зелёному дашборду с подписью false confidence, ложная уверенность. Блок с меткой PRODUCTION (прод): frozen set (замороженный набор) и live sample (выборка живого трафика) вместе питают honest scoreboard — честную сводку качества"
-  caption="Два набора — два разных вопроса: не сломал ли я то, что работало, и похожа ли моя оценка на реальность."
-/>
+<InfoCard
+  title="Два eval-набора, не один"
+  caption="Каждый отвечает на свой вопрос: не сломал ли я то, что работало, и похожа ли моя оценка на реальность.">
+  <Lane kind="demo" label="ДЕМО">
+    <Node icon="clipboard" label="eval-набор первой недели" />
+    <Flow kind="fail" />
+    <Node icon="dashboard" badge="bang" label="дашборд лжёт" />
+  </Lane>
+  <Lane kind="production" label="ПРОД">
+    <Merge>
+      <Node icon="clipboard" badge="padlock" label="набор заморожен" />
+      <Node icon="speechBubbleGroup" label="выборка трафика" />
+    </Merge>
+    <Flow />
+    <Node icon="scales" label="честная сводка качества" />
+  </Lane>
+</InfoCard>
 
 Тестовые примеры, написанные на первой неделе, описывают, как команда вообразила будущие вопросы. Полгода
 живого трафика описывают, как спрашивают на самом деле, и в этом разрыве зелёный дашборд начинает лгать.
@@ -105,11 +145,22 @@ score не откалиброваны по сопоставимой шкале, 
 
 ## 4 · Зелёный дашборд — это ещё не верный ответ
 
-<Infographic
-  src="/img/infographics/production-failures/04-green-not-correct.webp"
-  alt="Здоровый дашборд рядом с неверным ответом, wrong answer, при коде ответа 200 OK; в блоке с меткой PRODUCTION (прод) добавлены pipeline trace — трейс всего пути запроса, judge on sample — судья на выборке — и quality alert, алерт по качеству"
-  caption="Доступность — свойство сервиса. Правильность — свойство ответа."
-/>
+<InfoCard
+  title="Зелёный — ещё не верный"
+  caption="Доступность — свойство сервиса. Правильность — свойство ответа.">
+  <Lane kind="demo" label="ДЕМО">
+    <Node icon="cloud" badge="tick" label="200 OK" />
+    <Flow kind="fail" />
+    <Node icon="speechBubble" badge="bang" label="неверный ответ" />
+  </Lane>
+  <Lane kind="production" label="ПРОД">
+    <Node icon="traceSpans" label="трейс запроса" />
+    <Flow />
+    <Node icon="scales" label="судья на выборке" />
+    <Flow />
+    <Node icon="gauge" badge="tick" label="алерт по качеству" />
+  </Lane>
+</InfoCard>
 
 Все привычные сигналы могут быть зелёными, пока система отвечает неверно. Латентность в норме, доля ошибок
 нулевая, сам под (pod) жив — а ответы уверенно неправильные: обычному монитору нечего сказать о *содержимом*
@@ -165,11 +216,24 @@ the cheaper model wins only when:
 
 ## 6 · Сначала переиндексируй, потом переобучай
 
-<Infographic
-  src="/img/infographics/production-failures/06-drift.webp"
-  alt="Блок с меткой DEMO (демо): drift detected — дрейф обнаружен — сразу ведёт к retrain the model, переобучению модели. Блок с меткой PRODUCTION (прод): путь идёт по ступеням re-index (переиндексация), retrieval mix (сочетание методов поиска) и prompt (промпт) и только потом доходит до пригашенного значка микросхемы с подписью weights last — веса в последнюю очередь"
-  caption="Три вида дрейфа, одна лестница — и веса на последней её ступени, а не на первой."
-/>
+<InfoCard
+  title="Переобучай в последнюю очередь"
+  caption="Дрейф обычно приходит от корпуса или от запросов, а не от весов.">
+  <Lane kind="demo" label="ДЕМО">
+    <Node icon="driftCurves" label="дрейф обнаружен" />
+    <Flow kind="fail" />
+    <Node icon="chip" badge="refresh" label="обучить заново" />
+  </Lane>
+  <Lane kind="production" label="ПРОД">
+    <Node icon="database" badge="refresh" label="индексация заново" rank="1" />
+    <Flow />
+    <Node icon="sliders" label="сочетание методов поиска" rank="2" />
+    <Flow />
+    <Node icon="codeFile" label="промпт" rank="3" />
+    <Flow />
+    <Node icon="chip" label="веса последними" rank="last" />
+  </Lane>
+</InfoCard>
 
 Качество проседает без всякого деплоя. Пользователи приносят новую лексику, документы в корпусе меняются, а
 размещённую у провайдера модель, версию которой ты не зафиксировал, подменят незаметно для тебя. Это третье
@@ -185,11 +249,24 @@ the cheaper model wins only when:
 
 ## 7 · Промпт и корпус — тоже релизы
 
-<Infographic
-  src="/img/infographics/production-failures/07-releases.webp"
-  alt="prompt in code — промпт внутри кода, где every edit ships, каждая правка едет в прод; ниже prompt config (промпт в конфигурации), pinned model (зафиксированная версия модели) и corpus snapshot (снимок корпуса) проходят canary, rollback — канареечный релиз с путём отката"
-  caption="Всему, что меняет поведение системы, нужны версия и путь назад."
-/>
+<InfoCard
+  title="Промпт и корпус — релизы"
+  caption="Всему, что меняет поведение системы, нужны версия и путь назад.">
+  <Lane kind="demo" label="ДЕМО">
+    <Node icon="codeFile" label="промпт в коде" />
+    <Flow kind="fail" />
+    <Node icon="cloud" badge="bang" label="правка едет в прод" />
+  </Lane>
+  <Lane kind="production" label="ПРОД">
+    <Merge>
+      <Node icon="document" badge="tag" label="промпт-конфиг" />
+      <Node icon="chip" badge="tag" label="версия модели" />
+      <Node icon="database" badge="tag" label="снимок корпуса" />
+    </Merge>
+    <Flow />
+    <Node icon="branchSplit" label="раскатка, откат" />
+  </Lane>
+</InfoCard>
 
 Когда промпт живёт внутри кода приложения, правка одного предложения — это деплой: у текстовой правки
 появляется риск полноценного развёртывания, и трогать её уже никто не хочет, хотя по сути там одно слово.
@@ -205,11 +282,22 @@ the cheaper model wins only when:
 
 ## 8 · Каждый шаг конвейера обязан отклонять плохой вход
 
-<Infographic
-  src="/img/infographics/production-failures/08-gates.webp"
-  alt="Блок с меткой DEMO (демо): цепочка шагов с подписью no checks — без проверок — ведёт к разорванному документу, first error spreads, первая ошибка расходится дальше. Блок с меткой PRODUCTION (прод): три воронки с подписями schema (схема), citations (цитаты) и judge (судья) стоят по возрастанию цены, cheapest first — сначала самая дешёвая"
-  caption="Каждый этап отклоняет плохой вход, а самая дешёвая проверка идёт первой."
-/>
+<InfoCard
+  title="Сначала самая дешёвая проверка"
+  caption="Каждый этап отклоняет плохой вход, а самая дешёвая проверка идёт первой.">
+  <Lane kind="demo" label="ДЕМО">
+    <Node icon="chainSteps" label="без проверок" />
+    <Flow kind="fail" />
+    <Node icon="document" badge="crack" label="первая ошибка расходится" />
+  </Lane>
+  <Lane kind="production" label="ПРОД">
+    <Node icon="gate" label="схема" rank="1" />
+    <Flow />
+    <Node icon="gate" label="цитаты" rank="2" />
+    <Flow />
+    <Node icon="gate" label="судья" rank="last" />
+  </Lane>
+</InfoCard>
 
 В многошаговом конвейере первый плохой выход становится доверенным входом следующего шага. Промах поиска
 превращается в уверенное резюме, резюме — в решение, и к тому моменту, когда что-то выглядит не так, исходная
@@ -226,11 +314,16 @@ the cheaper model wins only when:
 
 ## 9 · Четыре провала, которые редко попадают в списки
 
-<Infographic
-  src="/img/infographics/production-failures/09-four-missed.webp"
-  alt="Четыре сектора: unscoped access — доступ без ограничений, poisoned documents — отравленные документы, one language only — проверка только на одном языке, flaky tools — нестабильные инструменты"
-  caption="Четыре провала, которые стандартные списки пропускают, — а в последнем инструменты отваливаются раньше модели."
-/>
+<InfoCard
+  title="Четыре провала вне списков"
+  caption="Четыре провала, которые стандартные списки пропускают, — а в последнем инструменты отваливаются раньше модели.">
+  <Grid tone="fail">
+    <Node icon="lockOpen" label="доступ без ограничений" />
+    <Node icon="document" label="отравленные документы" />
+    <Node icon="globe" label="только один язык" />
+    <Node icon="plug" label="нестабильные инструменты" />
+  </Grid>
+</InfoCard>
 
 Ещё четыре, и каждый уже ронял прод-систему, пока все смотрели на восемь предыдущих.
 
