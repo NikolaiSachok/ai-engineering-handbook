@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <g stroke="none">
+    <path d="M25 5h10l9 9v10a3 3 0 0 1 -3 3h-16a3 3 0 0 1 -3 -3v-16a3 3 0 0 1 3 -3z" fill="var(--ic-tint, #93c5fd)" />
+    <!-- The back sheet's cells are FOUR SOLID BLOCKS, not an outlined grid. An enclosing box the size
+         this page can hold ends up within a stroke-width of the page's own outline, and a blind reader
+         duly read the table as "an unclipped shape that escaped its container". Solid blocks need no
+         interior, so they stay legible in a third of the space. -->
+    <path d="M28 16.5h5.5v3.5h-5.5z" fill="var(--ic-fill, #3b82f6)" />
+    <path d="M35.5 16.5h5.5v3.5h-5.5z" fill="var(--ic-fill, #3b82f6)" />
+    <path d="M28 21.5h5.5v3.5h-5.5z" fill="var(--ic-fill, #3b82f6)" />
+    <path d="M35.5 21.5h5.5v3.5h-5.5z" fill="var(--ic-fill, #3b82f6)" />
+    <path d="M7 21h10l9 9v10a3 3 0 0 1 -3 3h-16a3 3 0 0 1 -3 -3v-16a3 3 0 0 1 3 -3z" fill="var(--ic-fill, #3b82f6)" />
+  </g>
+  <path d="M35 5v6a3 3 0 0 0 3 3h6" />
+  <path d="M25 5h10l9 9v10a3 3 0 0 1 -3 3h-16a3 3 0 0 1 -3 -3v-16a3 3 0 0 1 3 -3z" />
+  <path d="M17 21v6a3 3 0 0 0 3 3h6" />
+  <path d="M7 21h10l9 9v10a3 3 0 0 1 -3 3h-16a3 3 0 0 1 -3 -3v-16a3 3 0 0 1 3 -3z" />
+  <path d="M8 34h12" />
+  <path d="M8 39h12" />
+</svg>

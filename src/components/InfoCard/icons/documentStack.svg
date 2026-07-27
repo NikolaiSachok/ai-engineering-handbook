@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="scale(2)" stroke-width="1.5">
+    <g stroke="none" fill="var(--ic-tint, #93c5fd)">
+      <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2" />
+      <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+    </g>
+    <g stroke="none" fill="var(--ic-fill, #3b82f6)">
+      <!-- CLOSED explicitly along the edge the back sheet hides (`v10z`). The stroke below keeps the
+           open path, which is right for a line that stops where the occlusion starts — but filling an
+           open path closes it with a straight chord, and here that chord ran corner to corner, so half
+           the front sheet was painted the back sheet's tint. A blind reader read the result as "the
+           back sheet bleeding through the front one — a z-order bug", which is what it looked like.
+           A fill path must be closed on purpose; never rely on the implicit close. -->
+      <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2v10z" />
+    </g>
+    <path d="M15 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2" />
+    <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+  </g>
+</svg>

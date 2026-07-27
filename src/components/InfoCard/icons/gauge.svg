@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 35a18 18 0 0 1 36 0z" fill="var(--ic-tint, #93c5fd)" stroke="none" />
+  <path d="M6 35a18 18 0 0 1 36 0" />
+  <path d="M6 35h36" />
+  <!-- The threshold, drawn as a BAND ON THE RIM rather than a radial notch. Two blind readers in a
+       row called the notch "a detached blue rod… the dial appears to have two needles", and at 40px
+       one read it as a sparkle. A mark concentric with the arc cannot be mistaken for a pointer: it
+       is the tachometer red-line convention, which is also what a score floor actually is. -->
+  <path d="M34.3 20.3A18 18 0 0 1 39.6 26" stroke="var(--ic-fill, #3b82f6)" />
+  <path d="M24 33.5l-7.5-10" />
+  <!-- A half-disc hub sitting on the base rail's TOP edge, not on its centre line. A full circle centred on the
+       rail bulges below it and the dial reads as knocked off its axis; a half-disc whose flat edge sits on
+       the rail's mid-line is half-buried in it, which a blind reader described exactly. -->
+  <path d="M19.5 33.5a4.5 4.5 0 0 1 9 0z" fill="var(--ic-fill, #3b82f6)" stroke="none" />
+  <path d="M19.5 33.5a4.5 4.5 0 0 1 9 0" />
+</svg>

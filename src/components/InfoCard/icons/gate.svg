@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <g stroke="none">
+    <rect x="3" y="37" width="17" height="8" rx="2.5" fill="var(--ic-tint, #93c5fd)" />
+    <rect x="13" y="9" width="32" height="11" rx="3" fill="var(--ic-tint, #93c5fd)" />
+  </g>
+  <rect x="3" y="37" width="17" height="8" rx="2.5" />
+  <path d="M11.5 37V17" />
+  <rect x="13" y="9" width="32" height="11" rx="3" />
+  <path
+    d="M21 18.5l5.5-8M30 18.5l5.5-8M39 18.5l4.5-6.5"
+    stroke="var(--ic-fill, #3b82f6)"
+    stroke-linecap="butt"
+  />
+  <circle cx="11.5" cy="14.5" r="3.5" fill="var(--ic-fill, #3b82f6)" stroke="none" />
+  <circle cx="11.5" cy="14.5" r="3.5" />
+</svg>
