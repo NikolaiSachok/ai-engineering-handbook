@@ -72,7 +72,7 @@ enumerate is a defect. The mechanics — parsing, layout, chunking strategies, m
   title="Retrieval must be allowed to refuse"
   caption="A relevance floor applied after reranking, and a generator allowed to answer 'no context'.">
   <Lane kind="demo" label="DEMO">
-    <Node icon="retrieval" label="top-k, always" />
+    <Node icon="retrieval" label="top-K, always" />
     <Flow kind="fail" />
     <Node icon="speechBubble" badge="bang" label="confident wrong answer" />
   </Lane>
@@ -95,7 +95,7 @@ to do — write a fluent answer from whatever it was given.
 Grading retrieval separately from generation is the diagnostic half, and Part I makes that case: without the
 split you cannot tell a retrieval miss from a model that ignored good context, and you will spend a fortnight
 tuning a prompt to fix an indexing bug. But the *production* half is a refusal path, and it is the piece most
-demos have no concept of. A demo returns **top-k, always** — top-k is a slice, not a judgement, and a
+demos have no concept of. A demo returns **top-K, always** — top-K is a slice, not a judgement, and a
 similarity ranking will hand back its best five candidates whether or not any of them is about your question.
 So put a **score floor** after the stage whose scores mean something. Fused hybrid scores — dense and lexical
 rankings combined — are not calibrated on a comparable scale, so a threshold on a fusion score is
@@ -115,7 +115,7 @@ floor possible. The demo answers everything. The production system is allowed to
   title="Two eval sets, not one"
   caption="Each answers a different question: did I break what worked, and does my eval still resemble reality?">
   <Lane kind="demo" label="DEMO">
-    <Node icon="clipboard" label="week-one test set" />
+    <Node icon="clipboard" label="week-one set" />
     <Flow kind="fail" />
     <Node icon="dashboard" badge="bang" label="false confidence" />
   </Lane>

@@ -115,7 +115,7 @@ score не откалиброваны по сопоставимой шкале, 
   title="Два eval-набора, не один"
   caption="Каждый отвечает на свой вопрос: не сломал ли я то, что работало, и похожа ли моя оценка на реальность.">
   <Lane kind="demo" label="ДЕМО">
-    <Node icon="clipboard" label="eval-набор первой недели" />
+    <Node icon="clipboard" label="набор первой недели" />
     <Flow kind="fail" />
     <Node icon="dashboard" badge="bang" label="дашборд лжёт" />
   </Lane>

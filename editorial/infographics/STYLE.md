@@ -69,9 +69,10 @@ the card as literal text (a real, observed failure).
   removed on 2026-07-27. Two reasons, and the second is the durable one: no other page in the handbook has a
   hero, and there is **no canon for making one** — cards have a grammar, a palette, an icon register, a
   sizing rule and a verification gate, and a hero has none of that. An unregulated one-off is how a style
-  system starts drifting. **So: no heroes until a hero guide exists.** `hero.webp` stays in git, unused,
-  and `CSS-CARDS-PLAN.md`'s "a hero is an illustration where generation genuinely wins" still holds for
-  whoever writes that guide — it is deferred, not refuted.
+  system starts drifting. **So: no heroes until a hero guide exists.** `hero.webp` was deleted with the
+  superseded rasters (§7); its prompt survives in the archive, so whoever writes that guide can regenerate
+  it, and `CSS-CARDS-PLAN.md`'s "a hero is an illustration where generation genuinely wins" still holds for
+  them — it is deferred, not refuted.
 - **No index badges.** The skill offers a numbered circle; this set omits it, because the page's numbered
   headings already carry the ordinal and a badge-less card stays reusable on a page that isn't numbered.
 - **Every card keeps its own title inside the frame, even under an `##` that says nearly the same words.**
@@ -99,7 +100,7 @@ the card as literal text (a real, observed failure).
 | ~~Hero~~ | ~~`16:9`~~ | ~~`--res 2K` PNG~~ | ~~WebP, **1600px**, `-q 82`~~ — **suspended, §2: no heroes until a hero guide exists** |
 
 ```bash
-cwebp -q 82 -resize 1400 0 raw/02-retrieval.png -o static/img/infographics/production-failures/02-retrieval.webp
+cwebp -q 82 -resize 1400 0 raw/05-cost.png -o static/img/infographics/production-failures/05-cost.webp
 ```
 
 Budget ≤ 200 KB per card; the first set runs **42–54 KB each, 500 KB for ten**. Raw PNGs never enter git —
@@ -193,13 +194,13 @@ composed lexicon — `coins` appears on no composed card in this set — so the 
 `create-infographic` §1a warns about is **not** exercised here. Any *future* rasterised card must pass the
 canon SVGs in as `--ref` images, per that section.
 
-The nine `.webp` cards are **still in git**. With RU and SK migrated too, **six of the eight that composed
-cards replaced are now referenced by nothing** — `01-corpus`, `03-eval-sets`, `04-green-not-correct`,
-`07-releases`, `08-gates`, `09-four-missed` — plus the unused `hero.webp` (§2). The remaining two,
-`02-retrieval` and `06-drift`, are still embedded by `docs/part-3-production/css-card-pilot.md`, the
-unlisted comparison page whose own header says to delete it "once the approach is decided". The approach
-*is* decided, so the follow-up is one commit with an ordering: **retire the pilot page first, then the
-eight rasters**. `05-cost` stays, in all three locales.
+**`05-cost.webp` is the only card image left in the repo.** The migration is closed: on 2026-07-27 the
+unlisted comparison page `css-card-pilot.md` was retired (its own header said to delete it once the
+approach was decided — it was), and with it the last two references to a superseded raster; the eight
+replaced cards and the unused `hero.webp` (§2) then went with it. What stays is the **prompt archive**
+(`prompts/production-failures/`), which is the provenance record and the only way to reproduce `05-cost`
+or a future hero — deleting an image is cheap when the recipe survives, and that is the rule for any set
+that migrates: **delete the rasters, never the prompts.**
 
 ---
 
@@ -229,9 +230,9 @@ the lexicon needs a new base object, not an overlay. (A magnifier is not a state
 `bang` and `crack` are claims about a component. Put one on a component that works and the card
 asserts something it does not mean.
 
-> Card 02 carried a `cross` on its `top-k, always` node and it read as *"retrieval is broken"*. The
+> Card 02 carried a `cross` on its `top-K, always` node and it read as *"retrieval is broken"*. The
 > card's claim is the opposite and sharper: **the retrieval mechanism works correctly; always
-> returning top-k is what produces the confident wrong answer.** The fault is in the policy, not the
+> returning top-K is what produces the confident wrong answer.** The fault is in the policy, not the
 > machinery. The badge came off, and nothing was lost — the red lane, the failure-hue connector and
 > the `bang` on the outcome already carry the failure, and they carry it *where it happens*.
 
@@ -460,10 +461,10 @@ They are not interchangeable, and picking by feel is how a lexicon flattens:
 - **`documentStack` is a noun.** A corpus, a set of documents, the sources — the *things*. Use it for
   an ingested collection, a chunk set, the passages handed to a generator.
 - **`retrieval` is a verb.** The search *over* those documents — the step that goes and finds them.
-  Use it for a retrieve node, a top-k step, a search call.
+  Use it for a retrieve node, a top-K step, a search call.
 
 The test: if the node could be labelled "documents" it is `documentStack`; if it could be labelled
-"find" it is `retrieval`. Card 02's `top-k, always` is a retrieval *policy*, so it is `retrieval` —
+"find" it is `retrieval`. Card 02's `top-K, always` is a retrieval *policy*, so it is `retrieval` —
 drawn with `documentStack` it said "documents", which is not what the node does.
 
 ### Residuals, recorded rather than hidden

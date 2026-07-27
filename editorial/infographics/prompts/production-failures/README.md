@@ -4,25 +4,29 @@ Ten cards for [Why AI systems fail in production](../../../docs/part-3-productio
 the opener of Part III. Light ground, `4:3` cards + one `16:9` hero, generated with Gemini Pro through the
 `create-infographic` skill.
 
-**Status: superseded on EN, 2026-07-27.** Eight of the nine cards are now **composed** markup on the English
-page (`src/components/InfoCard/`), reusing these labels verbatim; **`05-cost` still ships as this raster**, and
-the **hero was removed** (no heroes until a hero guide exists — STYLE.md §2). RU and SK still embed all nine
-rasters until their labels are translated.
+**Status: superseded and deleted, 2026-07-27 — this archive is all that survives of nine of them.** Eight of
+the nine cards are now **composed** markup (`src/components/InfoCard/`) on all three locales' pages, reusing
+these labels; the **hero was removed** (no heroes until a hero guide exists — STYLE.md §2); and once the
+pilot comparison page was retired, the nine superseded `.webp` files were deleted from the repo.
+**`05-cost.webp` is the one image still shipping** — the documented escape hatch (STYLE.md §7), embedded in
+EN, RU and SK.
 
-**Four strings have since diverged from these rasters**, under the owner rulings of 2026-07-27
-(`CSS-CARDS-PLAN.md`, final section) — so the table below is the record of what the *images* say, not of what
-the English page now says:
+So this directory is now the **only** record of those nine images. It stays for two reasons: it is how each
+card's node/edge structure and exact label strings were recovered for the port, and it is what would be
+needed to reproduce `05-cost` or, one day, the hero. **Do not delete it** — the rasters were disposable
+because the recipes are not.
+
+**Five strings have since diverged from these rasters**, under the owner rulings of 2026-07-27 and the
+label corrections that closed the migration (`CSS-CARDS-PLAN.md`, final sections) — so the table below is
+the record of what the *images* said, not of what the pages now say:
 
 | | Raster | Composed EN |
 |---|---|---|
+| 02 label | `top-k, always` | `top-K, always` (the handbook's token everywhere else; RU/SK shipped `top-K` first) |
 | 03 title | `One eval set is not enough` | `Two eval sets, not one` |
-| 03 label | `day-one test set` | `week-one test set` (the prose said "week one") |
+| 03 label | `day-one test set` | `week-one set` (the prose said "week one"; "test" says nothing its peers do not) |
 | 06 title | `Re-index before you retrain` | `Retrain last` |
 | 06 caption | "Three drifts, one ladder…" | "Drift usually lives in the corpus or the query, not in the weights." — the card only ever drew one drift |
-
-This directory stays as the provenance record: it is how each card's node/edge structure and exact label
-strings were recovered for the port, and it is what would be needed to reproduce `05-cost`. **Do not delete it
-when the `.webp` files go.**
 
 ## Archive format — the exact batch, not a retyped prompt
 
@@ -41,7 +45,18 @@ To reproduce any card, feed its item back through
 `01-corpus.webp` as its `--ref` — the style anchor for the set — except the two fixes, which anchor on
 `06-drift` and `09-four-missed` respectively (chosen for crisp icon linework).
 
+**The `ref` paths in the JSON are dead, and always were**: they point into a session scratchpad, and the
+anchor images themselves were deleted with the rest of the rasters. Reproduction is therefore two steps —
+regenerate `01-corpus` from `prompt-01-corpus.txt` first, ship it, then point the item's `--ref` at it. Only
+`05-cost.webp` is still in the repo and can serve as its own anchor. This is the honest cost of deleting
+rasters: the *prompts* are lossless, the *style anchoring* is not, so a regenerated card is a close
+relative of the original rather than the same image. Anything regenerated goes through the blind-naming and
+label-stripped gates again, exactly as a new card would.
+
 ## The cards
+
+The `File` column names what each item *produced*; only `05-cost.webp` is still in
+`static/img/infographics/production-failures/` — the other nine were deleted on 2026-07-27.
 
 | # | File | Node/edge content | Strings |
 |---|---|---|---|

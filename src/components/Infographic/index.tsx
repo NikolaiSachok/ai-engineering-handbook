@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 
 type InfographicProps = {
   /**
-   * Path under `static/`, e.g. "/img/infographics/production-failures/02-retrieval.webp".
+   * Path under `static/`, e.g. "/img/infographics/production-failures/05-cost.webp".
    * Written WITHOUT the site baseUrl — the component prepends it via `useBaseUrl`. Docusaurus
    * rewrites absolute asset paths in Markdown images, but not a `src` string handed to a
    * component, so a raw "/img/…" here 404s on a site served under a subpath.

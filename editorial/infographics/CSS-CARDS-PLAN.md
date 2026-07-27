@@ -1,10 +1,12 @@
 # Composed cards — migrating from generated rasters to CSS + an icon set
 
-**Status: MIGRATED (EN), 2026-07-27; owner rulings applied the same day.** The English `production-failures`
-page ships **eight composed cards and one raster** (`05-cost`), and no hero. The nine `.webp` files stay in
-git, unreferenced by EN, until the RU/SK pages are migrated too. The record below is chronological: the plan,
-four review rounds, the migration, and **the owner's rulings in the final section** — which is where the four
-open questions (card 05's substrate, card 09's existence, fork arrowheads, card titles) are closed.
+**Status: DONE — all three locales, 2026-07-27; owner rulings applied the same day; scaffolding removed.**
+Every `production-failures` page — EN, RU and SK — ships **eight composed cards and one raster**
+(`05-cost`), and no hero. The pilot comparison page and the nine superseded `.webp` files are deleted; the
+prompt archive stays, because it is the provenance record and the only way to reproduce `05-cost`. The
+record below is chronological: the plan, four review rounds, the migration, and **the owner's rulings in
+the final section** — which is where the four open questions (card 05's substrate, card 09's existence,
+fork arrowheads, card titles) are closed.
 
 ## Why
 
@@ -744,7 +746,11 @@ the owner's rather than the grammar's; see the owner-rulings section at the end.
 
 1. **RU and SK are visually divergent** until their labels are translated: both pages still embed all
    nine rasters and the hero is gone from all three. The label list is small and the strings are short.
+   **Resolved 2026-07-27: both locales migrated the same day, with translated labels and localised lane
+   pills (STYLE.md §2).**
 2. **The `.webp` files stay in git**, unreferenced by EN. They cannot go before the locales migrate.
+   **Resolved 2026-07-27: the locales migrated, the pilot page was retired, and the nine superseded
+   rasters were deleted. Only `05-cost.webp` and the prompt archive remain.**
 3. **`pin`'s glyph is a map pin** — the convention for *place*, not for *pinned version*. Unused in the
    set for that reason (card 07's three artefacts all take `tag`, which is both correct and a stronger
    claim). Redraw it before anything uses it. STYLE.md §8 records this.
@@ -912,7 +918,8 @@ arriving this time in hand-written text.
 another ("Test cases written in week one"). Harmonised on the card, not the prose, deliberately: the card
 label is an EN-only surface right now, so changing it leaves RU/SK untouched and the correction propagates
 naturally when the labels are translated. The raster still says "day-one", which is the locales' existing
-state and their translation pass's problem, not a new divergence.
+state and their translation pass's problem, not a new divergence. **Trimmed again the same day to
+`week-one set` — see the closing section: "test" says nothing its peers do not.**
 
 **Prose anchors: three added, two refused.** Composed labels are DOM text, so the restatement rule is no
 longer an accessibility gate — it is a coherence preference (STYLE.md §4). Added where it lands naturally:
@@ -928,8 +935,43 @@ and inserting the card's two-word labels would be vocabulary matching, not teach
 1. **RU and SK are unmigrated** and still embed all nine rasters; their card 06 caption still says
    *"Три вида дрейфа"* / three drifts, because the raster does. That is the translation pass's to fix
    together with the labels — this round deliberately did not touch `i18n/**`, since the labels it would
-   translate had to be final first.
+   translate had to be final first. **Resolved 2026-07-27 — both locales migrated the same day.**
 2. **`pin`'s glyph is a map pin.** Unchanged; redraw before anything uses it.
 3. **`branchSplit` is an icon made of arrows at the end of an arrow**, and it and `scales` are optically
    light next to the duotone icons.
 4. **An odd fan puts one leg on the trunk** (card 07). Ships, mitigated by the visible stem.
+
+---
+
+## Closed out 2026-07-27 — the scaffolding is gone and two labels were corrected
+
+The migration's last commit removes what only existed to *decide* the approach, and fixes the two labels
+the locale pass exposed.
+
+**Deleted: the pilot page and nine rasters.** `docs/part-3-production/css-card-pilot.md` was the
+raster-vs-composed comparison surface; its own header said to delete it once the approach was decided, and
+it was the last reference to `02-retrieval.webp` and `06-drift.webp`. With it gone, all eight superseded
+cards plus the unused `hero.webp` were referenced by nothing and were deleted. **`05-cost.webp` stays** (the
+escape hatch, embedded in all three locales) and so does `prompts/production-failures/` — the provenance
+record, and the only way to reproduce `05-cost` or a future hero. The rule that generalises: **delete the
+rasters, never the prompts.** An image is cheap to regenerate when the recipe survives; a recipe is not
+recoverable from an image.
+
+**`top-k, always` → `top-K, always`, EN only.** The translation pass is what surfaced it: RU and SK had both
+independently rendered the node as `top-K`, because `top-K` is the token the rest of the handbook uses — the
+glossary, three Part I lessons and the LLMOps lesson all write it that way. English was the odd one out, on
+its own card and in its own prose beneath it. The prose anchor moved with the label (`**top-K, always** —
+top-K is a slice`), and the canon's two quotations of the label in STYLE.md §8 and §12 with it. **A
+divergence invisible in one language can be visible the moment a second language has to reproduce it** —
+translation is a consistency check nobody budgets for.
+
+**`week-one test set` → `week-one set`, EN and RU.** Against its production-lane peers `frozen set` and
+`live sample`, "test" carried no information: every node on the card is a set of test cases, so the word
+distinguishes nothing and only spends label budget. RU dropped the same redundancy — `eval-набор первой
+недели` → `набор первой недели`, matching its own peers `набор заморожен` / `выборка трафика`, and saving
+the label a wrapped line. **SK needed no change**: `sada prvého týždňa` never carried the redundant element,
+because the translator had already resolved it against `zmrazená sada` / `živá vzorka`. The prose anchors
+("Test cases written in week one", «Тестовые примеры, написанные на первой неделе») already say *test*, which
+is precisely why the card need not. The rule: **a label earns its words against its peers on the same card,
+not against the concept in the abstract** — and a locale that solved it first is evidence the English was
+wrong, not that the locale drifted.
