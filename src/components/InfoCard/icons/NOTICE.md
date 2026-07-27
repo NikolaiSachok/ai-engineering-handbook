@@ -1,6 +1,6 @@
 # Icon lexicon — provenance and licence
 
-Thirty-seven assets: twenty-nine base objects and eight overlay badges. Sourcing is **hybrid** —
+Thirty-eight assets: thirty base objects and eight overlay badges. Sourcing is **hybrid** —
 generic objects are vendored from an established set, the domain metaphors no set ships are
 hand-authored. The rationale is in `editorial/infographics/CSS-CARDS-PLAN.md`; this file is the
 attribution record and the redraw instructions.
@@ -75,6 +75,7 @@ extends the set consistently:
 | `chainSteps` | linked rounded squares, links in the accent hue. **Three, not the four the plan asked for** — four squares inside 48 px at stroke 3 leaves 5 px of interior each and reads as noise |
 | `sortedList` | rows of decreasing length with a descending arrow, the top row in the accent hue: the ranked list |
 | `traceSpans` | three spans staggered left-to-right over a ticked time axis: the trace waterfall. **This icon cost three rounds of the blind gate.** As nested spans on a shared centre it read as "cascading pills… a lamp"; redrawn as dots on a line it read as "three pins… tuning knobs"; the staggered-spans version reads as "waterfall", which is the observability convention for a trace — so the *concept* was renamed from `timeline` to match what the drawing actually says |
+| `retrieval` | two offset pages **plus a magnifier over their lower-right** — the act of searching a corpus, not the corpus. `documentStack` is the noun, this is the verb (STYLE.md §12 holds the usage rule). The magnifier must read as being *in front of* the pages, and the fill-before-stroke rule forbids painting an opaque lens after the pages' outlines — so the occlusion is baked into the geometry instead: the front page's **fill path arcs around a circle of radius 12** concentric with the lens, and its outline stops short of that arc. No mask, no clip, no z-order trick; the hole is part of the path. Blind naming: *"stack of documents with a magnifier — searching files"* at reading size, *"something plus a magnifier"* at 40 px — recorded as a residual, never used unlabelled |
 | `speechBubbleEmpty` | the message bubble with **nothing inside it at all** — emptiness is the meaning, so it is drawn as an absence rather than as a symbol for absence. Two candidates went through blind naming: this one read as *"empty speech bubble… nothing is in there"*; a variant carrying `∅` read as *"blocked / banned message"*, because a circle with a diagonal bar is the universal **prohibition** sign, not the empty set. An absence beats a glyph that means absence. Pair it with a tick badge when the empty answer is the *correct* outcome |
 
 ## Badges

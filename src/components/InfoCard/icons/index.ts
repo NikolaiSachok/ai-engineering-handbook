@@ -33,6 +33,7 @@ import globe from './globe.svg';
 import lockOpen from './lockOpen.svg';
 import magnifier from './magnifier.svg';
 import plug from './plug.svg';
+import retrieval from './retrieval.svg';
 import scales from './scales.svg';
 import sliders from './sliders.svg';
 import sortedList from './sortedList.svg';
@@ -67,6 +68,7 @@ export const OBJECT_ICONS = {
   gauge,
   sliders,
   magnifier,
+  retrieval,
   sortedList,
   funnel,
   gate,
@@ -104,6 +106,8 @@ export const BADGE_TOP_RIGHT: ReadonlySet<string> = new Set([
   'traceSpans',
   'speechBubble',
   'speechBubbleEmpty',
+  // The magnifier IS the meaning here; a bottom-right badge would sit exactly on the lens.
+  'retrieval',
 ]);
 
 export type IconName = keyof typeof OBJECT_ICONS;

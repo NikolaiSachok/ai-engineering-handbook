@@ -2,10 +2,20 @@
    Palette roles come from editorial/infographics/STYLE.md §1. Unlike the generated-raster cards,
    which are a light plate in both themes because a raster icon has a baked outline, this card is
    theme-adaptive: the icons are inline SVG driven by `currentColor` plus two custom properties, so
-   ground, panels, ink and icon fills can all shift and stay legible. */
+   ground, panels, ink and icon fills can all shift and stay legible.
+
+   GEOMETRY IS PROPORTIONAL, NOT RESPONSIVE. `.card` is a container (`container-type: inline-size`)
+   and every length inside the diagram is a multiple of one unit, `--ic-u`, which is 1% of the card's
+   width. So the card scales like the raster it replaces: the same drawing at every viewport, never a
+   re-flowed one. The multipliers below are the old rem values divided by 5.6px — the 560px desktop
+   card's 1cqw — so the desktop rendering is unchanged to the pixel. STYLE.md §13 holds them as
+   "×N of the card width" rather than as pixels, because pixels are now only true at one width. */
 
 .card {
   margin: 1.75rem 0;
+  /* The query container. Everything in the diagram is sized from its inline size, so a translated
+     label, a nested column or a narrow phone all get the same drawing at a different scale. */
+  container-type: inline-size;
 }
 
 .plate {
@@ -25,21 +35,37 @@
   --ic-coin: #f0b429;
   --ic-coin-tint: #fde68a;
   --ic-badge-ink: #ffffff;
-  /* The branch's fixed row pitch. Declared here, not on .branch, because the lane needs it too:
-     the offset that puts the connector on the fork's axis is computed from it. */
-  --branch-row: 6.2rem;
-  --branch-gap: 0.55rem;
+
+  /* ---- the scale unit ----------------------------------------------------------------------
+     1% of the card's width, floored. Pure `1cqw` would lock the aspect ratio exactly, and it is
+     what the geometry wants — but it also shrinks the labels, and type below ~11px is unreadable
+     on a phone (STYLE.md §16, the label budget's own floor). The floor is therefore a legibility
+     floor, not a layout one: above a ~470px card the diagram scales like an image, and below it the
+     unit pins and the lane is allowed to wrap exactly as it did before. Graceful past the range
+     that matters, invariant across the range that does.
+     The floor is derived, not chosen: 11px / 2.343 (the label's multiplier below). Dropping it to a
+     bare `1cqw` is the one-line switch to a full lock — measured cost: 8.4px labels on a 390px
+     phone, which a blind reader called marginal. STYLE.md §16 holds the whole comparison. */
+  --ic-u: max(4.695px, 1cqw);
+
   /* The icon box. Every connector's vertical offset is derived from this, so an arrow stays on
      the icons' centre line no matter how many lines a label wraps to. */
-  --ic-box: 3.4rem;
+  --ic-box: calc(9.714 * var(--ic-u));
+  /* The branch's fixed row pitch. Declared here, not on .branch, because the lane needs it too:
+     the offset that puts the connector on the fork's axis is computed from it. */
+  --branch-row: calc(17.714 * var(--ic-u));
+  --branch-gap: calc(1.571 * var(--ic-u));
+  /* The connector's own drawing height. The line sits on its vertical midpoint, so the arrow's
+     offset from the top of a row is half the icon box minus half of this. */
+  --flow-h: calc(1.786 * var(--ic-u));
 
   background: var(--ic-ground);
   border: 1px solid var(--ic-hairline);
-  border-radius: 10px;
-  padding: 1.25rem 1.4rem 1.5rem;
+  border-radius: calc(1.786 * var(--ic-u));
+  padding: calc(3.571 * var(--ic-u)) calc(4 * var(--ic-u)) calc(4.286 * var(--ic-u));
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: calc(2.571 * var(--ic-u));
 }
 
 html[data-theme='dark'] .plate {
@@ -60,7 +86,7 @@ html[data-theme='dark'] .plate {
 .title {
   margin: 0;
   color: var(--ic-ink);
-  font-size: 1.35rem;
+  font-size: calc(3.857 * var(--ic-u));
   font-weight: 800;
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -71,9 +97,9 @@ html[data-theme='dark'] .plate {
 .lane {
   position: relative;
   background: var(--ic-panel);
-  border: 2px solid var(--lane-accent);
-  border-radius: 14px;
-  padding: 1.15rem 1rem 1rem;
+  border: calc(0.357 * var(--ic-u)) solid var(--lane-accent);
+  border-radius: calc(2.5 * var(--ic-u));
+  padding: calc(3.286 * var(--ic-u)) calc(2.857 * var(--ic-u)) calc(2.857 * var(--ic-u));
 }
 
 .demo {
@@ -86,14 +112,14 @@ html[data-theme='dark'] .plate {
 
 .pill {
   position: absolute;
-  top: -0.72rem;
-  left: 0.9rem;
-  padding: 0.1rem 0.6rem;
+  top: calc(-2.057 * var(--ic-u));
+  left: calc(2.571 * var(--ic-u));
+  padding: calc(0.286 * var(--ic-u)) calc(1.714 * var(--ic-u));
   border-radius: 999px;
   background: var(--lane-accent);
   color: #ffffff;
   font-family: var(--ifm-font-family-monospace);
-  font-size: 0.68rem;
+  font-size: calc(1.943 * var(--ic-u));
   font-weight: 700;
   letter-spacing: 0.06em;
 }
@@ -111,7 +137,7 @@ html[data-theme='dark'] .pill {
      CSS-CARDS-PLAN.md — the two lanes' first icons no longer share an x origin, which a blind
      reader had previously read as "two unrelated diagrams". */
   justify-content: center;
-  gap: 0.7rem 0.25rem;
+  gap: calc(2 * var(--ic-u)) calc(0.714 * var(--ic-u));
 }
 
 /* ---- nodes ---------------------------------------------------------------------------------- */
@@ -122,15 +148,15 @@ html[data-theme='dark'] .pill {
      different, so the first icon of a two-node lane sat ~30px right of the first icon of the lane
      below it — a stripped reader caught the ragged edge on both cards. A fixed width also *is* the
      gutter: two labels can never share a text line. */
-  flex: 0 1 5.9rem;
-  max-width: 5.9rem;
+  flex: 0 1 calc(16.857 * var(--ic-u));
+  max-width: calc(16.857 * var(--ic-u));
   min-width: 0;
-  padding: 0 0.35rem;
+  padding: 0 calc(1 * var(--ic-u));
   color: var(--ic-ink);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
+  gap: calc(1.286 * var(--ic-u));
 }
 
 /* Everything in the row except the branch itself drops by the fork offset, so the connector arrives
@@ -155,17 +181,19 @@ html[data-theme='dark'] .pill {
 
 .badge {
   position: absolute;
-  right: -0.3rem;
-  bottom: -0.2rem;
-  width: 1.5rem;
-  height: 1.5rem;
+  right: calc(-0.857 * var(--ic-u));
+  bottom: calc(-0.571 * var(--ic-u));
+  /* 44% of the icon box, and now actually 44% at every width — it used to be a fixed 1.5rem, which
+     silently became 52% of the smaller phone icon. */
+  width: calc(4.286 * var(--ic-u));
+  height: calc(4.286 * var(--ic-u));
   display: block;
 }
 
 /* For icons whose own drawing owns the bottom-right corner (see BADGE_TOP_RIGHT). */
 .badgeTop {
   bottom: auto;
-  top: -0.25rem;
+  top: calc(-0.714 * var(--ic-u));
 }
 
 .badge svg {
@@ -194,7 +222,7 @@ html[data-theme='dark'] .pill {
 .nodeLabel {
   color: inherit;
   font-family: var(--ifm-font-family-monospace);
-  font-size: 0.82rem;
+  font-size: calc(2.343 * var(--ic-u));
   font-weight: 600;
   line-height: 1.25;
   text-align: center;
@@ -243,11 +271,17 @@ html[data-theme='dark'] .pill {
   --ic-tint: #dde4ec;
 }
 
-.ranklast {
-  /* No fade, and no grey outline either — the ramp reaches the icon through its FILLS only. A
-     desaturated outline plus desaturated fills is the rendering convention for a disabled control,
-     and a blind reader duly called the last chip "switched off" rather than "last". */
+/* No fade, and no grey outline either — the ramp reaches the icon through its FILLS only. A
+   desaturated outline plus desaturated fills is the rendering convention for a disabled control,
+   and a blind reader duly called the last chip "switched off" rather than "last". This rung used to
+   set `color` on the NODE, which the icon's stroke inherits — so the rule was stated in the canon
+   and quietly broken in the code, and on the dark theme the last chip's outline fell to 2.2:1
+   against the panel. It sets the label's colour, like every other rung. */
+.ranklast .nodeLabel {
   color: #55707f;
+}
+
+.ranklast {
   --ic-fill: #8fa8b6;
   --ic-tint: #d5e2e8;
 }
@@ -303,19 +337,20 @@ html[data-theme='dark'] .ranklast {
    instead of being a fixed-length stub; the vertical offset is half the icon box, so the arrow
    stays on the icons' centre line even when a neighbouring label wraps. */
 .flow {
-  flex: 1 1 1.25rem;
+  flex: 1 1 calc(3.571 * var(--ic-u));
   /* A definite width as well as a basis. Without it the connector's intrinsic contribution is the
      SVG's default 300px, and a lane that would otherwise fit on one line wraps — which is how an
      uncapped connector silently broke card 02's branch onto a second row. */
-  width: 1.25rem;
-  min-width: 1.1rem;
+  width: calc(3.571 * var(--ic-u));
+  min-width: calc(3.143 * var(--ic-u));
   /* Capped again, and the lane centres what is left. Uncapped, the connectors absorbed every spare
      pixel and a two-node lane spanned both edges around one very long arrow. */
-  /* 3.5rem, not 5: a two-node lane's single arrow was three times the length of the arrows in a
-     four-node lane, which made the longer chain read as crammed rather than as fuller. */
-  max-width: 3.5rem;
+  /* 10× the unit (3.5rem on the desktop card), not 14: a two-node lane's single arrow was three
+     times the length of the arrows in a four-node lane, which made the longer chain read as crammed
+     rather than as fuller. */
+  max-width: calc(10 * var(--ic-u));
   align-self: flex-start;
-  margin-top: calc(var(--fork-offset, 0px) + var(--ic-box) / 2 - 5px);
+  margin-top: calc(var(--fork-offset, 0px) + var(--ic-box) / 2 - var(--flow-h) / 2);
   display: block;
   line-height: 0;
 }
@@ -324,11 +359,14 @@ html[data-theme='dark'] .ranklast {
   display: block;
   overflow: visible;
   width: 100%;
+  /* The drawing scales with everything else, so the line, its dashes and its arrowhead keep their
+     proportions instead of turning into a hairline on a phone. `y1/y2="50%"` resolve against this. */
+  height: var(--flow-h);
 }
 
 .flowSvg line {
   stroke: currentColor;
-  stroke-width: 2;
+  stroke-width: calc(0.357 * var(--ic-u));
 }
 
 .dashed {
@@ -336,7 +374,7 @@ html[data-theme='dark'] .ranklast {
 }
 
 .dashed .flowSvg line {
-  stroke-dasharray: 6 5;
+  stroke-dasharray: calc(1.071 * var(--ic-u)) calc(0.893 * var(--ic-u));
 }
 
 .solid {
@@ -348,7 +386,7 @@ html[data-theme='dark'] .ranklast {
 }
 
 .fail .flowSvg line {
-  stroke-dasharray: 6 5;
+  stroke-dasharray: calc(1.071 * var(--ic-u)) calc(0.893 * var(--ic-u));
 }
 
 /* A connector and the branch it feeds, kept on one line so a wrapping lane cannot separate them. */
@@ -369,7 +407,7 @@ html[data-theme='dark'] .ranklast {
   flex: 0 0 auto;
   align-self: flex-start;
   display: grid;
-  grid-template-columns: 2.1rem auto;
+  grid-template-columns: calc(6 * var(--ic-u)) auto;
   align-items: stretch;
   row-gap: var(--branch-gap);
   color: var(--lane-accent);
@@ -380,7 +418,7 @@ html[data-theme='dark'] .ranklast {
   height: var(--branch-row);
   align-self: start;
   align-items: flex-start;
-  padding-left: 0.15rem;
+  padding-left: calc(0.429 * var(--ic-u));
 }
 
 .branch .nodeLabel {
@@ -399,47 +437,48 @@ html[data-theme='dark'] .ranklast {
    neither outcome reads as the primary one. */
 .elbow {
   position: absolute;
-  left: 0.3rem;
+  left: calc(0.857 * var(--ic-u));
   /* Past the column edge, into the transparent margin inside the icon's own box: an arm that stops
      at the boundary ends in visible whitespace and its outcome reads as unattached. */
-  right: -0.55rem;
+  right: calc(-1.571 * var(--ic-u));
   border-color: currentColor;
   border-style: solid;
   border-width: 0;
 }
 
 .elbowUp {
-  border-top-width: 2px;
-  border-left-width: 2px;
-  border-top-left-radius: 7px;
+  border-top-width: calc(0.357 * var(--ic-u));
+  border-left-width: calc(0.357 * var(--ic-u));
+  border-top-left-radius: calc(1.25 * var(--ic-u));
 }
 
 .elbowDown {
-  border-bottom-width: 2px;
-  border-left-width: 2px;
-  border-bottom-left-radius: 7px;
+  border-bottom-width: calc(0.357 * var(--ic-u));
+  border-left-width: calc(0.357 * var(--ic-u));
+  border-bottom-left-radius: calc(1.25 * var(--ic-u));
 }
 
 /* Three or more outcomes: the middle ones tee off the stem. */
 .tick {
   position: absolute;
-  left: 0.3rem;
-  right: -0.55rem;
-  border-top: 2px solid currentColor;
+  left: calc(0.857 * var(--ic-u));
+  right: calc(-1.571 * var(--ic-u));
+  border-top: calc(0.357 * var(--ic-u)) solid currentColor;
 }
 
 /* Where the incoming connector lands. Without it the fork reads as unanchored and the arrow looks
    aimed at an outcome rather than at the split. */
 .junction {
   position: absolute;
-  left: 0.3rem;
-  width: 0.55rem;
-  height: 0.55rem;
-  margin: -0.275rem 0 0 -0.275rem;
+  left: calc(0.857 * var(--ic-u));
+  width: calc(1.571 * var(--ic-u));
+  height: calc(1.571 * var(--ic-u));
+  margin: calc(-0.786 * var(--ic-u)) 0 0 calc(-0.786 * var(--ic-u));
   border-radius: 50%;
   background: currentColor;
 }
 
+/* Prose, not diagram: the caption is read at body size whatever the card is scaled to. */
 .caption {
   margin-top: 0.6rem;
   font-size: 0.9rem;
@@ -448,34 +487,13 @@ html[data-theme='dark'] .ranklast {
 }
 
 /* Same reasoning as the raster cards: capped on desktop so the prose it introduces stays on
-   screen; full width on a phone, where the lanes stack. */
+   screen; full width on a phone, where the card is the only thing on screen. There is no other
+   breakpoint — the diagram inside is proportional, so it needs none. */
 @media (min-width: 997px) {
   .card {
     /* The same cap as the generated cards (src/components/Infographic), so a composed card and a
        raster one sit at identical proportions when the page shows them side by side. */
     max-width: 560px;
     margin-inline: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .plate {
-    --ic-box: 2.9rem;
-    padding: 1.1rem 0.9rem 1.2rem;
-  }
-
-  .node {
-    flex-basis: 5.4rem;
-    max-width: 5.4rem;
-    padding: 0 0.25rem;
-  }
-
-  .nodeLabel {
-    font-size: 0.76rem;
-  }
-
-  .flow {
-    flex-basis: 1.2rem;
-    max-width: 3rem;
   }
 }

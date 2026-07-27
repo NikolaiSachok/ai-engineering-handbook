@@ -58,8 +58,13 @@ well as the label**, so it is visible before a single word is read.
 ## Card 02 — retrieval and the refusal path
 
 Tests the other half of the grammar: a **branch**. One input, two legitimate fates — an answer or an
-honest refusal — drawn with a brace that spans both outcomes, stacked, with the incoming arrow aimed
-at the brace's midpoint.
+honest refusal — drawn as a routed fork symmetric about the incoming connector's axis, so neither
+outcome sits on the through-line and reads as the primary path.
+
+It also carries the badge rule the set is strictest about. The `top-k, always` node has **no** badge:
+the retrieval mechanism is not broken, and marking it would say it is. What goes wrong is the
+*policy* of always returning the top k, and the failure is already carried by the red lane, the
+failure-hue connector, and the `bang` on the outcome it produces.
 
 ### Generated (ships today)
 
@@ -75,7 +80,7 @@ at the brace's midpoint.
   title="Retrieval must be allowed to refuse"
   caption="A relevance floor applied after reranking, and a generator allowed to answer 'no context'.">
   <Lane kind="demo" label="DEMO">
-    <Node icon="documentStack" badge="cross" label="top-k, always" />
+    <Node icon="retrieval" label="top-k, always" />
     <Flow kind="fail" />
     <Node icon="speechBubble" badge="bang" label="confident wrong answer" />
   </Lane>
@@ -93,14 +98,18 @@ at the brace's midpoint.
 
 ## The icon lexicon
 
-Thirty-seven inline SVGs — twenty-nine base objects and eight overlay badges. Generic objects are
+Thirty-eight inline SVGs — thirty base objects and eight overlay badges. Generic objects are
 vendored from Tabler (MIT) and normalised onto one 48-unit grid; the domain metaphors no icon set
 ships are hand-authored on the same grid, so a vendored icon and a hand-authored one are
 indistinguishable in use. Provenance, the convention each hand-authored icon draws, and the licence
 are in `src/components/InfoCard/icons/NOTICE.md`.
 
-The whole set is **13 KB raw, under 6 KB gzipped**, against 156 KB for the raster equivalent — and
+The whole set is **20 KB raw, under 3 KB gzipped**, against 156 KB for the raster equivalent — and
 unlike the rasters it recolours, adapts to the theme, and stays crisp at any size.
+
+The diagrams are also **proportional, not responsive**: the card is a query container and every
+length inside it is a multiple of 1% of the card's width, so a card scales like the image it
+replaces instead of re-flowing into a different drawing. Resize the window and watch the shape hold.
 
 These three cards are a reference sheet rather than teaching cards, so they deliberately ignore the
 nine-string label budget.
@@ -119,6 +128,7 @@ nine-string label budget.
     <Node icon="gauge" label="gauge" />
     <Node icon="sliders" label="sliders" />
     <Node icon="magnifier" label="magnifier" />
+    <Node icon="retrieval" label="retrieval" />
     <Node icon="sortedList" label="sortedList" />
     <Node icon="funnel" label="funnel" />
     <Node icon="gate" label="gate" />
@@ -166,7 +176,7 @@ slot it is given, so the arrow spans the actual gap and its head is part of the 
 
 <InfoCard title="Flow marks" caption="The failure hue is only ever the consequence of the fault.">
   <Lane kind="production" label="DASHED — NORMAL FLOW">
-    <Node icon="database" label="retrieve" />
+    <Node icon="retrieval" label="retrieve" />
     <Flow />
     <Node icon="sortedList" label="rerank" />
     <Flow />
@@ -178,7 +188,7 @@ slot it is given, so the arrow spans the actual gap and its head is part of the 
     <Node icon="scales" label="scoreboard" />
   </Lane>
   <Lane kind="demo" label="FAIL — THE CONSEQUENCE">
-    <Node icon="chainSteps" badge="crack" label="unguarded chain" />
+    <Node icon="chainSteps" label="unguarded chain" />
     <Flow kind="fail" />
     <Node icon="lockOpen" badge="bang" label="unscoped access" />
   </Lane>

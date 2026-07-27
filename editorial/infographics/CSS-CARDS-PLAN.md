@@ -551,3 +551,88 @@ identical proportions when the pilot page shows them side by side.
 2. **Panels are top-weighted with spare space pooled at the bottom.** Mostly an artefact of the
    stripped test — the hidden labels reserve their space and read as emptiness — but not entirely:
    `--branch-row` is a fixed 6.2rem, so a two-line label leaves real slack in the last outcome's row.
+
+---
+
+## Owner review round 4 — scale like an image, un-mark the input, and a real `retrieval` icon
+
+### 1 · The diagram now scales instead of re-flowing (canon: STYLE.md §16)
+
+Every length in the card became a multiple of one unit, `--ic-u`, which is 1% of the card's width
+(`container-type: inline-size` on `.card`). The card has exactly one breakpoint left — the 560px
+desktop cap it shares with the raster component — and the diagram inside has none.
+
+**The tension was named before building, because it cuts against the label budget**, and all three
+candidates were built and measured rather than argued:
+
+| | Shape across 1440 → 360 | Node label on a 390px phone | |
+|---|---|---|---|
+| Pure `1cqw` | aspect ratio **exactly constant** (1.50 / 1.10) | **8.4px** | fails the 11px floor |
+| Lock geometry, floor the type | horizontally constant | 11px but **words break mid-token** (`confiden/t`, `retriev/al`) | fails |
+| Floor the unit | constant above the floor, old re-flow below | 11px | **shipped** |
+
+The deciding evidence was a fresh phone-width reader on the pure-lock render. It transcribed every
+label correctly at 1:1 — but measured the tiers and called node labels *"below the 11px line,
+marginal"* and the 7px lane pills *"shape-recognition, not reading"*. So the full lock fails the
+floor, and the hybrid ships: `--ic-u: max(4.695px, 1cqw)`, the floor derived as `11px ÷ 2.343`.
+
+What that costs, recorded rather than buried: **a phone still re-flows.** The crossover is a 458px
+card (≈490px viewport). At a 358px card an 11px label and an unwrapped four-node lane are
+arithmetically exclusive. STYLE.md §16 records the lever that would move it — the connector reserves
+a full-height flex column although it only occupies the icon centre line, which caps the label at the
+node pitch; the raster has no such cap, which is exactly why its labels are ~28% larger.
+
+Three things fell out of the conversion that are worth knowing:
+
+- **The badge was silently wrong.** Canon said "44% of the icon box"; the code had a fixed `1.5rem`,
+  which was 44% on the desktop card and **52%** of the smaller phone icon. In the unit it is 44%
+  everywhere. A ratio expressed as an absolute length is a ratio that will drift.
+- **The connector had to stop lying about its size.** Its `<svg>` carried `height="10"` and a line at
+  `y="5"`; the drawing now takes `--flow-h` from CSS and the line rides `y="50%"`, so stroke weight,
+  dash rhythm and arrowhead scale too instead of surviving as a hairline.
+- **A blind reader found a canon/code disagreement nobody had noticed.** It measured the dark-theme
+  `weights last` chip outline at **2.2:1** against the panel — "I registered it as an empty slot".
+  Cause: `.ranklast` set `color` on the *node*, which the icon's stroke inherits, while §10 rule 2
+  says the ramp reaches the icon through its fills only and every other rung obeys that. The rule was
+  right and the code was wrong for three review rounds. Fixed to `.ranklast .nodeLabel`.
+
+### 2 · The `cross` on `top-k, always` is gone, and the rule behind it is now canon
+
+The badge read as *"retrieval is broken"*. The card's claim is the opposite and sharper: **the
+retrieval mechanism works correctly; always returning top-k is what produces the confident wrong
+answer.** The fault is in the policy, not the machinery — and the red lane, the failure-hue connector
+and the `bang` on the outcome already carry the failure, at the point where it actually happens.
+
+New canon (§8): **a failure badge marks the thing that is broken, never the thing that is being
+misused**, plus the corollary that the *input* node of a failure is usually unmarked. Auditing the
+other nodes on both cards under that rule found one more instance: `chainSteps` + `crack` on
+`unguarded chain` (flow-marks card) — a chain run without a gate is not a broken chain. Removed. The
+neutral badges (`chip`+`refresh` = retraining, `database`+`refresh` = re-index) name an *action* and
+survive; `bang` on `confident wrong answer` and the two `tick`s on the branch outcomes all mark
+outcomes, which is what they are for.
+
+### 3 · `retrieval` — a new base object, not a badge and not a swap
+
+A magnifier is not a state, so it cannot be a badge (§8's constraint). A bare document stack says
+*documents*; the node is about **retrieval as a process**, which the generated raster drew as a stack
+*plus a magnifier* deliberately. So the lexicon gained an asset.
+
+Three drafts. The first put a featureless near-square block under a small magnifier and read as "a
+blue box"; the second, at proper page proportions, ended in a bare diagonal fill edge that read as a
+**torn** page. The third solves the occlusion the way the paint-order rule demands: since an opaque
+lens painted after the pages' outlines is forbidden, **the hole is baked into the path** — the front
+page's fill arcs around a circle concentric with the lens, and its outline stops short of that arc.
+No mask, no clip, no z-order trick. (An `evenodd` knockout was tried first and is wrong: a point
+inside the circle but outside the page has an odd crossing count, so it fills — the bug shipped a
+blue blob beside the magnifier until it was caught in the render.)
+
+Blind naming (fresh agent, `documentStack` and `magnifier` as the nearest neighbours, plus controls):
+**pass** — *"stack of documents with a magnifier — searching files"*, and it fused into one idea
+rather than two objects side by side. At 40px the same reader saw *"something plus a magnifier"*: the
+stack degrades, the magnifier survives. Recorded as a residual with the general lesson — **a
+two-object icon buys meaning at reading size and spends legibility at phone size, because each object
+gets half the detail budget.** Take that trade only when the second object *is* the concept.
+
+The usage split is now canon rather than taste (§12): **`documentStack` is a noun** (a corpus, a set
+of documents) and **`retrieval` is a verb** (the search over them). The test: a node that could be
+labelled "documents" takes the stack; one that could be labelled "find" takes `retrieval`.

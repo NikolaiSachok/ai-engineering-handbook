@@ -153,7 +153,27 @@ needs its own asset.
 
 **The constraint that makes it work: a badge modifies the object's state or action, it never renames
 the object.** A chip with a `refresh` is still a chip. If the badge would change *what the thing is*,
-the lexicon needs a new base object, not an overlay.
+the lexicon needs a new base object, not an overlay. (A magnifier is not a state, which is why
+*retrieval* is a base object — §12 — and not `documentStack` + a magnifier badge.)
+
+**A failure badge marks the thing that is broken, never the thing that is being misused.** `cross`,
+`bang` and `crack` are claims about a component. Put one on a component that works and the card
+asserts something it does not mean.
+
+> Card 02 carried a `cross` on its `top-k, always` node and it read as *"retrieval is broken"*. The
+> card's claim is the opposite and sharper: **the retrieval mechanism works correctly; always
+> returning top-k is what produces the confident wrong answer.** The fault is in the policy, not the
+> machinery. The badge came off, and nothing was lost — the red lane, the failure-hue connector and
+> the `bang` on the outcome already carry the failure, and they carry it *where it happens*.
+
+Two rules fall out, and they are what to check before adding any failure badge:
+
+1. **The input node of a failure is usually unmarked.** Mark the *consequence*, not the thing that
+   was used badly. The same audit removed `crack` from `unguarded chain` on the flow-marks card: a
+   chain run without a gate is not a broken chain.
+2. **One failure claim per fault.** The lane outline, its pill, the `fail` connector and one badge
+   are four channels saying the same thing; using all four on both ends of the arrow is
+   over-marking, and over-marking blurs *which* thing failed.
 
 | Badge | Means | Use it when | Colour role | Position |
 |---|---|---|---|---|
@@ -173,8 +193,9 @@ Colour roles resolve to `--ic-ok`, `--ic-fail` and `--ic-neutral` (§9). The gly
 drawing occupies that corner move theirs to the top-right, or the overlay covers the part of the icon
 that carries the meaning — `driftCurves` (the shift arrow), `sortedList` (the descending arrow),
 `traceSpans` (the last span and the axis), `gate` (the base plate), `branchSplit` (the return arm),
-`speechBubble` and `speechBubbleEmpty` (the tail). The list lives in `icons/index.ts`; adding an icon
-whose bottom-right is busy means adding it there too.
+`retrieval` (the magnifier — which is the whole meaning), `speechBubble` and `speechBubbleEmpty`
+(the tail). The list lives in `icons/index.ts`; adding an icon whose bottom-right is busy means
+adding it there too.
 
 ## 9 · Colour semantics, as roles
 
@@ -257,7 +278,7 @@ Four rules, each paid for by a blind reader:
 
 ## 12 · The icon register
 
-Thirty-seven assets: twenty-nine base objects and eight badges. **The convention column is the
+Thirty-eight assets: thirty base objects and eight badges. **The convention column is the
 load-bearing one** — it is what stops the next person redrawing `database` as a plain cylinder.
 Blind-naming rounds are recorded because a pass is evidence, not an opinion. Sourcing and licence:
 `icons/NOTICE.md`.
@@ -275,6 +296,7 @@ Blind-naming rounds are recorded because a pass is evidence, not an opinion. Sou
 | `dashboard` | monitoring | monitor + bar chart | Tabler | R1 pass |
 | `sliders` | tuning | rails with knobs | Tabler | R1 pass |
 | `magnifier` | search | lens + handle | Tabler | R1 pass |
+| `retrieval` | **searching a corpus** — the act, not the corpus | offset pages **plus a magnifier over their lower-right**, the page fill cut back in a circle so the magnifier reads as being in front | hand | R5 pass ("stack of documents with a magnifier — searching files"); mushy at 40 px |
 | `scales` | a fair comparison | balance beam + two pans | Tabler | R1 pass |
 | `speechBubble` | an answer | rounded bubble, tail, **text lines inside** | Tabler | R1 pass |
 | `speechBubbleEmpty` | an empty answer | the same bubble with **nothing inside** | hand | R4 pass |
@@ -302,30 +324,69 @@ Blind-naming rounds are recorded because a pass is evidence, not an opinion. Sou
 | `speechBubble` / `speechBubbleEmpty` | interior content only. That is the intended relationship — one object in two states — so they must never appear as unlabelled peers |
 | `spreadsheet` / `browserPage` | the page silhouette versus the window chrome bar; a bare rectangle with one divider reads as either |
 | `chainSteps` / `traceSpans` | the stagger and the time axis. Equal blocks in a row read as a chain; offset blocks over an axis read as a trace |
+| `documentStack` / `retrieval` | **the magnifier, and it is the whole difference** — see the usage rule below. At 40 px the stack in `retrieval` blurs and only the magnifier survives, so the pair separates reliably only at reading size or with its label |
+| `retrieval` / `magnifier` | whether anything is being searched. `magnifier` is the bare instrument — a search box, a lookup; `retrieval` is the instrument **over a corpus** |
+
+### `documentStack` or `retrieval` — the usage rule
+
+They are not interchangeable, and picking by feel is how a lexicon flattens:
+
+- **`documentStack` is a noun.** A corpus, a set of documents, the sources — the *things*. Use it for
+  an ingested collection, a chunk set, the passages handed to a generator.
+- **`retrieval` is a verb.** The search *over* those documents — the step that goes and finds them.
+  Use it for a retrieve node, a top-k step, a search call.
+
+The test: if the node could be labelled "documents" it is `documentStack`; if it could be labelled
+"find" it is `retrieval`. Card 02's `top-k, always` is a retrieval *policy*, so it is `retrieval` —
+drawn with `documentStack` it said "documents", which is not what the node does.
 
 ### Residuals, recorded rather than hidden
 
-`traceSpans`, `chainSteps`, `gate` and `branchSplit` all blur at the 34 px a phone renders. None is
-used where the distinction is load-bearing without its label. Treat this as a budget: **do not add a
-sixth detailed icon** to a card that already leans on one of these.
+`traceSpans`, `chainSteps`, `gate`, `branchSplit` and `retrieval` all blur at the 34 px a phone
+renders. None is used where the distinction is load-bearing without its label. Treat this as a
+budget: **do not add a sixth detailed icon** to a card that already leans on one of these.
+
+`retrieval` is the newest and the clearest case of the underlying cost: **a two-object icon buys
+meaning at large sizes and spends legibility at small ones.** Each object gets about half the grid,
+so each is drawn at half the detail budget of a single-object icon. Blind naming confirmed both
+halves of that: at 120 px it fused into one idea, *"search documents"*; at 40 px the reader saw
+*"something plus a magnifier"* — the magnifier survives because a circle with a stick is almost
+irreducible, the page stack does not. Accept the trade only where the second object **is** the
+concept (here: without the magnifier the node says "documents", which is the wrong claim).
 
 ## 13 · Sizing and geometry — hard numbers
 
 A set stays coherent because everything sits on one grid. These are *the* values, not suggestions.
 
-| | Value |
-|---|---|
-| Icon viewBox | `0 0 48 48`, no `width`/`height` attributes (so svgo cannot drop the viewBox) |
-| Stroke | effective width **3** in that grid, `stroke="currentColor"`, round cap and join |
-| Vendored normalisation | upstream 24×24 paths kept verbatim inside `<g transform="scale(2)" stroke-width="1.5">` |
-| Fills | `var(--ic-fill, #3b82f6)` and `var(--ic-tint, #93c5fd)` — **always with the literal fallback**, because non-browser rasterisers cannot resolve `var()` |
-| Icon box `--ic-box` | `3.4rem` desktop, `2.9rem` below 480px |
-| Badge | `1.5rem` — **44% of the icon box** |
-| Node pitch | `flex: 0 1 5.9rem`, `max-width` the same (`5.4rem` below 480px). A pitch, not a minimum: uniform node widths are also what stop two labels sharing a text line |
-| Connector | `flex: 1 1 1.25rem`, `width: 1.25rem`, `min-width: 1.1rem`, `max-width: 3.5rem`. The definite `width` is required — an `<svg>` with no viewBox contributes **300px** to flex line-breaking otherwise |
-| Connector offset | `calc(var(--fork-offset, 0px) + var(--ic-box) / 2 - 5px)` |
-| Branch row pitch | `--branch-row: 6.2rem`, `--branch-gap: 0.55rem` — fixed, because every number in the fork derives from it |
-| Card width | `560px` above 997px — the same cap as the generated cards, so both substrates sit at identical proportions |
+**The card's own lengths are no longer in `rem`, they are multiples of one unit `--ic-u`** (§16). The
+"× card width" column is the canonical number; the pixel column is only what it resolves to on the
+560px desktop card, and is shown so the two can be checked against each other.
+
+| | × card width | On a 560px card |
+|---|---|---|
+| Icon viewBox | — | `0 0 48 48`, no `width`/`height` attributes (so svgo cannot drop the viewBox) |
+| Stroke | — | effective width **3** in that grid, `stroke="currentColor"`, round cap and join |
+| Vendored normalisation | — | upstream 24×24 paths kept verbatim inside `<g transform="scale(2)" stroke-width="1.5">` |
+| Fills | — | `var(--ic-fill, #3b82f6)` and `var(--ic-tint, #93c5fd)` — **always with the literal fallback**, because non-browser rasterisers cannot resolve `var()` |
+| Icon box `--ic-box` | **9.714** | `54.4px` |
+| Badge | **4.286** — 44% of the icon box, now at every width | `24px` |
+| Node pitch | **16.857** (`flex-basis` and `max-width`) | `94.4px` |
+| Node label | **2.343** | `13.1px` |
+| Title | **3.857** | `21.6px` |
+| Lane pill | **1.943** | `10.9px` |
+| Connector | **3.571** basis and definite `width`, min **3.143**, max **10** | `20 / 17.6 / 56px` |
+| Connector offset | `calc(var(--fork-offset, 0px) + var(--ic-box) / 2 - var(--flow-h) / 2)` | — |
+| Connector drawing height `--flow-h` | **1.786**, line on its midpoint (`y="50%"`), stroke **0.357** | `10px`, stroke `2px` |
+| Branch row pitch | `--branch-row` **17.714**, `--branch-gap` **1.571** — fixed, because every number in the fork derives from it | `99.2 / 8.8px` |
+| Card width | — | `560px` above 997px — the same cap as the generated cards, so both substrates sit at identical proportions |
+
+Two of these are load-bearing for reasons that are not obvious:
+
+- The connector needs a **definite `width`**, not only a basis — an `<svg>` with no viewBox
+  contributes **300px** to flex line-breaking otherwise, which once broke card 02's branch onto a
+  second row.
+- The node pitch is a pitch, **not a minimum**: uniform node widths are also what stop two labels
+  sharing a text line.
 
 **Paint order is a geometry rule, not a style one: all fills are painted in a `stroke="none"` group
 before any stroke.** It structurally prevents the class of bug that turned a hand-drawn `database`
@@ -368,3 +429,61 @@ scan. It is a name-set diff, not a parser, on purpose: a check that is cheap and
    full re-run. Named as something else is a fail, however good the drawing looks.
 5. **Record the row in §12**, including the round it passed on and any residual. A pass you cannot
    cite is an opinion.
+
+## 16 · Composed cards scale, they do not re-flow — with a legibility floor
+
+**The rule.** A composed card is a **query container** (`container-type: inline-size` on `.card`) and
+every length inside the diagram — icon box, node pitch, connector slot and its cap, gaps, paddings,
+badge, stroke widths, dash rhythm, and all four type sizes — is a multiple of one unit:
+
+```css
+--ic-u: max(4.695px, 1cqw);   /* 1cqw = 1% of the card's width */
+```
+
+There is **exactly one breakpoint left in the component** (the 560px desktop cap on `.card`, kept so
+a composed card and a raster one sit at identical proportions). The diagram itself has none, and must
+not gain one: a media query inside the card re-introduces the defect this rule exists to remove.
+
+**Why: a diagram's shape is part of its argument.** With lengths in `rem`, the drawing was a fixed
+island — the same 477px of diagram inside a 964px card on a tablet and a 291px lane on a phone — so
+its *proportions* changed with the viewport and, past a threshold, its *topology* did: card 06's
+four-rung ladder broke into 3 + 1 and card 02's fork dropped to a second row with its incoming arrow
+starting at the panel edge, aimed at nothing. A reader who has seen the desktop card and then the
+phone card has seen two different diagrams. Measured, pure `1cqw` holds card 06 at an aspect ratio of
+**1.50** and card 02 at **1.10** at every viewport from 1440 down to 360; the `rem` version ran
+0.83 → 1.54.
+
+**The tension, stated because it cuts against §4's label budget.** Proportional scaling shrinks type,
+and the budget's floor — rendered type below **~11px** is unreadable at phone width — is
+evidence-derived. A card designed for four nodes across 560px puts its labels at **8.4px** when
+scaled to a 358px card (a 390px phone). A pure lock therefore trades re-flow for illegibility. Three
+options were built and measured:
+
+| | Shape | Node label at a 390px phone | Verdict |
+|---|---|---|---|
+| Pure `1cqw` | exactly constant at every width | **8.4px** — a blind reader transcribed every label but called it *"below the 11px line, marginal"*, and the 7px lane pills *"shape-recognition, not reading"* | **fails the floor** |
+| Lock geometry, floor the type at 11px | horizontally constant | 11px, but the label no longer fits its proportionally-shrunk column: measured mid-word breaks — `confiden/t`, `retriev/al`, `re-/index` | **fails — breaks words** |
+| **Floor the unit** (shipped) | constant above the floor, re-flows below it | 11px | **shipped** |
+
+So: **scale proportionally down to the legibility floor, and allow the old re-flow only below it.**
+The floor is derived, not chosen — `11px ÷ 2.343` (the label's multiplier, §13) `= 4.695px`. Measured
+consequences of that number: the lock holds exactly for a card **≥ 478px** (a viewport ≥ ~510px);
+between 458 and 478px the unit is pinned but the lane still fits on one line; **below a 458px card
+(a viewport below ~490px) the lane wraps**, as it did before. Invariant across the range that
+matters, graceful past it.
+
+**Recorded honestly: a phone still gets the re-flow, and this is why.** At a 358px card you can have
+an 11px label *or* an unwrapped four-node lane, not both — the two are mutually exclusive at these
+proportions, and the arithmetic says so: the lane needs 82.4 × the unit and the panel offers
+85.2 × the card's percent, so the moment the unit is pinned above `1cqw` the lane no longer fits.
+
+**The lever that would move the floor, for whoever takes it further.** The composed card's label
+column is **14.86 × card width**; the generated cards' labels are ~**3.0 × card width** in size
+against the composed card's 2.343, and they get away with it because a raster label may run *under*
+the arrow — the arrow lives on the icon centre line and the label sits below it. In the composed
+card the connector reserves a **full-height flex column**, so the label is capped at the node pitch
+minus its padding. Letting labels extend under the connector slot would widen the column to
+~20 × card width, admit a 3.0 label multiplier (raster parity, ~17px on the desktop card), and drop
+the floor to roughly a 355px card — i.e. **a full lock that stays legible on a phone**. It is not
+done here because it re-opens the "two labels sharing a text line" defect that the uniform pitch was
+introduced to close, and that needs its own blind read.

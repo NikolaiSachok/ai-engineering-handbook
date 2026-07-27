@@ -77,12 +77,16 @@ export function Node({
  * Every connector sits on the icon box's centre line — a fixed fraction of the icon box, never of
  * the node, whose height changes whenever a label wraps. A `Branch` puts its brace's nub on that
  * same line, so connectors into a branch need no special case.
+ *
+ * The drawing has no intrinsic size: CSS gives it `--flow-h`, a multiple of the card's own scale
+ * unit, and the line rides its midpoint (`y="50%"`). So the line weight, the dash rhythm and the
+ * head shrink with the card instead of surviving as a hairline when everything around them halves.
  */
 export function Flow({kind = 'dashed'}: {kind?: FlowKind}): React.JSX.Element {
   const id = `ic-arrow-${React.useId().replace(/[^a-zA-Z0-9]/g, '')}-${kind}`;
   return (
     <span className={cx(styles.flow, styles[kind])} aria-hidden="true">
-      <svg className={styles.flowSvg} height="10" width="100%" focusable="false">
+      <svg className={styles.flowSvg} width="100%" focusable="false">
         <defs>
           <marker
             id={id}
@@ -95,7 +99,7 @@ export function Flow({kind = 'dashed'}: {kind?: FlowKind}): React.JSX.Element {
             <path d="M0 0L5 2.5L0 5z" fill="currentColor" />
           </marker>
         </defs>
-        <line markerEnd={`url(#${id})`} x1="0" x2="100%" y1="5" y2="5" />
+        <line markerEnd={`url(#${id})`} x1="0" x2="100%" y1="50%" y2="50%" />
       </svg>
     </span>
   );
