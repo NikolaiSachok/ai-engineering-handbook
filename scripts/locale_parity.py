@@ -238,10 +238,24 @@ def compare_pair(locale: str, released: bool, src: str, tgt: str, rep: Report) -
     en_files, loc_files = md_files(src), md_files(tgt)
 
     # 1. file set
+    #
+    # An absent page is a DEFECT in a released locale and the EXPECTED state in an unreleased one —
+    # the same asymmetry missing_translation() already applies to a whole absent course, applied one
+    # level down. Without it a locale is all-or-nothing: the first pilot lesson creates `current/`,
+    # every other page of the course reads as "missing", and the gate fails on a tree that is
+    # correct for its stage. That is not a tolerance the gate can do without, because a locale
+    # cannot be translated in one commit — it is the ordinary mid-programme state.
+    #
+    # The reverse direction stays a hard failure in EVERY locale: a page with no English source is
+    # never expected, at any stage, and is the one half of this check that cannot fail open.
     if en_files - loc_files:
-        rep.fail(f"{locale}/{src} — page(s) present in English, missing in {locale}:")
-        for p in sorted(en_files - loc_files):
-            print(f"    - {p}")
+        if released:
+            rep.fail(f"{locale}/{src} — page(s) present in English, missing in {locale}:")
+            for p in sorted(en_files - loc_files):
+                print(f"    - {p}")
+        else:
+            print(f"  - {src}: {len(en_files - loc_files)} of {len(en_files)} page(s) not yet "
+                  f"translated ({locale} is gated/unreleased) — EN fallback")
     if loc_files - en_files:
         rep.fail(f"{locale}/{src} — page(s) present in {locale} with no English source:")
         for p in sorted(loc_files - en_files):
