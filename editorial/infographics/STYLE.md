@@ -65,6 +65,17 @@ the card as literal text (a real, observed failure).
   „v deme"). Length is never the argument either way: both localised pairs came out shorter than the
   English. **Canon-probation**: the first localised lane pills in the corpus; the next set either confirms
   the rule or replaces it.
+- **DE → `DEMO` / `PRODUKTION`** (settled 2026-07-28, by the same rule and by measurement). German declines
+  the concept natively — *in Produktion*, *produktionsreif* — so a `PRODUCTION` pill above German prose is
+  the same direction wobble the RU and SK entries describe, and `DEMO` is the German word as it is the
+  Slovak one. **The length question was raised and measured, not argued.** `PRODUKTION` is ten characters
+  against Slovak's nine and Russian's four, and the pill overlaps the lane's top-left corner, so the
+  worry was real. At 360px, rendered: the pill is **76.5px wide inside a 275px lane**, on one line, ending
+  **199px short of the lane's right edge** and **219px short of the plate's**. It is byte-for-byte the same
+  width as the English `PRODUCTION` that has always shipped — the pill is monospace and both words are ten
+  characters. **So `PRODUKTION` in full; `PROD` is not needed**, and was measured only to have the number
+  (40.3px) if a longer German word ever forces the question. The general rule stands: a pill is measured at
+  360px before it is shortened, because the monospace pill's width is a character count, not a guess.
 - **No hero, and this is a rule rather than an omission.** The page had a `16:9` generated hero; it was
   removed on 2026-07-27. Two reasons, and the second is the durable one: no other page in the handbook has a
   hero, and there is **no canon for making one** — cards have a grammar, a palette, an icon register, a
@@ -627,6 +638,58 @@ minus its padding. Letting labels extend under the connector slot would widen th
 the floor to roughly a 355px card — i.e. **a full lock that stays legible on a phone**. It is not
 done here because it re-opens the "two labels sharing a text line" defect that the uniform pitch was
 introduced to close, and that needs its own blind read.
+
+### 16.1 · Where the label budget meets a compounding language: hyphenate, per language
+
+The label budget (`create-infographic` §4) caps a label at four words against the 11px floor above, and
+the table just above records what happens when a token is wider than its column and nothing can divide
+it: the fallback chops it **mid-morpheme** — `confiden/t`, `retriev/al`, `re-/index`.
+
+**English, Russian and Slovak mostly dodge this by wrapping at a space. German cannot.** A German
+compound is one unbreakable run — *layoutbewusstes*, *Multiagentensysteme*, *Ingestion-Manifest*,
+*Score-Schwellenwert*, *Orchestrierungs-Frameworks* — so German reaches the floor first, and the
+milestone would otherwise be told to shorten labels that are already at their minimum. That is the
+budget punishing a language for its morphology, which is the wrong end to fix.
+
+**The rule.** `hyphens: auto` on the label surfaces (`.nodeLabel`, `.title`, `.caption`), **scoped to the
+languages that need it** (`:lang(de)` today). It supplies legal break points inside the run: the
+browser's dictionary for the undivided compounds, and the compound's own hyphen for the written ones.
+The language comes from the page — Docusaurus stamps `<html lang="de">` per locale, and both `:lang()`
+and `hyphens: auto` read it, so nothing is threaded through the component. Verified at 360px:
+
+| | Before | After |
+|---|---|---|
+| `Multiagentensysteme` | `Multiagent` / `ensysteme` | `Multiagen-` / `tensysteme` |
+| `Score-Schwellenwert` | `Score-` / `Schwellenw` / `ert` | `Score-` / `Schwel-` / `lenwert` |
+| `Wiederherstellungspunkt` | `Wiederhers` / `tellungspu` / `nkt` | `Wieder-` / `herstel-` / `lungspunkt` |
+| `Orchestrierungs-Frameworks` | `Orchestrie` / `rungs-` / `Frameworks` | `Orches-` / `trierungs-` / `Frameworks` |
+
+Every break lands on a hyphen at a real syllable boundary, and no label overflows its node.
+
+**Three things about this rule are load-bearing and were each measured, not assumed.**
+
+1. **It is scoped, not global.** Applied to every locale it *changes pages that have no problem to
+   solve*: English `clean / uniform / docs` became `clean uni-` / `form docs`, and Slovak
+   `rôzne / zdroje` became `rôz-` / `ne zdroje` — the browser spending a hyphen where a clean space
+   break already existed, because `text-wrap: balance` will do that to even out two lines. Both are
+   worse than what ships and neither locale gained anything. With the rule scoped to `:lang(de)`,
+   en/ru/sk render **pixel-identical** to before. The next compounding locale (Dutch, Finnish,
+   Swedish) joins the selector deliberately.
+2. **`overflow-wrap: anywhere` stays underneath it**, and stays `anywhere` rather than `break-word`.
+   Hyphenation is an ordinary line break and is taken first — the rendering is identical under either
+   value *when the dictionary can divide the word*. When it cannot, only `anywhere` breaks: with
+   `break-word`, **25 of 43** labels at 360px overflowed their node the moment the declared language
+   did not match the text, and **19 of 43** overflowed on a bare identifier or URL — running clean
+   across the lane into the neighbouring label, the exact defect the uniform node pitch exists to stop.
+3. **The `lang` dependency is real.** The same German text under `lang="en"` does not hyphenate at all;
+   the dictionary is chosen by the declared language, so a card in a locale whose `<html lang>` is
+   wrong gets no hyphenation and the fallback break instead.
+
+**One honest consequence, for the duration of a partial translation.** An untranslated page in the
+German locale serves English content under `<html lang="de">`, so German hyphenation is applied to
+English words — measured: `silent-` / `ly dropped`, which is not an English break point. It affects
+only not-yet-translated pages of an unreleased locale (gated out of the deployed build) and disappears
+as each page is translated. Not worth a mechanism; worth knowing before someone reports it as a bug.
 
 ## 17 · `Grid` — the shape for peers
 
