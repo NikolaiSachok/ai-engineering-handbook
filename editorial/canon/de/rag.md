@@ -127,6 +127,19 @@ These need either an attestation or a cold read before they become rules. **Unti
 paraphrase.** Writing a plausible-sounding German form here is exactly the failure the Slovak locale hit with
 „súbeh" — a coinage that passed one reviewer and was later struck as semantically wrong.
 
+> **Die ausgelieferte UI-Locale ist KEIN Beleg für diese Zeilen.** Eine Prüfung aller 139 deutschen
+> UI-Nachrichten (`i18n/de/**`, Stand #314) fand **keinen** Verstoß gegen die Tabelle unten — kein
+> `Guardrail`-Singular, kein nacktes `Gate`, kein `Log`/`Queue`, keine `embedden`/`chunken`-Partizipien.
+> **Das heißt nicht, dass die Zeilen erledigt sind.** Zwei Gründe, und nur der erste ist Verdienst:
+> `Gate` und `Guardrail` wurden bewusst über die Sense-Card bzw. die Nur-Plural-Regel geführt — `Log`,
+> `Queue` und die beiden Partizipien kamen schlicht **nicht vor**, weil eine Navigationsoberfläche sie nicht
+> braucht.
+>
+> **Die erste deutsche Lektionsprosa hat dieses Glück nicht.** Genau diese vier sind in laufendem Text über
+> Observability und Ingestion **unvermeidlich**. Wer aus „die Locale ist sauber" schließt, die offenen Zeilen
+> seien geklärt, zieht den Schluss aus einer Oberfläche, die sie nie berührt hat. *(Befund: `de-ui-strings`,
+> nach #314.)*
+
 | Terminus | Warum offen | Vorläufige Behandlung |
 |---|---|---|
 | **Guardrail (Singular)** | kein stabiler deutscher Singularusus für den KI-Sinn belegbar | nur im Plural *Guardrails* verwenden; Singular umformulieren |
