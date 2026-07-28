@@ -332,10 +332,16 @@ break opportunity; *Werkzeugaufruf* has none. This is a layout risk, not a trans
 ### 6.6 Anrede — German has a third attractor the Slavic languages lack
 
 RU and SK choose between two persons. German has **three**: *du*, *Sie*, and the impersonal **man** — the
-default reflex of German documentation prose, which reads as neither register and **drifts mid-paragraph**
-unless it is named and constrained. Naming `du` in the canon is not enough; the canon must also name `man`,
-say exactly which of its uses collide with `du`, and list what replaces those. The naive form of this rule —
-"ban `man`" — is wrong, and §7.1 records why.
+default reflex of German documentation prose, which is no form of address at all and **drifts mid-paragraph**
+unless it is named and constrained. Naming the address form in the canon is not enough; the canon must also
+name `man`, say exactly which of its uses collide with it, and list what replaces those. The naive form of
+this rule — "ban `man`" — is wrong, and §7.1 records why.
+
+**And German's choice of address is not only a pronoun choice — it is a *verb form* choice.** The imperative
+is the corpus's highest-frequency construction, and it is built differently for each person: *Gib eine
+Meldung zurück* versus *Geben Sie eine Meldung zurück*. Whichever way §7.1 falls, the decision propagates
+into nearly every instruction on all 67 pages, which is why it belongs in the injection block and not merely
+in the canon.
 
 ### 6.7 Gendering — an axis with no RU/SK analogue and no neutral default
 
@@ -395,41 +401,58 @@ Recorded the way the SK canon records rulings: the decision, the linguistic reas
 **Two of the three recommendations that went in came back amended.** That is the gate working, and both
 amendments are recorded rather than quietly absorbed.
 
-### 7.1 Anrede — `du`, lowercase. And `man` is *restricted*, not banned
+### 7.1 Anrede — `Sie`. And `man` is *restricted*, not banned
 
-**Decision.** Second person singular **`du`**, lowercase, corpus-wide.
+**Decision.** The polite form **`Sie`**, capitalised (with `Ihr/Ihre/Ihnen`), corpus-wide — **and every
+instruction in the Sie-imperative**: *Öffnen Sie die Konsole*, *Geben Sie eine Meldung zurück*.
 
-**Reason.** Corpus-internal register coherence: the same book addresses its reader as «ты» in Russian and
-„ty" in Slovak, and a locale that switches to `Sie` makes the German reader a different, more distant
-reader than the other two. Lowercase is the unmarked orthographic form in instructional prose (amtliches
-Regelwerk / Duden § 66: `du, dich, dir, dein` are written lowercase; capitalisation is optional only in
-personal correspondence).
+> **Decision history — this row was reversed, and the record says so.**
+> **Made as `du`** when this playbook was written, on corpus-internal symmetry with «ты»/„ty".
+> **Reversed to `Sie` by the owner on 2026-07-28**, on the attestation the `du` ruling itself had recorded
+> against it. A canon that quietly overwrites its own reversals is the SK Fáza 26 failure mode; this is why
+> the original decision is left legible above the new one instead of being deleted.
 
-**⚠️ Honest attestation — this is a house rule, NOT the German technical-publishing standard.** The verified
-usage of the §6.10 exemplars runs the other way: Rheinwerk, the current O'Reilly DE edition and c't all use
-`Sie`; dpunkt uses `du` in its Make/children's line but `Sie` in professional software titles; heise
-Developer's author guidelines go further and prefer impersonal constructions to any direct address at all.
-**Write it in the canon as a deliberate project choice with that counter-evidence attached.** Claiming `du`
-is "what German technical books do" would be a false justification — precisely the SK Fáza 26 failure where
-a settled row was defended with a reason a later check falsified.
+**Reason — the attestation, which is unanimous.** Every openable German publisher source that was checked
+uses `Sie`: the Rheinwerk Openbook; two dpunkt Leseproben (76×*Sie/Ihnen* vs 1×*du*, and 35×*Sie* vs
+0×*du*); the GNOME translation guidelines ("grundsätzlich in der Höflichkeitsform"); and Microsoft's
+localisation style guide, which reserves `du` for readers **under 18**. The tekom article confirms a `du`
+trend in the industry but advises in the same direction ("Mit dem Sie macht man im Zweifelsfall nichts
+Grundsätzliches verkehrt").
+
+**And the counter-case collapsed on inspection.** The three "independent exemplars" once cited for `du` are
+**one style family, not three data points** — dpunkt belongs to Heise Medien and has run the German
+O'Reilly programme since 2015. So the unanimous `Sie` evidence never had a second strand facing it; it had
+the same strand counted three times.
+
+**The load-bearing reason is the missing check.** The German locale has **no native proofreader** — the
+owner reads Russian and Slovak, his German is ~A1. With no human able to hear whether an unconventional
+register lands as *informal and modern* or as *foreign*, the attested publisher norm beats cross-locale
+symmetry. `du` was consistency with «ты»/„ty"; `Sie` is what a German engineer actually expects from a
+technical handbook.
+
+**What is now recorded as a divergence is RU/SK, not German publishing.** The canon flags the address form
+as a deliberate departure from the sister locales — the same shape as the `KI` vs `AI` divergence in §3 of
+the canon — so a later consistency pass does not "correct" it back.
 
 **Decision — `man`.** The proposal to forbid `man` by name was **rejected on linguistic grounds and is not
-adopted.** `du` is a personal address; `man` is an indefinite pronoun with general reference. They do
+adopted.** `Sie` is a personal address; `man` is an indefinite pronoun with general reference. They do
 different jobs, and a blanket ban conflates them. The rule is **restriction, not prohibition**:
 
-- **`man` is forbidden for the reader's own actions.** That is where it collides with `du` and produces the
-  mid-paragraph drift §6.6 warns about. Replace with, in order of preference: `du`; the imperative
-  (*Öffne …*); the passive (*wird gespeichert*); a reflexive construction (*lässt sich prüfen*); an
-  infinitive (*zum Prüfen*); a factual subject (*Der Retriever liefert …*). `wir` only for a thought the
-  text and the reader perform together.
+- **`man` is forbidden for the reader's own actions.** That is where it collides with the address form and
+  produces the mid-paragraph drift §6.6 warns about. Replace with, in order of preference: `Sie`; the
+  **Sie-imperative** (*Öffnen Sie …*); the passive (*wird gespeichert*); a reflexive construction (*lässt
+  sich prüfen*); an infinitive (*zum Prüfen*); a factual subject (*Der Retriever liefert …*). `wir` only for
+  a thought the text and the reader perform together. *(The replacement construction changed with the
+  reversal: it used to be the du-imperative *Öffne …*.)*
 - **`man` stays correct for genuine statements about people in general**, where the reader is not the
   subject: *Was man unter einem Agenten versteht, hängt vom Kontext ab.*
 
-The gate to run in review is therefore not "grep for `man`" but *"does this `man` mean the reader?"*
+The gate to run in review is therefore not "grep for `man`" but *"does this `man` mean the reader?"* — and
+note that `man` sits **closer** to the `Sie` register than it did to `du`, so it is now less conspicuous,
+not less wrong.
 
-**Reopening condition.** A binding house style from a publisher; audience testing that reads `du` as
-inappropriately familiar; or the German edition ceasing to be a parallel online version and becoming a
-standalone book.
+**Reopening condition.** A binding publisher house style prescribing `du`; or a native-reader finding
+(Gate 7) that `Sie` reads as distant for this audience. Owner decision either way.
 
 ### 7.2 Gendering — rephrase the role away; generic masculine as the fallback
 
@@ -453,7 +476,11 @@ Präsident\*in*) — that is a real fact, and it supports the decision as an *or
 support a claim about political neutrality. **So the canon records this as a consistency decision, not as a
 neutrality claim.** §6.7's real risk is wobble, and any single consistent choice removes it.
 
-**Where rephrasing breaks — name these in the canon, or each renderer improvises:**
+**Where rephrasing breaks — name these in the canon, or each renderer improvises.** They carry **more**
+weight since §7.1 flipped to `Sie`: an earlier version of the canon justified the rephrase rule partly by
+claiming the `du` address "dodges most gendering occurrences by construction". That justification is void —
+the polite form does not dodge agent nouns — so these four are where the corpus actually has to decide, and
+they occur more often than the original framing implied.
 
 1. **Responsibility** — *Der Betreiber haftet.*
 2. **Authorisation** — *Nur Administratoren dürfen Schlüssel rotieren.*
