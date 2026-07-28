@@ -592,7 +592,7 @@ cluster at exactly two points, and they are scheduled here rather than discovere
 | Phase | What |
 |---|---|
 | **0** | Infrastructure: `de` scaffold as gated UNRELEASED; Gate 0 parity script; card hyphenation; the stemmer test (§6.11). |
-| **1** | Canon bootstrap: `canon/de/_language.md` (voice, `man` ban, gendering, typography, Denglisch morphology, Durchkopplung, English-syntax tells, print bar) + the **kept-EN register** (§6.2/§6.3) + both course ledgers seeded + the full German glossary = all term decisions materialised, each with a Gate 6 attestation. |
+| **1** | Canon bootstrap: `canon/de/_language.md` (voice, the `man` **restriction**, gendering, typography, Denglisch morphology, Durchkopplung, English-syntax tells, print bar) + the **kept-EN register** (§6.2/§6.3) + both course ledgers seeded + the full German glossary = all term decisions materialised, each with a Gate 6 attestation. |
 | **2** | **Pilot** — ONE mid-complexity lesson, both its pages, through the FULL stack (Gates 0–6, cold read ×2). Recommended: *Tool use*, as SK — long enough to exercise every gate, central enough that its terminology feeds everything after, **and directly comparable to the Slovak pilot.** |
 | **2b** | ⚠️ **Scheduled risk cluster 1 of 2 — pilot re-edit.** |
 | **2c** | ⚠️ **Method change: full reconstruction-from-the-proposition pass.** Budgeted, not discovered. |
