@@ -98,10 +98,47 @@ Postmortem.*
 | **`gate` — Sense-Card** | drei verschiedene Begriffe unter einem englischen Wort, siehe unten | siehe Sense-Card |
 | **`drift` — Sense-Card** | drei verschiedene Begriffe, siehe unten | siehe Sense-Card |
 | **Scar archive / „Narbenarchiv"** | geprägte Figur, im Deutschen ungeprüft | **auf Probe**; schlicht: „das Archiv der behobenen Fehlerklassen" |
+| **`provenance`** | siehe die Entscheidung direkt unter dieser Tabelle — **„Herkunftsnachweis" ist ein gefangener falscher Freund** | kept-EN **die Provenance** als Terminus; **„Herkunft"** als kurzes Label |
 | **Citation laundering** | im Slowakischen und Russischen als Figur **gestrichen** (owner: DROP) | nicht prägen; direkt sagen: „eine verzerrte Behauptung, die so lange weitergereicht wird, bis sie wie eine Quellenangabe aussieht" |
 | **Human router / „Mensch als Router"** | im Slowakischen „auf Probe" adoptiert; im Deutschen ungeprüft | **auf Probe**, immer zuerst über *Human-in-the-Loop* einführen |
 
 ---
+
+## §4a Entscheidung: `provenance` — und ein gefangener falscher Freund
+
+**Kanon: kept-EN — die Provenance** (§1.0 Klasse 2), Glosse beim ersten Vorkommen „(Herkunft und
+Nachweiskette eines Artefakts)". Wo ein **kurzes Label** gebraucht wird, steht schlicht **„Herkunft"**.
+
+> **„Herkunftsnachweis" ✗ — ABGELEHNT, und der Grund gehört ins Protokoll.** Der Tausch war naheliegend,
+> grammatisch einwandfrei und wurde ohne Prägung eines neuen Wortes gemacht — trotzdem falsch, weil das Wort
+> im Deutschen **bereits besetzt** ist. Duden: „[schriftlicher] Nachweis, aus welchem Gebiet, welchem Land
+> eine **Ware, ein Importartikel** stammt" (<https://www.duden.de/rechtschreibung/Herkunftsnachweis>) — ein
+> **Ursprungszeugnis aus Handel und Zoll**, im Alltag zusätzlich stark vom Strommarkt besetzt
+> (Grünstrom-Herkunftsnachweise). Ein deutscher Leser dekodiert bei „Herkunftsnachweis" ein Zertifikat für
+> eine Ware, nicht die Nachweiskette eines Build-Artefakts.
+>
+> **Das ist exakt die Falle, für die die Terminus-Probezeit existiert** (§ Figuren und Termini auf Probe):
+> eine plausible, grammatisch tadellose deutsche Bildung, die **semantisch in eine andere Domäne zeigt** —
+> derselbe Fehlertyp wie das slowakische „súbeh" für *race condition*. Keine Glosse rettet ein Wort, dessen
+> Wörterbuchbedeutung woanders hingehört.
+
+**Ebenfalls geprüft und nicht genommen:**
+
+- **„Provenienz" bare — ABGELEHNT als Terminus.** Es bedeutet zwar das Richtige, ist aber in beiden
+  Wörterbüchern **registermarkiert** — Duden „**bildungssprachlich**", DWDS „**gehoben**"
+  (<https://www.dwds.de/wb/Provenienz>) — und die DWDS-Kollokationen sind durchgehend kunsthistorisch/
+  archivarisch (*adelig, Echtheit, Restitution, Erhaltungszustand, lückenlos, ungeklärt*). In der Drucklatte
+  dieses Korpus (dpunkt/heise) wäre es eine Stilhebung, kein Fachwort.
+- **„Datenprovenienz" — OPEN, nicht ratifiziert.** Als Fachkompositum in der Forschungsdaten- und
+  Data-Governance-Literatur plausibel, in dieser Sitzung aber **nicht verifiziert** (Suchbudget erschöpft).
+  Nicht verwenden, bis ein Beleg vorliegt; **nicht** aus Plausibilität setzen.
+- **„Datenherkunft" — VERWORFEN nach MT-Signal-Prüfung.** Der einzige Fundort war lokalisierte
+  Microsoft-Learn-Dokumentation; genau die Quellensorte, die § Sprachpaar und Rolle der Locale
+  disqualifiziert. *(Diese Disqualifikation stammt von `de-ui-strings` und war richtig.)*
+
+**Sichtbare Fläche:** das Label `Enterprise-Reifegrad: Prüfpfad, Herkunftsnachweis, Vorgaben` (ausgeliefert
+in #310) trägt die abgelehnte Form und ist auf **„… Prüfpfad, Herkunft, Vorgaben"** zu ändern. *(`Prüfpfad`
+für *audit trail* und `Vorgaben` für *policy* sind davon nicht berührt und bleiben.)*
 
 ## §5 Sense card: `gate` (drei verschiedene Begriffe unter einem englischen Wort)
 

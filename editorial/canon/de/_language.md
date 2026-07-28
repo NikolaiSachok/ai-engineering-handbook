@@ -55,7 +55,8 @@ A DISPUTED or OPEN row is a correct outcome. A confidently-wrong row is not.
 6. **Durchkopplung:** mehrgliedrige englische Fügungen werden im deutschen Satz durchgekoppelt —
    *Machine-Learning-Modell*, *Prompt-Injection-Angriff*, *Retrieval-Qualität*. „Prompt Injection Angriff" ✗.
 7. **Typografie:** „…" primär, ‚…' verschachtelt, **niemals »…«** und niemals «…»; **ß** (bundesdeutsch, kein
-   Schweizer ss); Dezimalkomma; Bis-Strich kompress; **Prozentzeichen mit schmalem geschützten
+   Schweizer ss); Dezimalkomma; **Gedankenstrich `–` (U+2013) MIT Leerzeichen — nie `—` (U+2014)**;
+   Bis-Strich kompress; **Prozentzeichen mit schmalem geschützten
    Zwischenraum** und Tausendergliederung ebenso — **10–20 %**, `28,7 %`, `1 000 000` (nicht „20%",
    nicht „1.000.000"). Das weicht bewusst von EN/RU/SK ab (§ Typografie, Vorrangregel).
 8. **Drucklatte:** dpunkt, Rheinwerk, O'Reilly Deutschland, heise/iX. **Nicht** Enterprise-Marketing-Deutsch —
@@ -190,6 +191,18 @@ die in einer benachbarten Standardvarietät völlig korrekt und für die gewähl
   > Fließtextes. Und `theme.blog.post.readMore` („Mehr lesen") ist exakt dieselbe Textsorte wie
   > `landing.cta.open` — stünde daneben „Öffnen Sie den Kurs →", wäre der Registerbruch **auf einer
   > Bildschirmseite sichtbar**.
+  >
+  > ⚠️ **Einschränkung zu diesem Beleg — das `de`-Theme-Paket ist ein Zeuge für das REGISTER, nicht für die
+  > KORREKTHEIT.** Eine Prüfung des ausgelieferten Pakets beim Bau von #279 ergab: **16 der 74**
+  > automatisch befüllten Schlüssel kommen unübersetzt auf Englisch zurück, drei weitere sind fehlerhaft —
+  > darunter „**Dokumentation Seiten**" (ein Deppenleerzeichen, also genau der Fehler, den §1.3.3 verbietet)
+  > und „**Ein doc getaggt**" (unübersetztes kleingeschriebenes Substantiv plus Denglisch-Partizip).
+  > **Das entwertet die Belegkraft oben nicht** — die zitierten Schlüssel („Kopieren", „Schließen",
+  > „Mehr lesen", „Bitte kontaktieren Sie …") sind einwandfreies Deutsch, und die Beobachtung ist ohnehin
+  > eine über die **Wahl der Verbform**, nicht über sprachliche Fehlerfreiheit. Aber: **das Paket darf nie
+  > als Autorität für eine Schreibung zitiert werden**, nur als Zeugnis dafür, welche Form deutsche Autoren
+  > in dieser Textsorte greifen. Wer eine Schreibung daraus übernimmt, importiert mit einiger
+  > Wahrscheinlichkeit einen Defekt. *(Befund: `de-ui-strings`, #279/#310.)*
   >
   > **Der Satz, der die Regel ausspricht** (Sheeren Münch-Schmitt, Lokalisierungsfachfrau,
   > <https://lingdrafts.hypotheses.org/2190>): „Übrigens: **Schaltflächen enthalten praktisch immer eine
@@ -564,6 +577,48 @@ tatsächliche Form.
   „von 8–20 Uhr" ✗.
   **Wiederaufnahme:** eine bindende Verlagshausregel; oder der Korpus wechselt in ein
   Korrespondenz-/Formularregister, für das DIN 5008 normativ ist.
+
+- **Gedankenstrich: Halbgeviertstrich `–` (U+2013) MIT Leerzeichen auf beiden Seiten.**
+  „Teil I – RAG", „Teil III – Produktivbetrieb und LLMOps", „Serving – FastAPI und Docker".
+  **Der Geviertstrich `—` (U+2014) ist im Deutschen falsch** — er ist die englische und spanische Konvention
+  und wird hier **nie** gesetzt, auch nicht als Trenner zwischen Label und Titel, auch nicht mitten im Satz.
+  **STATUS: SETTLED.**
+  - de.wikipedia, *Halbgeviertstrich*: „Der Gedankenstrich wird in deutschen Texten typografisch als
+    **Halbgeviertstrich** realisiert" und „Der Gedankenstrich wird auf beiden Seiten durch ein **Leerzeichen**
+    (oder einen Zeilenumbruch) vom Umgebenden getrennt"; zum Englischen ausdrücklich abgegrenzt: „Im
+    Englischen wird als Gedankenstrich oft auch der **Geviertstrich** ( — ) … verwendet."
+    (<https://de.wikipedia.org/wiki/Halbgeviertstrich>)
+  - de.wikipedia, *Geviertstrich*: im Deutschen „**kaum verwendet**"; als Gedankenstrich dient er „in
+    verschiedenen Sprachen wie dem **Englischen und dem Spanischen**".
+    (<https://de.wikipedia.org/wiki/Geviertstrich>)
+  - typolexikon, *Gedankenstrich*: „In der Typografie wird ein Gedankenstrich auch als **Halbgeviertstrich**
+    bezeichnet"; für den Parenthesestrich „**Vor und nach dem Gedankenstrich wird ein Leerraumzeichen
+    gesetzt**". (<https://www.typolexikon.de/gedankenstrich/>)
+
+  > **Das ist ein Fall der Vorrangregel, und zwar der bisher größte nach Fläche.** Der Geviertstrich steht in
+  > diesem Korpus nicht aus deutschem Anlass, sondern **geerbt aus dem englischen Quelltext**, und RU und SK
+  > haben ihn mitgeerbt: `Часть I — RAG`, `Časť I — RAG`. Genau die Konstellation, für die die Vorrangregel
+  > geschrieben wurde — projektweite Konvention gegen belegte deutsche Norm → **die deutsche Norm gewinnt**,
+  > und die Divergenz zu RU/SK wird hier protokolliert statt stillschweigend absorbiert. Wer sie später
+  > „glattzieht", macht die Entscheidung rückgängig.
+  >
+  > **Verhältnis zur Bis-Strich-Zeile — kein Widerspruch, zwei verschiedene Striche.** Beide sind derselbe
+  > Codepoint `–` (U+2013); sie unterscheiden sich **nur durch die Leerzeichen**, und das ist Absicht:
+  > **Bis-Strich kompress** (`10–20 %`, ein Bereich), **Gedankenstrich gespreizt** (`Teil I – RAG`, ein
+  > Einschub oder Trenner). Wer die beiden Zeilen nebeneinander liest und einen Fehler vermutet, hat die
+  > Funktion verwechselt, nicht den Kanon.
+  >
+  > **Herkunft dieser Zeile.** Aufgeworfen von der `de-ui-strings`-Instanz beim Bau von `i18n/de/**` (#279),
+  > die den Wert **nicht** eigenmächtig geflippt hat, weil der Kanon ihn nicht entschied — richtig gehandelt:
+  > eine locale-weite typografische Festlegung ist eine Kanonentscheidung, keine JSON-Entscheidung.
+  > **Der Befund ist zugleich eine Lücke im Sweep:** `de-locale-playbook.md` §7.7 gibt an, jeden aus RU/SK
+  > geerbten typografischen Wert geprüft zu haben, und führt diesen nicht auf. Ein Sweep, der sich für
+  > vollständig erklärt, ist damit nachweislich unvollständig gewesen — die Lehre gilt allgemein: **ein
+  > Vollständigkeitsanspruch ist selbst eine Behauptung und trägt keinen Beleg.**
+
+  **Betroffene Flächen (Stand #310, noch nicht umgestellt):** acht `Teil N — …`-Label in den Sidebars, acht
+  Kopien davon im Footer, zwei satzinterne Vorkommen (`landing.hero.tagline`, RAG-Blurb) — und, ungleich
+  größer, **die gesamte noch ungeschriebene deutsche Lektionsprosa**, für die diese Zeile ab jetzt gilt.
 
 - **Geschütztes Leerzeichen zwischen Zahl und Einheit** (128 GB, 8 GPU, 24 h), damit der Wert nicht am
   Zeilenende abreißt. **STATUS: SETTLED** für das Leerzeichen („Einheiten werden **immer** mit einem
