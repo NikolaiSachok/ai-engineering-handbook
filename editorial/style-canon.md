@@ -79,8 +79,11 @@ These are the language-agnostic spine. The per-language files specialise them; t
   glossary, the pass's own standing instructions). The test before marking anything settled: *name the pass that
   confirmed it — it must not be the pass that proposed it.* Related: a naturalness reviewer cannot report on
   whether a term is the **right** one; fluency and domain correctness are separate axes and the second needs its
-  own pass against external sources. (Incident + full rule, RU: `canon/ru/ai-sdlc.md`, the owner-ruling journal,
-  entry `escape` → «пропущенный дефект».)
+  own pass against external sources. A coinage that reads cleanly and fails only on **usage** (the sense is
+  right; this is simply not what the field calls the thing) leaves no trace on the fluency axis, so the term pass
+  is not a redundancy over a stricter naturalness prompt. (Incident + full rule, RU: `canon/ru/ai-sdlc.md`, the
+  owner-ruling journal, entry `escape` → «пропущенный дефект» — including the 2026-07-28 owner correction
+  striking the earlier "inverts the meaning" reading.)
 - **Sense cards.** Where one word carries several senses across the corpus, a **sense card** fixes one meaning
   per frame and names the disambiguating question to ask before writing the word — a reservation breach is a
   defect even when the sentence is otherwise correct. Each locale keeps its own cards (their polysemy differs;

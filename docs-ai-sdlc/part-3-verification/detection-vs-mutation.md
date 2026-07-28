@@ -14,6 +14,14 @@ artifact*. This lesson is the construction that follows from it: how you wire a 
 one making the change cannot also be the one certifying it — and how you price the cheat out of the work before
 the agent finds it.
 
+:::note[Field note]
+
+A case of this going wrong inside the handbook's own pipeline: [I told my reviewer to ignore the one thing that
+was wrong](/blog/i-told-my-reviewer-to-ignore-it) — the pass that made a change also wrote the entry exempting
+that change from review.
+
+:::
+
 ## The gate you can game is the gate you have
 
 Reward hacking is not a thought experiment; it is measured, large, and — worst of all — it *grows with the size
