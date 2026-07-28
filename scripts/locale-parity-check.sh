@@ -15,9 +15,10 @@
 #
 #   1. file set          — identical set of relative .md paths
 #   2. heading shape     — identical H1/H2 count and level sequence per file
-#   3. component counts  — identical counts of `<InfoCard`, `<Node`, `<YouTube`
-#   4. fenced blocks     — identical count per fence language (```text excepted)
-#   5. numeric drift     — no percentage/decimal figure differing in value between the two
+#   3. heading anchors   — identical ORDERED sequence of explicit `\{#id}` heading ids
+#   4. component counts  — identical counts of `<InfoCard`, `<Node`, `<YouTube`
+#   5. fenced blocks     — identical count per fence language (```text excepted)
+#   6. numeric drift     — no percentage/decimal figure differing in value between the two
 #
 # --- What was relaxed, and on what evidence ----------------------------------------------------
 #
@@ -69,6 +70,16 @@
 #
 # The file set and component counts were already clean on ru and sk and are asserted at full
 # strictness. They are the two checks a German tree will exercise from its first translated page.
+#
+# HEADING ANCHORS came later (#307's companion) and needed no relaxation: it was clean on ru and sk
+# from the first run. #306 gave 123 glossary headings an explicit `\{#id}` across six files, applied
+# BY HEADING INDEX and checked by hand afterwards — correct exactly once. Insert one entry mid-file
+# in a single locale and every id below it shifts: each id still exists, the counts still match,
+# the SET is still equal, and every inbound `glossary.md#id` link into that locale now lands on the
+# neighbouring entry. So the sequence is compared in ORDER, which catches the insert and the plain
+# swap alike. The escaped `\{` is the on-disk form (`future.v4: true` removes the MDX1 heading-id
+# escape, so a bare `{` parses as JSX and fails the build); the escape is markup, not id, and is
+# stripped before comparing.
 #
 # Usage: scripts/locale-parity-check.sh [locale…]   (default: every locale under i18n/)
 # Exit code: 0 if every locale is in parity, 1 otherwise.

@@ -46,7 +46,9 @@ jobs:
         # glossary across trees (see docusaurus.config.ts). i18n-link-check.sh runs the
         # build and re-imposes the hard gate on every REAL broken link: any breakage in
         # a released locale (en/ru) or on a genuinely-translated unreleased-locale page
-        # still fails CI; only pure EN-fallback→glossary links are tolerated.
+        # still fails CI; only pure EN-fallback→glossary links are tolerated. It runs its
+        # own classifier self-test first (fast, no build) — #307 was a mapping bug that a
+        # PASSing gate hid indefinitely, so the classifier is now asserted, not assumed.
         run: bash scripts/i18n-link-check.sh
 
   lint:

@@ -21,7 +21,8 @@ natively per the workflow below, never machine-translated).
   **every released locale** via the authoring-team skill, then that locale's canon
   (`editorial/canon/<lang>/`) + `scripts/i18n-link-check.sh` gate it. **Link parity is
   not shape parity**, so `scripts/locale-parity-check.sh` gates the rest in CI: the file set, the H1/H2
-  sequence, the `<InfoCard`/`<Node`/`<YouTube` counts, the fenced-block count per language, and figure drift.
+  sequence, the ordered `\{#id}` heading-anchor sequence, the `<InfoCard`/`<Node`/`<YouTube` counts, the
+  fenced-block count per language, and figure drift.
   Read its header before "fixing" a finding — it records what each check deliberately does NOT assert, and why. The gated-
   visibility infra (`RELEASED_LOCALES`/`UNRELEASED_LOCALES` in `docusaurus.config.ts`) stays in place for the
   NEXT locale: add it to `UNRELEASED_LOCALES` to build+validate it in CI while hidden on deploy, then move it
@@ -283,6 +284,13 @@ proportionate to a docs site, no ceremony for its own sake.
   access can settle it in a minute against *Settings → Branches → main → Require status checks*, after which
   both documents get reconciled to whatever is true. It matters because advisory and required checks look
   identical on a green PR and differ entirely on a red one.
+- **Adding a course needs no gate edit — the course table is derived.** A course is three names that must
+  agree: its `routeBasePath` (the URL prefix), its English content dir, and its `i18n/<loc>/…` plugin dir.
+  `scripts/courses.py` reads all three off the `COURSES` array in `docusaurus.config.ts` and both gates that
+  travel between them (`i18n-link-check.sh`, `locale_parity.py`) consume it. Never restate the mapping in a
+  script: each gate used to hold its own copy, and the copy in the link gate knew only the first course —
+  which made that gate a silent no-op for every gated-locale page (#307). Parsing there fails **closed**: an
+  unreadable table aborts rather than returning a short one, because a short table is an exemption.
 - **Content PRs** additionally require the **editorial gate** above (literary-edit pass per language) —
   enforced as a PR-template checklist item, not automation.
 - **Pre-commit hook** mirrors the generic leak scan locally so leaks are caught before they're committed.

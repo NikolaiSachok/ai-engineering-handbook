@@ -71,11 +71,11 @@ The handbook follows a small, real SDLC (kept proportionate to a docs site):
 
   | job name in CI | what it runs | what it catches |
   |---|---|---|
-  | `Build (both locales)` | `npm run build` for **every** locale | dead internal links (`onBrokenLinks: 'throw'`), a broken i18n tree |
+  | `Build (both locales)` | `scripts/i18n-link-check.sh` — a classifier self-test, then `npm run build` for **every** locale | dead internal links/anchors (`onBrokenLinks`/`onBrokenAnchors`), a broken i18n tree, a broken link on a page a gated locale HAS translated |
   | `Markdown lint` | `npm run lint:md` | structure/format hygiene |
   | `Generic leak scan` | `npm run leak-scan` | secrets, credentials, local paths, emails |
   | `Icon register drift check` | `scripts/icon-register-check.sh` | infographic icons drifting from the register |
-  | `Locale structural parity` | `scripts/locale-parity-check.sh` | a translated page losing sections, figures or card nodes; a sidebar category with no translation key; a released locale missing a whole course |
+  | `Locale structural parity` | `scripts/locale-parity-check.sh` | a translated page losing sections, figures or card nodes; an explicit `\{#id}` heading anchor that shifted position in one locale; a sidebar category with no translation key; a released locale missing a whole course |
 
   The `Build (both locales)` job name is **stale** — it builds every released locale plus the gated
   ones, which is four today, not two. It is left as-is deliberately: if branch protection requires

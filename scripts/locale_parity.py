@@ -18,13 +18,8 @@ import re
 import sys
 from collections import Counter
 
-# The English source dir -> the i18n plugin dir that translates it. The FIRST course is the preset
-# docs instance, whose i18n dir is UN-suffixed; every other course is a plugin instance with an
-# `-<id>` suffix (see the COURSES block in docusaurus.config.ts). Adding a course = a pair here.
-COURSE_PAIRS = [
-    ("docs", "docusaurus-plugin-content-docs"),
-    ("docs-ai-sdlc", "docusaurus-plugin-content-docs-ai-sdlc"),
-]
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from courses import courses  # noqa: E402  (path set above so the gate runs from the repo root)
 
 # The MDX components whose silent loss is invisible in prose. `<Node` is counted bare rather than as
 # `<Node label=`: every node in this corpus writes `icon` before `label`, so matching the literal
@@ -77,6 +72,40 @@ def headings(text: str, max_level: int = 2) -> list[int]:
         m = re.match(r"^(#{1,6}) ", line)
         if m and len(m.group(1)) <= max_level:
             out.append(len(m.group(1)))
+    return out
+
+
+def heading_anchors(text: str) -> list[str]:
+    """The ORDERED sequence of explicit heading ids — `## Some term \\{#some-id}`.
+
+    An explicit id is a cross-locale CONTRACT, not decoration. A lesson's terms footer links to
+    `../glossary.md#some-id` and that one link is shared by every locale, so the id has to name
+    the same entry in all of them; an auto-slug cannot hold it, because a translated heading
+    slugifies to something else entirely (#300, #306).
+
+    ORDER, not just the set, because #306 applied 123 ids across six glossary files BY HEADING
+    INDEX. That is correct exactly once. Insert a new entry mid-file in one locale only and every
+    id below it shifts by one: each id still exists, the counts still match, the set is still
+    equal — and every inbound link into that locale now lands on the neighbouring entry. The
+    reader gets a plausible wrong definition, which is the failure mode nobody reports. A sequence
+    comparison catches both the insert and the straight swap; a set comparison catches neither.
+
+    The brace is backslash-escaped in source (`\\{#id}`) because `future.v4: true` turns off the
+    MDX1 heading-id compat preprocessor and a bare `{` parses as a JSX expression, hard-failing the
+    build. The escape is therefore the form on disk — but it is markup, not part of the id, so it
+    is matched optionally and stripped: a bare `{#id}` must compare equal to `\\{#id}`, or this
+    gate would report a mismatch for two headings that name the same anchor.
+    """
+    out, fence = [], False
+    for line in strip_frontmatter(text).splitlines():
+        if re.match(r"^ *(```|~~~)", line):
+            fence = not fence
+            continue
+        if fence:
+            continue
+        m = re.match(r"^#{1,6} .*?\\?\{#([^}\s]+)\}\s*$", line)
+        if m:
+            out.append(m.group(1))
     return out
 
 
@@ -233,7 +262,24 @@ def compare_pair(locale: str, released: bool, src: str, tgt: str, rep: Report) -
                 print(f"    en:     {a}")
                 print(f"    {locale}: {b}")
 
-        # 3. component counts
+        # 3. explicit heading anchors — the ordered id sequence (see heading_anchors())
+        aa, ab = heading_anchors(en), heading_anchors(loc)
+        if aa != ab:
+            rep.fail(f"{where} — explicit heading id sequence differs (inbound "
+                     f"`#anchor` links into {locale} would land on the wrong heading):")
+            gone = [i for i in aa if i not in ab]
+            extra = [i for i in ab if i not in aa]
+            if gone:
+                print(f"    missing in {locale}: {gone}")
+            if extra:
+                print(f"    only in {locale}:    {extra}")
+            if not gone and not extra:
+                print(f"    same ids, different ORDER — first divergence at index "
+                      f"{next(i for i, (x, y) in enumerate(zip(aa, ab)) if x != y)}:")
+                print(f"    en:     {aa}")
+                print(f"    {locale}: {ab}")
+
+        # 4. component counts
         ca, cb = components(en), components(loc)
         if ca != cb:
             rep.fail(f"{where} — MDX component counts differ:")
@@ -241,7 +287,7 @@ def compare_pair(locale: str, released: bool, src: str, tgt: str, rep: Report) -
                 if ca[tag] != cb[tag]:
                     print(f"    {tag}: en={ca[tag]} {locale}={cb[tag]}")
 
-        # 4. fenced blocks — count per language; content is the locale's own (see the .sh header)
+        # 5. fenced blocks — count per language; content is the locale's own (see the .sh header)
         fa, fb = fences(en), fences(loc)
         count_a = Counter(l for l, _ in fa if l not in COUNT_EXEMPT_FENCES)
         count_b = Counter(l for l, _ in fb if l not in COUNT_EXEMPT_FENCES)
@@ -254,7 +300,7 @@ def compare_pair(locale: str, released: bool, src: str, tgt: str, rep: Report) -
             1 for (_, ba), (_, bb) in zip(fa, fb) if ba != bb
         )
 
-        # 5. numeric drift
+        # 6. numeric drift
         na, nb = numeric_tokens(en), numeric_tokens(loc)
         only_en, only_loc = na - nb, nb - na
         classes = {unit_class(t) for t in only_en} & {unit_class(t) for t in only_loc}
@@ -290,7 +336,7 @@ def compare_category_keys(
     overridden by `current.json`); asserting against it would be asserting against a decoy.
 
     Sidebar id is read off the key rather than configured, so this needs no third column in
-    COURSE_PAIRS to keep in sync. A key may also carry sub-fields of a category — e.g.
+    the course table to keep in sync. A key may also carry sub-fields of a category — e.g.
     `...category.Cross-cutting.link.generated-index.description` — so a key is orphaned only
     when its remainder is neither a label nor a sub-field of one.
     """
@@ -331,13 +377,15 @@ def main(argv: list[str]) -> int:
         d for d in os.listdir("i18n") if os.path.isdir(os.path.join("i18n", d))
     )
     released = released_locales()
+    course_table = courses()   # derived once; see scripts/courses.py
     rep = Report()
     for locale in locales:
         if locale == "en":
             continue
         is_released = locale in released
         print(f">> {locale}{'' if is_released else ' (gated/unreleased)'}")
-        for src, plugin in COURSE_PAIRS:
+        for course in course_table:
+            src, plugin = course.docs_dir, course.i18n_dir
             compare_pair(locale, is_released, src, f"i18n/{locale}/{plugin}/current", rep)
             compare_category_keys(
                 locale, is_released, src, f"i18n/{locale}/{plugin}/current.json", rep
