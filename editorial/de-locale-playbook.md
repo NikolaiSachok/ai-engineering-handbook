@@ -190,6 +190,25 @@ Record the recurring shapes in `canon/de/<course>.md` as a **constructions** sec
 substitutions**, each entry naming the English shape, the candidate frames, the test that decides between
 them, and a worked example of each branch. An entry that reads as a lookup table has failed.
 
+**Cannot catch — established by the pilot (2026-07-28), and it is structural, not a tuning problem: Gate 5
+judges strings IN ISOLATION and therefore cannot see a page-level pattern.** Every string can win its own
+blind round and the page can still read as machine output. Three observed instances, all on the pilot pages:
+
+- **heading-sequence rhythm** — three counted headings in a row („Der Tool-Call in vier Schritten", „Vier
+  Fehlerbilder …", „Drei Kosten …"). Each is a good German heading; the run is a listicle metronome.
+- **one referent under four names** — `Bestand` / `Satz an Tools` / `Tool-Liste` / `Tool-Katalog`. This is
+  the wobble the canon calls the loudest MT tell, one level up from gender.
+- **paragraph cadence** — eleven consecutive paragraphs ending on a pointed short sentence.
+
+**Also established: the blind cross-model judge and the naive cold reader disagree about headings
+systematically, and neither is right alone.** The judge rewards `Nominalstil` and information structure —
+both genuine German heading virtues; the reader calls several of the same headings stilted. Do not resolve
+this by picking a favourite judge.
+
+⇒ **A page-level consistency check must follow Gate 5** (heading sequence as a whole, one referent = one
+name, no cadence metronome). It is a *page* pass, not a string pass, and it is the reason Gate 5 alone did
+not protect the layer it exists for.
+
 ### Gate 6 — attestation-based term adjudication
 
 **This is the real replacement for the owner's eye, and it is the reason the A1 gap is survivable.**
@@ -221,6 +240,34 @@ authority. German will usually find a real answer.
 **What this gate really does: it converts "the owner reads it" into "the source says so" — a claim a
 non-speaker can verify independently.** That is the whole trick.
 
+### Gate 6.5 — reconciliation pass over parallel attestation batches *(added after the pilot, 2026-07-28)*
+
+**Numbered 6.5 deliberately: it sits between 6 and 7 and renumbers nothing.**
+
+Gate 6 is run in parallel batches because that is the only way it finishes. The pilot ran **five**. Two of
+the five collided at the seam, **and each was locally right** — no batch can see its neighbours, so no batch
+can detect the collision:
+
+1. **`write tools` / `read tools`.** Batch B attested the German participle skeleton („rein **lesende**
+   Services", „eine **schreibende** Transaktion") and proposed „schreibende **Werkzeuge**". Batch C had
+   measured `Tools` : `Werkzeuge` ≈ **15 : 2–3** in native German agent prose and confirmed `Tool` as
+   kept-EN. → Keep the attested skeleton, substitute the corpus's settled head noun: **„schreibende Tools"**.
+2. **`runtime` in the fan-out sentence.** Batch C's worked example wrote „**Die Laufzeitumgebung** verteilt
+   die Aufrufe …". Batch E, which studied that referent specifically, rules `Laufzeitumgebung` the wrong
+   referent (JVM/CLR-class host platform) and `Laufzeit` a categorical false friend. → **Batch E wins**;
+   „**Ihre Anwendung** verteilt die Aufrufe …".
+
+**Without this step both would have shipped** — a head noun against a corpus-wide decision and a wrong
+referent — and **both would have passed every fluency gate**, because both are fluent German.
+
+**Procedure.** One agent, all batch outputs at once, no new research: (a) build the union of every ruled
+term; (b) flag any term two batches touched, and any term whose *worked example* uses a word another batch
+ruled on; (c) resolve by the ranked-authority rule, with the batch that studied the referent **specifically**
+outranking the batch that used it in passing; (d) write the resolution into the term sheet as binding, with
+both sides recorded. **The output of Gate 6 is not the batches — it is the reconciled sheet.**
+
+**Cannot catch:** anything a single batch got wrong on its own; this gate only sees disagreements.
+
 ### Gate 7 — one native German reader, once, on the pilot
 
 Reproduce [`sk-pilot-naturalness-check.md`](./sk-pilot-naturalness-check.md) in German. Its proven shape:
@@ -239,6 +286,44 @@ item in the milestone.** Budget it as a scheduled task, not a hope.
 
 **Documented fallback if no human is secured:** a third independent cold read on the pilot (Gate 3 ×3), and
 every `DISPUTED` row stays disputed — it does not get resolved by model consensus.
+
+### The gates' own repair record — two mechanical gates could not accept a partial locale *(pilot, 2026-07-28)*
+
+Both were found empirically, by staging the English pages as `i18n/de/**` and running the gates **before a
+line of German existed**. Neither was a bug in the German; both were gates that could not represent the state
+the pilot was in.
+
+- **`scripts/locale_parity.py`, file-set check.** The moment `current/` exists it compared the **full** file
+  set and reported every not-yet-translated page as a defect. Correct for a *released* locale; for an
+  *unreleased* one, partial translation is the **normal state**. The script already knew the asymmetry —
+  `missing_translation()` applies it to a wholly absent course — just not one level down. **Effect without
+  the fix: the locale would have been all-or-nothing and the pilot could never have gone green.** Fix:
+  missing pages are informational in an unreleased locale; the **reverse** direction (a page with no English
+  source) stays a hard error in *every* locale — that is the half that must not fail open.
+- **`scripts/i18n-link-check.sh`, tolerance rule.** It tolerated a broken link only when the **source** page
+  was an untranslated EN fallback. But the first translated lesson of a locale necessarily links to
+  untranslated siblings and an untranslated glossary, and Docusaurus cannot resolve `.md` links across the
+  fallback/translation boundary. The gate's own header comment promised it "maintains itself as locales fill
+  in"; **in fact it did so only at 0 % and at 100 %.** Fix: the tolerance now judges the **pair** — tolerated
+  when the source is in an unreleased locale **and the target is not yet translated there**. Once the target
+  exists the link must resolve, so a wrong glossary anchor into an already-translated page still fails
+  (#307). Self-test grew from 9 to 19 cases, 10 of them new pair cases.
+
+> **The generalisable lesson, and it is about gate design, not about these two scripts: both gates were
+> written against a locale's END state and were untested against its FIRST state.** A gate that checks the
+> target state looks like a working gate for as long as nobody drives the transition. ⇒ **The pilot is the
+> first moment the gates themselves are tested, and it must be run BEFORE the prose, not after it** — stage
+> the English pages in the locale tree and run the whole mechanical stack against them.
+
+**Two further findings about gate *inputs*, from the same pilot — both are the same failure:**
+
+- **Do not gate an artefact that is still being produced.** A mechanical gate was run against a file an agent
+  was still writing and reported a defect that did not exist. The gate judged correctly — about an
+  intermediate state, which is not a subject of review.
+- **A gate's input preparation is part of the gate.** The register judge was fed sentences truncated at 300
+  characters and returned **eleven "Satzabbruch" verdicts** that were artefacts of the extraction, not
+  properties of the text. (The judge flagged the pattern itself.) ⇒ When standing up any gate, verify the
+  **input** first — complete? finished? unmutilated? — then read the verdict.
 
 ---
 
@@ -777,10 +862,10 @@ cluster at exactly two points, and they are scheduled here rather than discovere
 |---|---|
 | **0** | Infrastructure: `de` scaffold as gated UNRELEASED; Gate 0 parity script; card hyphenation; the stemmer test (§6.11). |
 | **1** | Canon bootstrap: `canon/de/_language.md` (voice, the `man` **restriction**, gendering, typography, Denglisch morphology, Durchkopplung, English-syntax tells, print bar) + the **kept-EN register** (§6.2/§6.3) + both course ledgers seeded + the full German glossary = all term decisions materialised, each with a Gate 6 attestation. |
-| **2** | **Pilot** — ONE mid-complexity lesson, both its pages, through the FULL stack (Gates 0–6, cold read ×2). Recommended: *Tool use*, as SK — long enough to exercise every gate, central enough that its terminology feeds everything after, **and directly comparable to the Slovak pilot.** |
-| **2b** | ⚠️ **Scheduled risk cluster 1 of 2 — pilot re-edit.** |
-| **2c** | ⚠️ **Method change: full reconstruction-from-the-proposition pass.** Budgeted, not discovered. |
-| **2d** | ⚠️ **Polish pass.** |
+| **2** | ✅ **RUN 2026-07-28.** **Pilot** — ONE mid-complexity lesson, both its pages, through the FULL stack (Gates 0–6, cold read ×2 — in the event ×3). Recommended and used: *Tool use*, as SK — long enough to exercise every gate, central enough that its terminology feeds everything after, **and directly comparable to the Slovak pilot.** Full record: `canon/de/rag.md` §8, Phase 3. |
+| **2b** | ⚠️ **Scheduled risk cluster 1 of 2 — pilot re-edit.** ✅ **Needed, and substantial.** Three cold reads (two comprehension, one naturalness) plus the cross-model register judge produced a real repair round: wrong-path words, a non-native coinage on both pages, English collocation skeletons, and page-level defects Gate 5 cannot see. **The pilot did not sail through.** |
+| **2c** | ⚠️ **Method change: full reconstruction-from-the-proposition pass.** Budgeted, not discovered. — ❌ **Did NOT recur.** The 2b repairs were propositional from the first pass, because the Slovak lesson („die Reparatur ist nie ein Wortersatz, sondern ein Neubau aus dem Sinn") was **already in the canon before the pilot started** (`_language.md` §1.4) and the renderer briefs carried it **verbatim**. **That is the port working.** ⚠️ **The limit of that claim, plainly: it shows a KNOWN trap is avoidable, not that no unknown ones remain** — §I–§N of the phase record are the unknown ones this pilot found. **Keep the phase budgeted** for the waves: it did not fire on the pilot, which is not evidence that it cannot. |
+| **2d** | ⚠️ **Polish pass.** — folded into 2b; no separate round was needed on the pilot. Not deleted from the plan: a two-page pilot is the cheapest possible case for folding it in, and a 13-page wave is not. |
 | **3** | **Native-reader calibration** (Gate 7) + method retro: amend canon and persona instructions with what leaked. **Waves do not start until the retro lands.** |
 | **4–7** | RAG waves: Part I (13 files) → Part II (14) → Part III (10) → intro+glossary (2). |
 | **8** | RAG corpus milestone pass (consistency + managing editor + cold-read spot checks). |
@@ -799,6 +884,25 @@ end to end (SK ran 26 phases over a 38-page corpus; German is 67 pages).
 structural: the first real page is where the canon meets prose and loses. Cluster 2 is the corpus paying
 for every deferral: items waved through as "fix in the milestone pass" accumulate, and the launch gate is
 where they come due.
+
+**What the pilot actually did to cluster 1 (2026-07-28) — half the prediction held.** The *re-edit* (2b)
+happened and was substantial; the *method change* (2c) did not, because the method was already in the canon
+and in the briefs before page one. **But the cost did not vanish, it moved**, and the three places it moved
+to are not in the phase table above:
+
+1. a **terminology round before the prose** that ran ≈5× its planned size — the kept-EN register had been
+   seeded from a *term inventory* (glossary lemmas, chapter headings) and did not contain the connective
+   tissue running prose actually needs (*retry, timeout, backoff, side effect, namespace, validation*).
+   ⇒ **Seed each wave's register from a frequency count over that wave's running English text, not from the
+   glossary.**
+2. **two infrastructure repairs** to gates that could not represent a partially translated locale (§4, "The
+   gates' own repair record"). Without them the pilot could not have gone green at all.
+3. a **reconciliation round between parallel attestation batches**, for which there was no gate — now
+   Gate 6.5.
+
+**Planning consequence: the pilot's real deliverable is the calibrated gate stack, not two translated
+pages.** Budget it that way, and run the mechanical gates against staged English pages *before* any German
+is written.
 
 ---
 

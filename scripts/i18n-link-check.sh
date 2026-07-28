@@ -95,6 +95,51 @@ is_tolerable_fallback() {
   return 1 # not an unreleased-locale page → never tolerable (released content)
 }
 
+# Is this URL under an unreleased locale at all? (Cheap guard so the target-side tolerance
+# below can never touch a released locale's links.)
+is_unreleased_page() {
+  local src="$1" loc
+  for loc in "${UNRELEASED_LOCALES[@]}"; do
+    [[ "$src" == *"/$loc/"* ]] && return 0
+  done
+  return 1
+}
+
+# Normalise a `resolved as:` target to the shape is_tolerable_fallback() expects: drop the
+# anchor and the `.md`/`.mdx` suffix, leaving `<baseUrl><locale>/<routeBasePath>/<docpath>`.
+normalise_target() {
+  local t="${1%%#*}"
+  t="${t%.md}"; t="${t%.mdx}"
+  printf '%s' "$t"
+}
+
+# Is this broken link tolerable — judged on the PAIR, not on the source alone?
+#
+# The source-only rule (is_tolerable_fallback) covers an untranslated page linking anywhere. It
+# does NOT cover the case that every locale must pass through exactly once: the FIRST translated
+# lesson, whose in-body links point at siblings and a glossary that are still untranslated. Those
+# links cannot resolve — Docusaurus path-matches across the `docs/` fallback and `i18n/<locale>/`
+# trees, and the target simply has no file yet — so the gate would fail on the first correct page
+# of every locale and stay failing until the whole course landed in one commit. The gate's own
+# header promises it "self-maintains as locales fill in"; without this it self-maintains only at
+# 0 % and 100 %.
+#
+# The tolerance is deliberately narrow and does NOT reopen #307's fail-open. It requires BOTH:
+#   - the source page is in an unreleased locale, AND
+#   - the TARGET is itself an untranslated page of that same unreleased locale.
+# So the moment the target IS translated, a link into it must resolve or this fails — which is
+# exactly the class the gate was written to catch (a freshly translated lesson pointing at a wrong
+# glossary slug still fails, because the glossary file exists). A target in a released locale, an
+# unmapped route, or an external path is never tolerable: is_tolerable_fallback fails closed on all
+# three.
+is_tolerable_pair() {
+  local src="$1" target="$2"
+  is_tolerable_fallback "$src" && return 0          # untranslated source — the original rule
+  is_unreleased_page "$src" || return 1             # released locale — never tolerable
+  [ -n "$target" ] || return 1                      # no target parsed — fail closed
+  is_tolerable_fallback "$(normalise_target "$target")"
+}
+
 # --- self-test ---------------------------------------------------------------------------
 #
 # A gate that has only ever been seen to PASS proves nothing. #307 survived because the
@@ -140,7 +185,29 @@ self_test() {
     "/hb/$rel/$base_a/part-x/absent|reported"       # released locale → never tolerable
   )
 
-  local url want got failures=0 line
+  # `<source url>::<resolved target>|<expected verdict>` for the PAIR classifier. These are the
+  # cases the source-only rule cannot express: a translated page is always "reported" on its own,
+  # so whether its link is tolerable turns entirely on the target.
+  local pair_cases=(
+    # first translated lesson → untranslated sibling / glossary: the case every locale hits once
+    "/hb/$loc/$base_a/part-x/lesson/::/hb/$loc/$base_a/glossary.md|tolerable"
+    "/hb/$loc/$base_a/part-x/lesson/::/hb/$loc/$base_a/part-x/absent/index.md|tolerable"
+    "/hb/$loc/$base_a/part-x/lesson/::/hb/$loc/$base_a/glossary.md#some-anchor|tolerable"
+    # target IS translated → a wrong slug/anchor, the defect this gate exists for
+    "/hb/$loc/$base_a/part-x/lesson/::/hb/$loc/$base_a/translated.md#wrong|reported"
+    "/hb/$loc/$base_a/part-x/lesson/::/hb/$loc/$base_a/part-x/lesson/index.md|reported"
+    # cross-course target, untranslated → still tolerable (course 2 must be mapped too)
+    "/hb/$loc/$base_a/part-x/lesson/::/hb/$loc/$base_b/part-y/absent.md|tolerable"
+    # released-locale source → never tolerable, whatever the target
+    "/hb/$rel/$base_a/part-x/lesson/::/hb/$rel/$base_a/glossary.md|reported"
+    # target outside any unreleased locale, or unparseable → fail closed
+    "/hb/$loc/$base_a/part-x/lesson/::/hb/$rel/$base_a/glossary.md|reported"
+    "/hb/$loc/$base_a/part-x/lesson/::|reported"
+    # untranslated source stays tolerable regardless of target (the original rule still applies)
+    "/hb/$loc/$base_a/part-x/absent::/hb/$loc/$base_a/translated.md|tolerable"
+  )
+
+  local url want got failures=0 line total=0
   local saved_root="$I18N_DOCS_ROOT"
   I18N_DOCS_ROOT="$root"
   for line in "${cases[@]}"; do
@@ -152,16 +219,30 @@ self_test() {
       printf '  FAIL  %-46s want=%s got=%s\n' "$url" "$want" "$got"
       failures=$((failures + 1))
     fi
+    total=$((total + 1))
+  done
+  local pair src_url tgt_url
+  for line in "${pair_cases[@]}"; do
+    pair="${line%|*}"; want="${line##*|}"
+    src_url="${pair%%::*}"; tgt_url="${pair#*::}"
+    if is_tolerable_pair "$src_url" "$tgt_url"; then got="tolerable"; else got="reported"; fi
+    if [ "$got" = "$want" ]; then
+      printf '  ok    %-46s -> %-42s %s\n' "$src_url" "${tgt_url:-<none>}" "$got"
+    else
+      printf '  FAIL  %-46s -> %-42s want=%s got=%s\n' "$src_url" "${tgt_url:-<none>}" "$want" "$got"
+      failures=$((failures + 1))
+    fi
+    total=$((total + 1))
   done
   I18N_DOCS_ROOT="$saved_root"
   rm -rf "$root"
 
   echo ""
   if [ "$failures" -eq 0 ]; then
-    echo "i18n-link-check --self-test: PASS — ${#cases[@]} classifier case(s)."
+    echo "i18n-link-check --self-test: PASS — $total classifier case(s)."
     return 0
   fi
-  echo "i18n-link-check --self-test: FAIL — $failures of ${#cases[@]} classifier case(s)."
+  echo "i18n-link-check --self-test: FAIL — $failures of $total classifier case(s)."
   return 1
 }
 
@@ -185,33 +266,64 @@ if [ "$BUILD_STATUS" -ne 0 ]; then
   exit "$BUILD_STATUS"
 fi
 
-SOURCES=()
-while IFS= read -r src; do
-  [ -n "$src" ] && SOURCES+=("$src")
-done < <(grep -oE 'Broken (link|anchor) on source page path = [^ ]+' "$LOG" \
-  | sed -E 's/^Broken (link|anchor) on source page path = //; s/:$//')
+# Docusaurus reports one `Broken link/anchor on source page path = <src>:` header followed by one
+# or more `-> linking to <raw> (resolved as: <target>)` lines. Judging the SOURCE alone cannot
+# express the first-translated-lesson case (see is_tolerable_pair), so flatten the log into
+# `<src>::<target>` PAIRS and judge each. A header with no parsable target yields an empty target,
+# which is_tolerable_pair rejects — the parser fails closed if Docusaurus ever changes its format.
+PAIRS=()
+while IFS= read -r line; do
+  [ -n "$line" ] && PAIRS+=("$line")
+done < <(awk '
+  /Broken (link|anchor) on source page path = / {
+    src = $0
+    sub(/^.*Broken (link|anchor) on source page path = /, "", src)
+    sub(/:[[:space:]]*$/, "", src)
+    seen = 0
+    next
+  }
+  /-> linking to .*\(resolved as: / {
+    if (src == "") next
+    tgt = $0
+    sub(/^.*\(resolved as: /, "", tgt)
+    sub(/\).*$/, "", tgt)
+    print src "::" tgt
+    seen = 1
+  }
+' "$LOG")
 
 REAL_BREAKS=()
-if [ "${#SOURCES[@]}" -gt 0 ]; then
-  for src in "${SOURCES[@]}"; do
-    if ! is_tolerable_fallback "$src"; then
-      REAL_BREAKS+=("$src")
-    fi
-  done
+TOLERATED=0
+for pair in "${PAIRS[@]}"; do
+  src="${pair%%::*}"; tgt="${pair#*::}"
+  if is_tolerable_pair "$src" "$tgt"; then
+    TOLERATED=$((TOLERATED + 1))
+  else
+    REAL_BREAKS+=("$src -> $tgt")
+  fi
+done
+
+# A header Docusaurus emitted but the parser produced no pair for is a parse failure, not a pass.
+HEADERS="$(grep -cE 'Broken (link|anchor) on source page path = ' "$LOG" || true)"
+if [ "$HEADERS" -gt 0 ] && [ "${#PAIRS[@]}" -eq 0 ]; then
+  echo ""
+  echo "i18n-link-check: FAIL — $HEADERS broken-link header(s) in the build log but 0 parsable"
+  echo "targets. The log format changed; refusing to pass on an unread log."
+  exit 1
 fi
 
 if [ "${#REAL_BREAKS[@]}" -gt 0 ]; then
   echo ""
   # One page can carry several broken items, so count the items and the pages separately —
   # "3 broken link(s)" over a list of 2 lines reads like the list lost something.
-  PAGES="$(printf '%s\n' "${REAL_BREAKS[@]}" | sort -u | wc -l | tr -d ' ')"
+  PAGES="$(printf '%s\n' "${REAL_BREAKS[@]}" | sed 's/ -> .*//' | sort -u | wc -l | tr -d ' ')"
   echo "i18n-link-check: FAIL — ${#REAL_BREAKS[@]} broken link(s)/anchor(s) on $PAGES shipping / translated page(s):"
   printf '  - %s\n' "${REAL_BREAKS[@]}" | sort -u
   echo ""
-  echo "Only EN-fallback pages of an unreleased locale may carry unresolved glossary links/anchors."
+  echo "Tolerated only when BOTH ends are an unreleased locale's untranslated content:"
+  echo "an EN-fallback source page, or a translated page linking at a not-yet-translated target."
   exit 1
 fi
 
-TOLERATED="${#SOURCES[@]}"
 echo ""
 echo "i18n-link-check: PASS — build clean; $TOLERATED tolerated fallback link(s)/anchor(s) in unreleased locales, 0 real breaks."
