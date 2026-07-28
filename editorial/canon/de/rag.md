@@ -127,18 +127,33 @@ These need either an attestation or a cold read before they become rules. **Unti
 paraphrase.** Writing a plausible-sounding German form here is exactly the failure the Slovak locale hit with
 „súbeh" — a coinage that passed one reviewer and was later struck as semantically wrong.
 
-> **Die ausgelieferte UI-Locale ist KEIN Beleg für diese Zeilen.** Eine Prüfung aller 139 deutschen
-> UI-Nachrichten (`i18n/de/**`, Stand #314) fand **keinen** Verstoß gegen die Tabelle unten — kein
-> `Guardrail`-Singular, kein nacktes `Gate`, kein `Log`/`Queue`, keine `embedden`/`chunken`-Partizipien.
-> **Das heißt nicht, dass die Zeilen erledigt sind.** Zwei Gründe, und nur der erste ist Verdienst:
-> `Gate` und `Guardrail` wurden bewusst über die Sense-Card bzw. die Nur-Plural-Regel geführt — `Log`,
-> `Queue` und die beiden Partizipien kamen schlicht **nicht vor**, weil eine Navigationsoberfläche sie nicht
-> braucht.
+> **Die ausgelieferte UI-Locale ist KEIN Beleg für diese Zeilen.** Ein Regex-Lauf über alle 139 deutschen
+> UI-Nachrichten (`i18n/de/**`, Stand #314) fand **null Treffer** auf `Guardrail`-Singular, nacktes `Gate`,
+> `Log`/`Queue` und die `embedden`/`chunken`-Partizipien. **Das heißt nicht, dass die Zeilen erledigt sind** —
+> und zwar aus drei Gründen, von denen nur der erste Verdienst ist:
+>
+> 1. **Absicht.** `Gate` und `Guardrail` wurden bewusst über die Sense-Card bzw. die Nur-Plural-Regel
+>    geführt.
+> 2. **Die Oberfläche.** `Log`, `Queue` und die beiden Partizipien kamen schlicht **nicht vor**, weil eine
+>    Navigationsoberfläche sie nicht braucht. Kein Verdienst, nur Gelegenheit.
+> 3. **Das Instrument.** Ein Regex belegt die Abwesenheit von **Zeichenketten**, nicht die von **Begriffen**.
+>    Ein Label kann den offenen Begriff tragen, ohne sein Wort zu tragen: `Gestaffelte Kontrollpunkte` **ist**
+>    der `gate`-Begriff, und die Sonde `\bGate\b` fand dort korrekt nichts. Das ist hier die gewollte
+>    Auflösung — aber es heißt, dass „0 Treffer" eine Aussage über die **Lexik** ist und keine über die
+>    **begriffliche Abdeckung**. Wer die Prüfung auf Prosa ausweitet, braucht zusätzlich einen
+>    **semantischen Durchgang**; der Regex-Lauf ersetzt ihn nicht.
 >
 > **Die erste deutsche Lektionsprosa hat dieses Glück nicht.** Genau diese vier sind in laufendem Text über
 > Observability und Ingestion **unvermeidlich**. Wer aus „die Locale ist sauber" schließt, die offenen Zeilen
-> seien geklärt, zieht den Schluss aus einer Oberfläche, die sie nie berührt hat. *(Befund: `de-ui-strings`,
-> nach #314.)*
+> seien geklärt, zieht den Schluss aus einer Oberfläche, die sie nie berührt hat — mit einem Werkzeug, das
+> nach Wörtern sucht und nicht nach Bedeutungen.
+>
+> **Die verallgemeinerte Form, und die schärfste der drei Vollständigkeits-Lehren dieses Kanons:** eine
+> ausbleibende Fehlermeldung ist immer nur so stark wie **die Fläche, die sie hätte erzeugen können, UND das
+> Instrument, das nach ihr gesucht hat**. Beide Grenzen sind im Ergebnis unsichtbar — eine „0" sieht
+> identisch aus, ob sie aus vollständiger Prüfung oder aus einer engen Sonde auf einer schmalen Fläche
+> stammt. *(Befund und Einschränkung: `de-ui-strings`, nach #314; die Einschränkung kam von derselben
+> Instanz, die den Befund geliefert hat.)*
 
 | Terminus | Warum offen | Vorläufige Behandlung |
 |---|---|---|
