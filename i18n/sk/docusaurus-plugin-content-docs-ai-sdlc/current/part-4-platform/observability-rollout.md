@@ -40,7 +40,7 @@ Existuje aj nameraný náznak, že si táto hrana pozornosť zaslúži. Správa 
 
 ## Núdzový vypínač nesmie potrebovať pipeline, ktorá sa práve pokazila
 
-Vrátenie zmeny, ktoré si žiada zelené CI, nové zostavenie a nasadenie, nie je núdzový vypínač. Je to nádej s dodacou lehotou — a zlyhá presne v situácii, pre ktorú existuje, teda keď je časťou problému sama pipeline. Vypnutie musí byť *zmena stavu*, nie *zostavenie*: prepni flag, presuň váhu prevádzky, vráť smerovanie. Nech je mechanizmus akýkoľvek, skúška je jediná otázka — dokáže ho jeden človek použiť za pár sekúnd bez toho, aby vznikol nový artefakt?
+Vrátenie zmeny, ktoré si žiada zelené CI, nové zostavenie a nasadenie, nie je núdzový vypínač. Je to nádej s dodacou lehotou — a zlyhá presne v situácii, pre ktorú existuje, teda keď je časťou problému sama pipeline. Vypnutie musí byť *zmena stavu*, nie *zostavenie*: prepni flag, presuň váhu premávky, vráť smerovanie. Nech je mechanizmus akýkoľvek, skúška je jediná otázka — dokáže ho jeden človek použiť za pár sekúnd bez toho, aby vznikol nový artefakt?
 
 Flotily majú na tom vypínači ešte druhú polohu, ktorú samostatný vývojár nepozná. Zastaviť *zmenu* je vrátenie; zastaviť jej *zdroj* znamená pozastaviť agentov. Flotila, ktorá ďalej generuje nad základom, ktorý si práve vrátil, ti ten problém s chuťou postaví znova alebo naskladá ďalšiu prácu na základ, ktorému už neveríš. Runbook preto potrebuje oboje: vrátiť artefakt a zastaviť slučku, ktorá ho vyrobila — [človek-smerovač](../part-2-loop/roles-and-the-human.md) tu vykonáva jediný zásah, ktorý sa nedá delegovať na to, čo sa práve zastavuje.
 

@@ -5,6 +5,10 @@ per target language:
 
 - [`ru/`](ru/) — Russian
 - [`sk/`](sk/) — Slovak
+- `de/` — German. **Scaffolded, not yet written**: the locale is wired as an *unreleased* locale
+  (built and gated in CI, absent from the deployed dropdown) while the canon files —
+  `de/_language.md` plus `de/rag.md` and `de/ai-sdlc.md` — are being authored. Until they land,
+  German has no settled terms; do not translate against an assumed canon.
 
 **The infographic canon is cross-language and lives outside this directory:**
 [`editorial/infographics/STYLE.md`](../infographics/STYLE.md) — palette, dimensions, naming and

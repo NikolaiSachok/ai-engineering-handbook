@@ -62,7 +62,7 @@ Nič z toho už nie je nepovinné. State of FinOps 2026 od FinOps Foundation uv�
 Ohraničenie robia tri kontroly na úrovni organizácie a všetky tri žijú tam, kadiaľ už každá požiadavka prechádza — na LLM-bráne.
 
 1. **Rozpočty s alertmi:** tokenové rozpočty na tím a na funkciu, s mäkkým stropom (soft cap), ktorý varuje, a tvrdým stropom (hard cap), ktorý odmietne alebo prepne na lacnejší variant. Vynucovanie tých stropov za behu je predmet prehĺbenia o observability; *politika* toho, kto akú kvótu dostane, sa rozhoduje tu.
-2. **Smerovanie podľa úrovne modelu**, povýšené z taktiky na pravidlo — smerovanie medzi modelmi premenené na governance, aby lacná prevádzka šla na lacný model v predvolenom nastavení a vlajkový model bol vec, ktorú si vedome zvolíš a obhájiš. Páka, ktorá účtom pohne najviac.
+2. **Smerovanie podľa úrovne modelu**, povýšené z taktiky na pravidlo — smerovanie medzi modelmi premenené na governance, aby nenáročné požiadavky šli na lacný model v predvolenom nastavení a vlajkový model bol vec, ktorú si vedome zvolíš a obhájiš. Páka, ktorá účtom pohne najviac.
 3. **Kontrola výdavkov v zozname pred nasadením:** keďže zmena promptu je zmena nákladov, releasová brána z ďalšej sekcie kontroluje aj predpokladaný náklad na požiadavku, nielen kvalitu.
 
 Každá z týchto kontrol zlyhá predvídateľne, keď ju vynecháš. Chargeback fakturovaný skôr, než je priradenie dôveryhodné, splodí spory a hranie sa s číslami. Rozpočet len s mäkkými stropmi rozdá alerty, na ktoré nikto nekoná, a účet aj tak pristane. Bez predvolenej trasy na lacný model platí každá požiadavka vlajkovú cenu z čistej zotrvačnosti.
@@ -73,7 +73,7 @@ Rozpoznať regresiu — odlíšiť štatisticky reálny pokles kvality od jedné
 
 Blokovanie je z tých dvoch lacnejšie — je to eval v CI z úvodu lekcie, videný zo strany vydania. Zmena, ktorej metriky na golden sete klesnú pod prah, je regresia zachytená ešte pred vydaním; zlúčenie či nasadenie sa zastaví pri bráne — na najlacnejšom mieste celého systému, kde ju vôbec možno zastaviť, dávno predtým, než na ňu narazí prvý používateľ. Toto je **release gate** (releasová brána): kontrola kvality, ktorá stojí medzi zmenou a produkciou.
 
-Lenže brána zachytí len to, čo golden set pokrýva, a zvyšok nájde produkčná prevádzka — preto sa vydanie neprepne z nuly na sto percent naraz. Ide von postupne. Canary (kanárikové nasadenie) si vezme časť živej prevádzky, kým riadič vydania (release controller) sleduje proxy kvality (nepriame signály) a náklady popri chybovosti a latencii. Odtiaľ sa automatizujú dva výsledky: keď metriky držia, nasleduje automatické povýšenie na plnú prevádzku; keď sa niektorá proxy prelomí, nasleduje automatický rollback na predošlú verziu. Celý dôvod sledovať kvalitu, a nie len dvestovku, je práve ten canary — rýchly, lacný a mierne nesprávny: musí spustiť rollback, a spraví to jedine signál kvality.
+Lenže brána zachytí len to, čo golden set pokrýva, a zvyšok nájdu až požiadavky z produkcie — preto sa vydanie neprepne z nuly na sto percent naraz. Ide von postupne. Canary (kanárikové nasadenie) si vezme časť živej premávky, kým riadič vydania (release controller) sleduje proxy kvality (nepriame signály) a náklady popri chybovosti a latencii. Odtiaľ sa automatizujú dva výsledky: keď metriky držia, nasleduje automatické povýšenie na plnú premávku; keď sa niektorá proxy prelomí, nasleduje automatický rollback na predošlú verziu. Celý dôvod sledovať kvalitu, a nie len dvestovku, je práve ten canary — rýchly, lacný a mierne nesprávny: musí spustiť rollback, a spraví to jedine signál kvality.
 
 Rollback je pre kód triviálny, no pre každý z piatich artefaktov je jemne iný, takže každý potrebuje vlastnú cestu premyslenú dopredu. Prompt sa vráti tak, že vrátiš commit alebo znova pripneš verziu v prompt registry (register promptov) z úvodu lekcie. Model sa vráti opätovným pripnutím predošlej verzie; doladený model tak, že pripneš jeho predchodcu alebo odpojíš LoRA adaptér (prvá sekcia). Konfigurácia či politika guardrails sa vráti vrátením hodnoty. Index je pasca: vráti sa jedine obnovením predošlej snímky, a re-ingest, ktorý prepíše na mieste, žiadnu snímku na obnovenie nemá — cesta späť neexistuje vôbec. Index preto musí byť verziovaný, pomenovaná snímka, ktorú vieš znova pripnúť, práve preto, aby bol zlý re-ingest rovnako vratný ako každý iný artefakt. Korpus je tiež vydanie a vydanie, ktoré nevieš zvrátiť, je príťaž a riziko.
 
@@ -83,7 +83,7 @@ Existuje jedna releasová kontrola silnejšia než čokoľvek uplatnené na jedn
 flowchart LR
     C["Zmena"] --> EG{"Eval brána<br/>(golden set)"}
     EG -->|"pod prahom"| BLK["Zablokované — oprav, skús znova"]
-    EG -->|"prejde"| CAN["Canary<br/>(časť živej prevádzky)"]
+    EG -->|"prejde"| CAN["Canary<br/>(časť živej premávky)"]
     CAN --> W{"Držia proxy kvality<br/>+ náklady?"}
     W -->|áno| PROMO["Auto-povýšenie → 100%"]
     W -->|nie| RB["Auto-rollback:<br/>vráť prompt / model / index / adaptér"]

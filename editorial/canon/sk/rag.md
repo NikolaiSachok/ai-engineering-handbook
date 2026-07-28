@@ -2737,6 +2737,12 @@ nesie „vydáva", do glossary-flip backlogu k Self-RAG/HITL/kosínus).
   literálne `docker build/push/pull`).
 - **„premávka"** (request/workload traffic) — **ponechané / sankcionované** (vedome namiesto „prevádzka",
   ktorá na týchto stránkach = *serving/prevádzka*; rámce sa nezamieňajú).
+  **⚠ PREKONANÉ (2026-07, vlna `traffic`, issue #250) — pozri `_language.md` §9 heslo `traffic`.**
+  Odmietnutie „prevádzka" ako náhrady **platí ďalej a je load-bearing**: rodený hovoriaci číta
+  *„šesť mesiacov reálnej prevádzky"* ako *šesť mesiacov behu systému*, nie ako nazbierané dáta.
+  Prekonaná je len **šírka** sankcie: jedno slovo tu pokrylo štyri rôzne rámce anglického *traffic*.
+  Odteraz sa rozhoduje testom zo §9 — `premávka` len pre smerovanie/transport, `záťaž` pre kapacitu,
+  `požiadavky z produkcie` pre logy/vzorky/evaluáciu, `prevádzka` pre beh systému.
 
 **§8 polotučné + em-dash + straight-quote (potvrdenie Fázy 2/6/10/12–18).** Celovetné/celoklauzové
 zvýraznenia (all-caps `worker JE` / `Čo ti NEDÁ`) prevedené na kurzívu (`*je*` / `*nedá*`) — tlačový register,
@@ -3517,7 +3523,9 @@ fyzické prehlbovanie vrstvy) vyškrtnutá; reader-facing „druhá časť lekci
 **H. Native-check track — doriešené (naivný SK čitateľ + webová kolokačná verifikácia).**
 - **PROMOVANÉ (clean, von z tracku, bez zmeny textu):** **„premávka“** (traffic — webom overená štandardná
   slovenčina, nie český kalk; cestná/sieťová premávka) a **„chunkami“** (inštrumentál ratifikovaný Fáza 5/18,
-  korpus jednotný, „chunkmi“ = 0).
+  korpus jednotný, „chunkmi“ = 0). **⚠ „premávka“ ČIASTOČNE PREKONANÁ (2026-07, issue #250):** slovo samo je
+  správna slovenčina — chybou bolo, že ním korpus prekladal všetky štyri rámce *traffic*. Rozsah jeho
+  platnosti dnes určuje test v `_language.md` §9 (`traffic`).
 - **KEEP-WITH-SCAFFOLD (marginálne, nesú svoj scaffold, nikdy holé):** preskórovať/preskórovanie, Skórer,
   allowlisty (glos „(zoznamy povoleného)“), vydestilovať (nález/fakt), minúť výpočet, zásuvka pre nástroje,
   plocha súhlasu (paralela s webom overenou „plocha útoku“), otrávená úloha (potvrdená coinage), tokenová diéta

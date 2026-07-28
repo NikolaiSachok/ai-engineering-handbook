@@ -26,7 +26,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // line); its `localeConfigs` label is already set below, so nothing else changes.
 const DEFAULT_LOCALE = 'en';
 const RELEASED_LOCALES = ['en', 'ru', 'sk']; // Slovak launched 2026-07-15; both courses now ship complete in all three
-const UNRELEASED_LOCALES: string[] = []; // add the next in-progress locale here to build+validate it in CI while gated
+const UNRELEASED_LOCALES: string[] = ['de']; // German in progress (from 2026-07-28): built+validated in CI, gated out of the deployed dropdown
 const INCLUDE_UNRELEASED = process.env.HANDBOOK_INCLUDE_UNRELEASED === '1';
 const LOCALES = [...RELEASED_LOCALES, ...(INCLUDE_UNRELEASED ? UNRELEASED_LOCALES : [])];
 const BASE_URL = '/ai-engineering-handbook/';
@@ -291,8 +291,11 @@ const config: Config = {
   // Russian serves under /ru/. RU stays audience-primary in authoring (written
   // natively, never machine-translated) — this only sets URL/serving structure.
   // `localeConfigs` labels every locale we might build (released or not) — it is
-  // harmless for a locale that isn't in `LOCALES`, so the Slovak label is set here
-  // permanently; only `LOCALES` decides what actually builds/serves.
+  // harmless for a locale that isn't in `LOCALES`, so a label is set here permanently
+  // the moment a locale is scaffolded (Slovak, now German); only `LOCALES` decides what
+  // actually builds/serves. A label is NOT auto-derived from the locale code: a locale
+  // in `LOCALES` with no `localeConfigs` entry fails the build outright, so add the
+  // label in the SAME change that adds the locale.
   i18n: {
     defaultLocale: DEFAULT_LOCALE,
     locales: LOCALES,
@@ -300,6 +303,7 @@ const config: Config = {
       en: {label: 'English'},
       ru: {label: 'Русский'},
       sk: {label: 'Slovenčina'},
+      de: {label: 'Deutsch'},
     },
   },
 
