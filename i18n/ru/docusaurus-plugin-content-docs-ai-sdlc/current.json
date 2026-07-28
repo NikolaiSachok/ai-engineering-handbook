@@ -22,5 +22,21 @@
   "sidebar.aiSdlcSidebar.category.Part V — Scale & Governance": {
     "message": "Часть V — Масштаб и управление",
     "description": "The label for category 'Part V — Scale & Governance' in sidebar 'aiSdlcSidebar'"
+  },
+  "sidebar.aiSdlcSidebar.category.Layered gates and mechanism diversity": {
+    "message": "Многослойные проверки и разнообразие механизмов",
+    "description": "The label for category 'Layered gates and mechanism diversity' in sidebar 'aiSdlcSidebar'"
+  },
+  "sidebar.aiSdlcSidebar.category.Least privilege and sandboxing": {
+    "message": "Наименьшие привилегии и песочница",
+    "description": "The label for category 'Least privilege and sandboxing' in sidebar 'aiSdlcSidebar'"
+  },
+  "sidebar.aiSdlcSidebar.category.Cost and the economics of agent work": {
+    "message": "Стоимость и экономика работы агентов",
+    "description": "The label for category 'Cost and the economics of agent work' in sidebar 'aiSdlcSidebar'"
+  },
+  "sidebar.aiSdlcSidebar.category.The enterprise tier: audit, provenance, and what's required": {
+    "message": "Энтерпрайз-уровень: аудит, происхождение и обязательные контроли",
+    "description": "The label for category 'The enterprise tier: audit, provenance, and what's required' in sidebar 'aiSdlcSidebar'"
   }
 }
