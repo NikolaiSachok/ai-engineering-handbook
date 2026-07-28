@@ -653,8 +653,68 @@ convention that a German norm contradicts.* A confirmed row is as useful as a ch
 | Sentence-initial capitalisation of lowercase-styled terms (`Top-K`, `vLLM`) | **confirmed** | German sentence-initial capitalisation; no inherited convention pushes against it. The canon's advice to rebuild the sentence rather than force the capital stands. |
 | Durchkopplung / hyphenation of English multiword terms | **confirmed**, out of scope here | Orthography, not typography, and already decided against the Regelwerk § 45 E1 (canon §1.3.3) — no RU/SK convention feeds it. |
 
-**Nothing else in the two documents carries a typographic value inherited from RU/SK.** The remaining
-formatting decisions (bold budget, figure probation, bridge direction) are editorial, not typographic.
+| **Gedankenstrich (parenthetical / title separator)** | **changed** → U+2013 **with** spaces; U+2014 dropped | **Ruled in #313; corpus rolled out in #314 (21 occurrences, counted); tally corrected in #315.** This row is added here because the sweep MISSED the value and the playbook still did not record it. Canon: `_language.md` § Typografie. **The term-ledger pass (#275/#276) reached the same conclusion independently and contributed the tier-1 attestation the original ruling lacked** — DIN 5008 prescribes the Halbgeviertstrich with a space each side and does not sanction the Geviertstrich at all; the Regelwerk § 77 section uses **66 × U+2013, 0 × U+2014**; measured across eight German sources, **≈ 220 en dashes, zero em dashes**. |
+
+**The sweep above missed a row, and the miss is instructive rather than embarrassing.** It swept for values
+inherited **from RU/SK** — and the em dash is inherited from **EN**, which no row was looking at. Every
+`Part I — RAG` and `Retrieval — deep dive` in the source tree carries it, so it was the single most frequent
+typographic value in the corpus. **Widen the question for any future sweep: *inherited from anywhere*, not
+just from the sister locales.** *(The canon makes the sharper version of this point: a claim of completeness
+is itself an assertion and carries no evidence. Two sweeps in a row erred on exactly this value.)*
+
+There is also a compounding defect worth stating once, because it is the exact tell this locale exists to
+avoid: English em-dash convention is **compressed** (`word—word`). `Retrieval — deep dive` with **full
+spaces around an em dash** is neither the German form nor the English one — it is the widened-em-dash
+pattern typical of machine-generated English. Fixing the glyph fixes the tell.
+
+**With that row added, nothing else in the two documents carries an inherited typographic value.** The
+remaining formatting decisions (bold budget, figure probation, bridge direction) are editorial, not
+typographic.
+
+### 7.8 Gate 6 has run — the term ledgers are settled (2026-07-28)
+
+Issues **#275** (kept-EN register) and **#276** (per-course ledgers + glossary decisions) are complete.
+Method as prescribed here: six parallel attestation batches by domain, a cross-model register judge for the
+recurring block strings and the constructions, and an independent verification pass over that judge's
+citations. Where it landed:
+
+- **Fourteen terms went German-led against the "German keeps English" instinct** — collected in
+  `_language.md` **§1.1.g**, which is the single most important table for anyone rendering a page. The
+  measured pattern: German wins on **measurements and processes** (*Durchsatz, Latenz, Inferenz,
+  Quantisierung, Instrumentierung, Fehlerbudget, Endpunkt*), English holds on **artefacts you can point at**
+  and on the closed **`-ing`** family, and — the sharpest finding — **the noun stays English while the verb
+  is Germanised** (*das Embedding* / *vektorisieren*, *der Trace* / *nachverfolgen*).
+- **Five previously-open rows closed because the evidence existed and nobody had looked in the right
+  place** — *Retrieval* (a Duden EDV lemma for the **bare** loan; the earlier search had only looked up
+  *Information Retrieval*), *Log* (a **second** Duden lemma, EDV, alongside the nautical DWDS one),
+  *Embedding*, *Chunk*, and **Least Privilege** at BSI. §6.2's premise that German "will usually find a real
+  answer" held.
+- **Nine wrong-sense dictionary traps** are now named in a single box in `_language.md` §1.1, with the two
+  meta-rules they teach: a search snippet describing an entry is not the entry, and a trap in *one*
+  dictionary does not mean the *other* lacks the right sense.
+- **Three rows were opened as DISPUTED** — *Harness*, *Cold Start*, *Drift* — each because German sources
+  contradict **each other** (twice within a single publisher, once within a single article). Incumbents
+  held, nothing changed, and every one of them becomes a question in the native-reader packet (#278), per
+  Gate 7.
+- **Six vendor-localisation sources disqualified** by the MT-signal check, each with the contradiction
+  named. Worth recording as method: **the check works better as a *self-consistency* test than as a blanket
+  vendor ban** — one German AWS page was internally consistent and kept as weak evidence, while the
+  Dead-Letter-Queue pages produced four renderings across three vendors and were thrown out.
+- **Method note that should propagate to later gates: measure, don't characterise.** The dash evidence was
+  settled by counting codepoints over served HTML (≈ 220 : 0), and three BSI rulings by `pdftotext | grep`
+  counts (*Geheimnis* 5 : *Zugangsdaten* 0; *Betriebshandbuch* 4 : *Runbook* 0; SBOM feminine 35 :
+  masculine/neuter 0). Those numbers are more defensible than any prose citation, and they cost one command
+  each. **Asking a model to characterise a corpus invites a plausible answer; counting produces a fact.**
+  *(Same family as #315's standing rule that a surface tally is counted, never inherited.)*
+- **And the counter-rule, because a count can also mislead: a null result is not evidence until the
+  source-language twin is grepped too.** BSI TR-03183-2 has zero hits for every German provenance word —
+  which says nothing, because the **English** edition has zero hits for `provenance` as well. The document
+  simply does not treat the concept. Read the German zero alone and you manufacture a finding.
+- **`audit` was checked for the first time and `Prüfpfad` did not survive it** (`canon/de/ai-sdlc.md` §4b).
+  It is a **§ 14 UStG** term for the link between an *invoice* and the *service supplied*; Duden has no
+  entry and DWDS flags its declension as computer-generated, while BSI's own audit module runs *Audit* 140×
+  against *Prüfpfad* 0×. #313 had explicitly left the word untouched, so this overrides nothing — it
+  examines something nothing had examined. The shipped label still carries it.
 
 ---
 
