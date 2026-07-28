@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Časť 1](./index.md) postavila rámec: trace je úplný záznam jednej požiadavky, span po spane; tri piliere sú traces, metrics, logs; loguješ špecifiká RAG — nájdené chunky so skóre, finálny prompt, surový výstup, latenciu, tokeny a náklad na každý krok; náklad a latencia sú prvoradé; a observability dáva evaluácii ďalší prípad, lebo zlá produkčná odpoveď je jej najbližší golden-set prípad.
 
-Táto stránka sa venuje tomu, čo sa mení, keď je prevádzka reálna a nepretržitá — keď sa z jedného tracu stane milión za deň a každé rozhodnutie musí obstáť pri veľkom rozsahu.
+Táto stránka sa venuje tomu, čo sa mení, keď je systém v skutočnej, nepretržitej prevádzke — keď sa z jedného tracu stane milión za deň a každé rozhodnutie musí obstáť pri veľkom rozsahu.
 
 Observability (pozorovateľnosť) sa tu mení na produkčnú disciplínu: pri veľkom objeme si nemôžeš nechať každý trace, tak vzorkuješ; nemôžeš uložiť všetko, tak sa rozhoduješ, čo je bezpečné nechať si; nemôžeš sledovať každý graf, tak si stanovíš ciele a alerty spustíš len na to, čo používateľ pocíti; prepad kvality musíš priradiť k príčine; a to, čo toto všetko minie, musíš zastropovať.
 
@@ -16,7 +16,7 @@ Nie je to opätovné rozvedenie tracu ako základného prvku (to má Časť 1), 
 
 ## Prečo si nenecháš každý trace
 
-Pri produkčnom objeme je uchovávať 100% tracov (trace — úplný záznam jednej požiadavky) neúnosne drahé — úložisko sa plní tak rýchlo, ako priteká prevádzka, a väčšina záznamov je nezaujímavá. Nechaj si teda reprezentatívnu a zaujímavú podmnožinu a zvyšok zahoď. To je vzorkovanie (sampling); celá otázka znie, ktoré tracy si necháš.
+Pri produkčnom objeme je uchovávať 100% tracov (trace — úplný záznam jednej požiadavky) neúnosne drahé — úložisko sa plní tak rýchlo, ako priteká premávka, a väčšina záznamov je nezaujímavá. Nechaj si teda reprezentatívnu a zaujímavú podmnožinu a zvyšok zahoď. To je vzorkovanie (sampling); celá otázka znie, ktoré tracy si necháš.
 
 **Head-based sampling** (vzorkovanie na začiatku tracu) rozhoduje o zachovaní alebo zahodení hneď na začiatku tracu, na koreňovom spane (jeden krok tracu), zvyčajne deterministickým pomerom podľa trace ID — jeden z desiatich si necháš, deväť zahodíš. Lacné, bezstavové, s objemom predvídateľným do posledného bajtu.
 
@@ -63,7 +63,7 @@ Vratné maskovanie — encrypt (šifrovanie) — necháva cestu späť pre oprá
 
 ## Čo sledovať a kedy niekoho zobudiť
 
-Dashboard LLM systému zobrazuje všetko, čo dashboard obyčajnej služby — golden signals (zlaté signály SRE) z tradície Google SRE: latenciu, prevádzku, chyby a saturáciu — plus jeden pilier, s ktorým tá štvorica nikdy nepočítala.
+Dashboard LLM systému zobrazuje všetko, čo dashboard obyčajnej služby — golden signals (zlaté signály SRE) z tradície Google SRE: latenciu, záťaž, chyby a saturáciu — plus jeden pilier, s ktorým tá štvorica nikdy nepočítala.
 
 Na obyčajnej osi: latencia ako rozdelenie, p50/p95/p99, plus TTFT (time-to-first-token — čas do prvého tokenu), teda to, čo používateľ streamovanej odpovede naozaj zažije; náklad a spotreba tokenov na požiadavku; priepustnosť; chybovosť.
 

@@ -302,7 +302,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Chvost rozdelenia (distribution tail)** — zriedkavé, hraničné a nepohodlné hodnoty v dátach: nezvyčajne dlhé reťazce, prázdne polia či záznamy vytvorené podľa staršej schémy.
 
-**Rozšíriť–migrovať–zúžiť (expand–migrate–contract, parallel change)** — postup bezpečnej zmeny schémy: najprv pridáš spätne kompatibilnú štruktúru, potom na ňu presunieš dáta aj prevádzku a starú odstrániš až nakoniec.
+**Rozšíriť–migrovať–zúžiť (expand–migrate–contract, parallel change)** — postup bezpečnej zmeny schémy: najprv pridáš spätne kompatibilnú štruktúru, potom na ňu presunieš dáta aj premávku a starú odstrániš až nakoniec.
 
 **Brána na deštruktívne príkazy (destructive-statement gate)** — deterministická kontrola, ktorá zastaví migráciu obsahujúcu príkaz schopný odstrániť alebo nenávratne zmeniť dáta, pokiaľ zmena nenesie výslovné povolenie.
 
