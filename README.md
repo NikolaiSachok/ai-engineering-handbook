@@ -30,12 +30,13 @@ npm run start
 npm run start -- --locale ru
 ```
 
-Docusaurus dev server serves one locale at a time; use the `--locale` flag to preview RU/SK.
+Docusaurus dev server serves one locale at a time; use the `--locale` flag to preview the others.
 
 ## Build
 
 ```bash
-npm run build   # builds every released locale (en + ru + sk)
+npm run build                                  # every released locale
+HANDBOOK_INCLUDE_UNRELEASED=1 npm run build    # …plus the gated ones CI validates
 ```
 
 Output is generated into `build/` and can be served with any static host.
@@ -62,11 +63,32 @@ The handbook follows a small, real SDLC (kept proportionate to a docs site):
   All changes land via a short-lived branch + Pull Request — no direct pushes to `main`.
 - **Conventional Commits** for messages (`docs:`, `feat:`, `fix:`, `chore:`, `ci:`) and PR
   titles. PRs are **squash-merged**.
-- **CI gates every PR** (branch protection should require them green before merge):
-  1. `npm run build` for **every locale** — the real correctness gate (`onBrokenLinks: 'throw'`
-     catches dead internal links; a broken i18n tree fails the build).
-  2. **Markdown lint** — `npm run lint:md` (structure/format hygiene).
-  3. **Generic leak scan** — `npm run leak-scan` (secrets, credentials, local paths, emails).
+- **CI gates every PR.** Five jobs, listed here under the exact names GitHub reports them by —
+  those strings are what branch protection matches on, so this list is the one to copy into
+  *Settings → Branches → main → Require status checks*:
+
+  | job name in CI | what it runs | what it catches |
+  |---|---|---|
+  | `Build (both locales)` | `npm run build` for **every** locale | dead internal links (`onBrokenLinks: 'throw'`), a broken i18n tree |
+  | `Markdown lint` | `npm run lint:md` | structure/format hygiene |
+  | `Generic leak scan` | `npm run leak-scan` | secrets, credentials, local paths, emails |
+  | `Icon register drift check` | `scripts/icon-register-check.sh` | infographic icons drifting from the register |
+  | `Locale structural parity` | `scripts/locale-parity-check.sh` | a translated page losing sections, figures or card nodes; a sidebar category with no translation key; a released locale missing a whole course |
+
+  The `Build (both locales)` job name is **stale** — it builds every released locale plus the gated
+  ones, which is four today, not two. It is left as-is deliberately: if branch protection requires
+  checks by name, renaming the job silently stops satisfying the requirement, so the rename and the
+  branch-protection update have to land together.
+
+  **Are these five actually *required*, or only *reported*? Unverified — treat it as an open
+  question.** Reading `repos/…/branches/main/protection` needs repo-admin scope that the tokens in
+  use here don't have (it `403`s), so nobody has checked the setting. `CLAUDE.md` states the gates
+  *are* required; earlier revisions of this file said they *should* be. In the handbook's own
+  grading vocabulary both are `ASSERTED`, not `MEASURED` — an instruction file records intent, and
+  intent is not evidence. Anyone with settings access can settle it in a minute by comparing the
+  five names above against *Settings → Branches → main → Require status checks*, and the two
+  documents should then be reconciled to whatever turns out to be true. It matters because advisory
+  and required look identical on a green PR and differ entirely on a red one.
 - **Content PRs** additionally require a **literary-edit pass per language, independently**
   (see the editorial standard in `CLAUDE.md`) — enforced via the PR-template checklist.
 - **Issues & milestones** are the planning surface: issues track lessons/topics; a milestone

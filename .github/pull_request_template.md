@@ -18,15 +18,20 @@ Squash-merge keeps `main` history clean.
 
 ## Gates
 
-- [ ] `npm run build` passes for **both locales** (ru + en)
+- [ ] `HANDBOOK_INCLUDE_UNRELEASED=1 npm run build` passes for **every** locale (every released
+      locale, plus any gated one)
 - [ ] Markdown lint passes (`npm run lint:md`)
 - [ ] Generic leak scan passes (`npm run leak-scan`)
+- [ ] Locale structural parity passes (`bash scripts/locale-parity-check.sh`)
+- [ ] Icon register drift check passes (`bash scripts/icon-register-check.sh`)
 - [ ] Internal links valid (the build's `onBrokenLinks: 'throw'` confirms this)
 - [ ] PR title follows **Conventional Commits**
 
 ## Content PRs only
 
-- [ ] Literary-edit pass done **for EACH language independently** (RU and EN) — no calques,
-      idiomatic prose, technical meaning preserved exactly
-- [ ] New terms added to the Glossary
+- [ ] Literary-edit pass done **for EACH language independently** (every locale the page ships in,
+      not just English) — no calques, idiomatic prose, technical meaning preserved exactly
+- [ ] New terms added to the Glossary **and** to that language's canon ledger in `editorial/canon/`
+- [ ] Any new sidebar category has a translation key in every locale's `current.json`
+      (`Locale structural parity` enforces this)
 - [ ] General / vendor-neutral only — no confidential, employer-internal, or client-specific material
