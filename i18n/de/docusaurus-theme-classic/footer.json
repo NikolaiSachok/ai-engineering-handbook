@@ -16,15 +16,15 @@
     "description": "The label of footer link with label=Introduction linking to /ai-sdlc/"
   },
   "link.item.label.Part I — RAG": {
-    "message": "Teil I — RAG",
+    "message": "Teil I – RAG",
     "description": "The label of footer link with label=Part I — RAG linking to /rag-agents/part-1-rag/overview"
   },
   "link.item.label.Part II — Agents": {
-    "message": "Teil II — Agenten",
+    "message": "Teil II – Agenten",
     "description": "The label of footer link with label=Part II — Agents linking to /rag-agents/part-2-agents/overview"
   },
   "link.item.label.Part III — Production & LLMOps": {
-    "message": "Teil III — Produktivbetrieb und LLMOps",
+    "message": "Teil III – Produktivbetrieb und LLMOps",
     "description": "The label of footer link with label=Part III — Production & LLMOps linking to /rag-agents/part-3-production/overview"
   },
   "link.item.label.Glossary": {
@@ -32,23 +32,23 @@
     "description": "The label of footer link with label=Glossary linking to /ai-sdlc/glossary"
   },
   "link.item.label.Part I — The Foundation": {
-    "message": "Teil I — Fundament",
+    "message": "Teil I – Fundament",
     "description": "The label of footer link with label=Part I — The Foundation linking to /ai-sdlc/part-1-foundation/overview"
   },
   "link.item.label.Part II — The Loop": {
-    "message": "Teil II — Arbeitsschleife",
+    "message": "Teil II – Arbeitsschleife",
     "description": "The label of footer link with label=Part II — The Loop linking to /ai-sdlc/part-2-loop/overview"
   },
   "link.item.label.Part III — Verification": {
-    "message": "Teil III — Überprüfung",
+    "message": "Teil III – Überprüfung",
     "description": "The label of footer link with label=Part III — Verification linking to /ai-sdlc/part-3-verification/overview"
   },
   "link.item.label.Part IV — The Platform": {
-    "message": "Teil IV — Plattform",
+    "message": "Teil IV – Plattform",
     "description": "The label of footer link with label=Part IV — The Platform linking to /ai-sdlc/part-4-platform/overview"
   },
   "link.item.label.Part V — Scale & Governance": {
-    "message": "Teil V — Skalierung und Governance",
+    "message": "Teil V – Skalierung und Governance",
     "description": "The label of footer link with label=Part V — Scale & Governance linking to /ai-sdlc/part-5-scale-governance/overview"
   },
   "link.item.label.Field notes": {

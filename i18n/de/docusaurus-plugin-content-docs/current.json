@@ -4,7 +4,7 @@
     "description": "The label for version current"
   },
   "sidebar.handbookSidebar.category.Part I — RAG": {
-    "message": "Teil I — RAG",
+    "message": "Teil I – RAG",
     "description": "The label for category 'Part I — RAG' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Ingestion": {
@@ -24,7 +24,7 @@
     "description": "The label for category 'Cross-cutting' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Cross-cutting.link.generated-index.description": {
-    "message": "Drei Dinge laufen durch alle Stufen der Pipeline und lassen sich keinem einzelnen Schritt zuordnen: woran Sie erkennen, dass das System funktioniert (Evaluation), wie Sie für seine Sicherheit sorgen (Guardrails) und wie Sie sehen, was es im Produktivbetrieb tut (Observability). Wir beginnen mit der Evaluation — ohne sie fehlt der Maßstab, an dem sich alles Übrige ausrichten lässt.",
+    "message": "Drei Dinge laufen durch alle Stufen der Pipeline und lassen sich keinem einzelnen Schritt zuordnen: woran Sie erkennen, dass das System funktioniert (Evaluation), wie Sie für seine Sicherheit sorgen (Guardrails) und wie Sie sehen, was es im Produktivbetrieb tut (Observability). Wir beginnen mit der Evaluation – ohne sie fehlt der Maßstab, an dem sich alles Übrige ausrichten lässt.",
     "description": "The generated-index page description for category 'Cross-cutting' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Evaluation": {
@@ -40,7 +40,7 @@
     "description": "The label for category 'Observability' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Part II — Agents": {
-    "message": "Teil II — Agenten",
+    "message": "Teil II – Agenten",
     "description": "The label for category 'Part II — Agents' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Agentic RAG": {
@@ -68,11 +68,11 @@
     "description": "The label for category 'MCP and agent protocols' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Part III — Production & LLMOps": {
-    "message": "Teil III — Produktivbetrieb und LLMOps",
+    "message": "Teil III – Produktivbetrieb und LLMOps",
     "description": "The label for category 'Part III — Production & LLMOps' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Serving — FastAPI + Docker": {
-    "message": "Serving — FastAPI und Docker",
+    "message": "Serving – FastAPI und Docker",
     "description": "The label for category 'Serving — FastAPI + Docker' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Cloud AI platforms": {
@@ -84,7 +84,7 @@
     "description": "The label for category 'The tooling ecosystem' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.LLMOps — deploy, monitor, cost": {
-    "message": "LLMOps — Bereitstellung, Überwachung, Kosten",
+    "message": "LLMOps – Bereitstellung, Überwachung, Kosten",
     "description": "The label for category 'LLMOps — deploy, monitor, cost' in sidebar 'handbookSidebar'"
   }
 }
