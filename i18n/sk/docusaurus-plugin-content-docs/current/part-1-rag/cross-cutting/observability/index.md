@@ -41,7 +41,7 @@ Kruh sa uzatvára: evaluácia meria, guardrails chránia, observability vidí a 
 
 (Nástroje — [LangSmith](https://www.langchain.com/langsmith), [Langfuse](https://langfuse.com), [Arize Phoenix](https://arize.com/phoenix), [OpenTelemetry](https://opentelemetry.io) — sú samostatná vrstva: pozri lekciu o [ekosystéme nástrojov](../../../part-3-production/tooling-ecosystem/); tu nám ide o princíp.)
 
-## Čím sa uzatvára Časť I
+---
 
 Týmto sa uzatvára viac než lekcia — uzatvára sa Časť I. V rukách máš jej kostru: zlá odpoveď sa rozkladá na zlyhanie vyhľadávania alebo zlyhanie generovania, pipeline sa stavia vrstvu po vrstve — Ingestion (príjem obsahu do indexu), Retrieval (vyhľadávanie), Generation (generovanie) — a prierezové postupy ju udržiavajú merateľnou, bezpečnou a viditeľnou.
 

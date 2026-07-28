@@ -80,3 +80,15 @@ jobs:
       # lives in editorial/. This asserts the two have not drifted apart.
       - name: Icon register drift check
         run: bash scripts/icon-register-check.sh
+
+  locale-parity:
+    name: Locale structural parity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      # The build proves a locale's pages EXIST and link correctly; it says nothing about whether a
+      # translated page still has the same sections, the same card nodes or the same figures as its
+      # English source. This asserts the shape (see the script header for what is asserted, what was
+      # deliberately relaxed, and on what measured evidence).
+      - name: Locale structural parity
+        run: bash scripts/locale-parity-check.sh
