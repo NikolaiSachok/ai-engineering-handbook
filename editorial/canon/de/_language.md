@@ -40,7 +40,9 @@ A DISPUTED or OPEN row is a correct outcome. A confidently-wrong row is not.
 1. **Anrede: „Sie", großgeschrieben — samt „Ihr/Ihre/Ihnen".** Nie „du". Nie Wechsel innerhalb einer Seite.
    **Jede Anweisung steht im Sie-Imperativ:** „Öffnen Sie die Konsole", „Prüfen Sie den Rückgabewert" — nicht
    „Öffne die Konsole". Das ist eine andere Verbform, nicht nur ein anderes Pronomen, und sie betrifft in
-   einem Anleitungskorpus fast jeden Satz.
+   einem Anleitungskorpus fast jeden Satz. **Einzige Ausnahme: die Aufschrift AUF einem Bedienelement**
+   (Schaltfläche, Link-CTA, Menüeintrag, `aria-label`) steht im **Infinitiv** — „Kurs öffnen →", „Kopieren",
+   „Schließen" —, weil sie die Handlung *benennt*, statt jemanden anzusprechen (§ Stimme und Anrede).
 2. **Kein „man" als Leseransprache.** „Man öffnet die Konsole" ✗ → „Öffnen Sie die Konsole." Ausnahme nur für
    echte Allgemeinaussagen über die Sprache oder das Fach (§ Stimme und Anrede).
 3. **Englische Fachtermini bleiben englisch** und bekommen einen **deutschen Artikel**: *der Tool-Call, das
@@ -146,6 +148,108 @@ die in einer benachbarten Standardvarietät völlig korrekt und für die gewähl
   > **Wiedereröffnungsbedingung.** Eine bindende Hausrichtlinie eines Verlags, die `du` vorschreibt; oder ein
   > nativer Leserbefund (Gate 7, `de-pilot-naturalness-check`), der das `Sie` für dieses Publikum als
   > distanziert markiert. **Kein Flip ohne Eigentümerentscheid** — in beide Richtungen.
+
+  **Ausnahme innerhalb der UI-Strings: Bedienelementbeschriftungen stehen im INFINITIV.** Die Grenze läuft
+  nicht zwischen Prosa und UI, sondern **innerhalb** der UI-Strings — zwischen zwei Textsorten:
+
+  | Textsorte | Form | Beispiele |
+  |---|---|---|
+  | **Handlungsanweisung** — ein Satz, der die lesende Person anspricht (Fließtext, Fehlermeldung, Hinweis, leerer Zustand) | **Sie-Imperativ** | „Öffnen Sie die Konsole.", „Bitte melden Sie sich an, um fortzufahren.", „Prüfen Sie den Rückgabewert." |
+  | **Bedienelementbeschriftung** — die Aufschrift **auf** einem Bedienelement: Schaltfläche, Link-CTA, Menüeintrag, Tab, Karteikartenreiter, `aria-label` | **Infinitiv** | „Kurs öffnen →", „Lehrplan ansehen →", „Kopieren", „Schließen", „Mehr lesen" |
+
+  **Zwei Unterfälle, die keine sind.** *Nacktes Verb* („Speichern") und *Verb mit Objekt* („Kurs öffnen")
+  sind dieselbe Form — keine geprüfte Quelle unterscheidet sie, und beide stehen überall nebeneinander
+  (KERN: „Speichern" und „Modal schließen"). Und ein **navigierender** CTA darf statt des Infinitivs auch
+  eine **bloße Präpositionalphrase ganz ohne Verb** tragen: „Zum Angebot", „Zum Girokonto", „In den
+  Warenkorb" — auf bahn.de, telekom.de, dkb.de, heise.de und rheinwerk-verlag.de gleichermaßen belegt. Die
+  Wahl steht also zwischen **Infinitiv und Präpositionalphrase**; ein Imperativ ist in keinem der beiden
+  Unterfälle vorgesehen.
+
+  **Der Grund ist kein Höflichkeitsgrund, sondern ein grammatischer.** Eine Beschriftung ist **an niemanden
+  gerichtet** — sie **benennt** die Handlung, die das Element auslöst, so wie eine Überschrift ihren
+  Abschnitt benennt. Der Sie-Imperativ macht aus dem Namen eine Aufforderung und damit aus dem Knopf einen
+  Satz („Öffnen Sie den Kurs →" auf einer anklickbaren Karte). Die Anrede wird dadurch **nicht** aufgeweicht:
+  sobald ein UI-String ein Satz an die lesende Person ist, gilt lückenlos der Sie-Imperativ.
+
+  > **STATUS: SETTLED.** Der stärkste Beleg ist **projektintern und liegt bereits im Build**: die
+  > deutschen Docusaurus-Theme-Strings (`@docusaurus/theme-translations/locales/de`), aus denen dieses
+  > Projekt **74 von 85 `code.json`-Schlüsseln** automatisch befüllt, treffen **in derselben Datei, von
+  > denselben deutschen Autoren** genau diese Unterscheidung:
+  >
+  > - Bedienelemente im **Infinitiv** — `theme.CodeBlock.copy` = „**Kopieren**",
+  >   `theme.CodeBlock.copyButtonAriaLabel` = „**In die Zwischenablage kopieren**",
+  >   `theme.AnnouncementBar.closeButtonAriaLabel` = „**Schließen**",
+  >   `theme.BackToTopButton.buttonAriaLabel` = „**Zurück nach oben scrollen**",
+  >   `theme.ErrorPageContent.tryAgain` = „**Nochmal versuchen**", `theme.blog.post.readMore` = „**Mehr lesen**".
+  > - Prosa-Sätze im **Sie-Imperativ** — `theme.NotFound.p2` = „**Bitte kontaktieren Sie** den Besitzer der
+  >   Seite … und **teilen Sie** ihm mit, dass der Link nicht mehr funktioniert."; `theme.NotFound.p1` =
+  >   „Wir konnten nicht finden, wonach **Sie** gesucht haben."
+  >
+  > Das ist die entscheidende Kombination: **dieselben Autoren, dieselbe Datei, Sie in der Prosa und
+  > Infinitiv auf den Knöpfen.** Die Verbform der Beschriftung ist also **unabhängig** von der Anrede des
+  > Fließtextes. Und `theme.blog.post.readMore` („Mehr lesen") ist exakt dieselbe Textsorte wie
+  > `landing.cta.open` — stünde daneben „Öffnen Sie den Kurs →", wäre der Registerbruch **auf einer
+  > Bildschirmseite sichtbar**.
+  >
+  > **Der Satz, der die Regel ausspricht** (Sheeren Münch-Schmitt, Lokalisierungsfachfrau,
+  > <https://lingdrafts.hypotheses.org/2190>): „Übrigens: **Schaltflächen enthalten praktisch immer eine
+  > Handlungsaufforderung. Daher werden sie üblicherweise nicht substantivisch, sondern verbal ausgedrückt –
+  > aber nicht im Imperativ, sondern im Infinitiv.**" Entscheidend ist die Begründungsrichtung: **gerade
+  > weil** die Beschriftung eine Handlungsaufforderung ist, steht sie trotzdem **nicht** im Imperativ. Das
+  > „nicht im Imperativ" ist unqualifiziert — es schließt den Imperativ als solchen aus, nicht nur den
+  > du-Imperativ.
+  >
+  > **Microsoft-Lokalisierungsleitfaden de-DE** (offiziell, 77 S.): enthält **keine** ausgesprochene Regel,
+  > **zeigt** die Trennung aber in den eigenen normativen Beispielen, in denen `(+)` die korrekte deutsche
+  > Zielform markiert — „(+) **Klicken Sie** im Menü Datei auf **Öffnen**." und „**Klicken Sie auf**
+  > ‚Abbrechen', um zu Ihrer Arbeit zurückzugehen …": Sie-Imperativ in der Prosa, Infinitiv auf dem
+  > Bedienelement, in einem Satz.
+  >
+  > **Mozilla-l10n-Styleguide DE** (<https://mozilla-l10n.github.io/styleguides/de/>) — „Stattdessen wird der
+  > **Infinitiv** verwendet" (Beispiel „XYZ anzeigen statt Zeige XYZ"); und, für diese Frage wichtiger als
+  > die du-Hälfte: „Des Weiteren sollte ein ‚Sie' **grundsätzlich aber auch gemieden** und nur in Fällen
+  > verwendet werden, **in denen es einer direkten Ansprache des Nutzers bedarf**." Eine Knopfbeschriftung
+  > ist kein solcher Fall.
+  >
+  > **Das Argument, das die Gegenhypothese ausschließt — die Paarung hält in BEIDE Richtungen.** Würde die
+  > Beschriftung der Anrede folgen, müssten du-Seiten „Speichere" und „Melde dich an" zeigen und Sie-Seiten
+  > „Buchen Sie" und „Erfahren Sie mehr". **Beides kommt in der geprüften Stichprobe kein einziges Mal vor:**
+  > - *Sie in der Prosa → Infinitiv auf den Knöpfen:* Microsoft de-DE, bahn.de („Profitieren Sie von …" neben
+  >   „Deutschland-Ticket buchen"), telekom.de, heise.de („Geben Sie uns Bescheid." neben „Jetzt anmelden").
+  > - *du in der Prosa → Infinitiv auf den Knöpfen:* der KERN-UX-Standard („**Nutze** Icons in Buttons nur
+  >   dann …", „**Achte** …", „**Verwende** …") beschriftet seine eigenen Knöpfe „Speichern", „Abbrechen",
+  >   „Bearbeiten", „Modal schließen"; ebenso dkb.de („**Nutze** den Sommer …" neben „Zum Girokonto").
+  > - *beide Anreden auf einer Seite → dieselben Infinitive:* rheinwerk-verlag.de.
+  >
+  > Über sechs deutschsprachige Seiten hinweg: **Sie-Imperativ als Knopfbeschriftung = 0, du-Imperativ als
+  > Knopfbeschriftung = 0.** Der Infinitiv ist **anredeneutral** — er benennt die Handlung, statt jemanden
+  > anzusprechen, trägt deshalb gar keine Höflichkeitsmarkierung und überlebt jedes umgebende Register
+  > unverändert. Genau das macht die Regel sicher kodifizierbar.
+  >
+  > **Was hier NICHT als Beleg zählt — dreimal.**
+  > 1. Die Schwester-Locales schreiben ihre CTAs zwar ebenfalls im Infinitiv („Открыть курс →",
+  >    „Otvoriť kurz →"), aber beide führen «ты»/„ty" — dort war der Infinitiv **keine**
+  >    Höflichkeitsentscheidung und trägt für diese Frage nichts bei.
+  > 2. Der **KERN-UX-Standard schreibt den Infinitiv nicht vor** — eine Prüfung der Seite ergab nur die
+  >    Forderung nach knappen, eindeutigen Handlungslabels. Er zählt hier **als Usus, nicht als Vorschrift**;
+  >    eine Berufung auf ihn als Regelquelle wäre eine Überdehnung.
+  > 3. Die deutsche Microsoft-Learn-Seite zum *Windows Admin Center UI style guide* passt inhaltlich perfekt,
+  >    trägt aber `ms.translationtype: MT` — maschinell übersetzt. Aus „Create/Delete/Add" entstehen
+  >    mechanisch deutsche Infinitive; der Beleg wäre zirkulär. **Nach der MT-Signal-Prüfung verworfen**
+  >    (§ Sprachpaar und Rolle der Locale).
+  >
+  > **Restschwäche, ehrlich benannt.** Es wurde **kein** Unternehmensstandard gefunden, der wörtlich sagt
+  > „nie den Sie-Imperativ auf einer Schaltfläche"; die Mozilla-Regel nennt ausdrücklich nur den
+  > du-Imperativ, und der unqualifizierte Satz stammt aus einem Fachblog, nicht aus einer Firmennorm. Das
+  > Verbot ruht also auf der **Konvergenz** aus Münch-Schmitt, den Microsoft-Beispielen und dem
+  > ausnahmslosen Befund über sechs Seiten. Ungeprüft blieben SAP Fiori DE, der Apple-Styleguide DE und der
+  > Styleguide der Bundesregierung. Das ist eine Lücke in der **Zitierbarkeit**, kein Widerspruch in der
+  > Beleglage: **nichts Geprüftes weist in die andere Richtung.**
+  >
+  > **Verhältnis zur Vorrangregel (§ Typografie).** Dies ist **kein** Fall der Vorrangregel: hier kollidiert
+  > keine projektweite Konvention mit einer deutschen Norm. Der Geltungsbereich hatte die beiden Textsorten
+  > schlicht nicht unterschieden, weil „UI-Strings" als **ein** Eimer notiert war. Diese Zeile teilt den
+  > Eimer; die Anrede-Entscheidung vom 2026-07-28 bleibt unangetastet.
 
 - **Das unpersönliche „man" ist im deutschen Doku-Reflex der Default — und im Korpus als Leseransprache
   verboten.** Es ist die dritte Anziehungskraft, die das Russische und das Slowakische gar nicht kennen: Es
