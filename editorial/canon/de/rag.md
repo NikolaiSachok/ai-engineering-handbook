@@ -139,6 +139,13 @@ paraphrase.** Writing a plausible-sounding German form here is exactly the failu
 > Observability und Ingestion **unvermeidlich**. Wer aus „die Locale ist sauber" schließt, die offenen Zeilen
 > seien geklärt, zieht den Schluss aus einer Oberfläche, die sie nie berührt hat. *(Befund: `de-ui-strings`,
 > nach #314.)*
+>
+> **Aussagekraft der Prüfung: Wörter, nicht Begriffe.** Technisch wurden die Zeichenketten der 139
+> UI-Nachrichten mit regulären Ausdrücken durchsucht; der Befund zeigt daher nur, welche Wörter nicht
+> vorkommen, nicht, ob die betreffenden Begriffe inhaltlich vertreten sind. Dass die Suche nach `Gate` ohne
+> Treffer bleibt, ist bei der gemäß der Sense-Card gewählten Umschreibung das erwartete Ergebnis: Die
+> ausgelieferte Überschrift „Gestaffelte Kontrollpunkte" gibt den Gate-Begriff wieder, ohne das Wort zu
+> verwenden.
 
 | Terminus | Warum offen | Vorläufige Behandlung |
 |---|---|---|
