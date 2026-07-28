@@ -616,9 +616,32 @@ tatsächliche Form.
   > vollständig erklärt, ist damit nachweislich unvollständig gewesen — die Lehre gilt allgemein: **ein
   > Vollständigkeitsanspruch ist selbst eine Behauptung und trägt keinen Beleg.**
 
-  **Betroffene Flächen (Stand #310, noch nicht umgestellt):** acht `Teil N — …`-Label in den Sidebars, acht
-  Kopien davon im Footer, zwei satzinterne Vorkommen (`landing.hero.tagline`, RAG-Blurb) — und, ungleich
-  größer, **die gesamte noch ungeschriebene deutsche Lektionsprosa**, für die diese Zeile ab jetzt gilt.
+  **Betroffene Flächen — umgestellt in #314, Endstand 21 Vorkommen** (`i18n/de/**`, ausgezählt, nicht
+  geschätzt):
+
+  - **8** `Teil N — …`-Kategorielabel in den Sidebars (5 `aiSdlcSidebar`, 3 `handbookSidebar`)
+  - **8** Kopien davon im Footer (`link.item.label.Part…`)
+  - **2** weitere Label desselben Musters: `Serving — FastAPI und Docker`, `LLMOps — Bereitstellung,
+    Überwachung, Kosten`
+  - **3** satzinterne Vorkommen: `landing.hero.tagline`, der RAG-Blurb **und die
+    generated-index-Beschreibung von `Cross-cutting`**
+
+  Und, ungleich größer als alle 21: **die gesamte noch ungeschriebene deutsche Lektionsprosa**, für die diese
+  Zeile ab jetzt gilt.
+
+  > **Diese Aufzählung stand hier zuerst falsch — und das gehört ins Protokoll, weil es dieselbe Lehre ist,
+  > die der Kasten darüber dem §7.7-Sweep vorhält, eine Ebene tiefer.** Die erste Fassung nannte „acht,
+  > acht, **zwei** satzinterne" und ließ `Serving`, `LLMOps` und die `Cross-cutting`-Beschreibung ganz aus:
+  > **20 statt 21, und die Gliederung an zwei Stellen daneben.** Ich hatte aus der Meldung abgeschrieben,
+  > die die Zeile ausgelöst hat, statt selbst zu zählen. Gefunden wurde der Fehler nur, weil die
+  > `de-ui-strings`-Instanz beim Umstellen **jede Nachricht mit U+2014 enumeriert hat, statt meine Liste
+  > abzuarbeiten**.
+  >
+  > **Die Regel, die daraus folgt und für jede „betroffene Flächen"-Angabe in diesem Kanon gilt:** eine
+  > Flächenangabe wird **ausgezählt, nicht übernommen** — und wer sie abarbeitet, enumeriert das Muster
+  > selbst, statt der Liste zu vertrauen. Eine Liste im Kanon ist ein **Hinweis auf die Größenordnung**, nie
+  > die Arbeitsgrundlage. Zwei Sweeps in Folge haben sich in genau diesem Punkt geirrt (§7.7 des Playbooks
+  > und diese Zeile); der Fehlertyp ist also nicht die Ausnahme, sondern der Normalfall.
 
 - **Geschütztes Leerzeichen zwischen Zahl und Einheit** (128 GB, 8 GPU, 24 h), damit der Wert nicht am
   Zeilenende abreißt. **STATUS: SETTLED** für das Leerzeichen („Einheiten werden **immer** mit einem
