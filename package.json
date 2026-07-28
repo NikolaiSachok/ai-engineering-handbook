@@ -16,6 +16,7 @@
     "lint:md": "markdownlint-cli2",
     "leak-scan": "bash scripts/leak-scan.sh",
     "icon-register-check": "bash scripts/icon-register-check.sh",
+    "locale-parity-check": "bash scripts/locale-parity-check.sh",
     "test:e2e": "node e2e/locale-detection.mjs && node e2e/locale-scroll-position.mjs && node e2e/tablet-layout.mjs"
   },
   "dependencies": {

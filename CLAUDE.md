@@ -14,7 +14,10 @@ natively per the workflow below, never machine-translated).
   content PR that adds or changes an EN/RU page **either updates the SK counterpart in the same PR or files
   a parity issue** — the deployed build now runs `onBrokenLinks: 'throw'` with `sk` included, so a broken or
   missing SK link fails the deploy. Authoring a new lesson means all three languages via the authoring-team
-  skill, then the SK canon (`editorial/canon/sk/`) + `scripts/i18n-link-check.sh` gate it. The gated-
+  skill, then the SK canon (`editorial/canon/sk/`) + `scripts/i18n-link-check.sh` gate it. **Link parity is
+  not shape parity**, so `scripts/locale-parity-check.sh` gates the rest in CI: the file set, the H1/H2
+  sequence, the `<InfoCard`/`<Node`/`<YouTube` counts, the fenced-block count per language, and figure drift.
+  Read its header before "fixing" a finding — it records what each check deliberately does NOT assert, and why. The gated-
   visibility infra (`RELEASED_LOCALES`/`UNRELEASED_LOCALES` in `docusaurus.config.ts`) stays in place for the
   NEXT locale: add it to `UNRELEASED_LOCALES` to build+validate it in CI while hidden on deploy, then move it
   to `RELEASED_LOCALES` to launch. A first visitor's browser language is
