@@ -1,0 +1,26 @@
+{
+  "title": {
+    "message": "AI Engineering Handbook",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "AI Engineering Handbook",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.RAG & Agents": {
+    "message": "RAG & Agents",
+    "description": "Navbar item with label RAG & Agents"
+  },
+  "item.label.AI SDLC": {
+    "message": "AI SDLC",
+    "description": "Navbar item with label AI SDLC"
+  },
+  "item.label.Field notes": {
+    "message": "Werkstattnotizen",
+    "description": "Navbar item with label Field notes"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
