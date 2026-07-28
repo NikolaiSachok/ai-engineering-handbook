@@ -18,8 +18,8 @@ Squash-merge keeps `main` history clean.
 
 ## Gates
 
-- [ ] `HANDBOOK_INCLUDE_UNRELEASED=1 npm run build` passes for **every** locale (en + ru + sk, plus
-      any gated locale)
+- [ ] `HANDBOOK_INCLUDE_UNRELEASED=1 npm run build` passes for **every** locale (every released
+      locale, plus any gated one)
 - [ ] Markdown lint passes (`npm run lint:md`)
 - [ ] Generic leak scan passes (`npm run leak-scan`)
 - [ ] Locale structural parity passes (`bash scripts/locale-parity-check.sh`)

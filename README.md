@@ -30,12 +30,13 @@ npm run start
 npm run start -- --locale ru
 ```
 
-Docusaurus dev server serves one locale at a time; use the `--locale` flag to preview RU/SK.
+Docusaurus dev server serves one locale at a time; use the `--locale` flag to preview the others.
 
 ## Build
 
 ```bash
-npm run build   # builds every released locale (en + ru + sk)
+npm run build                                  # every released locale
+HANDBOOK_INCLUDE_UNRELEASED=1 npm run build    # …plus the gated ones CI validates
 ```
 
 Output is generated into `build/` and can be served with any static host.
