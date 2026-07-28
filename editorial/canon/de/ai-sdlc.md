@@ -136,9 +136,11 @@ Nachweiskette eines Artefakts)". Wo ein **kurzes Label** gebraucht wird, steht s
   Microsoft-Learn-Dokumentation; genau die Quellensorte, die § Sprachpaar und Rolle der Locale
   disqualifiziert. *(Diese Disqualifikation stammt von `de-ui-strings` und war richtig.)*
 
-**Sichtbare Fläche:** das Label `Enterprise-Reifegrad: Prüfpfad, Herkunftsnachweis, Vorgaben` (ausgeliefert
-in #310) trägt die abgelehnte Form und ist auf **„… Prüfpfad, Herkunft, Vorgaben"** zu ändern. *(`Prüfpfad`
-für *audit trail* und `Vorgaben` für *policy* sind davon nicht berührt und bleiben.)*
+**Sichtbare Fläche — erledigt.** Das in #310 ausgelieferte Label
+`Enterprise-Reifegrad: Prüfpfad, Herkunftsnachweis, Vorgaben` trug die abgelehnte Form und lautet seit **#314**
+`Enterprise-Reifegrad: Prüfpfad, **Herkunft**, Vorgaben`. `Prüfpfad` (*audit trail*) und `Vorgaben` (*policy*)
+waren nicht berührt und bleiben. Im gesamten `i18n/de/**` steht seither **kein** „Herkunftsnachweis" mehr
+(ausgezählt).
 
 ## §5 Sense card: `gate` (drei verschiedene Begriffe unter einem englischen Wort)
 
