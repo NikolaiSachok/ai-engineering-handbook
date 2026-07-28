@@ -19,8 +19,12 @@ is ~A1 and who therefore cannot check the German itself — can read the confide
   with no dictionary entry. Usable, but it deserves a second independent source before being defended as a rule.
 - **HOUSE** — no external norm decides it; this is a deliberate editorial ruling for corpus consistency. The
   reason is always given.
-- **DISPUTED** — sources genuinely conflict, or an external norm conflicts with a project-wide convention.
-  The incumbent form is named and **held**; nobody flips a DISPUTED row without new evidence.
+- **DISPUTED** — die **deutschen Quellen selbst** widersprechen einander (etwa DIN 5008 gegen Duden) und
+  keine von ihnen entscheidet die Zeile. Die Incumbent-Form wird benannt und **gehalten**; nobody flips a
+  DISPUTED row without new evidence.
+  **Nicht mehr DISPUTED:** „externe deutsche Norm gegen projektweite Konvention". Diese Klasse ist seit
+  2026-07-28 durch die **Vorrangregel** (§ Typografie) entschieden — die deutsche Norm gewinnt, und die
+  Abweichung von den Schwester-Locales wird protokolliert.
 - **OPEN** — no usable attestation was found. The form is *not* settled and must not be presented as canon.
 
 A DISPUTED or OPEN row is a correct outcome. A confidently-wrong row is not.
@@ -49,7 +53,9 @@ A DISPUTED or OPEN row is a correct outcome. A confidently-wrong row is not.
 6. **Durchkopplung:** mehrgliedrige englische Fügungen werden im deutschen Satz durchgekoppelt —
    *Machine-Learning-Modell*, *Prompt-Injection-Angriff*, *Retrieval-Qualität*. „Prompt Injection Angriff" ✗.
 7. **Typografie:** „…" primär, ‚…' verschachtelt, **niemals »…«** und niemals «…»; **ß** (bundesdeutsch, kein
-   Schweizer ss); Dezimalkomma; Bis-Strich kompress und Prozent eng: **10–20%**.
+   Schweizer ss); Dezimalkomma; Bis-Strich kompress; **Prozentzeichen mit schmalem geschützten
+   Zwischenraum** und Tausendergliederung ebenso — **10–20 %**, `28,7 %`, `1 000 000` (nicht „20%",
+   nicht „1.000.000"). Das weicht bewusst von EN/RU/SK ab (§ Typografie, Vorrangregel).
 8. **Drucklatte:** dpunkt, Rheinwerk, O'Reilly Deutschland, heise/iX. **Nicht** Enterprise-Marketing-Deutsch —
    genau das Register, in das ein Modell rutscht, wenn man ihm „professionelles Deutsch" sagt.
 
@@ -299,6 +305,37 @@ tatsächliche Form.
 
 ## Typografie
 
+> ### Vorrangregel — bei Kollision gewinnt die deutsche Norm
+>
+> **STATUS: SETTLED — Eigentümerentscheidung 2026-07-28.** Sie gilt für die ganze Locale, nicht nur für die
+> zwei Zeilen, an denen sie gefunden wurde.
+>
+> **Die Regel.** Wo eine **projektweite Konvention** (aus EN/RU/SK übernommen) mit einer **belegten
+> deutschen Norm** zusammenstößt, **gewinnt die deutsche Norm** — und die Abweichung von den
+> Schwester-Locales wird in der betroffenen Zeile **ausdrücklich protokolliert**, statt stillschweigend
+> absorbiert zu werden.
+>
+> **Grund — es ist derselbe Grund wie bei der Anrede.** Am 2026-07-28 hat der Eigentümer die Anrede genau so
+> entschieden: „du" war die Gleichlage mit «ты» und „ty", „Sie" ist das, was das deutsche Fachverlagswesen
+> tatsächlich belegt. Er hat die belegte Norm über die Locale-Symmetrie gestellt — **weil es in diesem Projekt
+> keinen deutschen Muttersprachler gibt, der hören könnte, ob eine unkonventionelle Wahl als bewusst oder als
+> fremd ankommt** (§ Sprachpaar und Rolle der Locale: „für das Deutsche bürgen nur die Gates"). Eine
+> Konvention, die für das Russische und das Slowakische richtig ist, wird durch den Import ins Deutsche nicht
+> richtig — sie wird nur **unhörbar** falsch. Enges Prozentzeichen ist dieselbe Frage in anderer Gestalt und
+> bekommt dieselbe Antwort.
+>
+> **Was dabei aufgegeben wird — ehrlich benannt.** Die **visuelle Gleichlage über die Locales** ist ein
+> echter Wert und wird hier wissentlich eingetauscht, nicht übersehen: dieselbe Zahl sieht auf der deutschen
+> Seite ab jetzt anders aus als auf der englischen, russischen und slowakischen, und ein späterer
+> Konsistenzlauf **wird** versuchen, das zu „reparieren". Der Gegenwert: auf dem Bildschirm ist immer nur
+> **eine** Locale sichtbar — die Norm dagegen ist für jeden deutschen Leser in **jedem** Satz sichtbar. Wer
+> eine solche Zeile später zurückdreht, dreht eine Eigentümerentscheidung zurück und braucht dafür einen
+> Beleg, nicht ein Konsistenzgefühl.
+>
+> **Was die Regel *nicht* tut.** Sie entscheidet keine Zeile, in der sich die **deutschen Quellen
+> untereinander** widersprechen (DIN 5008 gegen Duden, Norm gegen Buchsatz). Solche Zeilen bleiben DISPUTED
+> oder werden mit Angabe des Registers entschieden — und der unterlegene Beleg bleibt im Text stehen.
+
 - **Deutsche Anführungszeichen „…"** (unten öffnend, oben schließend), verschachtelt ‚…'.
   **STATUS: SETTLED** — so gesetzt im Amtlichen Regelwerk 2024, § 79: „Steht innerhalb einer Anführung eine
   weitere Anführung, steht die weitere Anführung in der Regel in **halben** Anführungszeichen … „Das ist wohl
@@ -316,6 +353,11 @@ tatsächliche Form.
   **Grund für die Wahl:** Gleichlage mit der slowakischen Locale, die ebenfalls „…" führt — ein Wechsel des
   Anführungssystems zwischen zwei Locales desselben Buches wäre eine sichtbare Inkonsistenz. Genau deshalb
   steht das Verbot **namentlich**: ein Modell wird »…« erzeugen, weil es korrekt ist.
+  **Gegen die Vorrangregel geprüft (2026-07-28): keine Kollision.** Die Gleichlage mit dem Slowakischen ist
+  hier **nicht** der einzige Träger — „…" ist unabhängig davon die Form, die das Amtliche Regelwerk 2024 in
+  seinen eigenen Beispielen setzt (§ 79, siehe Zeile oben). Es wird also **keine** deutsche Norm gegen eine
+  Projektkonvention eingetauscht; die Konvention und die primär belegte Form fallen zusammen, und »…« bleibt
+  eine legitime, aber nicht gewählte Alternative. Nur deshalb darf diese Zeile HOUSE bleiben.
   Ebenfalls draußen: russische «…», englische gerade "…", und die **schweizerischen** «…» (§1.3.4).
   Anführungszeichen stehen **ohne** Leerzeichen am Text (nie französisch « … »).
 
@@ -330,46 +372,110 @@ tatsächliche Form.
 
 - **Dezimalkomma**: 0,5; 0,36; 28,7 — nie „0.5". **STATUS: SETTLED.**
 
-- **Tausendergliederung: schmaler geschützter Zwischenraum**, nicht der Punkt — `10 000`, `1 000 000`; und
-  **vierstellige Zahlen werden nicht gegliedert** (`5423`, nicht „5 423").
-  **STATUS: DISPUTED.** Norm-Seite: DIN 5008:2020 („Zahlen mit mehr als vier Stellen sollten … durch je ein
-  Leerzeichen in dreistellige Gruppen gegliedert werden — 15 976 Messebesucher") und Duden („Ganze Zahlen mit
-  5 oder mehr Ziffern werden … durch Zwischenräume in dreistellige Gruppen gegliedert",
-  <https://www.duden.de/sprachwissen/rechtschreibregeln/zahlen-und-ziffern>). Praxis-Seite: die de-DE-Locale
-  aller Systeme und die verbreitete Fachprosa verwenden den **Punkt** (`120.000`). **Incumbent: Zwischenraum**
-  — er kollidiert nicht mit dem englischen Dezimalpunkt, der im Korpus in Code und Zahlenbeispielen vorkommt.
-  Ausnahme laut DIN: **Geldbeträge** werden „aus Sicherheitsgründen mit dem Punkt" gegliedert (`51.397,30 €`).
+- **Tausendergliederung: schmaler geschützter Zwischenraum (U+202F)**, nicht der Punkt — `10 000`,
+  `1 000 000`; und **vierstellige Zahlen werden nicht gegliedert** (`5423`, nicht „5 423").
+  **STATUS: SETTLED (2026-07-28, Vorrangregel oben) — vorher DISPUTED.** Hier sagen **DIN und Duden
+  dasselbe**, es gibt also gar keinen deutschen Quellenstreit:
+  - DIN 5008:2020, Abschnitt 11.2: „**Zahlen mit mehr als drei Stellen links oder rechts des Kommas werden
+    mithilfe eines ganzen Leerschritts – vom Komma ausgehend – in dreistellige Gruppen gegliedert.**"
+    Beispiele der Norm: `7 654 321,08 CHF`, `0,373 18 g`
+    (<https://journalismusausbildung.de/din-5008-zahlen/>).
+  - Duden: „Ganze Zahlen mit 5 oder mehr Ziffern werden von der Endziffer aus **durch Zwischenräume** in
+    dreistellige Gruppen gegliedert" — `34 500`, `600 000`, `3 134 512`
+    (<https://www.duden.de/sprachwissen/rechtschreibregeln/zahlen-und-ziffern>).
+  **Vierstellige Zahlen:** DIN stellt frei („Bei vierstelligen Zahlen ist neben der Schreibung mit
+  Zwischenraum bzw. ganzem Leerschritt auch die ohne möglich"), Duden gliedert erst ab **fünf** Ziffern. Der
+  Korpus nimmt die ungegliederte Form — sie ist unter **beiden** Quellen zulässig.
+  **Einzige Ausnahme, und sie kommt aus der Norm selbst — Geldbeträge:** „Bei Geldbeträgen können aus
+  Sicherheitsgründen auch Punkte zur Gliederung verwendet werden" (`5.340 EUR`, `7.893.432 EUR`). Nur dort
+  ist der Punkt richtig.
+  **Was aufgegeben wird, benannt:** die **Drucklatte setzt durchgehend den Punkt** — dpunkt/O'Reilly `4.319`,
+  Rheinwerk `12.000`, heise `100.000`, und die de-DE-Locale aller Systeme tut es auch. Das ist verbreitete
+  deutsche **Praxis**, aber keine Norm; und im Korpus kollidiert sie zusätzlich mit dem englischen
+  Dezimalpunkt, der in Code und Zahlenbeispielen auf derselben Seite steht. Die Norm entscheidet, der
+  Praxis-Dissens bleibt hier stehen.
+  **Zur Breite des Zwischenraums — ehrlich, weil die Norm hier wörtlich etwas anderes sagt:** DIN schreibt
+  für die Tausendergliederung einen **ganzen** Leerschritt vor (Schreibmaschinen- und
+  Textverarbeitungskontext); im Satz sähe der wie eine Wortlücke aus. Der Korpus setzt deshalb die
+  **typografische Realisierung** derselben Gliederungsregel: schmaler **geschützter** Zwischenraum U+202F.
+  Fällt der aus, ist U+00A0 der Rückfall — **nie** ein normales Leerzeichen (Umbruchrisiko), **nie** der
+  Punkt außerhalb von Geldbeträgen, **nie** ungegliedert (`137813` ist unter beiden Quellen falsch).
+  **Wiederaufnahme:** eine bindende Verlagshausregel; der Renderer gibt U+202F unzuverlässig aus; oder die
+  Zahl steht als Code, Datenbankwert oder API-Literal — dann bleibt die Quellform unverändert.
 
-- **Prozentzeichen eng am Zahlwert: 10–20%, 28,7%.**
-  **STATUS: DISPUTED — bewusste Abweichung von der deutschen Norm.** Die Norm ist eindeutig und lautet
-  **`20 %` mit Zwischenraum**: DIN 5008:2020 „**Vor dem Prozentzeichen wird ein Leerzeichen gesetzt.** Das
-  Leerzeichen entfällt bei Ableitungen. — 3 % Skonto — Aber: 14 prozentig"; ebenso typolexikon: „Zwischen
-  Zahl und Prozentzeichen wird **immer** ein Leerraumzeichen gesetzt". Die enge Schreibung ist ein Import aus
-  der englischen Typografie.
-  Dagegen steht die **projektweite Konvention**: EN, RU und SK schreiben im gesamten Korpus eng (`20%`), und
-  die slowakische Locale hat 2026-07 ausdrücklich von „geschütztes Leerzeichen" auf „eng" umgestellt, weil die
-  alte Regel dem eigenen Korpus widersprach. **Incumbent: eng** — Korpuskonsistenz schlägt hier die
-  Einzelsprachnorm, weil dieselbe Zahl auf vier Sprachseiten identisch aussehen soll.
-  **Dieser Konflikt ist der auffälligste bewusste Normbruch des deutschen Kanons.** Er steht hier, damit ihn
-  niemand für ein Versehen hält; ein Flip auf `20 %` ist eine Eigentümerentscheidung und müsste **korpusweit**
-  erfolgen. Unabhängig davon gilt die Ableitungsregel: `20%ig`, `die 5-%-Klausel`.
+- **Prozentzeichen mit schmalem geschützten Zwischenraum: `20 %`, `10–20 %`, `28,7 %`.**
+  **STATUS: SETTLED (2026-07-28, Vorrangregel oben) — vorher DISPUTED mit „eng" als Incumbent.**
+  > **Entscheidungsgeschichte — diese Zeile wurde umgedreht, und das Protokoll sagt es.**
+  > Ursprünglich **eng (`20%`)**, auf Korpuskonsistenz mit EN/RU/SK; der Kanon nannte das selbst „den
+  > auffälligsten bewussten Normbruch des deutschen Kanons". Die Zeile stand außerdem **im Widerspruch zum
+  > Playbook** (`de-locale-playbook.md` §7.5), das schon `20 %` festgelegt hatte — welches Dokument gewann,
+  > hing davon ab, welches ein Renderer zuerst las. **Umgedreht auf `20 %` durch den Eigentümer am
+  > 2026-07-28**, auf genau den Beleg, den die eng-Zeile bereits gegen sich selbst notiert hatte. Ein Kanon,
+  > der seine eigenen Umkehrungen stillschweigend überschreibt, ist der SK-Fáza-26-Fehlermodus; deshalb steht
+  > die alte Entscheidung hier lesbar über der neuen.
+  **Beleglage — die deutschen Quellen sind sich hier einig, sie spalten sich nicht:**
+  - DIN 5008:2020, Abschnitt 10.7 („Prozent- und Promillezeichen"): „**Prozent- und Promillezeichen sind
+    durch einen Leerschritt von der zugehörigen Zahl zu trennen.**" Für Textverarbeitungssysteme schreibt die
+    Norm ausdrücklich „**einen kleineren Zwischenraum (Festabstand)**" vor — das ist genau U+202F — und:
+    „Die Trennung von Zahl und Prozent- bzw. Promillezeichen am Zeilenende sollte vermieden werden"
+    (<https://journalismusausbildung.de/din-5008-prozent-und-promillezeichen/>).
+  - Duden (Rechtschreibung, 24. Aufl.): Wert und Einheit getrennt — „5 Prozent oder 5 %".
+  - typolexikon: „Zwischen Zahl und Prozentzeichen wird **immer** ein Leerraumzeichen gesetzt"
+    (<https://www.typolexikon.de/prozentzeichen/>).
+  - korrekturen.de: „**Anders als teilweise im Englischen** werden im Deutschen Maßeinheiten und Symbole
+    stets mit Abstand vor oder hinter die Zahl gestellt: € 25, **80 %**, 3 t Gewicht."
+  Die enge Schreibung ist ein **Import aus der englischen Typografie** — die letzte Quelle sagt das
+  wörtlich.
+  **Ableitungen bleiben eng** (das ist keine Ausnahme *vom* Beleg, sondern steht in ihm): `20%ig`
+  (Duden D 30.1 führt `75%ig`), alternativ ausgeschrieben `20-prozentig`; und `die 5-%-Klausel` (das
+  Amtliche Regelwerk 2024 führt `5-%-Klausel` unter „fünf"). DIN: „Das Leerzeichen entfällt bei
+  Ableitungen — *Der 8%ige Umsatzrückgang …*"
+  **Abweichung von den Schwester-Locales, protokolliert:** EN, RU und SK schreiben im gesamten Korpus eng,
+  und die slowakische Locale hat 2026-07 ausdrücklich von „geschütztes Leerzeichen" auf „eng" umgestellt
+  (`canon/sk/_language.md`). **Diese Konvention trägt nicht ins Deutsche.** Eine typografische Konvention ist
+  eine Eigenschaft der **Locale**, nicht des Korpus. Wer die deutsche Seite später „auf eng vereinheitlicht",
+  dreht eine Eigentümerentscheidung zurück.
+  **Wiederaufnahme:** nur für Code, UI-Strings und wörtlich zitierte fremdsprachige Passagen — dort bleibt die
+  Quellform stehen — sowie für echte Ableitungen und Zusammensetzungen. **Gleichlage mit den anderen Locales
+  ist ausdrücklich kein Wiederaufnahmegrund.**
 
-- **Bereiche mit Bis-Strich (Halbgeviert, en dash), ohne Leerzeichen**: `10–20%`.
-  **STATUS: DISPUTED, mit begründetem Incumbent.** Der **normative Teil** von DIN 5008 setzt Leerzeichen
-  („Montag – Donnerstag"); der **klassische Buchsatz und DIN 5008 Anhang F** (der Anhang für typografisch
-  gehobene Publikationen) setzen kompress. Die Gesellschaft für deutsche Sprache bestätigt beides: „Der
-  Bis-Strich **darf auch kompress gesetzt werden**, also ohne Leerzeichen" (<https://gfds.de/strichlaengen/>).
-  **Incumbent: kompress** — ein Buch ist genau der Fall, für den Anhang F geschrieben wurde, und es ist die
-  Form der übrigen Locales.
+- **Bereiche mit Bis-Strich (Halbgeviert, en dash), ohne Leerzeichen**: `10–20 %`, `9–11 Uhr`.
+  **STATUS: SETTLED nach Register (2026-07-28) — vorher DISPUTED.** Hier spalten sich die deutschen Quellen
+  **wirklich**, und beide Seiten stehen deshalb im Protokoll:
+  - **Kompress:** Duden setzt vor und nach dem Bis-Zeichen kein Leerzeichen — „Vor und nach dem bis-Zeichen
+    steht gemäß zum Beispiel Duden **kein Leerzeichen**: 24.–25. Oktober"
+    (<https://blog.leo.org/2020/10/23/das-bis-zeichen-und-seine-laenge/>); korrekturen.de setzt es ebenso
+    („bis-Zeichen (»Öffnungszeiten 9–11 Uhr«)"); die Gesellschaft für deutsche Sprache bestätigt die Form
+    ausdrücklich als zulässig: „Der Bis-Strich **darf auch kompress gesetzt werden**, also ohne Leerzeichen"
+    (<https://gfds.de/strichlaengen/>). Auch der klassische Buchsatz und DIN 5008 Anhang F (der Anhang für
+    typografisch gehobene Publikationen) setzen kompress.
+  - **Mit Leerzeichen:** der **normative Teil** von DIN 5008 („24. – 25. Oktober", „Montag – Donnerstag").
+  **Der Kanon nimmt kompress**, und zwar **nicht** wegen der Gleichlage mit den anderen Locales, sondern weil
+  DIN 5008 die Geschäftskorrespondenz und Textverarbeitung regelt, während dies ein **gesetztes Buch** ist —
+  genau der Fall, für den Anhang F geschrieben wurde, und der Fall, den Duden und korrekturen.de beschreiben.
+  Dass es zufällig auch die Form der Schwester-Locales ist, ist ein Nebeneffekt, kein Grund; die Zeile stünde
+  genauso da, wenn RU und SK es anders machten. **Die Vorrangregel greift hier nicht** — sie entscheidet nur
+  Norm gegen Projektkonvention, nicht deutsche Quelle gegen deutsche Quelle.
   **Harte Unterregel, nicht optional:** Wort und Strich werden nie gemischt — „von 8 bis 20 Uhr" ✓,
   „von 8–20 Uhr" ✗.
+  **Wiederaufnahme:** eine bindende Verlagshausregel; oder der Korpus wechselt in ein
+  Korrespondenz-/Formularregister, für das DIN 5008 normativ ist.
 
 - **Geschütztes Leerzeichen zwischen Zahl und Einheit** (128 GB, 8 GPU, 24 h), damit der Wert nicht am
   Zeilenende abreißt. **STATUS: SETTLED** für das Leerzeichen („Einheiten werden **immer** mit einem
   Leerzeichen zwischen dem Zahlenwert und der Einheit geschrieben"), WEAK für die Art des Leerzeichens.
   Innerhalb einer abgekürzten Einheit steht **nie** ein Leerzeichen. Sonderfälle: **Temperatur** `8 °C`
-  (Zwischenraum, dann Gradzeichen direkt an der Einheit), **Winkel** `45°` (kein Zwischenraum).
-  Beim Prozentzeichen gilt nach der Zeile oben **kein** Zwischenraum.
+  (Zwischenraum, dann Gradzeichen direkt an der Einheit), **Winkel** `45°` (kein Zwischenraum) — korrekturen.de
+  nennt den Winkelgrad ausdrücklich als „die einzige Ausnahme … 45° (aber: 45 °C)".
+  **Das Prozentzeichen fällt unter dieselbe Regel** und bekommt denselben schmalen geschützten Zwischenraum
+  (`20 %`) — siehe die Prozent-Zeile oben. *(Diese Stelle sagte bis 2026-07-28 das Gegenteil; sie wurde mit
+  der Prozent-Umkehrung nachgezogen.)*
+- **Wie der schmale Zwischenraum in den Quelldateien steht.** In dieser Kanondatei und in allen Beispielen
+  oben steht an den betreffenden Stellen ein **normales Leerzeichen** — eine Regelsammlung, in der das
+  entscheidende Zeichen unsichtbar ist, kann niemand prüfen. Im **gesetzten Korpus** (`i18n/de/**`) steht
+  dort U+202F, ersatzweise U+00A0. Wer eine Regel aus dieser Datei kopiert, kopiert also die *Form*, nicht
+  das Byte.
+
 - **Großschreibung am Satzanfang für Termini, die sonst klein gesetzt werden**: „top-K" im Satzinneren, aber
   „Top-K ist die Zahl der Fragmente, die das Retrieval zurückgibt." Ebenso „vLLM", „promptfoo" — den Satz
   lieber umbauen, als eine erzwungene Kleinschreibung an den Anfang zu stellen.
@@ -899,8 +1005,8 @@ deutsche Glosse".
 ## §9 Konstruktionen (Angebot an den Schreibenden, keine Regel)
 
 Das Register in §1.0–§1.2 hält **Termini**. Dieser Abschnitt hält **Konstruktionen**: wiederkehrende
-englische Satzformen, die sonst jedes Mal neu entschieden werden — typisch in der Überschrift, auf die ~1%
-der Tokens und ~1% der Aufmerksamkeit entfallen.
+englische Satzformen, die sonst jedes Mal neu entschieden werden — typisch in der Überschrift, auf die ~1 %
+der Tokens und ~1 % der Aufmerksamkeit entfallen.
 
 > **Status dieser Einträge.** Es sind **Startvorschläge für den Schreibenden, keine Substitution und kein
 > Verbot.** Die richtige Fassung hängt davon ab, welchen Gedanken der Satz trägt; jeder Eintrag hält deshalb

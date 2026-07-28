@@ -356,9 +356,15 @@ here, more than any individual choice. Decide once; see §7.2.
 - **»…« must be forbidden by name.** It is perfectly legitimate German and *will* appear if it is not
   explicitly excluded; a corpus mixing „…" and »…« is inconsistent, not stylish. See §7.6.
 - **ß vs. Swiss ss** — decided; see §7.3.
-- **Thousands separator** — decided; see §7.4.
-- **Percent** — decided, and it **diverges** from the RU/SK convention; see §7.5. Flag it in the canon as an
-  intentional divergence, or a future consistency pass will "correct" it back.
+- **Thousands separator** — decided: **narrow no-break space**, `1 000 000`; see §7.4. This row was
+  **reversed on 2026-07-28** (it used to say thousands point) and the reversal is on the record there.
+- **Percent** — decided: **`20 %`**, and it **diverges** from the RU/SK convention; see §7.5. Flag it in the
+  canon as an intentional divergence, or a future consistency pass will "correct" it back.
+- **Both of those rows once contradicted the canon**, which said tight percent and narrow-space thousands —
+  so whichever document a renderer opened first won. Reconciled 2026-07-28 under the canon's new
+  **Vorrangregel** (`canon/de/_language.md` § Typografie): *where a project-wide convention collides with an
+  attested German norm, German wins, and the divergence from the sister locales is recorded rather than
+  silently absorbed.* The canon is the normative home of that rule; this playbook records how it was reached.
 
 ### 6.9 No sister-language interference slot — what fills it
 
@@ -400,6 +406,28 @@ Recorded the way the SK canon records rulings: the decision, the linguistic reas
 
 **Two of the three recommendations that went in came back amended.** That is the gate working, and both
 amendments are recorded rather than quietly absorbed.
+
+> ### The standing rule these decisions now share (2026-07-28)
+>
+> **Where a project-wide convention collides with an attested German norm, German wins — and the divergence
+> from the other locales is recorded, not silently absorbed.**
+>
+> It is the principle the owner used to settle the Anrede (§7.1): `du` was cross-locale consistency with
+> «ты»/„ty", `Sie` is what German publishing actually attests, and the attested norm won **because there is
+> no native German reader on this project to hear whether an unconventional choice lands as deliberate or as
+> foreign.** §7.5 (percent) is the same question in another guise and gets the same answer.
+>
+> **The counter-consideration is real and is being traded knowingly:** cross-locale *visual* consistency —
+> the same number looking identical on the EN, RU, SK and DE pages — is given up. It is worth giving up
+> because only one locale is ever on screen, while the norm is visible to a German reader in every sentence.
+> A later consistency pass that "fixes" one of these rows back is undoing an owner decision.
+>
+> **What the rule does not decide:** rows where the *German sources themselves* disagree (DIN 5008 vs.
+> Duden). Those stay DISPUTED, or are decided by register with the losing source left on the record — see
+> §7.4's print-bar dissent and the range-dash split in the canon.
+>
+> The normative statement lives in `canon/de/_language.md` § Typografie ("Vorrangregel"); this box is the
+> playbook's record of how it was reached.
 
 ### 7.1 Anrede — `Sie`. And `man` is *restricted*, not banned
 
@@ -507,29 +535,50 @@ ss geschrieben werden") or to the technical case where ß is unavailable.
 **Reopening condition.** A Swiss/Liechtenstein regional edition; ß technically unavailable; all-caps
 setting (where both **STRAẞE** and **STRASSE** are permitted).
 
-### 7.4 Thousands separator — thousands point, with the norm's dissent on the record
+### 7.4 Thousands separator — narrow no-break space, with the print bar's dissent on the record
 
-**Decision.** **`137.813`** — thousands point. Decimal separator: **comma** (`3,14`). Ranges: **`10–20`**,
-en dash, no spaces.
+**Decision.** **`137 813`** — narrow no-break space (U+202F), grouping in threes. Four-digit numbers stay
+ungrouped (`5423`). Decimal separator: **comma** (`3,14`). Ranges: **`10–20`**, en dash, no spaces.
+**Point only for money amounts** (`5.340 EUR`) — that exception comes from the norm itself.
 
-**Reason and the conflict, stated honestly.** This is the one decision here where the norm and the print bar
-disagree, so both are recorded:
+> **Decision history — this row was reversed, and the record says so.**
+> **Made as the thousands point** (`137.813`) when this playbook was written, on the §6.10 print bar.
+> The canon meanwhile carried the **narrow space**, marked DISPUTED — so the two documents disagreed and
+> whichever a renderer read first won. **Reversed to the space by the owner on 2026-07-28**, on the standing
+> rule above: the separator follows DIN 5008. The original decision is left legible here rather than deleted
+> — a canon that quietly overwrites its own reversals is the SK Fáza 26 failure mode.
 
-- **DIN 5008:2020-03 §11.2** recommends grouping in threes with a **space** above four digits, and Duden's
-  number guidance gives *34 500* / *3 134 512*. On a web page that means a narrow no-break space (U+202F).
-- **The §6.10 print-bar exemplars all use the point**: dpunkt/O'Reilly *4.319*, *100.000*; Rheinwerk
-  *12.000*; heise *100.000*.
+**Attestation — verified in this pass, and note that DIN and Duden do *not* split here.**
 
-**The ruling follows the print bar**, because §6.10 makes those publications the calibration target and
-because DIN 5008 governs business correspondence and word processing rather than book typography. Unspaced
-`137813` is wrong under both and is excluded. Note the stakes are low — four-plus-digit figures barely occur
-in this corpus's prose — which is itself a reason not to spend a native reader's attention on it.
+- **DIN 5008:2020, §11.2:** "Zahlen mit mehr als drei Stellen links oder rechts des Kommas werden mithilfe
+  eines **ganzen Leerschritts** – vom Komma ausgehend – in dreistellige Gruppen gegliedert." Examples
+  *7 654 321,08 CHF*, *0,373 18 g*. Four digits are optional either way: "Bei vierstelligen Zahlen ist neben
+  der Schreibung mit Zwischenraum bzw. ganzem Leerschritt auch die ohne möglich." Money is the one exception:
+  "Bei Geldbeträgen können aus Sicherheitsgründen auch Punkte zur Gliederung verwendet werden."
+- **Duden:** "Ganze Zahlen mit 5 oder mehr Ziffern werden von der Endziffer aus durch **Zwischenräume** in
+  dreistellige Gruppen gegliedert" — *34 500*, *600 000*, *3 134 512*.
 
-For the range dash the sources also split (DIN §9.4 normative sets *10 – 20*; annex F.5 and Duden book
-setting set compressed *10–20*); a typeset online handbook takes the compressed form.
+**What is given up, honestly.** The §6.10 print-bar exemplars all use the point — dpunkt/O'Reilly *4.319*,
+*100.000*; Rheinwerk *12.000*; heise *100.000* — and so does every system de-DE locale. That is widespread
+German **practice**, but it is not the norm, and in this corpus it additionally collides with the English
+decimal point that appears in code and numeric examples on the same page. The norm decides; the practice
+stays on the record as dissent.
+
+**One precision the earlier version got slightly wrong.** DIN prescribes a *full* space for thousands
+(a typewriter/word-processing context) and a *narrow fixed* space only for the percent sign. A full space in
+typeset prose reads as a word gap, so the corpus sets **U+202F as the typographic realisation of DIN's
+grouping rule** and says so in the canon, rather than presenting U+202F as DIN's literal letter. Fallback
+U+00A0; never a plain space, never the point outside money, never unspaced (`137813` is wrong under both
+sources). Stakes stay low — four-plus-digit figures barely occur in this corpus's prose.
+
+For the range dash the sources genuinely **do** split — DIN's normative part sets *24. – 25. Oktober*, while
+Duden sets no space (*24.–25. Oktober*), as do korrekturen.de and the GfdS. A typeset handbook takes the
+compressed form; that is a **register** ruling, not the standing rule above, and both sources are kept in the
+canon row.
 
 **Reopening condition.** A binding house style; the renderer emitting U+202F unreliably; or numbers
-appearing as code, database values or API literals, where the source form is kept verbatim.
+appearing as code, database values or API literals, where the source form is kept verbatim. Consistency with
+the other locales is explicitly *not* a reason.
 
 ### 7.5 Percent — `20 %`, and the German locale therefore DEVIATES from the inherited convention
 
@@ -539,11 +588,28 @@ tight-percent convention (`20%`, settled 2026-07 for RU/SK) does not carry into 
 **Reason.** In a percentage the sign behaves as a postposed unit name and is separated from the value by a
 fixed space.
 
-**Attestation — and note that unlike §7.4 the sources do NOT split.** Duden gives *"5 Prozent oder 5 %"*;
-DIN 5008:2020-03 §10.7 ("Prozent- und Promillezeichen") likewise requires the space. Both agree.
+> **The canon disagreed with this row until 2026-07-28.** `canon/de/_language.md` carried **tight `20%`**,
+> marked DISPUTED, and called it "der auffälligste bewusste Normbruch des deutschen Kanons" — while this
+> playbook already said `20 %`. Two documents, opposite rules, and whichever a renderer opened first won.
+> The owner settled it on the standing rule above; the canon row is now SETTLED at `20 %` with its own
+> reversal note. Recorded here because the disagreement, not just its outcome, is the lesson.
 
-**Exception.** Adjectival derivation is written solid: **`20%ig`** (Duden attests *100%ig*), or spelled
-`20-prozentig`.
+**Attestation — re-verified in this pass, and unlike §7.4 the sources do NOT split.**
+
+- **DIN 5008:2020, §10.7 ("Prozent- und Promillezeichen"):** "Prozent- und Promillezeichen sind durch einen
+  Leerschritt von der zugehörigen Zahl zu trennen." For text-processing systems the standard specifies
+  "einen **kleineren Zwischenraum (Festabstand)**" — i.e. U+202F is the norm's own prescription, not an
+  interpretation — plus "Die Trennung von Zahl und Prozent- bzw. Promillezeichen am Zeilenende sollte
+  vermieden werden."
+- **Duden** (Rechtschreibung, 24th ed.): *"5 Prozent oder 5 %"*.
+- **typolexikon:** "Zwischen Zahl und Prozentzeichen wird **immer** ein Leerraumzeichen gesetzt."
+- **korrekturen.de** names the contrast explicitly: "**Anders als teilweise im Englischen** werden im
+  Deutschen Maßeinheiten und Symbole stets mit Abstand vor oder hinter die Zahl gestellt: € 25, **80 %**,
+  3 t Gewicht." The tight form is an import from English typography, and a German source says so.
+
+**Exception.** Adjectival derivation is written solid: **`20%ig`** (Duden D 30.1 attests *75%ig*), or spelled
+`20-prozentig`; and `5-%-Klausel`, which the amtliches Regelwerk 2024 lists under *fünf*. DIN states the
+exception in the same clause: "Das Leerzeichen entfällt bei Ableitungen."
 
 **Why this deviation is correct rather than a break in consistency.** A typographic convention is a property
 of a **locale**, not of a corpus. Forcing `20%` into German for cross-locale symmetry would import a defect
@@ -562,6 +628,33 @@ German marks.
 
 **Reopening condition.** None foreseen; a corpus-wide switch would be a mechanical find-and-replace, so the
 cost of changing later is low and the cost of *inconsistency* is what is being avoided.
+
+**Checked against the standing rule — no collision.** The `„…"` choice is not carried by Slovak symmetry
+alone: it is independently the form the amtliches Regelwerk 2024 uses in its own examples (§ 79). So no
+German norm is being traded for a project convention here, and the row may stay a house ruling. `»…«`
+remains legitimate German that this corpus simply does not use.
+
+### 7.7 Every other typography row, checked against the standing rule (2026-07-28)
+
+The percent and thousands rows were found by accident, so the whole typography inventory in
+`canon/de/_language.md` was swept for the same shape: *a value inherited from the project-wide or RU/SK
+convention that a German norm contradicts.* A confirmed row is as useful as a changed one.
+
+| Row | Verdict | Basis |
+| --- | --- | --- |
+| Quotation marks `„…"` / `‚…'` | **confirmed** | Amtliches Regelwerk 2024 § 79 sets exactly this. Matches SK by coincidence, not by dependence. |
+| `»…«` excluded by name | **confirmed** (house) | Legitimate German, but not the Regelwerk's own form; excluding it costs no norm. |
+| `ß` vs. blanket `ss` | **confirmed** | Regelwerk § 25 + E2; a German-internal regional question, no inherited convention involved. |
+| Decimal **comma** | **confirmed** | German norm; RU/SK also use the comma, so the inherited value happens to be right. |
+| Thousands separator | **changed** → narrow no-break space | DIN 5008 §11.2 + Duden agree on the space; the point survives only for money amounts. Print-bar dissent recorded. |
+| Percent sign | **changed** → `20 %` | DIN 5008 §10.7 + Duden + typolexikon + korrekturen.de, unanimous. Divergence from EN/RU/SK recorded. |
+| Range dash, compressed `10–20` | **confirmed**, and promoted from DISPUTED to *settled by register* | Duden, korrekturen.de and the GfdS set it compressed; DIN's normative part spaces it. A DIN-vs-Duden split, so the standing rule does not apply — the book register decides and both sources stay on the record. |
+| No-break space between value and unit (`128 GB`, `24 h`) | **confirmed** | German norm; korrekturen.de names the one exception, angle degrees (`45°`, but `45 °C`). The clause that exempted `%` from this row was the contradiction and is gone. |
+| Sentence-initial capitalisation of lowercase-styled terms (`Top-K`, `vLLM`) | **confirmed** | German sentence-initial capitalisation; no inherited convention pushes against it. The canon's advice to rebuild the sentence rather than force the capital stands. |
+| Durchkopplung / hyphenation of English multiword terms | **confirmed**, out of scope here | Orthography, not typography, and already decided against the Regelwerk § 45 E1 (canon §1.3.3) — no RU/SK convention feeds it. |
+
+**Nothing else in the two documents carries a typographic value inherited from RU/SK.** The remaining
+formatting decisions (bold budget, figure probation, bridge direction) are editorial, not typographic.
 
 ---
 
