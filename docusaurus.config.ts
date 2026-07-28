@@ -26,7 +26,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // line); its `localeConfigs` label is already set below, so nothing else changes.
 const DEFAULT_LOCALE = 'en';
 const RELEASED_LOCALES = ['en', 'ru', 'sk']; // Slovak launched 2026-07-15; both courses now ship complete in all three
-const UNRELEASED_LOCALES: string[] = []; // add the next in-progress locale here to build+validate it in CI while gated
+const UNRELEASED_LOCALES: string[] = ['de']; // German in progress (from 2026-07-28): built+validated in CI, gated out of the deployed dropdown
 const INCLUDE_UNRELEASED = process.env.HANDBOOK_INCLUDE_UNRELEASED === '1';
 const LOCALES = [...RELEASED_LOCALES, ...(INCLUDE_UNRELEASED ? UNRELEASED_LOCALES : [])];
 const BASE_URL = '/ai-engineering-handbook/';
@@ -60,12 +60,15 @@ type Course = {
   live: boolean;       // true = content shipped; false = placeholder / in progress
   inNavbar: boolean;   // add a docSidebar item to the navbar yet?
   // The course's slice of the footer sitemap, in order. `path` is appended to
-  // `basePath` ('' = the course intro). Courses differ in what routes they even
-  // HAVE — the RAG course gives each Part an `overview` page (its `_category_.json`
-  // carries a `link`), the AI SDLC course does not — so this is per-course data,
-  // not something the footer can guess. Only list routes that actually exist:
-  // released builds run `onBrokenLinks: 'throw'`, so an invented footer link is a
-  // build failure, and the footer is the only always-visible navigation on phones.
+  // `basePath` ('' = the course intro). This is per-course DATA rather than
+  // something the footer derives, because which routes a course even HAS is
+  // decided in its content tree — a Part gets its own page only if that Part's
+  // EN `_category_.json` carries a `link` (the EN one decides for every locale) —
+  // and the footer cannot guess that.
+  // Only list routes that actually exist: released builds run
+  // `onBrokenLinks: 'throw'`, so an invented footer link is a build failure. And
+  // keep this in step when a course gains pages — the footer is the only
+  // always-visible navigation on phones, so a gap here is a gap for most readers.
   footerLinks: {label: string; path: string}[];
 };
 const COURSES: Course[] = [
@@ -94,8 +97,8 @@ const COURSES: Course[] = [
   // AI SDLC — shipped complete and trilingual (July 2026): all five Parts, 22
   // lessons plus 4 optional deep-dives, in EN/RU/SK (28 pages per locale incl.
   // intro + glossary). `live: true` badges it "Live" on the hub, like RAG.
-  // Unlike the RAG course it has NO per-Part overview pages — its Parts are plain
-  // sidebar categories — so its footer column is Introduction + Glossary only.
+  // Part labels below are the `_category_.json` labels verbatim, so the footer and
+  // the sidebar name the same thing the same way.
   {
     id: 'ai-sdlc',
     basePath: '/ai-sdlc',
@@ -109,6 +112,11 @@ const COURSES: Course[] = [
     inNavbar: true,
     footerLinks: [
       {label: 'Introduction', path: ''},
+      {label: 'Part I — The Foundation', path: 'part-1-foundation/overview'},
+      {label: 'Part II — The Loop', path: 'part-2-loop/overview'},
+      {label: 'Part III — Verification', path: 'part-3-verification/overview'},
+      {label: 'Part IV — The Platform', path: 'part-4-platform/overview'},
+      {label: 'Part V — Scale & Governance', path: 'part-5-scale-governance/overview'},
       {label: 'Glossary', path: 'glossary'},
     ],
   },
@@ -291,8 +299,11 @@ const config: Config = {
   // Russian serves under /ru/. RU stays audience-primary in authoring (written
   // natively, never machine-translated) — this only sets URL/serving structure.
   // `localeConfigs` labels every locale we might build (released or not) — it is
-  // harmless for a locale that isn't in `LOCALES`, so the Slovak label is set here
-  // permanently; only `LOCALES` decides what actually builds/serves.
+  // harmless for a locale that isn't in `LOCALES`, so a label is set here permanently
+  // the moment a locale is scaffolded (Slovak, now German); only `LOCALES` decides what
+  // actually builds/serves. A label is NOT auto-derived from the locale code: a locale
+  // in `LOCALES` with no `localeConfigs` entry fails the build outright, so add the
+  // label in the SAME change that adds the locale.
   i18n: {
     defaultLocale: DEFAULT_LOCALE,
     locales: LOCALES,
@@ -300,6 +311,7 @@ const config: Config = {
       en: {label: 'English'},
       ru: {label: 'Русский'},
       sk: {label: 'Slovenčina'},
+      de: {label: 'Deutsch'},
     },
   },
 

@@ -27,6 +27,26 @@
     "message": "Часть III — Production и LLMOps",
     "description": "The label of footer link with label=Part III — Production & LLMOps linking to /rag-agents/part-3-production/overview"
   },
+  "link.item.label.Part I — The Foundation": {
+    "message": "Часть I — Фундамент",
+    "description": "The label of footer link with label=Part I — The Foundation linking to /ai-sdlc/part-1-foundation/overview"
+  },
+  "link.item.label.Part II — The Loop": {
+    "message": "Часть II — Цикл",
+    "description": "The label of footer link with label=Part II — The Loop linking to /ai-sdlc/part-2-loop/overview"
+  },
+  "link.item.label.Part III — Verification": {
+    "message": "Часть III — Проверка",
+    "description": "The label of footer link with label=Part III — Verification linking to /ai-sdlc/part-3-verification/overview"
+  },
+  "link.item.label.Part IV — The Platform": {
+    "message": "Часть IV — Платформа",
+    "description": "The label of footer link with label=Part IV — The Platform linking to /ai-sdlc/part-4-platform/overview"
+  },
+  "link.item.label.Part V — Scale & Governance": {
+    "message": "Часть V — Масштаб и управление",
+    "description": "The label of footer link with label=Part V — Scale & Governance linking to /ai-sdlc/part-5-scale-governance/overview"
+  },
   "link.item.label.Glossary": {
     "message": "Глоссарий",
     "description": "The label of footer link with label=Glossary linking to /ai-sdlc/glossary"

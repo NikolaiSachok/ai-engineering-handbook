@@ -39,6 +39,7 @@ gate has not cleared; a form still awaiting a native check is marked *proposed, 
 |---|---|---|---|
 | **RU + EN** | [`canon/ru/_language.md`](./canon/ru/_language.md) | [`canon/ru/rag.md`](./canon/ru/rag.md) (frozen) · [`canon/ru/ai-sdlc.md`](./canon/ru/ai-sdlc.md) | RU is audience-primary (written natively, never by translation); EN is the canonical source locale in `docs/`. |
 | **SK** | [`canon/sk/_language.md`](./canon/sk/_language.md) | [`canon/sk/rag.md`](./canon/sk/rag.md) (frozen) · [`canon/sk/ai-sdlc.md`](./canon/sk/ai-sdlc.md) | Slovak — presentation-grade secondary locale, composed natively from EN meaning. Mirrors the RU/EN canon's *shape*, not its decisions; carries the anti-bohemism gate + EN→SK calque templates in `_language.md`. |
+| **DE** | `canon/de/_language.md` *(scaffolded, not yet written)* | `canon/de/rag.md` · `canon/de/ai-sdlc.md` *(scaffolded, not yet written)* | German — in progress. The locale is wired as **unreleased** (built + link-gated in CI, gated out of the deployed dropdown) ahead of its canon; the files above are where the German rules and ledgers will live. Until they exist there is **no** settled German canon to load. |
 
 **Add a language** → add `canon/<lang>/_language.md` (its own kept-EN set / false friends / figures) plus one
 `canon/<lang>/<course>.md` ledger per course **and add a row here**. **Add a course** → add

@@ -302,6 +302,57 @@ pozornosti.
   ✓ — prešlo ako natívne práve preto, že sloveso vyvodenia tam už stálo. V ruskej lokalizácii ten istý
   reťazec bez slovesa („Зелёный — ещё не верный") neprešiel a musel sa prepísať na „ещё не значат".
 
+**`traffic` (2026-07, vlna naprieč korpusom — ruší holú sankciu z Fázy 19)**
+
+Anglické *traffic* nesie štyri rôzne myšlienky a slovenčina pre ne nemá jedno slovo. Preto sa
+**nerozhoduje o preklade slova, ale o rámci vety**. Entry patrí do §9, hoci ide o termín: voľba je
+podmienená rámcom presne ako pri konštrukciách, a substitučný zoznam by ju zabil.
+
+- Rámec **„premávka"** — keď je predmetom **to, čo niekam tečie, čo smeruješ, filtruješ alebo prepínaš**.
+  Vec je v pohybe medzi bodmi a veta hovorí o jej *ceste*: brána, router, región, zrkadlenie, váha
+  pri prepínaní. („premávka k modelu neprejde cez verejný internet", „udržať premávku v regióne",
+  „canary si vezme časť živej premávky", „presuň váhu premávky".)
+- Rámec **„záťaž"** — keď je predmetom **objem, ktorý systém musí uniesť**. Veta hovorí o kapacite,
+  špičkách, cene za nečinnosť, škálovaní. („ustálená vysoká záťaž", „keď príde produkčná záťaž",
+  „endpoint bežiaci pri slabej záťaži".)
+- Rámec **„požiadavky z produkcie"** — keď sú predmetom **samotné požiadavky ako materiál**: to, čo
+  zbieraš, vzorkuješ, skóruješ, ukladáš do evaluačnej sady, čím meriaš falošné pozitíva. Vec sa
+  nikam nepohybuje; leží a dá sa nad ňou počítať. („vzorka požiadaviek z produkcie", „miera falošných
+  pozitív na skutočných požiadavkách z produkcie", „golden set už nezastupuje skutočné požiadavky
+  z produkcie".)
+- Rámec **„prevádzka"** — keď je predmetom **to, že systém beží**. Nie objekt, ale stav: metrika beží
+  *za prevádzky*, chyba sa prejaví *až v prevádzke*, slučka sa uzatvára *na živej prevádzke*.
+
+- **Test voľby (v tomto poradí):**
+  1. **Dá sa to presmerovať?** Ak áno — ak vetu znesie sloveso *smerovať / presunúť / zrkadliť /
+     prepustiť* — je to **premávka**.
+  2. **Dá sa to zmerať v jednotkách za sekundu a bolí to kapacitu?** Ak áno — ak vetu znesie
+     *uniesť / škálovať / zvládnuť špičku* — je to **záťaž**.
+  3. **Dá sa z toho zobrať vzorka a oskórovať ju?** Ak áno — ak vetu znesie *vzorkovať / uložiť /
+     označkovať / spočítať mieru* — sú to **požiadavky z produkcie**.
+  4. Ak veta nehovorí o veci, ale o **stave systému** („beží", „je v", „pod"), je to **prevádzka**.
+
+  Rámce 1 a 3 sa najčastejšie mýlia. Rozdiel je v tom, **čo veta s tou vecou robí**: premávku
+  *posúvaš*, požiadavky z produkcie *počítaš*. „Vzorka premávky" je zámena rámca — vzorku neberieš
+  z pohybu, ale z toho, čo sa nazbieralo.
+
+- **„požiadavky z produkcie" je menná fráza, nie zámena slova.** Vetu treba prestavať okolo nej, nie
+  ju doplniť do existujúcej väzby. *„šesť mesiacov reálnej premávky"* ✗ → **„požiadavky zozbierané za
+  šesť mesiacov produkčnej prevádzky"** ✓ (časový úsek patrí prevádzke, zozbieraný materiál
+  požiadavkám). Ak veta odoláva, prepíš vetu.
+- **Prvý výskyt na stránke dostáva glosu** (rovnaké pravidlo sebestačnosti stránky ako pri `trace`):
+  studený slovenský čitateľ termín dekóduje, ale nevie, či ide len o text otázky, alebo o celý
+  zaznamenaný beh. Precedens: `production-failures` — „teda to, čo do systému skutočne prišlo od
+  používateľov, aj s odpoveďou, ktorú na to dostali".
+- **Odmietnuté varianty (neopakovať):** `dopyty` (obsadené DB dopytmi aj LLM dopytmi), `tok
+  požiadaviek` (vzorku berieš *z* toku, nie z toho, že tok tečie), a **`prevádzka` ako univerzálna
+  náhrada za `premávka`** — to bol pôvodný podnet studeného čitateľa a je nesprávny: *„šesť mesiacov
+  reálnej prevádzky"* číta rodený hovoriaci ako *šesť mesiacov behu systému*, nie ako nazbierané dáta.
+  Fáza 19 mala v tomto pravdu; jej chybou bolo len to, že jedným slovom pokryla všetky štyri rámce.
+- **Kolokácie preverené natívne (GPT-Sol, 2026-07):** `zlaté signály SRE` = *latencia, **záťaž**, chyby,
+  saturácia* (signál meria objem, nie cestu). `cheap traffic` ✗ „lacná premávka" → **„nenáročné
+  požiadavky"** (premávka nie je lacná ani drahá; drahá je požiadavka).
+
 ### Figúry (§6)
 
 **Ruské autorské figúry sa neprenášajú.** Chránené ruské figúry (§6 ruského kánonu — `ru.md`) sú ruské novotvary

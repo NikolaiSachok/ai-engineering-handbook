@@ -59,7 +59,7 @@ Produkcia preto pripína presné verzie. Nepripnutý alias je nasadenie, ktoré 
 
 ### Vydávaj postupne
 
-Vzory postupného vydávania pochádzajú z release engineeringu, s jedným zvratom. **Canary release** (kanárikové nasadenie) pošle malý podiel živej prevádzky na nový prompt alebo model a sleduje metriky. **Shadow deployment** (tieňové nasadenie) púšťa nový variant na zrkadlenej prevádzke bez toho, aby sa jeho odpovede dostali k používateľom — bezpečné porovnanie kvality na reálnych otázkach. A/B test je online evaluácia z Prvej časti príručky: dva varianty, ktoré dostanú reálni používatelia, porovnané podľa výsledkov.
+Vzory postupného vydávania pochádzajú z release engineeringu, s jedným zvratom. **Canary release** (kanárikové nasadenie) pošle malý podiel živej premávky na nový prompt alebo model a sleduje metriky. **Shadow deployment** (tieňové nasadenie) púšťa nový variant na zrkadlenej premávke bez toho, aby sa jeho odpovede dostali k používateľom — bezpečné porovnanie kvality na reálnych otázkach. A/B test je online evaluácia z Prvej časti príručky: dva varianty, ktoré dostanú reálni používatelia, porovnané podľa výsledkov.
 
 Novinkou je predmet sledovania: nielen chyby a latencia, ale aj proxy kvality a náklady. Kanárik, ktorý odpovedá rýchlo, lacno a mierne nesprávne, je zlý kanárik — a povedia to jedine metriky kvality.
 
@@ -69,13 +69,13 @@ Index je správanie. Opätovné načítanie do indexu (re-ingest) s novou konfig
 
 ## Monitorovanie v produkcii
 
-Monitorovanie je observability bežiaca nepretržite plus alerting na pohyb. Klasický panel sa prenáša: percentily latencie (p50 / p95), miery chýb a časových limitov, náklad na tokeny na požiadavku. LLM-špecifický panel drží proxy kvality — nepriame signály, že sa kvalita pohla: miera odmietnutí, miera spustenia guardrails, miera spätnej väzby od používateľov a — dnes už bežná prax — online LLM-as-a-judge, ktorý oskóruje vzorku produkčnej prevádzky. Vzorku, pretože aj sudca páli tokeny; jeho náklad ohraničíš ako každý iný výdavok.
+Monitorovanie je observability bežiaca nepretržite plus alerting na pohyb. Klasický panel sa prenáša: percentily latencie (p50 / p95), miery chýb a časových limitov, náklad na tokeny na požiadavku. LLM-špecifický panel drží proxy kvality — nepriame signály, že sa kvalita pohla: miera odmietnutí, miera spustenia guardrails, miera spätnej väzby od používateľov a — dnes už bežná prax — online LLM-as-a-judge, ktorý oskóruje vzorku požiadaviek z produkcie. Vzorku, pretože aj sudca páli tokeny; jeho náklad ohraničíš ako každý iný výdavok.
 
 ### Drift — tri podoby
 
 Zamrznutá konfigurácia neznamená zamrznuté správanie, pretože svet pod ňou sa hýbe. Tomuto posunu hovoríme **drift** (posun) a má tri podoby:
 
-- **drift vstupu** — ustálený termín: používatelia sa začnú pýtať nové druhy otázok a golden set už nezastupuje reálnu prevádzku, takže eval ostáva zelený na otázkach, ktoré už nikto neposiela;
+- **drift vstupu** — ustálený termín: používatelia sa začnú pýtať nové druhy otázok a golden set už nezastupuje skutočné požiadavky z produkcie, takže eval ostáva zelený na otázkach, ktoré už nikto neposiela;
 - drift korpusu — rozšírenie tej istej myšlienky v tejto príručke (jav je reálny, dvojica je naša razba): dokumenty starnú a odpovede začnú citovať fakty, ktoré platili v čase načítania;
 - drift modelu zhora — poskytovateľ zmení model za nepripnutým aliasom a správanie sa pohne bez jedinej zmeny na tvojej strane. Prívlastok „zhora“ drž — v klasickom MLOps znamená „model drift“ niečo iné, totiž zhoršovanie výkonu tvojho vlastného modelu.
 
@@ -121,7 +121,7 @@ Práca, ktorá počká, nemá platiť interaktívnu cenu. Nočné obohacovanie k
 
 ### Rozpočty uzatvárajú slučku
 
-Zrelá prax — bežná, hoci nie štandard — sú tokenové rozpočty na tím a na funkciu s alertmi, vynucované tam, kadiaľ už aj tak tečie všetka prevádzka: na bráne. A do kontrolného zoznamu pred nasadením pribudne prehľad nákladov, lebo úvodný rozdiel tejto lekcie platí aj pre náklady: zmena promptu je zmena nákladov. Slučka z hlavičky tejto stránky beží na kvalite aj na dolároch.
+Zrelá prax — bežná, hoci nie štandard — sú tokenové rozpočty na tím a na funkciu s alertmi, vynucované tam, kadiaľ už aj tak tečie všetka premávka: na bráne. A do kontrolného zoznamu pred nasadením pribudne prehľad nákladov, lebo úvodný rozdiel tejto lekcie platí aj pre náklady: zmena promptu je zmena nákladov. Slučka z hlavičky tejto stránky beží na kvalite aj na dolároch.
 
 ```mermaid
 flowchart LR
