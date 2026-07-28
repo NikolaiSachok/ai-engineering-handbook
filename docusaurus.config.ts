@@ -60,12 +60,15 @@ type Course = {
   live: boolean;       // true = content shipped; false = placeholder / in progress
   inNavbar: boolean;   // add a docSidebar item to the navbar yet?
   // The course's slice of the footer sitemap, in order. `path` is appended to
-  // `basePath` ('' = the course intro). Courses differ in what routes they even
-  // HAVE — the RAG course gives each Part an `overview` page (its `_category_.json`
-  // carries a `link`), the AI SDLC course does not — so this is per-course data,
-  // not something the footer can guess. Only list routes that actually exist:
-  // released builds run `onBrokenLinks: 'throw'`, so an invented footer link is a
-  // build failure, and the footer is the only always-visible navigation on phones.
+  // `basePath` ('' = the course intro). This is per-course DATA rather than
+  // something the footer derives, because which routes a course even HAS is
+  // decided in its content tree — a Part gets its own page only if that Part's
+  // EN `_category_.json` carries a `link` (the EN one decides for every locale) —
+  // and the footer cannot guess that.
+  // Only list routes that actually exist: released builds run
+  // `onBrokenLinks: 'throw'`, so an invented footer link is a build failure. And
+  // keep this in step when a course gains pages — the footer is the only
+  // always-visible navigation on phones, so a gap here is a gap for most readers.
   footerLinks: {label: string; path: string}[];
 };
 const COURSES: Course[] = [
@@ -94,8 +97,8 @@ const COURSES: Course[] = [
   // AI SDLC — shipped complete and trilingual (July 2026): all five Parts, 22
   // lessons plus 4 optional deep-dives, in EN/RU/SK (28 pages per locale incl.
   // intro + glossary). `live: true` badges it "Live" on the hub, like RAG.
-  // Unlike the RAG course it has NO per-Part overview pages — its Parts are plain
-  // sidebar categories — so its footer column is Introduction + Glossary only.
+  // Part labels below are the `_category_.json` labels verbatim, so the footer and
+  // the sidebar name the same thing the same way.
   {
     id: 'ai-sdlc',
     basePath: '/ai-sdlc',
@@ -109,6 +112,11 @@ const COURSES: Course[] = [
     inNavbar: true,
     footerLinks: [
       {label: 'Introduction', path: ''},
+      {label: 'Part I — The Foundation', path: 'part-1-foundation/overview'},
+      {label: 'Part II — The Loop', path: 'part-2-loop/overview'},
+      {label: 'Part III — Verification', path: 'part-3-verification/overview'},
+      {label: 'Part IV — The Platform', path: 'part-4-platform/overview'},
+      {label: 'Part V — Scale & Governance', path: 'part-5-scale-governance/overview'},
       {label: 'Glossary', path: 'glossary'},
     ],
   },
