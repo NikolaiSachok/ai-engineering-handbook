@@ -257,6 +257,21 @@ const config: Config = {
   // untranslated fallback page (i.e. EN, RU, or a genuinely-translated locale page).
   onBrokenLinks: INCLUDE_UNRELEASED ? 'warn' : 'throw',
 
+  // Same treatment, same reasoning, for the `#fragment` half of a link (#300). Left
+  // unset, Docusaurus defaults it to 'warn', which is how 124 dead "jump to the
+  // glossary entry" links survived on `main`: a lesson's terms footer pointed at
+  // `glossary.md#ingestion-chunking` while the heading `## Ingestion — chunking`
+  // slugified to `ingestion--chunking`, so the reader landed at the top of a very
+  // long page instead of at the entry. The fix is explicit `{#anchor}` ids on every
+  // glossary heading in every locale (a translated heading slugifies to something
+  // else entirely, so only an explicit id can satisfy a shared inbound link); this
+  // setting is what stops it coming back silently. It mirrors `onBrokenLinks` rather
+  // than throwing unconditionally because a partially-translated locale hits the same
+  // fallback/translated path-matching gap — and scripts/i18n-link-check.sh applies the
+  // same "real break vs tolerable fallback" test to broken anchors, so released
+  // locales stay hard-gated in CI too.
+  onBrokenAnchors: INCLUDE_UNRELEASED ? 'warn' : 'throw',
+
   // Browser-language auto-detect + cookie, injected as a blocking <head> script so
   // it runs before paint (no flash-of-wrong-language). See `localeDetectionScript`.
   headTags: [

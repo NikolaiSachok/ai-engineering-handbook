@@ -10,7 +10,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="verification-bottleneck"></a>
 
-## Úzke miesto overovania
+## Úzke miesto overovania \{#verification-bottleneck}
 
 **Úzke miesto overovania** — rozhodujúce obmedzenie pri vývoji softvéru agentmi: generovanie je lacné, kontrola nie; priepustnosť závisí od kapacity na revíziu a overovanie, nie od schopností modelu.
 
@@ -26,7 +26,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="reading-the-evidence"></a>
 
-## Ako posudzovať dôkazy
+## Ako posudzovať dôkazy \{#reading-the-evidence}
 
 **Stupeň dôkazu** — klasifikácia tvrdenia ako `MEASURED` / `REPORTED` / `ASSERTED`. Stupeň sa dedí a nikdy sa nezvyšuje.
 
@@ -36,7 +36,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="preparation-over-model"></a>
 
-## Príprava je dôležitejšia než model
+## Príprava je dôležitejšia než model \{#preparation-over-model}
 
 **Príprava je dôležitejšia než model** — príprava prostredia a vymedzenie úlohy ovplyvňujú úspešnosť viac než výber modelu.
 
@@ -50,7 +50,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="project-memory-and-tiering"></a>
 
-## Pamäť projektu a vrstvenie znalostí
+## Pamäť projektu a vrstvenie znalostí \{#project-memory-and-tiering}
 
 **Pamäť projektu** — trvalé znalosti čitateľné agentom, ktoré prežijú jednotlivé spustenia.
 
@@ -74,7 +74,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="rules-that-hold"></a>
 
-## Pravidlá, ktoré platia
+## Pravidlá, ktoré platia \{#rules-that-hold}
 
 **Vykonateľné pravidlo / pravidlá ako kód** — obmedzenie vynucované harnessom alebo CI — hookom, linterom, grepom či bránou — ktoré model nedokáže obísť.
 
@@ -98,7 +98,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="vision-to-stages"></a>
 
-## Od vízie k etapám
+## Od vízie k etapám \{#vision-to-stages}
 
 **Overiteľná etapa** — jednotka plánu, ktorú určuje podmienka dokončenia, ktorú vieš potvrdiť, nie krok, ktorý vieš opísať; úsek medzi dvoma kontrolami, ktoré môžeš skutočne vykonať.
 
@@ -110,7 +110,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="atomic-tasks"></a>
 
-## Atomárne úlohy
+## Atomárne úlohy \{#atomic-tasks}
 
 **Atomárna úloha** — jednotka práce, ktorá je dostatočne malá na to, aby sa dala overiť na jedno prečítanie; práve s takou podrobnosťou si skutočne zachovávaš kontrolu nad tým, čo agent vytvorí.
 
@@ -122,7 +122,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="artifacts-as-interface"></a>
 
-## Artefakty ako rozhranie
+## Artefakty ako rozhranie \{#artifacts-as-interface}
 
 **Artefakt ako rozhranie** — pravidlo, podľa ktorého si etapy odovzdávajú prácu prostredníctvom písomných artefaktov, nie rozhovoru: hranicu musí prekročiť vec, ktorú môže niekto preskúmať, porovnať s predchádzajúcou verziou a skontrolovať voči podmienke dokončenia.
 
@@ -134,7 +134,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="plan-review-implement-critic"></a>
 
-## Plán, kontrola, implementácia, kritik
+## Plán, kontrola, implementácia, kritik \{#plan-review-implement-critic}
 
 **Cyklus „plán — kontrola — implementácia — kritik“** — základný cyklus Časti II: skontrolovať plán pred napísaním kódu, implementovať podľa skontrolovaného plánu a potom kriticky posúdiť výsledok pred jeho začlenením. Lacné generovanie prebieha medzi dvoma bránami; odstráň ktorúkoľvek z nich a cyklus sa zmení na nekontrolované generovanie.
 
@@ -144,7 +144,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="roles-and-the-human"></a>
 
-## Roly a miesto človeka
+## Roly a miesto človeka \{#roles-and-the-human}
 
 **Človek ako smerovač (nad cyklom a vnútri cyklu)** — miesto človeka je nad cyklom: dohliada naň, zodpovedá za podmienky dokončenia a brány a rozhoduje o začlenení zmien. Nie je fázou vnútri cyklu, ktorá sa dostane na rad medzi agentmi. Nad cyklom zostáva táto rola účinná aj pri zrýchľovaní generovania; vnútri cyklu sa človek stáva úzkym miestom a napokon obeťou preťaženia.
 
@@ -154,7 +154,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="layered-gates"></a>
 
-## Vrstvené brány
+## Vrstvené brány \{#layered-gates}
 
 **Vrstvené brány** — overovací reťazec pozostávajúci z niekoľkých po sebe nasledujúcich kontrol. Každá brána pokrýva triedu chýb, ktorú predchádzajúca brána zo svojej podstaty nedokáže odhaliť. Pokrytie je vlastnosťou celého reťazca, nikdy nie jedinej brány.
 
@@ -186,7 +186,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="escape-ledger"></a>
 
-## Register únikov
+## Register únikov \{#escape-ledger}
 
 **Register únikov** — evidencia všetkých chýb, ktoré sa dostali do produkcie napriek tomu, že prešli reťazcom brán. Uplatňuje na brány princípy analýzy bez hľadania vinníka: každý únik má vlastný riadok s triedou chýb, bránou, ktorá ho mala zachytiť, slepým miestom a premenou na kontrolu, ktorá už danú triedu pokrýva.
 
@@ -200,7 +200,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="detection-vs-mutation"></a>
 
-## Detekcia a oprava
+## Detekcia a oprava \{#detection-vs-mutation}
 
 **Detekcia a oprava** — pravidlo, podľa ktorého musí byť krok, ktorý chybu *nájde*, oddelený od kroku, ktorý kód *opraví* či upraví. Audítor, ktorý môže upravovať aj to, čo kontroluje, môže nález odstrániť namiesto jeho nahlásenia, takže zoznam nálezov prestane opisovať skutočnosť.
 
@@ -216,7 +216,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="review-at-volume"></a>
 
-## Kontrola pri veľkom objeme
+## Kontrola pri veľkom objeme \{#review-at-volume}
 
 **Kontrola pri veľkom objeme** — problém, ako zachovať zmysluplnosť ľudskej kontroly, keď agenti generujú výstupy rýchlejšie, než ich ktokoľvek dokáže čítať. Po prekročení určitej hranice prestáva „kontrola všetkého“ plniť funkciu dohľadu a mení sa na formálne odklepnutie.
 
@@ -232,7 +232,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="secrets"></a>
 
-## Secrets
+## Secrets \{#secrets}
 
 **Invariant secretov (secrets invariant)** — pravidlo, podľa ktorého sa hodnota secretu nedostane ani do repozitára, ani do kontextu agenta.
 
@@ -252,7 +252,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="least-privilege-and-sandboxing"></a>
 
-## Najnižšie oprávnenia a sandbox
+## Najnižšie oprávnenia a sandbox \{#least-privilege-and-sandboxing}
 
 **Princíp najnižších oprávnení (least privilege)** — zásada, podľa ktorej agent dostane prístup iba ku konkrétnym prostriedkom a operáciám, ktoré jeho aktuálna úloha potrebuje.
 
@@ -292,7 +292,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="environments-migrations-and-real-data"></a>
 
-## Prostredia, migrácie a reálne dáta
+## Prostredia, migrácie a reálne dáta \{#environments-migrations-and-real-data}
 
 **Vierohodné, nie reálne dáta (realistic-not-real data)** — dátová množina, ktorá zachováva štruktúru, väzby a rozdelenie produkčných dát bez toho, aby obsahovala skutočné údaje zákazníkov alebo iné citlivé záznamy.
 
@@ -312,7 +312,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="observability-rollout-and-the-kill-switch"></a>
 
-## Pozorovateľnosť, nasadzovanie a núdzový vypínač
+## Pozorovateľnosť, nasadzovanie a núdzový vypínač \{#observability-rollout-and-the-kill-switch}
 
 **Produkcia ako koncová brána** — produkcia je posledný kontrolný bod overovacej reťaze. Zachytáva triedy chýb, ktoré vznikajú až pod skutočnou prevádzkou, skutočnými dátami, zariadeniami a súbežnosťou.
 
@@ -334,7 +334,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="running-agent-fleets-isolation-and-parallelism"></a>
 
-## Flotily agentov: izolácia a paralelizmus
+## Flotily agentov: izolácia a paralelizmus \{#running-agent-fleets-isolation-and-parallelism}
 
 **Flotila agentov (agent fleet)** — viacero agentov pracujúcich súbežne nad jednou kódovou základňou. Jej veľkosť neurčuje dostupný výpočtový výkon, ale to, koľko toho vstrebe reťaz overovania.
 
@@ -352,7 +352,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="drift-control-and-rule-rot"></a>
 
-## Kontrola driftu a zastarávanie pravidiel
+## Kontrola driftu a zastarávanie pravidiel \{#drift-control-and-rule-rot}
 
 **Zastarávanie pravidiel (rule rot)** — chátranie korpusu pravidiel, kým sa kód, ktorý opisuje, hýbe ďalej. Zastarané pravidlo je horšie než žiadne: človek prekonanú konvenciu obíde, agent ju poslúchne.
 
@@ -370,7 +370,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="cost-and-the-economics-of-agent-work"></a>
 
-## Náklady a ekonomika práce agentov
+## Náklady a ekonomika práce agentov \{#cost-and-the-economics-of-agent-work}
 
 **Náklady na prijatú zmenu (cost per accepted change)** — poctivá jednotka ekonomiky agentov: všetko, čo sa minulo na ceste k zmene, ktorá prežila reťaz brán, vrátane opakovaných pokusov, opustených behov, volaní na overovanie a času revízie. Náklady na token sú cenník, nie meranie.
 
@@ -404,7 +404,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 <a id="the-enterprise-tier-audit-provenance-and-whats-required"></a>
 
-## Enterprise úroveň: audit, pôvod a čo je povinné
+## Enterprise úroveň: audit, pôvod a čo je povinné \{#the-enterprise-tier-audit-provenance-and-whats-required}
 
 **Preukázateľná kontrola (demonstrable control)** — kontrola, o ktorej vie niekto iný než jej vykonávateľ spätne ukázať, že prebehla. V tejto vzdialenosti od blast radius je kontrola, ktorá sa nedá doložiť, nerozoznateľná od kontroly, ktorá nikdy neexistovala.
 

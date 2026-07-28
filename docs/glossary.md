@@ -12,7 +12,7 @@ a link follows the definition (↗ Wikipedia for classics, ↗ arXiv for techniq
 
 <a id="ingestion-chunking"></a>
 
-## Ingestion — chunking
+## Ingestion — chunking \{#ingestion-chunking}
 
 **Chunk** — a fragment of a document, the unit of indexing. It is at once the unit of search and the unit
 of what the model gets to see.
@@ -46,7 +46,7 @@ document. Needs a long-context embedding model. ↗ [arXiv](https://arxiv.org/ab
 
 <a id="ingestion-embeddings"></a>
 
-## Ingestion — embeddings
+## Ingestion — embeddings \{#ingestion-embeddings}
 
 **Embedding** — a vector representing text in a space where geometric closeness means closeness in meaning.
 
@@ -85,7 +85,7 @@ dial with no re-embedding. ↗ [arXiv](https://arxiv.org/abs/2205.13147)
 
 <a id="retrieval"></a>
 
-## Retrieval
+## Retrieval \{#retrieval}
 
 **Dense retrieval** — search over embedding vectors; catches meaning and synonyms, blind to exact tokens.
 
@@ -162,7 +162,7 @@ queries. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Mean_reciprocal_rank)
 
 <a id="generation"></a>
 
-## Generation
+## Generation \{#generation}
 
 **Grounding** — tying the answer to the supplied context rather than the model's parametric memory.
 
@@ -206,7 +206,7 @@ to grounding: shaping must never drop a citation, a caveat, or an honest refusal
 
 <a id="evaluation"></a>
 
-## Evaluation
+## Evaluation \{#evaluation}
 
 **Evaluation** — measuring pipeline quality with metrics instead of by feel. It makes the pipeline tunable.
 
@@ -282,7 +282,7 @@ failure) instead of labelling at random.
 
 <a id="guardrails"></a>
 
-## Guardrails
+## Guardrails \{#guardrails}
 
 **Guardrails** — a safety layer on the input and output of an LLM system: against attacks, leaks, and harmful output.
 
@@ -310,7 +310,7 @@ failure) instead of labelling at random.
 
 <a id="observability"></a>
 
-## Observability
+## Observability \{#observability}
 
 **Observability** — the ability to see what a live system actually does: debug a bad answer, measure cost
 and latency.
@@ -387,7 +387,7 @@ through; a hard cap enforces at runtime (reject, downgrade to a cheaper model, t
 
 <a id="agentic-rag"></a>
 
-## Agents — agentic RAG
+## Agents — agentic RAG \{#agentic-rag}
 
 **Agentic RAG** — RAG in which retrieval becomes an action the model chooses inside a loop, rather than a
 fixed pipeline step. The model owns the control flow, not the code.
@@ -437,7 +437,7 @@ lost-in-the-middle). Self-RAG's support / usefulness tokens are one implementati
 
 <a id="tools"></a>
 
-## Agents — tools
+## Agents — tools \{#tools}
 
 **Tool use / function calling** — the general mechanism by which the model calls an external function: the
 model emits a structured intent and your code executes it. Retrieval is a special case.
@@ -487,7 +487,7 @@ failing call becomes a non-terminating retry loop. Mirrors the step budget and t
 
 <a id="planning-loops"></a>
 
-## Agents — planning & loops
+## Agents — planning & loops \{#planning-loops}
 
 **Planning** — how the agent arranges the sequence of steps toward a goal; the plan may be fixed up front or
 emerge as the loop runs.
@@ -562,7 +562,7 @@ exposes the run-to-run variance a single pass@1 hides. ↗ [arXiv](https://arxiv
 
 <a id="multi-agent"></a>
 
-## Agents — multi-agent systems
+## Agents — multi-agent systems \{#multi-agent}
 
 **Multi-agent system** — several specialised agents collaborating instead of one agent; motivated by
 specialisation, context isolation, modularity, and parallelism.
@@ -605,7 +605,7 @@ precondition for evaluating a team.
 
 <a id="orchestration-frameworks"></a>
 
-## Agents — orchestration frameworks
+## Agents — orchestration frameworks \{#orchestration-frameworks}
 
 **Orchestration framework** — a library that packages the agent loop, tool-calling glue, state, control
 flow, and multi-agent orchestration so you don't hand-roll them: LangChain, LangGraph, LlamaIndex,
@@ -647,7 +647,7 @@ in a framework, a first-class interrupt node.
 
 <a id="mcp"></a>
 
-## Agents — MCP and agent protocols
+## Agents — MCP and agent protocols \{#mcp}
 
 **MCP (Model Context Protocol)** — an open client–server standard (created by Anthropic in late 2024, a
 project of the Agentic AI Foundation under the Linux Foundation since December 2025) for connecting
@@ -708,7 +708,7 @@ classic risk in remote-MCP OAuth token handling. Least privilege and tight token
 
 <a id="real-agents"></a>
 
-## Agents — real agents (capstone)
+## Agents — real agents (capstone) \{#real-agents}
 
 **Extended thinking** — the visible reasoning blocks a model emits before answering; in Claude they surface
 as `thinking` blocks.
@@ -735,7 +735,7 @@ even under `bypassPermissions`.
 
 <a id="production-failures"></a>
 
-## Production — why AI fails in production
+## Production — why AI fails in production \{#production-failures}
 
 **Score floor / relevance floor** — a minimum score a retrieved chunk must clear before it is allowed into the
 context, applied **after reranking**: fused hybrid scores are not on a comparable scale, so a threshold on them
@@ -789,7 +789,7 @@ of hanging. Users read a hang as broken and a caveated answer as merely slow.
 
 <a id="serving"></a>
 
-## Production — serving
+## Production — serving \{#serving}
 
 **Serving** — running a model or a pipeline as a network service. Two distinct senses: serving the
 application (your RAG/agent pipeline behind an API) and serving the model (running LLM inference itself).
@@ -897,7 +897,7 @@ memory snapshots and warm pools.
 
 <a id="cloud-platforms"></a>
 
-## Production — cloud platforms
+## Production — cloud platforms \{#cloud-platforms}
 
 **Managed endpoint** — a model served by a cloud AI platform behind your IAM, billing, and network
 perimeter: you call it, the platform runs it.
@@ -976,7 +976,7 @@ workloads; frontier models often lag or are absent there.
 
 <a id="tooling-ecosystem"></a>
 
-## Production — the tooling ecosystem
+## Production — the tooling ecosystem \{#tooling-ecosystem}
 
 **Instrumentation** — adding the code or SDK hooks that emit traces, spans, and metrics from the pipeline;
 the precondition for observability.
@@ -993,7 +993,7 @@ productized in eval tools and platform red-team features.
 
 <a id="llmops"></a>
 
-## Production — LLMOps
+## Production — LLMOps \{#llmops}
 
 **LLMOps** — the operations discipline for LLM applications: deploying, monitoring, and cost-managing
 systems whose behaviour lives in prompts, model versions, indexes, and configs rather than only in code.

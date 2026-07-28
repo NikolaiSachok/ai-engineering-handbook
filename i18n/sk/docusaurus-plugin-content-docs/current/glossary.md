@@ -12,7 +12,7 @@ definíciou nasleduje odkaz (↗ Wikipedia pre klasiku, ↗ arXiv pre postupy zo
 
 <a id="ingestion-chunking"></a>
 
-## Ingestion — chunking
+## Ingestion — chunking \{#ingestion-chunking}
 
 **Chunk (kúsok)** — fragment dokumentu, jednotka indexácie. Je to naraz jednotka vyhľadávania aj jednotka
 toho, čo napokon uvidí model.
@@ -48,7 +48,7 @@ celého dokumentu. Potrebuje embeddingový model s dlhým kontextom. ↗ [arXiv]
 
 <a id="ingestion-embeddings"></a>
 
-## Ingestion — embeddingy
+## Ingestion — embeddingy \{#ingestion-embeddings}
 
 **Embedding (vektorová reprezentácia textu)** — vektor reprezentujúci text v priestore, kde geometrická
 blízkosť znamená blízkosť významu.
@@ -88,7 +88,7 @@ regulátor „veľkosť/presnosť“ bez opätovného embeddovania. ↗ [arXiv](
 
 <a id="retrieval"></a>
 
-## Retrieval
+## Retrieval \{#retrieval}
 
 **Dense retrieval (husté vyhľadávanie)** — vyhľadávanie nad vektormi embeddingov; zachytáva význam a synonymá,
 slepé voči presným tokenom.
@@ -172,7 +172,7 @@ našli, ale aj ich pozície (vyššie je cennejšie).
 
 <a id="generation"></a>
 
-## Generation
+## Generation \{#generation}
 
 **Grounding (opretie odpovede o kontext)** — priviazanie odpovede na dodaný kontext namiesto parametrickej
 pamäte modelu.
@@ -217,7 +217,7 @@ podriadená opretiu o kontext: tvarovanie nesmie nikdy zahodiť citáciu, výhra
 
 <a id="evaluation"></a>
 
-## Evaluation
+## Evaluation \{#evaluation}
 
 **Evaluation (evaluácia)** — meranie kvality pipeline metrikami namiesto „od oka“. Vďaka tomu sa pipeline dá ladiť.
 
@@ -294,7 +294,7 @@ produkcia odhalila chybu), namiesto značkovania naslepo.
 
 <a id="guardrails"></a>
 
-## Guardrails
+## Guardrails \{#guardrails}
 
 **Guardrails (bezpečnostné mantinely)** — bezpečnostná vrstva na vstupe a výstupe LLM systému: proti útokom,
 únikom a škodlivému výstupu.
@@ -335,7 +335,7 @@ spolu.
 
 <a id="observability"></a>
 
-## Observability
+## Observability \{#observability}
 
 **Observability (pozorovateľnosť)** — schopnosť vidieť, čo živý systém skutočne robí: odladiť zlú odpoveď,
 zmerať cenu a latenciu.
@@ -413,7 +413,7 @@ kontext).
 
 <a id="agentic-rag"></a>
 
-## Agents — agentický RAG
+## Agents — agentický RAG \{#agentic-rag}
 
 **Agentic RAG** — RAG, v ktorom sa vyhľadávanie stáva akciou, ktorú si model volí vnútri slučky, namiesto pevne daného kroku v reťazci spracovania. Tok riadenia patrí modelu, nie kódu.
 
@@ -444,7 +444,7 @@ kontext).
 
 <a id="tools"></a>
 
-## Agents — nástroje
+## Agents — nástroje \{#tools}
 
 **Tool use / function calling (používanie nástrojov / volanie funkcií)** — všeobecný mechanizmus, ktorým model volá vonkajšiu funkciu: model vydá štruktúrovaný zámer a tvoj kód ho vykoná. Vyhľadávanie je špeciálny prípad.
 
@@ -476,7 +476,7 @@ kontext).
 
 <a id="planning-loops"></a>
 
-## Agents — plánovanie a slučky
+## Agents — plánovanie a slučky \{#planning-loops}
 
 **Planning (plánovanie)** — ako agent usporadúva postupnosť krokov k cieľu; plán môže byť pevne daný vopred alebo vznikať počas behu slučky.
 
@@ -524,7 +524,7 @@ kontext).
 
 <a id="multi-agent"></a>
 
-## Agents — multiagentové systémy
+## Agents — multiagentové systémy \{#multi-agent}
 
 **Multi-agent system (multiagentový systém)** — niekoľko špecializovaných agentov, ktorí spolupracujú
 namiesto jedného agenta; motivuje to špecializácia, izolácia kontextu, modularita a paralelizmus.
@@ -569,7 +569,7 @@ stromu „rodič – potomok“, ktorý možno ohodnotiť ako celok; predpoklad 
 
 <a id="orchestration-frameworks"></a>
 
-## Agents — orchestračné frameworky
+## Agents — orchestračné frameworky \{#orchestration-frameworks}
 
 **Orchestration framework (orchestračný framework)** — knižnica, ktorá zabalí slučku agenta, obslužný kód na
 volanie nástrojov, stav, tok riadenia a multiagentovú orchestráciu, aby si to nemusel skladať ručne:
@@ -617,7 +617,7 @@ slučka pokračuje; vo frameworku plnohodnotný uzol-prerušenie.
 
 <a id="mcp"></a>
 
-## Agents — MCP a protokoly agentov
+## Agents — MCP a protokoly agentov \{#mcp}
 
 **MCP (Model Context Protocol)** — otvorený štandard klient – server (vytvorený firmou Anthropic koncom roka
 2024, od decembra 2025 projekt Agentic AI Foundation pod Linux Foundation) na prepojenie agentov s nástrojmi
@@ -681,7 +681,7 @@ s OAuth-tokenmi vzdialeného MCP. Protiliekom sú najmenšie oprávnenia a úzke
 
 <a id="real-agents"></a>
 
-## Agents — reálni agenti (záverečná lekcia)
+## Agents — reálni agenti (záverečná lekcia) \{#real-agents}
 
 **Extended thinking (rozšírené uvažovanie)** — viditeľné bloky uvažovania, ktoré model vydá pred odpoveďou;
 u Clauda sa objavujú ako bloky `thinking`.
@@ -708,7 +708,7 @@ blokuje aj pod `bypassPermissions`.
 
 <a id="production-failures"></a>
 
-## Production — prečo AI zlyháva v produkcii
+## Production — prečo AI zlyháva v produkcii \{#production-failures}
 
 **Prah skóre / prah relevantnosti (score floor / relevance floor)** — najnižšie skóre, ktoré musí vyhľadaný
 chunk dosiahnuť, aby smel vstúpiť do kontextu; uplatňuje sa **až po rerankingu**. Zlúčené hybridné skóre nemá
@@ -771,7 +771,7 @@ vnímajú ako pokazený, kým odpoveď s výhradou vnímajú len ako pomalú.
 
 <a id="serving"></a>
 
-## Production — serving
+## Production — serving \{#serving}
 
 **Serving** — prevádzka modelu alebo pipeline ako sieťovej služby. Dva odlišné významy, ktoré nemožno
 zamieňať: serving aplikácie (tvoj RAG/agentový pipeline za API) a serving modelu (samotný beh LLM-inferencie).
@@ -888,7 +888,7 @@ zmierňujú snímky pamäte a teplé fondy inštancií.
 
 <a id="cloud-platforms"></a>
 
-## Production — cloudové platformy
+## Production — cloudové platformy \{#cloud-platforms}
 
 **Managed endpoint (spravovaný endpoint)** — model, ktorý cloudová AI-platforma obsluhuje za tvojím IAM,
 fakturáciou a sieťovým perimetrom: ty ho voláš, platforma ho prevádzkuje.
@@ -977,7 +977,7 @@ obranné záťaže; hraničné modely tam často zaostávajú alebo chýbajú.
 
 <a id="tooling-ecosystem"></a>
 
-## Production — ekosystém nástrojov
+## Production — ekosystém nástrojov \{#tooling-ecosystem}
 
 **Instrumentation (inštrumentácia)** — pridanie kódu alebo SDK-hookov, ktoré vysielajú trace, spany a metriky
 z pipeline; predpoklad pre observability.
@@ -995,7 +995,7 @@ zabudované v eval-nástrojoch a platformových red-team funkciách.
 
 <a id="llmops"></a>
 
-## Production — LLMOps
+## Production — LLMOps \{#llmops}
 
 **LLMOps** — operačná disciplína pre LLM-aplikácie: nasadzovanie, monitorovanie a riadenie nákladov
 systémov, ktorých správanie žije v promptoch, verziách modelov, indexoch a konfiguráciách, a nie len v kóde.

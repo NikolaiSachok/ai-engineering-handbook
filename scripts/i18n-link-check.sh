@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
-# i18n link gate for the unreleased-inclusive build.
+# i18n link + anchor gate for the unreleased-inclusive build.
 #
-# Context. `onBrokenLinks` throws for released (deployed) builds but only warns when
-# HANDBOOK_INCLUDE_UNRELEASED=1 (see docusaurus.config.ts). The reason is one class of
-# link that gated partial translation makes unavoidable and that never ships: an
-# untranslated fallback lesson (served from `docs/` in the unreleased locale) links to
+# Context. `onBrokenLinks` and `onBrokenAnchors` throw for released (deployed) builds but
+# only warn when HANDBOOK_INCLUDE_UNRELEASED=1 (see docusaurus.config.ts). The reason is
+# one class of link that gated partial translation makes unavoidable and that never ships:
+# an untranslated fallback lesson (served from `docs/` in the unreleased locale) links to
 # the glossary via a relative `.md` path; once the glossary alone is translated,
 # Docusaurus cannot path-match that link across the `docs/` (fallback) and
 # `i18n/<locale>/` (translated) trees — and the localized slug wouldn't match the EN
@@ -13,13 +13,14 @@
 # every deployed build.
 #
 # This gate keeps CI strict everywhere else. It runs the unreleased-inclusive build and
-# FAILS on any broken link whose source page is NOT such a tolerable fallback, i.e.:
-#   - any broken link in a released locale — real, shipping breakage; and
-#   - any broken link on a page that IS translated in an unreleased locale — a real
-#     broken anchor/link in authored content (e.g. a freshly translated lesson whose
+# FAILS on any broken link OR broken anchor whose source page is NOT such a tolerable
+# fallback, i.e.:
+#   - any broken link/anchor in a released locale — real, shipping breakage; and
+#   - any broken link/anchor on a page that IS translated in an unreleased locale — a
+#     real defect in authored content (e.g. a freshly translated lesson whose
 #     terms-footer points at a wrong glossary slug).
-# A broken link is tolerated ONLY when its source is an unreleased-locale page that has
-# no translation file yet (a pure EN fallback). The gate self-maintains as locales fill
+# It is tolerated ONLY when the source is an unreleased-locale page that has no
+# translation file yet (a pure EN fallback). The gate self-maintains as locales fill
 # in: the day a lesson is translated, its links must resolve or this gate fails.
 #
 # Usage: scripts/i18n-link-check.sh   (from repo root; runs the build itself)
@@ -72,8 +73,8 @@ is_tolerable_fallback() {
 SOURCES=()
 while IFS= read -r src; do
   [ -n "$src" ] && SOURCES+=("$src")
-done < <(grep -oE 'Broken link on source page path = [^ ]+' "$LOG" \
-  | sed -E 's/^Broken link on source page path = //; s/:$//')
+done < <(grep -oE 'Broken (link|anchor) on source page path = [^ ]+' "$LOG" \
+  | sed -E 's/^Broken (link|anchor) on source page path = //; s/:$//')
 
 REAL_BREAKS=()
 if [ "${#SOURCES[@]}" -gt 0 ]; then
@@ -86,13 +87,13 @@ fi
 
 if [ "${#REAL_BREAKS[@]}" -gt 0 ]; then
   echo ""
-  echo "i18n-link-check: FAIL — ${#REAL_BREAKS[@]} broken link(s) on shipping / translated pages:"
+  echo "i18n-link-check: FAIL — ${#REAL_BREAKS[@]} broken link(s)/anchor(s) on shipping / translated pages:"
   printf '  - %s\n' "${REAL_BREAKS[@]}" | sort -u
   echo ""
-  echo "Only EN-fallback pages of an unreleased locale may carry unresolved glossary links."
+  echo "Only EN-fallback pages of an unreleased locale may carry unresolved glossary links/anchors."
   exit 1
 fi
 
 TOLERATED="${#SOURCES[@]}"
 echo ""
-echo "i18n-link-check: PASS — build clean; $TOLERATED tolerated fallback link(s) in unreleased locales, 0 real breaks."
+echo "i18n-link-check: PASS — build clean; $TOLERATED tolerated fallback link(s)/anchor(s) in unreleased locales, 0 real breaks."
