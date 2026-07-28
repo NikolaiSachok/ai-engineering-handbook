@@ -79,6 +79,16 @@ The handbook follows a small, real SDLC (kept proportionate to a docs site):
   ones, which is four today, not two. It is left as-is deliberately: if branch protection requires
   checks by name, renaming the job silently stops satisfying the requirement, so the rename and the
   branch-protection update have to land together.
+
+  **Are these five actually *required*, or only *reported*? Unverified — treat it as an open
+  question.** Reading `repos/…/branches/main/protection` needs repo-admin scope that the tokens in
+  use here don't have (it `403`s), so nobody has checked the setting. `CLAUDE.md` states the gates
+  *are* required; earlier revisions of this file said they *should* be. In the handbook's own
+  grading vocabulary both are `ASSERTED`, not `MEASURED` — an instruction file records intent, and
+  intent is not evidence. Anyone with settings access can settle it in a minute by comparing the
+  five names above against *Settings → Branches → main → Require status checks*, and the two
+  documents should then be reconciled to whatever turns out to be true. It matters because advisory
+  and required look identical on a green PR and differ entirely on a red one.
 - **Content PRs** additionally require a **literary-edit pass per language, independently**
   (see the editorial standard in `CLAUDE.md`) — enforced via the PR-template checklist.
 - **Issues & milestones** are the planning surface: issues track lessons/topics; a milestone
