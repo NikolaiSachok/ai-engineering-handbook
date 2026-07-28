@@ -174,6 +174,17 @@ drift).
   the space-title form (`:::tip Title`) renders as literal text.
 - **Videos:** embed with the global `<YouTube id="…" title="…" />` component, not a bare YouTube link, so
   the player is in-page (nocookie, lazy, responsive).
+- **Glossary headings carry an explicit anchor id — in EVERY locale.** Every `##` in `docs/glossary.md` and
+  `docs-ai-sdlc/glossary.md` ends with `\{#some-id}`, and the *same* id is repeated on the corresponding
+  heading of every `i18n/<locale>/…/glossary.md`. Lessons link to `../glossary.md#some-id`, so the id is a
+  shared contract: an auto-slug can't hold it, because a translated heading slugifies to something else
+  entirely, and even in English a heading with an em dash, `&`, parentheses or a leading "The" slugifies to
+  something the link doesn't expect (`## Ingestion — chunking` → `ingestion--chunking`, not
+  `ingestion-chunking`). That mismatch dropped readers at the top of the glossary instead of the entry in
+  all three locales until #300. **The brace must be backslash-escaped** (`\{#id}`, not `{#id}`) — this site
+  sets `future.v4: true`, which turns off the MDX-1 heading-id compat escape, so a bare `{` is parsed as a
+  JSX expression and hard-fails the build. Adding a glossary entry = adding the id in every locale, in the
+  same position; `onBrokenAnchors` (throw on released builds) plus `scripts/i18n-link-check.sh` gate it.
 - **Glossary external refs:** a glossary term that maps to a named algorithm/metric/technique gets ONE
   canonical link at the end of its definition — `↗ [Wikipedia](…)` for classics (BM25, cosine similarity,
   precision/recall, nDCG, MRR), `↗ [arXiv](…)` for techniques from papers (HyDE, ColBERT). Verify every URL

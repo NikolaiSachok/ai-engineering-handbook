@@ -9,7 +9,7 @@ sidebar_position: 7
 Every term the lessons introduce, defined once. Each lesson closes with a **New terms** line that links to
 its section here. The list grows as the course does.
 
-## Verification bottleneck
+## Verification bottleneck \{#verification-bottleneck}
 
 **Verification bottleneck** — the binding constraint in agent-built software: generation is cheap, checking is not; throughput is gated by review and verification capacity, not by model capability.
 
@@ -23,7 +23,7 @@ its section here. The list grows as the course does.
 
 **Tech debt on credit** — velocity gained early and paid back later, as the sustained complexity and warning increases that drive the slowdown.
 
-## Reading the evidence
+## Reading the evidence \{#reading-the-evidence}
 
 **Evidence grade (the ladder)** — the `MEASURED` / `REPORTED` / `ASSERTED` classification of a claim. Grades are inherited, never upgraded.
 
@@ -31,7 +31,7 @@ its section here. The list grows as the course does.
 
 **Going to the primary** — reading the primary source, with its date, instead of trusting a second-hand summary of it.
 
-## Preparation over model
+## Preparation over model \{#preparation-over-model}
 
 **Preparation over model** — setup and scope move success more than the choice of model does.
 
@@ -43,7 +43,7 @@ its section here. The list grows as the course does.
 
 **Harness staleness** — scaffold components encode model-limit assumptions that expire.
 
-## Project memory and tiering
+## Project memory and tiering \{#project-memory-and-tiering}
 
 **Project memory** — durable, agent-readable knowledge that persists across runs.
 
@@ -65,7 +65,7 @@ its section here. The list grows as the course does.
 
 **Artifact overload** — spec-driven work's central unsolved failure: artifacts generated faster than review or context can absorb them, with no lifecycle discipline.
 
-## Rules that hold
+## Rules that hold \{#rules-that-hold}
 
 **Executable rule / rules-as-code** — a constraint enforced by the harness or CI (a hook, lint, grep, or gate) that the model cannot bypass.
 
@@ -87,7 +87,7 @@ its section here. The list grows as the course does.
 
 **Consistency owner** — the role accountable for reconciling a corpus so that two authoritative files can't prescribe opposite things.
 
-## Vision to stages
+## Vision to stages \{#vision-to-stages}
 
 **Verifiable stage** — a unit of a plan defined by a done-condition you can confirm, not by a step you can describe; the interval between two checks you can actually run.
 
@@ -97,7 +97,7 @@ its section here. The list grows as the course does.
 
 **Stage sizing** — sizing a stage to what you can verify in a short pass, not to what the model offers to do in one confident go.
 
-## Atomic tasks
+## Atomic tasks \{#atomic-tasks}
 
 **Atomic task** — a unit of work small enough to verify in a single reading; the granularity at which you actually keep control of what an agent produces.
 
@@ -107,7 +107,7 @@ its section here. The list grows as the course does.
 
 **Orchestrator and ephemeral workers** — a split where a long-lived orchestrator holds the plan, context, and done-conditions while short-lived workers each take one atomic task and return a compressed result; the orchestrator's job is verification, not generation.
 
-## Artifacts as interface
+## Artifacts as interface \{#artifacts-as-interface}
 
 **Artifact as interface** — the rule that stages hand off through written artifacts, not conversation: what crosses a boundary must be a thing someone can inspect, diff, and check against a done-condition.
 
@@ -117,7 +117,7 @@ its section here. The list grows as the course does.
 
 **Scope and evict** — the discipline that keeps the artifact interface from becoming artifact overload: pass only what the next stage needs, and drop what's finished instead of carrying it forward.
 
-## Plan, review, implement, critic
+## Plan, review, implement, critic \{#plan-review-implement-critic}
 
 **The loop (plan-review-implement-critic)** — the core cycle of Part II: review the plan before any code, implement against the reviewed plan, then critique the result before it lands. Cheap generation sits between two gates; remove either and it collapses into unchecked generation.
 
@@ -125,7 +125,7 @@ its section here. The list grows as the course does.
 
 **Critic gate** — a check the work cannot pass without clearing (a hook, not a suggestion), run by something independent of the work and unable to edit it; an agent grading its own output optimizes the check instead of doing the job.
 
-## Roles and the human
+## Roles and the human \{#roles-and-the-human}
 
 **Human router (on-the-loop vs in-the-loop)** — the human's place is above the loop (supervising it, owning the done-conditions and gates and the land decision), not a stage inside it taking a turn between agents. On the loop, the role stays effective as generation speeds up; in the loop, it becomes a bottleneck and then a casualty.
 
@@ -133,7 +133,7 @@ its section here. The list grows as the course does.
 
 **Oversight vs rubber-stamp** — real oversight is a few enforced checkpoints where a human's judgment is the control; "review everything" is not oversight but a rubber stamp — a person waved through more outputs than anyone could actually review.
 
-## Layered gates
+## Layered gates \{#layered-gates}
 
 **Layered gates** — a verification chain built from several checks in sequence, where each gate exists to cover a defect class the previous one structurally cannot see. Coverage is a property of the whole stack, never of any single gate.
 
@@ -163,7 +163,7 @@ its section here. The list grows as the course does.
 
 **Cost-per-run ordering** — running the cheapest gate first so the expensive gate only examines what already survived everything cheaper. For the gate chain it points the same direction as cost-to-invalidate, which is why the chain has a single order.
 
-## The escape ledger
+## The escape ledger \{#escape-ledger}
 
 **Escape ledger** — a record of every defect that reached production despite passing the gate chain, kept as blameless-postmortem discipline pointed at the gates: one row per escape names the defect class, the gate that should have caught it, the blind spot, and the promotion that now covers it.
 
@@ -175,7 +175,7 @@ its section here. The list grows as the course does.
 
 **Broad-probe hunt** — the proactive complement to the ledger: a deliberately coarse probe that over-reports, filtered by judgment, used to surface a defect class that every precise probe is structurally unable to name.
 
-## Detection vs mutation
+## Detection vs mutation \{#detection-vs-mutation}
 
 **Detection vs mutation** — the rule that the step which *finds* a defect must be separate from the step which *fixes* (mutates) the code. An auditor that can also edit what it audits can make a finding disappear instead of reporting it, so the finding list stops describing reality.
 
@@ -189,7 +189,7 @@ its section here. The list grows as the course does.
 
 **Goodhart's law** — "when a measure becomes a target, it ceases to be a good measure"; a proxy metric optimized hard enough (merged-PR count, tickets closed) stops tracking the value it stood for.
 
-## Review at volume
+## Review at volume \{#review-at-volume}
 
 **Review at volume** — the problem of keeping human review meaningful once agents generate faster than anyone can read; past a point, "review everything" stops being oversight and becomes a rubber stamp.
 
@@ -203,7 +203,7 @@ its section here. The list grows as the course does.
 
 **Machine-readable human-defer** — an inline, machine-readable marker an agent leaves on a genuine judgment call ("I need a human here") that a later human gate consumes as its worklist; it routes human attention instead of consuming it.
 
-## Secrets
+## Secrets \{#secrets}
 
 **Secrets invariant** — the rule that a secret's *value* reaches neither the repository nor the agent's context. Agents widen the second surface — they read the whole tree, transmit it to a model provider, log it, and can reproduce it — so "don't commit secrets" is now the smaller half of the rule.
 
@@ -221,7 +221,7 @@ its section here. The list grows as the course does.
 
 **Short-lived credential** — a dynamically generated, per-workload secret that expires faster than an exfiltrated copy stays useful; the blast-radius rule in credential form — the closer a secret sits to real damage, the shorter its life.
 
-## Least privilege and sandboxing
+## Least privilege and sandboxing \{#least-privilege-and-sandboxing}
 
 **Least privilege** — sizing a grant to the task in front of the agent rather than to everything the agent might ever need: the specific resource, read-only unless writing is the task, expiring soon, under an identity that can be revoked alone.
 
@@ -259,7 +259,7 @@ its section here. The list grows as the course does.
 
 **Confinement-as-code** — defining the box's boundaries as versioned, reproducibly-built configuration, so "the agent runs confined" is a property of the system rather than a fact about one hand-configured machine. *(deep dive)*
 
-## Environments, migrations, and real data
+## Environments, migrations, and real data \{#environments-migrations-and-real-data}
 
 **Realistic-not-real data** — the rule that an agent works against a dataset shaped like production but containing no real people, because a production copy both multiplies the obligations attached to personal data and feeds real records into the agent's uncontrolled context.
 
@@ -277,7 +277,7 @@ its section here. The list grows as the course does.
 
 **Point-in-time recovery** — the ability to restore state as of a chosen moment rather than only the last snapshot, which is what makes "undo the last hour" a capability instead of a hope.
 
-## Observability, rollout, and the kill switch
+## Observability, rollout, and the kill switch \{#observability-rollout-and-the-kill-switch}
 
 **Production as terminal gate** — treating live operation as the last gate in the verification chain, because some defect classes exist only under real traffic, real data distributions, and real devices, where no pre-merge gate can perceive them.
 
@@ -295,7 +295,7 @@ its section here. The list grows as the course does.
 
 **Fleet pause** — the second position of the kill switch when agents are generating continuously: stopping the *source* as well as the *change*, so a fleet does not rebuild the problem on top of the revert.
 
-## Running agent fleets: isolation and parallelism
+## Running agent fleets: isolation and parallelism \{#running-agent-fleets-isolation-and-parallelism}
 
 **Agent fleet** — several agents working concurrently on one codebase. Its size is governed not by available compute but by how much the verification chain can absorb.
 
@@ -311,7 +311,7 @@ its section here. The list grows as the course does.
 
 **Contention** — what additional agents buy once the serial fraction is saturated: queueing, rework, and a longer backlog rather than more finished work.
 
-## Drift control and rule rot
+## Drift control and rule rot \{#drift-control-and-rule-rot}
 
 **Rule rot** — the decay of a rule corpus as the code it describes moves on. A stale rule is worse than no rule: a human ignores an obsolete convention, an agent complies with it.
 
@@ -327,7 +327,7 @@ its section here. The list grows as the course does.
 
 **Memory drift** — the same decay in project memory: superseded decisions left standing beside the ones that replaced them, read by the agent as current fact.
 
-## Cost and the economics of agent work
+## Cost and the economics of agent work \{#cost-and-the-economics-of-agent-work}
 
 **Cost per accepted change** — the honest unit of agent economics: everything spent reaching a change that survived the gate chain, including retries, abandoned runs, verification calls, and review time. Cost per token is a price list, not a measurement.
 
@@ -359,7 +359,7 @@ its section here. The list grows as the course does.
 
 **Amdahl bound on token savings** — verification and human review do not move with token price, so a token discount can reduce total cost of a change by at most the fraction that is *not* review. When review dominates, the token bill is the smallest lever. *(deep dive)*
 
-## The enterprise tier: audit, provenance, and what's required
+## The enterprise tier: audit, provenance, and what's required \{#the-enterprise-tier-audit-provenance-and-whats-required}
 
 **Demonstrable control** — a control someone other than its operator can show, afterwards, to have run. At this distance from the blast radius, a control that cannot be evidenced is indistinguishable from one that never existed.
 
