@@ -17,7 +17,7 @@ assignees: ""
 
 ## Acceptance
 
-- [ ] `npm run build` still passes (both locales)
+- [ ] `npm run build` still passes (every released locale)
 - [ ] Markdown lint still passes
 - [ ] Generic leak scan still passes
 - [ ] No new toolchains introduced without justification

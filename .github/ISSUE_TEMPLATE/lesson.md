@@ -31,4 +31,4 @@ assignees: ""
 - [ ] EN translation added to the i18n tree
 - [ ] Literary-edit pass done **per language, independently** (no calques)
 - [ ] New terms added to the Glossary
-- [ ] `npm run build` passes (both locales)
+- [ ] `npm run build` passes (every released locale)
