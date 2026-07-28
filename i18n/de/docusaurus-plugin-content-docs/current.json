@@ -1,0 +1,90 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.handbookSidebar.category.Part I — RAG": {
+    "message": "Teil I — RAG",
+    "description": "The label for category 'Part I — RAG' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Ingestion": {
+    "message": "Ingestion",
+    "description": "The label for category 'Ingestion' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Retrieval": {
+    "message": "Retrieval",
+    "description": "The label for category 'Retrieval' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Generation": {
+    "message": "Generation",
+    "description": "The label for category 'Generation' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Cross-cutting": {
+    "message": "Querschnittsthemen",
+    "description": "The label for category 'Cross-cutting' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Cross-cutting.link.generated-index.description": {
+    "message": "Drei Dinge laufen durch alle Stufen der Pipeline und lassen sich keinem einzelnen Schritt zuordnen: woran Sie erkennen, dass das System funktioniert (Evaluation), wie Sie für seine Sicherheit sorgen (Guardrails) und wie Sie sehen, was es im Produktivbetrieb tut (Observability). Wir beginnen mit der Evaluation — ohne sie fehlt der Maßstab, an dem sich alles Übrige ausrichten lässt.",
+    "description": "The generated-index page description for category 'Cross-cutting' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Evaluation": {
+    "message": "Evaluation",
+    "description": "The label for category 'Evaluation' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Guardrails": {
+    "message": "Guardrails",
+    "description": "The label for category 'Guardrails' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Observability": {
+    "message": "Observability",
+    "description": "The label for category 'Observability' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Part II — Agents": {
+    "message": "Teil II — Agenten",
+    "description": "The label for category 'Part II — Agents' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Agentic RAG": {
+    "message": "Agentic RAG",
+    "description": "The label for category 'Agentic RAG' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Tool use": {
+    "message": "Tool-Einsatz",
+    "description": "The label for category 'Tool use' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Planning & loops": {
+    "message": "Planung und Schleifen",
+    "description": "The label for category 'Planning & loops' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Multi-agent systems": {
+    "message": "Multi-Agenten-Systeme",
+    "description": "The label for category 'Multi-agent systems' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Orchestration frameworks": {
+    "message": "Orchestrierungs-Frameworks",
+    "description": "The label for category 'Orchestration frameworks' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.MCP and agent protocols": {
+    "message": "MCP und Agentenprotokolle",
+    "description": "The label for category 'MCP and agent protocols' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Part III — Production & LLMOps": {
+    "message": "Teil III — Produktivbetrieb und LLMOps",
+    "description": "The label for category 'Part III — Production & LLMOps' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Serving — FastAPI + Docker": {
+    "message": "Serving — FastAPI und Docker",
+    "description": "The label for category 'Serving — FastAPI + Docker' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.Cloud AI platforms": {
+    "message": "Cloud-KI-Plattformen",
+    "description": "The label for category 'Cloud AI platforms' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.The tooling ecosystem": {
+    "message": "Tooling-Ökosystem",
+    "description": "The label for category 'The tooling ecosystem' in sidebar 'handbookSidebar'"
+  },
+  "sidebar.handbookSidebar.category.LLMOps — deploy, monitor, cost": {
+    "message": "LLMOps — Bereitstellung, Überwachung, Kosten",
+    "description": "The label for category 'LLMOps — deploy, monitor, cost' in sidebar 'handbookSidebar'"
+  }
+}
