@@ -63,7 +63,8 @@ type Course = {
   // `basePath` ('' = the course intro). This is per-course DATA rather than
   // something the footer derives, because which routes a course even HAS is
   // decided in its content tree — a Part gets its own page only if that Part's
-  // `_category_.json` carries a `link` — and the footer cannot guess that.
+  // EN `_category_.json` carries a `link` (the EN one decides for every locale) —
+  // and the footer cannot guess that.
   // Only list routes that actually exist: released builds run
   // `onBrokenLinks: 'throw'`, so an invented footer link is a build failure. And
   // keep this in step when a course gains pages — the footer is the only
@@ -96,9 +97,8 @@ const COURSES: Course[] = [
   // AI SDLC — shipped complete and trilingual (July 2026): all five Parts, 22
   // lessons plus 4 optional deep-dives, in EN/RU/SK (28 pages per locale incl.
   // intro + glossary). `live: true` badges it "Live" on the hub, like RAG.
-  // Its footer column is Introduction + Glossary because those were the course's
-  // only non-lesson routes when this landed; add each Part here as it gains an
-  // overview page, so the footer keeps matching the sidebar.
+  // Part labels below are the `_category_.json` labels verbatim, so the footer and
+  // the sidebar name the same thing the same way.
   {
     id: 'ai-sdlc',
     basePath: '/ai-sdlc',
@@ -112,6 +112,11 @@ const COURSES: Course[] = [
     inNavbar: true,
     footerLinks: [
       {label: 'Introduction', path: ''},
+      {label: 'Part I — The Foundation', path: 'part-1-foundation/overview'},
+      {label: 'Part II — The Loop', path: 'part-2-loop/overview'},
+      {label: 'Part III — Verification', path: 'part-3-verification/overview'},
+      {label: 'Part IV — The Platform', path: 'part-4-platform/overview'},
+      {label: 'Part V — Scale & Governance', path: 'part-5-scale-governance/overview'},
       {label: 'Glossary', path: 'glossary'},
     ],
   },
