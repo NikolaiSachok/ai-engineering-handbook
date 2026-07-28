@@ -22,5 +22,21 @@
   "sidebar.aiSdlcSidebar.category.Part V — Scale & Governance": {
     "message": "Časť V — Škálovanie a správa",
     "description": "The label for category 'Part V — Scale & Governance' in sidebar 'aiSdlcSidebar'"
+  },
+  "sidebar.aiSdlcSidebar.category.Layered gates and mechanism diversity": {
+    "message": "Vrstvené brány a rozmanitosť mechanizmov",
+    "description": "The label for category 'Layered gates and mechanism diversity' in sidebar 'aiSdlcSidebar'"
+  },
+  "sidebar.aiSdlcSidebar.category.Least privilege and sandboxing": {
+    "message": "Najnižšie oprávnenia a sandbox",
+    "description": "The label for category 'Least privilege and sandboxing' in sidebar 'aiSdlcSidebar'"
+  },
+  "sidebar.aiSdlcSidebar.category.Cost and the economics of agent work": {
+    "message": "Náklady a ekonomika práce agentov",
+    "description": "The label for category 'Cost and the economics of agent work' in sidebar 'aiSdlcSidebar'"
+  },
+  "sidebar.aiSdlcSidebar.category.The enterprise tier: audit, provenance, and what's required": {
+    "message": "Enterprise úroveň: audit, pôvod a čo je povinné",
+    "description": "The label for category 'The enterprise tier: audit, provenance, and what's required' in sidebar 'aiSdlcSidebar'"
   }
 }
