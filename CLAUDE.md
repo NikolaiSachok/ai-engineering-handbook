@@ -1,6 +1,6 @@
 # Enterprise RAG & Agents Handbook — Project Guide
 
-A public, open-source, **trilingual** teaching handbook on production RAG and agentic systems. Built with
+A public, open-source, **multilingual** teaching handbook on production RAG and agentic systems. Built with
 **Docusaurus → GitHub Pages** (docs = the courses, Mermaid diagrams, offline local search). The site carries
 **two content types**, authored and gated differently — check which one you are in before applying any rule
 below: the **courses**, owned by the docs plugins and published in every released locale; and **Field notes**
@@ -8,16 +8,18 @@ at `/blog` (the Docusaurus blog plugin, added in PR #219) — the **English-only
 building this handbook with the SDLC it teaches. See "Editorial config" for the per-type settings.
 
 **Locale model (EN-canonical).** English is the **default locale** — it lives in the top-level `docs/` and
-serves at the site root `/`. Russian is a secondary locale under
-`i18n/ru/docusaurus-plugin-content-docs/current/` and serves
-at `/ru/`. **Slovak** (launched 2026-07-15) is a third locale under `i18n/sk/…` serving at `/sk/`. This is
-only the URL/serving structure: **RU and SK stay audience-primary in *authoring*** (written
+serves at the site root `/`. Every other locale is a parallel tree under
+`i18n/<locale>/docusaurus-plugin-content-docs/current/` served at `/<locale>/` — today Russian at `/ru/` and
+**Slovak** (launched 2026-07-15) at `/sk/`, with the live list held in
+`RELEASED_LOCALES`/`UNRELEASED_LOCALES` in `docusaurus.config.ts`, never in a copy here. That is only the
+URL/serving structure: **every non-default locale stays audience-primary in *authoring*** (written
 natively per the workflow below, never machine-translated).
-- **LOCALE PARITY (from the SK launch on).** All three locales (en, ru, sk) are RELEASED and public. Every
-  content PR that adds or changes an EN/RU page **either updates the SK counterpart in the same PR or files
-  a parity issue** — the deployed build now runs `onBrokenLinks: 'throw'` with `sk` included, so a broken or
-  missing SK link fails the deploy. Authoring a new lesson means all three languages via the authoring-team
-  skill, then the SK canon (`editorial/canon/sk/`) + `scripts/i18n-link-check.sh` gate it. **Link parity is
+- **LOCALE PARITY (from the SK launch on).** Every locale in `RELEASED_LOCALES` is public. Every content PR
+  that adds or changes a page in one locale **either updates its counterpart in every other released locale
+  in the same PR or files a parity issue** — the deployed build runs `onBrokenLinks: 'throw'` over every
+  released locale, so a broken or missing link in any of them fails the deploy. Authoring a new lesson means
+  **every released locale** via the authoring-team skill, then that locale's canon
+  (`editorial/canon/<lang>/`) + `scripts/i18n-link-check.sh` gate it. **Link parity is
   not shape parity**, so `scripts/locale-parity-check.sh` gates the rest in CI: the file set, the H1/H2
   sequence, the `<InfoCard`/`<Node`/`<YouTube` counts, the fenced-block count per language, and figure drift.
   Read its header before "fixing" a finding — it records what each check deliberately does NOT assert, and why. The gated-
@@ -85,7 +87,7 @@ When a layer's *base* is finished, do all of this before moving on:
 1. **Deepen issue** — open `Deepen: <Layer>` in the `Part I/II — deepening` milestone with its topics.
 2. **On-page pointer** — a brief `:::note[Дальше — углубление слоя]` / `[Next — going deeper]` at the page
    bottom (deepening topics only; no issue/milestone refs on the public page).
-3. **Glossary** — add the layer's new terms to the Glossary (RU + EN).
+3. **Glossary** — add the layer's new terms to the Glossary in every released locale.
 4. **Managing-editor pass** — run the structure checklist in "Structure & presentation" below: update the
    part opener's TOC/status, keep `intro.md` + the milestone plan in sync, and check page uniformity.
 5. Publish (PR → CI → merge → deploy) and run the editorial pass.
@@ -98,9 +100,11 @@ holds only what's specific to THIS project, which the skill consumes:
 - **State the content type first — there is no one project-wide config.** The two content types are edited
   under different settings, and the courses' settings are the ones that used to be written here as if they
   were universal:
-  - **Courses** (`docs/`, `docs-ai-sdlc/`, `i18n/<locale>/…`): **RU audience-primary** (never produced by
-    translation), **EN the canonical default locale**, **SK** a released target (DE scaffolded, unreleased).
-    Voice: **second-person «ты»** in RU and its SK equivalent. Bound by the canon files below; every gate
+  - **Courses** (`docs/`, `docs-ai-sdlc/`, `i18n/<locale>/…`): **EN the canonical default locale**, **RU
+    audience-primary** (never produced by translation), every other locale a target in that same shape —
+    which ones are released and which are still gated is `RELEASED_LOCALES`/`UNRELEASED_LOCALES` in
+    `docusaurus.config.ts`, not a list kept here. Voice: **second-person «ты»** in RU and the equivalent
+    informal register in every other non-default locale. Bound by the canon files below; every gate
     below runs **per language**.
   - **Field notes blog** (`blog/`): **English-only — no source language, no translation targets, no locale
     tree.** Voice: **first-person singular, informal field-notes register** — the author's own account of the
@@ -116,14 +120,15 @@ holds only what's specific to THIS project, which the skill consumes:
   rules (spelling/register, voice, bridge, bold; for SK also anti-bohemism, calque templates, verb-by-object),
   shared by every course — and one **per-course term ledger** (`rag.md` — frozen — , `ai-sdlc.md`, …) holding
   that course's rejected variants, semantic reservations, casing, recurring-block strings. RU is
-  audience-primary + EN canonical source; SK is the Slovak locale. **Loading contract:** load `_language.md`
+  audience-primary and EN the canonical source; every other locale follows the same folder contract. **Loading contract:** load `_language.md`
   (always) + the target course's ledger; **peek-don't-load** across sibling ledgers — for a shared
   AI-engineering term, do a targeted read-only lookup, reuse a matching decision verbatim and cite it, or
   FLAG a genuine sense-difference; never load a whole sibling ledger and never edit a frozen one. All of it is
   normative for every page; canon updates ship **in the same PR** as the page that motivates them. (Add a
   language → add `editorial/canon/<lang>/_language.md` + a `<course>.md` ledger + a router row. Add a course →
   add `editorial/canon/<lang>/<course>.md` per language.)
-- **Terms this project keeps in English** (no crisp RU equivalent): *grounding*, *bi-encoder*,
+- **Terms this project keeps in English** (no crisp RU equivalent; every other locale's kept-English set is
+  its own canon's business, not this list's): *grounding*, *bi-encoder*,
   *cross-encoder*, *prompt injection*, *spotlighting*, *HyDE*, *BM25*, *ReAct*, *faithfulness*, *top-K*.
   (*Chunking* is NOT on this list: «чанкинг» is an established Cyrillic term — write «чанкинг», bridged as
   «чанкинг (chunking)» at first page-mention.)
@@ -146,8 +151,8 @@ the canonical, evolving spec for editorial quality, and it must pass like a buil
    wins.
 4. **Structural consistency** (managing editor) — see "Structure & presentation" below.
 
-Independent passes **per language** (the RU original needs it too, not just the translation); translation
-(RU→EN) is its own step and re-runs every gate in English. That per-language shape is the **courses'**; a
+Independent passes **per language** (the source draft needs it too, not just the rendered locales); rendering
+into each target locale is its own step and re-runs every gate in that language. That per-language shape is the **courses'**; a
 Field notes post is a single English pass with no translation step (see the per-content-type config above). Scale to stakes: routine handbook page = 2 passes
 /language; a flagship / LinkedIn extract = the full team. **The full checklists, the naive-reader method,
 worked examples, and role breakdown live in the skill — don't restate them here** (one source of truth, no
@@ -180,8 +185,9 @@ every layer-close, alongside the prose editorial pass.
 
 **Part-opener convention (uniform across ALL parts).** Every Part is fronted by a written opener page, never
 a bare auto-index:
-- `docs/part-N-<slug>/overview.md` (EN, default) — `id: overview`, `sidebar_label: "Part overview"` (the RU
-  mirror at `i18n/ru/.../current/part-N-<slug>/overview.md` uses `"Обзор части"`), and **no**
+- `docs/part-N-<slug>/overview.md` (EN, default) — `id: overview`, `sidebar_label: "Part overview"` (each
+  locale's mirror at `i18n/<locale>/.../current/part-N-<slug>/overview.md` carries its own localized
+  `sidebar_label` — RU `"Обзор части"`), and **no**
   `sidebar_position` (it is the category index, not a child in the list).
 - **One** `_category_.json`, in `docs/` (EN), points at it: `{"label": "…", "position": N, "link": {"type":
   "doc", "id": "part-N-<slug>/overview"}}` — so the part label itself opens the opener and the doc is pulled
@@ -201,13 +207,13 @@ a bare auto-index:
 **Keep the frame current (managing-editor checklist, run at each layer-close):**
 1. **Part opener** — add the new lesson to its «Что внутри» TOC; flip its 🚧 → a live `.md` link once
    published; refresh the status note.
-2. **Intro** (`intro.md`, both locales) — the Structure list matches the parts that actually exist; no stale
+2. **Intro** (`intro.md`, in every released locale) — the Structure list matches the parts that actually exist; no stale
    "🚧 заглушка" language once real content ships.
 3. **Curriculum ↔ milestones** — the part TOC reflects the GitHub milestone/issue plan; seed each part's TOC
    from its milestone up front, and move it when issues are added or the plan shifts.
 4. **Uniformity** — a new page matches the established skeleton (frontmatter, «Что забрать из урока», «Новые
    термины» → glossary, deepening `:::note`) and the admonition/link/video conventions above, in the
-   EN-default (`docs/`) + RU-parallel (`i18n/ru/`) layout.
+   EN-default (`docs/`) + per-locale parallel (`i18n/<locale>/`) layout.
 A `🚧` anywhere must mean *planned next*, never *silently missing*.
 
 **Deepening / Часть 2 (a lesson's second pass).** A base lesson stays **optimal-length** — deepening is
@@ -230,7 +236,7 @@ Deep dive"** page. The convention (piloted on Tool use, #64):
 - **A lesson becomes a group ONLY once its Часть 2 exists.** Un-deepened lessons stay flat single `.md`
   files; do not pre-create empty folders.
 - **Inbound links follow the move.** Every `.md` link to the base becomes `./<lesson>/index.md` (or
-  `../part-N/<lesson>/index.md` from another part) in **both** locales — `onBrokenLinks: 'throw'` catches a
+  `../part-N/<lesson>/index.md` from another part) in **every** locale — `onBrokenLinks: 'throw'` catches a
   miss. Links *inside* the moved base shift up one level (`../glossary.md` → `../../glossary.md`).
 - **Fold-vs-split rule.** A short, must-have clarification the base reader needs → fold into the base. Opt-in
   mastery detail (internals, failure-mode catalogue, "when NOT to," scale concerns) → Часть 2. If in doubt,
@@ -243,7 +249,7 @@ Deep dive"** page. The convention (piloted on Tool use, #64):
   (`./index.md`) in its first lines. Gate 4 (managing editor) enforces both on every future deepening.
 - **Same standard as a base lesson**, authored the same way (authoring-team → editorial-team, RU-primary),
   with the house skeleton (takeaways, glossary footer), Mermaid, `.md`-only links, and glossary + per-language
-  canon (`editorial/canon/<lang>.md`) updates shipped in the same PR.
+  canon (`editorial/canon/<lang>/`) updates shipped in the same PR.
 
 ## Engineering workflow (SDLC)
 The handbook is itself a demonstration of engineering maturity, so it follows a real workflow — kept
@@ -252,12 +258,20 @@ proportionate to a docs site, no ceremony for its own sake.
 - **Trunk-based, PR-only.** `main` is always deployable (auto-deploys to Pages). All changes land via a
   short-lived branch + Pull Request; no direct pushes to `main` (the one exception is the initial import).
 - **Conventional Commits** for messages (`docs:`, `feat:`, `fix:`, `chore:`, `ci:`). **Squash-merge** PRs.
-- **CI gates every PR** (branch protection requires them green before merge):
-  1. `npm run build` for **both locales** — the real correctness gate (`onBrokenLinks: 'throw'` catches
-     dead internal links; a broken i18n tree fails the build).
-  2. **Markdown lint** (structure/format hygiene).
-  3. **Generic leak scan** — secrets, credentials, local filesystem paths, emails. (The domain-specific
-     leak gate runs privately; see the private brief.)
+- **CI runs a gate suite on every PR.** The suite itself — the job names CI reports, what each one runs and
+  what it catches — is maintained in **one** place, the table in `README.md` ("Contributing / workflow");
+  read it there and add new jobs there, rather than keeping a second copy here that drifts. Two things about
+  it belong here and not in the README: the build gate covers **every locale the build covers** (released,
+  plus the gated ones under `HANDBOOK_INCLUDE_UNRELEASED=1`), which is why `onBrokenLinks: 'throw'` is the
+  real correctness gate; and the **domain-specific** leak gate is *not* in CI at all — it runs privately,
+  see the private brief.
+- **Whether branch protection *requires* those checks green is an open question — `ASSERTED`, not
+  `MEASURED`.** Reading `repos/…/branches/main/protection` needs repo-admin scope that no token in use here
+  has (it `403`s), so nobody has actually checked the setting; this file and the README record the same
+  uncertainty deliberately, and neither should be promoted to fact without evidence. Anyone with settings
+  access can settle it in a minute against *Settings → Branches → main → Require status checks*, after which
+  both documents get reconciled to whatever is true. It matters because advisory and required checks look
+  identical on a green PR and differ entirely on a red one.
 - **Content PRs** additionally require the **editorial gate** above (literary-edit pass per language) —
   enforced as a PR-template checklist item, not automation.
 - **Pre-commit hook** mirrors the generic leak scan locally so leaks are caught before they're committed.
@@ -298,8 +312,9 @@ proportionate to a docs site, no ceremony for its own sake.
 
 ## Local dev
 - EN (default): `npm run start`
-- RU: `npm run start -- --locale ru`
-- Full both-locale build (must pass before publish): `npm run build`
+- Any other locale: `npm run start -- --locale <locale>` (e.g. `ru`) — the dev server serves one at a time.
+- Full build over every released locale (must pass before publish): `npm run build`; add
+  `HANDBOOK_INCLUDE_UNRELEASED=1` to include the gated locales CI validates.
 - Locale-flip / detection E2E (needs a served prod build): `npm run test:e2e` (detection + locale-scroll +
   tablet layout) — see `e2e/`.
 - Deploy config in `docusaurus.config.ts` (`url`, `baseUrl`, `organizationName`) and the Pages workflow

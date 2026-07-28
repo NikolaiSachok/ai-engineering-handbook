@@ -14,10 +14,10 @@
 #
 # This gate keeps CI strict everywhere else. It runs the unreleased-inclusive build and
 # FAILS on any broken link whose source page is NOT such a tolerable fallback, i.e.:
-#   - any broken link in a released locale (en, ru) — real, shipping breakage; and
+#   - any broken link in a released locale — real, shipping breakage; and
 #   - any broken link on a page that IS translated in an unreleased locale — a real
-#     broken anchor/link in authored content (e.g. a future SK lesson's terms-footer
-#     pointing at a wrong glossary slug).
+#     broken anchor/link in authored content (e.g. a freshly translated lesson whose
+#     terms-footer points at a wrong glossary slug).
 # A broken link is tolerated ONLY when its source is an unreleased-locale page that has
 # no translation file yet (a pure EN fallback). The gate self-maintains as locales fill
 # in: the day a lesson is translated, its links must resolve or this gate fails.
