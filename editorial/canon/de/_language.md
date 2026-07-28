@@ -594,7 +594,7 @@ allein, *Open-Source-Software* durchgekoppelt.**
 getrennt und großgeschrieben stehen. **Sobald sie ein Kompositum anführen, greift wieder § 44(1):**
 `Dense-Retrieval-Verfahren`, `Constrained-Decoding-Strategie`, `Machine-Learning-Modell`.
 
-### Warum „Prompt Injection Angriff" nicht bloß unschön, sondern falsch ist
+#### Warum „Prompt Injection Angriff" nicht bloß unschön, sondern falsch ist
 
 Das Regelwerk selbst benennt das Phänomen und markiert es prescriptiv (S. 47):
 
@@ -611,7 +611,7 @@ sie zusammen.**" (Populär: das „Deppenleerzeichen",
 Injection" getrennt — das ist **genau die Getrenntschreibung, die das Regelwerk als nicht normgerecht
 bezeichnet**. Der Korpus folgt der Norm, nicht der Gewohnheit, und tut es **einheitlich**.
 
-### Verbindliche Schreibungen für dieses Korpus
+#### Verbindliche Schreibungen für dieses Korpus
 
 Nach Häufigkeit im Textbestand:
 
