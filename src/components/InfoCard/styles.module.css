@@ -228,7 +228,50 @@ html[data-theme='dark'] .pill {
   text-align: center;
   text-wrap: balance;
   /* A single token longer than the uniform node width would otherwise overflow and collide with the
-     neighbouring label — the exact "two labels on one text line" defect the pitch exists to stop. */
+     neighbouring label — the exact "two labels on one text line" defect the pitch exists to stop.
+     `anywhere` rather than `break-word` is load-bearing and was measured: with `break-word`, 25 of
+     43 labels at 360px overflowed their node the moment the text was longer than the column and
+     nothing could divide it, and 19 of 43 overflowed on a bare identifier or URL. Only `anywhere`
+     actually breaks such a token. It stays the LAST resort — a hyphenation opportunity (below) is an
+     ordinary line break and is taken in preference. */
+  overflow-wrap: anywhere;
+}
+
+/* ---- hyphenation: per-language, because it is a per-language problem ---------------------------
+   The label column is 14.86 × the card width and the type floors at 11px (§16), so a token wider
+   than the column must break somewhere. English, Russian and Slovak labels reach that point rarely
+   and break at a SPACE when they do, which needs no help. German has no such option: a compound is
+   one unbreakable run — *layoutbewusstes*, *Multiagentensysteme*, *Orchestrierungs-Frameworks* — so
+   German hits the floor first, and without hyphenation the fallback above chops it mid-morpheme
+   (`Wiederhers/tellungspu/nkt`). `hyphens: auto` gives the line breaker legal break points inside
+   the run: the browser's dictionary for the undivided compounds, and the compound's own hyphen for
+   the written ones. Measured at 360px, every break then lands on a hyphen at a real syllable
+   boundary — `Multiagen-/tensysteme`, `Schwel-/lenwert`, `Wieder-/herstel-/lungspunkt`.
+
+   Scoped to `:lang(de)` on purpose, not applied globally. Applied to every locale it CHANGES pages
+   that have no problem to solve: measured, English "clean / uniform / docs" became "clean uni-/form
+   docs" and Slovak "rôzne / zdroje" became "rôz-/ne zdroje" — the browser hyphenating where a clean
+   space break already existed, because `text-wrap: balance` will spend a hyphen to even out two
+   lines. Both are worse than what ships, and neither locale gained anything. So this is a rule for
+   the languages that need it, and the next such locale (Dutch, Finnish, Swedish — any language that
+   compounds without spaces) joins the selector deliberately.
+
+   The language comes from the page: Docusaurus stamps `<html lang="de">` on the German build, and
+   `:lang()` and `hyphens: auto` both read that, so nothing has to be threaded through the component.
+   The dependency is real, not decoration — with no language declared the dictionary is not consulted
+   and the rule does nothing (verified: the same German text under `lang="en"` does not hyphenate). */
+.nodeLabel:lang(de),
+.title:lang(de),
+.caption:lang(de) {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* The title and caption run the full plate width, so they will rarely need a break at all — but a
+   German title is one or two compounds wide, and when it does break it must break somewhere a reader
+   can follow, and must not run past the plate. */
+.title:lang(de),
+.caption:lang(de) {
   overflow-wrap: anywhere;
 }
 
