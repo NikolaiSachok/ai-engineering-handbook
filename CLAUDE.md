@@ -1,8 +1,11 @@
 # Enterprise RAG & Agents Handbook — Project Guide
 
 A public, open-source, **trilingual** teaching handbook on production RAG and agentic systems. Built with
-**Docusaurus → GitHub Pages** (docs = the course, Mermaid diagrams, offline local search). There is no blog:
-the docs plugin owns every page.
+**Docusaurus → GitHub Pages** (docs = the courses, Mermaid diagrams, offline local search). The site carries
+**two content types**, authored and gated differently — check which one you are in before applying any rule
+below: the **courses**, owned by the docs plugins and published in every released locale; and **Field notes**
+at `/blog` (the Docusaurus blog plugin, added in PR #219) — the **English-only** making-of series about
+building this handbook with the SDLC it teaches. See "Editorial config" for the per-type settings.
 
 **Locale model (EN-canonical).** English is the **default locale** — it lives in the top-level `docs/` and
 serves at the site root `/`. Russian is a secondary locale under
@@ -92,7 +95,20 @@ layer isn't closed.
 ### Editorial config (project-specific input to the editorial-team skill)
 The editorial **rules** live in the `editorial-team` skill — that is the single source of truth. This section
 holds only what's specific to THIS project, which the skill consumes:
-- Primary language **RU**; translation target **EN**. Voice: second-person «ты».
+- **State the content type first — there is no one project-wide config.** The two content types are edited
+  under different settings, and the courses' settings are the ones that used to be written here as if they
+  were universal:
+  - **Courses** (`docs/`, `docs-ai-sdlc/`, `i18n/<locale>/…`): **RU audience-primary** (never produced by
+    translation), **EN the canonical default locale**, **SK** a released target (DE scaffolded, unreleased).
+    Voice: **second-person «ты»** in RU and its SK equivalent. Bound by the canon files below; every gate
+    below runs **per language**.
+  - **Field notes blog** (`blog/`): **English-only — no source language, no translation targets, no locale
+    tree.** Voice: **first-person singular, informal field-notes register** — the author's own account of the
+    build, so the courses' instructional «ты» does not apply and neither does the translation step. Produced
+    by the **`field-notes` skill**, which runs the same editorial gate told the register is "informal field
+    notes", plus both leak gates. Course terms are *referenced* here, not defined — a post follows the
+    ledgers' decisions but does not settle them. **No canon file covers the blog yet** (issue #296); until
+    one exists, this paragraph is its config.
 - **Style canon — language × course, behind a router.** `editorial/style-canon.md` is a thin **router**: the
   cross-language spine (what a canon is; bridge-rule principle; bold & metaphor budgets; figure-probation;
   sense-card + book-unit concepts; ledger-binds-sense-not-string) + a pointer table. Under it, each language
@@ -131,7 +147,8 @@ the canonical, evolving spec for editorial quality, and it must pass like a buil
 4. **Structural consistency** (managing editor) — see "Structure & presentation" below.
 
 Independent passes **per language** (the RU original needs it too, not just the translation); translation
-(RU→EN) is its own step and re-runs every gate in English. Scale to stakes: routine handbook page = 2 passes
+(RU→EN) is its own step and re-runs every gate in English. That per-language shape is the **courses'**; a
+Field notes post is a single English pass with no translation step (see the per-content-type config above). Scale to stakes: routine handbook page = 2 passes
 /language; a flagship / LinkedIn extract = the full team. **The full checklists, the naive-reader method,
 worked examples, and role breakdown live in the skill — don't restate them here** (one source of truth, no
 drift).

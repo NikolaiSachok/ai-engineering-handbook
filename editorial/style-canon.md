@@ -73,6 +73,14 @@ These are the language-agnostic spine. The per-language files specialise them; t
   like ordinary text until the next cold read / milestone pass confirms it (a naive monolingual reader decodes it
   at first contact, without the English page) or strikes it (then it joins the rejected variants). Keep the
   per-page figure count modest. (RU/EN: §6; SK: "Figúry (§6)" — both in `canon/<lang>/_language.md`.)
+- **No self-issued exemption — probation covers every coinage, not just figures.** A **term, label or heading**
+  first invented during a rendering pass is on probation too, and **the pass that coined it may not enter it on
+  any "do not flag" list its own reviewer reads** (the confirmed-figure register, a "settled" ledger row, the
+  glossary, the pass's own standing instructions). The test before marking anything settled: *name the pass that
+  confirmed it — it must not be the pass that proposed it.* Related: a naturalness reviewer cannot report on
+  whether a term is the **right** one; fluency and domain correctness are separate axes and the second needs its
+  own pass against external sources. (Incident + full rule, RU: `canon/ru/ai-sdlc.md`, the owner-ruling journal,
+  entry `escape` → «пропущенный дефект».)
 - **Sense cards.** Where one word carries several senses across the corpus, a **sense card** fixes one meaning
   per frame and names the disambiguating question to ask before writing the word — a reservation breach is a
   defect even when the sentence is otherwise correct. Each locale keeps its own cards (their polysemy differs;
