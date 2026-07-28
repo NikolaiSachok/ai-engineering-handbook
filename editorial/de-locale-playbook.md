@@ -90,9 +90,10 @@ German inherits the whole thing from day one, so plan against these numbers, not
 
 **Non-prose surfaces.** UI strings: **130 keys / ~531 words** across five JSON files (`code.json` 85 —
 of which **74 auto-fill** from `@docusaurus/theme-translations/locales/de` and only **11 `landing.*` are
-authored**; `navbar.json` 6; `footer.json` 11; the two docs-plugin `current.json` files 22 + 6), plus **24
-`_category_.json` mirrors** per locale. **49 `<YouTube>` embeds** (videos stay English; the one-line "why
-watch" note is German and says the video is in English — same convention as RU/SK).
+authored**; `navbar.json` 6; `footer.json` 11; the two docs-plugin `current.json` files 22 + 6). **No
+`_category_.json` files** — locale copies never render and were deleted repo-wide in #290; the two
+`current.json` files carry every category label. **49 `<YouTube>` embeds** (videos stay English; the
+one-line "why watch" note is German and says the video is in English — same convention as RU/SK).
 
 **Load-bearing-strings surface ≈ 654** (Layer 1.5 of the `authoring-team` skill): 91 frontmatter strings
 (67 `title:` + 24 `sidebar_label:`) + 472 headings (`##`–`######`) + 91 translatable card strings (57
@@ -555,12 +556,15 @@ Mostly as SK. The differences are flagged.
 - **Theme strings:** run `npm run write-translations -- --locale de`. **74 of `code.json`'s 85 keys auto-fill
   from `@docusaurus/theme-translations/locales/de`**; only the **11 `landing.*` keys are authored**. Theme
   chrome in English inside German pages is a defect.
-- **Sidebar category labels — the documented gotcha.** Per the repo `CLAUDE.md`: a `_category_.json` under
-  `i18n/` is **silently OVERRIDDEN by `current.json` at render time**. Set every category label in
+- **Sidebar category labels — `current.json` only.** Set every category label in
   `i18n/de/docusaurus-plugin-content-docs*/current.json` under
-  `sidebar.<sidebarId>.category.<English label>`; keep the 24 `_category_.json` mirrors in sync, but
-  `current.json` is the one that renders. *This regression has already happened once, on the EN-canonical
-  flip.*
+  `sidebar.<sidebarId>.category.<English label>` (the English label is the lookup key). **Do not create a
+  single `_category_.json` under `i18n/de/`** — Docusaurus overrides such a file with `current.json` at
+  render time, so it does not render and editing it silently does nothing. The 58 pre-existing locale copies
+  were deleted in #290 after a measured rebuild showed the generated sidebars byte-identical without them.
+  Structure (`position`, `link`) comes from the **EN** `_category_.json` in `docs/`, which decides for every
+  locale. *A label left out of `current.json` renders as the English source string — that regression has
+  already happened once, on the EN-canonical flip.*
 - **Glossary anchors:** German glossary headings produce German slugs. Verify anchors in the build; do not
   assume SK or RU slug parity.
 - **Do not translate:** code blocks and identifiers, product names, Mermaid node IDs (labels and captions DO
@@ -602,7 +606,7 @@ cluster at exactly two points, and they are scheduled here rather than discovere
 | **8** | RAG corpus milestone pass (consistency + managing editor + cold-read spot checks). |
 | **9–10** | AI-SDLC waves: intro+glossary+Parts I–II (12 files) → Parts III–V (16). |
 | **11** | AI-SDLC corpus milestone pass. |
-| **12** | UI strings: `code.json`, navbar, footer, both `current.json` files, the 24 `_category_.json` mirrors. |
+| **12** | UI strings: `code.json`, navbar, footer, both `current.json` files (no `_category_.json` — see §8). |
 | **13** | ⚠️ **Scheduled risk cluster 2 of 2 — pre-launch cross-cutting cleanup** across all 67 pages. Delta editing, not re-translation. In SK this was Fáza 25: a deferred backlog discovered at launch time and never planned. |
 | **14** | **Launch:** flip `de` to `RELEASED_LOCALES`, plus every code touchpoint in §8, plus the locale-parity rule. |
 | **15** | ⚠️ **Post-launch pilot copy-edit** after an external review of the live pages. In SK this was Fáza 26 — prose only, zero fact movement, a large diff is a failure. Also where `DISPUTED` rows get their reckoning. |
