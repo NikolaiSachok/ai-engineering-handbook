@@ -60,12 +60,14 @@ type Course = {
   live: boolean;       // true = content shipped; false = placeholder / in progress
   inNavbar: boolean;   // add a docSidebar item to the navbar yet?
   // The course's slice of the footer sitemap, in order. `path` is appended to
-  // `basePath` ('' = the course intro). Courses differ in what routes they even
-  // HAVE — the RAG course gives each Part an `overview` page (its `_category_.json`
-  // carries a `link`), the AI SDLC course does not — so this is per-course data,
-  // not something the footer can guess. Only list routes that actually exist:
-  // released builds run `onBrokenLinks: 'throw'`, so an invented footer link is a
-  // build failure, and the footer is the only always-visible navigation on phones.
+  // `basePath` ('' = the course intro). This is per-course DATA rather than
+  // something the footer derives, because which routes a course even HAS is
+  // decided in its content tree — a Part gets its own page only if that Part's
+  // `_category_.json` carries a `link` — and the footer cannot guess that.
+  // Only list routes that actually exist: released builds run
+  // `onBrokenLinks: 'throw'`, so an invented footer link is a build failure. And
+  // keep this in step when a course gains pages — the footer is the only
+  // always-visible navigation on phones, so a gap here is a gap for most readers.
   footerLinks: {label: string; path: string}[];
 };
 const COURSES: Course[] = [
@@ -94,8 +96,9 @@ const COURSES: Course[] = [
   // AI SDLC — shipped complete and trilingual (July 2026): all five Parts, 22
   // lessons plus 4 optional deep-dives, in EN/RU/SK (28 pages per locale incl.
   // intro + glossary). `live: true` badges it "Live" on the hub, like RAG.
-  // Unlike the RAG course it has NO per-Part overview pages — its Parts are plain
-  // sidebar categories — so its footer column is Introduction + Glossary only.
+  // Its footer column is Introduction + Glossary because those were the course's
+  // only non-lesson routes when this landed; add each Part here as it gains an
+  // overview page, so the footer keeps matching the sidebar.
   {
     id: 'ai-sdlc',
     basePath: '/ai-sdlc',
