@@ -84,7 +84,7 @@ Postmortem.*
 | die Zuständigkeit für Konsistenz | consistency owner | — |
 | die Überlastung durch Artefakte | artifact overload | — |
 | „Eine Anweisung ist keine Kontrolle." | "An instruction is not a control." | Merksatz. Beachte `_language.md` §9.3 — hier trägt die bloße Kopula, weil beide Größen gleichartig sind |
-| „Was du prüfst, das bekommst du." | "The gate defines the artifact." | Merksatz; **nicht** „Das Gate definiert das Artefakt" (Kalke) |
+| „Was Sie prüfen, das bekommen Sie." | "The gate defines the artifact." | Merksatz; **nicht** „Das Gate definiert das Artefakt" (Kalke). Anrede nachgezogen mit dem Sie-Ruling (`_language.md` § Stimme und Anrede, 2026-07-28) — der Merksatz stand zuvor im „du" |
 
 ---
 

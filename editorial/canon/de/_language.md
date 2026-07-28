@@ -33,8 +33,11 @@ A DISPUTED or OPEN row is a correct outcome. A confidently-wrong row is not.
 > einem Korpus voller Imperative in praktisch jedem Satz wirksam werden; wer sie erst beim Lektorat anwendet,
 > repariert 67 Seiten statt sie richtig zu schreiben.
 
-1. **Anrede: „du", klein.** Nie „Sie". Nie Wechsel innerhalb einer Seite.
-2. **Kein „man" als Leseransprache.** „Man öffnet die Konsole" ✗ → „Öffne die Konsole." Ausnahme nur für
+1. **Anrede: „Sie", großgeschrieben — samt „Ihr/Ihre/Ihnen".** Nie „du". Nie Wechsel innerhalb einer Seite.
+   **Jede Anweisung steht im Sie-Imperativ:** „Öffnen Sie die Konsole", „Prüfen Sie den Rückgabewert" — nicht
+   „Öffne die Konsole". Das ist eine andere Verbform, nicht nur ein anderes Pronomen, und sie betrifft in
+   einem Anleitungskorpus fast jeden Satz.
+2. **Kein „man" als Leseransprache.** „Man öffnet die Konsole" ✗ → „Öffnen Sie die Konsole." Ausnahme nur für
    echte Allgemeinaussagen über die Sprache oder das Fach (§ Stimme und Anrede).
 3. **Englische Fachtermini bleiben englisch** und bekommen einen **deutschen Artikel**: *der Tool-Call, das
    Tool-Result, im Strict Mode, der Idempotency Key*. Deutsche Neuprägungen (*Werkzeugaufruf*, *strikter
@@ -80,50 +83,85 @@ die in einer benachbarten Standardvarietät völlig korrekt und für die gewähl
 
 ## Stimme und Anrede
 
-- **Lektionen stehen im „du", kleingeschrieben** — „behalte im Kopf", „wenn du ausrollst", „du bekommst".
-  Nie „Sie", nie Wechsel innerhalb einer Seite. Spiegelt das russische «ты» und das slowakische „ty".
+- **Lektionen stehen im „Sie"** — „behalten Sie im Kopf", „wenn Sie ausrollen", „Sie bekommen". Nie „du",
+  nie Wechsel innerhalb einer Seite. Die Höflichkeitsform und ihre Possessiva werden **immer
+  großgeschrieben**: *Sie, Ihnen, Ihr, Ihre*.
 
-  > **STATUS: DISPUTED — und zwar gegen die Beleglage.** Das muss hier stehen, damit niemand es später für
-  > eine belegte Norm hält. **Jede öffentlich lesbare deutsche Fachbuchquelle, die geprüft wurde, verwendet
+  **Die Anrede entscheidet mit über die Verbform, nicht nur über das Pronomen.** Jede Anweisung steht im
+  **Sie-Imperativ**: „Öffnen Sie die Konsole", „Prüfen Sie den Rückgabewert", „Geben Sie eine Meldung
+  zurück" — nicht „Öffne …", „Prüfe …", „Gib …". Weil dieser Korpus überwiegend aus Anweisungen besteht,
+  ist das die **breiteste** Fläche dieser Entscheidung; ein einziger stehengebliebener du-Imperativ mitten
+  in einer Sie-Seite ist derselbe Registerbruch wie ein wackelndes Genus (§1.1).
+
+  **Geltungsbereich.** Die Regel gilt für **Korpusprosa** — Lektionen, Glossar, Blockstrings, Kartenlabels,
+  UI-Strings. Redaktionsdokumente wie dieses hier sprechen die **schreibende Instanz** an, nicht die
+  lesende; ihre Imperative („Vermeide scharfe Ausschläge", „Trage eine Zeile nach") sind **keine**
+  Korpusprosa und werden nicht mitgezogen.
+
+  > **STATUS: SETTLED — Eigentümerentscheid vom 2026-07-28, auf der Beleglage.** Diese Zeile stand bis dahin
+  > als `du` und als DISPUTED, *gegen* die eigene Beleglage. Die Beleglage hat entschieden; die Zeile ist
+  > jetzt die **belegte** Wahl, nicht mehr die trotzige.
+  >
+  > **Jede öffentlich lesbare deutsche Fachbuchquelle, die geprüft wurde, verwendet
   > `Sie`:** Rheinwerk-Openbook („Vor dem Lesen sollten **Sie** sich überlegen, welche Fragen das Kapitel
   > beantworten soll", <https://openbook.rheinwerk-verlag.de/javainsel/00_002.html>); zwei dpunkt-Leseproben
   > (76× *Sie/Ihnen* gegen 1× *du*; 35× *Sie* gegen 0× *du*); der GNOME-Übersetzungsleitfaden („Der Anwender
   > wird … **grundsätzlich in der Höflichkeitsform** angesprochen", <https://wiki.gnome.org/de/UebersetzungsRichtlinien>);
   > der Microsoft-Lokalisierungsleitfaden, der `du` ausdrücklich Leserinnen und Lesern **unter 18** vorbehält.
-  > Der tekom-Fachartikel bestätigt den `du`-Trend und rät zugleich zur Vorsicht: „Mit dem Sie macht man im
-  > Zweifelsfall nichts Grundsätzliches verkehrt … Ein falsch verwendetes Du kann aber durchaus zu Irritationen
-  > führen." (<https://technischekommunikation.info/fachartikel/sprache/gerne-per-du-1272/>)
+  > Der tekom-Fachartikel bestätigt zwar einen `du`-Trend, rät aber genau in diese Richtung: „Mit dem Sie
+  > macht man im Zweifelsfall nichts Grundsätzliches verkehrt … Ein falsch verwendetes Du kann aber durchaus
+  > zu Irritationen führen." (<https://technischekommunikation.info/fachartikel/sprache/gerne-per-du-1272/>)
   >
-  > **Zusatzbefund, der die Beleglage relativiert:** dpunkt, O'Reilly Deutschland und heise sind **eine**
-  > Stilfamilie, nicht drei unabhängige Datenpunkte — dpunkt betreut seit 2015 das deutschsprachige
-  > O'Reilly-Programm und gehört zu Heise Medien
+  > **Der Befund, der die Gegenrechnung zusammenbrechen ließ:** die drei angeblich unabhängigen Kronzeugen
+  > für ein `du` sind **eine** Stilfamilie, nicht drei Datenpunkte — dpunkt betreut seit 2015 das
+  > deutschsprachige O'Reilly-Programm und gehört zu Heise Medien
   > (<https://www.heise.de/news/dpunkt-verlag-uebernimmt-deutschsprachiges-O-Reilly-Programm-2622415.html>).
-  > Eine öffentlich lesbare **Buch**-Autorenrichtlinie mit Anrederegel existiert bei keinem der drei: OPEN.
+  > Damit stand einer einhelligen Sie-Beleglage kein zweiter Strang gegenüber, sondern derselbe Strang
+  > dreimal gezählt.
   >
-  > **Incumbent: `du`** — als bewusste Marken- und Korpusentscheidung, gestützt auf (1) den Registerwunsch
-  > handlungsorientierter Tutorials und (2) die Gleichlage mit den beiden Schwester-Locales (RU «ты», SK „ty"),
-  > die eine Übersetzung sonst schon an der Anrede erkennbar machen würde. **Kein Flip ohne Eigentümerentscheid**
-  > — und wer sie verteidigt, verteidigt sie als Entscheidung, nicht als Norm.
+  > **Was das SETTLED hier bedeutet — und was nicht.** Die Belege sind **Verlagsusus**, keine Duden- oder
+  > Regelwerksregel; eine öffentlich lesbare **Buch**-Autorenrichtlinie mit Anrederegel existiert bei keinem
+  > der Verlage (das bleibt OPEN). SETTLED steht deshalb dafür, dass die Quellen einander **nicht
+  > widersprechen** und die Entscheidung getroffen ist — nicht dafür, dass ein Normgeber sie vorschreibt.
+  >
+  > **Der tragende Grund ist die fehlende Kontrollinstanz.** Der deutschen Locale fehlt der native
+  > Korrekturleser; der Eigentümer liest Russisch und Slowakisch, sein Deutsch ist ~A1. Wenn niemand hören
+  > kann, ob ein unkonventionelles Register als *informell und modern* oder als *fremd* ankommt, gewinnt der
+  > belegte Verlagsusus gegen jede Erwägung von Korpussymmetrie. Ein deutscher Entwickler erwartet in einem
+  > Fachhandbuch das `Sie`.
+  >
+  > **Vermerkt wird ab jetzt die Divergenz zu RU und SK, nicht die zur deutschen Fachprosa.** Russisch führt
+  > «ты», Slowakisch „ty" — das Deutsche weicht davon **bewusst** ab. Die Gleichlage der Anrede über alle
+  > Locales war das Argument für `du`; sie ist eine Konsistenzerwägung und wiegt weniger als der attestierte
+  > Usus der Zielsprache. Wer diese Divergenz später „glattzieht", macht die Entscheidung rückgängig — sie
+  > ist keine Unachtsamkeit. *(Dieselbe Sorte Divergenz wie bei §3 „KI statt AI": das Deutsche folgt seiner
+  > eigenen belegten Praxis, wo RU und SK anders verfahren.)*
+  >
+  > **Wiedereröffnungsbedingung.** Eine bindende Hausrichtlinie eines Verlags, die `du` vorschreibt; oder ein
+  > nativer Leserbefund (Gate 7, `de-pilot-naturalness-check`), der das `Sie` für dieses Publikum als
+  > distanziert markiert. **Kein Flip ohne Eigentümerentscheid** — in beide Richtungen.
 
 - **Das unpersönliche „man" ist im deutschen Doku-Reflex der Default — und im Korpus als Leseransprache
   verboten.** Es ist die dritte Anziehungskraft, die das Russische und das Slowakische gar nicht kennen: Es
-  liest sich weder als „du" noch als „Sie", und ein Absatz driftet lautlos hinein und wieder heraus. Diese
-  Drift ist der eigentliche Defekt, nicht das Wort.
+  ist überhaupt keine Anrede — weder „Sie" noch „du" —, und ein Absatz driftet lautlos hinein und wieder
+  heraus. Diese Drift ist der eigentliche Defekt, nicht das Wort. **Der Wechsel auf „Sie" macht diese Falle
+  nicht kleiner:** „man" liegt registerlich näher an der Höflichkeitsform als am „du" und wirkt deshalb
+  unauffälliger, während es dieselbe Uneindeutigkeit über den Handelnden erzeugt.
 
   **Verboten** ist „man" überall dort, wo **die lesende Person die handelnde ist** — in Anweisungen,
   Empfehlungen, Arbeitsschritten, Warnungen:
 
   | ✗ „man" | ✓ Neubau | Funktion |
   |---|---|---|
-  | Man öffnet die Konsole. | Öffne die Konsole. | konkrete Leserhandlung → Imperativ |
-  | Man prüft den Rückgabewert. | Prüfe den Rückgabewert. | Anweisung → Imperativ |
+  | Man öffnet die Konsole. | Öffnen Sie die Konsole. | konkrete Leserhandlung → Sie-Imperativ |
+  | Man prüft den Rückgabewert. | Prüfen Sie den Rückgabewert. | Anweisung → Sie-Imperativ |
   | Man speichert die Daten im Index. | Die Daten werden im Index gespeichert. | Vorgang, Handelnder unwichtig → Passiv |
   | Man kann drei Fälle unterscheiden. | Es lassen sich drei Fälle unterscheiden. | unpersönliche Möglichkeit |
   | Beim Reranking bewertet man neu. | Beim Reranking werden die Treffer neu bewertet. | echte Prozessbeschreibung |
 
   **Erlaubt — und nur hier** — ist „man" für **echte Allgemeinaussagen über die Sprache, das Fach oder eine
-  Definition**, wo „du" sachlich falsch wäre: „Unter einem Agenten versteht man hier …", „Im Deutschen setzt
-  man in diesem Fall einen Bindestrich."
+  Definition**, wo die Leseranrede sachlich falsch wäre: „Unter einem Agenten versteht man hier …", „Im
+  Deutschen setzt man in diesem Fall einen Bindestrich."
 
   > **STATUS: HOUSE — ausdrücklich eine Redaktionsregel, KEINE deutsche Norm.** Die Recherche fand **keine
   > einzige** deutsche Quelle, die „man" in Anleitungs- oder Fachprosa untersagt — die englische Intuition,
@@ -134,16 +172,19 @@ die in einer benachbarten Standardvarietät völlig korrekt und für die gewähl
   > und heise verwendet es unmarkiert („Werte definiert **man** mit def.").
   >
   > Was der Beleglage standhält, ist die **engere** Regel, und genau die gilt hier: **kein „man" für einen
-  > Schritt, den die lesende Person ausführen soll** — Handlungsschritte stehen im Imperativ, damit der
-  > Handelnde eindeutig ist. Der Rest ist Registerdisziplin: „man" driftet aus der „du"-Ansprache heraus und
-  > wieder hinein, und diese Drift liest sich als Maschinenausgabe.
+  > Schritt, den die lesende Person ausführen soll** — Handlungsschritte stehen im **Sie-Imperativ**
+  > („Prüfen Sie …", „Öffnen Sie …"), damit der Handelnde eindeutig ist. Der Rest ist Registerdisziplin:
+  > „man" driftet aus der „Sie"-Ansprache heraus und wieder hinein, und diese Drift liest sich als
+  > Maschinenausgabe.
   >
   > Der unabhängige Register-Gegencheck (ein zweites Modell als nativer Registerrichter) lehnte ein
-  > ausnahmsloses Verbot mit demselben Grund ab: „du" und „man" sind semantisch nicht
+  > ausnahmsloses Verbot mit demselben Grund ab: die Leseranrede und „man" sind semantisch nicht
   > austauschbar (Leseransprache vs. generische Referenz); ein Totalverbot erzwingt unidiomatisches Passiv,
-  > überladene Substantivierungen oder ein „du", das dem Leser Handlungen unterstellt, die er nicht ausführt.
-  > **Die Regel lautet deshalb: „man" ist ein Defekt, außer es lässt sich mit dem Definitionsrahmen
-  > begründen** — die Beweislast liegt beim „man", nicht beim „du".
+  > überladene Substantivierungen oder eine Anrede, die der lesenden Person Handlungen unterstellt, die sie
+  > nicht ausführt. **Die Regel lautet deshalb: „man" ist ein Defekt, außer es lässt sich mit dem
+  > Definitionsrahmen begründen** — die Beweislast liegt beim „man", nicht bei der Anrede. *(Der Gegencheck
+  > lief gegen die damalige `du`-Fassung; sein Argument ist von der Wahl der Anredeform unabhängig und
+  > trägt unter „Sie" unverändert.)*
 
 - **Autoren-„wir" nur dosiert** und nur als Rahmen des gemeinsamen Wegs („Schritt für Schritt geben wir dem
   Modell mehr Freiheit") sowie für Vorbehalte zum Umfang des Materials; **nie in Anweisungen an den Leser**.
@@ -152,7 +193,10 @@ die in einer benachbarten Standardvarietät völlig korrekt und für die gewähl
   Entwicklerin als *von einer Kollegin geschrieben* akzeptiert: das Register von **dpunkt, Rheinwerk,
   O'Reilly Deutschland, heise/iX/c't** — sachlich, dicht, ohne Aufgeregtheit, mit Fachwörtern statt
   Umschreibungen. **Ausdrücklich NICHT: Enterprise-Marketing-Deutsch** („ganzheitliche Lösungen", „nahtlose
-  Integration", „zukunftssicher", „Mehrwert schaffen", Nominalstil, Sie-Ansprache mit Werbeduktus). Genau in
+  Integration", „zukunftssicher", „Mehrwert schaffen", Nominalstil, werbender Anpreisungston —
+  „Entdecken Sie jetzt die Vorteile …"). **Der Defekt ist der Werbeduktus, nicht die Höflichkeitsform:** das
+  „Sie" ist genau die Anrede, die dpunkt, Rheinwerk und O'Reilly Deutschland selbst verwenden (§ Stimme und
+  Anrede), und darf deshalb **nie** als Marketingsignal geflaggt werden. Genau in
   dieses Register rutscht ein Modell, wenn man ihm „professionelles Deutsch" sagt — es ist die deutsche
   Entsprechung zu dem, was der slowakische Kanon als „preložený marketingový text" abweist, nur aus der
   entgegengesetzten Richtung.
@@ -169,9 +213,19 @@ die in einer benachbarten Standardvarietät völlig korrekt und für die gewähl
 Deutsch hat hier eine Achse, für die es im Russischen und Slowakischen **kein Gegenstück** gibt: *der
 Entwickler* vs. *Entwickler:innen* vs. *Entwicklerinnen und Entwickler*. **Ein neutrales Default existiert
 nicht** — jede explizite Strategie wird als Position gelesen. Rollenbezeichnungen kommen in diesem Korpus
-ständig vor (*Nutzer, Entwickler, Reviewer, Autor, Angreifer, Betreiber, Prüfer*). Die „du"-Anrede räumt den
-größten Teil davon konstruktiv ab; der Rest muss **einmal, bewusst** entschieden werden. Ein unentschiedenes
-Korpus wackelt, und deutsche Leser lesen Wackeln als Maschinenausgabe.
+ständig vor (*Nutzer, Entwickler, Reviewer, Autor, Angreifer, Betreiber, Prüfer*), und sie müssen **einmal,
+bewusst** entschieden werden. Ein unentschiedenes Korpus wackelt, und deutsche Leser lesen Wackeln als
+Maschinenausgabe.
+
+> **Korrigierte Begründung (2026-07-28, mit dem Anredewechsel).** Eine frühere Fassung dieses Abschnitts
+> stützte sich darauf, dass die „du"-Anrede „den größten Teil davon konstruktiv abräumt". **Diese Begründung
+> ist hinfällig** und wird hier nicht stillschweigend ersetzt, sondern benannt: die Höflichkeitsform räumt
+> Agensnomen **nicht** ab, wie es eine Ansprache in der zweiten Person Singular für einen Teil der Fälle tat.
+> Sie war ohnehin nur dort richtig, wo der Satz die **lesende Person** meinte — nie für *der Betreiber*, *der
+> Angreifer*, *der Prüfer*, *der Autor*, die den Korpus tatsächlich füllen und über die in der dritten Person
+> gesprochen wird. **Die Leiter unten steht deshalb auf eigenen Füßen** (vier unabhängige Belegstränge, siehe
+> unten), und die **vier Fälle, in denen die Umformulierung scheitert, tragen jetzt mehr Gewicht, nicht
+> weniger** — sie sind häufiger, weil die Anrede weniger wegnimmt.
 
 **Entscheidung: die Rollenbezeichnung wird weggeschrieben, nicht markiert.** Leiter, in dieser Reihenfolge:
 
@@ -220,7 +274,8 @@ stützen** — Rechtschreibrat, dpunkt, Microsoft und die beobachtete Buchprosa.
 Kanon oben auf der Leiter.
 
 **Wo die Umformulierung regelmäßig scheitert — diese vier Fälle stehen hier namentlich, damit sie nicht
-jede schreibende Instanz neu improvisiert:**
+jede schreibende Instanz neu improvisiert.** Sie sind **die tragenden Fälle dieses Abschnitts**: seit die
+Anrede „Sie" lautet, nimmt sie der Leiter nichts mehr ab, und diese vier treten entsprechend häufiger auf.
 
 1. **Verantwortung** — „**Der Betreiber** haftet." (Die Rolle *ist* das Subjekt der Aussage.)
 2. **Berechtigung** — „Nur **Administratoren** dürfen Schlüssel rotieren."
@@ -690,13 +745,13 @@ Bedingung — mit welchem Ergebnis).
 | `is running / is processing` | „ist am Laufen", „ist gerade am Verarbeiten" | Deutsches Präsens trägt den Verlauf schon: „Der Dienst läuft." / „Der Dienst verarbeitet gerade die Anfrage." / „Die Verarbeitung läuft noch." Der Am-Progressiv ist nicht falsch, aber regional und im Schriftdeutsch markiert |
 | `does not call the tool` (Skopus verrutscht) | „Das Modell **nicht** ruft das Tool auf", „ruft nicht auf das Tool" | *nicht* steht an der **Skopusgrenze**: Satznegation „ruft das Tool **nicht auf**"; Objektkontrast „ruft **nicht das Tool**, sondern die lokale Funktion auf"; Modalität „**muss** das Tool **nicht** aufrufen" (kein Zwang) vs. „**darf** das Tool **nicht** aufrufen" (Verbot). **Test:** eine *sondern*-Fortsetzung bilden — passt keine, ist es Satznegation |
 | `What X changes is …` / `It is X that …` | „Was X ändert, ist …", „Es ist X, das …" | Deutscher Spaltsatz nur bei **echtem Kontrastfokus** („Nicht das Modell ändert den Zustand; es ist das Tool, das ihn ändert"). Ohne ausgeschlossene Alternative: direkt sagen — „Das Modell erzeugt eine Anfrage." **Test:** lässt sich „nicht A, sondern X" bilden? Wenn nein, ist der Spaltsatz nur englische Verpackung |
-| `What is important to understand is that …` | „Was wichtig zu verstehen ist, ist, dass …" | „**Entscheidend ist, dass …**" / „Dabei ist Folgendes wichtig: …" / „Du musst zwei Fälle unterscheiden: …" |
+| `What is important to understand is that …` | „Was wichtig zu verstehen ist, ist, dass …" | „**Entscheidend ist, dass …**" / „Dabei ist Folgendes wichtig: …" / „Sie müssen zwei Fälle unterscheiden: …" |
 | `Once the agent receives the data, …` | „Einmal der Agent die Daten erhält, …" | „**Sobald** der Agent die Daten erhält, …" / „Nachdem der Agent die Daten erhalten hat, …" (*einmal* leitet keinen finiten Nebensatz ein) |
 | `This allows the model to call the tool` | „Das erlaubt dem Modell, **um** das Tool aufzurufen" | „**Dadurch kann** das Modell das Tool aufrufen." / „Das ermöglicht es dem Modell, das Tool aufzurufen." (*erlauben/ermöglichen* regieren den reinen *zu*-Infinitiv; *um zu* ist final) |
-| `By using a re-ranker, …` | „Durch Verwenden eines Re-Rankers …" | „Durch **den Einsatz** eines Re-Rankers …" / „Wenn du einen Re-Ranker einsetzt, …" |
+| `By using a re-ranker, …` | „Durch Verwenden eines Re-Rankers …" | „Durch **den Einsatz** eines Re-Rankers …" / „Wenn Sie einen Re-Ranker einsetzen, …" |
 | `different than expected` | „unterschiedlich als erwartet" | „Das Ergebnis **weicht von** der Erwartung **ab**." / „… fällt **anders aus als** erwartet." |
 | `ends up calling the tool twice` | „Der Agent endet damit, das Tool zweimal aufzurufen" | „**Schließlich** ruft der Agent das Tool zweimal auf." / „Infolgedessen …" |
-| `You want to validate the answer` | „Du willst die Antwort validieren" | „Du **solltest** die Antwort prüfen." / „Prüfe die Antwort, bevor du sie weiterverarbeitest." (*you want to* ist Empfehlung, nicht Wille) |
+| `You want to validate the answer` | „Sie wollen die Antwort validieren" | „Sie **sollten** die Antwort prüfen." / „Prüfen Sie die Antwort, bevor Sie sie weiterverarbeiten." (*you want to* ist Empfehlung, nicht Wille) |
 | `supports calling external tools` | „unterstützt das Aufrufen externer Tools" | „**kann** externe Tools aufrufen" / „unterstützt Aufrufe externer Tools" |
 | `The request comes with three parameters` | „Die Anfrage kommt mit drei Parametern" | „Die Anfrage **enthält** drei Parameter." |
 | `is responsible for generating the answer` | „ist verantwortlich für das Erzeugen der Antwort" | „Das Modell **erzeugt** die Antwort." / „Für die Antwortgenerierung ist das Modell **zuständig**." (*verantwortlich* aktiviert Haftung) |
@@ -707,7 +762,7 @@ Bedingung — mit welchem Ergebnis).
 
 **Unterklammerte Hauptsatzketten — flaggen, aber mit Bedacht.** Eine Folge kurzer, je für sich korrekter
 Hauptsätze ist **kein sicheres** Übersetzungsindiz: in Anleitungen und Warnungen ist sie idiomatisch
-(„Starte den Dienst. Prüfe das Protokoll."). **Verdächtig wird sie, wenn logisch abhängige Aussagen nur
+(„Starten Sie den Dienst. Prüfen Sie das Protokoll."). **Verdächtig wird sie, wenn logisch abhängige Aussagen nur
 deshalb getrennt bleiben, weil das Englische unabhängige Sätze verwendet** — Ursache, Bedingung und Zweck
 bleiben unmarkiert, bekannte Information wird immer wieder zum neuen Satzsubjekt, alles trägt denselben
 Rang:
@@ -734,7 +789,7 @@ Schablone — der Satz wird aus der Proposition neu gebaut:
 - `resultiert in`
 - `unterschiedlich als`
 - `endet damit, ... zu`
-- `Du willst` (als Empfehlung)
+- `Sie wollen` (als Empfehlung — die Anrede ist richtig, das Verb ist der Kalk: gemeint ist *sollten*)
 - `ist verantwortlich für das`
 - `kommt mit` (für *comes with*)
 - `Durch Verwenden`
@@ -835,7 +890,7 @@ deutsche Glosse".
 - **Ausgezeichnet wird:** der Terminus-Anker beim ersten definierenden Vorkommen (meist zusammen mit der
   Brücke), der Kopf eines Definitionslistenpunkts, die seltene einzelne Merksatz-These einer Seite.
 - **Nicht ausgezeichnet wird:** rhetorische Betonung mitten im Satz, ganze Sätze und mehrgliedrige Klauseln,
-  Wiederholungen bereits eingeführter Termini — auch nicht im Abschnitt „Was du mitnimmst" (die
+  Wiederholungen bereits eingeführter Termini — auch nicht im Abschnitt „Was Sie mitnehmen" (die
   Zusammenfassung zeichnet nicht erneut aus, was im Text schon ausgezeichnet ist). Ein klauselanger Merksatz
   kommt in Anführungszeichen oder Kursive, nicht in Fettdruck.
 
