@@ -120,8 +120,8 @@ holds only what's specific to THIS project, which the skill consumes:
   rules (spelling/register, voice, bridge, bold; for SK also anti-bohemism, calque templates, verb-by-object),
   shared by every course — and one **per-course term ledger** (`rag.md` — frozen — , `ai-sdlc.md`, …) holding
   that course's rejected variants, semantic reservations, casing, recurring-block strings. RU is
-  audience-primary and EN the canonical source; every other locale follows the same folder contract. **Loading contract:** load `_language.md`
-  (always) + the target course's ledger; **peek-don't-load** across sibling ledgers — for a shared
+  audience-primary and EN the canonical source; every other locale follows the same folder contract.
+  **Loading contract:** load `_language.md` (always) + the target course's ledger; **peek-don't-load** across sibling ledgers — for a shared
   AI-engineering term, do a targeted read-only lookup, reuse a matching decision verbatim and cite it, or
   FLAG a genuine sense-difference; never load a whole sibling ledger and never edit a frozen one. All of it is
   normative for every page; canon updates ship **in the same PR** as the page that motivates them. (Add a
@@ -152,8 +152,9 @@ the canonical, evolving spec for editorial quality, and it must pass like a buil
 4. **Structural consistency** (managing editor) — see "Structure & presentation" below.
 
 Independent passes **per language** (the source draft needs it too, not just the rendered locales); rendering
-into each target locale is its own step and re-runs every gate in that language. That per-language shape is the **courses'**; a
-Field notes post is a single English pass with no translation step (see the per-content-type config above). Scale to stakes: routine handbook page = 2 passes
+into each target locale is its own step and re-runs every gate in that language. That per-language shape is
+the **courses'**; a Field notes post is a single English pass with no translation step (see the
+per-content-type config above). Scale to stakes: routine handbook page = 2 passes
 /language; a flagship / LinkedIn extract = the full team. **The full checklists, the naive-reader method,
 worked examples, and role breakdown live in the skill — don't restate them here** (one source of truth, no
 drift).
@@ -207,8 +208,8 @@ a bare auto-index:
 **Keep the frame current (managing-editor checklist, run at each layer-close):**
 1. **Part opener** — add the new lesson to its «Что внутри» TOC; flip its 🚧 → a live `.md` link once
    published; refresh the status note.
-2. **Intro** (`intro.md`, in every released locale) — the Structure list matches the parts that actually exist; no stale
-   "🚧 заглушка" language once real content ships.
+2. **Intro** (`intro.md`, in every released locale) — the Structure list matches the parts that actually
+   exist; no stale "🚧 заглушка" language once real content ships.
 3. **Curriculum ↔ milestones** — the part TOC reflects the GitHub milestone/issue plan; seed each part's TOC
    from its milestone up front, and move it when issues are added or the plan shifts.
 4. **Uniformity** — a new page matches the established skeleton (frontmatter, «Что забрать из урока», «Новые
@@ -261,10 +262,9 @@ proportionate to a docs site, no ceremony for its own sake.
 - **CI runs a gate suite on every PR.** The suite itself — the job names CI reports, what each one runs and
   what it catches — is maintained in **one** place, the table in `README.md` ("Contributing / workflow");
   read it there and add new jobs there, rather than keeping a second copy here that drifts. Two things about
-  it belong here and not in the README: the build gate covers **every locale the build covers** (released,
-  plus the gated ones under `HANDBOOK_INCLUDE_UNRELEASED=1`), which is why `onBrokenLinks: 'throw'` is the
-  real correctness gate; and the **domain-specific** leak gate is *not* in CI at all — it runs privately,
-  see the private brief.
+  it belong here and not in the README: the build gate runs over **every released locale plus the gated ones**
+  (`HANDBOOK_INCLUDE_UNRELEASED=1`), which is what makes `onBrokenLinks: 'throw'` the real correctness gate;
+  and the **domain-specific** leak gate is *not* in CI at all — it runs privately, see the private brief.
 - **Whether branch protection *requires* those checks green is an open question — `ASSERTED`, not
   `MEASURED`.** Reading `repos/…/branches/main/protection` needs repo-admin scope that no token in use here
   has (it `403`s), so nobody has actually checked the setting; this file and the README record the same
