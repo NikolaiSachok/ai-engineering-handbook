@@ -12,6 +12,7 @@ Prints findings to stdout; exits 0 when every locale is in parity, 1 otherwise.
 
 from __future__ import annotations
 
+import json
 import os
 import re
 import sys
@@ -135,6 +136,7 @@ class Report:
     def __init__(self) -> None:
         self.failures = 0
         self.checked = 0
+        self.categories = 0  # sidebar category labels, counted apart from files
         self.tolerated = 0
 
     def fail(self, message: str) -> None:
@@ -217,6 +219,63 @@ def compare_pair(locale: str, src: str, tgt: str, rep: Report) -> None:
             rep.tolerated += len(only_en) + len(only_loc)
 
 
+def category_labels(src: str) -> list[tuple[str, str]]:
+    """Every sidebar category label the English tree declares, as (label, source file)."""
+    out = []
+    for dirpath, _, filenames in os.walk(src):
+        if "_category_.json" in filenames:
+            path = os.path.join(dirpath, "_category_.json")
+            out.append((json.load(open(path, encoding="utf-8"))["label"], path))
+    return sorted(out)
+
+
+def compare_category_keys(locale: str, src: str, current_json: str, rep: Report) -> None:
+    """Every sidebar category must have a translation key, and every key a category.
+
+    This is shape, not wording: a category label lives in `current.json` under
+    `sidebar.<sidebarId>.category.<English label>`, and a MISSING key does not fail the build
+    or the link check — Docusaurus silently serves the English source string. That is how four
+    AI-SDLC deep-dive categories shipped untranslated in two released locales.
+
+    The `_category_.json` under `i18n/` is NOT consulted, because it never renders (it is
+    overridden by `current.json`); asserting against it would be asserting against a decoy.
+
+    Sidebar id is read off the key rather than configured, so this needs no third column in
+    COURSE_PAIRS to keep in sync. A key may also carry sub-fields of a category — e.g.
+    `...category.Cross-cutting.link.generated-index.description` — so a key is orphaned only
+    when its remainder is neither a label nor a sub-field of one.
+    """
+    if not os.path.isfile(current_json):
+        print(f"  - {src}: no {current_json} — locale does not translate this course")
+        return
+
+    labels = category_labels(src)
+    known = {label for label, _ in labels}
+    data = json.load(open(current_json, encoding="utf-8"))
+    translated = {
+        m.group(1) for m in (re.match(r"sidebar\.[^.]+\.category\.(.+)", k) for k in data) if m
+    }
+
+    missing = [(label, path) for label, path in labels if label not in translated]
+    orphans = sorted(
+        r for r in translated
+        if r not in known and not any(r.startswith(f"{label}.") for label in known)
+    )
+
+    if missing:
+        rep.fail(f"{locale}/{src} — sidebar category with no translation key "
+                 f"(renders in English, silently):")
+        for label, path in missing:
+            print(f"    {label!r}  declared in {path}")
+    if orphans:
+        rep.fail(f"{locale}/{src} — translation key for a category that no longer exists "
+                 f"(a rename left the new label untranslated):")
+        for r in orphans:
+            print(f"    {r!r}  in {current_json}")
+
+    rep.categories += len(labels)
+
+
 def main(argv: list[str]) -> int:
     locales = argv[1:] or sorted(
         d for d in os.listdir("i18n") if os.path.isdir(os.path.join("i18n", d))
@@ -228,18 +287,20 @@ def main(argv: list[str]) -> int:
         print(f">> {locale}")
         for src, plugin in COURSE_PAIRS:
             compare_pair(locale, src, f"i18n/{locale}/{plugin}/current", rep)
+            compare_category_keys(locale, src, f"i18n/{locale}/{plugin}/current.json", rep)
 
     print()
     if rep.failures == 0:
         print(
             f"locale-parity-check: PASS — {rep.checked} file(s) in structural parity; "
+            f"{rep.categories} sidebar category label(s) translated; "
             f"{rep.tolerated} tolerated wording difference(s)."
         )
         return 0
 
     print(
         f"locale-parity-check: FAIL — {rep.failures} parity defect(s) across "
-        f"{rep.checked} file(s) checked."
+        f"{rep.checked} file(s) and {rep.categories} category label(s) checked."
     )
     print()
     print("This gate asserts SHAPE, never wording. If a finding is a legitimate translation")
