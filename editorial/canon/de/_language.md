@@ -219,6 +219,19 @@ also kein Verbot, sondern ein Markiertheits-Befund.
 stützen** — Rechtschreibrat, dpunkt, Microsoft und die beobachtete Buchprosa. Deshalb steht sie in diesem
 Kanon oben auf der Leiter.
 
+**Wo die Umformulierung regelmäßig scheitert — diese vier Fälle stehen hier namentlich, damit sie nicht
+jede schreibende Instanz neu improvisiert:**
+
+1. **Verantwortung** — „**Der Betreiber** haftet." (Die Rolle *ist* das Subjekt der Aussage.)
+2. **Berechtigung** — „Nur **Administratoren** dürfen Schlüssel rotieren."
+3. **Rollenkontrast** — „**Autor und Reviewer** müssen verschiedene Personen sein." (Der Kontrast *ist* der
+   Inhalt; „beim Review" löscht ihn.)
+4. **Definierte Rahmenwerksrollen** — *Product Owner*, *Scrum Master*, *Data Protection Officer*: feste
+   Bezeichnungen, die nicht umformuliert werden.
+
+In allen vier Fällen gilt das generische Maskulinum. Für eine **konkrete, benannte Person** gilt deren
+tatsächliche Form.
+
 > **Der Restfall.** Wenn die Leiter 1–4 versagt und eine Rollenbezeichnung im Singular stehen *muss*, gilt
 > das **generische Maskulinum** als Rückfall — es ist die **sichere, nicht die unsichtbare** Wahl (für einen
 > Teil der Leserschaft trägt es inzwischen ein eigenes Signal). Das deckt sich mit dem Auftrag an diesen Kanon
