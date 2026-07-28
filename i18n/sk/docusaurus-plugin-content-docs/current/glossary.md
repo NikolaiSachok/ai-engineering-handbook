@@ -727,8 +727,8 @@ zostáva neviditeľná a pri dopyte sa nedá odlíšiť od „taký dokument nee
 **Zmrazená regresná sada (frozen regression set)** — evaluačná sada zámerne držaná v nemennom stave, aby
 zmena skóre znamenala zmenu systému. Odpovedá na otázku „pokazil som niečo, čo fungovalo?“.
 
-**Rotujúca sada vzorkovaná z reálnej premávky (rotating live-sampled set)** — evaluačná sada pravidelne
-obnovovaná z reálnej premávky, aby stále odrážala, ako sa ľudia naozaj pýtajú. Odpovedá na otázku
+**Rotujúca sada vzorkovaná z produkcie (rotating live-sampled set)** — evaluačná sada pravidelne
+dopĺňaná o skutočné požiadavky z produkcie, aby stále odrážala, ako sa ľudia naozaj pýtajú. Odpovedá na otázku
 „zodpovedá moja evaluácia ešte realite?“. Obe sady sa dopĺňajú: nahradiť zmrazenú rotujúcou znamená stratiť
 odhaľovanie regresií.
 
@@ -1001,11 +1001,11 @@ zabudované v eval-nástrojoch a platformových red-team funkciách.
 systémov, ktorých správanie žije v promptoch, verziách modelov, indexoch a konfiguráciách, a nie len v kóde.
 MLOps špecializovaný na aplikácie nad základovými modelmi.
 
-**Canary release (kanárikové nasadenie)** — smerovanie malého podielu živej prevádzky na nový variant
+**Canary release (kanárikové nasadenie)** — smerovanie malého podielu živej premávky na nový variant
 (prompt, model, index) so sledovaním metrík kvality a nákladov; regresia sa prejaví na zlomku používateľov a
 dá sa lacno vrátiť späť. ↗ [Martin Fowler](https://martinfowler.com/bliki/CanaryRelease.html)
 
-**Shadow deployment (tieňové nasadenie)** — nový variant beží na zrkadlenej produkčnej prevádzke a jeho
+**Shadow deployment (tieňové nasadenie)** — nový variant beží na zrkadlenej produkčnej premávke a jeho
 odpovede sa používateľom nikdy neukazujú; bezpečné porovnanie kvality na reálnych požiadavkách.
 
 **Prompt registry (register promptov)** — verziované úložisko promptov oddelené od nasadení kódu; produktové
@@ -1034,7 +1034,7 @@ prompty sa navrhujú s dôrazom na statický prefix.
 spárovanú podľa podobnosti embeddingov; ušetrí náklad celej požiadavky za cenu rizika falošného zásahu pri
 jemne odlišnej otázke.
 
-**Drift** — svet sa posúva pod nemennou konfiguráciou: drift vstupu (prevádzka sa pýta nové druhy otázok),
+**Drift** — svet sa posúva pod nemennou konfiguráciou: drift vstupu (z produkcie prichádzajú nové druhy otázok),
 drift korpusu (dokumenty starnú), drift modelu zhora (poskytovateľ zmení nepripnutý model).
 
 **Grader (hodnotiteľ)** — pri reinforcement fine-tuningu skórovač, ktorý si zadefinuješ a ktorý hodnotí
