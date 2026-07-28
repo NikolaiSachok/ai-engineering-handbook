@@ -37,6 +37,12 @@ COMPONENTS = ["<InfoCard", "<Node", "<YouTube"]
 # a dropped ```mermaid is a lost diagram and a dropped ```bash is a lost copyable command.
 COUNT_EXEMPT_FENCES = {"text", "(none)"}
 
+# The sub-fields a sidebar category key may legitimately carry beyond its label, i.e. the keys of
+# the form `sidebar.<id>.category.<label>.<subfield>`. Docusaurus emits exactly these for a
+# category with a generated-index link. Matched as a CLOSED SET rather than "anything after a
+# known label", so that a typo'd or stale sub-field is reported instead of silently accepted.
+CATEGORY_SUBFIELDS = {"link.generated-index.title", "link.generated-index.description"}
+
 # Digit-group separators seen in this corpus: plain space, NBSP, narrow NBSP, thin space, figure space.
 SEP = "[     ]"
 
@@ -154,9 +160,50 @@ def md_files(root: str) -> set[str]:
     return out
 
 
-def compare_pair(locale: str, src: str, tgt: str, rep: Report) -> None:
+def released_locales() -> set[str]:
+    """The locales that ship publicly, read from the same constant the build uses.
+
+    A missing translation is a defect for a RELEASED locale and expected for one still being
+    scaffolded, so the gate has to know which is which — and the only honest source is
+    `RELEASED_LOCALES` in docusaurus.config.ts. Parsing is deliberately strict: if the constant
+    ever moves or changes shape this ABORTS rather than falling back to a permissive default,
+    because the permissive default is exactly the fail-open this function exists to close.
+    """
+    config = "docusaurus.config.ts"
+    m = re.search(r"const\s+RELEASED_LOCALES\s*=\s*\[(.*?)\]", read(config), re.S)
+    if not m:
+        sys.exit(
+            f"locale-parity-check: ERROR — could not read RELEASED_LOCALES from {config}. "
+            "The gate cannot tell a released locale from a scaffolded one, so it refuses to "
+            "run rather than pass silently. Fix the parse in released_locales()."
+        )
+    found = set(re.findall(r"['\"]([\w-]+)['\"]", m.group(1)))
+    if not found:
+        sys.exit(f"locale-parity-check: ERROR — RELEASED_LOCALES in {config} parsed as empty.")
+    return found
+
+
+def missing_translation(locale: str, released: bool, src: str, path: str, rep: Report) -> None:
+    """Report an absent translation target according to the locale's release status.
+
+    Absence used to be reported as "locale does not translate this course" and skipped. That is an
+    INFERENCE from a missing file, and it is wrong the moment a locale ships: deleting a whole
+    `current.json` (or a whole `current/` tree) for a released locale left every one of that
+    course's categories rendering English with the gate still green — the same defect this gate
+    was written for, one size up.
+    """
+    if released:
+        rep.fail(
+            f"{locale}/{src} — released locale has no {path}. Every course must be translated in "
+            f"a locale that ships; absence here means the whole course renders in English."
+        )
+    else:
+        print(f"  - {src}: no {path} — not yet translated ({locale} is gated/unreleased)")
+
+
+def compare_pair(locale: str, released: bool, src: str, tgt: str, rep: Report) -> None:
     if not os.path.isdir(tgt):
-        print(f"  - {src}: no {tgt} — locale does not translate this course")
+        missing_translation(locale, released, src, tgt, rep)
         return
 
     en_files, loc_files = md_files(src), md_files(tgt)
@@ -229,7 +276,9 @@ def category_labels(src: str) -> list[tuple[str, str]]:
     return sorted(out)
 
 
-def compare_category_keys(locale: str, src: str, current_json: str, rep: Report) -> None:
+def compare_category_keys(
+    locale: str, released: bool, src: str, current_json: str, rep: Report
+) -> None:
     """Every sidebar category must have a translation key, and every key a category.
 
     This is shape, not wording: a category label lives in `current.json` under
@@ -246,7 +295,7 @@ def compare_category_keys(locale: str, src: str, current_json: str, rep: Report)
     when its remainder is neither a label nor a sub-field of one.
     """
     if not os.path.isfile(current_json):
-        print(f"  - {src}: no {current_json} — locale does not translate this course")
+        missing_translation(locale, released, src, current_json, rep)
         return
 
     labels = category_labels(src)
@@ -259,7 +308,8 @@ def compare_category_keys(locale: str, src: str, current_json: str, rep: Report)
     missing = [(label, path) for label, path in labels if label not in translated]
     orphans = sorted(
         r for r in translated
-        if r not in known and not any(r.startswith(f"{label}.") for label in known)
+        if r not in known
+        and not any(r == f"{label}.{sub}" for label in known for sub in CATEGORY_SUBFIELDS)
     )
 
     if missing:
@@ -280,14 +330,18 @@ def main(argv: list[str]) -> int:
     locales = argv[1:] or sorted(
         d for d in os.listdir("i18n") if os.path.isdir(os.path.join("i18n", d))
     )
+    released = released_locales()
     rep = Report()
     for locale in locales:
         if locale == "en":
             continue
-        print(f">> {locale}")
+        is_released = locale in released
+        print(f">> {locale}{'' if is_released else ' (gated/unreleased)'}")
         for src, plugin in COURSE_PAIRS:
-            compare_pair(locale, src, f"i18n/{locale}/{plugin}/current", rep)
-            compare_category_keys(locale, src, f"i18n/{locale}/{plugin}/current.json", rep)
+            compare_pair(locale, is_released, src, f"i18n/{locale}/{plugin}/current", rep)
+            compare_category_keys(
+                locale, is_released, src, f"i18n/{locale}/{plugin}/current.json", rep
+            )
 
     print()
     if rep.failures == 0:
