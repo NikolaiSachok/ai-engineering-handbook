@@ -293,7 +293,7 @@
     "message": "Ein Hub mit Kursen, die KI-Engineering für den Produktivbetrieb von den Grundlagen her erklären: RAG, Agenten und der KI-gestützte Softwareentwicklungszyklus."
   },
   "landing.hero.tagline": {
-    "message": "Kurse, die von den Grundlagen her erklären, wie KI-Systeme entstehen, die dem Produktivbetrieb standhalten — das {why} und die Fehlermuster, nicht bloß eine Funktionsliste."
+    "message": "Kurse, die von den Grundlagen her erklären, wie KI-Systeme entstehen, die dem Produktivbetrieb standhalten – das {why} und die Fehlermuster, nicht bloß eine Funktionsliste."
   },
   "landing.hero.tagline.why": {
     "message": "Warum"
@@ -317,7 +317,7 @@
     "message": "Lehrplan ansehen →"
   },
   "landing.course.rag-agents.blurb": {
-    "message": "RAG- und Agentensysteme für den Produktivbetrieb, von den Grundlagen her entwickelt: Ingestion, Retrieval, Generation, Agenten — und die Evaluation, Guardrails und LLMOps, die unbelegte Ausgaben erkennen und begrenzen.",
+    "message": "RAG- und Agentensysteme für den Produktivbetrieb, von den Grundlagen her entwickelt: Ingestion, Retrieval, Generation, Agenten – und die Evaluation, Guardrails und LLMOps, die unbelegte Ausgaben erkennen und begrenzen.",
     "description": "Landing card blurb for the RAG & Agents course"
   },
   "landing.course.ai-sdlc.blurb": {

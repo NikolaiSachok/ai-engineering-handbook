@@ -4,15 +4,15 @@
     "description": "The label for version current"
   },
   "sidebar.aiSdlcSidebar.category.Part I — The Foundation": {
-    "message": "Teil I — Fundament",
+    "message": "Teil I – Fundament",
     "description": "The label for category 'Part I — The Foundation' in sidebar 'aiSdlcSidebar'"
   },
   "sidebar.aiSdlcSidebar.category.Part II — The Loop": {
-    "message": "Teil II — Arbeitsschleife",
+    "message": "Teil II – Arbeitsschleife",
     "description": "The label for category 'Part II — The Loop' in sidebar 'aiSdlcSidebar'"
   },
   "sidebar.aiSdlcSidebar.category.Part III — Verification": {
-    "message": "Teil III — Überprüfung",
+    "message": "Teil III – Überprüfung",
     "description": "The label for category 'Part III — Verification' in sidebar 'aiSdlcSidebar'"
   },
   "sidebar.aiSdlcSidebar.category.Layered gates and mechanism diversity": {
@@ -20,7 +20,7 @@
     "description": "The label for category 'Layered gates and mechanism diversity' in sidebar 'aiSdlcSidebar'"
   },
   "sidebar.aiSdlcSidebar.category.Part IV — The Platform": {
-    "message": "Teil IV — Plattform",
+    "message": "Teil IV – Plattform",
     "description": "The label for category 'Part IV — The Platform' in sidebar 'aiSdlcSidebar'"
   },
   "sidebar.aiSdlcSidebar.category.Least privilege and sandboxing": {
@@ -28,7 +28,7 @@
     "description": "The label for category 'Least privilege and sandboxing' in sidebar 'aiSdlcSidebar'"
   },
   "sidebar.aiSdlcSidebar.category.Part V — Scale & Governance": {
-    "message": "Teil V — Skalierung und Governance",
+    "message": "Teil V – Skalierung und Governance",
     "description": "The label for category 'Part V — Scale & Governance' in sidebar 'aiSdlcSidebar'"
   },
   "sidebar.aiSdlcSidebar.category.Cost and the economics of agent work": {
@@ -36,7 +36,7 @@
     "description": "The label for category 'Cost and the economics of agent work' in sidebar 'aiSdlcSidebar'"
   },
   "sidebar.aiSdlcSidebar.category.The enterprise tier: audit, provenance, and what's required": {
-    "message": "Enterprise-Reifegrad: Prüfpfad, Herkunftsnachweis, Vorgaben",
+    "message": "Enterprise-Reifegrad: Prüfpfad, Herkunft, Vorgaben",
     "description": "The label for category 'The enterprise tier: audit, provenance, and what's required' in sidebar 'aiSdlcSidebar'"
   }
 }
