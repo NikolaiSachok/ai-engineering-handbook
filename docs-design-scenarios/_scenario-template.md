@@ -5,13 +5,12 @@
 # FOUR THINGS THE COPY MUST DO, none of which are automatic:
 #   1. Replace every frontmatter field below, then delete this comment block. Nothing warns you:
 #      YAML comments are legal and silent, so a page ships with the template's notes still in it.
-#   2. Turn the two &lt;details&gt; / &lt;summary&gt; entities into real <details> / <summary> tags.
-#      They are escaped here so this file stays readable as source; copied verbatim they ship literal
-#      text and no reveal, which is the one structural element the method depends on. Those two are
-#      the ONLY escapes to revive — do NOT run a find-and-replace over the file. The H1 placeholder
-#      is in square brackets for exactly that reason; angle brackets there would parse as JSX and
-#      fail the build.
-#   3. Headings, admonition titles, the <summary> text, the <Verdict> block, the italic testimony
+#   2. Nothing to un-escape. The reveal is <Reveal>…</Reveal>, a registered component — copy it
+#      verbatim. (It replaced a raw <details>, which had to be written escaped here and revived by
+#      hand in the copy; a step that is invisible when you forget it, because the page then ships
+#      literal text and no reveal at all.) The H1 placeholder stays in square brackets: angle
+#      brackets there would parse as JSX and fail the build.
+#   3. Headings, admonition titles, the <Reveal> summary text, the <Verdict> block, the italic testimony
 #      line under each attempt heading, and the bolded "Answer it before you read on." are FIXED —
 #      copy them verbatim. Everything else in the body is instruction describing what replaces it.
 #   4. Delete everything from the horizontal rule ("Producing one") down. It is guidance, not page content.
@@ -40,7 +39,7 @@ against. Change the order and the page becomes a listicle about a topic.
 > them: a peak below its own average is the kind of thing three attempts will answer around and every reader
 > will find.
 
-:::info[Why this question]
+:::note[Why this question]
 
 80–150 words on the signal actually under test: what the question separates, and what a shallow answer
 reveals. The reader has met the prompt and has not answered yet, so say what is being measured without
@@ -55,8 +54,7 @@ attempts were written blind, each author seeing only the prompt, none seeing the
 rubric — which was pre-registered before any attempt existed. If the prompt is corrected after the attempts
 were written, say so here and say whether any attempt used the figure.
 
-&lt;details&gt;
-&lt;summary&gt;Show the three attempts&lt;/summary&gt;
+<Reveal>
 
 ## Attempt A — the common answer
 
@@ -120,7 +118,7 @@ the other two over the winner, you have written an answer key.
 > being wrong. This is the sentence a reader should still have in a year. If it cannot be written, the
 > scenario is not yet a scenario.
 
-&lt;/details&gt;
+</Reveal>
 
 :::tip[Read next]
 
@@ -168,12 +166,16 @@ Two devices carry the answer/assessment boundary, and both are load-bearing:
 
 - **The italic testimony line** under each attempt heading establishes whose voice is speaking before the
   reader is a paragraph deep.
+- **`<Reveal>`** is the commit-first gate. It is a component and not a markdown `<details>` because
+  Docusaurus themes those as a tinted `alert` plate — right for a short collapsible, wrong for one holding
+  the whole body of a page, where the tint stops reading as a callout and starts reading as a different kind
+  of page. The affordance lives in the summary; the revealed body is ordinary handbook prose.
 - **`<Verdict>`** sets the assessment in a different typographic register from the attempt. It replaced a
   bolded `**Verdict.**` lead-in, which failed for a specific reason: the attempts are full of bolded section
   labels in the candidate's own voice (`**Rollout.**`, `**Classification.**`), so a bolded verdict read as
   one more of the candidate's own headings — the interviewee summarising what their design achieves rather
   than a third party pricing it. It is a component and not an admonition because `:::` directives do not
-  render inside the `<details>` reveal.
+  render inside the `<Reveal>` gate.
 
 Notes from the runs so far:
 
@@ -185,7 +187,10 @@ Notes from the runs so far:
   broken construct, nothing else. Do not smooth rhythm, cut hedges, or align terminology across attempts —
   divergent terminology between them is signal. An AI tell inside an attempt is a finding to report, because
   it means the persona failed; papering over it hides that from the next run.
-- **Admonitions do not render inside `<details>`** (observed on the current Docusaurus/MDX version; re-test
+- **`:::note` for the framing box, `:::tip` for Read next.** House convention across the other two
+  courses is 39 notes and 50 tips against a single `:::info` — the neutral note is what a framing box
+  looks like here, and a cyan one reads as a different site.
+- **Admonitions do not render inside `<Reveal>`** (observed on the current Docusaurus/MDX version; re-test
   rather than treating it as law). Keep `:::info` and `:::tip` outside the reveal.
 - **Inside an attempt, a diagram is the candidate's own sketch** — ASCII, fenced as `text`, never Mermaid.
   Anywhere the page speaks in its own voice, Mermaid. The linter requires every fence to declare a language

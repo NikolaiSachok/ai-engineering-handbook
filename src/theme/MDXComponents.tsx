@@ -1,6 +1,7 @@
 import MDXComponents from '@theme-original/MDXComponents';
 import Infographic from '@site/src/components/Infographic';
 import InfoCard, {Branch, Flow, Grid, Lane, Merge, Node} from '@site/src/components/InfoCard';
+import Reveal from '@site/src/components/Reveal';
 import Verdict from '@site/src/components/Verdict';
 import YouTube from '@site/src/components/YouTube';
 
@@ -10,7 +11,9 @@ import YouTube from '@site/src/components/YouTube';
 // the cards that are still rasters (the cost comparison) and for the RU/SK pages, whose labels are
 // not translated yet. `Verdict` sets a Design Scenario's assessment apart from the answer it
 // judges — a component rather than an admonition because the attempts live inside a `<details>`
-// reveal, where Docusaurus does not process `:::` directives.
+// reveal, where Docusaurus does not process `:::` directives. `Reveal` is that reveal: a plain
+// <details> would pick up the themed alert plate, which is right for a short collapsible and
+// wrong for one holding a whole page.
 export default {
   ...MDXComponents,
   Branch,
@@ -21,6 +24,7 @@ export default {
   Lane,
   Merge,
   Node,
+  Reveal,
   Verdict,
   YouTube,
 };

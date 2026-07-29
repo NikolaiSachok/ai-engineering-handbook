@@ -1,0 +1,70 @@
+/* The commit-first reveal on a Design Scenario page.
+
+   The design rule here is that the CONTAINER should disappear once it is open. A collapsible that
+   holds a few sentences can afford a tinted plate; one that holds several thousand words cannot,
+   because at that length the tint stops reading as "this is a callout" and starts reading as "this
+   is a different kind of page". So all of the visual weight sits in the summary — small, coloured,
+   obviously clickable — and the body below it gets no ground, no border and no inset, which leaves
+   it rendering exactly like every other page in the handbook.
+
+   The only mark left after opening is a hairline under the summary, which keeps the boundary
+   between "the question" and "the answers" legible without drawing a box around half the article. */
+
+.reveal {
+  margin: 1.75rem 0;
+}
+
+.summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 2rem;
+  color: var(--ifm-color-primary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color var(--ifm-transition-fast) ease;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+/* The disclosure triangle, drawn rather than inherited, so it can rotate on open. */
+.summary::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 0.3rem solid transparent;
+  border-bottom: 0.3rem solid transparent;
+  border-left: 0.45rem solid currentColor;
+  transition: transform var(--ifm-transition-fast) ease;
+}
+
+.reveal[open] > .summary::before {
+  transform: rotate(90deg);
+}
+
+.summary:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+/* No ground, no border, no padding: once open, this is ordinary page prose. The rule is the single
+   mark that survives, marking where the question ends and the answers begin. */
+.body {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ifm-toc-border-color);
+}
+
+.body > :last-child {
+  margin-bottom: 0;
+}
