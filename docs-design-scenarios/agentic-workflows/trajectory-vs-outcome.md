@@ -2,7 +2,7 @@
 id: trajectory-vs-outcome
 title: Knowing an agent works
 sidebar_position: 2
-description: Trajectory eval or outcome eval — three attempts at measuring a multi-step agent whose only ground-truth label arrives two weeks late and can be bought for $75.
+description: Trajectory eval or outcome eval — three attempts at measuring a multi-step agent whose only ground-truth label arrives two weeks late and can be closed with a $75 credit.
 # The reveal is the method. A page TOC lists every heading inside the collapsed reveal —
 # naming all three attempts and the principle before the reader has committed to an answer.
 hide_table_of_contents: true
@@ -10,28 +10,30 @@ hide_table_of_contents: true
 
 # Knowing an agent works
 
-> You own the agent that clears fulfillment exceptions in a parcel network — stuck shipments, item
+> You own the agent that clears fulfilment exceptions in a parcel network — stuck shipments, item
 > mismatches, bad addresses, parcels a carrier can't locate. It reads the exception, queries the warehouse
 > system, the order database and two carrier APIs, then acts: reroutes, splits a shipment, reprints labels,
-> issues a credit up to $75, or escalates. Nine thousand exceptions a day, about 375 an hour, near 1,100 an
+> issues a credit up to $75, or escalates. Nine thousand exceptions a day, about 375 an hour, nearly 1,100 an
 > hour once a tracking feed goes stale. Median eleven tool calls per task, p95 forty; forty seconds to six
 > minutes end to end; about $76,000 a month in model calls. Each reroute costs the network around nine
-> dollars, and a credit is real money. Fifteen percent escalate to a human queue. Four engineers maintain it,
-> one of them half-time on quality. A case counts as resolved when the parcel is delivered and the customer
-> doesn't write again within ten days — a label that lands two weeks late, and a credit closes almost
-> anything. Two ops reviewers can audit about two hundred cases a week. The customer sees one message; nobody
-> reads the tool logs. Design the evaluation.
+> dollars, and a credit is real money. Fifteen percent escalate to the ops floor's own queue, which is
+> staffed separately. Four engineers maintain it, one of them half-time on quality. A case counts as resolved
+> when the parcel is delivered and the customer doesn't write again within ten days — a label that lands two
+> weeks late, and a credit closes almost anything. For quality work you get two ops reviewers, who can audit
+> about two hundred cases a week. The customer sees one message; nobody reads the tool logs. Design the
+> evaluation.
 
 :::note[Why this question]
 
-Multi-step agents break the habit that final-answer scoring is enough. Here the outcome label exists but is
-late and bought — a credit closes almost any case — so the question tests whether you can tell a metric you
-can measure from a metric you can trust, and what you build when the honest one is unavailable. It also tests
-arithmetic about your own eval: two reviewers, 200 cases a week, against 63,000. The common answer proposes
-scoring both the path and the result and moves on, without noticing there is no correct path written down
-anywhere, and without pricing the judge it just invented. The over-built answer labels trajectories a team of
-four could never label. What separates people is what they choose not to measure, and what they admit stays
-invisible.
+An agent that takes eleven steps to answer can be judged two ways. Score the **outcome** — did the parcel
+arrive, did the customer stay quiet — and you get one cheap number per case that says nothing about how it
+got there. Score the **trajectory** — which systems it read, which action it chose, whether it had the
+evidence to choose it — and you get a per-case verdict within minutes, provided you can state what a good
+trajectory looks like. Here the outcome label is late, and buying it is cheaper than earning it. No correct
+trajectory is written down anywhere. So the question is what you measure when the honest signal is
+unavailable and the available one is confounded, and whether the arithmetic of your own eval closes: two
+reviewers, 200 cases a week, against 63,000 a week. The answers separate on what they choose not to measure,
+and what they admit stays invisible.
 
 :::
 
@@ -39,9 +41,11 @@ invisible.
 
 Three model-written attempts follow. Each comes from a separate agent given one engineer's habits and the
 prompt above — no agent saw the other two, or the rubric, which was written first
-([how these are made](/design-scenarios/how-these-are-made)). Every figure in the prompt was checked against
-every other figure before the attempts ran. Figures the attempts introduce are their own, and where one of
-those is load-bearing and unchecked, the verdict says so.
+([how these are made](/design-scenarios/how-these-are-made)). The prompt has been clarified once since they
+answered — it now says outright that the escalation queue and the two quality reviewers are staffed
+separately, which no attempt disputed. Every figure in it was checked against every other before the attempts
+ran; the attempts introduce figures of their own, and where one of those is load-bearing and unchecked, the
+verdict under that attempt says so.
 
 <Reveal>
 
@@ -110,14 +114,14 @@ and the aggregate won't show it.
 
 <Verdict>
 
-A gets the layer separation right and does something many answers skip: it segments resolution rate by
-exception type and by action taken and puts cost per resolved case beside it, so an agent that resolves
-everything by rerouting twice reads as a regression rather than a win. It also names the hack — the outcome
-label rewards handing out money. Then it hands the catch to an LLM judge over every trace and prices that
-judge as "rounding error against seventy-six thousand a month" without computing it. The dimension it cares
-most about, credit-appropriateness, is exactly the call with no reference answer to check the judge against;
-and the fix for that — a five-hundred-case human-labelled anchor set — is two and a half weeks of the entire
-two-hundred-a-week review budget, spent before the eval runs. A never checks either number.
+A alone segments the outcome label itself — resolution rate by exception type and by action taken, cost per
+resolved case beside it — so resolving everything by rerouting twice stops looking like a win. It also names
+the hack: the outcome label rewards handing out money. Then it hands the catch to an LLM judge over every
+trace, and prices that judge as "rounding error against seventy-six thousand a month" without computing it.
+The conclusion happens to hold, as B's arithmetic shows. But the dimension A cares most about,
+credit-appropriateness, is the one call with no recorded correct answer to check a judge against, and A's fix
+for that — a five-hundred-case golden set — is two and a half weeks of the entire two-hundred-a-week budget,
+spent before the eval runs. A calls that budget "the scarcest thing I have" and divides neither number.
 
 </Verdict>
 
@@ -184,14 +188,15 @@ first thing I'd buy.
 
 <Verdict>
 
-B is the only answer that asks what signal already arrives on its own: carrier and WMS state tells you
-whether the reroute moved the parcel and whether the split produced two scannable labels, same day, with no
-reviewer involved. That reframing is the answer's best move, and its reviewer table is priced — 800 reviews a
-month against 270,000 cases, 0.3%. Which makes "maybe 70% of actions" the odd figure out: the coverage of
-that free check decides how much work is left for the judge and the two reviewers, and it is the one number B
-does not derive. The second gap is a missing gate. The 300-case replay suite has no pass condition and no
-named blocker, so the fast layer B built to replace a two-week label never actually stops a bad change from
-shipping.
+B asks what signal arrives on its own before designing anything, and finds a kind the others miss: carrier
+and WMS state, which reports whether the reroute moved the parcel and whether the split produced two
+scannable labels — same day, no reviewer involved. That reframing is its best move. The reviewer table is
+priced: 800 reviews a month against 270,000 cases, 0.3%. That makes "maybe 70% of actions" the one figure B
+never checks. The coverage of that free check decides how much is left for the judge and the reviewers, and it
+is the only claim about the world B leaves unmeasured. The other gap is a missing gate: the 300-case replay
+suite has
+no pass condition and nobody named to block a release, so the fast layer B built to replace a two-week label
+never stops a bad change from shipping.
 
 </Verdict>
 
@@ -221,7 +226,7 @@ exception ──▶ frozen world snapshot ──▶ agent ──▶ action + mes
    (adjudicated golden set)  (does it match the       $9 reroute, credit $,
    + human-queue dispositions   action taken?)        escalation labour, tokens
                                                     │
-                                        10-day outcome ── weak, late, confounded
+                                                    10-day outcome ── weak, late, confounded
 ```
 
 **Grading happens per action, weighted by money.** The action space is small — reroute, split, reprint,
@@ -260,73 +265,78 @@ times that. Token efficiency is a metric I watch; action correctness is the metr
 
 <Verdict>
 
-C buys three things the others don't. The replay environment as a versioned contract — if a tool call can't
-be replayed deterministically, it doesn't ship — is the one artifact that makes every later eval cheap. Its
-stale-feed suite asserts something falsifiable: poison the tracking snapshots and require the action mix to
-shift toward escalate and hold. And it is the only answer that grades the thing the customer actually sees,
-checking the message against the action record so "we've rerouted your parcel" cannot ship over an issued
-credit. Then the bill. Fifteen hundred adjudicated cases, refreshed weekly, against two reviewers doing two
-hundred — seven and a half reviewer-weeks for one build, and C has already committed that capacity "entirely"
-elsewhere. "The design doesn't break at two, it just iterates slower" is where the arithmetic belonged.
+C buys three things the others don't. All three propose replay; C alone makes it a contract — "if a tool call
+can't be replayed deterministically, it doesn't ship" — the artefact that makes every later eval cheap. Its
+stale-feed suite asserts something falsifiable: poison the tracking snapshots, require the action mix to shift
+toward escalate and hold. No other attempt grades the thing the customer actually sees: C checks the message
+against the action record, so "we've rerouted your parcel" cannot go out on a credited case. Then the bill.
+Fifteen hundred adjudicated cases, refreshed weekly, against two reviewers doing two hundred a week — seven
+and a half weeks of their entire output for one build, and C has committed that capacity "entirely" elsewhere.
+"The design doesn't break at two, it just iterates slower" is where the arithmetic belonged.
 
 </Verdict>
 
 ## Where they actually disagree
 
-### What reads the trace: a judge, or an assertion
+Each disagreement below is a decision you will have to make yourself.
 
-A puts the primary quality signal in an LLM judge scoring anchored 1–5 dimensions on every trace — "this is
-where the real signal lives." B demotes the judge to a stratified 3–5% slice and makes the eval "action
-correctness measured against the action's own preconditions," trusting the judge only per action type where
-agreement with human labels clears ~85%. This is a direct contradiction about the instrument, not about
-thoroughness. B is right here, and the reason is A's own strongest dimension: credit-appropriateness is the
-call with no recorded correct answer, so a judge applied to it produces a number nobody can validate — while
-"did it read the latest carrier scan before rerouting" is answerable from the state the agent already saw. A
-judge is a good tool for text with a reference; the preconditions are checkable without one.
+### What reads the trace: a judge or an assertion
+
+A puts the primary quality signal in an LLM judge that scores every trace on four or five dimensions, 1–5,
+against written anchors — "this is where the real signal lives". B demotes the judge to a stratified 3–5%
+slice and makes the eval "action correctness measured against the action's own preconditions", trusting the
+judge only per action type where agreement with human labels clears ~85%. This is a direct contradiction
+about the instrument, not about thoroughness. B is right, and the reason is the dimension A already lost. A
+judge scoring credit-appropriateness produces a number nobody can validate. *Did it read the latest carrier
+scan before rerouting* is answerable from the state the agent already saw. A judge is a good tool for text
+with a reference; the preconditions are checkable without one.
 
 ### The escalation queue: free labels or paid review
 
-C treats the 1,300 daily escalations as data already flowing — "that disposition is a label" — and gives
-reviewer time only to cases the automated graders cannot call. B spends 150 of its 800 monthly reviews on
-escalations in both directions. C wins this one outright: it is buying with money what is arriving for free,
-and B's own framing ("what signal already exists") should have caught it. But C over-claims the label's
-strength. A human who closes the case with a credit produces the same confounded outcome the whole answer
-rejects, so the disposition is a comparator with unmeasured reviewer variance, not ground truth. The right
-shape is C's source with B's discipline: mine the dispositions automatically, spend a small slice of review
-on reviewer-vs-reviewer agreement so the comparator has a known error bar.
+C treats the 15% that escalate — about 1,350 cases a day — as data already flowing ("that disposition is a
+label") and gives reviewer time only to cases the automated graders cannot call. B spends 150 of its 800
+monthly reviews on escalations in both directions. C has the better source here, and B's own framing ("what
+signal already exists") should have caught it. But only one direction of the error is free. A disposition
+exists only where the agent escalated, so the queue prices over-escalation and is silent on the cases that
+should have been escalated and were not — which never reach a human, and which are what B's 150 escalation
+reviews are actually buying. And a human who closes a case with a credit produces the same confounded outcome C
+rejects everywhere else, so even the direction the dispositions do cover is a comparator with unmeasured
+reviewer variance, not ground truth.
 
-### Whether to author correct-action labels at all
+### Correct-action labels: author them or grade invariants
 
-C builds a per-class policy spec plus ~1,500 adjudicated cases as the grading substrate. B refuses that kind
-of labelling explicitly — "I'm not measuring the counterfactual, whether a human would have done better" —
-and grades invariants over 300 replayable cases instead. This genuinely depends, and on one thing: whether
-the action has a determined answer. Reroute-versus-hold on a parcel with no fresh scan is
-precondition-determined, and C's three-tier policy (correct / acceptable-but-expensive / forbidden) is the
-right way to encode it without golden-path brittleness. Credit-versus-reprint is a business tradeoff with no
-correct label. What settles it *here* is staffing, not epistemics: at 200 reviews a week C's dataset cannot
-be built once, let alone refreshed weekly, so B's version is the one that exists.
+C builds a policy spec per exception type plus ~1,500 adjudicated cases as the grading substrate. B never
+authors correct-action labels at all; the nearest it comes is a refusal: "I'm not measuring the
+counterfactual — whether a human would have done better on the same case." It grades invariants over 300
+replayable cases instead. Which of them is right depends on whether the action has a determined answer.
+Reroute-versus-escalate on a parcel with no fresh scan is precondition-determined, and C's three-tier policy
+(correct / acceptable-but-expensive / forbidden) is the right way to encode that without pinning one correct
+path per case. Credit-versus-reprint is a business tradeoff with no correct label. That is the general
+answer, and staffing overrides it here: 1,500 adjudicated cases is a hiring decision and 300 replayable ones
+is not, so B's version is the one that exists.
 
-### Where degraded-input behaviour gets handled
+### Degraded input: an infrastructure invariant or an eval target
 
-A tags surge cases and tracks the same rubric scores on them separately. B says don't trust the agent at all
-— hard-cap reroute and credit volume per hour with a circuit breaker, and watch its trip rate. C asserts a
-behaviour change instead: poisoned tracking snapshots, action mix must shift toward escalate and hold. B and
-C contradict on whether stale-feed conduct is an infrastructure invariant or an eval target. Both belong, and
-the ordering is decidable: B's cap is buildable this week and bounds the loss at $9 a reroute while nothing
-else is ready; C's assertion is the only one of the three testable *before* deploy. A's is the losing
-position — a tagged score slice tells you what the surge cost after it was spent.
+A tags surge cases and tracks the same rubric scores on them separately. B does both: it calls the surge "a
+load-and-degraded-input scenario" and then declines to trust the agent anyway, hard-capping reroute and
+credit volume per hour with a circuit breaker whose trip rate it watches. C names the assertion such a
+scenario has to make — poisoned tracking snapshots, action mix must shift toward escalate and hold. B and C
+are the same idea at two levels of precision, and the order follows: B's cap ships this week and limits how
+many nine-dollar reroutes a bad hour can spend while nothing else is ready, and C's assertion is the only one
+of the three precise enough that it can fail before a deploy. A's tagged score slice is the weakest of the
+three — it tells you what the surge cost after it was spent.
 
 ## The principle
 
-> When the only ground-truth label is late and confounded, an evaluation is worth exactly the signal that
-> already arrives for free plus the human hours you can actually staff — everything you cannot price in
-> reviewer-weeks is a diagram, not a measurement.
+> When the only ground-truth label is late and confounded, your evaluation is the signal that already arrives
+> for free plus the assertions you can check without a human plus the review hours you can actually staff —
+> anything you cannot price in reviewer-weeks is a diagram, not a measurement.
 
 </Reveal>
 
 :::tip[Read next]
 
-- [Plan search & memory](/rag-agents/part-2-agents/planning-loops/deep-dive) — splits agent eval into outcome
+- [Planning & loops — deep dive](/rag-agents/part-2-agents/planning-loops/deep-dive) — splits agent eval into outcome
   and process, and states that a correct answer down a wrong path is luck. Names the process metrics, and why
   only those localise a failure to a step.
 - [Reviewing agent output at volume](/ai-sdlc/part-3-verification/review-at-volume) — human review is
@@ -346,26 +356,25 @@ position — a tagged score slice tells you what the surge cost after it was spe
 
 ## If they push
 
-The interviewer has the attempts in front of them, and these are the three questions they ask next. Each one
-is easy for someone who reasoned their way to an answer and fatal to someone who memorised one.
+These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 
-> Your suite is green all month. Thirty days later, resolution rate is flat and credit spend is up sixty
-> percent. Which of your checks should have caught that, and at what point?
+> Your suite has been green for a month. Resolution rate is flat and credit spend is up sixty percent. Which
+> of your checks should have caught that, and at what point?
 
-This asks whether cost-adjustment is a wired gate with a threshold and an owner or a phrase in a plan.
-Someone who reasoned it out points at a specific check and a specific day. A memoriser re-explains that
-credits are a confound, which is the part of the answer already agreed.
+This asks whether cost per resolved case is a wired gate with a threshold and an owner, or a phrase in a
+plan. Someone who reasoned it out points at a specific check and a specific day. Someone who memorised an
+answer re-explains that credits confound the label, which the prompt already states outright.
 
 > One case: the agent rerouted before reading the carrier's last scan, and the parcel arrived on time. Pass
 > or fail — and what does your system actually do with it?
 
-Right outcome, wrong path, and both slogans apply, so a memorised answer hedges. The reasoned one rules
-immediately: names the invariant, says what the trajectory layer emits, and says whether that verdict blocks
-a release. It also exposes whether the trajectory layer produces verdicts at all or only scores.
+Right outcome, wrong path: the outcome check passes and the path check fails, so both halves of a rehearsed
+answer apply and neither settles it. What the question wants is a ruling — the invariant that was violated,
+what the path check emits, and whether that blocks a release. It also exposes whether the path check produces
+rulings at all, or only scores.
 
 > Two reviewers, two hundred cases a week, and you want them on the highest-value cases. What's on next
 > week's list, and what did you stop showing them to make room?
 
-Subtraction. Memorised answers only ever add layers. Anyone who reasoned about a fixed budget can name the
-trade and say why next week's queue differs from last week's — which is also the difference between a review
-process that compounds and one that re-spends the same capacity every week.
+Subtraction, which is the one operation an eval plan never volunteers. Anyone who has run a fixed review
+budget can name the trade, and say why next week's queue differs from last week's.
