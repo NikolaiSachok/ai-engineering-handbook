@@ -29,7 +29,25 @@ where this course's terms land and why — the direction itself is decided once,
 
 | Class | Meaning | This course's members |
 |---|---|---|
-| **1 — exact identifiers / branded features** | English, code-styled or as a proper name; never translated, never inflected | `parallel_tool_calls`, `tool_choice`, `strict: true`, `additionalProperties`, `top_k`, **Structured Outputs**, product/model names |
+| **1 — exact identifiers / branded features** | English, code-styled or as a proper name; never translated, never inflected | `parallel_tool_calls`, `tool_choice`, `strict: true`, `additionalProperties`, `top_k`, `p95` / `p99`, `query:` / `passage:`, `tail_sampling`, **Structured Outputs**, **Sampling (die MCP-Fähigkeit)**, product/model names |
+
+> **Umstellung Welle 1 (2026-07-28) — `Sampling` als MCP-Primitive wandert von Klasse 2 nach Klasse 1, und
+> der Grund ist ein Beleg, der dem falschen Referenten gehörte.** Der Kanon besitzt für `Sampling` **eine**
+> deutsche Attestierung (`_language.md` §1.1.e, heise) — und die gehört dem **statistischen
+> Observability-Sinn**: „Metriken und Traces [kommen] in der Regel nur als Stichprobe … an (**Sampling**),
+> … **das Sampling** reduziert die Datenmenge". Die MCP-Zeile und die Token-Decoding-Zeile standen in §2
+> **ohne eigene Attestierung** und fuhren auf diesem Beleg mit. Das ist **der `Span`-Fehler eine Etage
+> höher**: korrektes Genus für den falschen Referenten. Als **Feature-Eigenname** (wie `Roots`,
+> `Elicitation`, `Structured Outputs`) ist die MCP-Fähigkeit gar kein Appellativ mehr und kollidiert nicht.
+> Das Appellativ **das Sampling** behält seinen Beleg und seine §1.1.e-Zeile. Für den **Decoding**-Sinn gilt
+> unverändert §3, Zeile `Sampler`: die Stufe benennen, nicht personifizieren; das Substantiv möglichst als
+> Kompositum (*Top-K-Sampling*), nie nackt. Sense-Card in §4.
+> ⚠ **Gemessen, nicht vermutet:** in dieser Welle kommt `sampling` **27-mal** vor und **jedes einzelne
+> Vorkommen ist der statistische Sinn** (Head-/Tail-/Priority-Sampling von Traces sowie *active sampling*
+> beim Labeln). Die MCP- und die Decoding-Bedeutung treten in Teil I **gar nicht** auf — die Umstellung ist
+> also **Vorsorge für Teil II**, nicht Reparatur einer Welle-1-Seite. `Roots` und `Elicitation` haben
+> dieselbe Gestalt, werden hier aber **ausdrücklich NICHT** umgestellt: sie kommen in dieser Welle nicht
+> vor, und ein Zusammenführungsdurchgang entscheidet nichts, was er nicht gelesen hat.
 | **2 — English-led with a German article (the DEFAULT)** | English term, German article, German inflection, Durchkopplung in compounds; one German gloss at first mention | the bulk of §2 below |
 | **3 — German-led (the EXCEPTION)** | German term in the body; English original once in parentheses | das Modell, der Kontext, die Anfrage, die Abfrage, die Antwort, der Fehler, der Ausfall, die Latenz, der Durchsatz, die Berechtigung, die Zugriffssteuerung, die Bereitstellung |
 
@@ -52,23 +70,47 @@ table, it must be added there *before* its second use on any page.
 *RAG, Retrieval, Ingestion, Generation, Guardrails, Observability, Serving, Pipeline, Embedding, Chunk,
 Chunking, Chunk-Overlap, Bi-Encoder, Cross-Encoder, Reranking, Reranker, Trace, Tracing, Span, Grounding,
 Prompt, Token, Top-K, HyDE, BM25, RRF, nDCG, MRR, ColBERT, MaxSim, Late Interaction, Multi-Vector, Contextual
-Retrieval, Hybrid Search, Zero-Shot, Few-Shot, Faithfulness, Golden Set, LLM-as-a-judge, ReAct, Self-RAG,
+Retrieval, Hybrid Search, Zero-Shot, Few-Shot, Faithfulness, ~~Golden Set~~, LLM-as-a-judge, ReAct, Self-RAG,
 Corrective RAG (CRAG), Adaptive RAG, Plan-and-Execute, Tree of Thoughts (ToT), Graph of Thoughts (GoT), LATS,
 Self-Refine, Reflexion, MemGPT, Chain-of-Thought, Chain-of-Verification (CoVe), Self-Consistency, Scratchpad,
 Context Precision, Context Recall, Reference-Free, Reference-Based, Pointwise, Pairwise, Prompt Injection,
 Jailbreak, Spotlighting, Delimiting, Datamarking, Encoding, Instruction Hierarchy, PII, Red-Teaming,
-Defence-in-Depth, Tool Poisoning, Rug Pull, Confused Deputy, MCP, Roots, Sampling, Elicitation, stdio,
+Defence-in-Depth, Tool Poisoning, Rug Pull, Confused Deputy, MCP, Roots, Elicitation, stdio,
 Streamable HTTP, JSON Schema, Structured Outputs, Strict Mode, Constrained Decoding, Idempotency Key,
+Late Chunking (OPEN, §3),
 Dry-Run, Race Condition, Tool-RAG, Lost-in-the-Middle, Human-in-the-Loop (HITL), Checkpointing, Checkpoint,
 StateGraph, Store, Durable Execution, Super-Step, Thread, A2A, Blackboard, Agent Card, TTFT, SSE,
 PagedAttention, Continuous Batching, Prefill, Decode, Chunked Prefill, Prefix Caching, KV-Cache, LoRA, PEFT,
 Fine-Tuning, SFT, DPO, Cold Start, Scale-to-Zero, Backpressure, Load Shedding, Admission Control,
 Little's Law, Vendor-Lock-in, Managed Endpoint, Provisioned Throughput, Instrumentation, OpenTelemetry
 (OTel), Canary Release, Shadow Deployment, Prompt Registry, Model Pinning, Model Routing, Fallback,
-LLM-Gateway, Prompt Caching, Semantic Caching, Drift, Grader, Error Budget, Release Gate, Dead-Letter Queue
-(DLQ), SLI, SLO, SLA, IAM, Golden Signals, Latency Budget, Soft Cap / Hard Cap, Alert, Dashboard, Matryoshka
+LLM-Gateway, Prompt Caching, Semantic Caching, Drift, Grader, Release Gate, Dead-Letter Queue
+(DLQ), SLI, SLO, SLA, IAM, Golden Signals, Soft Cap / Hard Cap, Alert, Alerting, Dashboard, Matryoshka
 (MRL), MTEB, Contrastive Learning, Hard Negatives, Extended Thinking, Reasoning Effort, Thinking Budget,
 Hooks, Callbacks, Permission Modes.*
+
+> **Drei Streichungen aus dieser Liste, Welle 1 (2026-07-28) — sichtbar gestrichen, nicht still entfernt.**
+> Ein Ledger, das seine eigenen Umkehrungen überschreibt, ist der SK-Fáza-26-Fehlermodus.
+>
+> - ~~**Error Budget**~~ → **das Fehlerbudget.** ⚠ **Das war ein Selbstwiderspruch INNERHALB DIESER DATEI:**
+>   die Liste oben führte den Loan, während die deutsch geführte Tabelle in §2, `_language.md` §1.1.g **und**
+>   §1.2 alle drei **das Fehlerbudget** setzen. Die deutsche Zeile ist die **belegte** (Computerwoche und
+>   iX schreiben ausschließlich deutsch, die englische Form kommt in beiden Artikeln kein einziges Mal vor);
+>   die kept-EN-Nennung war ein **Bootstrap-Rest**. **Der Widerspruch stand seit dem Bootstrap in einer
+>   Datei und ist von keinem Prosa-Gate gefunden worden** — Gates lesen Sätze, nicht Register.
+>   *(Batch E; Schreibung mitgezogen in `_language.md` §1.3.3.)*
+> - ~~**Latency Budget**~~ → **§3, OPEN.** Die Zeile stand hier kept-EN **ohne jeden Beleg**. Der Duden führt
+>   für `Budget` **keine** Bedeutung „Menge, die man gegen ein Ziel verbrauchen darf" — der SRE-Sinn ist im
+>   Deutschen **nur über das Kompositum** attestiert (*das Fehlerbudget*), und für *Latenzbudget* gibt es
+>   keins. **Nicht ersatzlos gestrichen, sondern nach §3 verschoben**, mit Schließbedingung und Korpusform.
+>   *(Batch E.)*
+> - ~~**Sampling**~~ (als MCP-Primitive) → **Klasse 1**, siehe den Kasten in §1. Das **Appellativ**
+>   *das Sampling* (Observability) bleibt kept-EN und behält seine §1.1.e-Zeile. *(Batch E.)*
+>
+> **Neu in der Liste:** `Alerting` (das Alerting, kein Plural — flexionstragend belegt, `_language.md`
+> §1.1.e) und `Late Chunking` (**mit OPEN-Marker**: die Schreibung ist durch Kanonregel entschieden, die
+> Attestierung fehlt — wer den Marker abschneidet, liest die Zeile als gleichwertig zu *Late Interaction*,
+> und genau das ist sie nicht).
 
 > **The list above is in CITATION form, not in running-prose form.** Multi-word terms are spelled per
 > `_language.md` §1.3.3 the moment they sit in a German sentence: **noun + noun → hyphenated**
@@ -84,22 +126,84 @@ ReAct, MRL, RRF, nDCG, MRR, LATS, MemGPT, MaxSim, code identifiers, product name
 
 ### Kept-EN with an OBLIGATORY German gloss at first mention
 
+> **Reparatur 2026-07-29 (Welle-1-Konsistenzdurchgang): die Glossen in dieser Tabelle standen mit
+> Geviertstrich U+2014 — dem Zeichen, das § Typografie dem Korpus VERBIETET und das die Codepoint-Zählung
+> zurückweist.** §2 weist die Renderer an, diese Zeichenketten **wörtlich** zu übernehmen; der Kanon hat also
+> jedem Renderer aufgetragen, einen verbotenen Codepoint auszuliefern. **Fünf Glossen sind auf `–` (U+2013,
+> mit Leerzeichen) korrigiert** — `Guardrails`, `Backpressure`, `Confused Deputy`, `Faithfulness`,
+> `Alerting` —, dazu die `Groundedness`-Glosse in `_language.md` §1.1.b und die `Harness`-Glosse in
+> `ai-sdlc.md` §2.
+>
+> ⚠ **Alle sechs Renderer der Welle haben den Strich selbstständig korrigiert**, unabhängig voneinander: die
+> dreizehn ausgelieferten Seiten führen **0× U+2014**. Das ist der Beleg dafür, dass der Kanon der defekte
+> Teil war, nicht die Prosa — und es ist derselbe Befund wie bei `Golden Set` weiter unten: **wo ein Register
+> und sechs unabhängige Renderer auseinandergehen, ist das Register der Verdächtige.**
+>
+> ⚠ **Ausdrücklich NICHT angetastet, und die Abgrenzung ist die eigentliche Entscheidung:**
+> (a) die **Metaprosa** dieser Redaktionsdateien — das ist §8 §O und Issue #318, eine **locale-weite
+> redaktionelle** Frage, die dieser Durchgang nicht an sich zieht;
+> (b) **Zitate aus Quellen** (die BSI-Sätze in `_language.md` §1.1.f, der englische Quelltextausschnitt in
+> §3 `verbosity bias`) — **ein Zitat zu glätten fälscht den Beleg**, und das Register lebt von seinen Belegen;
+> (c) die Stellen, an denen der Geviertstrich **selbst der Gegenstand** ist („—" als genanntes Zeichen).
+>
+> **Die Regel, die daraus folgt und die künftige Zeilen bindet: eine Zeichenkette, die §2 zum wörtlichen
+> Übernehmen freigibt, ist ein AUSGELIEFERTER String und untersteht der Typografie — auch wenn sie in einer
+> Redaktionsdatei steht.**
+
 | Terminus | Glosse beim ersten Vorkommen |
 |---|---|
 | Fine-Tuning | „(Nachtrainieren des Modells)" |
-| Guardrails | „(Leitplanken — Schutzregeln um das Modell)" — Bild bei heise belegt |
+| Guardrails | „(Leitplanken – Schutzregeln um das Modell)" — Bild bei heise belegt |
 | Grounding | „(Rückbindung der Antwort an den Kontext)" |
 | Store | „(Langzeitspeicher des Frameworks)" |
 | Scale-to-Zero | „(Herunterskalieren auf null Instanzen)" |
-| Backpressure | „(Gegendruck — Schutz vor Überlast)" |
+| Backpressure | „(Gegendruck – Schutz vor Überlast)" |
 | Load Shedding | „(gezieltes Abwerfen von Last)" |
 | Zero-Shot | „(ohne Trainingsbeispiele)" |
 | Race Condition | „(Fehler durch unkontrolliertes Timing zweier nebenläufiger Zugriffe)" — **nicht** „Wettlaufsituation" als Terminus |
-| Confused Deputy | „(getäuschter Stellvertreter — eine privilegierte Komponente wird zum Missbrauch ihrer Rechte verleitet)" |
+| Confused Deputy | „(getäuschter Stellvertreter – eine privilegierte Komponente wird zum Missbrauch ihrer Rechte verleitet)" |
 | Rug Pull | „(Austausch eines Tools nach der Freigabe)" |
 | Dry-Run | „(Probelauf ohne Wirkung)" |
-| Golden Set | „(handgeprüfter Referenzdatensatz)" |
+| ~~Golden Set~~ → **der Goldstandard** | ~~„(handgeprüfter Referenzdatensatz)"~~ — **GESTRICHEN, siehe den Kasten unter dieser Tabelle.** Die Glosse überlebt als Apposition zum deutschen Terminus: „der **Goldstandard** (*golden set*) – der handgeprüfte Referenzdatensatz" |
 | LLM-as-a-judge | „(ein Modell bewertet die Ausgabe eines anderen)" |
+| **Faithfulness** *(neu, Welle 1)* | „**(Quellentreue – wie treu die Antwort den herangezogenen Quellen bleibt, ohne unbelegte Informationen hinzuzufügen)**" |
+| **Groundedness** *(neu, Welle 1)* | dieselbe Glosse; **nur als Kompositumsglied** — „die Groundedness-Metrik", „der Groundedness-Wert". ⛔ „das/die Groundedness" mit Artikel |
+| **Alerting** *(neu, Welle 1)* | „(Alarmierung – die Regeln, nach denen ein Alarm ausgelöst wird)"; danach kept-EN weiterlaufen |
+
+> **Vierte Streichung aus §2 — Welle-1-Konsistenzdurchgang (2026-07-29), in der Form der
+> `Error-Budget`-Streichung, weil es derselbe Fehlertyp ist: ein Selbstwiderspruch INNERHALB DIESER DATEI.**
+>
+> - ~~**Golden Set**~~ → **der Goldstandard.** ⚠ Der Loan stand **zweimal** in §2 — in der
+>   settled-kept-EN-Liste **und** in der Glossentabelle darüber —, während die **deutsch geführte Tabelle
+>   derselben §2** und `_language.md` §1.1.b beide **der Goldstandard** setzen: Duden, Bedeutung 2, volles
+>   Paradigma, mit der ausdrücklichen Notiz „**‚Golden Set' hat praktisch keine deutsche Attestierung**".
+>   **Drei Zeilen gegen zwei — und die zwei waren die belegten.**
+> - **Die Welle hatte die Frage längst entschieden, bevor sie jemand stellte: `Goldstandard` 29×,
+>   `Golden Set` 0×** — fünf Seiten, sechs Renderer, kein einziger Rückfall.
+> - **Die Glosse ist nicht verloren, sie dreht sich um.** Klasse 3 heißt „deutscher Terminus im Fließtext,
+>   englisches Original einmal in Klammern"; die Korpusform ist **„der Goldstandard (*golden set*) – der
+>   handgeprüfte Referenzdatensatz"**, und `cross-cutting/evaluation/index.md` schreibt sie bereits so.
+> - ⚠ **Was NICHT mitgestrichen wird:** `Ground Truth` bleibt **OPEN** (`_language.md` §1.1.b). Die Welle
+>   verwendet es artikelfrei („als Ground Truth dienen", „die Ground-Truth-Labels") — genau das, was die offene
+>   Zeile vorschreibt. **Eine Streichung entscheidet die Nachbarzeile nicht mit.**
+
+> **Wie die `Faithfulness`-Zeile hierher kam — eine Gate-6.5-Entscheidung, ausdrücklich protokolliert.**
+> Batch A fand beim Attestieren von `groundedness` zwei unabhängige deutsche Quellen, die **dieselbe**
+> Glosse setzen: heise („**Quellentreue (Faithfulness)**: Wie treu bleibt die generierte Antwort den
+> bereitgestellten Quelldokumenten, ohne unbelegte Informationen hinzuzufügen?") und die Juristische
+> Fakultät der HHU Düsseldorf („Wie gut passen die generierten Ergebnisse zu den zitierten Dokumenten
+> (**Quellentreue**)?"). `Faithfulness` stand in §2 als **settled kept-EN ohne Glosse**; Batch A hat die
+> Frage **eskaliert statt §2 anzufassen** — das war richtig, und hier ist die Antwort:
+>
+> **Die Zeile wird NICHT umgedreht, sie bekommt eine Glosse.** Die Klasse bleibt 2 (kept-EN mit deutschem
+> Artikel); sie wandert nur aus der glossenlosen Liste in diese Tabelle. Grund: die beiden Quellen
+> **glossieren** den englischen Terminus, sie **ersetzen** ihn nicht — genau die Brückenrichtung aus §7.
+>
+> ⚠ **Und die Doppelglossen-Sorge, die Batch A mitgemeldet hat, ist geprüft und aufgelöst:** `Grounding` →
+> „(Rückbindung der Antwort an den Kontext)" und `Faithfulness/Groundedness` → „(Quellentreue)" sind
+> **nicht zwei Wörter für einen Referenten**. *Grounding* ist der **Vorgang** (die Antwort an den Kontext
+> binden), *Faithfulness/Groundedness* ist die **gemessene Eigenschaft**. Sense-Card in §4 — sie steht
+> dort, weil genau diese Unterscheidung ohne sie beim nächsten Durchgang wieder eingeebnet würde.
 
 ### German-led (class 3) — this course
 
@@ -132,6 +236,28 @@ ReAct, MRL, RRF, nDCG, MRR, LATS, MemGPT, MaxSim, code identifiers, product name
 | **die Bereitstellung / der Betrieb** | serving | „das Serving" mit deutschem Artikel ist unbelegt |
 | **der Bewerter / das Bewertungsmodell** | grader | der Loan hat null deutsche Attestierung |
 | **die Nutzlast / die Nutzdaten** | payload | das Lehnwort hat **kein** Wörterbuchlemma und kein stabiles Genus |
+| **die Kosinus-Ähnlichkeit** | cosine similarity | de.wikipedia-Lemmatitel; **8 : 0** gegen *Cosinus-*; heise + INNOQ. „Cosine Similarity" in deutscher Prosa **nie** *(Welle 1)* |
+| **der Dienst** | service | ⚠ `der Service` hat in **beiden** Wörterbüchern ein volles Paradigma und in **keinem** unseren Sinn. Loan nur im Kompositum (*Microservice*) *(Welle 1)* |
+| **die Reihenfolge** · **das Ranking** · **der Rang** | ordering · ranking · rank | drei Referenten, drei Wörter. ⛔ *die Anordnung* (Duden-Sinn 2 = **Verfügung**) *(Welle 1)* |
+| **die Passage / der Textabschnitt** | passage | Duden-Sinn 4; *Textpassage*, wo `Passage` sonst ortshaft läse. **Nicht** synonym mit *Chunk* — §4 *(Welle 1)* |
+| **das Bewertungsraster** | rubric | ⛔ **die Rubrik** — kein Bewertungssinn in Duden **oder** DWDS *(Welle 1)* |
+| **die Regression** *(mit Pflichtglosse)* | regression (Softwaretest) | „eine Regression (eine durch eine Änderung verursachte Verschlechterung)". ⛔ das Verb *regredieren* *(Welle 1)* |
+| **die Kalibrierung**; kalibrieren | calibration | ⚠ **nur** der Judge-Sinn. *RRF needs no calibration* → **die Score-Normierung** *(Welle 1)* |
+| **der Schwellenwert** | threshold | ⛔ *die Schwelle* für einen Zahlenwert (Eisenbahnschwelle) *(Welle 1)* |
+| **die Übereinstimmung zwischen den Annotatoren** | inter-annotator agreement | Umschreibung ist die Korpusform; *IAA* einmal einführen; Überschrift: *die Interrater-Reliabilität* *(Welle 1)* |
+| **die Schwärzung / die Maskierung** | redaction / masking | BSI. ⛔ *die Redaktion*; ⚠ *Anonymisierung* für *redaction* ist **sachlich falsch** *(Welle 1)* |
+| **die Erfolgsrate der Angriffe (ASR)** | attack success rate | BSI: fünf Vorkommen, und `Angriffserfolgsrate` **0×** im selben Dokument *(Welle 1)* |
+| **die Metadaten** *(nur Plural)* | metadata | Duden: **Pluralwort**. *metadata filtering* → **verbal**: „nach Metadaten filtern" *(Welle 1)* |
+| **das Verfahren** | technique | ⛔ *die Technik* — im Deutschen zuerst die Technologie *(Welle 1)* |
+| **die Domäne** | domain | ⛔ *die Domain*. Der AD-Sinn steckt im deutschen Wort; die **Fügung** entschärft ihn *(Welle 1)* |
+| **die Chunk-Größe** | chunk size / chunk length | ⚠ **Genuswechsel:** *der* Chunk → **die** Chunk-Größe. **Eine** Benennung, obwohl das Englische zwischen *size* und *length* wechselt *(Welle 1)* |
+| **die Normierung**; normieren | normalisation | **WEAK.** ⛔ *die Normalisierung* als bloßes Substantiv; Ausnahme **L2-normalisiert** *(Welle 1)* |
+| **die Deduplikation**; deduplizieren | deduplication | volles Duden-Paradigma für Substantiv **und** Verb; Anweisungsform „Duplikate entfernen" *(Welle 1)* |
+| **der Widerspruch**; widersprechen **+ Dativ** | conflict | ⛔ *der Konflikt* für zwei Quellen — im Deutschen zwischenmenschlich, mit **Parteien** *(Welle 1)* |
+| **das Perzentil** | percentile | `das 95. Perzentil` (Ziffer, Punkt, Leerzeichen). `p95` bleibt Klasse 1 *(Welle 1)* |
+| **die Obergrenze / das Limit** | cap | ⛔ „das Cap" nackt. *A budget is a cap* → „**Ein Budget ist eine Obergrenze**" *(Welle 1)* |
+| **mehrsprachig** | multilingual | Duden definiert *multilingual* über das deutsche Wort; als Modellnamensteil unangetastet *(Welle 1)* |
+| **die Rechteausweitung** | privilege escalation | de.wikipedia-Lemma; ⛔ *eskalieren* für „stufenweise zunehmen" *(Welle 1)* |
 
 ---
 
@@ -202,6 +328,25 @@ paraphrase.** Writing a plausible-sounding German form here is exactly the failu
 | **Drift (Genus)** | **NEU 2026-07-28 — DISPUTED.** Duden hat *die* Drift (Strömung) **und** *der* Drift (Motorsport), **keines im ML-Sinn** | Incumbent **der Drift**; **möglichst das Kompositum schreiben** — *die Datendrift*, *der Modelldrift*, *der Konzeptdrift* sind besser belegt |
 | **„AI delta" → „KI-Delta"** | Autorenfigur, im Deutschen nicht geprüft. **BLEIBT OPEN — und der Pilot durfte sie nicht bestätigen:** jeder belegte deutsche Sinn von `Delta` ist eine **messbare Zahldifferenz** (DWDS „Lücke, Differenz", Beleg aus dem Haushaltskontext; daneben Buchstabe, NATO-Alphabet, Flussdelta, Virusvariante, Börsen-Delta), unsere Verwendung ist **qualitativ**. **Kanonregel angewandt: der Durchgang, der einen Terminus prägt, darf nicht der sein, der ihn bestätigt** | auf Probe; im Zweifel schlichte Prosa — **die Korpusform des Piloten:** „Hier liegt der entscheidende Unterschied zur gewöhnlichen API-Entwicklung." |
 | **„token tax"** | im Russischen bestätigt, im Slowakischen **gestrichen** | **nicht übernehmen**; „die laufenden Kosten der Tool-Beschreibungen" |
+| **Latency Budget / Latenzbudget** | **NEU OPEN 2026-07-28 (Welle 1) — und diese Zeile ist eine UMKEHRUNG:** sie stand in §2 als settled kept-EN, **ohne jeden Beleg**. Der Duden führt für `Budget` **keine** Bedeutung „Menge, die man gegen ein Ziel verbrauchen darf"; der SRE-Sinn ist im Deutschen **nur über das Kompositum** attestiert (*das Fehlerbudget*, Computerwoche + iX) — für *Latenzbudget* existiert keins | **umbauen**: „**Für die Latenz gilt eine Obergrenze von …**", „**das vorgegebene Latenzziel**". ⛔ „das Latency Budget" mit deutschem Artikel. **Was es schließen würde:** ein flektierter deutscher Satz bei heise/iX/INNOQ/dpunkt mit *Latenzbudget* oder mit artikeltragendem *Latency Budget* |
+| **Tail-Latenz / „the tail"** | **NEU OPEN 2026-07-28 (Welle 1).** Für *Tail-Latenz* stammen die **einzigen** deutschsprachigen Treffer von `beefed.ai`, einer KI-generierten Content-Farm — vom Auftrag **ausdrücklich disqualifiziert, nicht abgewertet**; *der Schwanz der Verteilung* nur aus derselben Quelle. `Tail` ist im Deutschen schlicht **nicht angekommen** — es gibt nichts zu verwechseln, weil es nichts gibt | **die Perzentilform** (`_language.md` §1.1.e): „die Latenz im **95. Perzentil**", „der **p95-Wert** der Latenz", am klarsten „**die langsamsten 5 % der Anfragen**"; für „the tail" umschreiben: „**der obere Rand der Verteilung**", „**die seltenen, langsamen Anfragen**". ⛔ **die Ausreißer** — das ist eine **sachliche** Verfälschung, keine stilistische. **Was es schließen würde:** ein flektierter Satz bei heise/iX/c't/INNOQ/dpunkt oder ein de.wikipedia-Lemma; für „the tail" ein deutsches SRE-Fachbuch mit einem stehenden Substantiv |
+| **Alert Fatigue / Alarmmüdigkeit** | **NEU OPEN 2026-07-28 (Welle 1) — und es ist ein REGISTER-, kein Bedeutungsproblem, was die seltenere und genauso teure Sorte ist.** *Alarmmüdigkeit* ist attestiert (Charité, Institut für Medizinische Informatik) und der Mechanismus ist **identisch** mit unserem — aber das Wort ist im Deutschen fest in der **Intensivmedizin** verankert; ein deutscher Entwickler liest Stationsalltag, nicht SRE. Strukturell dieselbe Lage wie **`Lastabwurf`**, nur ist dort das Fach fremd und hier **benachbart**. ⚠ Aussagekräftiger Nullbefund: ein deutscher Fachtext über genau dieses Problem enthält `Alarmmüdigkeit` **null Mal** — und ist zusätzlich eine wortgleich auf fünf Seiten stehende **Pressemitteilung**, zählt also nur als Nullbefund | **das Phänomen beschreiben, nicht benennen**: „wer zu viel alarmiert, wird nicht mehr gehört", „zu viele Alarme stumpfen ab", „die Zuständigen gewöhnen sich an die Alarme und übersehen den einen, der zählt". Wo ein Terminus unvermeidlich ist: kept-EN **`Alert Fatigue`, artikelfrei**, mit deutscher Umschreibung in Klammern. **Was es schließen würde:** **ein** flektierter Satz bei heise/iX/c't/INNOQ/dpunkt/Rheinwerk mit *Alarmmüdigkeit* **oder** *Alert Fatigue* über **Bereitschaftsdienst/On-Call** — einer reicht, die Wortbildung ist unstrittig, nur der Registertransfer ist offen |
+| **burn-rate alerting** | **NEU OPEN 2026-07-28 (Welle 1).** Für *Burn Rate* liefert die Herstellerlokalisierung „die **Brennrate** des Fehlerbudgets" (Google Cloud de) — und Google Cloud de ist in genau diesem Themenfeld bereits **disqualifiziert** (`_language.md` §1.1, Falle 4) | **umbauen**: „**Alerts auf die Burn Rate**", „**wenn die Burn Rate steigt, …**". **Was es schließen würde:** ein deutscher Satz bei heise/iX/INNOQ/dpunkt mit **flektierter** *Burn Rate* oder mit einer deutschen Vollform, die **nicht** *Brennrate* ist |
+| **staleness / freshness (Index-Aktualität)** | **NEU OPEN 2026-07-28 (Welle 1) — keine Attestierung auf einer zulässigen Stufe.** Alle Treffer der gezielten Suche waren SEO-Agenturseiten, Anbieter-Glossare, KI-generierte Wissensseiten und Google-Cloud-Lokalisierung; diese Klassen sind ausdrücklich disqualifiziert. ⛔ *die Frische* ist im Deutschen auf **Lebensmittel** festgelegt und liest sich sofort übersetzt; ⛔ *die Veraltung*, *der Veraltungsgrad*, *der Aktualitätsrückstand* sind **Prägungen ohne Beleg** — der „súbeh"-Fehlermodus | **den Zustand als Nebensatz schreiben, nicht als Substantiv**: „**wie aktuell der Index ist**", „**veraltete Einträge**", „**der Index hinkt der Quelle hinterher**", „**seit der letzten Indexierung geänderte Dokumente**". *die Aktualität* ist ein gewöhnliches deutsches Wort und **darf im Satz vorkommen** — festgelegt wird die **Fügung** nicht. **Was es schließen würde:** ein Satz bei heise/iX/c't/INNOQ/dpunkt/Rheinwerk oder ein de.wikipedia-Lemma, in dem *Aktualität* einen **Index, Datenbestand oder Cache im Genitiv regiert** — oder ein deutsches Substantiv für *staleness*, das nicht erst für diesen Anlass gebildet wurde |
+| **answer relevance** | **NEU OPEN 2026-07-28 (Welle 1) — und die Nullbefunde sind ordentlich erhoben.** Verworfen: `myscale.com/blog/de` (MT-Lokalisierung des englischen Originals), `innowise.com/de` (MT-Signal: „**Ein guter** „LLM-as-a-judge"-**Modell**"), Fraunhofer IESE (**404 beim Abruf** — der Treffer stammte aus einer Suchvorschau und zählt deshalb **nicht**). ⚠ **Gegenläufiges Signal, ehrlich vermerkt:** heise **verdeutscht** die Schwestermetrik (*Quellentreue (Faithfulness)*) — *die Antwortrelevanz* wäre also nicht abwegig, sie ist nur **unbelegt** | **Incumbent kept-EN halten, artikelfrei** und vorzugsweise als Kompositumsglied: „der **Answer-Relevance-Wert**", „die **Answer-Relevance-Metrik**" (Durchkopplung, §1.3.3). Beim ersten Vorkommen glossieren: „(wie gut die Antwort die gestellte Frage trifft)". ⚠ **§2 führt drei der vier RAGAS-Metriken** (Faithfulness, Context Precision, Context Recall) — **die vierte wird dort ergänzt, sobald diese Zeile schließt, und vorher nicht.** **Was es schließen würde:** **ein einziger** deutscher Satz bei heise/iX/dpunkt/Fraunhofer/INNOQ oder in deutscher Hochschullehre, der die RAGAS-Metrik benennt — artikeltragend englisch („**die** Answer Relevance liegt bei …") oder deutsch („**die Antwortrelevanz** misst …") |
+| **Inter-Annotator-Agreement (Genus des Loans)** | **NEU OPEN 2026-07-28 (Welle 1).** Der Loan ist in deutscher Wissenschaftsprosa belegt — aber **ausnahmslos artikellos bzw. als Klammereinschub**; **kein kasusmarkierter Beleg** | **die attestierte Umschreibung verwenden**: „die **Übereinstimmung zwischen den Annotatoren**" (*zwischen* + Dativ), Kürzel **IAA** einmal einführen; als **Überschrift** ist **die Interrater-Reliabilität** zulässig (de.wikipedia-Lemma). **Was es schließen würde:** ein deutscher Satz bei heise/iX/dpunkt oder in einem Hochschulskript mit **kasusmarkiertem** „das/der Inter-Annotator-Agreement" |
+| **verbosity bias · self-preference / self-enhancement bias** | **NEU WEAK 2026-07-28 (Welle 1) — und das ist eine Gate-6.5-Entscheidung gegen die Zurückhaltung des Batches, deshalb steht sie hier vollständig.** Batch A hat das Bildungsmuster auf **Stufe 1** belegt (BSI-Bias-Whitepaper: geschlossenes Kompositum, deutsches Erstglied, englisches Original in Klammern — *Repräsentationsbias*, *Messungsbias*, *Präsentationsbias*, *Auswahlbias* u. a., 16 Geschwister) und die beiden Wörter **bewusst nicht geprägt**, weil es ihre Vorkommen nicht zählte. **Gezählt (2026-07-28): `verbosity bias` 4×, `self-preference` 6× + `self-enhancement` 2×** — beide liegen also über der Nachtragsschwelle und **müssen** eine Wiedergabe haben. **Das Muster lizenziert die FORM, nicht das WORT:** die konkreten Komposita sind **unattestiert** | **der Ausführlichkeitsbias (Verbosity Bias)** · **der Selbstbevorzugungsbias (Self-Preference Bias)** — Genus und Genitiv vom belegten Grundwort (*der Bias*, *des Bias*, §1.1.a). **Die Klammer mit dem englischen Original ist PFLICHT, nicht Zierrat** — sie ist das, was eine musterlizenzierte Prägung tragbar macht, und die BSI macht es selbst so. Wo der Quelltext das Wort **ohne** „bias" verwendet („**Self-preference** — the judge rating outputs in its own style"), **nicht substantivieren, sondern den Satz bauen**: „das Modell **bevorzugt Antworten im eigenen Stil**", „die **Bevorzugung längerer Antworten**". **Was es schließen würde (WEAK → SETTLED):** ein deutscher Satz bei heise/iX/dpunkt/Fraunhofer/BSI mit **einem der beiden Komposita flektiert** |
+| **fusion (bloßes Substantiv im IR-Sinn)** | **NEU OPEN 2026-07-28 (Welle 1).** Kein deutschsprachiger T1–T5-Beleg für `Fusion`/`fusionieren` mit **zwei Rangfolgelisten** als Objekt. ⚠ **Der Nullbefund, der die Zeile trägt:** INNOQ — ein deutsches Haus, genau unsere Drucklatte — schrieb seinen RRF-/Hybrid-Search-Artikel **nur auf Englisch**. Duden führt vier Sinne, **keinen** über Listen oder Rangfolgen; der Leitsinn ist die **Unternehmensfusion**, sodass ein kalt eingeführtes „die Fusion" im Suchkapitel kaufmännisch liest, bevor es technisch liest | **`RRF` / `Reciprocal Rank Fusion` bleiben kept-EN** (bereits settled, nicht wieder aufmachen). Für den **Vorgang** ausschreiben: „**die Zusammenführung der beiden Ergebnislisten**"; Verb **zusammenführen**; die beiden Familien: „**die score-basierte** vs. **die rangbasierte Zusammenführung**"; *the fused order* → „**die resultierende Reihenfolge**". ⛔ *die Verschmelzung* (Dudens eigenes Definitionswort für den Fusions-/Kernsinn — importiert den falschen Rahmen), *die Rangfusion* (keine Attestierung). **Was es schließen würde:** ein nativer deutscher Satz mit artikeltragendem oder flektiertem `Fusion`/`fusionieren`, dessen Objekt **zwei Trefferlisten** sind („bei der Fusion der beiden Trefferlisten"); eine deutsche Wiedergabe von RRF als „reziproke Rangfusion" schlösse sie sofort |
+| **packing / context packing** | **NEU OPEN 2026-07-28 (Welle 1) — ehrlicher Nullbefund, kein Achselzucken:** `Context Packing`, `Kontext-Packing`, `die Kontextpackung` und „gepackte Chunks" ergaben **null** T1–T5-Treffer. ⛔ *die Packung* ist Duden-fest auf Verpackung und den medizinischen Wickel — „die Kontextpackung" wäre komisch. **Die Abwesenheit eines deutschen Substantivs IST der Befund** | **kein Substantiv prägen — den Vorgang verbal schreiben**: „…und **übergibt diese als Kontext an das Modell**" (INNOQ), „die ausgewählten Chunks **in den Prompt aufnehmen**", „**das Kontextfenster füllen**", wo das Budget der Punkt ist. Als **Überschrift** nach §6.2 Rahmen C umbauen: „**Einen langen Kontext zusammenstellen**", nicht „Long-Context-Packing". *the packed chunks* → „die **aufgenommenen** / **übergebenen** Chunks". **Was es schließen würde:** ein T1–T5-Satz mit artikeltragendem „das Context Packing" / „das Kontext-Packing" oder ein etabliertes deutsches Substantiv. Bis dahin ist die Verbalkonstruktion **kein Notbehelf, sondern das Ruling** (Präzedenz: `Gate`, `Load Shedding`) |
+| **parametric knowledge / parametric memory** | **NEU OPEN 2026-07-28 (Welle 1) — das Adjektiv ist einwandfreies Deutsch, der TERMINUS ist unattestiert.** de.wikipedia `insource:"parametrisches Wissen"` → **0 Treffer**; `insource:"parametrische" insource:"Sprachmodell"` → **0**. ⚠ Und `parametrisch` ist nicht *falsch*, sondern **besetzt**: die dominante deutsche Kollokation ist **parametrische vs. nichtparametrische Statistik** — und die liegt in unserer Nachbarschaft, sodass ein Evaluationskapitel mit „parametrisch" den Leser zu **verteilungsfreien Tests** einlädt; dazu parametrisches CAD und der parametrische Equalizer. „Parametrisches Wissen" liest sich als *Wissen parametrischer Art* | **umschreiben**: „**das im Modell gespeicherte Wissen**", „**das Wissen in den Gewichten des Modells**" (Fraunhofer IESE: „den Ursprung der Halluzinationen **in den Gewichten des Modells** zu verstehen"); als Kurzanapher „**das Modellwissen**"; der Kontrast der Welle → „**Wissen aus dem Kontext gegen Wissen aus den Gewichten**". Muss der englische Terminus erscheinen, **einmal in Klammern als Englisch**: „das im Modell gespeicherte Wissen (*parametric knowledge*)". ⛔ *das parametrische Gedächtnis* — Kalk **und** eine Prägung **auf einer offenen Zeile** (§4, `Speicher`: *Gedächtnis* ist dort OPEN); genau der SK-„súbeh"-Fehler. ⚠ **`die Wissensbasis` hier NICHT wiederverwenden** — sie bezeichnet in diesem Korpus die **abgerufene** Seite, und die Gleichsetzung zerstört exakt den Gegensatz, auf dem die Lektion steht. **Was es schließen würde:** ein heise-/iX-/Fraunhofer-/INNOQ-/BSI-Satz mit flektiertem „parametrisches Wissen" / „des parametrischen Wissens" im LLM-Sinn |
+| **Late Chunking (Attestierung)** | **NEU OPEN 2026-07-28 (Welle 1) — die SCHREIBUNG ist entschieden, die ATTESTIERUNG fehlt, und die Zeile steht hier, damit niemand das eine für das andere hält.** de.wikipedia `insource:"Late Chunking"` → **0 Treffer**. Die einzige deutschsprachige Quelle (`jina.ai/de`) **disqualifiziert sich auf der eigenen Seite**: Überschrift „**Spätes Chunking** in Embedding-Modellen mit langem Kontext", Fließtext durchgehend „**Late Chunking**" — eine Seite, zwei Wiedergaben desselben Terminus; dazu „die **Late Chunking**-Strategie" (undurchgekoppelt, §1.3.3-widrig) und „**Cosinus**-Ähnlichkeit" gegen die 8 : 0-Zählung | **das Late Chunking, des Late Chunkings** — getrennt und großgeschrieben (Adj+Subst), Genus **geerbt von `das Chunking`**; im Kompositum durchgekoppelt: **das Late-Chunking-Verfahren**. ⚠ **Es erbt von `Late Interaction` die FORM, nicht den STATUS.** ⛔ *spätes Chunking* — behauptet Verspätung **in der Zeit** statt Nachordnung **in der Pipeline**, und ist nur von der disqualifizierten Quelle lizenziert. Erstnennung mit Glosse: „(das Dokument zuerst vollständig einbetten und die Chunks erst danach aus den Token-Embeddings herausschneiden)". **Was es schließen würde:** ein artikeltragender deutscher Satz bei heise/iX/INNOQ/Fraunhofer/dpunkt („beim **Late Chunking** …", „**des Late Chunkings**") oder ein de.wikipedia-Lemma |
+| **knowledge conflict / context–memory conflict** | **NEU OPEN 2026-07-28 (Welle 1).** Kein deutscher RAG-/LLM-Fachtext **benennt** das Phänomen; *Wissenskonflikt* und *Kontext-Gedächtnis-Konflikt* sind unbelegt. ⚠ Zusätzlich sperrt das Deutsche selbst: **alle drei Duden-Bedeutungen von `Konflikt` haben PARTEIEN** (streitende Auffassungen mit Zerwürfnis, bewaffnete Auseinandersetzung, innerer Zwiespalt) — **zwei Quellen streiten nicht, sie stimmen nicht überein** | **umschreiben, nicht prägen**: „**der Widerspruch zwischen abgerufenem Kontext und Modellwissen**". Für den allgemeinen Fall gilt die settled Zeile: Verb **widersprechen + DATIV** („Das widerspricht **dem** höherrangigen Ziel."), reziprok „die Quellen widersprechen **einander**"; Adjektiv **widersprüchlich** / attributiv **sich widersprechend**; Substantiv **der Widerspruch**. ⚠ **„mit etwas in Konflikt geraten" ist im Duden als „gegen etwas verstoßen" glossiert** — wer „das Ergebnis gerät mit dem Kontext in Konflikt" schreibt, sagt auf Deutsch *es verstößt gegen den Kontext*. Das ist eine andere Aussage. ⛔ *konfligieren* (bildungssprachlich), *kollidieren* (kollokiert mit Regeln, Terminen, Fahrzeugen). **Was es schließen würde:** ein deutscher RAG-/LLM-Fachtext, der das Phänomen mit einem **flektierten** Substantiv benennt |
+| **der Metadatenfilter (Kompositum)** | **NEU OPEN 2026-07-28 (Welle 1) — und der Nullbefund ist aussagekräftig, kein Fehlen:** **jede** geprüfte deutsche Quelle greift für diesen Referenten zur **Verbalphrase**, nicht zum Kompositum | **verbal**: „**nach Metadaten filtern**", „**die Metadaten zum Filtern verwenden**" (heise); als Ding: „**Filterkriterien für die Metadaten**" (heise). Falls unvermeidbar **der Metadatenfilter** (Genus vom Kopfnomen *der Filter*) — **HOUSE, nicht belegt**. **Was es schließen würde:** ein nativer deutscher Satz bei heise/iX/INNOQ/Fraunhofer mit **flektiertem** *Metadatenfilter* („**der** Metadatenfilter", „**des** Metadatenfilters") |
+| **size ↔ length (terminologische Trennung)** | **NEU OPEN 2026-07-28 (Welle 1).** **Keine** geprüfte deutsche Quelle unterscheidet die beiden terminologisch; die einzige, die die Größe überhaupt benennt, verwendet *Länge* **anaphorisch für dieselbe Größe** | **die Trennung nicht nachbauen**: eine Benennung — **die Chunk-Größe** —, auch wo das Englische *length* schreibt. *answer length* → **die Länge der Antwort**; *maximum input length* → **eine Obergrenze für die Eingabelänge**. **Was es schließen würde:** ein deutscher Fachtext, der *size* und *length* für dieselbe Domäne **terminologisch unterscheidet** |
+| **parametric override** | **NEU OPEN 2026-07-28 (Welle 1).** Kein deutscher Satz aus heise/iX/Fraunhofer/BSI benennt mit einem **Substantiv**, dass ein Modell sein parametrisches Wissen dem gelieferten Kontext vorzieht | **den Nebensatz schreiben**: „**wie oft sich das Modell über den gelieferten Kontext hinwegsetzt**" (*sich hinwegsetzen* **über + Akk.**) oder „wie oft das im Modell gespeicherte Wissen den Kontext **verdrängt**". ⛔ *der Override* als Loan (kein Genus auf irgendeiner Stufe). **Was es schließen würde:** ein deutscher Fachsatz, der das Phänomen mit einem Substantiv benennt |
+| **refusal rate** | **NEU OPEN 2026-07-28 (Welle 1).** *die Verweigerungsrate* und *die Ablehnungsrate* sind morphologisch einwandfrei und **beide unbelegt** | **Korpusform: „der Anteil verweigerter Antworten"** in der Dashboard-Aufzählung. ⚠ Hinweis für die Suche: die BSI zeigt das produktive Muster („**die Erfolgsrate** komplexer Angriffe") — falls je ein Beleg auftaucht, wird er vermutlich „**die Rate verweigerter Antworten**" lauten, nicht das Kompositum. **Was es schließen würde:** ein deutscher Satz aus heise/iX/BSI/Fraunhofer, der eine **gemessene Rate von Modellverweigerungen** mit einem Substantiv benennt |
+| **denylist / blocklist** | **NEU OPEN 2026-07-28 (Welle 1) — bewusst NICHT vorentschieden:** beide kommen in dieser Welle **nicht vor**, und ein Zusammenführungsdurchgang entscheidet nichts, was er nicht gelesen hat. ⛔ *die Sperrliste* ist zudem besetzt (deutsches Standardwort für die **Certificate Revocation List**), *die Negativliste* stammt aus einem **BSI-Dokument von 2009** mit Vor-Umbenennungs-Vokabular | für `allowlist` gilt die WEAK-Zeile in `_language.md` §1.1.f (Plural und Komposita ja, artikeltragender Singular nein). Für die beiden anderen: **erst zählen, dann entscheiden** |
+| **Golden Signals** | **NEU markiert 2026-07-28 (Welle 1): der Incumbent bleibt, aber als HOUSE, nicht als belegt.** Auf **keiner** Quellenstufe wurde eine deutsche Attestierung gefunden — weder für den Loan noch für eine deutsche Form. Die Zeile stand in §2, als wäre sie belegt | **kept-EN, im Plural und mit deutschem Artikel: „die Golden Signals"**, einmal glossiert („Latenz, Traffic, Fehler, Sättigung"). ⛔ **„die goldenen Signale"** — das übersetzt einen Eigennamen. **Was es schließen würde:** ein deutscher Satz bei heise/iX/INNOQ/dpunkt mit `Golden Signals` **oder** einer deutschen Vollform |
 
 > **Nachtrag aus dem Piloten „Tool-Einsatz" (2026-07-28) — warum `Gate` OPEN bleibt, ausführlich.** Die Zeile
 > ist nicht aus Trägheit offen; dieser Durchgang hat sie **verschärft** und dabei die Gestalt der Ausnahme
@@ -253,17 +398,155 @@ Seeded from collisions already visible in the corpus:
   Frage vor dem Schreiben: *Meine ich einen Vorfall, eine Kategorie oder einen Programmierfehler?* Vorschlag:
   Vorfall → **der Fehler**; Kategorie → **das Fehlerbild / die Fehlerklasse**; Ausfall der Verfügbarkeit →
   **der Ausfall**. **Auf Probe.**
+  **Vierter Zweig, ergänzt Welle 1 (2026-07-28):** *eine durch eine ÄNDERUNG verursachte Verschlechterung*
+  → **die Regression** — mit **Pflichtglosse** beim ersten Vorkommen einer Seite, weil der deutsche Leser
+  sonst die Statistik mitliest (`_language.md` §1.1.b). Die Zusatzfrage lautet damit: *Ist es überhaupt
+  ein Fehler — oder ist es messbar schlechter geworden, ohne dass etwas kaputt ist?* Der Korpus nennt
+  ausdrücklich Modellwechsel, Korpus-Reingest und Eingabedrift als Ursachen; **nicht jede Regression ist
+  ein Defekt im Code**, deshalb ⛔ *der Regressionsfehler* als Oberbegriff.
+  **Fünfter Zweig, und der teuerste — Welle-1-Konsistenzdurchgang (2026-07-29): `retrieval failure` /
+  `generation failure`, das diagnostische Rückgrat von Teil I.**
+  **Korpusform: „das Fehlerbild des Retrievals" und „das Fehlerbild der Generation".**
+  Diese Karte hatte die Entscheidung bereits getroffen; niemand hatte sie angewandt. **Das Paar ist eine
+  KATEGORIE, kein Vorfall** — der Überblick führt es als die *zwei* Ursachen ein, in die jede schlechte
+  Antwort zerfällt —, und der Zweig *Kategorie → das Fehlerbild / die Fehlerklasse* steht seit dem Bootstrap
+  oben in dieser Karte.
+  ⚠ **Gezählt, nicht geschätzt: die dreizehn Seiten trugen SIEBEN Namen für dieses eine Paar** —
+  *Fehler des Retrievals* (ausgerechnet auf der Seite, die es **definiert**), *Versagen des Retrievals* (4×),
+  *Fehler im Retrieval* (3×), *Fehlerquote des Retrievals*, *die Quote*, *Fehler der Generation* (3×),
+  *Fehler in der Generation* (3×). **Und daneben stand auf zwei Seiten, unabhängig voneinander, bereits
+  `Fehlerbild` als Anapher für genau dieses Paar** („die Aufschlüsselung der **Fehlerbilder** aus dem
+  Überblick", „das direkteste Maß für das **Fehlerbild**, das Teil 1 benannt hat"). **Der Korpus hatte die
+  Antwort also selbst gefunden, zweimal, ohne dass eine Zeile sie festhielt.**
+  - **`versagen` bleibt — als VERB, und das ist keine Konzession.** „dass das Retrieval seltener
+    **versagt**", „Mit jeder Stufe **versagt** das Retrieval seltener" sind attestiert (`_language.md` §9.2,
+    heise) und bleiben unangetastet. Gestrichen ist allein die **Nominalisierung als Klassenname**: *das
+    Versagen des Retrievals* benennt ein **Ereignis des Zusammenbrechens** (Organversagen, menschliches
+    Versagen), nicht eine Diagnosekategorie — dasselbe Wort, andere Wortart, anderer Referent.
+  - **Die RATE heißt nicht *die Fehlerquote des Retrievals*, sondern wird verbal gebaut:** „**wie oft das
+    Retrieval versagt**", „um wie viel **seltener das Retrieval damit versagt**". Danach darf „die Quote" als
+    Anapher stehen — aber erst danach.
+  - **`die Fehlerklasse` wird NICHT mitgestrichen und ist keine Dublette.** Sie benennt eine Klasse **in einer
+    Taxonomie**, eine Ebene unter dem Paar: die vier Reparaturfälle in `generation/index.md`, „die schlechteste
+    Fehlerklasse, die sich ausliefern lässt". **Frage vor dem Schreiben:** *Meine ich eine der ZWEI
+    Diagnosekategorien dieses Teils — oder irgendeine Fehlerkategorie?*
+  - ⛔ *der Retrieval-Fehler* · ⛔ *der Generierungsfehler* — sie lesen sich als **ein einzelner Vorfall** und
+    fallen damit auf den ersten Zweig dieser Karte zurück.
+  - ⚠ **Warum `Fehlerbild` und nicht `Fehlerklasse` für das Paar:** der Überblick rahmt den ganzen Teil
+    **diagnostisch** („Bestimmen Sie die Ursache, bevor Sie den Fehler beheben"), und ein *Fehlerbild* ist
+    genau das, was man diagnostiziert. Die beiden Seiten, die von sich aus so schrieben, taten es in derselben
+    Rahmung — **Usus und Sense-Card zeigen hier in dieselbe Richtung, und das ist der Grund, warum die Zeile
+    nicht DISPUTED ist.**
+  - ⚠ **Bindet Teil II und Teil III.** Das Paar ist das diagnostische Rückgrat des ganzen Kurses, nicht nur
+    von Teil I; jede spätere Welle, die es erwähnt, schreibt **dieselben zwei Zeichenketten**.
 - **`Suche` / `Retrieval` / `Recherche`** — *retrieval* (die Schicht/der Terminus) vs. *search* (die
   Handlung) vs. *search over a tree* (der algorithmische Durchlauf). Vorschlag: Terminus → **Retrieval**;
   Handlung → **suchen / die Suche**; Baum-/Graphdurchlauf → **die Suche im Suchraum / das Durchsuchen**.
   **Auf Probe.**
 - **`Bewertung`** — *evaluation* (die Disziplin) vs. *score* (die Zahl) vs. *rating*. Vorschlag: Disziplin →
   **die Evaluation**; Zahl → **der Score**; „Bewertung" nicht für die Zahl. **Auf Probe.**
+  **Erweitert Welle 1 (2026-07-28) — und die Erweiterung ist zugleich die ANTWORT auf eine Prüffrage an
+  Gate 6.5: hat die `Bewertungs-`Familie inzwischen zwei Wörter für einen Referenten?** Sie hat es
+  **nicht**. Sechs Referenten, sechs Namen, keine Überschneidung:
+  - die **Disziplin** → **die Evaluierung / die Evaluation** (`_language.md` §1.1.e)
+  - die **Zahl** → **der Score** — ⛔ nie „die Bewertung" für die Zahl
+  - das **Kriterienwerk**, gegen das bewertet wird → **das Bewertungsraster** *(rubric, neu)*
+  - die **bewertende Instanz** → **der Bewerter / das Bewertungsmodell / die Bewertungsinstanz** *(grader)*
+  - der **Spruch** des Judges über eine Antwort → **das Urteil** *(verdict, neu)* — „zu demselben Urteil
+    kommen"
+  - die **zusammengezogene Empfehlung** am Absatzende → **das Fazit** *(verdict im zweiten Korpussinn, neu)*
+  
+  **Frage vor dem Schreiben:** *Meine ich das Fach, die Zahl, das Regelwerk, wer bewertet, den Spruch über
+  eine Antwort oder die Schlussfolgerung des Abschnitts?* ⚠ Das Bewertungsraster ist das **Kriterienwerk**,
+  nicht die Zahl — die alte Kartenregel wird davon **nicht** verletzt.
 - **`Schicht`** — *layer* (Pipelinestufe des Buches) vs. *layer* (Verteidigungsschicht). Vorschlag: bei
   Verwechslungsgefahr nie nackt — **die Pipelinestufe** vs. **die Verteidigungsschicht**. **Auf Probe.**
 - **`Speicher`** — *memory* (Agentengedächtnis) vs. *storage* (Ablage) vs. *cache*. Vorschlag: Gedächtnis →
   **das Gedächtnis / die Memory** (OPEN), Ablage → **der Speicher**, Zwischenspeicher → **der Cache**.
   **OPEN — nicht entschieden.**
+  ⚠ **Welle 1:** *parametric memory* darf diese offene Zeile **nicht stillschweigend schließen** — die
+  Wiedergabe ist „das im Modell gespeicherte Wissen" (§3), **nicht** „das parametrische Gedächtnis".
+
+**Neu in Welle 1 (2026-07-28) — sechs Karten, jede aus einer Kollision, die ein einzelner Belegdurchgang
+nicht sehen konnte:**
+
+- **`Chunk` / `Passage` / `Textabschnitt`** — **der englische Quelltext verwendet *chunk* und *passage*
+  nahezu austauschbar; das Deutsche erzwingt die Unterscheidung**, und wer sie einebnet, verliert die
+  Pipeline-Logik der Lektion.
+  **Frage vor dem Schreiben:** *Rede ich über das, was die Ingestion ERZEUGT — oder über das, was der
+  Retriever/Reranker BEWERTET?*
+  - das Artefakt der Ingestion (Segmentierung, Overlap, Größe) → **der Chunk**, *des Chunks*, *die Chunks*
+  - die Texteinheit, die abgerufen und bewertet wird → **die Passage**, *der Passage*, *die Passagen*;
+    **die Textpassage**, wo `Passage` sonst ortshaft läse (Ladenpassage)
+  - dort, wo die **Segmentgrenze** selbst der Punkt ist → **der Textabschnitt**
+  - ⚠ **Genuswechsel im Kompositum, den ein späterer Durchgang sonst „korrigiert":** *der* Chunk, aber
+    **die** Chunk-Größe (das Kopfnomen trägt das Genus).
+  - ⛔ *der Absatz* — behauptet eine typografische Grenze, die der Chunker nicht respektieren muss.
+  - Die Codepräfixe `query:` / `passage:` sind **Klasse 1**: nie übersetzen, nie flektieren.
+
+- **`Aussage` / `Behauptung` / `Zeugenaussage`** — für *claim* (25 Vorkommen), und die Zweiteilung ist
+  **belegt, nicht erfunden** (de.wikipedia *Faktencheck* prüft „**die Aussage**" und reserviert
+  „**Behauptungen**" für die ungeprüfte Meldung).
+  **Frage vor dem Schreiben:** *Behaupte ich schon etwas über den Wahrheitswert?*
+  - nein, neutrale Einheit → **die Einzelaussage / die atomare Aussage / die Aussagen der Antwort** —
+    **nie das nackte „die Aussage"** neben *Quelle* und *prüfen*, sonst liest der Gerichtssinn mit
+  - ja, ausdrücklich unbelegt („an unsupported claim", „the model asserts") → **die Behauptung**
+  - ⛔ **die Zeugenaussage** — und der Grund ist nicht Geschmack: `Behauptung` **trägt das Urteil im Wort**
+    (DWDS „aber **unbewiesene** Meinungsäußerung"), sodass *supported claims / total claims* als
+    „gestützte unbewiesene Meinungsäußerungen" gelesen würde — ein Widerspruch in sich.
+  - ⛔ „durch die Quelle **gedeckt**" → „**durch die Quelle belegt**" / „**stützt sich auf** die Quelle".
+
+- **`Sampling`** — drei Sinne, ein Wort, **und der Beleg gehört nur einem davon**.
+  **Frage vor dem Schreiben:** *Meine ich das Aufzeichnen einer Teilmenge, die MCP-Fähigkeit oder die
+  Tokenauswahl?*
+  - **statistisch / Traces** (der einzige Sinn, für den der Kanon eine deutsche Attestierung besitzt) →
+    **das Sampling**, *des Samplings*; **die Stichprobe** ist das **Ergebnis** (die behaltene Teilmenge),
+    nicht das Verfahren. In einer Lektion, die MCP oder Decoding berührt, **nie nackt**, sondern als
+    durchgekoppeltes Kompositum: **das Trace-Sampling**, **das Head-based Sampling**, **das Tail-based
+    Sampling**; koordiniert nach §6.5 „**Head- und Tail-Sampling**".
+  - **MCP-Fähigkeit** → **Klasse 1**, Eigenname, unübersetzt und unflektiert (§1).
+  - **Tokenauswahl beim Decoding** → §3, Zeile `Sampler`: **die Stufe benennen, nicht personifizieren**;
+    Verb **auswählen**; das Substantiv möglichst als Kompositum (*Top-K-Sampling*), nie nackt.
+  - ⚠ **Für Teil I ist das Vorsorge:** alle 27 Vorkommen dieser Welle sind der statistische Sinn.
+
+- **`Feedback` / `Rückmeldung`** — **eine Richtungskarte, kein Bedeutungsproblem**, und das macht sie
+  gefährlicher: *Rückmeldung* ist keine falsche Übersetzung (der Duden glossiert *Feedback* selbst so),
+  **aber in nativer deutscher IT-Prosa zeigt der Pfeil in die andere Richtung**.
+  **Frage vor dem Schreiben:** *Wer schickt an wen?*
+  - Nutzer → System → **das Feedback / das Nutzerfeedback**
+  - System → Nutzer → **die Rückmeldung**
+  - Beleg, der beides in **einem** Satz verteilt: „Geben die Nutzenden **Feedback** …, bekommen sie eine
+    visuelle **Rückmeldung** über die Aktivierung." (informatik-aktuell)
+  - ⚠ In einem Observability-Kapitel, dessen ganzer Punkt die **Herkunft eines Signals** ist, ist die
+    Verwechslung ein **Sachfehler**. ⛔ *das Feedbacksignal* → „ein Signal aus dem Nutzerfeedback".
+  - ⚠ Offen und **bewusst nicht hier entschieden:** ob der Korpus *Nutzerfeedback* oder
+    *Nutzenden-Feedback* schreibt, entscheidet `_language.md` § Gendern, nicht diese Karte. Incumbent:
+    **das Nutzerfeedback**.
+
+- **`Alerting` / `Benachrichtigung`** — **zwei Stufen einer Kette, nicht zwei Wörter für eine Sache**;
+  heise trennt sie in einem Satzpaar.
+  **Frage vor dem Schreiben:** *Rede ich über die REGEL, die auslöst — oder über die ZUSTELLUNG danach?*
+  - Regel + Auslösung → **das Alerting** („Für Alerting legen Administratoren fest, in welchen Fällen ein
+    Alarm ausgelöst wird"); **die Alarmierung** nur als **Glosse** beim ersten Vorkommen, nie als Laufterm
+    (sonst liest sich der Absatz wie ein Leitstellenprotokoll)
+  - Zustellung an die Zuständigen → **die Benachrichtigung / benachrichtigen** („Das Benachrichtigen der
+    zuständigen Personen übernehmen häufig externe Tools")
+  - das einzelne Ereignis → **der Alert** (§1.1.a) bzw. **der Alarm**, der **ausgelöst** wird
+  - ⚠ Wer *alerting* mit *Benachrichtigung* wiedergibt, verliert **genau die Unterscheidung, die die
+    Lektion trägt**.
+
+- **`Grounding` / `Groundedness` / `Faithfulness`** — die Karte, die verhindert, dass ein späterer
+  Durchgang die beiden Glossen für Dubletten hält (Batch A hat die Frage an Gate 6.5 eskaliert; §2 trägt
+  die Entscheidung, hier steht die Abgrenzung).
+  **Frage vor dem Schreiben:** *Rede ich über den VORGANG oder über die gemessene EIGENSCHAFT?*
+  - der Vorgang, die Antwort an den Kontext zu binden → **Grounding**, Glosse „(Rückbindung der Antwort an
+    den Kontext)"
+  - die gemessene Eigenschaft und ihre Metrik → **Faithfulness / Groundedness**, Glosse
+    „(Quellentreue …)" — *Groundedness* **nur als Kompositumsglied** (*die Groundedness-Metrik*), weil
+    das nackte Lehnwort **kein attestiertes Genus** hat
+  - ⚠ **Quellentreue ist nicht Faktentreue:** der Korpus sagt ausdrücklich, eine Antwort könne
+    **quellentreu und trotzdem falsch** sein. ⛔ *die Faktentreue* misst Wahrheit, nicht Stützung.
+  - ⛔ *die Rückbindung* als **Metrikname** — sie ist und bleibt die Glosse für *Grounding*.
 
 ---
 
@@ -420,6 +703,46 @@ Die Kapitel dieses Kurses heißen nach den **Schichten** der Pipeline, und die S
   Leerzeichen, und **beide** Glieder folgen ihrer eigenen Klasse: „**Ingestion – Chunking**",
   „**Agenten – Planung und Schleifen**", „**Produktivbetrieb – Bereitstellung**". ⚠ **Die Anker-IDs ändern
   sich dabei NICHT** — siehe §7.
+
+### 6.7 Vier Konstruktionen aus Welle 1, die jede Seite von Teil I trifft
+
+*Neu 2026-07-28. Jede stammt aus einem Belegdurchgang, und drei davon sind Fehler, die eine Seite
+**fließend** begehen kann — deshalb stehen sie hier und nicht nur in einer Termzeile.*
+
+**(a) `three costs` — das Pluraletantum blockiert den ZÄHLER, nicht das Verb.**
+`Kosten` hat keinen Singular, auf den ein Kardinale referieren könnte. „Es fallen Kosten an" ✅ —
+„**Drei Kosten** fallen an" ⛔. **Die Reparatur ist ein Zählwort oder ein Satzumbau, nicht ein anderes
+Verb:** „**drei Kostenblöcke**" (belegt) · „drei Kostenarten" · „drei Posten" · „**An drei Stellen
+entstehen Kosten.**" · „**Die Kosten haben drei Quellen.**"
+**Test:** *Steht eine Zahl unmittelbar vor `Kosten`?* Dann umbauen. — ⚠ Wer aus diesem Befund
+„*anfallen* ist verboten" macht, repariert das falsche Wort.
+
+**(b) `X attacks that problem` — das ist NICHT `angreifen`.**
+Die Welle enthält 54 Sicherheitsangriffe **und drei Stellen, an denen `attack` „ein Problem angehen"
+heißt** („Two techniques from 2024 **attack** that loss", „Late chunking **attacks** it by inverting the
+order of operations", „Contextual retrieval **attacks** the same disease at index time").
+→ „**gehen dagegen an**", „**setzen dort an**", „**greifen das Problem auf**".
+**Test:** *Ist das Subjekt ein Angreifer — oder ein Verfahren?* Verfahren → nie `angreifen`. In einem Buch,
+dessen übrige Vorkommen Sicherheitsangriffe sind, wäre das ein **Lesefehler**, kein Stilfehler.
+
+**(c) Das englische Verb, für das es kein deutsches gibt — umbauen, nicht entlehnen.**
+Diese Welle liefert das Muster dreimal: `to threshold`, `to redact` (im schmalen Listensinn), `to cap`.
+Deutsch bildet an dieser Stelle **eine Relativkonstruktion oder ein Funktionsverbgefüge**:
+- *a score you can threshold* → „ein Score, **auf den sich ein Schwellenwert anwenden lässt**"
+- *a number you threshold on* → „ein Konfidenzwert, **über den ein Schwellenwert entscheidet**"
+- *X overrides Y* → „X **setzt** Y **außer Kraft**" (Satzklammer!)
+- *cap it with `max_tokens`* → „**Begrenzen Sie die Ausgabe mit `max_tokens`.**"
+⛔ *thresholden*, *alerten*, *trunkieren* (letzteres **nicht** mangels Beleg, sondern **wegen** eines
+Belegs im falschen Sinn — `_language.md` §1.3.2).
+**Test:** *Habe ich gerade ein englisches Verb mit deutscher Endung gebildet?* Dann steht die Antwort in
+§1.3.2, und sie lautet fast immer: den Satz umbauen.
+
+**(d) Ordinalzahl + Bezugswort — `das 95. Perzentil`.**
+Ziffer, **Punkt**, Leerzeichen, Bezugswort (Duden: „In Ziffern geschriebene Ordnungszahlen erhalten einen
+Punkt"). ⛔ „das 95te Perzentil", „das 95-te Perzentil". `p95` / `p99` bleiben **Klasse 1**, klein und
+englisch; mit Artikel durchgekoppelt: **der p95-Wert**. Prozentangaben folgen der Typografiezeile:
+`5 %`, nicht `5%`. ⚠ **Umbruchschutz (U+00A0) zwischen „95." und „Perzentil" ist HOUSE** — eine Regel
+dafür wurde ausdrücklich gesucht und **nicht gefunden**.
 
 ---
 
@@ -863,3 +1186,264 @@ des Kanons? — `_language.md` führte am 2026-07-28 **608** Geviertstriche U+20
 nichts geändert:** es ist eine **locale-weite redaktionelle Entscheidung**, keine Pilotentscheidung, und sie
 gehört nach #318. Der Pilot liefert nur die Zählung, damit die Entscheidung dort auf Zahlen und nicht auf
 einem Eindruck getroffen wird.
+
+---
+
+### Phase 4 (2026-07-28) — Welle 1, Belegdurchgang vor der Prosa (RAG Teil I)
+
+*Fünf parallele Attestierungsbatches über die 13 englischen Dateien unter `docs/part-1-rag/` (A Evaluation
+und Messung · B Retrieval-Mechanik · C Sicherheit und Datenschutz · D Inhalt und Daten · E Observability
+und Betrieb), danach **ein** Zusammenführungsdurchgang (Gate 6.5) über alle fünf Ledger gleichzeitig.
+**Kein Renderdurchgang, keine Prosa** — dieser Eintrag protokolliert, was das Register vor der ersten
+deutschen Seite gekostet und erbracht hat.*
+
+#### Die Zahlen, gemessen und nicht geschätzt
+
+- **59 Kopfwörter** haben die fünf Batches beurteilt. **Sieben** davon hatten bereits eine Kanonzeile —
+  und bei **dreien** (`Budget`, `Cap`, `Signal`) betraf die vorhandene Zeile nur das **Markenkompositum**
+  (*Error Budget*, *Soft Cap / Hard Cap*, *Golden Signals*), **nicht das Appellativ**, das die Prosa
+  tatsächlich braucht. **Zweiundfünfzig Kopfwörter waren neu.**
+- **Rund 45 Zeilen sind SETTLED** (mehrere davon mit ausdrücklich WEAK oder OPEN markiertem Teilzweig),
+  **18 Zeilen stehen OPEN** — jede mit ihrer Schließbedingung in §3 —, **kein einziger neuer
+  DISPUTED-Fall.** Die bestehenden DISPUTED-Zeilen (*Recall/Precision*, *Cold Start*, *Drift*, *Harness*,
+  *API*, die Formwahl bei *Least Privilege*) sind **unberührt geblieben**.
+- **Der Kanon ist an fünf Stellen gewachsen, deren Zählung im Text steht und deshalb mitgezogen werden
+  musste:** der Fallenkasten von **sechzehn auf einundzwanzig**, §1.1.g von **vierzehn auf achtzehn**, und
+  — weil Punkt 4 des Injektionsblocks jene achtzehn **aufzählt** — auch der Block, der **wörtlich in jeden
+  Render-Prompt** kopiert wird.
+
+#### Was die Prosa an Register verlangt hat, das die Glossar-Saat nicht enthielt
+
+Das Startregister (§2) ist aus den **Hochfrequenztermini des englischen Quellbaums** gezogen worden, also
+aus dem, was eine Terminologieliste sieht. **Was es nicht sah, ist das Bindegewebe:** `cost` (57),
+`attack` (54), `masking` (29), `parsing` (29), `claim` (25), `metadata` (25), `budget` (23), `sampling`
+(27 — und, gezählt, **alle 27 im statistischen Sinn**), `passage` (17), `fusion` (17), `refusal` (15),
+`length` (15), `paper` (15). **Das sind keine Fachbegriffe, das sind die Wörter, mit denen ein Fachtext
+Sätze baut** — und genau sie hatten keine Zeile. Der Befund ist deshalb nicht „das Register war
+unvollständig", sondern schärfer: **ein aus Termfrequenz gezogenes Register erfasst systematisch nicht,
+was ein Kapitel FLIESSEND macht.**
+
+#### Sechs Kollisionen, die kein einzelner Batch sehen konnte
+
+**Alle sechs sind von der Gestalt, für die Gate 6.5 existiert: jede Seite war für sich richtig.**
+
+1. **`Normierung` (B) gegen `Score-Normalisierung` (A).** Batch B hat den Referenten **eigens studiert**
+   und ruled `die Normierung` (WEAK, mit protokollierter Gegenevidenz); Batch A schrieb beim Ruling zu
+   `calibration` **im Vorbeigehen** „die **Score-Normalisierung**" in ein durchgearbeitetes Beispiel.
+   → **B gewinnt** nach der Vorrangregel *wer den Referenten eigens studiert hat, schlägt wer ihn beiläufig
+   verwendet*. **Beide Seiten bleiben stehen:** A's **Aufspaltung** (Judge-Kalibrierung ≠
+   Score-Skalierung) war die eigentliche Einsicht und wird übernommen — nur das Wort wechselt.
+   **Korpusform: „RRF braucht keine Score-Normierung."**
+2. **Die Glosse für `Faithfulness`.** Batch A fand zwei unabhängige deutsche Quellen, die die Metrik mit
+   **Quellentreue** glossieren, und hat die Frage **eskaliert, statt §2 anzufassen** — richtig, denn §2
+   führte `Faithfulness` als settled kept-EN **ohne** Glosse. → **Die Zeile wird nicht umgedreht, sie
+   bekommt eine Glosse** und wandert aus der glossenlosen Liste in die Glossentabelle. Die mitgemeldete
+   Doppelglossen-Sorge ist geprüft und **aufgelöst**: *Grounding* ist der **Vorgang**,
+   *Faithfulness/Groundedness* die gemessene **Eigenschaft** — Sense-Card in §4.
+3. **`Error Budget` — ein Selbstwiderspruch INNERHALB dieser Datei.** §2 führte den Loan als settled
+   kept-EN, während die deutsch geführte Tabelle **derselben Datei** sowie `_language.md` §1.1.g und §1.2
+   **das Fehlerbudget** setzen. → **Der Loan wird gestrichen**, sichtbar und mit Grund; die deutsche Zeile
+   ist die belegte (Computerwoche und iX schreiben ausschließlich deutsch), die kept-EN-Nennung war ein
+   Bootstrap-Rest. **Im selben Zug `Latency Budget`:** stand kept-EN **ohne jeden Beleg** → nach §3, OPEN,
+   mit Schließbedingung. ⚠ **Der Widerspruch stand seit dem Bootstrap in einer Datei und ist von keinem
+   Prosa-Gate gefunden worden — Gates lesen Sätze, nicht Register.**
+4. **`Sampling` fuhr auf einem Beleg mit, der einem anderen Referenten gehört.** Die einzige deutsche
+   Attestierung des Kanons (§1.1.e, heise) belegt den **statistischen** Sinn; die MCP-Zeile und die
+   Decoding-Zeile in §2 standen unbelegt daneben. **Das ist der `Span`-Fehler eine Etage höher: korrektes
+   Genus für den falschen Referenten.** → Sinn (iii) behält den Beleg; die **MCP-Fähigkeit wird Klasse 1**
+   (Eigenname); der Decoding-Sinn läuft über die bestehende `Sampler`-Zeile; Sense-Card in §4.
+   ⚠ **Der Auftrag hatte die Lage umgekehrt vermutet** — die Beleglage fiel andersherum aus.
+5. **`der Dienst` — und die Zählung, die vier Batches gleichzeitig fortschrieben.** Batch E fand eine
+   §1.1.g-Zeile, die **fehlte**, obwohl der Kanon längst so schreibt (§1.4, §9.3, § Gendern). ⚠ **Die
+   eigentliche Kollision war arithmetisch: DREI Batches meldeten unabhängig „damit wächst §1.1.g auf
+   fünfzehn"** (B für *Kosinus-Ähnlichkeit*, D für *mehrsprachig*, E für *der Dienst*), Batch C reichte
+   *die Schwärzung* nach. **Jede Meldung war für sich richtig und alle vier zusammen falsch.** →
+   **vierzehn → achtzehn**, in der Tabelle **und** im Injektionsblock. **Ebenso doppelt belegt war der
+   Fallenkasten:** B beanspruchte Platz **17** für `Trunkierung`, E denselben Platz für `Service`. →
+   beide sind gültige Fallen, der Kasten geht auf **einundzwanzig**.
+6. **`verbosity bias` / `self-preference bias` — hier hat Gate 6.5 GEGEN die Zurückhaltung eines Batches
+   entschieden, und das steht ausdrücklich so da.** Batch A belegte das Bildungsmuster auf **Stufe 1**
+   (BSI: geschlossenes Kompositum, deutsches Erstglied, englisches Original in Klammern, 16 Geschwister)
+   und **prägte die beiden Wörter bewusst nicht**, weil es ihre Vorkommen nicht besaß. Der
+   Zusammenführungsdurchgang hat gezählt — **`verbosity bias` 4×, `self-preference` 6× + `self-enhancement`
+   2×** —, beide liegen über der Nachtragsschwelle und **müssen** eine Wiedergabe haben. →
+   **Das Muster lizenziert die FORM, nicht das WORT:** *der Ausführlichkeitsbias (Verbosity Bias)*,
+   *der Selbstbevorzugungsbias (Self-Preference Bias)*, **WEAK**, mit **pflichtiger** englischer Klammer —
+   und wo der Quelltext ohne „bias" auskommt, wird **nicht substantiviert, sondern der Satz gebaut**.
+   **Batch A's Abstinenz bleibt als Gegenstimme im Protokoll**, weil sie methodisch richtig war.
+
+#### Fünf Befunde, die den eigenen Vorhandensvermutungen eines Batches widersprochen haben
+
+*Diese Liste steht hier, weil ein Ledger, das nur seine Ergebnisse zeigt, seine teuerste Arbeit verbirgt.*
+
+- **`die Schwärzung` war als REJECTED geschrieben**, bevor die BSI-Handreichung auftauchte: **weder Duden
+  noch DWDS führen unseren Sinn** (nur „schwarz färben", der fotografische Sinn und, süddeutsch-salopp,
+  „schmuggeln"). **Die Stufe-1-Domänenquelle überschreibt die Wörterbuchlücke** — die `Log`-Lehre
+  („‚unbelegt' hieß mehrfach ‚falsch gesucht'") ein zweites Mal bestätigt.
+- **`kalibrieren` hätte scheitern können:** Duden führt **nur** messtechnische Sinne. Gerettet hat die
+  Zeile **DWDS-Sinn 2** — die andere Hälfte der Lehre: *eine Falle in EINEM Wörterbuch heißt nicht, dass
+  das ANDERE den richtigen Sinn nicht führt.*
+- **`überschreiben` ist NICHT einfach falsch**, und das wäre beinahe so protokolliert worden: dieselbe BSI
+  verwendet es für *override*. Der Kanon übernimmt es trotzdem nicht — **aber beide Befunde stehen im
+  Eintrag**, damit niemand später den zweiten „entdeckt" und die Zeile für nachlässig hält.
+- **Bei `domain` saß die Falle nicht, wo der Auftrag sie vermutete.** Erwartet war „Domain heißt zuerst
+  Internetdomain"; **der gefährlichere Zwilling steckt im deutschen Wort** (Windows-/AD-Domäne). Der
+  Ausweg auf *Domäne* wehrt den Netzsinn also gar nicht ab — **die Fügung tut es.**
+- **Bei `Kosten` hatte der Kaltleser recht und die Diagnose war falsch.** Das Pluraletantum blockiert
+  **den Zähler, nicht das Verb**: „Es fallen Kosten an" ist einwandfrei, „drei Kosten" ist es nicht. **Wer
+  daraus „*anfallen* ist verboten" macht, repariert das falsche Wort.**
+- *(Kleiner, aber teuer:* **`Dashboard` fehlte nicht — es stand im falschen Unterabschnitt.** Die Zeile
+  ist seit dem Bootstrap in §1.1.a korrekt und vollständig; wer eine Observability-Seite rendert, lädt
+  aber §1.1.e und findet sie dort nicht. Repariert mit einem **Querverweis**, nicht mit einem Umzug —
+  Verschieben bräche bestehende Verweise, ohne etwas zu entscheiden.*)
+
+#### Eine neue Klasse, die der Fallenkasten nicht hatte
+
+Die einundzwanzig Kastenzeilen enden alle mit „Wort nicht verwenden". **Welle 1 hat eine zweite Klasse
+sichtbar gemacht, deren Konsequenz „Wort verwenden, aber nie nackt" lautet:** `Kandidat` (Wörterbücher
+kennen nur Personen), `Passage` (Ladenpassage), `Aussage` (Zeugenaussage), `Verweigerung` (Kriegsdienst —
+eine **Dominanzfalle**, kein falscher Sinn), `Domäne` (AD-Domäne). Bei allen fünf trägt **die Fügung** den
+Referenten, nicht das Lemma. **Sie in den Kasten zu schreiben hieße, fünf Wörter zu verbieten, für die es
+keinen Ersatz gibt — und der nächste Durchgang erfände einen.** Die Trennung *verbieten* gegen *binden*
+ist deshalb selbst die Entscheidung; sie steht als eigener Unterkasten in `_language.md` §1.1.
+`Alarmmüdigkeit` schließt die Klasse als **Grenzfall** ab: dort hilft keine Kollokation, weil das Problem
+das **Register** ist (Intensivmedizin) — die Zeile bleibt OPEN.
+
+#### Was dieser Durchgang NICHT konnte
+
+- **Er sieht nur Widersprüche.** Was ein einzelner Batch für sich falsch beurteilt hat, findet er nicht —
+  das ist die eingebaute Grenze von Gate 6.5 und keine Nachlässigkeit dieses Laufs.
+- **Er hat nicht nachrecherchiert.** Wo zwei Ledger eine Frage offen ließen, steht die Zeile **OPEN mit
+  gehaltenem Incumbenten**; das ist das korrekte Ergebnis, nicht ein Patt.
+- **Die deutsche Fachbuchschicht (dpunkt, Rheinwerk, O'Reilly DE) und die kostenpflichtigen iX-/c't-
+  Volltexte blieben wieder unerreichbar** — dieselbe Feststellung wie in Phase 2, und dort liegen
+  weiterhin die meisten der offenen Antworten.
+- **Achtzehn OPEN-Zeilen sind kein Restposten, sondern die Arbeitsliste der nächsten Welle.** Sechs davon
+  (`Alert Fatigue`, `Tail-Latenz`, „the tail", `Latenzbudget`, `staleness/freshness`, `burn-rate
+  alerting`) betreffen **eine einzige Seite** — die Observability-Vertiefung. Wer sie rendert, rendert
+  eine Seite, deren Kernvokabular im Deutschen **nicht existiert**, und muss durchgehend umschreiben.
+  Das gehört in den Renderbrief, nicht in eine Fußnote.
+
+---
+
+### Phase 5 (2026-07-29) — Welle 1, Seiten- und Wellenkonsistenz NACH der Prosa (RAG Teil I)
+
+*Ein Durchgang über alle dreizehn ausgelieferten deutschen Seiten unter `part-1-rag/`, nachdem sechs Renderer
+sie parallel geschrieben hatten. **Das ist die Schicht, die das Playbook nach dem Piloten eingezogen hat:
+Gate 5 beurteilt Zeichenketten in Isolation und kann eine Eigenschaft der SEITE oder der WELLE grundsätzlich
+nicht sehen** (§8 Phase 3 §K, Amendment in `de-locale-playbook.md` §4). Kein Renderdurchgang, keine neue
+Recherche — gezählt, geruled, angewandt, protokolliert.*
+
+#### Der Befund, der alles andere erklärt
+
+**Jeder Renderer hat innerhalb seiner Lektion sauber gearbeitet. Es gibt in dieser Welle keine einzige
+Kollision INNERHALB einer Seite. Alle liegen ZWISCHEN den Seiten** — und keine einzelne Instanz ist ein
+Fehler: jede Zeichenkette für sich ist einwandfreies Deutsch, jede war lokal die richtige Wahl. **Defekt ist
+erst die Menge.** Das ist dieselbe Gestalt wie bei Gate 6.5 eine Etage tiefer (dort kollidieren
+Attestierungsbatches, hier Renderer), und es ist der Grund, warum ein Konsistenzdurchgang **zählen** muss und
+nicht lesen kann: ein Prüfer, der die Seiten nacheinander liest, sieht auf jeder Seite ein stimmiges Bild.
+
+#### Die teuerste Kollision: EIN Referent, SIEBEN Namen
+
+`retrieval failure` / `generation failure` ist das diagnostische Rückgrat, das der Überblick aufspannt; es
+kehrt auf mindestens acht Seiten wieder. Es trug **sieben** deutsche Namen: *Fehler des Retrievals*
+(ausgerechnet auf der Seite, die den Terminus **definiert**), *Versagen des Retrievals* (4×), *Fehler im
+Retrieval* (3×), *Fehlerquote des Retrievals*, *die Quote*, *Fehler der Generation* (3×), *Fehler in der
+Generation* (3×). **Der Pilot hatte vier Namen für einen Referenten; eine Welle mit sechs parallelen
+Renderern kommt auf sieben — die Zahl skaliert mit der Zahl der Autoren, nicht mit der Zahl der Seiten.**
+
+**Geruled: `das Fehlerbild des Retrievals` / `das Fehlerbild der Generation`** — Begründung, Abgrenzung gegen
+`die Fehlerklasse` und der Verbleib des Verbs `versagen` stehen in der `Fehler`-Sense-Card (§4), wo die
+Entscheidung hingehört. ⚠ **Der eigentliche Befund über die Methode ist ein anderer:** die Karte hatte die
+Antwort seit dem Bootstrap („Kategorie → das Fehlerbild"), und **zwei Seiten hatten sie unabhängig
+voneinander bereits angewandt**, ohne dass eine Zeile sie festhielt. **Der Kanon war nicht unvollständig — er
+war unangewandt.** Ein Register beantwortet keine Frage, die niemand ihm stellt; deshalb muss der
+Konsistenzdurchgang die Karte **gegen die gezählten Namen halten** und nicht darauf warten, dass ein Renderer
+nachschlägt.
+
+#### Zwei Kanonzeilen haben einander widersprochen — und beide Male gewann die, die ein System bildet
+
+1. **`top-K` gegen `Top-k`.** §3 und § Typografie setzen `top-K`, §1.1.b setzte `Top-k`. **Die §1.1.b-Zeile
+   ist gestrichen** (sichtbar, mit Begründung, wie die `Error-Budget`-Streichung). Entschieden hat nicht die
+   Mehrheit der Fundstellen, sondern dass die eine Seite ein **System** ist — dieselbe Positionsregel trägt
+   `vLLM` und `promptfoo`, und das große `K` bindet an `Recall@K` — während die andere sich **selbst als
+   „Usus-Beobachtung, keine Norm"** deklarierte. **Eine Zeile, die ihre eigene Beweislast benennt, hat den
+   Streit vorentschieden.**
+2. **`Golden Set` gegen `der Goldstandard` — innerhalb DERSELBEN Datei**, zum zweiten Mal nach `Error Budget`.
+   §2 führte den Loan zweimal, die deutsch geführte Tabelle derselben §2 und `_language.md` §1.1.b setzten den
+   deutschen Terminus. **Die Welle hatte längst abgestimmt: 29 : 0.** Streichung in §2.
+
+> **Die Lehre, die aus beiden zusammen folgt und die über diese Welle hinausreicht: wenn ein Register und
+> sechs unabhängige Renderer auseinandergehen, ist das REGISTER der Verdächtige.** Beim Geviertstrich (unten)
+> war es genauso: sechs Renderer haben denselben Kanonfehler unabhängig voneinander korrigiert. **Der Korpus
+> ist ein Prüfinstrument für den Kanon, nicht nur umgekehrt.**
+
+#### Der Kanon hat jedem Renderer aufgetragen, einen verbotenen Codepoint auszuliefern
+
+**§2 gibt seine Pflichtglossen zum wörtlichen Übernehmen frei — und schrieb fünf davon mit U+2014**, dem
+Geviertstrich, den § Typografie dem Korpus verbietet und den die Codepoint-Zählung zurückweist. Repariert
+sind die fünf plus `Groundedness` (`_language.md`) und `Harness` (`ai-sdlc.md`).
+**Die Regel, die daraus wird: eine Zeichenkette, die der Kanon zum wörtlichen Übernehmen freigibt, ist ein
+AUSGELIEFERTER String und untersteht der Typografie — auch wenn sie in einer Redaktionsdatei steht.**
+⚠ **Ausdrücklich nicht angetastet:** die **Metaprosa** der Kanondateien (das ist §8 §O und #318, eine
+locale-weite redaktionelle Frage) und **Zitate aus Quellen** — ein Zitat zu glätten fälscht den Beleg.
+**Die Grenze zwischen beidem zu ziehen war die eigentliche Arbeit dieser Zeile**, nicht das Ersetzen.
+
+#### Was der Durchgang an neuen Zeilen erzwungen hat — und woran man sie erkennt
+
+**Siebzehn neue §1.1-Zeilen**, und **keine einzige** entstand aus einer Prägung: jede hält fest, was die
+Renderer bereits einstimmig geschrieben hatten, ohne nachschlagen zu können — `die Quellenangabe` (21× auf
+einer Seite allein 18×), `die Prüffrage` (7×), `die Modellbeschreibung` (2× wortgleich),
+`referenzfrei/referenzbasiert` (8×), `Faithfulness` **artikelfrei** (32× ohne einen einzigen Artikel),
+`Late Interaction` (6× ohne Artikel). **Das ist das Muster, das die Zeilen belastbar macht: sechs Renderer,
+die dieselbe Lösung finden, ohne voneinander zu wissen, sind eine Messung — kein Konsens.**
+⚠ Und der Umkehrschluss steht mit im Register: **`labeln` bleibt OPEN**, obwohl eine Seite „gelabelte Daten"
+schreibt. **Ein Konsistenzdurchgang schließt keine offene Zeile** — die Stelle ist gemeldet, nicht geändert.
+
+#### Zwei Fallen, die der Fallenkasten nicht hatte, und beide sind vom Typ „richtig, aber nie nackt"
+
+- **`die Generation`** — der gesetzte Schichtname, aber im Deutschen zuerst die **Alterskohorte**. Damit
+  gehört er in die Klasse von `Bestand`, `Kandidat`, `Passage`, `Aussage`, `Domäne`, die Welle 1 aufgemacht
+  hat. Dazu kam ein zweiter Name für dieselbe Stufe (`die Generierung`, 3× auf einer Seite, u. a. im
+  Diagramm) — **vereinheitlicht auf `Generation`**.
+- **`das Korpus`** — das Genus wechselte zwischen den Seiten, also genau das, was §1.1 als lautestes
+  Maschinenübersetzungs-Signal führt. ⚠ **Und der Beweis stand schon im Text:** dieselben Seiten, die „**den**
+  gesamten Korpus" schrieben, schrieben den Plural „Unternehmen**skorpora**" — *Korpora* ist der Plural des
+  **Neutrums**. **Ein Text kann seinen eigenen Fehler beweisen, wenn man ihn zählt statt liest.**
+
+#### Zwei Entscheidungen, die Teil II und Teil III BINDEN
+
+1. **`sidebar_label: Teilübersicht` → `Überblick`.** *Teilübersicht* ist **keine attestierte deutsche Form**,
+   sondern eine Prägung, und sie decodiert zweideutig: „Übersicht über den Teil" **oder** „teilweise
+   Übersicht" — und ein Sidebar-Label hat keinen Kontext, der die falsche Lesart abwehrt. Ihr Renderer hatte
+   das gemeldet; ausgeliefert wurde sie trotzdem, weil eine andere Seite sie in der Prosa aufgriff. **Genau
+   dieser Mechanismus ist die Gefahr: ein gemeldeter Defekt zementiert sich, sobald eine Nachbarseite ihn
+   zitiert.** ⇒ **Die Übersichtsseite jedes Teils trägt `sidebar_label: Überblick`**, und die Prosa verweist
+   auf sie als **„der Überblick zu Teil I/II/III"** — eine Fügung, die zugleich sagt, *welches* Dokument
+   gemeint ist.
+2. **`Teil I` (der Buchteil) gegen `Teil 1` (die erste Hälfte einer Lektion).** Der Unterschied war
+   **römisch gegen arabisch und sonst nichts** — er verschwindet beim Lautlesen, und **zwei von drei
+   Kaltlesern sind darüber gestolpert**; auf der Observability-Vertiefung standen beide auf einer Seite und
+   meinten zwei verschiedene Dokumente. ⇒ **Konvention: die erste Nennung je Seite wird ausgeschrieben —
+   „[Teil 1 der Lektion](./index.md)"** (die Formulierung, die der ausgelieferte Sidebar-Hinweis „Als
+   Nächstes: **Teil 2 der Lektion**" ohnehin schon verwendet), danach kurz „Teil 1"; **der Buchteil heißt
+   römisch und wird, wo er quer verweist, als „der Überblick zu Teil I" benannt.**
+
+#### Was dieser Durchgang NICHT konnte — und was er ausdrücklich nicht angefasst hat
+
+- **Er sieht nur Mengen.** Was ein einzelner Renderer für sich falsch entschieden hat, findet er nicht; das
+  ist die eingebaute Grenze, dieselbe wie bei Gate 6.5.
+- **Er hat nicht nachrecherchiert.** Wo kein Beleg vorlag, steht die Zeile **HOUSE** oder **OPEN** mit
+  gehaltenem Incumbenten und benannter Schließbedingung — nie eine Prägung.
+- **Er hat gutes Deutsch stehen lassen, auch wo es die Einheitlichkeit stört.** `der Zielkonflikt` bleibt
+  neben `die Abwägung`, weil er eine **schärfere** Aussage macht (zwei Ziele stehen gegeneinander) und echtes
+  Fachvokabular ist. **§8 §I gilt auch für einen Konsistenzdurchgang: eine Runde, die das glattzieht, macht
+  den Korpus schlechter.**
+- **Er hat einen Quelldefekt gemeldet statt repariert:** `maskieren` ist auf der Guardrails-Vertiefung
+  zugleich der **Oberbegriff** und **einer seiner vier eigenen Operatoren** — dieselbe Mehrdeutigkeit trägt
+  das englische Original. **Das ist §M, und die Regel gilt unverändert: die Sekundärlocale macht die
+  Mehrdeutigkeit sichtbar, sie glättet sie nicht.**
+- **Offen an die nächste Welle:** die Observability-Übersicht definiert die Evaluierung als „offline, auf
+  einem Datensatz", während drei Argumente der Vertiefung auf einer unglossierten **Online-Evaluierung**
+  aufsitzen. Das ist ein **wellenweiter** Riss, der in die Evaluierungslektion hineinreicht — er gehört
+  dorthin und nicht in einen lokalen Flicken.
