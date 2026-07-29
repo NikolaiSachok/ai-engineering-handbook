@@ -61,7 +61,7 @@ eingestellten Werkzeug halb herübergezogen wurden, und Scans. Der übliche Rat,
 Schemata zu prüfen, trifft für strukturierte Einträge zu und geht bei Dokumenten am Ziel vorbei, denn was
 eine RAG-Antwort zerlegt, ist selten ein fehlerhaft gefülltes Feld. Es ist die **Struktur**: eine Tabelle,
 die zu Prosa plattgedrückt wurde, eine Fußzeile, die an jedem Chunk klebt, und vor allem eine Chunk-Grenze,
-die eine Tatsache von der Einschränkung trennt, die sie erst wahr gemacht hat. „Die Tarife stiegen um 4 %“
+die eine Tatsache von der Einschränkung trennt, unter der sie überhaupt gilt. „Die Tarife stiegen um 4 %“
 ist nicht falsch – bis Sie es von „nur im Pilotprojekt 2019“ abschneiden.
 
 Schlimmer noch: Ein strenger Validierer versagt *unbemerkt*. Er verwirft die Dokumente, die nicht in das
@@ -101,20 +101,20 @@ einen Fehler. Der Dienst antwortet mit 200. Es kommen einfach die falschen Chunk
 wofür es gebaut ist – es schreibt eine flüssige Antwort aus allem, was es bekommen hat.
 
 Das Retrieval getrennt von der Generation zu bewerten, ist die diagnostische Hälfte, und Teil I begründet
-sie: Ohne diese Trennung unterscheiden Sie einen Fehlgriff des Retrievals nicht von einem Modell, das guten
-Kontext übergangen hat, und Sie verbringen zwei Wochen damit, an einem Prompt zu feilen, um einen Fehler in
-der Indexierung zu beheben. Was der Produktivbetrieb zusätzlich braucht, ist ein Weg der Verweigerung, und genau
-den haben die meisten Demos nicht einmal im Entwurf. Ein Demo gibt **immer top-K** zurück – top-K ist ein
-Ausschnitt und kein Urteil, und ein Ranking nach Ähnlichkeit liefert seine fünf besten Kandidaten, ob
-nun einer davon Ihre Frage betrifft oder keiner. **Setzen Sie eine Score-Untergrenze hinter die Stufe, deren
-Scores etwas bedeuten.** Die zusammengeführten Scores einer hybriden Suche – das Ranking aus der dichten und
-das aus der lexikalischen Suche, in einem zusammengefasst – sind nicht auf eine vergleichbare Skala
-kalibriert, ein Schwellenwert auf einem solchen Score ist deshalb annähernd willkürlich; der Score eines
-Cross-Encoder-Rerankers ist der, gegen den Sie eine Untergrenze wirklich einstellen können.
-Oberhalb der Untergrenze ist die Antwort **belegt** – jede Aussage stützt sich auf eine Passage, die die Hürde
-genommen hat. Unterhalb davon gibt das Retrieval **absichtlich eine leere Menge zurück**, und der Generator
-sagt, dass ihm der stützende Kontext fehlt, statt aus einer schwachen Ausbeute etwas Plausibles
-zusammenzusetzen.
+sie: Ohne diese Trennung unterscheiden Sie einen Fehlgriff des Retrievals nicht von einem Modell, das
+guten Kontext übergangen hat, und Sie verbringen zwei Wochen damit, an einem Prompt zu feilen, um einen
+Fehler in der Indexierung zu beheben. Was der Produktivbetrieb zusätzlich braucht, ist die Möglichkeit zu
+verweigern, und genau den haben die meisten Demos nicht einmal im Entwurf. Ein Demo gibt **immer top-K**
+zurück – top-K ist ein Ausschnitt und kein Urteil, und ein Ranking nach Ähnlichkeit liefert seine fünf
+besten Kandidaten, ob nun einer davon Ihre Frage betrifft oder keiner. **Setzen Sie eine Score-Untergrenze
+hinter die Stufe, deren Scores etwas bedeuten.** Die zusammengeführten Scores einer hybriden Suche – das
+Ranking aus der dichten und das aus der lexikalischen Suche, in einem zusammengefasst – sind nicht auf
+eine vergleichbare Skala kalibriert, ein Schwellenwert auf einem solchen Score ist deshalb annähernd
+willkürlich; der Score eines Cross-Encoder-Rerankers ist der, für den Sie eine Untergrenze wirklich
+festlegen können. Oberhalb der Untergrenze ist die Antwort **belegt** – jede Aussage stützt sich auf eine
+Passage, die die Hürde genommen hat. Unterhalb davon gibt das Retrieval **absichtlich eine leere Menge
+zurück**, und der Generator sagt, dass ihm der stützende Kontext fehlt, statt aus einer schwachen Ausbeute
+etwas Plausibles zusammenzusetzen.
 
 Der letzte Schritt gelingt nur einem Generator, der das Verweigern gelernt hat – dafür argumentiert
 die [Generation](../part-1-rag/generation/index.md) ausführlich, und das
@@ -216,10 +216,10 @@ neu, also kostet eine Aufgabe, die doppelt so lange läuft, ungefähr das Vierfa
 Kontext mitfährt, ist der wirksamste Hebel, den Sie haben. Ein stabiles Präfix des Prompts, das sich cachen
 lässt, hilft mehr als jeder Wechsel auf ein anderes Modell.
 
-Damit kommt der zweite Einwand: „Überlassen Sie die Routine einem leichteren Modell“ ist ein Rat mit einer
+Damit kommt der zweite Einwand: „Überlassen Sie die Routine einem kleineren Modell“ ist ein Rat mit einer
 Bedingung, und die Bedingung wird meist weggelassen. Es zählen die **Kosten für eine angenommene Antwort**
-und nicht die Kosten je Token. Ein günstigeres Modell, das drei Versuche braucht, wo das teure einen
-brauchte, ist damit nicht günstiger – diesen Abstand fressen die **Mehrkosten der Wiederholungen**:
+und nicht die Kosten je Token. Ein günstigeres Modell, das drei Versuche braucht, während das teure mit
+einem auskam, ist damit nicht günstiger – diesen Abstand fressen die **Mehrkosten der Wiederholungen**:
 
 ```text
 cost_per_accepted ≈ attempt_cost / p          (p = Erfolgsquote beim ersten Versuch)
@@ -255,10 +255,10 @@ dieselbe Arithmetik für eine andere Einheit aus: für die Kosten einer angenomm
 </InfoCard>
 
 Die Qualität lässt nach, ohne dass ein Deployment stattfindet. Nutzer bringen neues Vokabular mit, die
-Dokumente darunter ändern sich, und ein beim Anbieter betriebenes Modell, dessen Version Sie nicht festgelegt
-haben, wird unbemerkt ausgetauscht. Das ist der dritte Einwand und der schärfste: Der gewohnte Reflex,
-ein erneutes Training von Schwellenwerten für den Drift auslösen zu lassen, ist eine Antwort aus MLOps, die
-ein System, in dem die Gewichte fast nie das Problem sind.
+Dokumente darunter ändern sich, und ein beim Anbieter betriebenes Modell, dessen Version Sie nicht
+festgelegt haben, wird unbemerkt ausgetauscht. Das ist der dritte Einwand und der schärfste: Der gewohnte
+Reflex, ein erneutes Training von Schwellenwerten für den Drift auslösen zu lassen, ist eine Antwort aus
+MLOps, übertragen auf ein System, in dem die Gewichte fast nie das Problem sind.
 
 In einem System mit Retrieval kommt der Drift meist vom Korpus oder von den Fragen, und deshalb beginnt die
 Leiter weit unterhalb des Modells: neu indexieren und neu in Chunks aufteilen, die Mischung der Suchverfahren
@@ -299,7 +299,7 @@ Verlangen Sie dasselbe von allem anderen, was das Verhalten ändert, ohne den Co
 die Modellversion fest**, **nehmen Sie einen Snapshot des Korpus**, rollen Sie als Canary Release aus,
 und halten Sie für jeden der drei einen eigenen Weg zurück bereit. Ein System, in dem sich Prompt, Modell und
 Index jederzeit unbemerkt ändern können, hat überhaupt keinen reproduzierbaren Zustand, und das
-behebt kein Test der Welt. Die Mechanik des Release steht in [LLMOps](./llmops/index.md).
+behebt kein Test der Welt. Die Mechanik des Releases steht in [LLMOps](./llmops/index.md).
 
 ## 8 · Eine Pipeline braucht Prüfungen zwischen den Schritten
 
@@ -323,8 +323,8 @@ behebt kein Test der Welt. Die Mechanik des Release steht in [LLMOps](./llmops/i
 In einer Pipeline über mehrere Schritte wird die erste schlechte Ausgabe zu der Eingabe, die der nächste
 Schritt für vertrauenswürdig hält. Aus einem Fehlgriff des Retrievals wird eine überzeugte Zusammenfassung,
 aus ihr eine Entscheidung, und bis irgendetwas auffällig aussieht, liegt der ursprüngliche Fehler mehrere
-Umformungen zurück. Die Antwort darauf ist eine Prüfung zwischen den Schritten, und jede Stufe sollte darauf
-gebaut sein, schlechte Eingaben **abzuweisen**, statt aus ihnen das Beste zu machen. Eine Stufe, die nie
+Umformungen zurück. Die Antwort darauf ist eine Prüfung zwischen den Schritten, und jede Stufe hat die Aufgabe,
+schlechte Eingaben **abzuweisen**, statt aus ihnen das Beste zu machen. Eine Stufe, die nie
 etwas abweist, verdeckt Fehler nur und gibt sie weiter.
 
 Die Verfeinerung, die sich lohnt, ist die **Reihenfolge**. Nicht jede Prüfung kostet gleich viel: Eine
@@ -352,11 +352,11 @@ Ausgabe und bei der Ingestion absichern – sind die
 Noch vier, und jeder von ihnen hat schon ein Produktivsystem zu Fall gebracht, während alle auf die acht
 davor geschaut haben.
 
-**Unbegrenzte Zugriffsrechte.** Im Demo läuft der Agent mit Anmeldedaten, die alles erlauben, und
-der Index hält jedes Dokument, das der Crawler erreichen konnte. Im Produktivbetrieb ist genau dieselbe
-Anordnung ein Kanal zum Abfluss von Daten: Ein Retrieval, das nicht nach den Berechtigungen des Aufrufers
-filtert, zitiert bereitwillig ein Dokument, das der Aufrufer nie öffnen durfte. **Ein Retrieval, das die
-Berechtigungen kennt**, ist kein Merkmal, das Sie später ergänzen – es ändert die Form des Index.
+**Unbegrenzte Zugriffsrechte.** Im Demo läuft der Agent mit Anmeldedaten, die alles erlauben, und der
+Index hält jedes Dokument, das der Crawler erreichen konnte. Im Produktivbetrieb ist genau dieselbe
+Anordnung ein Weg, auf dem Daten nach außen gelangen: Ein Retrieval, das nicht nach den Berechtigungen des
+Aufrufers filtert, zitiert bereitwillig ein Dokument, das der Aufrufer nie öffnen durfte. **Ein Retrieval,
+das die Berechtigungen kennt**, ist kein Merkmal, das Sie später ergänzen – es ändert die Form des Index.
 
 **Vergiftete Dokumente.** Abgerufener Text ist eine nicht vertrauenswürdige Eingabe. Ein Dokument, in dem
 Anweisungen stehen, kann das Modell kapern, das es liest, und deshalb fangen Sie das am günstigsten bei der
@@ -382,7 +382,7 @@ seinen Fehlern.
 - **Die Ingestion soll ausweisen und nicht bloß prüfen** – aufgenommen, ausgeschlossen samt Grund, und die
   blinden Flecken. Ein unbemerkt verworfenes Dokument erzeugt eine überzeugte Antwort aus einem
   unvollständigen Korpus.
-- **Das Retrieval braucht einen Weg der Verweigerung**: eine Score-Untergrenze hinter dem Reranking, eine
+- **Das Retrieval muss verweigern können**: eine Score-Untergrenze hinter dem Reranking, eine
   absichtlich leere Menge und einen Generator, der sagt, dass ihm der Kontext fehlt.
 - **Zwei Datensätze** – ein eingefrorener für die Regressionen, ein wechselnder aus dem laufenden Verkehr für
   die Wirklichkeit. Keiner ersetzt den anderen.
