@@ -22,8 +22,9 @@ The interviewer on these pages is that role in the exercise — the one holding 
 
 :::note[Status]
 
-In progress. The first batch of scenarios is being written; this page describes the format they will
-take.
+In progress. One scenario is published —
+[routing queries across models](/design-scenarios/agentic-workflows/model-routing) — and the rest of the
+first batch is being written.
 
 :::
 

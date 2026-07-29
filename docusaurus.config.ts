@@ -171,7 +171,10 @@ const COURSES: Course[] = [
     locales: ['en'],
     live: false,
     inNavbar: false,
-    footerLinks: [{label: 'Introduction', path: ''}],
+    footerLinks: [
+      {label: 'Introduction', path: ''},
+      {label: 'Agentic workflows', path: 'agentic-workflows/overview'},
+    ],
   },
 ];
 // Validate the declared scope at config load, so a malformed declaration fails the build

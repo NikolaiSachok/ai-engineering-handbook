@@ -2,7 +2,8 @@
   "label": "Agentic workflows",
   "position": 2,
   "collapsed": false,
-  "customProps": {
-    "description": "Orchestration, tools, state, and the cost and quality tradeoffs that come with them."
+  "link": {
+    "type": "doc",
+    "id": "agentic-workflows/overview"
   }
 }

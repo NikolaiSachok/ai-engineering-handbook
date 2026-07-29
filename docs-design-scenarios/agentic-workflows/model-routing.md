@@ -3,38 +3,43 @@ id: model-routing
 title: Routing queries across models
 sidebar_position: 1
 description: When a router earns its own latency and cost — three attempts at cutting an LLM bill without silently losing answer quality.
+# The reveal is the method. A page TOC lists every heading inside the collapsed <details> —
+# naming all three attempts and the principle before the reader has committed to an answer.
+hide_table_of_contents: true
 ---
 
 # Routing queries across models
 
 > You own the assistant feature inside a B2B web app: users ask questions and draft documents against
-> content they've uploaded. Two million requests a day, peaking around 40,000 an hour. The mix is lopsided —
+> content they've uploaded. Two million requests a day, peaking around 200,000 an hour. The mix is lopsided —
 > roughly 70% are short lookups over one or two retrieved passages, 25% need a few paragraphs of synthesis,
 > 5% are long multi-step drafting jobs. It's interactive and streamed: 800ms to first token at p95, full
 > response inside six seconds for everything except the drafting jobs. Today every request goes to a single
-> frontier model and the bill is $180k a month. You've been asked to take 40% out of that this quarter.
-> Quality here means the answer is supported by the user's own documents — a confident wrong answer costs us
-> far more than a slow one, and only a small fraction of output is ever seen by a human. Four engineers own
-> this, sharing the product's on-call rotation. There's no ML team. Design it.
+> frontier model — the largest and most capable tier on the market — and the bill is $180k a month. You've
+> been asked to take 40% out of that this quarter. Quality here means the answer is supported by the user's
+> own documents. A confident wrong answer costs us far more than a slow one, and only a small fraction of
+> output is ever seen by a human. Four engineers own this, sharing the product's on-call rotation. There's
+> no ML team. Design it.
 
 :::info[Why this question]
 
 Cost work is where engineers reveal whether they optimise against measurements or against intuitions.
 
-The theme invites a tidy answer — classify the query, dispatch to a tier — and that answer is a design
-sketch, not an engineering plan: it spends latency and money on every request to save money on some, and it
-ships no instrument that could tell you afterwards whether the trade was good.
+The tidy answer is to classify the query and dispatch it to a tier. Stated that way it is a design sketch,
+not an engineering plan. It spends latency and money on every request to save money on some, and it ships no
+instrument that could tell you afterwards whether the trade was good.
 
-So the question separates people who can hold three coupled budgets at once — money, latency, quality — and
-reason about a change none of them can be evaluated in isolation, from people who can name the components of
-a router. A weak answer reveals someone who has read about LLM routing and never had to defend a cost saving
+So the question separates two kinds of engineer. One holds three coupled budgets at once — money, latency,
+quality — and reasons about a change when none of the three can be evaluated on its own. The other can name
+the components of a router: someone who has read about LLM routing and never had to defend a cost saving
 against a quality regression they couldn't see.
 
 :::
 
 **Answer it before you read on.** Out loud or on paper, whichever you'd do at a whiteboard. The three
-attempts below were written blind — each author saw only the prompt above, none saw the scoring rubric, and
-none saw the others.
+attempts below were written blind — each author saw only the prompt above, none saw the others, and none saw
+the scoring rubric, which was written before any attempt existed. (The prompt has been corrected once since
+they answered: it put the peak at 40,000 an hour, below its own daily average. No attempt uses the figure.)
 
 <details>
 <summary>Show the three attempts</summary>
@@ -96,10 +101,11 @@ Monday.
 as a hot-reloadable data file, per-tenant cache keys stated unprompted, canary by tenant with a one-deploy
 global revert. It breaks on arithmetic and on streaming. "They're the least interesting cost-wise per
 request even though they're the most expensive" dismisses the 5% drafting slice in the same clause that
-concedes it dominates per-request spend — so "that gets us past 40% before we've touched anything else" is
-asserted against a distribution nobody measured. And "verification composes with streaming" is false:
-escalating after the stream completes means retracting text already rendered. The grounding judge is also a
-second model call on 70% of traffic, unpriced.
+calls it the most expensive per request. So "that gets us past 40% before we've touched anything else" rests
+on a distribution nobody measured. And "verification composes with streaming" is false: escalating — that
+is, re-running the request on the frontier model — after the stream completes means retracting text already
+rendered. The grounding judge is a second model call too, defended as "cheap enough to run on the majority
+tier" but scoped by A's own words to "every routed response", a wider population. It is never priced.
 
 ## Attempt B — the strong answer
 
@@ -158,12 +164,13 @@ some of it backing off — and I'd rather explain a 40% cut than a hallucination
 draft.
 
 **Verdict.** The only attempt that computes before it designs — $0.003 blended, "that average is lying to
-me" — and the only one that banks the free levers first: prompt caching, top-k from eight to three, hard
-output caps, roughly 20% with no quality risk. It resolves the conflict A gets wrong, buffering short answers
-at 300–400ms and verifying asynchronously on the synthesis tier. The crack is inside the verifier: checking
-that cited spans *exist* is string work at sub-20ms, but checking they "actually cover the assertions" is
-entailment, and no string comparison performs it. The quality dial is softer than claimed. Deferring drafting
-to last also contradicts its own opening prior about where the money sits.
+me" — and the only one that banks the cheap levers first: prompt caching, top-K from eight to three, hard
+output caps. It calls that 15–20% risk-free, which only the caching is. It does resolve the conflict A gets
+wrong, buffering short answers at 300–400ms and verifying asynchronously on the synthesis tier. The crack is
+inside the verifier. Checking that cited spans *exist* is string work at sub-20ms; checking they "actually
+cover the assertions" is entailment — whether the claim follows from the span — and no string comparison
+decides that. The quality dial is softer than claimed, and it defers drafting to last against its own
+opening prior about where the money sits.
 
 ## Attempt C — the over-built answer
 
@@ -217,13 +224,14 @@ Sequencing: gateway and telemetry first — you cannot optimise what you can't a
 Bootstrap classifier plus cache next, and that alone lands near 40%. Bandit and distillation follow, which is
 where we get to 60% and a system that keeps compounding instead of being re-litigated every quarter.
 
-**Verdict.** Layer one and layer four are correct and undervalued: capability requests instead of vendor
-endpoints, and per-request route/cost/grounding attribution, are what make any later savings claim checkable
-at all. Then it funds them with a bill four people cannot carry. The bandit's reward is "a composite of
-grounding score, latency, and cost", but grounding comes from a sampled judge — the policy trains on its own
-estimator's noise, with no human in the loop and no retraining owner named. vLLM, speculative decoding, a
-feature store and a distilled model each add a 3am owner; "the automation is what makes the headcount
-survivable" inverts that. Its semantic cache asserts hit rates with no tenant-isolation rule, which A stated.
+**Verdict.** Layer one and layer four are correct and undervalued. Capability requests instead of vendor
+endpoints, and per-request attribution of route, cost and grounding, are what make any later savings claim
+checkable at all. Then it pays for them with an operating burden four people cannot carry. The bandit's
+reward is "a composite of grounding score, latency, and cost", but grounding comes from a sampled judge, so
+the policy trains on its own estimator's noise. Humans calibrate that judge, and nothing checks the policy
+the judge then trains. No retraining owner is named. The vLLM tier, speculative decoding, a feature store,
+and a distilled model each add a 3am owner; "the automation is what makes the headcount survivable" inverts
+that. It asserts semantic-cache hit rates without the per-tenant isolation rule A stated unprompted.
 
 ## Where they actually disagree
 
@@ -234,20 +242,22 @@ you will have to make yourself.
 escalation re-renders. B says that means retracting text on screen and buffers short answers instead. Same
 architecture, opposite user-visible failure — and B is right.
 
-**Should the policy be written or learned?** B routes deterministically on evidence shape and refuses to own
-a model. C argues a rules table is "a snapshot of one afternoon's understanding" and that drift outruns four
-engineers' maintenance. That concern is legitimate; it dies on the missing request-time reward signal, not on
-the ambition.
+**Should the routing policy be written or learned?** B routes deterministically on evidence shape and
+refuses to own a model. C argues a rules table is "a snapshot of one afternoon's understanding" and that
+drift outruns four engineers' maintenance. That concern is legitimate. C's answer to it dies on the reward
+signal, not on the ambition: cost and latency are known for every request, but grounding is only sampled, so
+most routing decisions are never scored at all.
 
-**What is the 5% drafting slice?** A calls it the least interesting cost-wise. B's prior is that it and the
-retrieval context are most of the bill. That single disagreement decides whether 40% is reachable from the
-70% slice at all — and neither of them can settle it without the measurement B insists on taking first.
+**What does the 5% drafting slice actually cost?** A calls it the least interesting cost-wise. B's prior is
+that it and the retrieval context are most of the bill. That single disagreement decides whether 40% is
+reachable from the 70% slice at all. Neither of them can settle it without the measurement B insists on
+taking first.
 
 ## The principle
 
-> Downgrading a model is only safe on traffic whose output carries a mechanically checkable artifact — a
-> citation, a schema, a tool result — because a misroute never pages anyone, it just returns a plausible
-> answer nobody flags.
+> Downgrading a model is only safe where the answer carries a mechanically checkable artefact — a citation,
+> a schema, a tool result — because on traffic nobody reads, a bad route never pages anyone; it just returns
+> a plausible answer nobody flags.
 
 </details>
 
@@ -255,40 +265,46 @@ retrieval context are most of the bill. That single disagreement decides whether
 
 - [Why AI systems fail in production](/rag-agents/part-3-production/production-failures) — the arithmetic all
   three attempts are judged against: the unit is cost per *accepted* answer, and a cheap model wins only when
-  its acceptance rate beats the price ratio. Also the cheapest-gate-first ordering — schema, then citations,
-  then a judge.
+  its acceptance rate beats the price ratio. It also gives the cheapest-gate-first ordering: schema, then
+  citations, then a judge.
 - [LLMOps — deploy, monitor, cost](/rag-agents/part-3-production/llmops/) — the catalogue every attempt draws
   its levers from, with the honest clauses attached: prompt caching and its write premium, semantic caching
   and its false-hit risk, eval-in-CI, and why "a canary that answers fast, cheap, and slightly wrong is a
   failing canary."
-- [Metric internals and judge calibration](/rag-agents/part-1-rag/cross-cutting/evaluation/deep-dive) — why
-  faithfulness scores 1.0 on an answer grounded in the wrong context, and what B's 500–1000 labels actually
-  buy: a judge-versus-human agreement number, and the systematic biases more data will not wash out.
-- [Serving — FastAPI and Docker](/rag-agents/part-3-production/serving/) — the paragraph that settles the
-  sharpest disagreement above: validating a streamed answer forces a choice between buffering and letting a
-  bad prefix reach the user.
-- [Sampling, SLOs and budgets](/rag-agents/part-1-rag/cross-cutting/observability/deep-dive) — per-request
-  token accounting and cost attribution by feature, tenant, route and model, plus the rule that a service
+- [Metric internals & judge calibration](/rag-agents/part-1-rag/cross-cutting/evaluation/deep-dive) — why
+  faithfulness scores 1.0 on an answer grounded in the wrong context, and what a run of 500–1000 human
+  groundedness labels actually buys: a judge-versus-human agreement number, and the systematic biases more
+  data will not wash out.
+- [Serving — FastAPI + Docker](/rag-agents/part-3-production/serving/) — the paragraph that settles the
+  streaming-versus-verification disagreement the attempts split on: validating a streamed answer forces a
+  choice between buffering and letting a bad prefix reach the user.
+- [Sampling, SLOs & budgets](/rag-agents/part-1-rag/cross-cutting/observability/deep-dive) — per-request
+  token accounting and cost attribution by feature, tenant, route, and model, plus the rule that a service
   100% available and 30% hallucinating still meets its uptime SLO.
 
 :::
 
 ## If they push
 
-**"Do the arithmetic with me. Your router runs before every request. 70% of traffic is the cheap slice, p95
-to first token is 800ms. What's the most that router can cost, and how accurate does it have to be before
-this starts losing me money — and what's the loss when it routes wrong?"**
-Whether the tiering was reasoned or recited. The reasoner reaches for expected value — savings on correct
-downgrades, minus router cost on 100% of traffic, minus the cost of wrong downgrades — and notices that the
-last term is the one they cannot price without an eval.
+These are the follow-ups an interviewer reaches for next, and what each one exposes.
 
-**"Six weeks in, the bill is down 45% and you're happy. How do you know you haven't shipped a quality
-regression? And what would you have had to build in week one to be able to answer that today?"**
+> Do the arithmetic with me. Your router runs before every request. 70% of traffic is the cheap slice, p95 to
+> first token is 800ms. What's the most that router can cost, and how accurate does it have to be before this
+> starts losing me money — and what's the loss when it routes wrong?
+
+Whether the tiering was reasoned or recited. Someone who reasoned it reaches for expected value — savings on
+correct downgrades, minus router cost on 100% of traffic, minus the cost of wrong downgrades — and notices
+that the last term is the one they cannot price without an eval.
+
+> Six weeks in, the bill is down 45% and you're happy. How do you know you haven't shipped a quality
+> regression? And what would you have had to build in week one to be able to answer that today?
+
 Counterfactual thinking. Routing changes quality invisibly by construction: nobody complains about the answer
-they didn't get. Only someone who reasoned to shadow sampling or a held-out paired comparison can answer the
-second half, because the instrument had to exist before the change.
+they didn't get. Only someone who reasoned their way to shadow sampling or a held-out paired comparison can
+answer the second half, because the instrument had to exist before the change.
 
-**"Peak hour. Your strongest model starts returning 429s and 40-second timeouts for the next half hour. Walk
-me through what happens to the 5% of long drafting jobs."**
+> Peak hour. Your strongest model starts returning 429s and 40-second timeouts for the next half hour. Walk
+> me through what happens to the 5% of long drafting jobs.
+
 Fallback design under the only conditions that test it. The trap answer degrades the hardest workload onto
 the weakest model at the worst moment and calls it resilience.
