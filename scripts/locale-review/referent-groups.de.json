@@ -1,0 +1,323 @@
+{
+ "REGRESSION: Golden Set (struck wave 1, REGRESSED in wave 2)": [
+  "Golden Set",
+  "Golden Sets",
+  "Goldstandard",
+  "Goldstandards"
+ ],
+ "REGRESSION: Error Budget (struck wave 1)": [
+  "Error Budget",
+  "Error-Budget",
+  "Fehlerbudget",
+  "Fehlerbudgets"
+ ],
+ "REGRESSION: Latency Budget (struck to OPEN wave 1)": [
+  "Latency Budget",
+  "Latenzbudget",
+  "Latenzziel",
+  "Obergrenze"
+ ],
+ "REGRESSION: Scratchpad (struck to OPEN wave 2)": [
+  "Scratchpad",
+  "Arbeitsgedächtnis",
+  "Arbeitsspeicher"
+ ],
+ "REGRESSION: der Service (rejected §1.1.g)": [
+  "der Service",
+  "des Service",
+  "dem Service",
+  "der Dienst",
+  "des Dienstes",
+  "die Dienste"
+ ],
+ "REGRESSION: Endpoint (reversed to Endpunkt)": [
+  "Endpoint",
+  "Endpoints",
+  "Endpunkt",
+  "Endpunkte",
+  "Endpunkts"
+ ],
+ "REGRESSION: Evaluator (rejected wave 2)": [
+  "Evaluator",
+  "Bewerter",
+  "Bewertungsfunktion",
+  "Bewertungsmodell",
+  "Bewertungsinstanz"
+ ],
+ "REGRESSION: Selbstkritik (rejected wave 2)": [
+  "Selbstkritik",
+  "Reflexion"
+ ],
+ "REGRESSION: Teilübersicht (struck wave 1)": [
+  "Teilübersicht",
+  "Überblick",
+  "Teilüberblick"
+ ],
+ "REGRESSION: Prüfpfad (rejected, UStG term)": [
+  "Prüfpfad",
+  "Audit",
+  "Protokollierung"
+ ],
+ "REGRESSION: Generierung (unified on Generation)": [
+  "die Generierung",
+  "der Generierung",
+  "die Generation",
+  "der Generation"
+ ],
+ "REGRESSION: Werkzeugaufruf (corpus writes Tool-Call)": [
+  "Werkzeugaufruf",
+  "Werkzeugaufrufe",
+  "Tool-Call",
+  "Tool-Calls"
+ ],
+ "REGRESSION: das Cap (no attested gender)": [
+  "das Cap",
+  "der Cap",
+  "Obergrenze",
+  "weiche Obergrenze",
+  "harte Obergrenze"
+ ],
+ "REGRESSION: Schwelle for a numeric value": [
+  "die Schwelle",
+  "der Schwelle",
+  "Schwellenwert",
+  "Schwellenwerte"
+ ],
+ "REGRESSION: Technik for technique": [
+  "die Technik",
+  "der Technik",
+  "das Verfahren",
+  "die Verfahren"
+ ],
+ "REGRESSION: Anordnung (Duden sense 2 = Verfügung)": [
+  "Anordnung",
+  "Reihenfolge",
+  "Ranking",
+  "Rang"
+ ],
+ "REGRESSION: Fehlerbild pair (7 names in wave 1)": [
+  "Fehlerbild",
+  "Fehlerklasse",
+  "Versagen des Retrievals",
+  "Fehler des Retrievals",
+  "Fehler im Retrieval",
+  "Fehlerquote"
+ ],
+ "REGRESSION: Laufzeit as a component (pilot ruled it a false friend)": [
+  "Laufzeit",
+  "Laufzeitumgebung",
+  "zur Laufzeit",
+  "Runtime"
+ ],
+ "REGRESSION: Lauf vs Durchlauf (canon gloss defect, wave 3)": [
+  "ein Lauf",
+  "der Lauf",
+  "Durchlauf",
+  "Durchläufe",
+  "Durchlaufs"
+ ],
+ "WAVE 3: the run/execution referent": [
+  "Durchlauf",
+  "Ausführung",
+  "Lauf",
+  "Durchgang"
+ ],
+ "WAVE 3: the worker referent": [
+  "Worker",
+  "Arbeitsprozess",
+  "Arbeiter",
+  "Prozess"
+ ],
+ "WAVE 3: the queue referent": [
+  "Queue",
+  "Warteschlange",
+  "Auftragsschlange",
+  "Jobschlange"
+ ],
+ "WAVE 3: the provider referent": [
+  "Provider",
+  "Anbieter",
+  "Hersteller",
+  "Betreiber"
+ ],
+ "WAVE 3: the tier referent": [
+  "Tier",
+  "Stufe",
+  "Ebene",
+  "Klasse",
+  "Tarif",
+  "Spur"
+ ],
+ "WAVE 3: the gate referent": [
+  "Gate",
+  "Gates",
+  "Kontrollpunkt",
+  "Prüfpunkt",
+  "Freigabe",
+  "Quality Gate",
+  "Prüfung"
+ ],
+ "WAVE 3: the snapshot referent": [
+  "Snapshot",
+  "Snapshots",
+  "Momentaufnahme",
+  "Abzug",
+  "Stand",
+  "Checkpoint"
+ ],
+ "WAVE 3: the spend referent": [
+  "Ausgaben",
+  "Aufwand",
+  "Spend",
+  "Kosten",
+  "Budget"
+ ],
+ "WAVE 3: the lever referent": [
+  "Hebel",
+  "Stellschraube",
+  "Stellhebel",
+  "Ansatzpunkt"
+ ],
+ "WAVE 3: the validator referent": [
+  "Validator",
+  "Prüfer",
+  "Prüfregel",
+  "Validierer",
+  "Validierung"
+ ],
+ "WAVE 3: the inference-server referent": [
+  "Inference-Server",
+  "Inferenzserver",
+  "Inferenz-Server",
+  "Modellserver"
+ ],
+ "WAVE 3: the release referent": [
+  "Release",
+  "Releases",
+  "Freigabe",
+  "Veröffentlichung",
+  "Auslieferung"
+ ],
+ "WAVE 3: the capacity referent": [
+  "Kapazität",
+  "Kapazitäten",
+  "Capacity"
+ ],
+ "WAVE 3: the self-hosting referent": [
+  "Selbstbetrieb",
+  "Eigenbetrieb",
+  "selbst hosten",
+  "Self-Hosting",
+  "selbst betrieben"
+ ],
+ "WAVE 3: the AI-delta referent": [
+  "KI-Delta",
+  "AI-Delta",
+  "Delta",
+  "entscheidende Unterschied"
+ ],
+ "WAVE 3: the app-layer referent": [
+  "App-Schicht",
+  "Anwendungsschicht",
+  "App-Layer",
+  "Applikationsschicht"
+ ],
+ "WAVE 3: the sovereignty referent": [
+  "Souveränität",
+  "Datensouveränität",
+  "digitale Souveränität"
+ ],
+ "WAVE 3: the drift referent": [
+  "Drift",
+  "Datendrift",
+  "Modelldrift",
+  "Konzeptdrift",
+  "Abdriften"
+ ],
+ "WAVE 3: the freeze referent": [
+  "Freeze",
+  "Einfrieren",
+  "eingefroren",
+  "Sperre",
+  "Stopp"
+ ],
+ "WAVE 3: the rollout referent": [
+  "Rollout",
+  "Ausrollen",
+  "Ausrollung",
+  "schrittweise Freigabe",
+  "Canary"
+ ],
+ "TYPOGRAPHY: the forbidden dash": [
+  "—"
+ ],
+ "TYPOGRAPHY: guillemets": [
+  "»",
+  "«"
+ ],
+ "WAVE 3 ZERO-INCUMBENT: the residency referent": [
+  "Residency",
+  "Datenresidenz",
+  "Datenhaltung",
+  "Speicherort",
+  "Datenstandort",
+  "Ansässigkeit"
+ ],
+ "WAVE 3 ZERO-INCUMBENT: the perimeter referent": [
+  "Perimeter",
+  "Sicherheitsperimeter",
+  "Außengrenze",
+  "Netzgrenze",
+  "Grenze"
+ ],
+ "WAVE 3 ZERO-INCUMBENT: the enterprise referent": [
+  "Enterprise",
+  "Unternehmens-",
+  "unternehmensweit",
+  "Konzern",
+  "Großunternehmen"
+ ],
+ "WAVE 3 ZERO-INCUMBENT: the managed referent": [
+  "Managed",
+  "verwaltet",
+  "betreut",
+  "gemanagt",
+  "als Dienst"
+ ],
+ "WAVE 3 DANGER: the wire referent (4 senses)": [
+  "Leitung",
+  "Draht",
+  "verdrahtet",
+  "Nachrichtenformat",
+  "Übertragungsformat",
+  "Schnittstellenstandard",
+  "Protokollstandard"
+ ],
+ "WAVE 3: the ceiling/floor pair": [
+  "Decke",
+  "Obergrenze",
+  "Untergrenze",
+  "Boden",
+  "Höchstwert",
+  "Mindestwert"
+ ],
+ "WAVE 3: the blocking-call referent": [
+  "blockierend",
+  "einfrieren",
+  "eingefroren",
+  "blockiert",
+  "Blockade"
+ ],
+ "WAVE 3: the image referent": [
+  "Container-Image",
+  "Image",
+  "Abbild",
+  "Abzug"
+ ],
+ "WAVE 3: the thread referent": [
+  "roter Faden",
+  "Faden",
+  "Thread",
+  "Strang"
+ ]
+}

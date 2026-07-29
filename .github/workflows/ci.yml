@@ -83,6 +83,20 @@ jobs:
       - name: Icon register drift check
         run: bash scripts/icon-register-check.sh
 
+  locale-review-tools:
+    name: Locale-review instrument self-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      # The tools in scripts/locale-review/ are not build gates — they produce the work list a
+      # translator acts on. A broken build gate goes red; a broken INSTRUMENT returns a
+      # confident, well-formed, wrong answer, which is what happened eight separate times
+      # across the German waves. Each self-test below reproduces one of those failures, needs
+      # no build and no network, and is the only thing standing between a silent regression and
+      # rediscovering it the expensive way. See scripts/locale-review/README.md.
+      - name: Locale-review instrument self-tests
+        run: bash scripts/locale-review/self-test.sh
+
   locale-parity:
     name: Locale structural parity
     runs-on: ubuntu-latest
