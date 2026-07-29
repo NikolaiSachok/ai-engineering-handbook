@@ -21,7 +21,7 @@ darum herum haben Sie gebaut.
 
 :::note[Woher diese Landkarte kommt]
 
-Diese acht Fehlerbilder machen in Diskussionen über KI im Produktivbetrieb weithin die Runde;
+Diese acht Fehlerbilder machen in Diskussionen über KI im Produktivbetrieb die Runde;
 den Anstoß zu dieser Anordnung gab eine viel geteilte Infografik von Alex Xu (ByteByteGo). Zwei Unterschiede
 sind Absicht. Jene Fassung zeigt nur die Fehler, und für ein diagnostisches Plakat ist das der ehrliche
 Zuschnitt – diese Karten stellen neben jeden Fehler die **Architektur für den Produktivbetrieb**, denn zu
@@ -64,7 +64,7 @@ die zu Prosa plattgedrückt wurde, eine Fußzeile, die an jedem Chunk klebt, und
 die eine Tatsache von der Einschränkung trennt, unter der sie überhaupt gilt. „Die Tarife stiegen um 4 %“
 ist nicht falsch – bis Sie es von „nur im Pilotprojekt 2019“ abschneiden.
 
-Schlimmer noch: Ein strenger Validierer richtet seinen Schaden *unbemerkt* an. Er verwirft die Dokumente,
+Schlimmer noch: Ein strenger Validierer schadet *unbemerkt*. Er verwirft die Dokumente,
 die nicht in das Schema passen, der Index sieht anschließend gesund aus, und das Modell antwortet aus
 einem unvollständigen Korpus – mit Überzeugung, denn niemand hat ihm gesagt, dass ein Drittel des
 Ausgangsmaterials nie angekommen ist. Die Architektur für den Produktivbetrieb ist deshalb keine strengere
@@ -292,8 +292,8 @@ der Code.
 
 Steckt ein Prompt im Code der Anwendung, ist das Ändern eines Satzes ein Deployment – eine Korrektur am Text
 trägt damit das Risiko eines Deployments, und niemand traut sich mehr, sie als die kleine Änderung zu
-behandeln, die sie ist. Heben Sie die Prompts in eine **Konfiguration unter Versionsverwaltung** mit eigenen
-Prüfungen der Qualität, und das Gerüst lässt sich per Diff vergleichen und zurücknehmen, statt dass Sie
+behandeln, die sie ist. Lagern Sie die Prompts mit eigenen Prüfungen der Qualität in eine **Konfiguration unter
+Versionsverwaltung** aus, und das Gerüst lässt sich per Diff vergleichen und zurücknehmen, statt dass Sie
 bei jedem Ausrollen die Daumen drücken.
 
 Verlangen Sie dasselbe von allem anderen, was das Verhalten ändert, ohne den Code zu ändern: **Legen Sie
@@ -353,11 +353,11 @@ Ausgabe und bei der Ingestion absichern – steht in der Lektion zu den
 Noch vier Fehler, und jeder von ihnen hat schon ein Produktivsystem zu Fall gebracht, während alle auf die acht
 davor geschaut haben.
 
-**Unbegrenzte Zugriffsrechte.** Im Demo läuft der Agent mit Anmeldedaten, die alles erlauben, und der
-Index hält jedes Dokument, das der Crawler erreichen konnte. Im Produktivbetrieb ist genau dieselbe
-Anordnung ein Weg, auf dem Daten nach außen gelangen: Ein Retrieval, das nicht nach den Berechtigungen des
-Aufrufers filtert, zitiert bereitwillig ein Dokument, das der Aufrufer nie öffnen durfte. **Ein Retrieval,
-das die Berechtigungen kennt**, ist kein Merkmal, das Sie später ergänzen – es ändert die Form des Index.
+**Unbegrenzte Zugriffsrechte.** Im Demo läuft der Agent mit Anmeldedaten, die alles erlauben, und im Index
+liegt jedes Dokument, das der Crawler erreichen konnte. Im Produktivbetrieb ist genau dieselbe Anordnung
+ein Weg, auf dem Daten nach außen gelangen: Ein Retrieval, das nicht nach den Berechtigungen des Aufrufers
+filtert, zitiert bereitwillig ein Dokument, das der Aufrufer nie öffnen durfte. **Ein Retrieval, das die
+Berechtigungen kennt**, ist kein Merkmal, das Sie später ergänzen – es ändert die Form des Index.
 
 **Vergiftete Dokumente.** Abgerufener Text ist eine nicht vertrauenswürdige Eingabe. Ein Dokument, in dem
 Anweisungen stehen, kann das Modell kapern, das es liest, und deshalb fangen Sie das am günstigsten bei der
@@ -389,8 +389,9 @@ Umgang mit seinen Fehlern.
 - **Verfügbarkeit ist nicht Korrektheit.** Nehmen Sie einen Trace mit den Kennungen der Chunks dazu und einen
   Judge auf einer Stichprobe des Verkehrs; entscheiden Sie gesondert, ob Sie jemandem eine Protokollierung
   für ein Audit schulden.
-- **Die Kosten für eine angenommene Antwort** sind die Einheit: `cost ≈ attempt_cost / p`, und ein
-  günstigeres Modell muss bei der Zuverlässigkeit mehr voraushaben, als es beim Preis spart.
+- **Die Kosten für eine angenommene Antwort** sind die Einheit: `cost ≈ attempt_cost / p`, und der
+  Vorsprung eines günstigeren Modells bei der Zuverlässigkeit muss größer sein als seine Ersparnis beim
+  Preis.
 - **Gegen den Drift hilft zuerst ein erneutes Indexieren** und erst viel später ein erneutes Training;
   das Korpus ist ein Release, mit einer Version und einem Rollback.
 - **Prompt, Modellversion und Korpus** brauchen alle drei je eine Version und einen Weg zurück, sonst
