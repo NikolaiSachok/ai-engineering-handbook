@@ -21,7 +21,8 @@ none of them raise an error. They return a plausible answer, and the system repo
 
 - **[Routing queries across models](/design-scenarios/agentic-workflows/model-routing)** — when a router
   earns its own latency and cost, and how you would know afterwards whether it did.
+- **[Knowing an agent works](/design-scenarios/agentic-workflows/trajectory-vs-outcome)** — trajectory eval or
+  outcome eval, when the outcome label lands two weeks late and a credit can buy it.
 
-Seven more are being written: evaluating an agent by trajectory or by outcome, a named framework against
-your own primitives, agent memory, tools that fail, guardrails at the boundary, observing a
-non-deterministic system, and when not to build an agent at all.
+Six more are being written: a named framework against your own primitives, agent memory, tools that fail,
+guardrails at the boundary, observing a non-deterministic system, and when not to build an agent at all.

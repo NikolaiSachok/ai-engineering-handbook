@@ -3,7 +3,7 @@ id: model-routing
 title: Routing queries across models
 sidebar_position: 1
 description: When a router earns its own latency and cost — three attempts at cutting an LLM bill without silently losing answer quality.
-# The reveal is the method. A page TOC lists every heading inside the collapsed <details> —
+# The reveal is the method. A page TOC lists every heading inside the collapsed reveal —
 # naming all three attempts and the principle before the reader has committed to an answer.
 hide_table_of_contents: true
 ---
