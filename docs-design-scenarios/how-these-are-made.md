@@ -52,7 +52,7 @@ has one.
 
 ## Where it has already been wrong
 
-Two failures are worth recording, because both were invisible until something specific was checked.
+Three failures are worth recording, because each was invisible until something specific was checked.
 
 **The personas converged.** The first run briefed the three candidates by *competence level* — "competent,
 well-read, has shipped features". All three produced near-senior answers. A model asked how good someone is
@@ -65,6 +65,16 @@ of all paragraphs opened with a bolded declarative. All three closed on a neat f
 tend to just run out. Persona instruction moved content, rhythm and pronouns; it did not move punctuation or
 paragraph shape. That is a measured limit of the method, and it is the reason the editorial pass is forbidden
 from touching the attempts: fixing those tells would erase the evidence that they exist.
+
+**A question can turn out to have only one answer.** The framework scenario's first question was written with
+every constraint pushing the same way — a system already in production doing everything the future needed, a
+hard deadline, and money that could not be spent twice. Three engineers with three different sets of habits
+read it and gave the same answer, correctly, because there was only one. The personas were not at fault; the
+question was. It was thrown away and rewritten so that both options were defensible, and the rewrite ships
+with a note stating the strongest one-sentence case for each side and the specific fact in the question that
+makes each case available — an artefact the first version could not have produced. Divergence between the
+attempts is evidence about the question, so manufacturing it by editing the answers apart would have destroyed
+the only thing the comparison is good for.
 
 ## The gates, and the one that had to be inverted
 
