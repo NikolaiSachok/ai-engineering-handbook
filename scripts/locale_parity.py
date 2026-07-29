@@ -24,7 +24,7 @@ from courses import courses  # noqa: E402  (path set above so the gate runs from
 # The MDX components whose silent loss is invisible in prose. `<Node` is counted bare rather than as
 # `<Node label=`: every node in this corpus writes `icon` before `label`, so matching the literal
 # `<Node label=` would count zero everywhere and quietly assert nothing.
-COMPONENTS = ["<InfoCard", "<Node", "<YouTube"]
+COMPONENTS = ["<InfoCard", "<Node", "<YouTube", "<Verdict"]
 
 # Fence languages a locale may legitimately drop entirely, because their content is prose in a
 # monospace box and a locale may inline it instead (RU renders two English ```text formula blocks as

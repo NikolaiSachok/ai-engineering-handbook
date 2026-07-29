@@ -46,6 +46,8 @@ they answered: it put the peak at 40,000 an hour, below its own daily average. N
 
 ## Attempt A — the common answer
 
+*Written blind. The candidate's own words, unedited.*
+
 Let me draw it, because the shape of the problem is that we have one component doing three jobs.
 
 **The seam is the router.** Right now the gateway is a pass-through: request in, frontier model out. I'd make
@@ -97,7 +99,9 @@ config is a data file, not code: tier assignments, thresholds, escalation rules,
 should have to ship a binary at 3am to fix a routing decision — they flip the switch and we look at it
 Monday.
 
-**Verdict.** The architecture is right and the operations are the best-specified of the three: routing policy
+<Verdict>
+
+The architecture is right and the operations are the best-specified of the three: routing policy
 as a hot-reloadable data file, per-tenant cache keys stated unprompted, canary by tenant with a one-deploy
 global revert. It breaks on arithmetic and on streaming. "They're the least interesting cost-wise per
 request even though they're the most expensive" dismisses the 5% drafting slice in the same clause that
@@ -107,7 +111,11 @@ is, re-running the request on the frontier model — after the stream completes 
 rendered. The grounding judge is a second model call too, defended as "cheap enough to run on the majority
 tier" but scoped by A's own words to "every routed response", a wider population. It is never priced.
 
+</Verdict>
+
 ## Attempt B — the strong answer
+
+*Written blind. The candidate's own words, unedited.*
 
 First thing I do is stop guessing where the money is. Two million requests at $180k is $0.003 a request
 blended, and that average is lying to me. I want a cost histogram by segment: tokens in, tokens out, per
@@ -163,7 +171,9 @@ Expected landing: 45–55%. I want the headroom because the first time groundedn
 some of it backing off — and I'd rather explain a 40% cut than a hallucination in a customer's contract
 draft.
 
-**Verdict.** The only attempt that computes before it designs — $0.003 blended, "that average is lying to
+<Verdict>
+
+The only attempt that computes before it designs — $0.003 blended, "that average is lying to
 me" — and the only one that banks the cheap levers first: prompt caching, top-K from eight to three, hard
 output caps. It calls that 15–20% risk-free, which only the caching is. It does resolve the conflict A gets
 wrong, buffering short answers at 300–400ms and verifying asynchronously on the synthesis tier. The crack is
@@ -172,7 +182,11 @@ cover the assertions" is entailment — whether the claim follows from the span 
 decides that. The quality dial is softer than claimed, and it defers drafting to last against its own
 opening prior about where the money sits.
 
+</Verdict>
+
 ## Attempt C — the over-built answer
+
+*Written blind. The candidate's own words, unedited.*
 
 The 40% is a symptom. The real statement of the problem is: we have no policy layer. Every request,
 regardless of what it needs, gets the most expensive possible execution path, and we have no mechanism that
@@ -224,7 +238,9 @@ Sequencing: gateway and telemetry first — you cannot optimise what you can't a
 Bootstrap classifier plus cache next, and that alone lands near 40%. Bandit and distillation follow, which is
 where we get to 60% and a system that keeps compounding instead of being re-litigated every quarter.
 
-**Verdict.** Layer one and layer four are correct and undervalued. Capability requests instead of vendor
+<Verdict>
+
+Layer one and layer four are correct and undervalued. Capability requests instead of vendor
 endpoints, and per-request attribution of route, cost and grounding, are what make any later savings claim
 checkable at all. Then it pays for them with an operating burden four people cannot carry. The bandit's
 reward is "a composite of grounding score, latency, and cost", but grounding comes from a sampled judge, so
@@ -232,6 +248,8 @@ the policy trains on its own estimator's noise. Humans calibrate that judge, and
 the judge then trains. No retraining owner is named. The vLLM tier, speculative decoding, a feature store,
 and a distilled model each add a 3am owner; "the automation is what makes the headcount survivable" inverts
 that. It asserts semantic-cache hit rates without the per-tenant isolation rule A stated unprompted.
+
+</Verdict>
 
 ## Where they actually disagree
 
