@@ -17,11 +17,11 @@ Architektur, die ihn verhindert, und verweist auf die Lektion, in der der Mechan
 Einige kennen Sie schon – die Qualität des Retrievals aus Teil I, den Ausfall eines Tools aus Teil II. Der
 Rest ist der Gegenstand dieses Teils. Und alle acht haben eines gemeinsam: **Fast nichts
 davon ist ein Fehler des Modells.** Das Modell ist das eine Bauteil, das Sie nicht geschrieben haben. Alles
-darum herum ist Ihres.
+darum herum haben Sie gebaut.
 
 :::note[Woher diese Landkarte kommt]
 
-Diese acht sind die Fehlerbilder, die in Diskussionen über KI im Produktivbetrieb weithin die Runde machen;
+Diese acht Fehlerbilder machen in Diskussionen über KI im Produktivbetrieb weithin die Runde;
 den Anstoß zu dieser Anordnung gab eine viel geteilte Infografik von Alex Xu (ByteByteGo). Zwei Unterschiede
 sind Absicht. Jene Fassung zeigt nur die Fehler, und für ein diagnostisches Plakat ist das der ehrliche
 Zuschnitt – diese Karten stellen neben jeden Fehler die **Architektur für den Produktivbetrieb**, denn zu
@@ -38,7 +38,7 @@ auftaucht.
   title="Das Korpus ist das Produkt"
   caption="Die Ingestion im Produktivbetrieb weist aus, was sie aufgenommen hat, was sie ausgeschlossen hat und was sie nie zu sehen bekam.">
   <Lane kind="demo" label="DEMO">
-    <Node icon="documentStack" label="saubere, gleiche Dokumente" />
+    <Node icon="documentStack" label="saubere Dokumente, eine Sorte" />
     <Flow kind="fail" />
     <Branch>
       <Node icon="database" badge="tick" label="Index" />
@@ -58,26 +58,26 @@ Das Korpus für ein Demo ist ein Ordner, den jemand von Hand zusammengestellt ha
 Dokumente, alle von einer Sorte. Im Produktivbetrieb ist es eine Mischung aus Quellen – PDFs mit
 zweispaltigem Satz, Tabellen, deren Bedeutung in der Kopfzeile steckt, Wiki-Seiten, die aus einem längst
 eingestellten Werkzeug halb herübergezogen wurden, und Scans. Der übliche Rat, bei der Ingestion die
-Schemata zu prüfen, trifft für strukturierte Einträge zu und geht bei Dokumenten am Ziel vorbei, denn was
+Schemata zu prüfen, trifft für strukturierte Einträge zu und greift bei Dokumenten nicht, denn was
 eine RAG-Antwort zerlegt, ist selten ein fehlerhaft gefülltes Feld. Es ist die **Struktur**: eine Tabelle,
 die zu Prosa plattgedrückt wurde, eine Fußzeile, die an jedem Chunk klebt, und vor allem eine Chunk-Grenze,
 die eine Tatsache von der Einschränkung trennt, unter der sie überhaupt gilt. „Die Tarife stiegen um 4 %“
 ist nicht falsch – bis Sie es von „nur im Pilotprojekt 2019“ abschneiden.
 
-Schlimmer noch: Ein strenger Validierer versagt *unbemerkt*. Er verwirft die Dokumente, die nicht in das
-Schema passen, der Index sieht anschließend gesund aus, und das Modell antwortet aus einem
-unvollständigen Korpus – mit Überzeugung, denn niemand hat ihm gesagt, dass ein Drittel des Ausgangsmaterials
-nie angekommen ist. Die Architektur für den Produktivbetrieb ist deshalb keine strengere Prüfung, sondern ein
-**Manifest**: Die Ingestion weist aus, was sie *aufgenommen* hat, was sie *ausgeschlossen hat und warum* und
-wo ihre *blinden Flecken* liegen – als Artefakt der Erstellung, das man lesen kann. Ein ausgeschlossenes
-Dokument ist eine Entscheidung; ein ausgeschlossenes Dokument, das niemand benennen kann, ist ein Defekt. Die
-Mechanik – das Parsing, das Layout, die Verfahren für das Chunking, die Metadaten – steht in der Lektion zur
-[Ingestion](../part-1-rag/ingestion/index.md).
+Schlimmer noch: Ein strenger Validierer richtet seinen Schaden *unbemerkt* an. Er verwirft die Dokumente,
+die nicht in das Schema passen, der Index sieht anschließend gesund aus, und das Modell antwortet aus
+einem unvollständigen Korpus – mit Überzeugung, denn niemand hat ihm gesagt, dass ein Drittel des
+Ausgangsmaterials nie angekommen ist. Die Architektur für den Produktivbetrieb ist deshalb keine strengere
+Prüfung, sondern ein **Manifest**: Die Ingestion weist aus, was sie *aufgenommen* hat, was sie
+*ausgeschlossen hat und warum* und wo ihre *blinden Flecken* liegen – als Artefakt der Erstellung, das man
+lesen kann. Ein ausgeschlossenes Dokument ist eine Entscheidung; ein ausgeschlossenes Dokument, das
+niemand benennen kann, ist ein Defekt. Die Mechanik – das Parsing, das Layout, die Verfahren für das
+Chunking, die Metadaten – steht in der Lektion zur [Ingestion](../part-1-rag/ingestion/index.md).
 
 ## 2 · Das Retrieval braucht das Recht, Nein zu sagen
 
 <InfoCard
-  title="Das Retrieval darf verweigern"
+  title="Das Retrieval darf die Antwort verweigern"
   caption="Eine Untergrenze für die Relevanz hinter dem Reranking, und ein Generator, der „kein Kontext“ antworten darf.">
   <Lane kind="demo" label="DEMO">
     <Node icon="retrieval" label="top-K, immer" />
@@ -100,23 +100,23 @@ Dieser Fehler kostet Teams die meiste Zeit, weil das System an jeder Stelle gesu
 einen Fehler. Der Dienst antwortet mit 200. Es kommen einfach die falschen Chunks an, und das Modell tut,
 wofür es gebaut ist – es schreibt eine flüssige Antwort aus allem, was es bekommen hat.
 
-Das Retrieval getrennt von der Generation zu bewerten, ist die diagnostische Hälfte, und Teil I begründet
-sie: Ohne diese Trennung unterscheiden Sie einen Fehlgriff des Retrievals nicht von einem Modell, das
-guten Kontext übergangen hat, und Sie verbringen zwei Wochen damit, an einem Prompt zu feilen, um einen
-Fehler in der Indexierung zu beheben. Was der Produktivbetrieb zusätzlich braucht, ist die Möglichkeit zu
-verweigern, und genau den haben die meisten Demos nicht einmal im Entwurf. Ein Demo gibt **immer top-K**
-zurück – top-K ist ein Ausschnitt und kein Urteil, und ein Ranking nach Ähnlichkeit liefert seine fünf
-besten Kandidaten, ob nun einer davon Ihre Frage betrifft oder keiner. **Setzen Sie eine Score-Untergrenze
-hinter die Stufe, deren Scores etwas bedeuten.** Die zusammengeführten Scores einer hybriden Suche – das
-Ranking aus der dichten und das aus der lexikalischen Suche, in einem zusammengefasst – sind nicht auf
-eine vergleichbare Skala kalibriert, ein Schwellenwert auf einem solchen Score ist deshalb annähernd
-willkürlich; der Score eines Cross-Encoder-Rerankers ist der, für den Sie eine Untergrenze wirklich
-festlegen können. Oberhalb der Untergrenze ist die Antwort **belegt** – jede Aussage stützt sich auf eine
-Passage, die die Hürde genommen hat. Unterhalb davon gibt das Retrieval **absichtlich eine leere Menge
-zurück**, und der Generator sagt, dass ihm der stützende Kontext fehlt, statt aus einer schwachen Ausbeute
-etwas Plausibles zusammenzusetzen.
+Das Retrieval getrennt von der Generation zu bewerten, ist die eine Hälfte der Aufgabe, die Diagnose; Teil
+I begründet sie: Ohne diese Trennung unterscheiden Sie einen Fehlgriff des Retrievals nicht von einem
+Modell, das guten Kontext übergangen hat, und Sie verbringen zwei Wochen damit, an einem Prompt zu feilen,
+um einen Fehler in der Indexierung zu beheben. Was der Produktivbetrieb zusätzlich braucht, ist die
+Möglichkeit, die Antwort zu verweigern, und genau die haben die meisten Demos nicht einmal im Entwurf. Ein
+Demo gibt **immer top-K** zurück – top-K ist ein Ausschnitt und kein Urteil, und ein Ranking nach
+Ähnlichkeit liefert seine fünf besten Kandidaten, ob nun einer davon Ihre Frage betrifft oder keiner.
+**Setzen Sie eine Score-Untergrenze hinter die Stufe, deren Scores etwas bedeuten.** Die zusammengeführten
+Scores einer hybriden Suche – das Ranking aus der dichten und das aus der lexikalischen Suche, in einem
+zusammengefasst – sind nicht auf eine vergleichbare Skala kalibriert, ein Schwellenwert auf einem solchen
+Score ist deshalb annähernd willkürlich; der Score eines Cross-Encoder-Rerankers ist der, für den Sie eine
+Untergrenze wirklich festlegen können. Oberhalb der Untergrenze ist die Antwort **belegt** – jede Aussage
+stützt sich auf eine Passage, die die Hürde genommen hat. Unterhalb davon gibt das Retrieval **absichtlich
+eine leere Menge zurück**, und der Generator sagt, dass ihm der stützende Kontext fehlt, statt aus einer
+schwachen Ausbeute etwas Plausibles zusammenzusetzen.
 
-Der letzte Schritt gelingt nur einem Generator, der das Verweigern gelernt hat – dafür argumentiert
+Der letzte Schritt gelingt nur einem Generator, der die Antwort auch verweigern kann – dafür argumentiert
 die [Generation](../part-1-rag/generation/index.md) ausführlich, und das
 [Retrieval](../part-1-rag/retrieval/index.md) liefert die hybride Suche und das Reranking, ohne die eine
 sinnvolle Untergrenze gar nicht möglich ist. Das Demo antwortet auf alles. Das Produktivsystem darf Nein
@@ -126,7 +126,7 @@ sagen.
 
 <InfoCard
   title="Zwei Datensätze, nicht einer"
-  caption="Jeder beantwortet eine andere Frage: Läuft noch, was vorher lief? Und gleicht meine Evaluierung noch der Wirklichkeit?">
+  caption="Jeder beantwortet eine andere Frage: Läuft noch, was vorher lief? Und passt meine Evaluierung noch zur Wirklichkeit?">
   <Lane kind="demo" label="DEMO">
     <Node icon="clipboard" label="Datensatz, Woche 1" />
     <Flow kind="fail" />
@@ -142,16 +142,17 @@ sagen.
   </Lane>
 </InfoCard>
 
-Testfälle aus der ersten Woche beschreiben, wie sich das Team vorgestellt hat, dass Leute fragen. Ein halbes
-Jahr echter Verkehr beschreibt, wie sie tatsächlich fragen, und in dieser Lücke fängt ein grünes Dashboard
-an zu lügen. Der übliche Rat lautet, wöchentlich eine Stichprobe aus dem laufenden Verkehr zu ziehen und sie
-als Maßstab zu nehmen – und hier steht unser erster Einwand, denn den festen Datensatz zu *ersetzen* tauscht
-eine Blindheit gegen eine andere. Ein Maßstab, der sich jede Woche ändert, sagt Ihnen nicht, ob die Änderung
-dieser Woche etwas zerlegt hat, das letzte Woche lief; dafür ist ein eingefrorener Datensatz da.
+Testfälle aus der ersten Woche beschreiben, wie sich das Team vorgestellt hat, dass Leute fragen. Nach
+einem halben Jahr im Produktivbetrieb wissen Sie, wie sie tatsächlich fragen, und in dieser Lücke fängt
+ein grünes Dashboard an zu lügen. Der übliche Rat lautet, wöchentlich eine Stichprobe aus dem laufenden
+Verkehr zu ziehen und sie als Maßstab zu nehmen – und hier steht unser erster Einwand, denn den festen
+Datensatz zu *ersetzen* tauscht eine Blindheit gegen eine andere. Ein Maßstab, der sich jede Woche ändert,
+sagt Ihnen nicht, ob die Änderung dieser Woche etwas zerlegt hat, das letzte Woche lief; dafür ist ein
+eingefrorener Datensatz da.
 
 Behalten Sie beide. Ein **eingefrorener Regressionsdatensatz** beantwortet die Frage „Läuft noch, was vorher
 lief?“, und um sie zu beantworten, muss er stillstehen. Ein **wechselnder Datensatz aus dem laufenden
-Verkehr** beantwortet die Frage „Gleicht meine Evaluierung noch der Wirklichkeit?“, und dafür muss er sich
+Verkehr** beantwortet die Frage „Passt meine Evaluierung noch zur Wirklichkeit?“, und dafür muss er sich
 bewegen. Für den Wechsel gibt es einen zweiten Grund, und er kommt von der anderen Seite: Ein fester Maßstab,
 gegen den ein Team Monate lang optimiert, misst irgendwann nicht mehr die Qualität, sondern die **Vertrautheit
 mit dem Maßstab** selbst. Beide Datensätze brauchen Labels, und das ist der Teil, für den niemand ein Budget
@@ -193,12 +194,12 @@ der Kundenbetreuung erfahren. Das ist die
 Evaluierung speist.
 
 Eine Sache entwerfen Sie besser bewusst, statt sie zu erben: Eine Protokollierung, die auf die Fehlersuche
-zugeschnitten ist, ist keine Protokollierung, die auf den Nachweis zugeschnitten ist. Die Fehlersuche will
-die letzten Tage so genau, wie Sie sich das leisten können. Für ein **Audit** dagegen – etwa in einer
-regulierten Branche, bei einer bestrittenen Antwort oder wenn ein Kunde fragt, was Ihr System ihm im März
-gesagt hat – müssen Sie *Monate später* noch nachweisen können, was gefunden und was zurückgegeben wurde.
-Das ist eine Anforderung an Aufbewahrung und Integrität und keine Einstellung für die Ausführlichkeit.
-Entscheiden Sie, was von beiden Sie bauen, bevor ein Prüfer es für Sie entscheidet.
+zugeschnitten ist, ist keine Protokollierung, die auf den Nachweis zugeschnitten ist. Für die Fehlersuche
+brauchen Sie die letzten Tage so genau, wie Sie sich das leisten können. Für ein **Audit** dagegen – etwa
+in einer regulierten Branche, bei einer bestrittenen Antwort oder wenn ein Kunde fragt, was Ihr System ihm
+im März gesagt hat – müssen Sie *Monate später* noch nachweisen können, was gefunden und was zurückgegeben
+wurde. Das ist eine Anforderung an Aufbewahrung und Integrität und keine Einstellung für die
+Ausführlichkeit. Entscheiden Sie, welches von beiden Sie bauen, bevor ein Prüfer es für Sie entscheidet.
 
 ## 5 · Die Einheit sind die Kosten für eine angenommene Antwort
 
@@ -230,7 +231,7 @@ Das günstigere Modell gewinnt nur, wenn:
 
 Der halbe Preis bringt nichts, wenn die Zuverlässigkeit unter der Hälfte liegt. Messen Sie `p` für jede
 Route, bevor Sie einer Einsparung glauben. [LLMOps](./llmops/index.md) behandelt die Hebel – das Routing, das
-Caching, den Batch-Tarif, Budgets, die den Kreis tatsächlich schließen –, und der Kurs zum AI-SDLC rechnet
+Caching, den Batch-Tarif, Budgets, die den Verbrauch wirklich stoppen –, und der Kurs zum AI-SDLC rechnet
 dieselbe Arithmetik für eine andere Einheit aus: für die Kosten einer angenommenen Änderung am Code.
 
 ## 6 · Indexieren Sie neu, bevor Sie neu trainieren
@@ -257,16 +258,16 @@ dieselbe Arithmetik für eine andere Einheit aus: für die Kosten einer angenomm
 Die Qualität lässt nach, ohne dass ein Deployment stattfindet. Nutzer bringen neues Vokabular mit, die
 Dokumente darunter ändern sich, und ein beim Anbieter betriebenes Modell, dessen Version Sie nicht
 festgelegt haben, wird unbemerkt ausgetauscht. Das ist der dritte Einwand und der schärfste: Der gewohnte
-Reflex, ein erneutes Training von Schwellenwerten für den Drift auslösen zu lassen, ist eine Antwort aus
-MLOps, übertragen auf ein System, in dem die Gewichte fast nie das Problem sind.
+Reflex ist, ein erneutes Training anzustoßen, sobald der Drift einen Schwellenwert überschreitet – eine
+Antwort aus MLOps, übertragen auf ein System, in dem die Gewichte fast nie das Problem sind.
 
-In einem System mit Retrieval kommt der Drift meist vom Korpus oder von den Fragen, und deshalb beginnt die
-Leiter weit unterhalb des Modells: neu indexieren und neu in Chunks aufteilen, die Mischung der Suchverfahren
+In einem System mit Retrieval kommt der Drift meist vom Korpus oder von den Fragen, und deshalb fangen Sie weit
+unterhalb des Modells an: neu indexieren und neu in Chunks aufteilen, die Mischung der Suchverfahren
 anpassen, den Prompt überarbeiten – und erst dann überlegen, ob Sie an die Gewichte gehen, was für die
 meisten Teams ohnehin nur das nächste Release des Anbieters bedeutet und keinen eigenen Trainingsdurchlauf.
 Drei Arten von Drift und wie Sie jede beobachten, stehen in [LLMOps](./llmops/index.md). Die brauchbare
-Folgerung: **Das Korpus ist ein Release** – ihm stehen eine Version, ein Diff und ein Rollback zu, genau wie
-dem Code.
+Folgerung: **Das Korpus ist ein Release** – es braucht eine Version, einen Diff und einen Rollback, genau wie
+der Code.
 
 ## 7 · Der Prompt und das Korpus sind Releases
 
@@ -328,12 +329,12 @@ schlechte Eingaben **abzuweisen**, statt aus ihnen das Beste zu machen. Eine Stu
 etwas abweist, verdeckt Fehler nur und gibt sie weiter.
 
 Die Verfeinerung, die sich lohnt, ist die **Reihenfolge**. Nicht jede Prüfung kostet gleich viel: Eine
-Prüfung des Schemas kostet Mikrosekunden, die Prüfung, ob die Antwort auf den angegebenen Quellen ruht,
+Prüfung des Schemas kostet Mikrosekunden, die Prüfung, ob die Antwort von den angegebenen Quellen gedeckt ist,
 kostet ein Retrieval, ein Urteil durch ein Modell kostet einen Modellaufruf. Lassen Sie die günstigste
 zuerst laufen, damit Sie für Fehler, die ein regulärer Ausdruck abgefangen hätte, nie den Preis eines
 Judges zahlen. Dieses Argument über die Reihenfolge entwickelt die Lektion über die mehrschichtigen Prüfungen
 im Kurs zum AI-SDLC in aller Ruhe; die Maschinerie auf der RAG-Seite – was Sie an der Eingabe, an der
-Ausgabe und bei der Ingestion absichern – sind die
+Ausgabe und bei der Ingestion absichern – steht in der Lektion zu den
 [Guardrails](../part-1-rag/cross-cutting/guardrails/index.md).
 
 ## 9 · Vier, die selten auf der Liste stehen
@@ -349,7 +350,7 @@ Ausgabe und bei der Ingestion absichern – sind die
   </Grid>
 </InfoCard>
 
-Noch vier, und jeder von ihnen hat schon ein Produktivsystem zu Fall gebracht, während alle auf die acht
+Noch vier Fehler, und jeder von ihnen hat schon ein Produktivsystem zu Fall gebracht, während alle auf die acht
 davor geschaut haben.
 
 **Unbegrenzte Zugriffsrechte.** Im Demo läuft der Agent mit Anmeldedaten, die alles erlauben, und der
@@ -367,13 +368,12 @@ einschlägige englische Dokumente, sobald die Frage in einer anderen Sprache ein
 unbemerkt: weniger Treffer, alle plausibel. Sind Ihre Nutzer mehrsprachig und Ihre Evaluierung nicht, dann
 haben Sie nicht das System gemessen, das Ihre Nutzer vor sich haben.
 
-**Unzuverlässige Tools.** Die Tools fallen vor dem Modell aus. APIs antworten nicht mehr rechtzeitig,
-ein MCP-Server startet neu, ein Vektorspeicher weist eine Verbindung ab – und ein Agent ohne Timeout,
-ohne Wiederholung und
-ohne Fallback-Antwort hängt einfach – und für die Nutzer ist das kaputt und nicht langsam. Liefern Sie
-absichtlich eine schlechtere Antwort, statt gar keine; die Lektion über den
-[Tool-Einsatz](../part-2-agents/tool-use/index.md) behandelt den ganzen Ablauf eines Aufrufs und den Umgang mit
-seinen Fehlern.
+**Unzuverlässige Tools.** Die Tools fallen vor dem Modell aus. APIs antworten nicht mehr rechtzeitig, ein
+MCP-Server wird neu gestartet, ein Vektorspeicher weist eine Verbindung ab – und ein Agent ohne Timeout,
+ohne Wiederholung und ohne Fallback-Antwort hängt einfach – und die Nutzer halten das für einen Defekt und
+nicht für Langsamkeit. Liefern Sie absichtlich eine schlechtere Antwort, statt gar keine; die Lektion über
+den [Tool-Einsatz](../part-2-agents/tool-use/index.md) behandelt den ganzen Ablauf eines Aufrufs und den
+Umgang mit seinen Fehlern.
 
 ## Das Wichtigste
 
@@ -382,7 +382,7 @@ seinen Fehlern.
 - **Die Ingestion soll ausweisen und nicht bloß prüfen** – aufgenommen, ausgeschlossen samt Grund, und die
   blinden Flecken. Ein unbemerkt verworfenes Dokument erzeugt eine überzeugte Antwort aus einem
   unvollständigen Korpus.
-- **Das Retrieval muss verweigern können**: eine Score-Untergrenze hinter dem Reranking, eine
+- **Das Retrieval muss die Antwort verweigern können**: eine Score-Untergrenze hinter dem Reranking, eine
   absichtlich leere Menge und einen Generator, der sagt, dass ihm der Kontext fehlt.
 - **Zwei Datensätze** – ein eingefrorener für die Regressionen, ein wechselnder aus dem laufenden Verkehr für
   die Wirklichkeit. Keiner ersetzt den anderen.
@@ -390,7 +390,7 @@ seinen Fehlern.
   Judge auf einer Stichprobe des Verkehrs; entscheiden Sie gesondert, ob Sie jemandem eine Protokollierung
   für ein Audit schulden.
 - **Die Kosten für eine angenommene Antwort** sind die Einheit: `cost ≈ attempt_cost / p`, und ein
-  günstigeres Modell muss bei der Zuverlässigkeit weiter vorn liegen als beim Preis.
+  günstigeres Modell muss bei der Zuverlässigkeit mehr voraushaben, als es beim Preis spart.
 - **Gegen den Drift hilft zuerst ein erneutes Indexieren** und erst viel später ein erneutes Training;
   das Korpus ist ein Release, mit einer Version und einem Rollback.
 - **Prompt, Modellversion und Korpus** brauchen alle drei je eine Version und einen Weg zurück, sonst
@@ -400,7 +400,7 @@ seinen Fehlern.
 - **Und die vier, die niemand auflistet**: unbegrenzte Zugriffsrechte, vergiftete Dokumente, eine Evaluierung
   in nur einer Sprache, unzuverlässige Tools.
 
-Teil III baut nun die Antworten: die [Bereitstellung](./serving/index.md) des Systems, die
+Teil III liefert nun die Antworten: die [Bereitstellung](./serving/index.md) des Systems, die
 [Cloud-Plattformen](./cloud-platforms/index.md), auf denen es läuft, das
 [Tooling-Ökosystem](./tooling-ecosystem/index.md), das es misst und absichert, und
 [LLMOps](./llmops/index.md) für sein Leben nach dem Release.
