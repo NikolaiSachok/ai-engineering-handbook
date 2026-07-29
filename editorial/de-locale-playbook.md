@@ -109,6 +109,11 @@ that one page the densest width-budgeted surface in the corpus. See §6.5.*
 In run order. Each gate states its **scope** and — the part that matters — **what it cannot catch**. A gate
 whose blind spot is unwritten is a gate people trust too far.
 
+> **Read §13 before running any of them.** This section says *what* to check; §13 says how to run a check so
+> that its answer means something — the input assertions, the positive control, the sampling and stopping
+> rule, and the eight ways a gate's input has silently produced a confident wrong answer. The instruments
+> themselves live in `scripts/locale-review/`.
+
 ### Gate 0 — structural parity script *(new; does not exist today)*
 
 Language-independent. Asserts, per locale pair:
@@ -950,3 +955,219 @@ phase.
 The honest comparison: **German is ~1.76× Slovak's prose surface and carries one entirely new canon section
 (§6.2, the kept-EN morphology register) that no sibling locale could donate a template for.** Everything
 else is a port.
+
+---
+
+## 13. Running a gate — what three waves measured about the instruments themselves
+
+Sections 4–12 say what to check. This section says how to run a check so that its answer means
+something, because that turned out to be the harder half. Every entry below is a measurement,
+and the tooling that enforces it lives in **`scripts/locale-review/`** with a self-test per
+defect.
+
+The one-line version: **a gate that is wrong does not go red. It returns a confident,
+well-formed, useless answer, and nothing about it looks like a bug.**
+
+### 13.1 The gate's input is the gate
+
+Eight distinct input failures, each with its own signature, each of which produced a plausible
+result:
+
+| Failure | What it produces |
+|---|---|
+| **truncating** the page | fabricated verdicts about text the judge never saw |
+| **narrowing** the page | fabricated *absences* — "this page is clean" |
+| a **shared scratch path** | verdicts about a different lesson entirely |
+| a **silent zero** | a failed call that reads exactly like a null result |
+| a **trailing-context matcher** | drops the occurrence that mattered |
+| an **uppercase-node-ID heuristic** | ate a Mermaid label (`G[GPU]`: id `G`, label `GPU`) |
+| a **fixed word-window scorer** | made a working gate look dead on a short page |
+| a **quoted shell probe** | destroyed U+202F and reported `0` on a file containing it |
+
+Note what they have in common. Four fabricate content, four fabricate *absence*, and the second
+group is worse, because an absence is what a reviewer stops looking at.
+
+**So: always carry a positive control.** Any count that can legitimately be zero is run
+alongside a fixture the same code path must report as non-zero. A zero without a positive
+control is not a null finding — it is an unfalsifiable one. This applies hardest to invisible
+characters: assert them **by codepoint number, from bytes, inside the program**. Never through
+a shell argument or an interpolated string, which is how a `python3 -c` inside double quotes
+came to report `U+202F: 0` for a file that contained it.
+
+### 13.2 The lever is the prompt, not the reviewer
+
+Wave 1 refused about a third of the judge's proposed replacements as enterprise-German
+flattening — the reviewer was doing real work, and the work was rejecting the instrument's
+output. Waves 2 and 3 refused none, because the prompt was changed instead: it **forbids
+proposing a replacement at all** (the judge diagnoses; someone else repairs), it **requires a
+named linguistic phenomenon** for every finding, and it **invalidates any verdict whose quote
+is not verbatim in the page**.
+
+Be exact about what the verbatim rule bought, because the stronger version of this claim is
+false and was on the record for a while. Across wave 3's 28 verdict files: **334 blocks, 313
+accepted, 21 discarded — 8 of them fabricated citations and 13 a finding that named no
+phenomenon.** So fabricated citations do happen; wave 2's zero was a property of one wave, not
+of the method. The true claim is the narrower and more useful one: **no fabricated citation was
+ever acted on**, because every quote is machine-checked against the page before it reaches a
+work list. Do not restore the stronger claim, and do not read a non-zero here as drift — it is
+ordinary behaviour from a stochastic judge sampled more often.
+
+### 13.3 A stochastic judge must be sampled, and the stopping rule is severity, not count
+
+Eight independent samples of the same ~3 000-word page returned **19 · 8 · 19 · 11 · 14 · 9 ·
+13 · 7** accepted verdicts. It does not converge, and waiting for a clean run is waiting for
+something that will not arrive. Two all-clean samples on a short page were then followed by two
+that named four real tells, so a clean sample is not evidence either.
+
+The count is the wrong thing to watch. Graded by severity, the same eight samples give
+**13 · 6 · 11 · 5 · 9 · 3 · 6 · 2** hard findings (`ÜBERSETZT`) against 6 · 2 · 8 · 6 · 5 · 6 ·
+5 · 5 soft ones (`VERDÄCHTIG`). The hard grade decays and the soft grade does not — the later
+samples are mostly restating suspicions. **That decay is the defensible stopping signal.**
+A stop justified by "the last sample was clean" is not defensible: hard grammatical findings
+appeared in six of the eight samples including the last.
+
+### 13.4 A repair is a change, and must be re-gated rather than re-read
+
+Three rounds found defects that an earlier repair had introduced. Two, verbatim from the
+verdicts:
+
+- a relative clause left **without a finite verb** — „*… ist eine Antwort aus MLOps, die ein
+  System, in dem die Gewichte fast nie das Problem sind.*“
+- a pronoun **disagreeing with the antecedent the same repair had just introduced** —
+  „*wie das Release mit einer Regression umgeht … Entweder **er** blockiert sie*“, where
+  `das Release` is neuter and settled as neuter in this very wave.
+
+Both were caught and fixed before shipping, which is the point: they were caught by a *gate*,
+not by rereading. A reviewer rereading their own repair is checking it against the intention
+they just had. (No reliable per-repair defect rate came out of this; treat the qualitative
+finding as the finding.)
+
+### 13.5 Shortening for a layout budget can silently change a claim
+
+`cardwidth.mjs` measures pixels. Nothing measures whether the shorter string still says what
+the long one said, and the corpus shows the gap: for one referent the prose writes
+„*saubere, gleichartige Dokumente*“ while the card label — width-budgeted to three lines —
+writes „*saubere Dokumente, eine Sorte*“. Same node, same referent, two claims that are close
+but not identical, and no gate in the stack compares them.
+
+**So a width failure is repaired by a human who re-reads the shortened string against the claim
+it makes, never by the shortest string that fits.** And never by shrinking the type.
+
+### 13.6 `AGREED ×2` is the most confident and least verified label available
+
+Running each slice twice, blind, catches a wrong answer. It cannot catch a shared blind spot,
+and it produces a label that reads like verification.
+
+**Its detector is agreement on the verdict with disagreement on the measurement.** The clearest
+case: `der Perimeter` carries `AGREED ×2` for genus, register *and* referent, on **one** source
+document — and the two runs, reading that same document, report **28** against **34**
+occurrences. The doubling did not even reproduce the count it agreed about. Four further
+diverging counts are on record in the same pass (`open-weight` 3 against 2, `Eigenbetrieb` 2
+against 3, `vendor` 21 against 20, `self-host*` 20 against 23).
+
+Two harder cases, and both are the same shape: **both runs independently wrote a *banned*
+string into their own sheets**, and **both runs cited a corpus form that does not exist in the
+shipped locale** (`pro Anfrage` 6 : `je Anfrage` 0). A doubling that reports the same error
+twice is indistinguishable from confirmation.
+
+So `AGREED ×2` is only evidence when the two runs could have disagreed. When both read the same
+source, or both apply the same house rule, it is **one data point counted twice** — and a row
+resting on a single regulator document is worth *less* with the label, not more. The
+counter-check is a different *kind* of source, never a second read of the same one.
+
+### 13.7 A declared blind spot locates unease, not weakness
+
+Slices were asked to pre-register their own fragile rows. The row one slice flagged as fragile
+turned out to be its **best**-evidenced — `der Anbieter`, which the corpus then settled at
+38 : 0 with 22 article-bearing forms, 10 genitives, 3 dative plurals across 8 pages. It was
+never a gap; it was an unrecorded ruling. Meanwhile the genuinely thin rows — a term with no
+dictionary lemma in any tier, another resting on one encyclopaedia sentence read twice — were
+**not** flagged by anyone.
+
+Keep asking for the declaration; it is cheap and it surfaces real unease. Just do not treat an
+unflagged row as checked, or a flagged one as weak.
+
+### 13.8 Doubling protects against a wrong answer and does nothing about a missing question
+
+Four terms were assigned to **no slice at all**, so no amount of doubling could reach them, and
+they had to be ruled with zero attestation to stop a renderer inventing something:
+`der Ergebnisspeicher`, `der semantische Cache`, `Failover`, and `Fallbacks`.
+
+The worst of them repeated this project's own known-worst defect class. `Fallback` was already
+carried in the course canon as **settled kept-EN with no register row** — no gender, no plural,
+no genitive: a pointer to an empty cell, which looks exactly like a pointer to a filled one.
+And it was the **highest-exposure term in the wave with no owner**: 10 occurrences across 5
+files, an H3 heading, a Mermaid label and a glossary footer. The ruling therefore had to be
+*don't invent an article* rather than a genus.
+
+**Coverage is a separate gate from correctness.** Diff the term inventory against the union of
+the slice assignments before the slices run, not after.
+
+### 13.9 What a count is not
+
+Four distinct versions of one error, each of which cost something:
+
+- **A count sees quantities, not referents.** A counted 1 : 2 divergence once ordered a repair
+  that merged two genuinely different referents; reading one sentence dispelled it. No merge is
+  ordered without reading an occurrence.
+- **A count of a translated word is not a count of the English referent.** `Managed` appears 0
+  times where `verwaltet` appears 9 — same referent, and a zero on the loan says nothing about
+  the concept's presence.
+- **An unrestricted corpus count measures the corpus's topic mix**, not the word's register.
+- **The corpus can convict but not acquit.** It overrode both runs on `frontier model`, where
+  neither had grepped the delivered German, and it caught a corpus citation both runs had
+  invented. But `Cloud` ships 96 times in one course part with zero appellative uses and no
+  register row, and neither run drew any conclusion from that. Absence of a finding in the
+  corpus is not a finding of absence.
+
+### 13.10 An over-broad ban is a defect, and a ban is not always one repair
+
+Two rules in this locale's ban list were written wide enough to fire on correct forms and had
+to be **narrowed rather than kept just in case**: `Laufzeitumgebung`, released for the
+host-platform referent (what is banned is the coinage `Agentenlaufzeit` and bare `Laufzeit` as a
+component name), and `einfrieren`, which is correct for a release freeze and for frozen weights
+and is banned **only** in the blocking-call sense.
+
+The cost of an over-broad ban is not reading time. It is that the author learns to skip the
+scanner, after which a real hit goes past too — the same failure mode as an assertion with 50
+known-false hits. And `einfrieren` carries the second half of the lesson: **where a banned
+string spans two senses, the repair must be spelled out per sense.** One replacement
+instruction applied across senses is how a correct measurement gets applied to the wrong word.
+
+### 13.11 Grep the canon for the page's own slug before deciding anything
+
+`_language.md` §9 held a precedent block written for **`part-3-production/production-failures`
+by name** — spelling out that page's H1, a second heading, a card title, a pointed heading and
+its two-sentence prose resolution, verbatim. All five strings are in the shipped page today.
+The block had been there since the construction pass; it was found late.
+
+This is the recurring shape, and it is not "the canon was incomplete" — it is **unapplied, not
+missing**. A decision that exists and is not looked up costs exactly as much as a decision that
+was never made, and it costs more to discover. Two mechanical habits close it:
+
+- before drafting a page, **grep the whole canon for that page's slug, its title and its
+  headings**;
+- when a canon entry cites another register, **check the citation resolves**. A pointer to an
+  empty cell is indistinguishable from a pointer to a filled one.
+
+### 13.12 The example is the part nobody proofreads
+
+Five instances now, all the same shape: the *rule* is checked and the *illustration of the rule*
+is not.
+
+1. the canon's mandatory gloss;
+2. struck terms surviving as rule examples;
+3. sheets whose tables were clean and whose sentences were not;
+4. a ruling contradicting its own example within one row;
+5. **the binding term sheet's own worked sentences** — the ones renderers are told to copy.
+
+The fifth is the worst position available for a defect, because copying the worked sentence is
+precisely what a worked sentence is for. And the mechanism was declared in advance: that sheet's
+own limitations section states that **no native ear and no independent model read the sentences
+it binds** — every collocation check ran against dictionaries, and an English-built German
+collocation survives exactly that check. The defects were then found by the *render's* gate,
+one file downstream of where they were introduced.
+
+**So: run the ban scan and the register gate over the LEDGER, before it binds — not only over
+the prose afterwards.** `banscan.py` takes a ledger directly for this reason. An example is
+shipped text; gate it as text.
