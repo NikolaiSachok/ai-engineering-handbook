@@ -21,7 +21,7 @@ hide_table_of_contents: true
 > output is ever seen by a human. Four engineers own this, sharing the product's on-call rotation. There's
 > no ML team. Design it.
 
-:::info[Why this question]
+:::note[Why this question]
 
 Cost work is where engineers reveal whether they optimise against measurements or against intuitions.
 
@@ -41,8 +41,7 @@ attempts below were written blind — each author saw only the prompt above, non
 the scoring rubric, which was written before any attempt existed. (The prompt has been corrected once since
 they answered: it put the peak at 40,000 an hour, below its own daily average. No attempt uses the figure.)
 
-<details>
-<summary>Show the three attempts</summary>
+<Reveal>
 
 ## Attempt A — the common answer
 
@@ -277,7 +276,7 @@ taking first.
 > a schema, a tool result — because on traffic nobody reads, a bad route never pages anyone; it just returns
 > a plausible answer nobody flags.
 
-</details>
+</Reveal>
 
 :::tip[Read next]
 
