@@ -37,6 +37,7 @@
   "globs": [
     "docs/**/*.md",
     "docs-ai-sdlc/**/*.md",
+    "docs-design-scenarios/**/*.md",
     "blog/**/*.md",
     "i18n/**/*.md"
   ],
