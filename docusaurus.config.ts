@@ -151,6 +151,28 @@ const COURSES: Course[] = [
       {label: 'Glossary', path: 'glossary'},
     ],
   },
+  // Design Scenarios — production design questions worked through three ways, in
+  // ENGLISH ONLY. That is a declaration, not a gap: interview-register prose is the
+  // most idiom-dense text on this site and a translated scenario reads as one, so the
+  // course claims `['en']` and the i18n gates scope themselves to it (the `locales`
+  // field above explains the mechanism). The landing card derives "English" from the
+  // same list, so a reader in any locale sees what they are getting before clicking.
+  // `live: false` until the first batch lands — the card shows "In progress" and its
+  // CTA points at the intro, which describes the plan.
+  {
+    id: 'design-scenarios',
+    basePath: '/design-scenarios',
+    sidebarId: 'designScenariosSidebar',
+    navbarLabel: 'Design Scenarios',
+    blurb:
+      'Hard design questions from real AI-engineering roles, each worked through three ' +
+      'ways — the common answer, the strong one, and the over-built one — with the ' +
+      'tradeoffs that separate them.',
+    locales: ['en'],
+    live: false,
+    inNavbar: false,
+    footerLinks: [{label: 'Introduction', path: ''}],
+  },
 ];
 // Validate the declared scope at config load, so a malformed declaration fails the build
 // rather than quietly reaching the gates — which read the same field and would then be

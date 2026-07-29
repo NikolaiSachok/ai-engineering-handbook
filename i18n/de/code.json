@@ -323,5 +323,9 @@
   "landing.course.ai-sdlc.blurb": {
     "message": "Der KI-gestützte Softwareentwicklungszyklus: planen, bauen, prüfen und ausliefern, wenn KI-Agenten zum Team gehören.",
     "description": "Landing card blurb for the AI SDLC course"
+  },
+  "landing.course.design-scenarios.blurb": {
+    "message": "Schwierige Entwurfsfragen aus echten KI-Engineering-Rollen, jede dreimal beantwortet: die gängige Antwort, die starke und die überdimensionierte – dazu die Abwägungen, in denen sich die drei unterscheiden.",
+    "description": "Landing card blurb for the Design Scenarios course"
   }
 }

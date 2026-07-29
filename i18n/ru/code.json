@@ -332,5 +332,9 @@
   "landing.course.ai-sdlc.blurb": {
     "message": "Жизненный цикл разработки ПО с поддержкой AI: планирование, реализация, ревью и релиз, когда AI-агенты — часть команды.",
     "description": "Landing card blurb for the AI SDLC course"
+  },
+  "landing.course.design-scenarios.blurb": {
+    "message": "Трудные вопросы проектирования, взятые из требований в опубликованных вакансиях AI-инженеров: у каждого три ответа — привычный, сильный и избыточный — и разбор компромиссов, которыми они различаются.",
+    "description": "Landing card blurb for the Design Scenarios course"
   }
 }

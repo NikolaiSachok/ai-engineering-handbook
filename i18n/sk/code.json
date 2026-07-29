@@ -332,5 +332,9 @@
   "landing.course.ai-sdlc.blurb": {
     "message": "Životný cyklus vývoja softvéru s podporou AI: plánovanie, vývoj, kontrola a nasadzovanie, keď sú AI agenti súčasťou tímu.",
     "description": "Landing card blurb for the AI SDLC course"
+  },
+  "landing.course.design-scenarios.blurb": {
+    "message": "Náročné otázky pri návrhu AI-systémov, zostavené podľa verejných pracovných ponúk pre AI-inžinierov: ku každej tri odpovede — bežná, silná a predimenzovaná — a kompromisy, ktoré ich odlišujú.",
+    "description": "Landing card blurb for the Design Scenarios course"
   }
 }
