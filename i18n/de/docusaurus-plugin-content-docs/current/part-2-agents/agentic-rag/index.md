@@ -11,8 +11,9 @@ sieht sich die Frage gar nicht an und wählt nichts aus – sie dreht bei jeder 
 
 Genau das bricht Agentic RAG auf. Das Retrieval ist kein starrer Schritt mehr, sondern eine **Aktion, für
 die sich das Modell selbst entscheidet** – in einer Schleife, mit Blick auf das Zwischenergebnis. Das
-Modell entscheidet: suchen oder nicht, wonach suchen, die Frage umformulieren oder so lassen, noch einmal
-gehen oder nicht, aus welcher Quelle holen, ob es für eine Antwort schon genug hat.
+Modell entscheidet: suchen oder nicht, wonach suchen, die Frage umformulieren oder so lassen, eine
+weitere Runde drehen oder es dabei belassen, aus welcher Quelle holen, ob es für eine Antwort schon
+genug hat.
 
 Ein Satz für die ganze Lektion: **Im statischen RAG hat der Code die Kontrolle, im Agentic RAG das Modell.**
 
@@ -27,8 +28,8 @@ wird. (Das Video ist auf Englisch.)
 
 ## Wo statisches RAG versagt
 
-Autonomie wird nicht eingebaut, weil sie gerade in Mode ist. Ein festes `retrieve → generate` versagt bei
-ganzen Klassen von Fragen wirklich.
+Autonomie wird nicht eingebaut, weil sie gerade in Mode ist. Eine feste Pipeline aus
+`retrieve → generate` versagt bei ganzen Klassen von Fragen wirklich.
 
 - **Mehrschrittige Fragen.** „Wer leitet die Abteilung, die Richtlinie X erlassen hat?“ Mit einer Suche ist
   das nicht zu holen: erst Richtlinie X finden, daraus die Abteilung – und erst dann, wer sie leitet. Die
@@ -38,16 +39,16 @@ ganzen Klassen von Fragen wirklich.
   „Wie viel sind 15 % von 200?“ Statisches RAG gräbt trotzdem in der Datenbank und mischt unbrauchbaren
   Kontext dazu. Ein Agent kann entscheiden, dass es hier nichts zu suchen gibt.
 - **Verschiedene Quellen für verschiedene Fragen.** Manche Fragen gehören in die Wissensdatenbank, manche
-  an SQL über eine Tabelle, manche ins aktuelle Web. Eine feste Pipeline geht immer an dieselbe Stelle. Ein
-  Agent **leitet** die Frage dorthin **weiter**, wo die Antwort liegt.
+  in eine SQL-Abfrage über eine Tabelle, manche ins aktuelle Web. Eine feste Pipeline geht immer an
+  dieselbe Stelle. Ein Agent **leitet** die Frage dorthin **weiter**, wo die Antwort liegt.
 - **Ein schlechtes erstes Ergebnis.** Kommen unpassende Chunks zurück, reicht die statische Pipeline sie
   trotzdem an die Generation weiter und erzeugt eine schwache Antwort. Ein Agent kann sich ansehen, was
   zurückkam, merken, dass es danebenliegt, neu formulieren und noch einmal suchen. Das ist die
   **Selbstkorrektur**, und der Rückweg in die Suche mit einer geschärften Frage heißt **iteratives
   Retrieval**.
 
-Der gemeinsame Nenner: Eine echte Frage braucht **wechselnd viele Schritte, und sie braucht die Wahl,
-welchen Weg sie nimmt** – die Pipeline bietet einen festen an.
+Der gemeinsame Nenner: Eine echte Frage braucht **unterschiedlich viele Schritte, und sie braucht die
+Wahl, welchen Weg sie nimmt** – die Pipeline bietet einen festen an.
 
 ## Der Mechanismus dahinter: eine Schleife
 
@@ -78,8 +79,8 @@ Diese Schleife aus denken → tun → hinsehen → wiederholen ist die Autonomie
 
 <YouTube id="0z9_MhcYvcY" title="What is Agentic RAG? — IBM Technology" />
 
-Dieselbe Schleife aus einem anderen Blickwinkel, entlang der Rollen des Agenten: Planung, Tool-Calls,
-Reasoning. (Das Video ist auf Englisch.)
+Dieselbe Schleife aus einem anderen Blickwinkel: Das Video geht die Rollen des Agenten durch – Planung,
+Tool-Calls, Reasoning. (Das Video ist auf Englisch.)
 
 :::
 
@@ -94,25 +95,25 @@ Zerlegen wir „das Modell hat die Kontrolle“ in greifbare Fähigkeiten.
 | Umformulierung | Frage unverändert (bestenfalls eine Umformung vorab) | schreibt **zwischen** den Schritten um, aus dem Ergebnis heraus |
 | Quelle | eine feste | leitet an die richtige weiter (Wissensdatenbank / SQL / Web / API) |
 | Reaktion auf ein schlechtes Ergebnis | reicht es durch | merkt, dass es danebenliegt, und geht noch einmal |
-| Zahl der Schritte | fest | wechselnd, das Modell entscheidet |
+| Zahl der Schritte | fest | unterschiedlich, das Modell entscheidet |
 
 ## Ein Spektrum, kein Schalter
 
-Denken Sie nicht „statisch ODER agentisch“. Dazwischen liegt ein stufenloses Spektrum, abgestuft danach,
-**wie viel Freiheit Sie dem Modell lassen**.
+Denken Sie nicht „statisch ODER agentisch“. Dazwischen liegt ein fließendes Spektrum, und es ordnet
+sich danach, **wie viel Freiheit Sie dem Modell lassen**.
 
 1. **Der Query-Router.** Der leichteste Schritt in die Autonomie. Das Modell trifft eine einzige
    Entscheidung – wohin die Frage geht: in welchen Index, an welches Tool, oder „kein Retrieval nötig“ –,
    alles danach ist statisch. Billig, vorhersagbar, und er deckt die meisten Fälle ab.
 2. **Die Abfragen planen.** Das Modell zerlegt eine schwierige Frage vorab in Teilfragen.
-3. **Die volle Schleife (nach dem Muster von ReAct, Reasoning + Acting).** Ein echtes
-   `nachdenken → entscheiden → handeln → beobachten` in einer Schleife, mit Selbstkorrektur und wechselnd
-   vielen Schritten.
+3. **Die volle Schleife (nach dem Muster von ReAct, Reasoning + Acting).** Eine echte Schleife aus
+   `nachdenken → entscheiden → handeln → beobachten`, mit Selbstkorrektur und unterschiedlich vielen
+   Schritten.
 
 Eine praktische Regel, die Sie sich jetzt schon merken sollten: Nehmen Sie die einfachste Stufe, die die
 Aufgabe löst. Die volle agentische Schleife ist kein Preis, den es zu gewinnen gibt, sondern eine Rechnung,
-die Sie bezahlen. Oft schlägt ein Router vor einem guten statischen RAG den „vollen Agenten“ bei Kosten,
-Latenz und Stabilität.
+die Sie bezahlen. Oft ist ein Router auf einem guten statischen RAG bei Kosten, Latenz und Stabilität
+besser als ein „voller Agent“.
 
 ## Was die Autonomie kostet – und warum Teil I dadurch wichtiger wird
 
@@ -139,7 +140,7 @@ Agent seine Entscheidungen trifft.
   das Retrieval wird zur Aktion in einer Schleife, die Kontrolle liegt beim Modell.
 - Autonomie brauchen Sie dort, wo die Pipeline bricht: mehrschrittige Fragen, „kein Retrieval nötig“, das
   Weiterleiten an die richtige Quelle, die Selbstkorrektur nach einem schlechten Ergebnis.
-- Der Mechanismus ist die Schleife aus nachdenken → entscheiden → handeln → beobachten, wiederholt, bis das
+- Der Mechanismus ist die Schleife aus `nachdenken → entscheiden → handeln → beobachten`, wiederholt, bis das
   Modell antworten kann.
 - Es ist ein Spektrum: Router → Abfragen planen → volle Schleife. Nehmen Sie die einfachste Stufe, die die
   Aufgabe löst.

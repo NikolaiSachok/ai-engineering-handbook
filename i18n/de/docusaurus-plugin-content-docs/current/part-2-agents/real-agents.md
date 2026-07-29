@@ -28,7 +28,7 @@ beherrscht, schlägt in der Dokumentation eines Anbieters nur noch nach, statt s
 <YouTube id="fCHe_fOqlYA" title="Building AI Agent Systems and Scaling Challenges in Agentic AI — IBM Technology" />
 
 Sehen Sie das zuerst: IBM benennt dieselbe Spannung, die dem Abschluss dieses Teils zugrunde liegt – echte
-Agenten kosten Latenz und Komplexität, und die Ingenieursleistung besteht darin, so *wenig* Selbständigkeit zu
+Agenten kosten Latenz und Komplexität, und die Ingenieursleistung besteht darin, so *wenig* Autonomie zu
 wählen, wie die Aufgabe verlangt, und nicht so viel wie möglich. (Das Video ist auf Englisch.)
 
 :::
@@ -122,7 +122,7 @@ Teil I genau das richtige Werkzeug ([Agentic RAG](./agentic-rag/index.md)).
 
 ## Planung und Schleifen – Rechenzeit gegen bessere Entscheidungen, unter einer Obergrenze
 
-Die Schleife des Agenten lautet nachdenken → entscheiden → handeln → beobachten, so lange wiederholt, bis eine
+Die Schleife des Agenten lautet `nachdenken → entscheiden → handeln → beobachten`, so lange wiederholt, bis eine
 Abbruchbedingung greift. Lassen Sie das Modell vor dem Handeln ausdrücklich nachdenken, entscheidet es besser;
 eine Obergrenze für Antworten oder Schritte ist die Sicherung gegen eine Schleife, die nicht anhält. Beides
 hängt nicht am Anbieter ([Planung und Schleifen](./planning-loops/index.md)).
@@ -358,7 +358,7 @@ eines neuen Anbieters nach, statt sie neu zu lernen.
 - Retrieval ist ein Tool mit Quellenangaben. Alle drei bringen eine eigene Websuche mit; Claude legt den Abruf
   einer Webseite und eine Sandbox für Code dazu, OpenAI setzt auf File Search über Vector Stores, und Gemini
   bindet an Google Search an, ergänzt um eine verwaltete RAG Engine.
-- Die Schleife lautet nachdenken → entscheiden → handeln → beobachten, begrenzt durch ein Budget an Antworten
+- Die Schleife lautet `nachdenken → entscheiden → handeln → beobachten`, begrenzt durch ein Budget an Antworten
   oder Schritten. Bei der Steuerung des Nachdenkens gehen die drei auseinander: sichtbares Nachdenken bei
   Claude, das undurchsichtige `reasoning.effort` bei OpenAI, ein numerisches Thinking Budget bei Gemini.
 - Erholen statt sterben: Fehler aus Tools gehen als Text zurück, damit sich das Modell korrigiert, und der

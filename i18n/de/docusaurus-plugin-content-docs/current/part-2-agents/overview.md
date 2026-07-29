@@ -27,8 +27,8 @@ Aufgabe wirklich braucht**.
   `Plan-and-Execute`, die Aufgabenzerlegung, Abbruchbedingungen und der Weg aus einer Schleife wieder
   heraus.
 - **[Multi-Agenten-Systeme](./multi-agent/index.md)** – mehrere spezialisierte Agenten, ihre Rollen, die
-  Übergabe an den nächsten Agenten; dazu die Topologien – also wie die Agenten miteinander verbunden sind
-  – und wann Sie einen Agenten besser nicht aufteilen.
+  Übergabe an den nächsten Agenten; dazu die Topologien – also wie die Agenten miteinander verbunden
+  sind – und wann Sie einen Agenten besser nicht aufteilen.
 - **[Orchestrierungs-Frameworks](./orchestration-frameworks/index.md)** – [LangGraph](https://www.langchain.com/langgraph), [LangChain](https://www.langchain.com), Microsoft Agent
   Framework, [CrewAI](https://www.crewai.com): was sie einer selbst gebauten `while`-Schleife voraushaben und wann
   Sie besser darauf verzichten.

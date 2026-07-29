@@ -5,13 +5,13 @@ slug: /part-2-agents/planning-loops/
 
 # Die Schleife auf das Ziel ausrichten – und dafür sorgen, dass sie endet
 
-In [Agentic RAG](../agentic-rag/index.md) haben Sie die Schleife bekommen: `reason → decide → act → observe`,
+In [Agentic RAG](../agentic-rag/index.md) haben Sie die Schleife bekommen: `nachdenken → entscheiden → handeln → beobachten`,
 und sie dreht sich, bis das Modell selbst entscheidet, dass es so weit ist. In [Tool-Einsatz](../tool-use/index.md)
 kam dazu, dass jede Aktion in dieser Schleife ein Tool-Call ist – das Modell formuliert die Absicht, Ihr Code
 setzt den Aufruf ab. Der Agent hat also Bewegungsfreiheit und einen Vorrat an Aktionen. Eine Frage blieb dabei
 offen: Wie entscheidet der Agent bei einer Aufgabe über *viele* Schritte, in welcher Reihenfolge er sie abarbeitet –
-und was bringt die Schleife dazu, **anzuhalten**? Um die Schicht, die die Schleife steuert und beendet, geht es
-in dieser Lektion.
+und was bringt die Schleife dazu, **anzuhalten**? Um diese **Schleifensteuerung** – die Schicht, die die Schleife steuert und
+beendet – geht es in dieser Lektion.
 
 Die ganze Lektion in einem Satz: Agentic RAG hat dem Agenten eine Schleife gegeben; hier geht es darum, sie auf
 das Ziel auszurichten und so zu begrenzen, dass sie tatsächlich endet.
@@ -22,8 +22,7 @@ das Ziel auszurichten und so zu begrenzen, dass sie tatsächlich endet.
 
 Das Video nimmt die ganze Lektion von den Fehlern her: die konkreten Arten, auf die eine Schleife
 schiefgeht – Endlosschleifen und Planungsfehler –, und warum erst die Freiheit, die Reihenfolge selbst zu
-bestimmen, sie möglich macht.
-(Das Video ist auf Englisch.)
+bestimmen, sie möglich macht. (Das Video ist auf Englisch.)
 
 :::
 
@@ -75,11 +74,10 @@ Umplanung ist das Gelenk zwischen beiden.
 
 ## Das zentrale Fehlerbild – eine Schleife, die nicht richtig endet
 
-Das ist das Fehlerbild dieser ganzen Schicht: **Die Schleife endet nicht richtig.** Geben Sie dem Agenten die Freiheit, die
-Reihenfolge selbst zu bestimmen, dann kann er dort versagen, wo eine starre Pipeline es nie könnte – ein fester
-Weg `retrieve → generate` endet immer, weil es nirgendwo sonst hingeht. Eine Schleife dagegen muss sich für
-das Ende *entscheiden*. Genau diese Entscheidung ist das Neue, das misslingen kann.
-
+Das ist das Fehlerbild dieser ganzen Schicht: **Die Schleife endet nicht richtig.** Geben Sie dem Agenten die
+Freiheit, die Reihenfolge selbst zu bestimmen, dann kann er dort versagen, wo eine starre Pipeline es nie
+könnte – eine feste Pipeline `retrieve → generate` endet immer, weil es nirgendwo sonst hingeht. Eine Schleife
+dagegen muss sich für das Ende *entscheiden*. Genau diese Entscheidung ist das Neue, das misslingen kann.
 Sie misslingt in drei Gestalten:
 
 - **Sie hält nie an.** Der Agent ruft immer weiter Tools auf und kommt nie zu dem Schluss, dass er fertig ist.
@@ -93,8 +91,8 @@ dieselbe Freiheit, mit der die Schleife Fragen über mehrere Hops beantworten ka
 
 ## Verteidigung in Schichten
 
-Gegen eine Schleife, die nicht anhält, gibt es keinen einzelnen Schalter. Sie legen die Verteidigung in Schichten
-übereinander: unten die schwächste und zugleich unnachgiebigste, oben die klügste.
+Gegen eine Schleife, die nicht anhält, gibt es keinen einzelnen Schalter. Sie legen die Verteidigung in
+Schichten übereinander: unten die schwächste und zugleich unnachgiebigste, oben die klügste.
 
 **Budgets und Limits.** Eine harte Obergrenze – für Schritte, Tool-Calls, Tokens, Kosten oder die verstrichene
 Zeit. Ist sie erreicht, hält die Schleife an, gleichgültig was das Modell „will“. Im Produktivbetrieb ist das
@@ -169,7 +167,7 @@ der sich bezahlt macht.
 ## Wo diese Schicht sitzt – und was sie nachgelagert kostet
 
 Zuerst der Ort. Sie steuert und beendet die Schleife aus Agentic RAG und liegt *über* den Tools aus
-Tool-Einsatz: Zerlegung und Abbruch sitzen auf der Schleife `reason → decide → act → observe`, die die Tools
+Tool-Einsatz: Zerlegung und Abbruch sitzen auf der Schleife `nachdenken → entscheiden → handeln → beobachten`, die die Tools
 aufruft. Nichts davon ersetzt jene Lektionen – es steuert, was sie gebaut haben.
 
 Zwei nachgelagerte Folgen schärfen Punkte, die Sie schon kennen. **Observability** ist nicht mehr bloß
@@ -183,8 +181,8 @@ gereicht hätten, ist kein guter Agent.
 
 ## Das Wichtigste
 
-- Diese Lektion ist die Schicht, die die Schleife und die Tools steuert – Zerlegung und Abbruch sitzen auf
-  `reason → decide → act → observe`. Sie lenkt die Freiheit, die die früheren Lektionen dem Modell gegeben
+- Diese Lektion ist die Schleifensteuerung über der Schleife und den Tools – Zerlegung und Abbruch sitzen auf
+  `nachdenken → entscheiden → handeln → beobachten`. Sie lenkt die Freiheit, die die früheren Lektionen dem Modell gegeben
   haben.
 - Die Aufgabenzerlegung macht aus einem Ziel eine Folge von Teilaufgaben, entweder ausdrücklich (ein
   aufgeschriebener Plan, an dem Sie den Fortschritt ablesen) oder implizit (ein Plan, der in der Schleife von

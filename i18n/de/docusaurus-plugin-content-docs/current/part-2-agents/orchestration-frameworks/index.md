@@ -33,10 +33,10 @@ eine gute Orientierung, bevor es darum geht, was jede Schicht Ihnen einbringt. (
 Beginnen Sie mit der ehrlichen Frage: Was schreiben Sie selbst, wenn Sie das Framework weglassen? Wer ein paar Agenten
 von Grund auf gebaut hat, kennt die Antwort: immer wieder dieselbe Mechanik, und davon eine ganze Menge.
 
-Die Schleife kommt zuerst: der Zyklus überlegen → entscheiden → handeln → beobachten, der so lange läuft, bis der Agent
+Die Schleife kommt zuerst: der Zyklus `nachdenken → entscheiden → handeln → beobachten`, der so lange läuft, bis der Agent
 selbst befindet, dass er fertig ist. Dann die Verdrahtung um die Tool-Calls herum – die Schemata, die das Modell liest, die
 Zuordnung, die einen Tool-Namen auf die richtige Funktion abbildet, und die Formatierung, die jedes Ergebnis wieder in den
-Gesprächsverlauf einfügt. Anspruchsvoll ist davon nichts, fummelig ist alles davon, und Sie schreiben es jedes einzelne Mal neu.
+Gesprächsverlauf einfügt. Anspruchsvoll ist daran nichts, fummelig ist beides, und Sie schreiben es jedes einzelne Mal neu.
 
 Darauf sitzt, was mit dem Agenten mitwächst:
 
