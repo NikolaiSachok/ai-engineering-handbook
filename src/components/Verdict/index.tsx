@@ -16,14 +16,16 @@ import styles from './styles.module.css';
  * `<details>` reveal, and Docusaurus does not process `:::` directives inside JSX. A component
  * renders there.
  *
- * The label names the speaker. The page establishes an interviewer who holds a rubric written
- * before any answer existed; the verdict is that interviewer's, and saying so is what stops the
- * assessment from being read as the candidate's own summary.
+ * The label names the speaker, and names it accurately: a separate assessor agent writes the
+ * verdicts, scoring the three attempts against a rubric it did not write. An earlier version said
+ * "the interviewer's verdict", which was tidier and wrong — the interviewer agent writes the question
+ * and the rubric and never sees the answers. Naming the speaker is what stops the assessment from
+ * being read as the attempt's own closing summary.
  */
 export default function Verdict({
   children,
   /** Overrides the label. Use only where the assessing voice genuinely differs. */
-  label = "The interviewer's verdict",
+  label = "The assessor's verdict",
 }: {
   children: React.ReactNode;
   label?: string;

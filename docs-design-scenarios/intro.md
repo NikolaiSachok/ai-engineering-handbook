@@ -18,7 +18,12 @@ one and say why.
 Each scenario is staged as an interview, because that is the format that reliably produces a question
 this sharp: a constraint, a clock, and someone who will ask why. The question and the rubric that
 judges answers are written first; the attempts are written afterwards, against the question alone.
-The interviewer on these pages is that role in the exercise — the one holding the rubric.
+
+**The answers are written by language models** — one agent per attempt, each given a set of
+engineering habits and the question, and nothing else: not the scoring rubric, not the other two
+attempts. Read one as a reconstruction of how an engineer at that level reasons, not as a report from
+somebody who lived it. [How these are made](/design-scenarios/how-these-are-made) sets out the whole
+arrangement, including what it cannot buy.
 
 :::note[Status]
 
@@ -34,7 +39,7 @@ A single worked answer teaches you what someone concluded. It does not teach you
 alternatives were worse, and that is where the reasoning lives.
 
 So each scenario carries three attempts, written independently and without sight of each other or of
-an interviewer's rubric:
+the rubric:
 
 - **The common answer** — the one you will hear most often, and the one most write-ups stop at. It
   is never a strawman: plausible, popular, and usually wrong in one specific place.
@@ -54,8 +59,8 @@ good answer is not the skill that produces one.
 
 Two sections then close the scenario. **Read next** points into the other two courses, at the
 lessons that teach the mechanics an answer leaned on. A scenario shows you a decision; the machinery
-under it is taught there. **If they push** lists the follow-up questions an interviewer reaches for
-next. Those questions separate understanding from memory: if you memorised an answer here, the first
+under it is taught there. **If they push** lists the follow-up questions the interviewer would reach
+for next. Those questions separate understanding from memory: if you memorised an answer here, the first
 one will find that out.
 
 ## Where the questions come from
@@ -77,5 +82,5 @@ when the postings ask for that kind of role often enough to fill one.
 The other two courses are translated. This one is written in English and stays that way, and the
 reason is register. Scenario pages carry argument, hedging, and the specific vocabulary of engineers
 disagreeing with each other. That is the hardest kind of prose to move between languages without it
-reading as moved. And the value here depends on the attempts sounding like three people rather than
-one machine.
+reading as moved. And the three attempts have to read as three distinct engineers, which is hard
+enough to hold in one language.

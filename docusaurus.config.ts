@@ -174,6 +174,7 @@ const COURSES: Course[] = [
     footerLinks: [
       {label: 'Introduction', path: ''},
       {label: 'Agentic workflows', path: 'agentic-workflows/overview'},
+      {label: 'How these are made', path: 'how-these-are-made'},
     ],
   },
 ];
