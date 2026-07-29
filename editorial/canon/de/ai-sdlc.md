@@ -48,7 +48,7 @@ Postmortem.*
 
 | Terminus | Glosse beim ersten Vorkommen |
 |---|---|
-| Harness | „(das Gerüst, in dem der Agent arbeitet — Werkzeuge, Regeln, Grenzen)" — **Genus siehe §4, WEAK** |
+| Harness | „(das Gerüst, in dem der Agent arbeitet – Werkzeuge, Regeln, Grenzen)" — **Genus siehe §4, WEAK** |
 | Hook vs. Skill | „(Hook = deterministischer Eingriff des Harness; Skill = ein Rat, den das Modell ignorieren kann)" |
 | Reward Hacking | „(die geprüfte Kennzahl erfüllen, ohne die verlangte Arbeit zu tun)" — **nicht** „Belohnungs-Hacking" |
 | Blast Radius | „(Reichweite des Schadens, den ein entgleister Agent anrichten kann)" |
