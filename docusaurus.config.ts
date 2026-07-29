@@ -165,13 +165,16 @@ const COURSES: Course[] = [
     sidebarId: 'designScenariosSidebar',
     navbarLabel: 'Design Scenarios',
     blurb:
-      'Hard design questions from real AI-engineering roles, each worked through three ' +
-      'ways — the common answer, the strong one, and the over-built one — with the ' +
+      'Hard design questions from published AI-engineering job postings, each worked through ' +
+      'three ways — the common answer, the strong one, and the over-built one — with the ' +
       'tradeoffs that separate them.',
     locales: ['en'],
     live: false,
     inNavbar: false,
-    footerLinks: [{label: 'Introduction', path: ''}],
+    footerLinks: [
+      {label: 'Introduction', path: ''},
+      {label: 'Agentic workflows', path: 'agentic-workflows/overview'},
+    ],
   },
 ];
 // Validate the declared scope at config load, so a malformed declaration fails the build
