@@ -27,8 +27,9 @@ arrangement, including what it cannot buy.
 
 :::note[Status]
 
-In progress. One scenario is published —
-[routing queries across models](/design-scenarios/agentic-workflows/model-routing) — and the rest of the
+In progress. Two scenarios are published —
+[routing queries across models](/design-scenarios/agentic-workflows/model-routing) and
+[knowing an agent works](/design-scenarios/agentic-workflows/trajectory-vs-outcome) — and the rest of the
 first batch is being written.
 
 :::
