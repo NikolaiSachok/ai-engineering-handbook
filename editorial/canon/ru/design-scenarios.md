@@ -18,8 +18,7 @@ sense-difference. `rag.md` is FROZEN — never edit it.
 
 ## Language policy
 
-- The course is authored in English and is **not translated**. Reason of record (`intro.md`,
-  "Why English only"): interview-register prose — argument, hedging, engineers disagreeing — is the
+- The course is authored in English and is **not translated**. Reason of record — the unheaded closing passage of `intro.md`: interview-register prose — argument, hedging, engineers disagreeing — is the
   corpus's most idiom-dense text, and a translated scenario reads as translated.
 - **The landing card IS localized**, so a reader in any locale learns what the course is before
   clicking. The card copy **describes the course and never comments on its language** — the card
@@ -77,7 +76,7 @@ ledger's own `scenario` book-unit row already read "one transferable sentence". 
 template implement that promise rather than improvising it. The template supplies the test: it must
 survive the specific numbers being wrong.
 
-**Placement — OPEN, and this is the question the earlier row did not ask. FOR THE AUTHOR.**
+**Placement — open, for the milestone pass to settle.** The earlier row did not ask this question.
 `## The principle` sits **inside** the `<details>` reveal and is **not** the last section — the page
 continues with `Read next` and closes on `If they push`. So it differs from the corpus's closing
 takeaway on two axes, and only the first was decided. Two consequences to rule on: a reader who never
@@ -187,11 +186,19 @@ an author writing in one of these languages reads their own `_language.md`, not 
 |---|---|---|
 | **ru** | Трудные вопросы проектирования, взятые из требований в опубликованных вакансиях AI-инженеров: у каждого три ответа — привычный, сильный и избыточный — и разбор компромиссов, которыми они различаются. | `AI`, never «ИИ» (`_language.md` §3). Noun-first enumeration («три ответа» before the adjectives) so the elided triple parses 1+1+1, and so the closing «они» has a plural antecedent on the page. |
 | **sk** | Náročné otázky pri návrhu AI-systémov, zostavené podľa verejných pracovných ponúk pre AI-inžinierov: ku každej tri odpovede — bežná, silná a predimenzovaná — a kompromisy, ktoré ich odlišujú. | `<noun> pri návrhu` shape from `sk/rag.md`, given an object (`AI-systémov`) so `návrh` cannot read as *a proposal/draft*; `AI-` hyphenated per SK `_language.md` §3. |
-| **de** | Schwierige Entwurfsfragen aus echten KI-Engineering-Rollen, jede dreimal beantwortet: die gängige Antwort, die starke und die überdimensionierte – dazu die Abwägungen, in denen sich die drei unterscheiden. | `KI`, not `AI` (DE `_language.md` §3); Durchkopplung on `KI-Engineering-Rollen`; en dash, not em dash. The elided adjectives stay **lowercase** — the noun is elided, not nominalised; a later pass must not "correct" them to `die Starke`. |
+| **de** | Schwierige Entwurfsfragen aus veröffentlichten Stellenanzeigen für KI-Engineering-Rollen, jede dreimal beantwortet: die gängige Antwort, die starke und die überdimensionierte – dazu die Abwägungen, in denen sich die drei unterscheiden. | `KI`, not `AI` (DE `_language.md` §3); Durchkopplung on `KI-Engineering-Rollen`; en dash, not em dash. The elided adjectives stay **lowercase** — the noun is elided, not nominalised; a later pass must not "correct" them to `die Starke`. |
 
 **Provenance formula — a content-honesty row, not a style row.** Every locale renders the source of
 the questions as **published job postings**, never as interviews attended, never a named employer.
-RU «опубликованных вакансий», SK «verejných pracovných ponúk», DE «echten KI-Engineering-Rollen».
+RU «опубликованных вакансий», SK «verejných pracovných ponúk», DE «veröffentlichten Stellenanzeigen», EN
+"published … job postings".
+
+*Corrected 2026-07-29 by the pre-publication leak audit.* The row previously recorded DE «echten
+KI-Engineering-Rollen» — *real roles* — as satisfying this formula, and the EN source said "real
+**AI-engineering roles**" too. Neither carried the *published* qualifier that does the honesty work; the
+contrast in «echt» is authentic-versus-invented, not public-versus-private. The row looked like it had
+audited three strings when it had only recorded them. **A ledger row that restates a rendering is not
+evidence that the rendering was checked against the rule above it.**
 A rendering that implies insider sourcing is a *factual* defect, not a stylistic one.
 
 **Term decisions behind the card, with the rejections:**

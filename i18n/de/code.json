@@ -325,7 +325,7 @@
     "description": "Landing card blurb for the AI SDLC course"
   },
   "landing.course.design-scenarios.blurb": {
-    "message": "Schwierige Entwurfsfragen aus echten KI-Engineering-Rollen, jede dreimal beantwortet: die gängige Antwort, die starke und die überdimensionierte – dazu die Abwägungen, in denen sich die drei unterscheiden.",
+    "message": "Schwierige Entwurfsfragen aus veröffentlichten Stellenanzeigen für KI-Engineering-Rollen, jede dreimal beantwortet: die gängige Antwort, die starke und die überdimensionierte – dazu die Abwägungen, in denen sich die drei unterscheiden.",
     "description": "Landing card blurb for the Design Scenarios course"
   }
 }

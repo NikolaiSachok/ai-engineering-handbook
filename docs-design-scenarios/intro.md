@@ -64,9 +64,8 @@ The questions are sampled, not invented. They come from the stated requirements 
 AI-engineering job postings, clustered and weighted by what recurs across them. Themes that appear
 in one posting wait for evidence that they appear in more.
 
-Nothing here comes from a private conversation, and no employer is named. The questions are
-abstracted to role archetypes, and the constraints are chosen to make the engineering hard, not to
-identify anyone.
+They are abstracted to role archetypes, and no employer is named. The constraints are chosen to make
+the engineering hard, not to identify anyone.
 
 Those archetypes are also how the scenarios are grouped. Each scenario is tagged with the kind of
 role that asks it, and the tags become tracks. The first track is **agentic workflows** —
