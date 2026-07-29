@@ -100,7 +100,7 @@ Dry-Run, Race Condition, Tool-RAG, Lost-in-the-Middle, Human-in-the-Loop (HITL),
 StateGraph, Store, Durable Execution, ~~Super-Step~~, Thread, A2A, Blackboard, Agent Card, TTFT, SSE,
 PagedAttention, Continuous Batching, Prefill, Decode, Chunked Prefill, Prefix Caching, KV-Cache, LoRA, PEFT,
 Fine-Tuning, SFT, DPO, Cold Start, Scale-to-Zero, Backpressure, Load Shedding, Admission Control,
-Little's Law, Vendor-Lock-in, Managed Endpoint, Provisioned Throughput, Instrumentation, OpenTelemetry
+Little's Law, Vendor-Lock-in, ~~Managed Endpoint~~, ~~Provisioned Throughput~~ → Klasse 1, ~~Instrumentation~~, OpenTelemetry
 (OTel), Canary Release, Shadow Deployment, Prompt Registry, Model Pinning, Model Routing, Fallback,
 LLM-Gateway, Prompt Caching, Semantic Caching, Drift, Grader, Release Gate, Dead-Letter Queue
 (DLQ), SLI, SLO, SLA, IAM, Golden Signals, Soft Cap / Hard Cap, Alert, Alerting, Dashboard, Matryoshka
@@ -175,6 +175,44 @@ LLM-Gateway, Prompt Caching, Semantic Caching, Drift, Grader, Release Gate, Dead
 >   Wörterbuch). Zwei Namen für einen Referenten auf einer Seite sind das *Richtungswackeln* aus §1.0, und
 >   die Seite mit dem attestierten Paradigma gewinnt. Dieselbe Anmerkung gilt für §6.5, „Soft- und
 >   Hard-Cap" – die **Ergänzungsstrich-Konstruktion bleibt gültig**, wo das Paar als Paar benannt wird.
+
+> **Drei Streichungen, Welle 3 (2026-07-29), RAG Teil III — und sie stehen alle drei in EINER Zeile der
+> Liste (der Produktiv-/Serving-Zeile), die diese Welle als erste tatsächlich gebraucht hat.**
+> Es ist die Gestalt aus **#327, Frage 2 und 3**: *ein Terminus steht in einem Abschnitt als settled, während
+> ein anderer ihn deutsch führt oder gar keine Zeile für ihn hat.* ⚠ **Und die drei Zeilen brauchen drei
+> VERSCHIEDENE Auflösungen — ein pauschaler Sweep hätte eine davon falsch eingeordnet.** Das ist der Grund,
+> warum #327 „Beispiel ersetzen, nicht Regel schwächen" sagt und nicht „Liste durchstreichen".
+>
+> - ~~**Managed Endpoint**~~ → **der Endpunkt** (§1.1.g). Der Loan stand hier settled, **ohne §1.1-Zeile** —
+>   ein Zeiger auf eine leere Zelle (#327, Frage 3) —, während `endpoint → der Endpunkt` an **fünf** Stellen
+>   deutsch geführt und SETTLED ist: `_language.md` §1.1 (umgedreht am 2026-07-28, Duden), §1.2, der
+>   Fallenkasten, **der Injektionsblock** (Punkt 4, wörtlich in jeden Render-Prompt kopiert) und die
+>   §2-Tabelle dieser Datei. Dazu das eigene Phasenprotokoll (§8): „die teuerste war **Endpoint → Endpunkt**".
+>   **Fünf gegen eins, und die eine ist ein Bootstrap-Rest**, den der Umkehrungsdurchgang nicht mitgezogen
+>   hat, weil er das **nackte** Substantiv drehte und niemand das **Markenkompositum** nachgesehen hat —
+>   genau die Welle-1-Falle (`Budget`, `Cap`, `Signal`: Zeile fürs Kompositum, keine fürs Appellativ),
+>   diesmal spiegelverkehrt.
+>   ⚠ **Der Quelltext entscheidet die Klassenfrage, und zwar durch die Schreibung:** „models run as
+>   **managed endpoints**" ist klein und im Plural, also ein **Appellativ**, kein Produktname.
+>   **Gegenstimme im Protokoll (Slice C, run 1), und sie ist inhaltlich stark:** im deutschen IT-Markt ist
+>   *Managed + Endpoint* der **stehende Name des Endpoint-Security-/MDR-Marktes**; der Slice wollte den
+>   Incumbenten mit Pflichtglosse halten. **Beide Wege führen zur selben Korpusform** — „**der Endpunkt des
+>   Anbieters**", nie nacktes `Managed Endpoint` —, und genau deshalb wird die kept-EN-Zeile gestrichen
+>   statt gehalten: **sie lizenziert die nackte Form, die in die falsche Branche zeigt.**
+> - ~~**Provisioned Throughput**~~ → **Klasse 1**, nicht deutsch geführt. **Hier wäre ein pauschaler Sweep
+>   falsch gewesen.** Der Quelltext schreibt es durchgehend **groß** und als **Herstellerangebot** („Bedrock
+>   as **Provisioned Throughput** and Reserved terms", „Azure sells it as PTU (**provisioned throughput
+>   units**)"). Es ist ein **Produktname** wie `Golden Signals`, kein Appellativ — es kollidiert also gar
+>   nicht mit `der Durchsatz`, sondern war bloß in der falschen Klasse einsortiert. Das **Appellativ** im
+>   selben Absatz (klein: *provisioned throughput units*) läuft weiter über **den Durchsatz**.
+> - ~~**Instrumentation**~~ → **die Instrumentierung** (§1.1.g). Der Quelltext schreibt es **klein und
+>   appellativisch** (7×, u. a. als Glossarlemma in `[New terms]`), und *die Instrumentierung* steht
+>   **im Injektionsblock**. Ein Terminus, den der Block namentlich als deutsch geführt aufzählt, darf nicht
+>   zwei Dateien weiter als settled kept-EN stehen.
+>
+> **Gegen #327 protokolliert**, damit der dortige Sweep diese drei nicht neu herleitet — und mit dem Befund,
+> den sie zusammen tragen: **die Prüffrage „steht der Terminus woanders anders?" reicht nicht; man muss die
+> Schreibung im QUELLTEXT lesen, um zu wissen, welche der drei Auflösungen die richtige ist.**
 
 > **The list above is in CITATION form, not in running-prose form.** Multi-word terms are spelled per
 > `_language.md` §1.3.3 the moment they sit in a German sentence: **noun + noun → hyphenated**
