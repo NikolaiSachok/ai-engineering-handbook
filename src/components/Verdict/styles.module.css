@@ -1,0 +1,49 @@
+/* The verdict block on a Design Scenario page.
+
+   Its whole job is separation: everything above it is one engineer's answer in their own voice, and
+   this is somebody else judging it. So the design leans on devices the attempt prose cannot use — a
+   heavy left rule, an inset ground, and a small-caps speaker label — rather than on another weight
+   of bold, which is the attempt's own vocabulary.
+
+   Colours come from Infima's emphasis scale rather than a palette of its own, so the block follows
+   the light and dark themes with no override and never competes with a link or an admonition for
+   the reader's "this is special" attention. */
+
+/* The ground is the PAGE background, not a step on the emphasis scale. The verdict always sits
+   inside the `<details>` reveal, which Docusaurus themes with its own tinted plate — so an
+   emphasis-100 grey laid on that tint reads as a dimmed patch of the same surface, which is exactly
+   backwards: this block is set apart, not de-emphasised. Page background makes it a card resting on
+   the reveal instead, and the hairline keeps it defined if it is ever used outside one. */
+.verdict {
+  margin: 1.75rem 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-left: 4px solid var(--ifm-color-emphasis-600);
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-background-color);
+}
+
+.label {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* The body keeps normal prose colour: the block is set apart, not de-emphasised. A verdict the
+   reader skims because it looks like a footnote defeats the point of separating it. */
+.body {
+  color: var(--ifm-font-color-base);
+}
+
+.body > :last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 570px) {
+  .verdict {
+    padding: 0.875rem 1rem;
+  }
+}
