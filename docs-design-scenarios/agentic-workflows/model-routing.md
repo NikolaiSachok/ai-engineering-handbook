@@ -36,16 +36,18 @@ against a quality regression they couldn't see.
 
 :::
 
-**Answer it before you read on.** Out loud or on paper, whichever you'd do at a whiteboard. The three
-attempts below were written blind — each author saw only the prompt above, none saw the others, and none saw
-the scoring rubric, which was written before any attempt existed. (The prompt has been corrected once since
-they answered: it put the peak at 40,000 an hour, below its own daily average. No attempt uses the figure.)
+**Answer it before you read on.** Out loud or on paper, whichever you'd do at a whiteboard.
+
+Three model-written attempts follow. Each comes from a separate agent given one engineer's habits and the
+prompt above — no agent saw the other two, or the rubric, which was written first
+([how these are made](/design-scenarios/how-these-are-made)). The prompt has been corrected once since they
+answered: it put the peak at 40,000 an hour, below its own daily average. No attempt uses the figure.
 
 <Reveal>
 
 ## Attempt A — the common answer
 
-*Written blind. The candidate's own words, unedited.*
+*Persona given to the agent: Has shipped LLM features that work, and reads widely. Thinks in components, patterns and seams. Has never had to prove that a change did not quietly degrade quality — the output always had a human reading it.*
 
 Let me draw it, because the shape of the problem is that we have one component doing three jobs.
 
@@ -114,7 +116,7 @@ tier" but scoped by A's own words to "every routed response", a wider population
 
 ## Attempt B — the strong answer
 
-*Written blind. The candidate's own words, unedited.*
+*Persona given to the agent: Has run a system like this in production and been paged for it. Reasons from constraints and failure modes, and says what each choice costs as well as what it buys.*
 
 First thing I do is stop guessing where the money is. Two million requests at $180k is $0.003 a request
 blended, and that average is lying to me. I want a cost histogram by segment: tokens in, tokens out, per
@@ -185,7 +187,7 @@ opening prior about where the money sits.
 
 ## Attempt C — the over-built answer
 
-*Written blind. The candidate's own words, unedited.*
+*Persona given to the agent: Designs for where the system will be, not where it is. Has watched teams ship the quick version and spend years unable to change it, and concluded that under-building is the expensive mistake.*
 
 The 40% is a symptom. The real statement of the problem is: we have no policy layer. Every request,
 regardless of what it needs, gets the most expensive possible execution path, and we have no mechanism that
