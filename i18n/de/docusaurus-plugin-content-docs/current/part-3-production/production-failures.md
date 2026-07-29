@@ -96,14 +96,14 @@ Mechanik – das Parsing, das Layout, die Verfahren für das Chunking, die Metad
   </Lane>
 </InfoCard>
 
-Dieser Fehler kostet Teams die meiste Zeit, weil das System auf dem ganzen Weg gesund aussieht. Nichts wirft
+Dieser Fehler kostet Teams die meiste Zeit, weil das System an jeder Stelle gesund aussieht. Nichts wirft
 einen Fehler. Der Dienst antwortet mit 200. Es kommen einfach die falschen Chunks an, und das Modell tut,
 wofür es gebaut ist – es schreibt eine flüssige Antwort aus allem, was es bekommen hat.
 
 Das Retrieval getrennt von der Generation zu bewerten, ist die diagnostische Hälfte, und Teil I begründet
 sie: Ohne diese Trennung unterscheiden Sie einen Fehlgriff des Retrievals nicht von einem Modell, das guten
 Kontext übergangen hat, und Sie verbringen zwei Wochen damit, an einem Prompt zu feilen, um einen Fehler in
-der Indexierung zu beheben. Die Hälfte für den Produktivbetrieb aber ist ein Weg der Verweigerung, und genau
+der Indexierung zu beheben. Was der Produktivbetrieb zusätzlich braucht, ist ein Weg der Verweigerung, und genau
 den haben die meisten Demos nicht einmal im Entwurf. Ein Demo gibt **immer top-K** zurück – top-K ist ein
 Ausschnitt und kein Urteil, und ein Ranking nach Ähnlichkeit liefert seine fünf besten Kandidaten, ob
 nun einer davon Ihre Frage betrifft oder keiner. **Setzen Sie eine Score-Untergrenze hinter die Stufe, deren
@@ -111,7 +111,7 @@ Scores etwas bedeuten.** Die zusammengeführten Scores einer hybriden Suche – 
 das aus der lexikalischen Suche, in einem zusammengefasst – sind nicht auf eine vergleichbare Skala
 kalibriert, ein Schwellenwert auf einem solchen Score ist deshalb annähernd willkürlich; der Score eines
 Cross-Encoder-Rerankers ist der, gegen den Sie eine Untergrenze wirklich einstellen können.
-Oberhalb der Untergrenze ist die Antwort **belegt** – jede Aussage ruht auf einer Passage, die die Hürde
+Oberhalb der Untergrenze ist die Antwort **belegt** – jede Aussage stützt sich auf eine Passage, die die Hürde
 genommen hat. Unterhalb davon gibt das Retrieval **absichtlich eine leere Menge zurück**, und der Generator
 sagt, dass ihm der stützende Kontext fehlt, statt aus einer schwachen Ausbeute etwas Plausibles
 zusammenzusetzen.
@@ -184,20 +184,21 @@ die Antwort korrekt ist: Verfügbarkeit ist eine Eigenschaft des Dienstes, Korre
 Antwort, und aus der ersten folgt die zweite nicht.
 
 Zwei Dinge schließen die Lücke. Ein **Trace**, der den ganzen Weg einer Anfrage aufzeichnet – die Frage,
-welche Chunks zurückkamen und mit welchen Scores, den Prompt in der Form, in der er abging, die Antwort, die
-Tokens –, denn ohne die Kennungen der Chunks rekonstruieren Sie nicht einmal, *warum* eine Antwort falsch
-war. Und ein **unabhängiger Judge auf einer Stichprobe des laufenden Verkehrs**, damit die Qualität eine
-überwachte Metrik mit Schwellenwert und Alarm ist und nicht etwas, das Sie aus einem Ticket der
-Kundenbetreuung erfahren. Das ist die [Observability](../part-1-rag/cross-cutting/observability/index.md) und
-die Schleife, in der sie die Evaluierung speist.
+welche Chunks zurückkamen und mit welchen Scores, den Prompt in der Form, in der er abgeschickt wurde, die
+Antwort, die Tokens –, denn ohne die Kennungen der Chunks rekonstruieren Sie nicht einmal, *warum* eine
+Antwort falsch war. Und ein **unabhängiger Judge auf einer Stichprobe des laufenden Verkehrs**, damit die
+Qualität eine überwachte Metrik mit Schwellenwert und Alarm ist und nicht etwas, das Sie aus einem Ticket
+der Kundenbetreuung erfahren. Das ist die
+[Observability](../part-1-rag/cross-cutting/observability/index.md) und die Schleife, in der sie die
+Evaluierung speist.
 
 Eine Sache entwerfen Sie besser bewusst, statt sie zu erben: Eine Protokollierung, die auf die Fehlersuche
 zugeschnitten ist, ist keine Protokollierung, die auf den Nachweis zugeschnitten ist. Die Fehlersuche will
-die letzten Tage so genau, wie Sie sich das leisten können. Ein **Audit** – eine regulierte Branche, eine
-bestrittene Antwort, ein Kunde, der fragt, was Ihr System ihm im März gesagt hat – muss *Monate später*
-wiederherstellen, was gefunden und was zurückgegeben wurde. Das ist eine Anforderung an Aufbewahrung und
-Integrität und keine Einstellung für die Ausführlichkeit. Entscheiden Sie, was von beiden Sie bauen, bevor ein
-Prüfer es für Sie entscheidet.
+die letzten Tage so genau, wie Sie sich das leisten können. Für ein **Audit** dagegen – etwa in einer
+regulierten Branche, bei einer bestrittenen Antwort oder wenn ein Kunde fragt, was Ihr System ihm im März
+gesagt hat – müssen Sie *Monate später* noch nachweisen können, was gefunden und was zurückgegeben wurde.
+Das ist eine Anforderung an Aufbewahrung und Integrität und keine Einstellung für die Ausführlichkeit.
+Entscheiden Sie, was von beiden Sie bauen, bevor ein Prüfer es für Sie entscheidet.
 
 ## 5 · Die Einheit sind die Kosten für eine angenommene Antwort
 
@@ -213,7 +214,7 @@ erneut, und Nutzer kleben ganze Dokumente in ein Feld, das Sie für einen Satz b
 Senden wird am häufigsten übersehen: Ein zustandsloses Modell liest bei jeder Replik die ganze Mitschrift
 neu, also kostet eine Aufgabe, die doppelt so lange läuft, ungefähr das Vierfache. Zu beschneiden, was im
 Kontext mitfährt, ist der wirksamste Hebel, den Sie haben. Ein stabiles Präfix des Prompts, das sich cachen
-lässt, bringt mehr ein, als sich nach einem anderen Modell umzusehen.
+lässt, hilft mehr als jeder Wechsel auf ein anderes Modell.
 
 Damit kommt der zweite Einwand: „Überlassen Sie die Routine einem leichteren Modell“ ist ein Rat mit einer
 Bedingung, und die Bedingung wird meist weggelassen. Es zählen die **Kosten für eine angenommene Antwort**
@@ -256,7 +257,7 @@ dieselbe Arithmetik für eine andere Einheit aus: für die Kosten einer angenomm
 Die Qualität lässt nach, ohne dass ein Deployment stattfindet. Nutzer bringen neues Vokabular mit, die
 Dokumente darunter ändern sich, und ein beim Anbieter betriebenes Modell, dessen Version Sie nicht festgelegt
 haben, wird unbemerkt ausgetauscht. Das ist der dritte Einwand und der schärfste: Der gewohnte Reflex,
-ein erneutes Training an Schwellenwerte für den Drift zu koppeln, ist eine Antwort aus MLOps, übertragen auf
+ein erneutes Training von Schwellenwerten für den Drift auslösen zu lassen, ist eine Antwort aus MLOps, die
 ein System, in dem die Gewichte fast nie das Problem sind.
 
 In einem System mit Retrieval kommt der Drift meist vom Korpus oder von den Fragen, und deshalb beginnt die
@@ -288,16 +289,16 @@ dem Code.
   </Lane>
 </InfoCard>
 
-Wohnt ein Prompt im Code der Anwendung, ist das Ändern eines Satzes ein Deployment – eine Korrektur am Text
+Steckt ein Prompt im Code der Anwendung, ist das Ändern eines Satzes ein Deployment – eine Korrektur am Text
 trägt damit das Risiko eines Deployments, und niemand traut sich mehr, sie als die kleine Änderung zu
 behandeln, die sie ist. Heben Sie die Prompts in eine **Konfiguration unter Versionsverwaltung** mit eigenen
 Prüfungen der Qualität, und das Gerüst lässt sich per Diff vergleichen und zurücknehmen, statt dass Sie
 bei jedem Ausrollen die Daumen drücken.
 
 Verlangen Sie dasselbe von allem anderen, was das Verhalten ändert, ohne den Code zu ändern: **Legen Sie
-die Modellversion fest**, **nehmen Sie einen Snapshot des Korpus**, rollen Sie über ein Canary Release aus,
-und halten Sie für jeden der drei einen eigenen Weg zurück bereit. Ein System, in dem Prompt, Modell und
-Index gleichzeitig unter Ihnen verrutschen können, hat überhaupt keinen reproduzierbaren Zustand, und das
+die Modellversion fest**, **nehmen Sie einen Snapshot des Korpus**, rollen Sie als Canary Release aus,
+und halten Sie für jeden der drei einen eigenen Weg zurück bereit. Ein System, in dem sich Prompt, Modell und
+Index jederzeit unbemerkt ändern können, hat überhaupt keinen reproduzierbaren Zustand, und das
 behebt kein Test der Welt. Die Mechanik des Release steht in [LLMOps](./llmops/index.md).
 
 ## 8 · Eine Pipeline braucht Prüfungen zwischen den Schritten
@@ -369,15 +370,15 @@ haben Sie nicht das System gemessen, das Ihre Nutzer vor sich haben.
 **Unzuverlässige Tools.** Die Tools fallen vor dem Modell aus. APIs antworten nicht mehr rechtzeitig,
 ein MCP-Server startet neu, ein Vektorspeicher weist eine Verbindung ab – und ein Agent ohne Timeout,
 ohne Wiederholung und
-ohne Fallback-Antwort hängt einfach, und das lesen Nutzer als „kaputt“ und nicht als „langsam“. Liefern Sie
+ohne Fallback-Antwort hängt einfach – und für die Nutzer ist das kaputt und nicht langsam. Liefern Sie
 absichtlich eine schlechtere Antwort, statt gar keine; die Lektion über den
-[Tool-Einsatz](../part-2-agents/tool-use/index.md) behandelt den vollen Weg eines Aufrufs und den Umgang mit
+[Tool-Einsatz](../part-2-agents/tool-use/index.md) behandelt den ganzen Ablauf eines Aufrufs und den Umgang mit
 seinen Fehlern.
 
 ## Das Wichtigste
 
 - **Fast nichts davon ist ein Fehler des Modells.** Das Modell ist das Bauteil, das Sie nicht geschrieben
-  haben; die Fehler leben in dem System darum herum.
+  haben; die Fehler sitzen im System darum herum.
 - **Die Ingestion soll ausweisen und nicht bloß prüfen** – aufgenommen, ausgeschlossen samt Grund, und die
   blinden Flecken. Ein unbemerkt verworfenes Dokument erzeugt eine überzeugte Antwort aus einem
   unvollständigen Korpus.
@@ -389,7 +390,7 @@ seinen Fehlern.
   Judge auf einer Stichprobe des Verkehrs; entscheiden Sie gesondert, ob Sie jemandem eine Protokollierung
   für ein Audit schulden.
 - **Die Kosten für eine angenommene Antwort** sind die Einheit: `cost ≈ attempt_cost / p`, und ein
-  günstigeres Modell muss bei der Zuverlässigkeit das Verhältnis der Preise überbieten.
+  günstigeres Modell muss bei der Zuverlässigkeit weiter vorn liegen als beim Preis.
 - **Gegen den Drift hilft zuerst ein erneutes Indexieren** und erst viel später ein erneutes Training;
   das Korpus ist ein Release, mit einer Version und einem Rollback.
 - **Prompt, Modellversion und Korpus** brauchen alle drei je eine Version und einen Weg zurück, sonst
