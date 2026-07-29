@@ -173,6 +173,7 @@ class Report:
         self.checked = 0
         self.categories = 0  # sidebar category labels, counted apart from files
         self.tolerated = 0
+        self.scoped_out = 0  # course/locale pairs the course does not claim
 
     def fail(self, message: str) -> None:
         self.failures += 1
@@ -223,8 +224,11 @@ def missing_translation(locale: str, released: bool, src: str, path: str, rep: R
     """
     if released:
         rep.fail(
-            f"{locale}/{src} — released locale has no {path}. Every course must be translated in "
-            f"a locale that ships; absence here means the whole course renders in English."
+            f"{locale}/{src} — released locale has no {path}. This course CLAIMS {locale} "
+            f"(its `locales` in docusaurus.config.ts), and a claimed locale that ships must be "
+            f"translated; absence here means the whole course renders in English. If the course "
+            f"is genuinely not translated here, drop {locale} from its declared locales — that "
+            f"is a decision, and it belongs in the config where readers of the card can see it."
         )
     else:
         print(f"  - {src}: no {path} — not yet translated ({locale} is gated/unreleased)")
@@ -386,7 +390,131 @@ def compare_category_keys(
     rep.categories += len(labels)
 
 
+# --- self-test ---------------------------------------------------------------------------
+#
+# Per-course locale scope decides whether a course/locale pair is checked AT ALL, which makes it
+# the one setting here that can turn the gate off. A wrong scope does not produce a wrong finding;
+# it produces silence, and silence is what a passing gate looks like. The corpus cannot exercise
+# it either — today every course claims every locale, so the scoping branch never runs against
+# real content and would sit unproven until the first English-only course, which is exactly when
+# a mistake would ship.
+#
+# So the verdicts are asserted against synthetic trees: a claimed locale is still checked and
+# still fails when its translation is missing (the fail-closed the scope must not reopen), an
+# unclaimed one is skipped, and a malformed declaration aborts rather than defaulting to
+# "everything", which would be a blanket exemption wearing a green tick.
+SELF_TEST_CASES = [
+    # (name, courses declaration, tree to create, expected exit, expected substring)
+    (
+        "claimed + translated → checked",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md": "# T\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        0,
+        "1 file(s) in structural parity",
+    ),
+    (
+        "claimed + MISSING translation, released locale → still fails",
+        [("default", "/a", ["en", "ru"])],
+        {"docs/x.md": "# T\n"},
+        1,
+        "released locale has no",
+    ),
+    (
+        "NOT claimed → skipped, and the run passes",
+        [("default", "/a", ["en"])],
+        {"docs/x.md": "# T\n"},
+        0,
+        "not claimed by this course",
+    ),
+    (
+        "not claimed → reported, never silent",
+        [("default", "/a", ["en"])],
+        {"docs/x.md": "# T\n"},
+        0,
+        "out of declared scope",
+    ),
+    (
+        "claimed + unreleased locale, missing tree → tolerated",
+        [("default", "/a", ["en", "de"])],
+        {"docs/x.md": "# T\n"},
+        0,
+        "not yet translated",
+    ),
+    (
+        "no `locales:` declared → aborts, does not default to all",
+        [("default", "/a", None)],
+        {"docs/x.md": "# T\n"},
+        1,
+        "declares no `locales:`",
+    ),
+    (
+        "`locales:` without 'en' → aborts",
+        [("default", "/a", ["ru"])],
+        {"docs/x.md": "# T\n"},
+        1,
+        "does not claim 'en'",
+    ),
+]
+
+
+def self_test() -> int:
+    import shutil
+    import subprocess
+    import tempfile
+
+    me = os.path.abspath(__file__)
+    failures = 0
+    for name, decls, tree, want_code, want_text in SELF_TEST_CASES:
+        root = tempfile.mkdtemp(prefix="parity-selftest-")
+        try:
+            objs = []
+            for cid, base, locs in decls:
+                loc_line = "" if locs is None else f"    locales: {list(locs)!r},\n"
+                objs.append(f"  {{\n    id: '{cid}',\n    basePath: '{base}',\n{loc_line}  }},")
+            config = (
+                "const RELEASED_LOCALES = ['en', 'ru', 'sk'];\n"
+                "const UNRELEASED_LOCALES: string[] = ['de'];\n"
+                "const COURSES: Course[] = [\n" + "\n".join(objs) + "\n];\n"
+            )
+            with open(os.path.join(root, "docusaurus.config.ts"), "w", encoding="utf-8") as fh:
+                fh.write(config.replace("'", "'"))
+            for rel, body in tree.items():
+                path = os.path.join(root, rel)
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, "w", encoding="utf-8") as fh:
+                    fh.write(body)
+            # Every locale dir must exist or main() never iterates it.
+            for loc in ("ru", "sk", "de"):
+                os.makedirs(os.path.join(root, "i18n", loc), exist_ok=True)
+
+            r = subprocess.run(
+                [sys.executable, me], cwd=root, capture_output=True, text=True
+            )
+            out = r.stdout + r.stderr
+            ok = r.returncode == want_code and want_text in out
+            print(f"  {'ok  ' if ok else 'FAIL'}  {name}")
+            if not ok:
+                failures += 1
+                print(f"        expected exit {want_code} and {want_text!r}")
+                print(f"        got exit {r.returncode}; output:\n{out}")
+        finally:
+            shutil.rmtree(root, ignore_errors=True)
+
+    print()
+    if failures:
+        print(f"locale-parity-check --self-test: FAIL — {failures} case(s).")
+        return 1
+    print(f"locale-parity-check --self-test: PASS — {len(SELF_TEST_CASES)} scope case(s).")
+    return 0
+
+
 def main(argv: list[str]) -> int:
+    if "--self-test" in argv[1:]:
+        return self_test()
     locales = argv[1:] or sorted(
         d for d in os.listdir("i18n") if os.path.isdir(os.path.join("i18n", d))
     )
@@ -399,6 +527,18 @@ def main(argv: list[str]) -> int:
         is_released = locale in released
         print(f">> {locale}{'' if is_released else ' (gated/unreleased)'}")
         for course in course_table:
+            # Scope check, before anything is compared. A course that does not claim this
+            # locale is not a defect and not a fallback — it is a declared boundary, and the
+            # only honest thing to do with it is say so out loud. Reported, never silent:
+            # an unexplained absence in the log is how "not translated here" and "translation
+            # lost" become indistinguishable.
+            if locale not in course.locales:
+                print(
+                    f"  - {course.docs_dir}: not claimed by this course "
+                    f"(claims {', '.join(course.locales)}) — out of scope, EN throughout"
+                )
+                rep.scoped_out += 1
+                continue
             src, plugin = course.docs_dir, course.i18n_dir
             compare_pair(locale, is_released, src, f"i18n/{locale}/{plugin}/current", rep)
             compare_category_keys(
@@ -410,7 +550,12 @@ def main(argv: list[str]) -> int:
         print(
             f"locale-parity-check: PASS — {rep.checked} file(s) in structural parity; "
             f"{rep.categories} sidebar category label(s) translated; "
-            f"{rep.tolerated} tolerated wording difference(s)."
+            f"{rep.tolerated} tolerated wording difference(s)"
+            + (
+                f"; {rep.scoped_out} course/locale pair(s) out of declared scope."
+                if rep.scoped_out
+                else "."
+            )
         )
         return 0
 

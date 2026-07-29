@@ -31,6 +31,18 @@ const INCLUDE_UNRELEASED = process.env.HANDBOOK_INCLUDE_UNRELEASED === '1';
 const LOCALES = [...RELEASED_LOCALES, ...(INCLUDE_UNRELEASED ? UNRELEASED_LOCALES : [])];
 const BASE_URL = '/ai-engineering-handbook/';
 
+// Each locale's endonym — the name that language calls itself, which reads correctly in
+// every locale and so is never translated. One table, two consumers: Docusaurus'
+// `localeConfigs` labels (the locale dropdown) and the landing hub's per-course language
+// line. They used to be written out twice, which is how a course card can advertise a
+// language the site does not serve.
+const LOCALE_LABELS: Record<string, string> = {
+  en: 'English',
+  ru: 'Русский',
+  sk: 'Slovenčina',
+  de: 'Deutsch',
+};
+
 // --- Courses (docs instances) — the hub's single source of truth -------------
 // This site is a HUB of independent AI-engineering courses, not one book. Each
 // course is its own Docusaurus docs instance served under its own URL prefix
@@ -40,7 +52,10 @@ const BASE_URL = '/ai-engineering-handbook/';
 // apart across those surfaces.
 //
 // Adding a THIRD course later is symmetric and mechanical:
-//   1. Append an entry to COURSES below (id, basePath, sidebarId, label, flags).
+//   1. Append an entry to COURSES below (id, basePath, sidebarId, label, flags) —
+//      including `locales`, the locale codes that course claims. A course need not be
+//      trilingual: an English-only course declares `['en']` and the i18n gates scope
+//      themselves to it (see the field's comment).
 //   2. Wire its docs instance. The FIRST course is the preset `docs` (the
 //      "default" instance, id 'default') — its i18n lives under the UN-suffixed
 //      `i18n/<loc>/docusaurus-plugin-content-docs/`. EVERY OTHER course is a
@@ -56,7 +71,23 @@ type Course = {
   sidebarId: string;   // the sidebar key exported by its sidebars file
   navbarLabel: string; // label shown in the navbar and on the landing card
   blurb: string;       // one-line description for the landing hub card
-  languages: string[]; // locales the course is available in (landing card)
+  // The locales this course CLAIMS — the ones it is translated into, or is being
+  // translated into. Locale CODES, not display names: two gates read this list
+  // (scripts/courses.py → locale_parity.py + i18n-link-check.sh), and the landing card's
+  // language line is derived from it (released members only, via LOCALE_LABELS).
+  //
+  // Why a course declares this at all. The parity gate used to assume the site-wide truth
+  // "every course is translated in every released locale", and hard-failed a released
+  // locale with no i18n tree for a course. That held while every course was trilingual and
+  // stops holding the moment one course deliberately is not — an English-only course would
+  // fail CI for ru and sk on the day it is registered, and for de on the day de launches.
+  // Scope belongs to the course, because the course is what decides it.
+  //
+  // Deliberately NOT defaulted: a course that declares no locales aborts the gates rather
+  // than inheriting every released locale, since the permissive default is the fail-open
+  // this field exists to close. `en` must always be present — the English tree is the
+  // source every other locale is compared against.
+  locales: string[];
   live: boolean;       // true = content shipped; false = placeholder / in progress
   inNavbar: boolean;   // add a docSidebar item to the navbar yet?
   // The course's slice of the footer sitemap, in order. `path` is appended to
@@ -83,7 +114,7 @@ const COURSES: Course[] = [
     blurb:
       'Production RAG and agentic systems from first principles — ingestion, retrieval, ' +
       'generation, agents, and the eval, guardrails and LLMOps that keep them honest.',
-    languages: ['English', 'Русский', 'Slovenčina'],
+    locales: ['en', 'ru', 'sk', 'de'],
     live: true,
     inNavbar: true,
     footerLinks: [
@@ -107,7 +138,7 @@ const COURSES: Course[] = [
     blurb:
       'The AI-assisted software development lifecycle: planning, building, reviewing and ' +
       'shipping when AI agents are part of the team.',
-    languages: ['English', 'Русский', 'Slovenčina'],
+    locales: ['en', 'ru', 'sk', 'de'],
     live: true,
     inNavbar: true,
     footerLinks: [
@@ -121,6 +152,32 @@ const COURSES: Course[] = [
     ],
   },
 ];
+// Validate the declared scope at config load, so a malformed declaration fails the build
+// rather than quietly reaching the gates — which read the same field and would then be
+// scoping themselves off a typo. Three ways to get it wrong, all fatal:
+for (const c of COURSES) {
+  if (!c.locales.length) {
+    throw new Error(
+      `Course '${c.id}' declares no locales. A course must state which locales it claims; ` +
+        'there is no default, because "all of them" is exactly the assumption per-course ' +
+        'locale scope exists to remove.',
+    );
+  }
+  if (!c.locales.includes(DEFAULT_LOCALE)) {
+    throw new Error(
+      `Course '${c.id}' does not claim the default locale '${DEFAULT_LOCALE}'. The English ` +
+        'tree is the source every other locale is compared against, so every course has one.',
+    );
+  }
+  const unknown = c.locales.filter((loc) => !(loc in LOCALE_LABELS));
+  if (unknown.length) {
+    throw new Error(
+      `Course '${c.id}' claims unknown locale(s): ${unknown.join(', ')}. Add the locale to ` +
+        'LOCALE_LABELS (and to the released/unreleased lists) in the same change.',
+    );
+  }
+}
+
 const DEFAULT_COURSE = COURSES[0];
 // Every course's route base path — the set of docs instances the local search
 // index must cover (see the search theme below).
@@ -238,7 +295,13 @@ const config: Config = {
       basePath: c.basePath,
       label: c.navbarLabel,
       blurb: c.blurb,
-      languages: c.languages,
+      // Only the locales this course claims AND the site actually ships. A card that
+      // advertises a language the reader cannot switch to is worse than one that
+      // undersells: German is claimed by both courses while it is still being
+      // translated, and must not appear here until it launches.
+      languages: c.locales
+        .filter((loc) => RELEASED_LOCALES.includes(loc))
+        .map((loc) => LOCALE_LABELS[loc]),
       live: c.live,
     })),
   },
@@ -322,12 +385,9 @@ const config: Config = {
   i18n: {
     defaultLocale: DEFAULT_LOCALE,
     locales: LOCALES,
-    localeConfigs: {
-      en: {label: 'English'},
-      ru: {label: 'Русский'},
-      sk: {label: 'Slovenčina'},
-      de: {label: 'Deutsch'},
-    },
+    localeConfigs: Object.fromEntries(
+      Object.entries(LOCALE_LABELS).map(([loc, label]) => [loc, {label}]),
+    ),
   },
 
   presets: [

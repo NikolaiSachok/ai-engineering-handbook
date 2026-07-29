@@ -92,5 +92,11 @@ jobs:
       # translated page still has the same sections, the same card nodes or the same figures as its
       # English source. This asserts the shape (see the script header for what is asserted, what was
       # deliberately relaxed, and on what measured evidence).
+      # Runs FIRST: per-course locale scope decides whether a course/locale pair is checked at
+      # all, so a mistake there shows up as silence rather than as a finding. The corpus cannot
+      # exercise it while every course claims every locale, so it is asserted against synthetic
+      # trees instead — including that a claimed-but-missing translation still fails.
+      - name: Locale scope self-test
+        run: bash scripts/locale-parity-check.sh --self-test
       - name: Locale structural parity
         run: bash scripts/locale-parity-check.sh

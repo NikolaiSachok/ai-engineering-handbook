@@ -81,7 +81,15 @@
 # escape, so a bare `{` parses as JSX and fails the build); the escape is markup, not id, and is
 # stripped before comparing.
 #
+# PER-COURSE SCOPE. A course declares the locales it claims (`locales` in docusaurus.config.ts).
+# This gate checks a course/locale pair only when the course claims it, and prints the pairs it
+# skipped. The scope is a declaration, not an inference from a missing directory — absence still
+# fails for a claimed locale that ships, which is the whole point of the earlier fix that stopped
+# treating "no translation dir" as "this course isn't translated here". Not translating a course
+# in a locale is a decision, so it is made in the config, where the landing card shows it too.
+#
 # Usage: scripts/locale-parity-check.sh [locale…]   (default: every locale under i18n/)
+#        scripts/locale-parity-check.sh --self-test (assert the scope verdicts, no corpus needed)
 # Exit code: 0 if every locale is in parity, 1 otherwise.
 
 set -uo pipefail
