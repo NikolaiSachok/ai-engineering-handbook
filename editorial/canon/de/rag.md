@@ -36,8 +36,17 @@ where this course's terms land and why — the direction itself is decided once,
 > deutsche Attestierung (`_language.md` §1.1.e, heise) — und die gehört dem **statistischen
 > Observability-Sinn**: „Metriken und Traces [kommen] in der Regel nur als Stichprobe … an (**Sampling**),
 > … **das Sampling** reduziert die Datenmenge". Die MCP-Zeile und die Token-Decoding-Zeile standen in §2
-> **ohne eigene Attestierung** und fuhren auf diesem Beleg mit. Das ist **der `Span`-Fehler eine Etage
-> höher**: korrektes Genus für den falschen Referenten. Als **Feature-Eigenname** (wie `Roots`,
+> ~~**ohne eigene Attestierung** und fuhren auf diesem Beleg mit. Das ist **der `Span`-Fehler eine Etage
+> höher**: korrektes Genus für den falschen Referenten.~~
+> **Korrektur Welle 2 (2026-07-29): diese Begründung ist überholt, die Entscheidung nicht.** heise
+> attestiert `Sampling` inzwischen **im MCP-Referenten und flektiert** („Durch den Wegfall **des Samplings**
+> …"; „die bisherigen **Funktionen Roots, Sampling** und Logging"). Die MCP-Bedeutung reitet also nicht mehr
+> auf fremdem Beleg – **und die befürchtete Falle existiert morphologisch gar nicht**: der Beleg ergibt
+> *das Sampling, des Samplings*, **identisch** mit dem Appellativ; die beiden Sinne unterscheiden sich
+> **nur im Referenten**, nicht im Genus. Klasse 1 bleibt richtig, aber als **Disambiguierungs**entscheidung
+> statt als Attestierungsentscheidung: ein großgeschriebener, unflektierter Eigenname signalisiert dem Leser
+> den MCP-Sinn dort, wo *des Samplings* mit dem statistischen verwechselbar wäre. (Präzedenz
+> `_language.md` §1.3.1: **die Regel steht, die Begründung war falsch.**) Als **Feature-Eigenname** (wie `Roots`,
 > `Elicitation`, `Structured Outputs`) ist die MCP-Fähigkeit gar kein Appellativ mehr und kollidiert nicht.
 > Das Appellativ **das Sampling** behält seinen Beleg und seine §1.1.e-Zeile. Für den **Decoding**-Sinn gilt
 > unverändert §3, Zeile `Sampler`: die Stufe benennen, nicht personifizieren; das Substantiv möglichst als
@@ -48,6 +57,14 @@ where this course's terms land and why — the direction itself is decided once,
 > also **Vorsorge für Teil II**, nicht Reparatur einer Welle-1-Seite. `Roots` und `Elicitation` haben
 > dieselbe Gestalt, werden hier aber **ausdrücklich NICHT** umgestellt: sie kommen in dieser Welle nicht
 > vor, und ein Zusammenführungsdurchgang entscheidet nichts, was er nicht gelesen hat.
+> **Welle 2 (2026-07-29): beide kommen vor und werden umgestellt.** `Roots` → **Klasse 1, SETTLED** (heise
+> führt es als unflektierten Eigennamen im deutschen Satz). `Elicitation` → **Klasse 1, aber HOUSE**:
+> Formgleichheit mit `Roots`, **keine deutsche Attestierung im MCP-Sinn** – ausdrücklich **nicht** als
+> belegt darstellen. Pflichtglosse: „(der Server fragt über den Client beim Menschen nach)"; ⛔ jede
+> Wiedergabe über *Anforderung*, weil die deutsche Softwaretechnik „Requirements Elicitation =
+> **Anforderungserhebung**" bereits besetzt. Register beider Zeilen: `_language.md` §1.1.c.
+> ⚠ **Und die Zurückstellung von Welle 1 hat sich messbar bezahlt gemacht:** weil niemand vorgegriffen hat,
+> steht die Umstellung heute auf einem **echten Beleg** statt auf einer Analogie zu `Sampling`.
 | **2 — English-led with a German article (the DEFAULT)** | English term, German article, German inflection, Durchkopplung in compounds; one German gloss at first mention | the bulk of §2 below |
 | **3 — German-led (the EXCEPTION)** | German term in the body; English original once in parentheses | das Modell, der Kontext, die Anfrage, die Abfrage, die Antwort, der Fehler, der Ausfall, die Latenz, der Durchsatz, die Berechtigung, die Zugriffssteuerung, die Bereitstellung |
 
@@ -72,22 +89,23 @@ Chunking, Chunk-Overlap, Bi-Encoder, Cross-Encoder, Reranking, Reranker, Trace, 
 Prompt, Token, Top-K, HyDE, BM25, RRF, nDCG, MRR, ColBERT, MaxSim, Late Interaction, Multi-Vector, Contextual
 Retrieval, Hybrid Search, Zero-Shot, Few-Shot, Faithfulness, ~~Golden Set~~, LLM-as-a-judge, ReAct, Self-RAG,
 Corrective RAG (CRAG), Adaptive RAG, Plan-and-Execute, Tree of Thoughts (ToT), Graph of Thoughts (GoT), LATS,
-Self-Refine, Reflexion, MemGPT, Chain-of-Thought, Chain-of-Verification (CoVe), Self-Consistency, Scratchpad,
+Self-Refine, Reflexion, MemGPT, Chain-of-Thought, Chain-of-Verification (CoVe), Self-Consistency,
+~~Scratchpad~~,
 Context Precision, Context Recall, Reference-Free, Reference-Based, Pointwise, Pairwise, Prompt Injection,
 Jailbreak, Spotlighting, Delimiting, Datamarking, Encoding, Instruction Hierarchy, PII, Red-Teaming,
 Defence-in-Depth, Tool Poisoning, Rug Pull, Confused Deputy, MCP, Roots, Elicitation, stdio,
 Streamable HTTP, JSON Schema, Structured Outputs, Strict Mode, Constrained Decoding, Idempotency Key,
 Late Chunking (OPEN, §3),
 Dry-Run, Race Condition, Tool-RAG, Lost-in-the-Middle, Human-in-the-Loop (HITL), Checkpointing, Checkpoint,
-StateGraph, Store, Durable Execution, Super-Step, Thread, A2A, Blackboard, Agent Card, TTFT, SSE,
+StateGraph, Store, Durable Execution, ~~Super-Step~~, Thread, A2A, Blackboard, Agent Card, TTFT, SSE,
 PagedAttention, Continuous Batching, Prefill, Decode, Chunked Prefill, Prefix Caching, KV-Cache, LoRA, PEFT,
 Fine-Tuning, SFT, DPO, Cold Start, Scale-to-Zero, Backpressure, Load Shedding, Admission Control,
 Little's Law, Vendor-Lock-in, Managed Endpoint, Provisioned Throughput, Instrumentation, OpenTelemetry
 (OTel), Canary Release, Shadow Deployment, Prompt Registry, Model Pinning, Model Routing, Fallback,
 LLM-Gateway, Prompt Caching, Semantic Caching, Drift, Grader, Release Gate, Dead-Letter Queue
 (DLQ), SLI, SLO, SLA, IAM, Golden Signals, Soft Cap / Hard Cap, Alert, Alerting, Dashboard, Matryoshka
-(MRL), MTEB, Contrastive Learning, Hard Negatives, Extended Thinking, Reasoning Effort, Thinking Budget,
-Hooks, Callbacks, Permission Modes.*
+(MRL), MTEB, Contrastive Learning, Hard Negatives, ~~Extended Thinking~~, ~~Reasoning Effort~~,
+~~Thinking Budget~~, ~~Hooks, Callbacks, Permission Modes~~ → aufgespalten, siehe den Welle-2-Kasten.*
 
 > **Drei Streichungen aus dieser Liste, Welle 1 (2026-07-28) — sichtbar gestrichen, nicht still entfernt.**
 > Ein Ledger, das seine eigenen Umkehrungen überschreibt, ist der SK-Fáza-26-Fehlermodus.
@@ -111,6 +129,52 @@ Hooks, Callbacks, Permission Modes.*
 > §1.1.e) und `Late Chunking` (**mit OPEN-Marker**: die Schreibung ist durch Kanonregel entschieden, die
 > Attestierung fehlt — wer den Marker abschneidet, liest die Zeile als gleichwertig zu *Late Interaction*,
 > und genau das ist sie nicht).
+
+> **Fünf Streichungen, eine Aufspaltung und eine Anmerkung – Welle 2 (2026-07-29), RAG Teil II.**
+> Wieder sichtbar gestrichen, nicht still entfernt; wieder ist die häufigste Ursache dieselbe: **eine Zeile
+> stand hier als „settled kept-EN", ohne dass je etwas attestiert worden wäre.**
+>
+> - ~~**Scratchpad**~~ → **§3, OPEN.** Die Zeile stand hier kept-EN **ohne jeden Beleg**. Der Loan **ist**
+>   im Deutschen attestiert – im **falschen Sinn**: CPU-naher Speicher, 23 de.wikipedia-Treffer, alle
+>   Hardware, und *Fairchild Channel F* glossiert `scratchpad RAM` mit **Arbeitsspeicher**. Korpusform:
+>   **das Arbeitsgedächtnis** (ein Referent, ein Name); Erstnennung koppelt einmal („das
+>   **Arbeitsgedächtnis** – das Scratchpad aus Teil 1"). `Scratchpad` überlebt nur als Rückverweis auf
+>   Teil 1 und als Kompositumsglied. ⚠ **`der Arbeitsspeicher` bleibt für RAM reserviert** und ist **nie**
+>   die Wiedergabe von *working memory* – das Wort steht im selben Absatz und muss sauber getrennt bleiben.
+>   *(Der Batch, der den Namen verlor, hat die Streichung gewonnen: er hatte den **Loan** studiert, während
+>   der andere den **Referenten** studiert hatte. Wer den Referenten eigens studiert, schlägt wer den Loan
+>   nachschlägt – die Vorrangregel aus Welle 1.)*
+> - ~~**Super-Step**~~ → **§3, OPEN.** Stand kept-EN **ohne Beleg und ohne Genus**. Vier Durchgänge
+>   berichten denselben Nullbefund: de.wikipedia `insource` **0**; *Bulk Synchronous Parallel* und
+>   *Pregel (Framework)* haben **kein** deutsches Lemma (beide Abrufe: Seite existiert nicht); Duden `Step`
+>   ist der **Steppschritt**, und `Super-Step` ist **kopffinal**, sodass die Kompositumsbildner-Ausnahme
+>   nicht greift. **Dieselbe Gestalt wie ~~`Latency Budget`~~.** Korpusform: „speichert den Zustand des
+>   Graphen **nach jedem Knotenübergang** (im LangGraph-Vokabular: *Super-Step*)" – das Englische einmal,
+>   kursiv, artikellos, in Klammern.
+> - ~~**Extended Thinking**~~, ~~**Reasoning Effort**~~, ~~**Thinking Budget**~~ → **Klasse 1.** Es sind
+>   **Herstellerstellschrauben** (`thinking`, `reasoning.effort`, `thinkingBudget`), keine Appellative;
+>   de.wikipedia-Attestierung **0 : 0 : 0**. Sie stehen unverändert englisch, artikellos, in Codeschrift,
+>   mit Glosse bei Erstnennung. Für `Thinking Budget` gilt zusätzlich: der **appellative** Gebrauch wird
+>   **umgebaut** – „wie viel **Nachdenken** eine Aufgabe bekommen darf"; ⛔ *das Denkbudget* und
+>   *das Rechenbudget* (je 0 Treffer, das wäre die *Latenzbudget*-Prägung ein zweites Mal); das deutsche
+>   Kompositum **das Thinking-Budget** nur dort, wo ein Artikel erzwungen ist (`_language.md` §1.1.c).
+> - **Aufgespalten: ~~`Hooks, Callbacks, Permission Modes`~~.** Die drei standen gemeinsam am Ende der
+>   Liste als Teil-II-Vorgriff, also als **Marken** – aber `hook` und `callback` werden im Korpus **auch
+>   appellativ** gebraucht („a pre-hook that can block", „a `before_tool` callback"). Also:
+>   **Klasse 1** – `Claude Code Hooks`, `ADK Callbacks`, `Permission Modes` (nur Plural; keinen Singular
+>   erfinden, sondern den Wert nennen: „der Modus `plan`"). **Klasse 2, appellativ, mit neuen
+>   `_language.md` §1.1.c-Zeilen** – **der Hook**, **der Callback**.
+>   ⚠ **Und dabei ist eine Kanonzeile falsifiziert worden:** die `Hook`-Zeile behauptete von
+>   de.wikipedia *Hook (Informatik)* „**das Lemma flektiert nie**". Es flektiert **sechsmal**, Genitiv
+>   eingeschlossen – geprüft an der Quelle, die die Zeile selbst zitiert. Die Zeile steht jetzt auf
+>   **SETTLED**. *(Der Gegendurchgang, der stattdessen DWDS las, fand nur den **Golf- und Boxschlag** und
+>   hätte den WEAK-Status bestätigt – ein volles Paradigma für den falschen Referenten.)*
+> - **Anmerkung, keine Streichung: `Soft Cap / Hard Cap`.** Der Mustername ist echt und bleibt – er ist nur
+>   **nicht der Laufterm**. **Zitierform des Musternamens; im Fließtext die weiche / die harte
+>   Obergrenze**; ⛔ „das Cap" / „der Cap" (**kein attestiertes Genus in diesem Sinn**, in keinem
+>   Wörterbuch). Zwei Namen für einen Referenten auf einer Seite sind das *Richtungswackeln* aus §1.0, und
+>   die Seite mit dem attestierten Paradigma gewinnt. Dieselbe Anmerkung gilt für §6.5, „Soft- und
+>   Hard-Cap" – die **Ergänzungsstrich-Konstruktion bleibt gültig**, wo das Paar als Paar benannt wird.
 
 > **The list above is in CITATION form, not in running-prose form.** Multi-word terms are spelled per
 > `_language.md` §1.3.3 the moment they sit in a German sentence: **noun + noun → hyphenated**
@@ -161,7 +225,7 @@ ReAct, MRL, RRF, nDCG, MRR, LATS, MemGPT, MaxSim, code identifiers, product name
 | Load Shedding | „(gezieltes Abwerfen von Last)" |
 | Zero-Shot | „(ohne Trainingsbeispiele)" |
 | Race Condition | „(Fehler durch unkontrolliertes Timing zweier nebenläufiger Zugriffe)" — **nicht** „Wettlaufsituation" als Terminus |
-| Confused Deputy | „(getäuschter Stellvertreter – eine privilegierte Komponente wird zum Missbrauch ihrer Rechte verleitet)" |
+| Confused Deputy | „(getäuschter Stellvertreter – eine privilegierte Komponente wird zum Missbrauch ihrer **eigenen** Rechte verleitet)" *(Welle 2, 2026-07-29: an die ausgelieferte Fassung angeglichen. §2 gibt diese Zeichenkette zum wörtlichen Übernehmen frei, also durfte sie nicht von der ausgelieferten Seite abweichen – und die ausgelieferte gewinnt, weil sie besser liest und veröffentlicht ist.)* |
 | Rug Pull | „(Austausch eines Tools nach der Freigabe)" |
 | Dry-Run | „(Probelauf ohne Wirkung)" |
 | ~~Golden Set~~ → **der Goldstandard** | ~~„(handgeprüfter Referenzdatensatz)"~~ — **GESTRICHEN, siehe den Kasten unter dieser Tabelle.** Die Glosse überlebt als Apposition zum deutschen Terminus: „der **Goldstandard** (*golden set*) – der handgeprüfte Referenzdatensatz" |
@@ -347,6 +411,8 @@ paraphrase.** Writing a plausible-sounding German form here is exactly the failu
 | **refusal rate** | **NEU OPEN 2026-07-28 (Welle 1).** *die Verweigerungsrate* und *die Ablehnungsrate* sind morphologisch einwandfrei und **beide unbelegt** | **Korpusform: „der Anteil verweigerter Antworten"** in der Dashboard-Aufzählung. ⚠ Hinweis für die Suche: die BSI zeigt das produktive Muster („**die Erfolgsrate** komplexer Angriffe") — falls je ein Beleg auftaucht, wird er vermutlich „**die Rate verweigerter Antworten**" lauten, nicht das Kompositum. **Was es schließen würde:** ein deutscher Satz aus heise/iX/BSI/Fraunhofer, der eine **gemessene Rate von Modellverweigerungen** mit einem Substantiv benennt |
 | **denylist / blocklist** | **NEU OPEN 2026-07-28 (Welle 1) — bewusst NICHT vorentschieden:** beide kommen in dieser Welle **nicht vor**, und ein Zusammenführungsdurchgang entscheidet nichts, was er nicht gelesen hat. ⛔ *die Sperrliste* ist zudem besetzt (deutsches Standardwort für die **Certificate Revocation List**), *die Negativliste* stammt aus einem **BSI-Dokument von 2009** mit Vor-Umbenennungs-Vokabular | für `allowlist` gilt die WEAK-Zeile in `_language.md` §1.1.f (Plural und Komposita ja, artikeltragender Singular nein). Für die beiden anderen: **erst zählen, dann entscheiden** |
 | **Golden Signals** | **NEU markiert 2026-07-28 (Welle 1): der Incumbent bleibt, aber als HOUSE, nicht als belegt.** Auf **keiner** Quellenstufe wurde eine deutsche Attestierung gefunden — weder für den Loan noch für eine deutsche Form. Die Zeile stand in §2, als wäre sie belegt | **kept-EN, im Plural und mit deutschem Artikel: „die Golden Signals"**, einmal glossiert („Latenz, Traffic, Fehler, Sättigung"). ⛔ **„die goldenen Signale"** — das übersetzt einen Eigennamen. **Was es schließen würde:** ein deutscher Satz bei heise/iX/INNOQ/dpunkt mit `Golden Signals` **oder** einer deutschen Vollform |
+| **Scratchpad (als freies deutsches Substantiv)** | **NEU OPEN 2026-07-29 (Welle 2) – und diese Zeile ist eine UMKEHRUNG:** sie stand in §2 als settled kept-EN, **ohne jeden Beleg**. Der Loan **ist** attestiert, aber im **falschen Sinn**: 23 de.wikipedia-Treffer, allesamt **CPU-naher Speicher**, und *Fairchild Channel F* glossiert `scratchpad RAM` ausgerechnet mit **Arbeitsspeicher** – dem Wort, das im selben Absatz für RAM reserviert ist | **das Arbeitsgedächtnis** ist die Korpusform (ein Referent, ein Name); Erstnennung koppelt einmal: „das **Arbeitsgedächtnis** – das Scratchpad aus Teil 1". `Scratchpad` nur als **Rückverweis auf Teil 1** und als **Kompositumsglied**. ⛔ „das Scratchpad" mit deutschem Artikel im Fließtext. **Was es schließen würde:** ein flektierter deutscher Satz bei heise/iX/c't/INNOQ/dpunkt mit artikeltragendem `Scratchpad` **im Agenten-/LLM-Referenten**, nicht im Mikrocontroller |
+| **Super-Step (Genus)** | **NEU OPEN 2026-07-29 (Welle 2) – zweite UMKEHRUNG derselben Gestalt**, und der Nullbefund ist von **vier** Durchgängen unabhängig erhoben: de.wikipedia `insource` **0**; *Bulk Synchronous Parallel* und *Pregel (Framework)* haben **kein deutsches Lemma** (beide Abrufe: Seite existiert nicht); Duden `Step` ist „frühere Schreibung für **Stepp**", der Steppschritt, also **kein Rechensinn und keine Genusquelle**; und `Super-Step` ist **kopffinal**, sodass die Kompositumsbildner-Ausnahme (`_language.md` §1.1) nicht greift | **umbauen:** „speichert den Zustand des Graphen **nach jedem Knotenübergang** (im LangGraph-Vokabular: *Super-Step*)" – das Englische **einmal**, kursiv, artikellos, in Klammern. ⛔ „der/das Super-Step". **Was es schließen würde:** ein deutscher Satz mit `der`/`das Super-Step` **im markierten Kasus**, oder ein de.wikipedia-Lemma zu Pregel oder BSP |
 
 > **Nachtrag aus dem Piloten „Tool-Einsatz" (2026-07-28) — warum `Gate` OPEN bleibt, ausführlich.** Die Zeile
 > ist nicht aus Trägheit offen; dieser Durchgang hat sie **verschärft** und dabei die Gestalt der Ausnahme
@@ -447,7 +513,8 @@ Seeded from collisions already visible in the corpus:
   **die Evaluation**; Zahl → **der Score**; „Bewertung" nicht für die Zahl. **Auf Probe.**
   **Erweitert Welle 1 (2026-07-28) — und die Erweiterung ist zugleich die ANTWORT auf eine Prüffrage an
   Gate 6.5: hat die `Bewertungs-`Familie inzwischen zwei Wörter für einen Referenten?** Sie hat es
-  **nicht**. Sechs Referenten, sechs Namen, keine Überschneidung:
+  **nicht**. ~~Sechs Referenten, sechs Namen~~ **acht Referenten, acht Namen** *(Welle 2, 2026-07-29)*,
+  keine Überschneidung:
   - die **Disziplin** → **die Evaluierung / die Evaluation** (`_language.md` §1.1.e)
   - die **Zahl** → **der Score** — ⛔ nie „die Bewertung" für die Zahl
   - das **Kriterienwerk**, gegen das bewertet wird → **das Bewertungsraster** *(rubric, neu)*
@@ -455,6 +522,22 @@ Seeded from collisions already visible in the corpus:
   - der **Spruch** des Judges über eine Antwort → **das Urteil** *(verdict, neu)* — „zu demselben Urteil
     kommen"
   - die **zusammengezogene Empfehlung** am Absatzende → **das Fazit** *(verdict im zweiten Korpussinn, neu)*
+  - die **Tätigkeit** des Bewertens → **die Bewertung** *(grading, neu Welle 2)* – „die **Bewertung jedes
+    Hops**", „**pro Hop bewerten**". ⚠ Das ⛔ dieser Karte gilt **nur für die Zahl**: *die Bewertung* darf
+    nicht der Name des **Scores** sein, wohl aber der Name der **Handlung**. Beide Sätze zusammen sind die
+    Karte, nicht nur der zweite.
+  - die **Heuristik, die Knoten eines Suchbaums bewertet** (ToT/LATS, *state evaluator*) → **die
+    Bewertungsfunktion** *(neu Welle 2)* – de.wikipedia *Minimax-Algorithmus*, exakt unser Referent.
+    ⛔ **der Evaluator** (kein Duden-, kein DWDS-Lemma; im Deutschen die **Person** der Programmevaluation)
+    – er wäre der **vierte** Name für eine bewertende Komponente neben *Judge*, *Bewerter* und *Kritiker*.
+    §1.1.g führt die Zeile.
+  
+  ⚠ **Wie die beiden Zeilen hierhergekommen sind, und es ist die Lehre der Welle in Kleinform: zwei Batches
+  haben unabhängig „den siebten Referenten" gemeldet.** Jeder war für sich richtig, beide zusammen waren
+  falsch – dieselbe arithmetische Kollision, die Welle 1 in §1.1.g getroffen hat, eine Etage tiefer.
+  **Die Zahl in einer Sense-Card („sechs Referenten, sechs Namen") IST eine Zählung**, auch wenn sie nicht
+  wie eine aussieht; die Batches hatten ausdrücklich darauf verzichtet, Tabellenzahlen fortzuschreiben –
+  und es ist trotzdem passiert, an der Stelle, die niemand für eine Zählung hielt.
   
   **Frage vor dem Schreiben:** *Meine ich das Fach, die Zahl, das Regelwerk, wer bewertet, den Spruch über
   eine Antwort oder die Schlussfolgerung des Abschnitts?* ⚠ Das Bewertungsraster ist das **Kriterienwerk**,
@@ -547,6 +630,26 @@ nicht sehen konnte:**
   - ⚠ **Quellentreue ist nicht Faktentreue:** der Korpus sagt ausdrücklich, eine Antwort könne
     **quellentreu und trotzdem falsch** sein. ⛔ *die Faktentreue* misst Wahrheit, nicht Stützung.
   - ⛔ *die Rückbindung* als **Metrikname** — sie ist und bleibt die Glosse für *Grounding*.
+
+**Neu in Welle 2 (2026-07-29) – eine Karte, und sie entscheidet nichts Neues: sie AKTIVIERT eine Bedingung,
+die der Kanon seit Welle 1 mit sich führt:**
+
+- **`Protokoll`** – *communication protocol* gegen *audit trail*, zwei Referenten, die in Teil II auf
+  derselben Seite stehen.
+  **Frage vor dem Schreiben:** *Rede ich über eine Vereinbarung zwischen zwei Seiten – oder über eine
+  Aufzeichnung?*
+  - die Vereinbarung → **das Protokoll**, *die Protokolle*, *des Protokolls*. **Auf Protokoll- und
+    Agentenseiten (Teil II) heißt `das Protokoll` ausschließlich das Kommunikationsprotokoll**, gemessen
+    47 : 0 für den Netzsinn in dieser Materie.
+  - die Aufzeichnung → dort **die Protokollierung** bzw. **das Log** (`_language.md` §1.1.e).
+  - ⚠ **Außerhalb dieses Kontexts bleibt die §2-Zeile („die Protokollierung / das Protokoll" für *audit
+    trail*) unverändert gültig** – vor allem in `ai-sdlc.md`. **Die Zeile wird nicht gestrichen, sie wird
+    durch diese Karte geschützt:** sie trug die Bedingung „nur ohne Verwechslungsgefahr mit dem
+    Netzwerkprotokoll" von Anfang an, und Teil II ist der Ort, an dem die Bedingung **feuert**.
+  - ⛔ die Genitivfügung „**das Protokoll der Sitzung**" – Duden-Bedeutung 1 von `Protokoll` ist die
+    **Sitzungsniederschrift**, und *Sitzung* ist in Teil II unser eigenes Wort für *session*. Beide Wörter
+    sind unsere; die Fügung gehört jemand anderem.
+  - ⛔ *das Prüfprotokoll*, ⛔ *der Prüfpfad* (§1.1.f, umsatzsteuerrechtlich besetzt).
 
 ---
 
@@ -680,7 +783,7 @@ reference-based*. Das Deutsche **muss** den gemeinsamen Bestandteil mit einem **
 
 - *head-based and tail-based sampling* → „**Head- und Tail-Sampling**" (nicht „Head und Tail Sampling")
 - *pre-filter / post-filter* → „**Vor- und Nachfilterung**" (deutsch geführt) oder „**Pre- und Post-Filter**"
-- *soft cap / hard cap* → „**Soft- und Hard-Cap**"
+- *soft cap / hard cap* → „**Soft- und Hard-Cap**" ⚠ *(Welle 2, 2026-07-29: die Ergänzungsstrich-Konstruktion bleibt gültig, wo das Paar **als Paar benannt** wird – `Soft Cap / Hard Cap` ist die **Zitierform des Musternamens**. Der Laufterm im Fließtext ist **die weiche / die harte Obergrenze**; ⛔ „das Cap" / „der Cap", kein attestiertes Genus in diesem Sinn. Siehe die Anmerkung in §2.)*
 - *reference-free vs reference-based* → „**referenzfreie und referenzbasierte** Bewertung"
 
 **Test:** teilen die beiden Glieder ein Grundwort? Dann trägt das erste den **Ergänzungsstrich**, und das
@@ -1000,8 +1103,9 @@ findet, trägt nicht „OPEN, Wort meiden" ein, sondern prüft zuerst die Kompos
 
 Neu belegt: `Time-out` (Duden: **Sport**, „Auszeit", kein EDV-Sinn), `transient` (DWDS: **Signalphysik**;
 das Informatikbeispiel ist das **Java-Schlüsselwort**), `Grundlast` (**Stromnetz**), `Sampler`/`sampeln`
-(**Musik**), `wohlgeformt` (Duden: **ästhetisch**, „wohlgeformte Hände"), `Loadout` (**Gaming**), `Fan-Out`
-(**Digitaltechnik** *Ausgangslastfaktor* **und** **Offsetdruck**).
+(**Musik**), `wohlgeformt` (Duden: **ästhetisch**, „wohlgeformte Hände"), `Loadout` (**Gaming**), `Fan-out`
+(**Digitaltechnik** *Ausgangslastfaktor* **und** **Offsetdruck**) *(Schreibung Welle 2 korrigiert: `out` ist kein
+Substantiv, § 45 E1 greift nicht; `_language.md` §1.1, Fallenkasten)*.
 
 **Die neue Art ist `Gate`.** Der Kanon führte es als Flughafen-Falle. Die *lebendige* Kollision ist eine
 andere: de.wikipedias LSTM-Artikel flektiert **das Input Gate**, **das Forget Gate**, **des Forget Gates**.
@@ -1447,3 +1551,210 @@ schreibt. **Ein Konsistenzdurchgang schließt keine offene Zeile** — die Stell
   einem Datensatz", während drei Argumente der Vertiefung auf einer unglossierten **Online-Evaluierung**
   aufsitzen. Das ist ein **wellenweiter** Riss, der in die Evaluierungslektion hineinreicht — er gehört
   dorthin und nicht in einen lokalen Flicken.
+
+---
+
+### Phase 6 (2026-07-29) – Welle 2, Belegdurchgang vor der Prosa (RAG Teil II)
+#### Eine Anweisung des Gates war falsch, und die Dateigrenze hat sie abgefangen
+
+Gate 6.5 hat als Reparatur **O.29** verlangt, auf der Observability-Vertiefung von Teil I
+`Werkzeugkatalog` durch `Tool-Katalog` zu ersetzen – gestützt auf eine Zählung: einmal
+`Werkzeugkatalog` gegen zweimal `Tool-Katalog` im ausgelieferten Korpus. Der ausführende Agent hat die
+Zeile **nicht angefasst**, weil der Pfad außerhalb seiner erlaubten Dateiliste lag, und den Fall gemeldet
+statt ihn zu erledigen.
+
+**Das war der Glücksfall, denn die Anweisung war sachlich falsch.** Der Satz lautet: „Um den
+**Werkzeugkatalog** geht es hier ebenfalls nicht, der steht in [Teil III]" – und Teil III ist die Lektion
+über das **Werkzeug-Ökosystem** (Ragas, DeepEval, LangSmith …). Das englische Original schreibt an genau
+dieser Stelle „the tool catalogue, which is Part III". Gemeint ist der Katalog der **Produkte**, nicht der
+Katalog der Tools, die ein Agent registriert hat. **Zwei Referenten, zwei Namen – korrekt so.** Die
+Ersetzung hätte sie zu einem verschmolzen, also genau den Defekt erzeugt, gegen den dieser ganze Durchgang
+gebaut ist.
+
+**Die Lehre ist doppelt.** Erstens: **eine Zählung sieht Mengen, keine Referenten** – das ist dieselbe
+eingebaute Grenze wie in Phase 5, hier aber mit umgekehrtem Vorzeichen. Dort hat das Zählen einen Defekt
+gefunden, den Lesen übersehen hätte; hier hat es einen Defekt *erfunden*, den Lesen sofort ausräumt. **Wer
+eine gezählte Abweichung repariert, muss den Satz gelesen haben.** Zweitens, und das ist die
+Prozesslehre: **die Dateigrenze war als Sicherung gegen Scope-Creep gedacht und hat stattdessen einen
+Inhaltsfehler abgefangen.** Eine Begrenzung, die den Ausführenden zum Melden statt zum Erledigen zwingt,
+erzeugt genau den Moment, in dem die Anweisung noch einmal geprüft wird.
+
+
+*Sechs Slices über die englischen Dateien unter `docs/part-2-agents/` (A Schleife und Steuerung ·
+B Planung · C Gedächtnis und Zustand · D Multiagentensysteme und Graph · E MCP und Agentenprotokolle ·
+F Tools, Sicherheit und Bewertung) – **und jeder Slice lief ZWEIMAL, unabhängig**. Zwölf Blätter, danach
+**ein** Zusammenführungsdurchgang (Gate 6.5) über alle zwölf gleichzeitig. Kein Renderdurchgang, keine
+Prosa. Das bindende Blatt ist `WAVE2-TERMS.md`: **226 Zeilen über rund 191 Kopfwörter**, davon **213
+anwendbar** und **13 OPEN**; **null DISPUTED sind stehen geblieben**.*
+
+#### Was das Doppeln gekauft hat – und was es nicht kaufen kann
+
+**102 der 226 Zeilen tragen `AGREED ×2`**, also: beide Durchgänge eines Slices sind unabhängig zum selben
+Ruling gekommen. Das ist die stärkste Evidenzklasse dieses Durchgangs und **es gibt sie nur, weil doppelt
+gelaufen wurde**. **40 Zeilen sind RESOLVED** – dort haben die beiden Durchgänge einander widersprochen und
+dieser Gate hat entschieden.
+
+**Alle sechs Slices haben mindestens einen frontalen Widerspruch produziert; der Auftrag hatte mit drei
+gerechnet.** Und sie lagen nicht gleichverteilt: **in vier von sechs Fällen traf der Widerspruch die
+folgenreichste Zeile des Slices** – `trajectory` (55–60 Sätze), `reflection` (die zentrale Unterscheidung
+der Lektion), `session` (querschnittig), `state machine` (der Rahmen der Graphlektion). Ein einzelner Lauf
+hätte jedes Mal eine selbstsichere, ordentlich zitierte, **falsche** Zeile ausgeliefert.
+
+Die drei frontalen Widersprüche, die dieser Eintrag namentlich festhält:
+
+1. **`reflection` / `self-critique`.** Der eine Durchgang ⛔te *die Reflexion* (strukturelles Argument: der
+   String ist im selben Kapitel ein Klasse-1-Eigenname) und setzte *die Selbstkritik*; der andere ⛔te *die
+   Selbstkritik* (Registerargument: das DWDS-Wortprofil ist *schonungslos, harsch, zerknirscht*) und hielt
+   *die Reflexion*. **Beide Argumente sind richtig und handeln von verschiedenen Dingen.** Entschieden,
+   nicht gemittelt: die gemessene Eigenschaft des **deutschen Wortes** schlägt die HOUSE-Zeile ohne
+   Domänenbeleg – und das strukturelle Problem wird durch die **Umbaulösung** des Verlierers gelöst, nicht
+   durch sein Wort. Ergebnis: Begriff → **die Reflexion**; Framework → **`Reflexion`** in Codeschrift mit
+   Apposition; der unterscheidende Merksatz wird **umgebaut, nicht übersetzt**; ⛔ *die Selbstkritik*.
+2. **`trajectory`.** *der Pfad* gegen *der Verlauf*, beide gut belegt. Entschieden hat **keine Beleglage,
+   sondern das Ledger**: `der Verlauf` ist in der **Nachbarlektion** bereits für die Gesprächshistorie
+   ausgegeben – ein deutsches Wort für zwei englische Referenten auf benachbarten Seiten ist genau der
+   Defekt, für den dieser Gate existiert. Dazu absorbiert `der Pfad` die Korpusüberschrift „Grading the
+   whole **path**". **Keiner der beiden Durchgänge konnte das sehen; ein Batch sieht seine Nachbarn nicht.**
+3. **`Multiagentensystem`.** Hier waren sich die beiden Durchgänge **uneinig darüber, ob es überhaupt einen
+   Widerspruch gibt**: der eine las die Zeile als lebendigen Selbstwiderspruch, der andere wies nach, dass
+   §1.3.3 die Hausform **namentlich** führt und die Zeile also stimmig ist. **Der zweite hat recht** – und
+   trotzdem wird die Zeile geändert. **Denn dieselbe Zeile ist jetzt von zwei unabhängigen Prüfern als
+   Widerspruch gelesen worden, und das ist ein Befund über die DARSTELLUNG der Tabelle, nicht über die
+   Regel.** Repariert ist deshalb die **Terminus-Spalte**, nicht das Ruling; die Zitation von §1.3.3 bleibt
+   stehen, ergänzt um die ehrliche Klarstellung, dass die Durchkopplung eine **Korpuskonsistenz-Entscheidung
+   ist und keine Regelfolge** (§ 44 betrifft englische Wortgruppen, § 45(2) erlaubt sie bloß). Daraus die
+   allgemeine Lesart, die über diese Zeile hinausgeht: **in einer §1.1-Zeile ist die Terminus-Spalte nicht
+   das Ruling – das steht in der Beleg-Spalte, und wo beide auseinandergehen, ist die Spalte der Defekt.**
+
+#### Der größte strukturelle Befund: das MCP-Register gab es nicht
+
+`_language.md` §1.1 hatte **keine einzige** Zeile für `Server`, `Client`, `Host`, `Protokoll`, `Session`,
+`Transport`, `SDK`, `Registry`, `Capability`, `Ressource`, `Primitiv`, `Agent Card`. Und die **acht
+MCP-Termini, die `rag.md` §2 seit dem Bootstrap als settled kept-EN führt** – `stdio`, `Streamable HTTP`,
+`SSE`, `A2A`, `Agent Card`, `Roots`, `Elicitation`, `MCP` –, hatten **ebenfalls keine Registerzeile**,
+obwohl §2 mit eigenen Worten verlangt, dass ein Terminus **vor seinem zweiten Vorkommen** eine §1.1-Zeile
+bekommt. **Die gesamte MCP-Oberfläche war unregistriert an dem Tag, an dem Teil II zu rendern begann.**
+
+**Das ist Welle 1s teuerster Befund, eine Sektion weiter: „unangewandt, nicht unvollständig."** Die
+Entscheidung existierte; die Anwendung fehlte. In Welle 1 war es eine Sense-Card, die seit dem Bootstrap die
+Antwort hatte und die niemand aufschlug; hier ist es ein Ledger, das auf ein anderes Ledger zeigt.
+**Die prozedurale Folgerung ist schärfer als die Wiederholung: ein Verweis von einem Register auf ein
+anderes braucht eine Prüfung, dass der Verweis auflöst.** Ein Zeiger auf eine leere Zelle sieht genauso aus
+wie ein Zeiger auf eine gefüllte.
+
+Der Zuwachs, gezählt: **37 neue §1.1-Zeilen** (14 MCP · 7 Multiagenten/Graph · 7 Tools/Sicherheit/Bewertung ·
+6 Gedächtnis/Zustand · 2 Planung · 1 Schleife) – **mehr als ein Drittel davon ist die eine fehlende
+Oberfläche.**
+
+#### Die Eingabe dieses Gates war defekt, auf zwei unabhängige Arten
+
+**Und beide sahen aus wie ein sauberes Ergebnis.**
+
+1. **Eine Regex, die jede Flexionsform ausschloss.** Das Term-Muster des Konkordanz-Extraktors trug ein
+   abschließendes `(?![a-z])`, wodurch **jeder Plural und jede flektierte Form per Konstruktion verloren
+   ging**. Gemessen: `primitive` stand mit **3 Sätzen**, der Quellbaum hat **22** – und **keiner der drei**
+   trägt die MCP-Bedeutung, an der die Zeile hängt; `loop` stand mit **156** und ist **183**; `step` 70 →
+   **103**; `budget` 43 → **55**; `checkpoint` 15 → **23**; `thread` 17 → **23**; `state` 59 → **62**.
+2. **Fehlende Abschnitte.** Mehrere Termini der Auftragsblätter hatten in der Konkordanzdatei **überhaupt
+   keinen Abschnitt**: `dry run` (der Korpus schreibt `dry-run`, und der Terminus steht **fettgedruckt auf
+   einer ausgelieferten Seite**), `permission mode` (4 Vorkommen), `tool result` (11), `toolset` (17),
+   `capstone` (13), `sensitive action` (6), `interpose` (4); ein anderer Slice vermisste sieben eigene
+   (`checkpointing`, `short-term memory`, `parametric memory`, `compact`, `session`, `context window`,
+   `summarise the history`); ein dritter neun (`agent loop`, `retrieval loop`, `turn`, `non-termination`,
+   `iteration limit` u. a.).
+
+**Ein abschneidender Extraktor erfindet Urteile; ein verengender erfindet ABWESENHEITEN – und das ist
+schwerer zu sehen, weil nichts kaputt aussieht.** Ein zu kurzer Satz sieht kurz aus. Eine Zahl „156" und
+eine Überschrift, die schlicht fehlt, sehen beide **richtig** aus. Welle 1 hatte den abschneidenden Fall
+protokolliert; **er ist nicht behoben, er hat nur die Gestalt gewechselt.**
+
+**Wer es unabhängig gefunden hat – und wer nicht:** Slice A fand die **abgeschnittenen Listen** selbst
+(„14 von 156 gezeigt, `… (142 more)`") und leitete daraufhin jeden Referenten neu aus `docs/part-2-agents/`
+ab; **die Regex fand A nicht** und sagt das ausdrücklich, weil eine plausible Zahl kein Signal gibt. Slice E
+fand die **Regex** und die fehlenden Abschnitte (von 21 Konkordanzabschnitten waren zwei nachweislich
+unvollständig, sieben Auftragstermini fehlten ganz). Slice F fand die **fehlenden Abschnitte** über einen
+Gegengrep. Slice C bekam eine korrigierte Konkordanz und hat seinen Durchgang daraufhin **angehängt statt
+eingearbeitet** – sichtbar, mit den bewegten Zählungen, nach derselben Regel, nach der dieses Register
+streicht.
+
+**Mehrere Rulings dieses Durchgangs existieren nur, weil ein Slice die Quelle selbst nachgegrept hat** –
+`der Loop-Back-Kante`, `Event Loop`, `LoopAgent`, die `plain/opaque/free-running`-Varianten, `dry-run`, und
+`die Komponente` für MCPs Primitive: Letzteres wäre an drei Sätzen entschieden worden, von denen **keiner**
+den MCP-Referenten trägt. **Ein Gate ist nur so gut wie seine Eingabe, und die Eingabe ist Teil des Gates.**
+
+#### Umkehrungen und Streichungen, jede einzeln benannt
+
+- **`rag.md` §2, fünf Streichungen:** ~~`Scratchpad`~~ und ~~`Super-Step`~~ nach §3 als **OPEN** (beide
+  standen kept-EN **ohne jeden Beleg** – dieselbe Gestalt wie ~~`Latency Budget`~~ in Welle 1);
+  ~~`Extended Thinking`~~, ~~`Reasoning Effort`~~, ~~`Thinking Budget`~~ nach **Klasse 1**
+  (Herstellerstellschrauben, keine Appellative).
+- **`rag.md` §2, eine Aufspaltung:** ~~`Hooks, Callbacks, Permission Modes`~~ → Klasse 1
+  (`Claude Code Hooks`, `ADK Callbacks`, `Permission Modes`) **plus** zwei appellative Klasse-2-Zeilen
+  (*der Hook*, *der Callback*).
+- **`rag.md` §2, eine Anmerkung statt einer Streichung:** `Soft Cap / Hard Cap` bleibt als **Zitierform des
+  Musternamens**; der Laufterm ist **die weiche / die harte Obergrenze**.
+- **Drei Kanonbegründungen sind falsifiziert worden, und in allen drei Fällen hat das Ruling überlebt und
+  nur der Grund gewechselt.** (a) Die `Hook`-Zeile behauptete „das Lemma flektiert nie" – es flektiert
+  **sechsmal**, Genitiv eingeschlossen, **in der Quelle, die die Zeile selbst zitiert**; die Zeile geht von
+  WEAK auf **SETTLED**. (b) Die `Orchestrator`-Zeile behauptete, **kein** obliquer Kasus sei in einer
+  Nicht-MT-Quelle belegt – Dativ und Akkusativ sind es jetzt; der Genitiv bleibt erschlossen, die Zeile
+  bleibt ehrlich. (c) Der `Sampling`-Kasten in §1 stützte sich darauf, die MCP-Bedeutung fahre auf fremdem
+  Beleg mit – sie tut es nicht mehr, und die befürchtete Falle existiert **morphologisch gar nicht**;
+  Klasse 1 steht weiter, aber als **Disambiguierungs**entscheidung.
+  **Das Muster ist die eigentliche Lehre: prüfe die BEGRÜNDUNG einer Zeile, bevor du ihre HEDGE erbst** –
+  die Hedge ist das, was die nächste Welle daran hindert, die Zeile zu verbessern.
+- **Zwei Bannzeilen wurden eingegrenzt statt umgekehrt:** `die Standardisierung` war für den statistischen
+  Rahmen verboten und ohne Geltungsbereich formuliert (Teil II braucht das Wort in einer Lektionsüberschrift);
+  die `Orchestrator`-Einschränkung war für den **Laufzeit**-Referenten der Tool-Use-Lektion geschrieben und
+  hätte in Teil II „Ihre Anwendung zerlegt die Aufgabe" erzeugt, wo der Korpus einen **Agenten** meint.
+- **Der Fallenkasten wächst von einundzwanzig auf siebenundzwanzig** (`Trajektorie`, `Transport`,
+  `Supervisor`, `persistieren`, `Resümee`, `Step`), die Pflicht-Kollokations-Klasse um **siebzehn**, und
+  **§1.1.g von achtzehn auf zweiundzwanzig** (*die Fähigkeit*, *das Transportprotokoll*, *die
+  Vertrauensgrenze*, *der Bewerter / die Bewertungsfunktion*) – **in der Tabelle UND im Injektionsblock,
+  Punkt 4, weil der die Zahl aufzählt und wörtlich in jeden Render-Prompt kopiert wird.**
+  ⚠ **Die Zahlen wurden EINMAL berechnet, von diesem Gate, aus der Vereinigung aller zwölf Blätter.**
+  Mehrere Batches haben ausdrücklich darauf verzichtet, Totale fortzuschreiben – und die Kollision ist
+  **trotzdem** passiert, eine Etage tiefer: **zwei Batches meldeten unabhängig „den siebten Referenten" der
+  `Bewertung`-Sense-Card.** Beide hatten recht, beide zusammen nicht; die Antwort ist **acht**.
+  **Eine Zahl in Kanonprosa ist eine geteilte veränderliche Variable, auch wenn sie nicht wie eine Zählung
+  aussieht.** „Sechs Referenten, sechs Namen" ist eine Zählung.
+- **Zwei neue Fehlerklassen, beide ausdrücklich außerhalb der Zählung:** die **Registerfalle** (Definition
+  richtig, Wortprofil falsch – `Alarmmüdigkeit`, `Selbstkritik`: mit zwei Mitgliedern ist es eine Klasse,
+  keine Anekdote) und die **Eigennamen-Kollision** (`die Reflexion` gegen `Reflexion`). Letztere ist der
+  interessanteste Befund der Welle: **die vier Fallen prüfen Lemma gegen Referent; keine prüft Appellativ
+  gegen Eigennamen** – und keine Attestierung findet sie, nur das Lesen des Quellsatzes. Ihre Reparatur ist
+  auch kein Wort, sondern ein **umgebauter Satz**, wofür ein Termledger keine Spalte hat.
+
+#### Was dieser Durchgang NICHT konnte
+
+- **Er sieht nur Widersprüche – und nach dem Doppeln trägt ein GETEILTER Irrtum die selbstsicherste
+  Beschriftung auf dem Blatt.** Was beide Durchgänge eines Slices **gleich** falsch beurteilt haben, geht
+  hier unbemerkt durch und heißt dann `AGREED ×2`. **102 der 226 Zeilen tragen dieses Etikett, und keine
+  davon ist gegen irgendetwas anderes geprüft worden als gegen den zweiten Lauf.** Doppeln erhöht den Preis
+  eines geteilten Irrtums; es beseitigt ihn nicht. **Der nächste Gate im Stapel darf `AGREED ×2` nicht als
+  „geprüft" lesen.** Zwei Kandidaten zuerst, beide auf **je einer** deutschen Quelle: `das
+  Arbeitsgedächtnis` im CS-Sinn und `der Subagent`.
+- **Er kann eine Attestierung nicht prüfen.** Jede Zählung, jedes Zitat und jeder Nullbefund der zwölf
+  Blätter ist auf Treu und Glauben übernommen. Die Blätter selbst berichten **fünf** Werkzeugfehler, die
+  **wie ein Nullbefund aussehen**: Rate-Limit, Bezahlschranken-Anreißer, falsche Sprachfassung, fehlender
+  Konkordanzabschnitt – und, der schlimmste, eine **Suchzusammenfassung, die einen plausiblen Satz zitiert,
+  den es auf der Seite nicht gibt.** Ein Teil der Nullbefunde in der Vereinigung ist also mit Sicherheit
+  keiner.
+- **Er kann Natürlichkeit nicht beurteilen.** Nichts hiervon hat ein deutscher Muttersprachler gelesen; jede
+  RESOLVED-Zeile ist eine Beleg- und Ledgerentscheidung, keine Ohrentscheidung. **Zuerst vor Gate 7
+  gehören:** `die Teilaufgabe` (die knappste Entscheidung der Welle, gegen eine Domänenregistermessung),
+  `die Reflexion` samt umgebautem Merksatz (ein Satz, kein Wort), `die Komponente` für MCPs Primitive (beide
+  Durchgänge haben gemessen – und Verschiedenes gemessen), `der Pfad` in seiner Bindung (eine gebundene
+  Fügung muss Wiederholung überstehen) und `die weiche / die harte Obergrenze`.
+- **Drei Dinge sind bewusst nicht entschieden worden.** (a) **`control layer`** steht **OPEN**, weil
+  `die Steuerungsschicht` bereits an *orchestration layer* vergeben ist; **ob ein deutsches Wort zwei
+  englische Termini tragen darf, ist eine Kanonpolitikfrage** und gehört zu §3, nicht zu einer Termzeile.
+  (b) `die API` (Genus) und die Formwahl bei `Least Privilege` bleiben **DISPUTED mit gehaltenem
+  Incumbenten** und werden nicht neu aufgerollt. (c) Die **Defekte der englischen Quelle** – zehn bestätigte
+  plus sieben im Nachtrag, darunter `call` mit drei Objekten und `capability` mit fünf – **sind keine
+  Termentscheidungen und wurden nicht als solche behandelt**; die Reparatur gehört nach EN und von dort in
+  alle vier Locales (§8 §M).
+- **Eine Messung konnte nicht abgeschlossen werden.** Mehrere Blätter melden Zählungen, die sie wegen
+  Rate-Limit oder Bezahlschranke nicht nehmen konnten (`mehrschrittig`, `Handlungsspielraum`,
+  `Rückwärtskante`, `Kontextüberlastung`). Sie stehen im bindenden Blatt als **NICHT GEMESSEN**, nie als
+  Null. **Ein späterer Durchgang soll sie nehmen, nicht erben.**
