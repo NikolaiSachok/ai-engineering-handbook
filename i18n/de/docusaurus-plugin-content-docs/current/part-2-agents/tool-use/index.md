@@ -67,7 +67,7 @@ Ist diese Beschreibung vage, hat das drei Folgen: Das Modell ruft zum falschen Z
 - **Eine klare, eindeutige Beschreibung** – das Modell unterscheidet Tools an ihrer Beschreibung, nicht an dem Code dahinter.
 - **Streng typisierte, eingeschränkte Parameter** (JSON Schema, `enum`, Formate) – sie engen ein, was das Modell überhaupt erzeugen kann, und senken die Quote fehlerhafter Aufrufe.
 - **Wenige Tools, und keine, die sich überschneiden.** Ein Dutzend Funktionen, die inhaltlich dicht beieinanderliegen, verwirrt das Modell, und die Fehler bei der Tool-Auswahl nehmen zu. Halten Sie den Tool-Katalog klein, statt ihn wachsen zu lassen.
-- **Klare Fehler.** Schlägt ein Tool fehl, geben Sie eine Meldung zurück, aus der das Modell sich erholen kann – etwa „date must be YYYY-MM-DD“. Dann korrigiert sich die Schleife selbst: Auf einen falschen Aufruf folgt ein klarer Fehler, das Modell formuliert neu und ruft erneut auf.
+- **Klare Fehler.** Schlägt ein Tool fehl, geben Sie eine Meldung zurück, gegen die das Modell korrigieren kann – etwa „date must be YYYY-MM-DD“. Dann korrigiert sich die Schleife selbst: Auf einen falschen Aufruf folgt ein klarer Fehler, das Modell formuliert neu und ruft erneut auf.
 - **Die richtige Granularität** – nicht zu fein (zehn Aufrufe für eine Aufgabe) und nicht zu grob (ein Tool für alles).
 
 ## Vier Fehlerbilder des Tool-Einsatzes
