@@ -49,9 +49,19 @@ I18N_DOCS_ROOT="${I18N_DOCS_ROOT:-i18n}" # i18n/<locale>/<plugin-dir>/current/<d
 # (#307 — the prefix was never stripped and only the first course's dir was ever consulted, so
 # every unreleased-locale page classified as an untranslated fallback and the gate was a no-op
 # exactly where it was supposed to bite). A third course must not need an edit here.
+#
+# The table's fourth column is the course's declared locales. This gate deliberately does
+# NOT scope itself by it, and the reason is worth stating because the parity gate does the
+# opposite. Parity asks "should a translation exist here?" — a question only the course can
+# answer. This gate asks "does this link resolve for a reader?" — and a reader of an
+# English-only course under /ru/ is being served real, shipping content. A broken link on
+# that page is broken for them. Tolerating it because the course is not translated would
+# weaken the gate to buy nothing: the pages are uniform EN in every locale, so they cannot
+# produce the split-tree fallback breakage the tolerance above exists for. The column is
+# read only so the field split stays correct as columns are added.
 COURSE_BASES=()
 COURSE_I18N_DIRS=()
-while IFS=$'\t' read -r _base _docs _i18n; do
+while IFS=$'\t' read -r _base _docs _i18n _locales; do
   [ -n "$_base" ] && COURSE_BASES+=("$_base") && COURSE_I18N_DIRS+=("$_i18n")
 done < <(python3 scripts/courses.py)
 if [ "${#COURSE_BASES[@]}" -eq 0 ]; then

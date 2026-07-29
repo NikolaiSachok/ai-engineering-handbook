@@ -29,7 +29,7 @@ blanket exemption in the link gate and an unchecked tree in the parity gate.
 
 Usage:
     from courses import courses                 # -> list[Course]
-    python3 scripts/courses.py                  # TSV: basePath<TAB>docsDir<TAB>i18nDir
+    python3 scripts/courses.py                  # TSV: basePath<TAB>docsDir<TAB>i18nDir<TAB>locales
 """
 
 from __future__ import annotations
@@ -52,6 +52,12 @@ class Course(NamedTuple):
     base: str      # routeBasePath with no slashes, e.g. 'rag-agents' — the URL segment
     docs_dir: str  # English content dir, e.g. 'docs' / 'docs-ai-sdlc'
     i18n_dir: str  # per-locale dir under i18n/<loc>/, e.g. 'docusaurus-plugin-content-docs'
+    # Locale codes the course CLAIMS — its `locales` field in the config. A course is not
+    # necessarily translated everywhere the SITE is: scope is per course, so a gate must
+    # ask the course rather than assume the site-wide answer. Parsed strictly and never
+    # defaulted (see _abort below): an empty or unreadable declaration would make every
+    # locale a blanket exemption, which is the fail-open the field was added to close.
+    locales: tuple[str, ...]
 
 
 def _abort(message: str) -> "None":
@@ -92,6 +98,23 @@ def courses(config_path: str = CONFIG) -> list[Course]:
         base = bp.group(1).strip("/")
         if not base:
             _abort(f"course '{cid}' has an empty basePath; a course must own a URL prefix.")
+
+        loc = re.search(r"^\s*locales:\s*\[([^\]]*)\],", chunk, re.M)
+        if not loc:
+            _abort(
+                f"course '{cid}' declares no `locales:`. Every course states which locales it "
+                "claims; there is no default, because the default would be 'all of them' — the "
+                "assumption per-course locale scope exists to remove."
+            )
+        claimed = tuple(re.findall(r"['\"]([\w-]+)['\"]", loc.group(1)))
+        if not claimed:
+            _abort(f"course '{cid}' has an empty `locales:` list; it must claim at least 'en'.")
+        if "en" not in claimed:
+            _abort(
+                f"course '{cid}' does not claim 'en'. The English tree is the source every "
+                "other locale is compared against, so every course has one."
+            )
+
         suffix = "" if cid == DEFAULT_INSTANCE_ID else f"-{cid}"
         out.append(
             Course(
@@ -99,6 +122,7 @@ def courses(config_path: str = CONFIG) -> list[Course]:
                 base=base,
                 docs_dir="docs" if cid == DEFAULT_INSTANCE_ID else f"docs-{cid}",
                 i18n_dir=f"{I18N_DIR_PREFIX}{suffix}",
+                locales=claimed,
             )
         )
 
@@ -110,4 +134,4 @@ def courses(config_path: str = CONFIG) -> list[Course]:
 
 if __name__ == "__main__":
     for c in courses():
-        print(f"{c.base}\t{c.docs_dir}\t{c.i18n_dir}")
+        print(f"{c.base}\t{c.docs_dir}\t{c.i18n_dir}\t{','.join(c.locales)}")
