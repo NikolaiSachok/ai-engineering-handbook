@@ -98,7 +98,7 @@ agent**, a batteries-included tool-caller you can instantiate instead of assembl
 Persistence shows up as a **checkpointer** — a memory component that saves state so a run can be paused and
 resumed later, and keeps separate threads apart so two conversations don't bleed into each other. On top of
 that sits the **human-in-the-loop (HITL)** interrupt: a node where the loop pauses for a person to approve,
-then resumes from exactly where it stopped. That's planning-loops' human-in-the-loop, now promoted to a
+and runs that node again once they do. That's planning-loops' human-in-the-loop, now promoted to a
 first-class node in the graph instead of a manual stop button.
 
 For teams, the framework hands you a **supervisor or crew construct** — the multi-agent lesson's orchestrator, prebuilt,
