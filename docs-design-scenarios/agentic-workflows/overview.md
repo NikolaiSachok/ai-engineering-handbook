@@ -29,5 +29,8 @@ none of them raise an error. They return a plausible answer, and the system repo
   persist, expire, never write; and what a workflow that has been running for eleven weeks is allowed to trust
   when it wakes.
 
-Four more are being written: tools that fail, guardrails at the boundary, observing a non-deterministic
-system, and when not to build an agent at all.
+- **[When an agent may try again](/design-scenarios/agentic-workflows/tools-that-fail)** — a nightly chain breaks
+  at 03:12 with nobody awake; what the agent may retry, and what it may publish without a signature.
+
+Three more are being written: guardrails at the boundary, observing a non-deterministic system, and when not to
+build an agent at all.

@@ -302,7 +302,7 @@ A pseudonymises and keeps running — "a tombstone that keeps the workflow runna
 terminates." C: "hard-fails to a terminal `abandoned_user_deleted`". All three honour the 30-day obligation the
 prompt states; they differ on whether exercising a privacy right silently kills an in-flight money recovery. C
 hard-codes losing it, and once the identity fields are gone there is nobody left to tell. A's default keeps the
-recovery running. B is the only one that leaves both open — "degrades to its pseudonymised typed facts **or**
+recovery running. B is the only one that leaves both open — "degrades to its pseudonymised typed facts or
 terminates" — but it is a bare disjunction, and B never says who picks or on what basis. All three leave that
 unanswered, which is the gap: this is a policy question wearing a schema question's clothes, and none of the
 three hands it to whoever should own it.
