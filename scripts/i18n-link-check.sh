@@ -304,7 +304,11 @@ done < <(awk '
 
 REAL_BREAKS=()
 TOLERATED=0
-for pair in "${PAIRS[@]}"; do
+# `${PAIRS[@]+…}` guard, not a bare `"${PAIRS[@]}"`: under `set -u`, bash 3.2 (the macOS system
+# bash) treats expanding an EMPTY array as an unbound variable and aborts. That is the
+# zero-broken-links case, so the unguarded form made this gate fail exactly when it should pass —
+# invisibly, because CI runs bash 5 where the bare form is fine.
+for pair in ${PAIRS[@]+"${PAIRS[@]}"}; do
   src="${pair%%::*}"; tgt="${pair#*::}"
   if is_tolerable_pair "$src" "$tgt"; then
     TOLERATED=$((TOLERATED + 1))
