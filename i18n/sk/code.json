@@ -336,5 +336,9 @@
   "landing.course.design-scenarios.blurb": {
     "message": "Náročné otázky pri návrhu AI-systémov, zostavené podľa verejných pracovných ponúk pre AI-inžinierov: ku každej tri odpovede — bežná, silná a predimenzovaná — a kompromisy, ktoré ich odlišujú.",
     "description": "Landing card blurb for the Design Scenarios course"
+  },
+  "fallback.englishOnly": {
+    "message": "Táto stránka je dostupná len v angličtine.",
+    "description": "Shown above the content when a page is served in English because the reader’s locale has no translation of it. The surrounding interface stays in the reader’s language."
   }
 }
