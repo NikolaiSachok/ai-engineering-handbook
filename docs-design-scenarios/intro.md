@@ -27,12 +27,13 @@ arrangement, including what it cannot buy.
 
 :::note[Status]
 
-In progress. Four scenarios are published —
+In progress. Five scenarios are published —
 [routing queries across models](/design-scenarios/agentic-workflows/model-routing),
 [knowing an agent works](/design-scenarios/agentic-workflows/trajectory-vs-outcome),
 [framework or your own primitives](/design-scenarios/agentic-workflows/framework-or-primitives) and
-[what an agent should remember, and what it must not](/design-scenarios/agentic-workflows/agent-memory). The
-rest of the first batch is being written.
+[what an agent should remember, and what it must not](/design-scenarios/agentic-workflows/agent-memory) and
+[when an agent may try again](/design-scenarios/agentic-workflows/tools-that-fail). The rest of the first batch
+is being written.
 
 :::
 
