@@ -73,6 +73,31 @@ async function run() {
     await ctx.close();
   }
 
+  // ---- 2b. Fresh de-browser → redirected to /de/, and the LESSON is really German ----
+  //
+  // The positive counterpart to case 4 below, and the assertion #287 asked for by name:
+  // German launched on the RAG course alone (#383), so detection must actually route a German
+  // browser to `/de/`. Before the launch this case could not exist — `de` was gated out of the
+  // deployed locale list — and case 4 used a `de-DE` fixture to assert the OPPOSITE. Both
+  // halves are now right, and they guard each other: if `de` were ever dropped from the served
+  // locales, this case fails loudly instead of case 4 quietly starting to pass for the wrong
+  // reason.
+  //
+  // `LESSON` is a RAG-course page on purpose. A German browser on an AI-SDLC path is a
+  // different question (that course does not claim `de`), and mixing the two would make a
+  // failure ambiguous.
+  {
+    const ctx = await browser.newContext({locale: 'de-DE'});
+    const page = await ctx.newPage();
+    const url = await gotoSettled(page, `${SITE}/${LESSON}/`);
+    check(
+      'fresh de-browser on default path → auto-redirected to /de/ (German RAG is live)',
+      /\/de\//.test(url) && (await htmlLang(page)) === 'de',
+      `landed ${url} (lang=${await htmlLang(page)})`,
+    );
+    await ctx.close();
+  }
+
   // ---- 3. Fresh en-browser on root → stays EN (no redirect) ----
   {
     const ctx = await browser.newContext({locale: 'en-US'});
