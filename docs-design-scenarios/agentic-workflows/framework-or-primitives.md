@@ -2,7 +2,7 @@
 id: framework-or-primitives
 title: Framework or your own primitives
 sidebar_position: 3
-description: Three attempts at the LangGraph question — adopt a named agent framework or build the primitives yourself, when the record you produce will be read by an auditor in fifteen months.
+description: Adopt a named agent framework or build the primitives yourself — three attempts at the LangGraph question, where the record you produce is read by an auditor fifteen months later.
 # The reveal is the method. A page TOC lists every heading inside the collapsed reveal —
 # naming all three attempts and the principle before the reader has committed to an answer.
 hide_table_of_contents: true
@@ -14,35 +14,35 @@ hide_table_of_contents: true
 > one pass per submission — 900 lines of Python behind a queue, no persisted intermediate state, and a re-run
 > costs about two cents, so failures just re-run. Next comes appeals. Each criterion is scored separately;
 > low-confidence criteria route to a human moderator who may take a week; a second-marker agent contests
-> borderline grades; and a candidate can appeal up to 30 days after publication, which reopens the case and
-> re-scores it. About one in forty is appealed — 300 an intake. Every published grade must be reproducible on
-> demand — inputs, rubric version, model version, each intermediate judgement — and retained for the
-> accreditation review in fifteen months, which will read your records. The appeals version must be live for
-> the January intake, five months out and before that review. Three engineers own this; the one who wrote the
-> queue moves teams in six weeks, leaving two, and none of the three has used LangGraph — which your open req
-> lists and a principal engineer named in a design review. Done is appeals working end to end for that
-> intake. Tell us what you do.
+> borderline grades. And a candidate can appeal up to 30 days after publication; the appeal reopens the case
+> and re-scores it. About one in forty is appealed — 300 an intake. Every published grade must be reproducible
+> on demand — inputs, rubric version, model version, each intermediate judgement — and retained for the
+> accreditation review in fifteen months, where an auditor will read your records. The appeals version must be
+> live for the January intake, five months out and before that review. Three engineers own this; the one who
+> wrote the queue moves teams in six weeks, leaving two, and none of the three has used LangGraph — which your
+> open req lists, and which a principal engineer named in a design review. Done is appeals working end to end
+> for that intake. Tell us what you do.
 
 :::note[Why this question]
 
-Four of the ten postings this course samples name LangGraph or LangChain, so it gets asked constantly —
-usually as a proxy for whether you have shipped orchestration at all. The choice is not between packages. It
-is over primitives, and which ones this workload needs: durable state per unit of work, branching on partial
-results, a join where a second agent contests the first, a pause a human can hold for a week, and — different
-in kind — reopening a case that was closed and published a month ago. That last one is not a paused run;
-nothing is waiting. The common answer argues framework against hand-rolled and never separates the two kinds
-of waiting, which is where both designs actually fail. Also at stake: a record an auditor reads is your
-artefact, whoever executes the graph.
+Four of the postings this course samples name LangGraph or LangChain, usually as a proxy for whether you have
+shipped orchestration at all. The choice is not between packages. It is between primitives — which ones this
+workload needs: durable state per unit of work, branching on partial results, a join where a second agent
+contests the first, a pause a human can hold for a week, and — different in kind — reopening a case that was
+closed and published a month ago. That last one is not a paused run; nothing is waiting. Argued as framework
+against hand-rolled, the question never separates suspending an open run from reopening a closed one, and that
+separation is what the design turns on. Also at stake: a record an auditor reads is your artefact, whoever
+executes the steps.
 
 :::
 
 **Answer it before you read on.** Out loud or on paper, whichever you'd do at a whiteboard.
 
 Three model-written attempts follow. Each comes from a separate agent given one engineer's habits and the
-prompt above — no agent saw the other two, or the rubric, which was written first
+prompt above — no agent saw the other two, or the assessor's rubric, which was written first
 ([how these are made](/design-scenarios/how-these-are-made)). All three answered this prompt as printed. An
-earlier version of the question was discarded before publication because every attempt at it agreed; that
-failure is recorded on the how-these-are-made page rather than here.
+earlier version of the question was discarded before publication because all three answers to it agreed; that
+failure is recorded there rather than here.
 
 <Reveal>
 
@@ -74,7 +74,7 @@ decision buys almost all of the requirements at once.
    │                  human moderator         │
    │                  (days–week)             │
    │                        │                 │
-   │              borderline ▼                │
+   │             borderline ▼                 │
    │                second_marker (subgraph)  │
    │                        │                 │
    └────────── appeal (≤30d) ─────────────────┘
@@ -129,14 +129,15 @@ plus the reviewer-facing read over thread history. Two weeks of slack before Jan
 <Verdict>
 
 A's opening read is right: what gets reopened is the judgement, not the submission. Then "Appeals are the same
-mechanism" collapses the two waits — a moderator pause holds an open run; an appeal arrives after `publish`,
-with nothing running — and A resumes the thread, branching from the checkpoint before `aggregate`, making
-publication rewindable. The API names are correct; the guarantees read off them are not. Resume does not pick
-up "with nothing recomputed" — the interrupted node re-executes from its start — and replaying stored
-supersteps returns recorded values without re-invoking anything, so "it lands on the same numbers" verifies
-nothing. Two-cent re-runs make the recompute harmless; the reproducibility claim is what breaks, and "the
-checkpointer is the record" puts that claim in a dependency's tables. Wrapping the 900 lines to hit parity
-against current output is its best de-risking move.
+mechanism" collapses the two waits. A moderator pause holds an open run; an appeal arrives after `publish`,
+with nothing running. A resumes the case thread anyway, branching from the checkpoint before `aggregate`, which
+makes publication rewindable. The API names are correct; the guarantees read off them are not. Resume does not
+pick up "with nothing recomputed": the interrupted node re-executes from its start. And a replay is not a
+record read — everything after the checkpoint it branches from runs again, model calls included — so "it lands
+on the same numbers" is a prediction about a non-deterministic call, not a check. Two-cent re-runs make the
+recompute harmless; the reproducibility claim is what breaks, and "the checkpointer is the record" puts that
+claim in a dependency's tables. Wrapping the 900 lines and hitting parity against current output is its best
+de-risking move.
 
 </Verdict>
 
@@ -212,14 +213,14 @@ engineers and a fixed date, learning a framework on the critical path is how you
 
 <Verdict>
 
-B finds the distinction the prompt is built on and states it as a mechanism: a re-run in November with
-November's model is a different answer, not a cheaper copy. From that follows an append-only row per
-criterion, a published grade that is a pointer into history, and an appeal that writes new rows superseding
-rather than overwriting. It alone asks what happens when a pinned snapshot is retired, answering that
-reproducibility is then the record, not re-derivation. Its headline look-alike pair, though, is second-marker
-versus moderator, not the sharper pause-versus-reopen, which it settles in one clause and a diagram arrow. Its
-first scope cut is the second marker, which the prompt lists inside appeals and inside done. And "a for-loop
-and a queue" under-prices the fan-out, join and reopen coordination it would then own.
+B states the distinction as a mechanism: a re-run in November with November's model is a different answer, not
+a cheaper copy. From that follow an append-only row per criterion, a published grade that is a pointer into
+history, and an appeal that writes new rows superseding rather than overwriting. It alone asks what happens
+when a pinned snapshot is retired, and answers that reproducibility is then the record itself. It headlines the
+wrong look-alike pair, though — second-marker versus moderator — and its design handles suspending against
+reopening without ever naming that as the trap. Its first scope cut is the second marker, which the prompt
+lists among the appeals features, and done is appeals working end to end. And "a for-loop and a queue"
+under-prices the coordination it would then own — fan-out, join, and reopen.
 
 </Verdict>
 
@@ -300,15 +301,15 @@ which is the failure mode we're currently escaping.
 
 <Verdict>
 
-C buys something real, and pays for it twice. Building the ledger before any orchestration, carrying a full
-reproduction tuple per event, and forking an appeal from the published case's log are the right order and the
-right shape; the CI harness that replays sampled cases weekly turns "reproducible on demand" from a promise
-into something already generated. Then the harness byte-compares against a stored hash of a raw model
-response, which either re-invokes a model that will not return identical bytes or replays recorded responses
-and tests only the deterministic fold. And the argument eats itself: two engineers cannot hand-roll
-durability, so they get an event store, a content-addressed store, a fold projection and a replay harness,
-while the framework costs "a couple of weeks" and appeals arrive "almost free." No reversal criterion, no
-dated path to January.
+C buys something real, and pays for it twice. Three moves are the right order and the right shape: building
+the ledger before any orchestration, carrying a full "reproduction tuple" per event, and forking an appeal from
+the published case's log. The weekly CI run that replays sampled cases turns "reproducible on demand" from a
+promise into something already generated. Then it byte-compares against a stored hash of a raw model response —
+a comparison that either re-invokes a model which will not return identical bytes, or replays recorded
+responses and tests only the deterministic fold. And the argument eats itself: two engineers cannot maintain
+bespoke glue, so they get an event log, a content-addressed store, a fold over it, and the CI job that replays
+it, while the framework costs "a couple of weeks" and appeals arrive "almost free". No condition that would
+reverse the decision, no dated path to January.
 
 </Verdict>
 
@@ -316,50 +317,52 @@ dated path to January.
 
 Each disagreement below is a decision you will have to make yourself.
 
-### What "reproducible" means
+### Reproducible: replay it or retain it
 
-Three positions, mutually exclusive. A: reproducibility is replay — "replay from the checkpoint with the
-pinned versions and it lands on the same numbers." C: reproducibility is replay *proven* — a CI harness
-replays sampled published cases weekly and byte-compares against what was recorded, so "grades aren't
-reproducible because we promise they are; they're reproducible because replay is a test." B: reproducibility
-is retention — "if a snapshot dies, reproducibility means 'here is the recorded judgement and its
-provenance,' not 'we can re-derive it.'"
+Three positions. A: reproducibility is the checkpointer's stored state, walked or replayed —
+"`get_state_history(thread_id)`, walk the supersteps", and "replay from the checkpoint with the pinned versions
+and it lands on the same numbers." C: reproducibility is replay *proven* — a weekly CI run replays sampled
+published cases and byte-compares against what was recorded, so "grades aren't reproducible because we promise
+they are; they're reproducible because replay is a test." B: reproducibility is retention — "if a snapshot
+dies, reproducibility means 'here is the recorded judgement and its provenance,' not 'we can re-derive it.'"
 
 B is right here, and the reason is the fifteen-month horizon plus an external reader. Both replay positions
 assume the model that produced the judgement is still callable and still deterministic; neither is guaranteed,
-and only B checks. C's position is nonetheless a genuine advance on A's: it distrusts the promise and builds a
-test. But its test only bites on the deterministic layer — the fold from events to case state — and for the
-model call it collapses into B's answer wearing C's clothes, comparing stored output to stored output.
+and only B plans for the answer being no. C's position is nonetheless a genuine advance on A's: it distrusts
+the promise and builds a test. But its test only reaches the deterministic layer — the fold from events to case
+state — and for the model call it reduces to B's answer wearing C's clothes, comparing stored output to stored
+output.
 
-### Who owns the durable state
+### Durable state: the framework's or yours
 
-A: "The checkpointer is the record." B and C both: the record is theirs and the engine is replaceable — B puts
-"state and audit log … in Postgres, framework-independent"; C builds the ledger "first, before any
+A: "The checkpointer is the record." B and C both: the record is theirs and the orchestration sits on top of
+it — B puts "state and audit log … in Postgres, framework-independent"; C builds the ledger "first, before any
 orchestration."
 
-B and C are right, for a reason that is about the reader, not about taste: the record has a retention duty and
-an auditor, and a schema owned by a dependency means a routine upgrade migrates evidence. Note this splits
-independently of the adopt-or-decline verdict — C adopts LangGraph and still keeps the record, which is
-exactly the reconciliation neither side of the framework argument settles on its own.
+B and C are right, and the reason is the reader rather than taste: the record has a retention duty and an
+auditor, and a schema owned by a dependency means a routine upgrade migrates evidence. This splits
+independently of the adopt-or-decline call — C adopts LangGraph and still keeps the record, and B's condition
+to adopt is precisely that the framework "holds run orchestration only, no durable state".
 
-### Whether the 900 lines get rewritten
+### The 900 lines: wrap them or replace them
 
 A wraps them: node functions, "near-verbatim, so the port is structural and reviewable rather than a rewrite
-with new bugs," verified by parity against current output. C replaces them: scoring lifted as pure functions,
-the rest is "undocumented glue with a departing author," and with no persisted state "there's nothing to
+with new bugs", verified by parity against current output. C replaces them: scoring lifted as pure functions,
+the rest "undocumented glue with a departing author", and with no persisted state "there's nothing to
 migrate — it's the cheapest moment this rewrite will ever be." B sidesteps: "the 900 lines and the queue
 aren't the problem."
 
-A is right, and this is the one axis where A beats B. The only person who knows how the current grader behaves
-leaves in six weeks; while he is there, current output is a free oracle, and parity on a few hundred
+A is right, and it is the one axis where A answers something B does not. The author of the queue moves teams in
+six weeks; while the current pipeline still runs, its output is a free oracle, and parity on a few hundred
 submissions is the cheapest correctness evidence available. C's "nothing to migrate" is true about state and
 false as an inference about behaviour. B never names any behaviour-equivalence check at all.
 
-### What the six weeks extract
+### The six weeks: a document or a demonstration
 
-A: ingestion and retry semantics, failure modes written down, pairing on the port. B: not a document — "the
-other two shipping a change to the queue with him watching," with a week-four trigger to cut scope if it isn't
-clear. C: explicitly "isn't documentation of the 900 lines" but rubric semantics into a versioned schema.
+A wants ingestion and retry semantics, the failure modes written down, and pairing on the port. B refuses a
+document and names a demonstration — "the other two shipping a change to the queue with him watching" — with a
+week-four trigger to cut appeals scope if the transfer is not done by then. C explicitly does not want
+"documentation of the 900 lines"; it wants rubric semantics in a versioned schema.
 
 B's mechanism is right — transfer demonstrated by the recipients doing the work, on a deadline, with a
 consequence attached. A names the right content (retry and failure modes) and the weaker mechanism. C is
@@ -368,28 +371,30 @@ leaves, while what walks out is operational.
 
 ## The principle
 
-> Suspending an open run and reopening a closed one are different problems, and only the first is something an
+> Suspending an open run and reopening a closed one are different problems, and only the first is a problem an
 > execution engine can solve for you.
 
 </Reveal>
 
 :::tip[Read next]
 
-- [Graphs & durable execution](/rag-agents/part-2-agents/orchestration-frameworks/deep-dive) — names the state
-  model a framework hands you: a checkpointer writing at every super-step keyed by `thread_id`, three
-  durability modes, swappable backends, and an interrupt node that persists and then waits days.
 - [Orchestration frameworks](/rag-agents/part-2-agents/orchestration-frameworks/) — enumerates what you own if
   you skip the framework, then prices the framework: abstraction cost, ecosystem churn,
   portability-versus-lock-in, and a primitives-first sequencing rule.
+- [Graphs & durable execution](/rag-agents/part-2-agents/orchestration-frameworks/deep-dive) — the deep dive
+  under that lesson, and it names the state model a framework hands you: a checkpointer writing at every
+  super-step keyed by `thread_id`, three durability modes, swappable backends, and an interrupt node that
+  persists and then waits days.
 - [Reliability & scale](/rag-agents/part-2-agents/tool-use/deep-dive) — retry safety is a property of the
   tool, not the retry policy: an idempotency key per intended operation, a dry-run/confirm split for
   irreversible writes, and why fixing idempotency comes before allowing retries.
 - [Real agents — Claude, OpenAI, Gemini](/rag-agents/part-2-agents/real-agents) — three vendors' resume
-  machinery under one pattern, and the clause this decision turns on: persisting state is not resuming,
-  because resume is only safe if you can tell what actually completed.
+  machinery under one pattern, and the caveat this question turns on: state you never persisted is state you
+  cannot resume, and even persisted, resume is only safe if you can tell what actually completed.
 - [Cost, agents & sovereignty](/rag-agents/part-3-production/cloud-platforms/deep-dive) — its
   managed-runtime section names the third option this question omits, a hosted agent loop with session
-  persistence, and prices abstraction in both directions.
+  persistence, and prices it both ways: six things you stop building, against lock-in and less control over
+  the loop.
 
 :::
 
@@ -397,21 +402,22 @@ leaves, while what walks out is operational.
 
 These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 
-> A grade goes out in March. In April the candidate appeals. Walk me through it — what do you load, what do
-> you create, and is that the same run as the one that published the grade or a different one?
+> A grade goes out at the end of March. Three weeks later the candidate appeals. Walk me through it — what do
+> you load, what do you create, and is that the same run as the one that published the grade or a different
+> one?
 
-This is the pause-versus-reopen distinction with nowhere to hide. Someone who reasoned it out describes a
-retained case record and a new linked run. Someone reciting a strong answer resumes from the checkpoint, which
-cannot be true of a run that already published.
+This is the difference between suspending an open run and reopening a closed one, with nowhere to hide. Someone
+who reasoned it out describes a retained case record and a new linked run. Someone reciting a memorised answer
+resumes the run that produced the grade, which is not something a finished, published run can do.
 
 > The moderator disagrees with the second-marker agent, which disagreed with the first pass. Who writes the
 > final judgement into the record, and what does the auditor see about the disagreement fifteen months later?
 
-State ownership under a genuine multi-writer loop, and whether the record was designed to hold contested
-history rather than a last-write-wins field. Not recitable — it requires the record's actual shape.
+State ownership with three writers disagreeing, and whether the record was designed to hold contested history
+rather than a last-write-wins field. It cannot be recited: the answer requires the record's actual shape.
 
-> Your engineer who wrote the queue leaves in six weeks. What is on the list for those six weeks under your
+> The engineer who wrote the queue moves teams in six weeks. What is on the list for those six weeks under your
 > plan, and what would be on it if you had chosen the other way?
 
-Whether both options were actually reasoned about, and whether handover was treated as work. Someone who
-picked a side by reflex cannot populate the second list.
+Whether both options were reasoned through, and whether handover was treated as work. Someone who picked a side
+by reflex cannot populate the second list.

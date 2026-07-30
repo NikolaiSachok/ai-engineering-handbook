@@ -66,15 +66,13 @@ tend to just run out. Persona instruction moved content, rhythm and pronouns; it
 paragraph shape. That is a measured limit of the method, and it is the reason the editorial pass is forbidden
 from touching the attempts: fixing those tells would erase the evidence that they exist.
 
-**A question can turn out to have only one answer.** The framework scenario's first question was written with
-every constraint pushing the same way — a system already in production doing everything the future needed, a
-hard deadline, and money that could not be spent twice. Three engineers with three different sets of habits
-read it and gave the same answer, correctly, because there was only one. The personas were not at fault; the
-question was. It was thrown away and rewritten so that both options were defensible, and the rewrite ships
-with a note stating the strongest one-sentence case for each side and the specific fact in the question that
-makes each case available — an artefact the first version could not have produced. Divergence between the
-attempts is evidence about the question, so manufacturing it by editing the answers apart would have destroyed
-the only thing the comparison is good for.
+**A question had only one answer.** The framework scenario's first question pushed every constraint the same
+way — a system already in production doing everything the future needed, a hard deadline, and money that could
+not be spent twice. Three agents briefed with three different sets of habits read it and gave the same answer,
+correctly, because there was only one. The personas were not at fault; the question was. Divergence is evidence
+about the question, so the question was thrown away rather than the answers edited apart — and the rewrite had
+to state the strongest one-sentence case for each side, and the fact that makes each available, before any
+attempt was written. That check now runs before the candidates do.
 
 ## The gates, and the one that had to be inverted
 
@@ -102,8 +100,8 @@ someone else's text turns out to be where attention is thinnest.
 - [Layered gates and mechanism diversity](/ai-sdlc/part-3-verification/layered-gates) — every gate is blind to
   something, so they are stacked to be blind to different things. The cold read exists because the main gate
   cannot see the fixer.
-- [The escape ledger](/ai-sdlc/part-3-verification/escape-ledger) — the two failures above are recorded rather
-  than quietly fixed, and each one changed a gate.
+- [The escape ledger](/ai-sdlc/part-3-verification/escape-ledger) — the three failures above are recorded
+  rather than quietly fixed, and each one changed how the next scenario is made.
 
 ## Honest accounting
 

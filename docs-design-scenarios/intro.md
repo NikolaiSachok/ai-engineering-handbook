@@ -30,8 +30,8 @@ arrangement, including what it cannot buy.
 In progress. Three scenarios are published —
 [routing queries across models](/design-scenarios/agentic-workflows/model-routing),
 [knowing an agent works](/design-scenarios/agentic-workflows/trajectory-vs-outcome) and
-[framework or your own primitives](/design-scenarios/agentic-workflows/framework-or-primitives) — and the rest
-of the first batch is being written.
+[framework or your own primitives](/design-scenarios/agentic-workflows/framework-or-primitives). The rest of
+the first batch is being written.
 
 :::
 
