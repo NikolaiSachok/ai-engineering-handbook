@@ -10,7 +10,7 @@ In der vorangegangenen Lektion über Agentic RAG hat sich eine Sache verschoben:
 **Tool-Einsatz**, auch **Function Calling** genannt, ist der allgemeine Mechanismus dahinter: Das Modell kann jede externe Funktion aufrufen. Zum Beispiel:
 
 - die Suche in einer Wissensdatenbank,
-- eine SQL-Abfrage auf eine Tabelle,
+- die Abfrage einer Tabelle per SQL,
 - der Aufruf einer HTTP-API,
 - ein Taschenrechner,
 - die Ausführung von Code,
@@ -28,7 +28,7 @@ IBM erläutert denselben Mechanismus und zeigt, wie ein Tool-Call das Modell an 
 
 ## Text ist keine Handlung – deshalb braucht das Modell ein Protokoll
 
-Ein Sprachmodell führt nichts aus. Es erzeugt Text, und dabei bleibt es: Es greift nicht selbst in eine Datenbank, es setzt keine Anfrage an eine API ab, und es führt physisch keinen Code aus. Der Tool-Einsatz ist das Protokoll, das diese Lücke überbrückt – zwischen dem Text, den das Modell erzeugt, und dem, was am Ende jemand wirklich tun muss. Der Ablauf ist dabei immer derselbe:
+Ein Sprachmodell führt nichts aus. Es erzeugt Text, und dabei bleibt es: Es greift nicht selbst in eine Datenbank, es setzt keine Anfrage an eine API ab, und Code führt es schon gar nicht aus. Der Tool-Einsatz ist das Protokoll, das diese Lücke überbrückt – zwischen dem Text, den das Modell erzeugt, und dem, was am Ende jemand wirklich tun muss. Der Ablauf ist dabei immer derselbe:
 
 1. Das Modell formuliert eine **strukturierte Absicht**: Funktion X mit den Argumenten Y aufrufen.
 2. **Ihr eigener Code** führt den Aufruf aus und erhält das Ergebnis.
@@ -60,20 +60,20 @@ flowchart LR
 
 Hier liegt der entscheidende Unterschied zur gewöhnlichen API-Entwicklung. Ein Modell wählt sein Tool aus und füllt dessen Argumente allein anhand der Beschreibung; in Ihre Implementierung kann es nicht hineinsehen. Wann und wie die Funktion aufgerufen wird, entscheidet ein probabilistisches Modell also anhand von drei Dingen: dem Namen, dem Beschreibungstext und den Beschreibungen der Parameter.
 
-Ist diese Beschreibung vage, hat das drei Folgen: Das Modell ruft zum falschen Zeitpunkt auf, es greift zum falschen Tool, oder es füllt die Argumente mit Unsinn. Tool-Beschreibungen gehören deshalb zum **Prompt-Engineering** – der Aufrufer ist hier kein deterministischer Code, sondern ein Modell, das natürliche Sprache liest.
+Ist diese Beschreibung vage, hat das drei Folgen: Das Modell löst den Aufruf zum falschen Zeitpunkt aus, es greift zum falschen Tool, oder es füllt die Argumente mit Unsinn. Tool-Beschreibungen gehören deshalb zum **Prompt-Engineering** – der Aufrufer ist hier kein deterministischer Code, sondern ein Modell, das natürliche Sprache liest.
 
 ## Fünf Merkmale eines guten Tools
 
-- **Eine klare, eindeutige Beschreibung** – das Modell unterscheidet Tools an ihrer Beschreibung, nicht an dem Code dahinter.
+- **Eine klare, eindeutige Beschreibung** – das Modell unterscheidet Tools anhand ihrer Beschreibung, nicht anhand des Codes dahinter.
 - **Streng typisierte, eingeschränkte Parameter** (JSON Schema, `enum`, Formate) – sie engen ein, was das Modell überhaupt erzeugen kann, und senken die Quote fehlerhafter Aufrufe.
 - **Wenige Tools, und keine, die sich überschneiden.** Ein Dutzend Funktionen, die inhaltlich dicht beieinanderliegen, verwirrt das Modell, und die Fehler bei der Tool-Auswahl nehmen zu. Halten Sie den Tool-Katalog klein, statt ihn wachsen zu lassen.
-- **Klare Fehler.** Schlägt ein Tool fehl, geben Sie eine Meldung zurück, gegen die das Modell korrigieren kann – etwa „date must be YYYY-MM-DD“. Dann korrigiert sich die Schleife selbst: Auf einen falschen Aufruf folgt ein klarer Fehler, das Modell formuliert neu und ruft erneut auf.
+- **Klare Fehler.** Schlägt ein Tool fehl, geben Sie eine Meldung zurück, mit der das Modell den Fehler beheben kann – etwa „date must be YYYY-MM-DD“. Dann korrigiert sich die Schleife selbst: Auf einen falschen Aufruf folgt ein klarer Fehler, das Modell formuliert neu und ruft erneut auf.
 - **Die richtige Granularität** – nicht zu fein (zehn Aufrufe für eine Aufgabe) und nicht zu grob (ein Tool für alles).
 
 ## Vier Fehlerbilder des Tool-Einsatzes
 
 - **Das falsche Tool – oder gar keines.** Das Modell hat die falsche Funktion genommen, oder es hat aus dem Gedächtnis geantwortet, statt überhaupt ein Tool aufzurufen. Abhilfe: bessere Beschreibungen und ein kleinerer Katalog.
-- **Ungültige Argumente** – erfundene oder schlicht falsche Parameter. Abhilfe: ein eng gefasstes Schema, gegen das validiert wird, und klare Fehler, aus denen das Modell sich selbst korrigieren kann.
+- **Ungültige Argumente** – erfundene oder schlicht falsche Parameter. Abhilfe: ein eng gefasstes Schema, gegen das validiert wird, und klare Fehler, die dem Modell die Selbstkorrektur ermöglichen.
 - **Erfindungen über das Ergebnis hinaus.** Das Modell kann auf einem Ergebnis aufsetzen und halluzinieren – besonders dann, wenn das Ergebnis unklar oder leer ist. Dagegen hilft, es als eigene Nachricht zurückzugeben und ausdrücklich als Tool-Ausgabe zu kennzeichnen. Das senkt das Risiko, beseitigt es aber nicht.
 - **Ein schreibendes Tool wird über die Modellausgabe gesteuert.** Was schreibt, versendet oder Code ausführt, hängt damit an Text, den ein Angreifer beeinflussen kann: Eine **Prompt-Injection** (eingeschleuste Anweisungen im Text) manipuliert die Ausgabe des Modells – auch indirekt, über Anweisungen, die in abgerufenen Inhalten stecken. Die Gegenmaßnahme heißt **Prinzip der geringsten Berechtigungen**: Geben Sie dem Agenten nur die Tools, die er wirklich braucht; trennen Sie lesende von schreibenden Tools; verlangen Sie für gefährliche Aktionen eine ausdrückliche Bestätigung. Dann richtet selbst eine erfolgreiche Injection nur noch sehr wenig aus.
 
@@ -81,7 +81,7 @@ Ist diese Beschreibung vage, hat das drei Folgen: Das Modell ruft zum falschen Z
 
 Damit schließt sich der Kreis: *Retrieval ist ein Tool.* Agentic RAG aus der vorangegangenen Lektion ist ein Sonderfall des Tool-Einsatzes, bei dem das wichtigste Tool die Suche ist.
 
-Sobald der Agent über mehrere Tools verfügt, deckt er den Fall ab, dass verschiedene Fragen verschiedene Quellen brauchen: Retrieval in die Wissensdatenbank, eine SQL-Abfrage auf die Tabellen, eine Websuche für alles, was aktuell sein muss, und ein Taschenrechner dort, wo exakt gerechnet werden muss. Der Router aus der vorangegangenen Lektion ist genau die Stelle, an der entschieden wird, welches Tool zum Zug kommt.
+Sobald der Agent über mehrere Tools verfügt, deckt er den Fall ab, dass verschiedene Fragen verschiedene Quellen brauchen: Retrieval aus der Wissensdatenbank, SQL für die Tabellen, eine Websuche für alles, was aktuell sein muss, und ein Taschenrechner dort, wo exakt gerechnet werden muss. Der Router aus der vorangegangenen Lektion ist genau die Stelle, an der entschieden wird, welches Tool zum Zug kommt.
 
 ## Das Wichtigste
 

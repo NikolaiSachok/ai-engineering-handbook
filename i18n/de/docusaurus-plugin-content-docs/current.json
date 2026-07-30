@@ -28,7 +28,7 @@
     "description": "The generated-index page description for category 'Cross-cutting' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Evaluation": {
-    "message": "Evaluation",
+    "message": "Evaluierung",
     "description": "The label for category 'Evaluation' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Guardrails": {
@@ -72,7 +72,7 @@
     "description": "The label for category 'Part III — Production & LLMOps' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Serving — FastAPI + Docker": {
-    "message": "Serving – FastAPI und Docker",
+    "message": "Bereitstellung und Betrieb – FastAPI und Docker",
     "description": "The label for category 'Serving — FastAPI + Docker' in sidebar 'handbookSidebar'"
   },
   "sidebar.handbookSidebar.category.Cloud AI platforms": {
