@@ -19,3 +19,6 @@ __pycache__/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Locale-review gate output (per-run verdict files — a work list, not an artefact to keep)
+scripts/locale-review/.sol-out/
