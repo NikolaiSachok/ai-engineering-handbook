@@ -57,6 +57,20 @@ read or milestone pass confirms or strikes them.
 | follow-up lead | `These are the three follow-ups an interviewer reaches for next, and what each one exposes.` — one sentence, **indefinite article**. **Never state what the interviewer has seen:** the interviewer role never sees the answers (`how-these-are-made.md`), so "the interviewer has the attempts in front of them" is factually wrong as well as a register slip — the same role conflation #356 removed from the `<Verdict>` label. |
 | frontmatter comment | `# The reveal is the method. A page TOC lists every heading inside the collapsed reveal —` / `# naming all three attempts and the principle before the reader has committed to an answer.` Two YAML comment lines above `hide_table_of_contents: true`. Scenario #1 said `the collapsed <details>`, stale since `<Reveal>` replaced the raw element; retro-fitted 2026-07-30. A YAML comment is silent, which is exactly why it drifts. |
 
+**Probation cleared 2026-07-30 (Gate 5, scenario #3), by a pass that coined none of them.** #3 reproduced the
+attempt headings and their tier labels, the commit line, the `<Reveal>` summary string, `Where they actually
+disagree`, the **disagreement lead**, `The principle`, `Read next`, `If they push`, the **follow-up lead**
+(indefinite article and the "three" intact) and the two frontmatter comment lines **byte-exactly**. Three
+independent pages, no drift: **the recurring block strings are SETTLED.** The tier labels themselves stay
+probationary as *labels* — that is a separate question about the words, recorded in the localized-card section.
+
+**Scoped amendment to the provenance paragraph, 2026-07-30.** The recurring clause is "no agent saw the other
+two, or the rubric, which was written first". #3's prompt is the first to use `rubric` in the *other* sense
+("inputs, rubric version, model version"), four lines above, so on that page bare "the rubric" binds to the
+submissions' grading rubric. #3 reads **"or the assessor's rubric"**, which also anchors to the `<Verdict>`
+component's rendered label. **Rule: qualify it only where the prompt uses `rubric` in the grading sense** — the
+ledger binds senses, not strings, so this is not a fork.
+
 **`the reveal` is NOT a page string.** It is the corpus's *name* for the boundary (`intro.md`, "before
 you open the reveal") and is registered in the terms table below. Scenario pages carry `Show the three
 attempts`. Recorded 2026-07-29: the earlier block-string row claimed a string that appears on no
@@ -87,6 +101,13 @@ takeaway on two axes, and only the first was decided. Two consequences to rule o
 opens the reveal never sees the transferable sentence; and scenario pages become the only pages in the
 corpus that do not close on a takeaway. Both may be intended — the sentence is a verdict on the
 attempts, so hiding it with them is coherent. Do not let scenario #2 settle it by repetition.
+
+**#3 makes it three, and gives the OPEN question its first hard evidence.** #3 also puts `The principle` inside
+the reveal and not last. But on #3 the section that renders *outside* the reveal (`If they push`) turns on the
+very distinction the principle states — so a reveal-skipper meets the payoff sentence's argument without ever
+having met the sentence. The gate closed the gap by spelling the distinction out in `If they push` rather than by
+moving the principle, because moving it is the author's call. **Three pages is de facto convention; rule on it
+before #4.**
 
 ## Jurisdiction — the three attempt bodies are testimony
 
@@ -135,6 +156,14 @@ pipeline owner needs to know rather than have it smoothed away.
 | **latency budget** | `rag.md` — «бюджет латентности» | a budget allotted to latency |
 | **rubric** | `rag.md` registry — «критерии оценки», never «рубрика» (false friend) | evaluation criteria, not a grid or template |
 | **production** | `rag.md` — «прод»; `ai-sdlc.md` — "the loop closes on production" | the live environment |
+| **super-step** | `docs/glossary.md` L628; `part-2-agents/orchestration-frameworks/deep-dive.md` L43 | the checkpointer's write unit. Corpus **2× `super-step`, 0× `superstep`** — hyphenated, in the frame, always |
+| **checkpointer** | same glossary entry | the component that saves graph state at every super-step, keyed by a thread |
+| **thread** / **thread_id** | `docs/glossary.md` L634 | the id isolating one run's checkpoint history. **Not a synonym for `case`** — a thread is the engine's handle, a case is the unit of work with a history. An attempt may map one onto the other; the frame must not merge them |
+| **interrupt node** | `orchestration-frameworks/deep-dive.md` L53 | the durable human-in-the-loop pause. **`durable interrupt` is Attempt C's phrase** on #3 — quote or convert. #3's frame used the lesson's words: recorded as the positive precedent |
+| **append-only** | `docs-ai-sdlc/glossary.md` L390; `part-4-platform/secrets.md` L22 | industry-standard, not a coinage; frame adoption is safe |
+| **model snapshot id** | `docs/glossary.md` L1013 (**Model pinning**) | a pinned model version. See the `snapshot` sense card — the bare word must not travel |
+| **oracle** (testing sense) | `docs-ai-sdlc/part-3-verification/detection-vs-mutation.md` L87, L119 | a trusted reference answer. Corpus vocabulary; needs no gloss |
+| **primitives** | `orchestration-frameworks/index.md` L8, L124, L151 ("primitives first") | the mechanisms a framework packages. Scenario #3's title term is the target lesson's word |
 
 ### Sense card: `production` (reservation)
 
@@ -157,7 +186,11 @@ one". Caught and fixed in the intro's editorial pass.
 | **the reveal** | the boundary the reader crosses after answering for themselves |
 | **role archetype** | the abstracted role a scenario is sampled from; the anonymisation device |
 | **exception type** | the domain's class-of-problem axis a scenario segments by. House form is `exception type`; `exception class` / `exception taxonomy` are an attempt's words — convert in the frame, or quote them. |
-| **replay environment** / **replay suite** | **two different objects, not synonyms.** An *environment* is the frozen-snapshot substrate with a determinism contract; a *suite* is a fixed set of cases run against it. `replay harness` is not a third house term. Disambiguate at first use if a page needs both. |
+| **replay environment** / **replay suite** | **two different objects, not synonyms.** An *environment* is the frozen-snapshot substrate with a determinism contract; a *suite* is a fixed set of cases run against it. `replay harness` is not a third house term. Disambiguate at first use if a page needs both. **Row extended 2026-07-30 (Gate 5, scenario #3) — the taxonomy had a hole, and the hole is why the barred term keeps arriving.** The row named no term for *the thing that runs a replay*, so #3's frame reached for `harness` four times for an artefact that is neither an environment nor a suite: a CI job that **samples** published cases, replays them and compares. Compliant moves, both used in #3's fixes: quote it as the attempt's word, or write the mechanism plainly (`the weekly CI run that replays sampled cases`, `the CI job that replays it`). **A prohibition with no replacement term gets overridden by the next author who needs the concept.** |
+| **the record** | the artefact an auditor reads — **the house term** for the object `judgement row` (#3's B), `event log` / `judgement ledger` (#3's C) and `the record` all name. It is also the prompt's word, which is why it wins. |
+| **execution engine** | the vendor-neutral noun for whatever runs the steps. Used once on #3, in `The principle`, where `framework` would date the sentence. **ON PROBATION.** |
+| **pause-versus-reopen** | #3's compressed name for its own distinction. **ON PROBATION**, and the sharper lesson is the counter-example beside it: the compound was legal only where the box had stated both halves, and the same section's `the checkpoint` was not. When in doubt, spell the distinction out — #3 shipped "the difference between suspending an open run and reopening a closed one", which needs no anchor at all. |
+| **a contested prompt term, quoted in a heading** | the device at `### Reproducible: replay it or retain it`, where the prompt's own word is under dispute and the frame quotes rather than adopts any attempt's definition of it. New on #3, **ON PROBATION**. |
 | **golden set** | the curated human-labelled evaluation set. `anchor set` is **not** a synonym. |
 | **trajectory eval** / **outcome eval** | peek-verified against `docs/part-2-agents/planning-loops/deep-dive.md` ("Trajectory eval requires a full trace of the run"; "outcome eval plus a step count can be plenty") — senses match, reuse verbatim. Keep the short `eval`; do not expand to "evaluation" in prose. The lesson also calls the axis **outcome versus process**, so a page that sends the reader there should bridge the two names once. |
 | **reviewer-weeks** | a generic unit of account for review capacity, usable in `The principle`. **Not for arithmetic on this course's prompts**, where "two reviewers audit ~200 cases a week" makes the natural person-week reading wrong by 2× — write "N weeks of the pair's entire output" instead. |
@@ -177,6 +210,74 @@ twice and is **correct**; Attempt C's `an LLM-judge` remains the real (unfixed, 
 **A ledger row asserting a prohibition must cite the corpus count that supports it** — this one did not, and
 would have driven a later reviewer to "fix" compliant prose. **CONTESTED for the author**, since it reverses
 a call scenario #1's Gate 5 recorded.
+
+### Sense card: `replay` / `resume` / `re-run` / `re-score` / `reopen` / `pause` — **ON PROBATION**
+
+Scenario #3 exists because two of these are confusable, so six words carry six meanings and the frame may not
+blur them:
+
+| word | meaning | owner |
+|---|---|---|
+| **pause** / **suspend** | an open run held; something is waiting | frame + prompt |
+| **reopen** | a closed, published case re-entered; nothing is waiting | prompt |
+| **resume** | picking up a *suspended* run — **never a published one** | frame, from the target lesson |
+| **re-run** | idempotent recovery of the same decision | prompt |
+| **re-score** | a **new** decision, permanently distinguishable from the original | prompt |
+| **replay** | re-executing from a checkpoint. **Not a record read** — see the framework-semantics row below | frame |
+
+**The page's whole argument is that `resume` and `reopen` are different operations**, so a frame sentence that
+resumes a published case denies the page's own principle. `If they push` shipped exactly that; see the rejected
+rows.
+
+### Sense card: `record` (three senses on one page) — **ON PROBATION**
+
+**Reserved sense:** the artefact an auditor reads — the object with a retention duty. Also live: the plain verb
+*to record*, and the prompt's plural `records`. The senses separate by article and form, and #3 does not slip.
+**Ask before writing it:** *is this the thing an auditor reads, or the act of writing something down?*
+
+### Sense card: `state` (three senses) — **ON PROBATION**
+
+**durable state** — what survives a deploy, a restart and a closed laptop; the reserved sense, and the axis one
+whole disagreement item turns on · **graph state** — the framework's in-run object (an attempt's) · **case
+state** — a fold over events (#3's C). The frame stays on *durable* except in a `Read next` gloss about the
+target lesson, which is correct in place. **Ask:** *does this survive a restart, or is it what the running graph
+is holding?*
+
+### Sense card: `snapshot` (three senses) — **the bare word must not travel**
+
+**model snapshot** — a pinned model version (glossary-verified) · **frozen snapshot** — the replay
+environment's substrate · and the **corpus's dominant sense**, a dated picture of a fast-moving market ("the
+product names are a snapshot", 7+ in `docs/`). Always qualify.
+
+### Sense card: `verdict` — reservation **REINFORCED; the breach has now shipped twice**
+
+Reserved for the assessment of one attempt, on the one page where the word is also a rendered UI label
+(`The assessor's verdict`). #2 shipped "says whether that verdict blocks a release"; #3 shipped "the
+adopt-or-decline verdict". Both in the *decision-outcome* sense, both caught at Gate 5, both after the row
+existed. **Ask before writing it:** *am I naming the assessor's judgement on one attempt? If not, write
+`ruling`, `call` or `split`.*
+
+## A page that grades a framework claim is itself making one — **NEW, and it is the class this course should fear most**
+
+Scenario #3 is the first page whose own voice asserts how a named third-party framework behaves, and it grades
+an attempt down on those assertions. **Every such assertion is verified against the vendor's live
+documentation, at gate time, with the doc language quoted into the report — never from a reviewer's
+recollection and never from what this handbook's own lessons say.** #3 shipped two claims and one was wrong:
+
+| claim in Verdict A, as first drafted | ruling |
+|---|---|
+| resuming from `interrupt()` re-executes the interrupted node from its start | **CORRECT**, and not config-dependent: the docs state it twice, index-based resume matching presupposes it, and it holds across all three `durability` modes (`exit` writes *fewer* intermediate checkpoints, so it widens re-execution rather than narrowing it). Task-level memoisation in the Functional API is *sub-node* and does not rescue a node-level claim |
+| "replaying stored super-steps returns recorded values without re-invoking anything, so it verifies nothing" | **WRONG.** LangGraph replay skips nodes *before* the checkpoint and **re-executes everything after it, LLM calls included**. The verdict attributed a history-walk's semantics to a replay and concluded the claim was vacuous. It is not vacuous — it is falsifiable and probably false, which is the stronger criticism. Corrected to "everything after the checkpoint it branches from runs again, model calls included — so 'it lands on the same numbers' is a prediction about a non-deterministic call, not a check" |
+
+**Two structural lessons, both cheap and both missed by every prose gate:**
+1. **A wrong framework claim contradicts the page's own later prose, and that contradiction is the free
+   detector.** The bad verdict said replay re-invokes nothing; `Where they actually disagree` said "both replay
+   positions assume the model … is still callable", and Verdict C stated the re-invoke-or-compare-stored
+   disjunction correctly. **Grep the frame for its own claim restated elsewhere before reaching for the docs.**
+2. **Do not calibrate against this handbook's own lessons.** `orchestration-frameworks/deep-dive.md` L53 says an
+   interrupted run "resumes exactly where it paused", which is the error Verdict A prosecutes. The lesson is
+   wrong, not the verdict — filed separately, because it is a translated published page and a locale-synced
+   change. A sibling course is not a primary source.
 
 ## The frame's stance — assess, never endorse, never design — **SETTLED (warrant predates #2)**
 
@@ -206,6 +307,23 @@ answers skip", "the one number B does not derive" — each gets read against the
 ships. Scenario #2 shipped four that a reader could falsify by scrolling up; that is the single most
 expensive defect class this course has, and it has now appeared on both pages.
 
+**Scenario #3 makes it three, and adds the shape the rule missed: an exclusivity claim about the ARGUMENT, not
+about an attempt.** "which is exactly the reconciliation neither side of the framework argument settles on its
+own" was falsified by Attempt B, which holds that very reconciliation as an explicit gate ("Condition to adopt:
+it holds run orchestration only, no durable state"). Nothing in the sentence named an attempt, so a
+letter-keyed check would have passed it. **Read every claim about what "neither side", "the usual answer" or
+"both designs" does against all three attempts, exactly as if it had named them.** Also caught on #3: "Three
+positions, mutually exclusive" (retracted by the same item's next paragraph, which shows C reducing to B) and
+"B and C both: … the engine is replaceable" (over-attribution — C adopts LangGraph and calls durability a
+property of the substrate).
+
+**Verdict openings — the designated house form is now the minority practice, and that needs the author.** All
+three of #3's verdicts open on the letter or its possessive ("A's opening read is right", "B states the
+distinction", "C buys something real") — #2's form. #3 did not fork it further, but it made #2's form the
+incumbent **by count**, 2–1, against #1's form which the row above declares the house form **by ruling**.
+Either the designation moves to #2's shape or #3's three verdicts move. **CONTESTED for the author** — it
+cannot stay a ruling that two of three pages contradict.
+
 ## `Why this question` — what it may not contain — **SETTLED (extends the rejected row above)**
 
 The box is read **before** the reader commits, so it says what is under test and nothing about who gets it
@@ -220,6 +338,20 @@ dodge the rule.
 **And the box is checkable prose, written LAST — against the verdicts, not first against the prompt.** #2's
 box contradicted its own Verdict A (box: "without pricing the judge"; verdict: "prices that judge … without
 computing it") and mischaracterised C.
+
+**Third consecutive page, and the TEMPLATE is why — now fixed at the source.** #3's box wrote "**The common
+answer** argues framework against hand-rolled and never separates the two kinds of waiting, which is where both
+designs actually fail" — a tier label with a diagnosis attached, pre-commit. The reason the class recurs was
+identifiable and mechanical: `_scenario-template.md` said only *"Do not name a quality tier the course does not
+have"*, which bars **inventing a fourth tier**, not **naming one of the three**. An author following the
+template shipped this defect and passed their own check. **The template was rewritten in this run** to carry
+the ledger's wording (name no tier at all, in any polarity; describe the trap agentlessly; write the box last).
+A ledger rule the template contradicts will lose to the template every time.
+
+Two further defects rode in the same sentence, both already-rejected shapes: **`both designs`** had no
+antecedent (no design has been shown to a pre-commit reader), and the claim was **falsifiable against the
+attempt a reader maps it to** — Attempt A never argues framework against hand-rolled; it adopts a framework
+without arguing.
 
 ## No interview-coach register anywhere in the frame — **SETTLED**
 
@@ -241,6 +373,20 @@ The recorded rule bars pointing into the reveal **by position**. Scenario #2 shi
 **A callback is a checkable claim.** Every attributed or quoted fragment is grepped against its source before
 the page ships. Scenario #2's twelve verified quotes were; these two were not, and two more were inexact.
 
+**Scenario #3 shipped the by-term shape twice more, and surfaced a genuine gap in the rule.**
+
+- **The breaches.** `If they push` used **`the checkpoint`** — Attempt A's mechanism, defined only inside the
+  reveal — and the box used **`the graph`**, which the prompt never mentions. Both were replaced with prompt-
+  anchored wording (`the run that produced the grade`; `whoever executes the steps`).
+- **The compliant counter-example on the same page**, worth keeping because it shows the rule is workable:
+  `pause-versus-reopen` was legal in the same section because the box states both halves before a reader
+  commits. Anchor the callback in the prompt or the box. #3 went further and spelled the distinction out.
+- **The gap, RULED this run.** #3's `Read next` glosses introduce `checkpointer`, `super-step`, `thread_id`,
+  `durability modes` and `interrupt node` outside the reveal. These are not an attempt's coinages — they are the
+  **target lesson's** vocabulary, arriving inside a gloss that says what the destination teaches, so nothing
+  dangles. **Scoping: the rule bars terms the frame relies on for its OWN argument; a link gloss naming the
+  destination's vocabulary in place is exempt.** Recorded as a ruling so #4 does not relitigate it.
+
 ## The disagreement items — H3, parallel — **SETTLED; retro-fit CONTESTED**
 
 Scenario #1 wrote the items as bolded questions inline; scenario #2 wrote them as `###` headings and shipped
@@ -256,6 +402,24 @@ already used: **`Topic: option A or option B`**. #2 shipped four different shape
 the sibling's length is wanted at all — at that weight it rivals an attempt, inside the reveal, which sharpens
 the OPEN question about `The principle`'s placement. Do not let scenario #3 settle either by repetition.
 
+**Scenario #3 forked the settled shape 0 of 4, and was normalised to it at the gate.** #3 first shipped four
+headless interrogatives (`What "reproducible" means`, `Who owns the durable state`, `Whether the 900 lines get
+rewritten`, `What the six weeks extract`) — parallel with each other, so half this row held, but none in the
+incumbent form, and two failed the shuffle test outright: "the 900 lines" and "the six weeks" have no referent
+read from a sidebar, and `extract` sat there transitive with no object. Normalised to `Reproducible: replay it or
+retain it` · `Durable state: the framework's or yours` · `The 900 lines: wrap them or replace them` ·
+`The six weeks: a document or a demonstration`. **The shape's real virtue is the shuffle test, not tidiness** —
+naming both options makes the heading decode cold, which the question form cannot.
+
+**Honest residual, recorded rather than papered over:** items 1 and 4 discuss three positions, not two, so
+their headings name the dominant axis and the third position is met in the body. That is the shape working at
+its limit, not a defect. **The retro-fit question is now downstream of this** — settle nothing on #1 until the
+shape is ratified, or #1 gets retro-fitted twice.
+
+**Length — the repetition the row warned about happened.** Disagreement sections, prose lines: #1 = 15, #2 = 40,
+**#3 = 40** — ~0.7× one of #3's own attempts. Two pages at this weight, inside the reveal, in front of
+`The principle`. **Still CONTESTED, now three pages old and compounding.**
+
 ## Numeral register in the frame — **SETTLED**
 
 The verdicts **mirror the numeral register of the attempt they judge** (A and C spell figures out, so Verdict
@@ -266,7 +430,16 @@ the frame (`1–5`, `3–5%`) even where the attempt being paraphrased used a hy
 
 **CONTESTED, for the author:** the blockquotes in `If they push` spell numbers out as spoken register
 ("up sixty percent"), where scenario #1's interviewer speaks in numerals ("the bill is down 45%"). Pick one
-for the course.
+for the course. **#3 sides with #2** — its three probes spell out throughout and use no digits — so the count is
+now 2–1 for spoken-register spelling-out, the third item this course has settled by repetition. Cheapest
+resolution: ratify the majority and correct #1.
+
+**The row states a register rule and describes a magnitude rule — reconcile it.** It says the neutral analytical
+register "uses **digits**", but #2 and #3 both spell small numbers and use digits above ~100: #2's box has
+"eleven steps" beside "200 cases a week … against 63,000 a week"; #3's has "Four of the postings" beside "the
+900 lines". Two pages agree on a **magnitude** rule; the row records a register rule, and applied literally it
+would demand "4 of the postings". **Nothing on either page is the defect — the row is.** Not rewritten here,
+because a pass may not silently reverse a row it did not evidence: **CONTESTED for the author.**
 
 ## Figures — scenario #2 (frame only) — **ALL ON PROBATION**
 
@@ -287,6 +460,94 @@ it costs"). Keep `buys` for *what an approach gains*; do not also use it for *pa
 yesterdays" all live **inside attempts**. They are testimony: not the page's figures, not canon material, not
 counted against the figure budget. Where the frame reuses one it quotes it — the correct handling.
 
+## Figures — scenario #3 (frame only) — **ALL ON PROBATION**
+
+Per the no-self-issued-exemption rule none of these may be marked protected by the pass that shipped them.
+Ten frame figures against #2's four, in a shorter frame — the aggregate, not any single item, was the finding,
+and two were cut at the gate for stacking.
+
+- **"making publication rewindable"** (Verdict A) — the page's sharpest image, and the exact name for A's error.
+  Corpus-anchored: the glossary's Checkpointer entry already says a run can be "rewound".
+- **"the guarantees read off them"** (Verdict A) — reading a value off an instrument.
+- **"puts that claim in a dependency's tables"** (Verdict A).
+- **"a routine upgrade migrates evidence"** (`Where they actually disagree`) — the strongest of the new set:
+  entirely concrete, and it carries the argument in five words.
+- **"the argument eats itself"** (Verdict C) — the over-build indicting itself; kin to #2's "Then the bill."
+- **"C buys something real, and pays for it twice"** (Verdict C) — compliant use of the **buy** family, and the
+  clearest instance yet of what that rule permits: `buys` for what an approach gains, `pays` for cost.
+- **"B's answer wearing C's clothes"** (`Where they actually disagree`) — rides *wolf in sheep's clothing*.
+- **"current output is a free oracle"** — *oracle* is corpus vocabulary in the testing sense, so reuse, not
+  coinage; needs no gloss.
+- **"what walks out is operational"** (`Where they actually disagree`).
+- **"with nowhere to hide"** (`If they push`), mild.
+
+**Struck at the gate for figure-stacking, not for being bad:** "its test only **bites** on the deterministic
+layer" (→ "only reaches"), which sat in one sentence with "B's answer wearing C's clothes" — two figures for one
+idea, the ROADS/MACHINERY ruling. And `collapses` was carrying two senses eleven screens apart (Verdict A
+"collapses the two waits" = *conflates*; the item's "collapses into B's answer" = *degenerates into*) — the
+second became "reduces to". **The `buys` precedent generalises: a verb doing figurative work in the frame gets
+one sense per page.**
+
+**Attribution warning for the next reviewer.** "the substrate", "a liability we're carrying", "the cheapest
+moment this rewrite will ever be", "Then he's replaceable", "a different answer, not a cheaper copy",
+"his queue knowledge has a deadline" all live **inside attempts** on #3. Testimony: not the page's figures, not
+canon material, not counted against the figure budget.
+
+## The reader-of-record — house name is `auditor`
+
+The frame's word for whoever reads the record later is **`an auditor`**. **`the accreditation review` names the
+event, not the reader.** #3's prompt first read "the accreditation review … which will read your records", where
+a review cannot read; it was corrected to "where an auditor will read your records", which also bridges the
+frame's own noun to the prompt at its first appearance. Recorded because the attempts supply four more names
+(`an outside party`, `the accreditation reviewer`, `the reviewer`, `the review`) and the frame must not pick
+them up.
+
+## Quoting mechanics in the frame — what may and may not change
+
+Stated once, because Gate 5 caught four instances of the same slip on one page.
+
+- **Adjusting the initial capital** to integrate a quotation mid-sentence is permitted. A later pass must not
+  "fix" it back.
+- **Re-nesting quotation marks** (a source's `"…"` inside yours becomes `'…'`) is required, not an edit.
+- **Everything else inside the marks is byte-exact**, ellipsis for elision, and **the frame's own punctuation
+  goes outside the closing mark.** Dropping a source's italics is acceptable; adding a comma is not.
+
+## The serial comma is free variation — do not normalise it
+
+Corpus is **364 Oxford / 224 non-Oxford**. #3's frame mixes both. **There is no house rule and none is being
+made.** Recorded so no future pass mistakes it for drift and opens a 588-instance sweep. A mixed comma is
+invisible; the sweep would not be.
+
+## Jurisdiction note — scenario #3: divergences observed inside attempts, deliberately left standing
+
+- **Attempt A: `superstep` ×5** where the corpus is `super-step`. Stands. **Verdict A's instance was the
+  defect** — the same split as #1's `top-k`.
+- **Attempt C: `durable interrupt`** where the target lesson says `interrupt node`. Stands; the frame used the
+  lesson's words, which is the correct handling.
+- **Three names for one object across three attempts** — `judgement row` (B), `event log` / `judgement ledger`
+  (C), `the record` — plus `thirty days` (A) against `30 days` (C). Stands, and is the page's best evidence of
+  genuine independence.
+- **Attempt B's US comma-inside-quotes**, where A and C use British placement. Stands, and the frame reproduces
+  it faithfully when quoting B.
+- **One mechanical fix inside an attempt, the first this course has made:** Attempt A's diagram had `borderline
+  ▼` one column right of its own flow line (col 30 against col 29 on four neighbouring rows). Character-level,
+  no wording touched. **Recorded as the worked example of what "outright mechanical error" licenses inside
+  testimony** — a misaligned box-drawing column, not a word.
+- **All three attempts came in British-clean** — a full US-spelling sweep returns zero hits page-wide. First
+  scenario needing no spelling exemption inside the attempts. The standing warning holds anyway: a mechanical
+  spelling gate must exempt the attempt line-ranges, because `superstep` is exactly what it would rewrite.
+
+## The attempts converged on a CONSTRUCTION — a third tell class, for the pipeline owner
+
+Not a page defect and not fixed. #3's three blind attempts share one syntactic frame: **`stops being …`, five
+times across all three**, and A and B share the subordinate clause **"the moment a case can be reopened"**
+near-verbatim. This differs from the two tells `how-these-are-made.md` records — personas converging on *level*,
+and instruction failing to move *paragraph shape*. Here independent agents converge on a **construction**, which
+points at the prompt rather than the personas. Also convergent: B and C both closing on a bold `**LangGraph**`
+section, and all three producing exactly one ASCII diagram unprompted, third page running. Moving in the right
+direction: em-dashes 7/6/9 against #1's 10/10/10, and bolded-declarative paragraph openings at 29–40% against
+#2's 75–89%.
+
 ## HOUSE — an instrument as the subject of *tells you* — **SETTLED, do not flag**
 
 "a tagged score slice **tells you** what the surge cost", "carrier and WMS state **tells you** whether the
@@ -298,9 +559,29 @@ stands for agents that decide** ("the metric rewards", "a credit closes").
 ## Bold budget on a scenario page — measured
 
 Measure the **frame only**; the attempts' bolded spoken section labels are their register and are excluded.
-Scenario #2's frame: **1 bold span / 122 prose lines = 0.008** against the ~0.36 cap (#1: 0.038). The single
-span is the fixed commit line. The attempts sat at 0.183 (#1: 0.117) and are **not** a budget finding —
-that number is pipeline signal about persona bleed, reported to the producer, never fixed.
+Re-measured across all three pages with one method (code fences and blank lines excluded, frontmatter
+excluded, attempt line-ranges separated) so the numbers are comparable rather than each page's own arithmetic:
+
+| page | frame | attempts |
+|---|---|---|
+| #1 model-routing | 4 / 115 = **0.035** | 14 / 126 = 0.111 |
+| #2 trajectory-vs-outcome | 3 / 143 = **0.021** | 22 / 126 = 0.175 |
+| #3 framework-or-primitives | **1 / 138 = 0.007** | **13 / 133 = 0.098** |
+
+Cap is ~0.36; no page is close. #3's single frame span is the fixed commit line. The attempts' number is
+**never** a budget finding — it is pipeline signal about persona bleed, reported to the producer, never fixed.
+
+**Correction to this row, 2026-07-30 (Gate 5, scenario #3) — a recorded measurement was wrong.** The row
+previously read "Scenario #2's frame: **1 bold span / 122 prose lines = 0.008** … The single span is the fixed
+commit line." #2's frame carries **three**: `**outcome**` and `**trajectory**` in `Why this question` — both
+legitimate first-defining-mention anchors under `_language.md` §8 — plus the commit line. The verdict is
+unchanged; the count was not. **A row asserting a measurement must state its method**, or the next pass cannot
+tell a real change from a different way of counting.
+
+**Under-use is now the trend.** Frame bold has gone 0.035 → 0.021 → 0.007 while the attempts hold near
+0.1–0.18. #3's box uses **zero** term anchors where #2 anchored its two controlling terms. The budget is a cap,
+not a floor — but §8 says bold's first job is the anchor at a defining mention, and #3's box defines the page's
+controlling distinction (suspending an open run versus reopening a closed one) with nothing marked.
 
 ## Product and vendor names inside an attempt — **RULED, KEEP; author may overturn**
 
@@ -311,6 +592,18 @@ was given "follows the eval-tooling ecosystem closely", and removing them erases
 the same way in the stricter register — #1's Verdict C names "The vLLM tier" in the page's own voice.
 **Ruling: keep, inside attempts.** Recorded as a decision rather than an oversight, because #3 will hit it
 again. If the author overturns it, #1's verdict is the more serious instance and moves first.
+
+**#3 extends it to the FRAME, deliberately.** `LangGraph` now appears in the `description`, the
+`Why this question` box and the track overview's gloss ("the LangGraph question"), because the prompt names it
+and it is *why* this question gets asked. **RULED, KEEP** — with one recorded asymmetry the author may want to
+revisit: the course titles its decisions vendor-neutrally (`Framework or your own primitives`), so the gloss
+makes the scenario look narrower than its own title.
+
+**`your open req` in the prompt — RULED, KEEP.** Gate 5 proposed striking it as US recruiting jargon colliding
+with the course's own `posting`. Overruled at adjudication: `req` is what a hiring manager actually says out
+loud, the prompt is spoken register, and the jargon rule targets **needless erudition**, not real workplace
+vocabulary. The provenance formula is untouched — it governs how the *course* describes its sources
+("published job postings"), not what an interviewer calls their own open role.
 
 ## Rejected variants (EN)
 
@@ -357,7 +650,7 @@ again. If the author overturns it, #1's verdict is the more serious instance and
 | "an evaluation is worth **exactly** the signal that already arrives for free **plus the human hours you can actually staff**" | the principle excluded a third category the page had just credited — **assertions checkable without a human** (C's replay contract, C's stale-feed assertion, B's preconditions). A principle must not contradict the verdicts above it. |
 | "**anchor set**" | a third name for the same object. Corpus term is **golden set** (`docs/` ×4, scenario #1 ×1). |
 | "a **per-class** policy spec" | House term is **exception type** (the prompt's register, and 2 of 3 attempts). `exception class` / `exception taxonomy` are Attempt C's words: convert, or quote them as C's. |
-| "the **disposition** is a comparator" (unquoted, page's voice) | `disposition` is Attempt C's coinage. The frame may **quote** an attempt's coinage; it does not adopt it as a house term. |
+| "the **disposition** is a comparator" (unquoted, page's voice) | `disposition` is Attempt C's coinage. The frame may **quote** an attempt's coinage; it does not adopt it as a house term. **Clarified 2026-07-30 (Gate 5, scenario #3):** the bar is on adopting a coinage as the page's **general term**. Naming *that attempt's own artefact* inside its own verdict is description, not adoption — `the ledger` and `reproduction tuple` for C's objects are legal (and `ledger` is corpus vocabulary anyway: `docs-ai-sdlc/part-3-verification/escape-ledger`). What is illegal is the coinage becoming the frame's word for a general thing. **Prefer quotation at first use either way**, which is what #1's "C's replay contract" did and what #3 now does with "reproduction tuple". |
 | "without **golden-path brittleness**" | a compound the page never introduces — C says *golden set* and *golden policy*, never *golden path*. → "without pinning one correct path per case". |
 | "What settles it here is staffing, not **epistemics**" | needless erudition for a practitioner audience; nothing on the page needs the word. → "not theory". |
 | "the **ordering is decidable**" / "stale-feed **conduct**" | borrowed formal-logic register, and *conduct* is a person-word used of a system. → "the order is clear" / "behaviour on a stale feed". |
@@ -366,6 +659,34 @@ again. If the author overturns it, #1's verdict is the more serious instance and
 | "**What separates people** is what they choose not to measure" | interview-coach register, and it makes the page a judge of persons rather than of answers. → "What the answers separate on is…". |
 | "against 63,000." (in `Why this question`) | elided unit on a figure the box asks the reader to compute with. → "against 63,000 a week". |
 | "can be bought for $75" (frontmatter `description`) | on the one surface a search-result reader sees, this decodes as *the label is purchasable from a vendor*. → "can be bought off with a $75 credit". |
+| "replaying stored **supersteps** returns recorded values without re-invoking anything" (in a verdict) | **two defects in one clause, and the worse one is factual.** Spelling: corpus is 2× `super-step`, 0× `superstep`, and the same page's `Read next` already wrote `super-step` — the `top-k`-in-a-verdict defect a third time. Substance: **wrong about LangGraph.** Replay skips nodes *before* the checkpoint and re-executes everything after it, model calls included. → "a replay is not a record read — everything after the checkpoint it branches from runs again, model calls included". See the framework-claims section. |
+| "which is exactly the reconciliation **neither side of the framework argument** settles on its own" | **falsified by Attempt B**, which holds that very reconciliation as an explicit gate ("Condition to adopt: it holds run orchestration only, no durable state"). Named no attempt, so a letter-keyed superlative check passed it. → name B's condition instead. |
+| "Three positions, **mutually exclusive**." | retracted by the same item's next paragraph, which shows C reducing to B for the model call. The count of three was right; the modifier was not. → "Three positions." |
+| "B and C both: the record is theirs and **the engine is replaceable**" | over-attribution. B says it ("framework-independent"); C adopts LangGraph and calls durability "properties of the substrate". → "the record is theirs and the orchestration sits on top of it". |
+| "the adopt-or-decline **verdict**" | **reservation breach, second shipping** (see the `verdict` sense card). → **call**. |
+| "**The only person who knows how the current grader behaves** leaves in six weeks" | a frame claim the prompt does not grant, plus backwards causality. The prompt says three engineers own the system and "the one who wrote **the queue** moves teams"; and the parity oracle is *the running code*, which survives his departure. → "The author of the queue moves teams in six weeks; while the current pipeline still runs, its output is a free oracle". Same class as `Reroute-versus-hold`. |
+| "this is the one axis where **A beats B**" | scoreboard — the `C wins this one outright` ruling. → "it is the one axis where A answers something B does not." |
+| "Someone reciting **a strong answer** resumes from **the checkpoint**" (in `If they push`) | **three defects at once.** `the checkpoint` is Attempt A's mechanism, defined only inside the reveal, in the one section written about the reader. `a strong answer` is the tier label for Attempt **B**, while the error described is Attempt **A**'s — the sentence hands A's disqualifier to B. And the corpus form is participial. → "Someone reciting a memorised answer resumes the run that produced the grade, which is not something a finished, published run can do." |
+| "whoever executes **the graph**" (in `Why this question`) | `graph` appears nowhere in the prompt and only inside the reveal — a by-term breach in the pre-commit box, which is worse than in `If they push` because it also presupposes one of the three architectures. → "whoever executes the steps". |
+| "a **fold projection**" / "an **event store**" (in a verdict) | two compounds the page never introduces. C says `fold` and `event log`; `projection` has **one corpus occurrence, this one**. The `golden-path brittleness` defect: frame coinages welded out of an attempt's words. → "an event log … a fold over it". |
+| "the CI **harness**" / "a **replay harness**" (frame, ×4) | `replay harness` is not a house term — but the prohibition had no replacement noun for *the runner*, which is why it was overridden. → "the weekly CI run that replays sampled cases" / "the CI job that replays it". Ledger row extended. |
+| "**so it gets asked constantly**" (in `Why this question`) | a claim about interviews actually sat, on a course whose sourcing rule is that questions come from **published postings, never from an interview anyone sat**. Same class as "by three different engineers". Cut; the evidenced half ("usually as a proxy for whether you have shipped orchestration at all") carries it. |
+| "Four of **the ten** postings this course samples" | the first and only statement of the course's sample size, landing in a scenario's pre-commit box, with a definite article inviting a reader to check a number the course has never published. → drop the denominator. **A provenance figure enters the corpus through `intro.md` §Where the questions come from, not through a scenario's box** — a scenario may then cite it. |
+| "The choice is not between packages. **It is over primitives**" | a *disagreement* is over something; a *choice* is between things — and the parallelism the sentence sets up demands the same preposition. → "It is between primitives — which ones this workload needs:". |
+| "recorded on **the how-these-are-made page**" | the URL slug used as a prose noun, three lines after the same target is linked by its real name. A slug is never a name. → "recorded there rather than here." |
+| "because **every attempt at it agreed**" | `attempt` is the course's book unit for *one of the three answers*, breached on the page that also uses it correctly nine lines below; and "every attempt agreed" leaves *with what* open. → "because all three answers to it agreed". |
+| "which the prompt lists inside appeals **and inside done**" | two inferential steps presented as one listing claim: the prompt lists the second marker among the appeals features, and separately defines `done` as "appeals working end to end". Say both. |
+| "a week-four trigger to cut scope **if it isn't clear**" | misreads B, whose "If we can't **clear it** in four" is a transitive verb (finish the transfer), not the adjective. → "if the transfer is not done by then". |
+| "**Not recitable** — it requires the record's actual shape." | the `a memoriser` defect in adjective form. → "It cannot be recited: the answer requires the record's actual shape." |
+| "State ownership under a genuine **multi-writer loop**" | nothing loops — three parties disagree over one record, which is a conflict, not a cycle; and `genuine` is filler. → "State ownership with three writers disagreeing". |
+| "A grade goes out in **March**. In **April** the candidate appeals." | the probe depends on the appeal landing inside the 30-day window, and March-to-April can be 60 days. → "at the end of March … Three weeks later". |
+| "**Your** engineer who wrote the queue **leaves** in six weeks" (in `If they push`) | possessive stacked on a restrictive relative, and it hardens the prompt's "moves teams" into "leaves" in the same interviewer's voice that spoke the prompt. → "The engineer who wrote the queue moves teams in six weeks." |
+| "**the two kinds of waiting**", one sentence after "nothing is waiting" | the box asserted the second thing is not waiting and then named the pair as two kinds of waiting — a self-contradiction on the page's controlling distinction, which a cold reader hits on the first pass. → name it the way `The principle` does: "suspending an open run from reopening a closed one". |
+| "its test only **bites** on the deterministic layer … it **collapses into** B's answer wearing C's clothes" | two figures for one idea in one sentence (the ROADS/MACHINERY ruling), and `collapses` was already carrying a different figurative sense in Verdict A. → "only reaches" / "reduces to". |
+| "the record you produce outlives the decision **by a year**" (track overview) | every other surface says **fifteen months**. → "by more than a year". |
+| "the rewrite **ships with a note** stating the strongest one-sentence case for each side" (`how-these-are-made.md`) | **no such note ships** — grep returns the sentence and nothing else. The artefact is pipeline-internal, like the rubric. → state it as a rule the rewrite had to satisfy, not as a published artefact. |
+| "**Three engineers** with three different sets of habits read it and gave the same answer" (`how-these-are-made.md`) | the already-rejected "by three different engineers" claim, shipped on the one page whose subject is that a model wrote every answer. → "Three agents briefed with three different sets of habits". |
+| "the **two** failures above" (`how-these-are-made.md`, Read next) | stale count in a file the same commit edited to add a third failure. **A count that lives away from the thing it counts goes stale silently** — grep the page for its own totals whenever an item is added. |
 
 ## Localized card copy — `landing.course.design-scenarios.blurb`
 

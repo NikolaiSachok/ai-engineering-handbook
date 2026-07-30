@@ -46,8 +46,11 @@ against. Change the order and the page becomes a listicle about a topic.
 80–150 words on the signal actually under test: what the question separates, and what a shallow answer
 reveals. The reader has met the prompt and has not answered yet, so say what is being measured without
 handing over the answer — and state it plainly rather than talking the question up, because the verdicts
-below have to bear it out. Do not name a quality tier the course does not have: the three are the common,
-the strong and the over-built answer.
+below have to bear it out. **Name no quality tier here at all, in any polarity.** The course has three — the
+common, the strong and the over-built answer — and this box is read before the reader has committed, so
+attaching a diagnosis to one of them hands over two of the three verdicts. Inventing a fourth tier to dodge
+that is barred by the same rule. Describe the trap agentlessly, and write this box LAST, against the finished
+verdicts.
 
 :::
 
@@ -191,6 +194,11 @@ Notes from the runs so far:
   the question was hard enough; manufactured divergence is fiction. The first run's "common" persona produced
   a near-senior answer because the persona described competence rather than habits — say how the engineer
   thinks and what they have never had to do, not how good they are.
+- **If sharper personas still converge, the question is the problem.** A prompt whose every constraint points
+  the same way has one right answer, and three engineers will correctly give it. Throw the question away and
+  rewrite it so both options are defensible — stating the strongest one-sentence case for each side, and the
+  fact in the prompt that makes each available, before any attempt is written. Recorded on how-these-are-made
+  as the third failure of the method.
 - **The attempts are quoted testimony; the editorial pass does not touch their voices.** Fix a typo or a
   broken construct, nothing else. Do not smooth rhythm, cut hedges, or align terminology across attempts —
   divergent terminology between them is signal. An AI tell inside an attempt is a finding to report, because

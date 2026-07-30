@@ -26,6 +26,7 @@ machinery below is as much a case study as any scenario.
 | **Candidate ×3** | One attempt each, in the voice of an engineer with a given set of habits | The rubric, and the other two attempts |
 | **Assessor** | The verdict on each attempt, scored against the rubric, plus the transferable principle | Nothing — it is the only role that sees everything |
 | **Curriculum linker** | The *Read next* links, and a report of every mechanic an attempt leaned on that no lesson teaches | — |
+| **Orchestrator** | Nothing on the page. It runs the other four, adjudicates what the review gates report, and assembles | The attempts, until every one of them is finished — it must not write one, having read the rubric |
 
 The blindness is the whole mechanism. A candidate that has seen the rubric writes toward it, and the common
 answer collapses into a strawman — which would make the comparison worthless, because the interesting thing
@@ -52,7 +53,7 @@ has one.
 
 ## Where it has already been wrong
 
-Two failures are worth recording, because both were invisible until something specific was checked.
+Three failures are worth recording, because each was invisible until something specific was checked.
 
 **The personas converged.** The first run briefed the three candidates by *competence level* — "competent,
 well-read, has shipped features". All three produced near-senior answers. A model asked how good someone is
@@ -65,6 +66,14 @@ of all paragraphs opened with a bolded declarative. All three closed on a neat f
 tend to just run out. Persona instruction moved content, rhythm and pronouns; it did not move punctuation or
 paragraph shape. That is a measured limit of the method, and it is the reason the editorial pass is forbidden
 from touching the attempts: fixing those tells would erase the evidence that they exist.
+
+**A question had only one answer.** The framework scenario's first question pushed every constraint the same
+way — a system already in production doing everything the future needed, a hard deadline, and money that could
+not be spent twice. Three agents briefed with three different sets of habits read it and gave the same answer,
+correctly, because there was only one. The personas were not at fault; the question was. Divergence is evidence
+about the question, so the question was thrown away rather than the answers edited apart — and the rewrite had
+to state the strongest one-sentence case for each side, and the fact that makes each available, before any
+attempt was written. That check now runs before the candidates do.
 
 ## The gates, and the one that had to be inverted
 
@@ -92,8 +101,8 @@ someone else's text turns out to be where attention is thinnest.
 - [Layered gates and mechanism diversity](/ai-sdlc/part-3-verification/layered-gates) — every gate is blind to
   something, so they are stacked to be blind to different things. The cold read exists because the main gate
   cannot see the fixer.
-- [The escape ledger](/ai-sdlc/part-3-verification/escape-ledger) — the two failures above are recorded rather
-  than quietly fixed, and each one changed a gate.
+- [The escape ledger](/ai-sdlc/part-3-verification/escape-ledger) — the three failures above are recorded
+  rather than quietly fixed, and each one changed how the next scenario is made.
 
 ## Honest accounting
 

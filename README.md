@@ -46,6 +46,9 @@ Output is generated into `build/` and can be served with any static host.
 - `docs/` — the **RAG & Agents** course in English, the canonical locale. It is the default
   docs instance, served at `/rag-agents`.
 - `docs-ai-sdlc/` — the **AI SDLC** course in English, its own docs instance, served at `/ai-sdlc`.
+- `docs-design-scenarios/` — the **Design Scenarios** course, its own docs instance, served at
+  `/design-scenarios`. English-only by declaration (`locales: ['en']` in `COURSES`), which the locale-parity
+  gate reads rather than assuming every course ships in every released locale.
 - `blog/` — the English-only **Field notes** blog, served at `/blog`.
 - `src/pages/index.tsx` — the landing hub. Its course cards derive from the `COURSES` array in
   `docusaurus.config.ts`, the single source of truth the navbar, footer and search index also read.
