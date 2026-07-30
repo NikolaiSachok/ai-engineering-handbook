@@ -2,7 +2,7 @@
 id: framework-or-primitives
 title: Framework or your own primitives
 sidebar_position: 3
-description: Adopt a named agent framework or build the primitives yourself — three attempts at the LangGraph question, where the record you produce is read by an auditor fifteen months later.
+description: Adopt a named agent framework or build the primitives yourself. Three attempts at a grading pipeline that must reopen published cases and hand its records to an auditor fifteen months later.
 # The reveal is the method. A page TOC lists every heading inside the collapsed reveal —
 # naming all three attempts and the principle before the reader has committed to an answer.
 hide_table_of_contents: true
@@ -26,23 +26,27 @@ hide_table_of_contents: true
 :::note[Why this question]
 
 Four of the postings this course samples name LangGraph or LangChain, usually as a proxy for whether you have
-shipped orchestration at all. The choice is not between packages. It is between primitives — which ones this
-workload needs: durable state per unit of work, branching on partial results, a join where a second agent
-contests the first, a pause a human can hold for a week, and — different in kind — reopening a case that was
-closed and published a month ago. That last one is not a paused run; nothing is waiting. Argued as framework
-against hand-rolled, the question never separates suspending an open run from reopening a closed one, and that
-separation is what the design turns on. Also at stake: a record an auditor reads is your artefact, whoever
-executes the steps.
+shipped orchestration at all. The choice is not between packages. It is between primitives, and this workload
+needs five: durable state per unit of work, branching on partial results, a join where a second agent contests
+the first, and a pause a human can hold for a week. The fifth is different in kind — reopening a case that was
+closed and published a month ago, where nothing is waiting to be resumed.
+
+Argued as framework against hand-rolled, the question never separates those last two waits, which behave
+nothing alike. Which of them an execution engine can hold for you is the whole design. Also at stake: a record
+an auditor reads is your artefact, whoever executes the steps.
 
 :::
 
 **Answer it before you read on.** Out loud or on paper, whichever you'd do at a whiteboard.
 
 Three model-written attempts follow. Each comes from a separate agent given one engineer's habits and the
-prompt above — no agent saw the other two, or the assessor's rubric, which was written first
-([how these are made](/design-scenarios/how-these-are-made)). All three answered this prompt as printed. An
-earlier version of the question was discarded before publication because all three answers to it agreed; that
-failure is recorded there rather than here.
+prompt above. No agent saw the other two, and none saw the scoring standard the verdicts are written against —
+that was fixed before any attempt existed, and a separate assessor applies it. The attempts introduce figures
+of their own; where one of those is load-bearing and unchecked, the verdict under that attempt says so.
+
+All three answered this prompt as printed. An earlier version of the question was discarded before publication
+because all three answers to it agreed — a failure recorded in
+[how these are made](/design-scenarios/how-these-are-made), not here.
 
 <Reveal>
 
@@ -217,10 +221,10 @@ B states the distinction as a mechanism: a re-run in November with November's mo
 a cheaper copy. From that follow an append-only row per criterion, a published grade that is a pointer into
 history, and an appeal that writes new rows superseding rather than overwriting. It alone asks what happens
 when a pinned snapshot is retired, and answers that reproducibility is then the record itself. It headlines the
-wrong look-alike pair, though — second-marker versus moderator — and its design handles suspending against
-reopening without ever naming that as the trap. Its first scope cut is the second marker, which the prompt
-lists among the appeals features, and done is appeals working end to end. And "a for-loop and a queue"
-under-prices the coordination it would then own — fan-out, join, and reopen.
+wrong look-alike pair, though — second-marker versus moderator — and gets to the sharper one, re-run against
+re-score, in a subordinate clause. Its first scope cut is the second marker, which the prompt lists among the
+appeals features, and done is appeals working end to end. And "a for-loop and a queue" under-prices the
+coordination it would then own — fan-out, join, and reopen.
 
 </Verdict>
 
@@ -306,7 +310,7 @@ the ledger before any orchestration, carrying a full "reproduction tuple" per ev
 the published case's log. The weekly CI run that replays sampled cases turns "reproducible on demand" from a
 promise into something already generated. Then it byte-compares against a stored hash of a raw model response —
 a comparison that either re-invokes a model which will not return identical bytes, or replays recorded
-responses and tests only the deterministic fold. And the argument eats itself: two engineers cannot maintain
+responses and tests only the deterministic fold. And the two-engineer argument runs both ways: two cannot maintain
 bespoke glue, so they get an event log, a content-addressed store, a fold over it, and the CI job that replays
 it, while the framework costs "a couple of weeks" and appeals arrive "almost free". No condition that would
 reverse the decision, no dated path to January.
@@ -315,9 +319,11 @@ reverse the decision, no dated path to January.
 
 ## Where they actually disagree
 
-Each disagreement below is a decision you will have to make yourself.
+None of the four disagreements below is the adopt-or-decline verdict, and that is not an omission. Two of the
+three attempts adopt the framework and reach opposite conclusions about everything that matters; the
+disagreements that decide the design sit underneath the choice of package.
 
-### Reproducible: replay it or retain it
+### Reproducibility: replay it or retain it
 
 Three positions. A: reproducibility is the checkpointer's stored state, walked or replayed —
 "`get_state_history(thread_id)`, walk the supersteps", and "replay from the checkpoint with the pinned versions
@@ -326,12 +332,12 @@ published cases and byte-compares against what was recorded, so "grades aren't r
 they are; they're reproducible because replay is a test." B: reproducibility is retention — "if a snapshot
 dies, reproducibility means 'here is the recorded judgement and its provenance,' not 'we can re-derive it.'"
 
-B is right here, and the reason is the fifteen-month horizon plus an external reader. Both replay positions
-assume the model that produced the judgement is still callable and still deterministic; neither is guaranteed,
-and only B plans for the answer being no. C's position is nonetheless a genuine advance on A's: it distrusts
-the promise and builds a test. But its test only reaches the deterministic layer — the fold from events to case
-state — and for the model call it reduces to B's answer wearing C's clothes, comparing stored output to stored
-output.
+Fifteen months and an external reader settle this. Both replay positions assume the model that produced the
+judgement is still callable and still deterministic; neither is guaranteed, and only B plans for the answer
+being no. C's position is a genuine advance on A's — it distrusts the promise and builds a test — but the test
+only reaches the deterministic layer, the fold from events to case state. For the model call C stores a hash of
+the response rather than the response, so its byte-compare has nothing to compare against without calling the
+model again, which is the thing that will not return identical bytes.
 
 ### Durable state: the framework's or yours
 
@@ -339,25 +345,26 @@ A: "The checkpointer is the record." B and C both: the record is theirs and the 
 it — B puts "state and audit log … in Postgres, framework-independent"; C builds the ledger "first, before any
 orchestration."
 
-B and C are right, and the reason is the reader rather than taste: the record has a retention duty and an
-auditor, and a schema owned by a dependency means a routine upgrade migrates evidence. This splits
+A schema owned by a dependency means a routine upgrade migrates evidence, and this record has a retention duty
+and a named reader. B and C are right. The split runs
 independently of the adopt-or-decline call — C adopts LangGraph and still keeps the record, and B's condition
 to adopt is precisely that the framework "holds run orchestration only, no durable state".
 
-### The 900 lines: wrap them or replace them
+### The 900 lines of existing Python: wrap or replace
 
 A wraps them: node functions, "near-verbatim, so the port is structural and reviewable rather than a rewrite
 with new bugs", verified by parity against current output. C replaces them: scoring lifted as pure functions,
 the rest "undocumented glue with a departing author", and with no persisted state "there's nothing to
-migrate — it's the cheapest moment this rewrite will ever be." B sidesteps: "the 900 lines and the queue
-aren't the problem."
+migrate — it's the cheapest moment this rewrite will ever be." B leaves them alone: "the 900 lines and the
+queue aren't the problem", because for B the missing piece is a store that never existed.
 
-A is right, and it is the one axis where A answers something B does not. The author of the queue moves teams in
-six weeks; while the current pipeline still runs, its output is a free oracle, and parity on a few hundred
-submissions is the cheapest correctness evidence available. C's "nothing to migrate" is true about state and
-false as an inference about behaviour. B never names any behaviour-equivalence check at all.
+A is right, and it is the one place where A holds something neither sibling does. The author of the queue moves
+teams in six weeks; while the current pipeline still runs, its output is a free oracle, and parity on a few
+hundred submissions is the cheapest correctness evidence available. C's "nothing to migrate" is true about
+state and false as an inference about behaviour. B reaches A's conclusion — leave the grader where it is — and
+names no check that would tell it whether the behaviour survived.
 
-### The six weeks: a document or a demonstration
+### The departing engineer's six weeks: document or demonstrate
 
 A wants ingestion and retry semantics, the failure modes written down, and pairing on the port. B refuses a
 document and names a demonstration — "the other two shipping a change to the queue with him watching" — with a
@@ -371,7 +378,7 @@ leaves, while what walks out is operational.
 
 ## The principle
 
-> Suspending an open run and reopening a closed one are different problems, and only the first is a problem an
+> Suspending an open run and reopening a closed one are different problems, and only the first is one an
 > execution engine can solve for you.
 
 </Reveal>
@@ -382,9 +389,8 @@ leaves, while what walks out is operational.
   you skip the framework, then prices the framework: abstraction cost, ecosystem churn,
   portability-versus-lock-in, and a primitives-first sequencing rule.
 - [Graphs & durable execution](/rag-agents/part-2-agents/orchestration-frameworks/deep-dive) — the deep dive
-  under that lesson, and it names the state model a framework hands you: a checkpointer writing at every
-  super-step keyed by `thread_id`, three durability modes, swappable backends, and an interrupt node that
-  persists and then waits days.
+  beneath that lesson; it names the state model a framework hands you, from a checkpointer writing at every
+  super-step keyed by `thread_id` to an interrupt node that persists and then waits days.
 - [Reliability & scale](/rag-agents/part-2-agents/tool-use/deep-dive) — retry safety is a property of the
   tool, not the retry policy: an idempotency key per intended operation, a dry-run/confirm split for
   irreversible writes, and why fixing idempotency comes before allowing retries.
@@ -392,32 +398,32 @@ leaves, while what walks out is operational.
   machinery under one pattern, and the caveat this question turns on: state you never persisted is state you
   cannot resume, and even persisted, resume is only safe if you can tell what actually completed.
 - [Cost, agents & sovereignty](/rag-agents/part-3-production/cloud-platforms/deep-dive) — its
-  managed-runtime section names the third option this question omits, a hosted agent loop with session
-  persistence, and prices it both ways: six things you stop building, against lock-in and less control over
-  the loop.
+  managed-runtime section names a third option neither the question nor any attempt considers — a hosted agent
+  loop with session persistence — and weighs it both ways: six things you stop building, against platform
+  lock-in and less control over the loop.
 
 :::
 
 ## If they push
 
-These are the three follow-ups an interviewer reaches for next, and what each one exposes.
+Three follow-ups an interviewer reaches for next, and what each exposes.
 
 > A grade goes out at the end of March. Three weeks later the candidate appeals. Walk me through it — what do
 > you load, what do you create, and is that the same run as the one that published the grade or a different
 > one?
 
-This is the difference between suspending an open run and reopening a closed one, with nowhere to hide. Someone
-who reasoned it out describes a retained case record and a new linked run. Someone reciting a memorised answer
-resumes the run that produced the grade, which is not something a finished, published run can do.
+This is the difference between suspending an open run and reopening a closed one, with no room to answer around
+it. Someone who reasoned it out describes a retained case record and a new linked run. Someone reciting a
+memorised answer resumes the run that produced the grade, which a finished, published run cannot do.
 
 > The moderator disagrees with the second-marker agent, which disagreed with the first pass. Who writes the
 > final judgement into the record, and what does the auditor see about the disagreement fifteen months later?
 
-State ownership with three writers disagreeing, and whether the record was designed to hold contested history
-rather than a last-write-wins field. It cannot be recited: the answer requires the record's actual shape.
+The answer has to name a field layout: three writers disagreed, and the record either holds the contested
+history or it holds whichever verdict was written last.
 
 > The engineer who wrote the queue moves teams in six weeks. What is on the list for those six weeks under your
-> plan, and what would be on it if you had chosen the other way?
+> plan, and what would be on it if you had made the opposite call on the framework?
 
-Whether both options were reasoned through, and whether handover was treated as work. Someone who picked a side
-by reflex cannot populate the second list.
+Two lists, and the second one is the test. It exists only if both options were reasoned through, and it differs
+from the first only if handover was treated as work rather than mentioned as a risk.

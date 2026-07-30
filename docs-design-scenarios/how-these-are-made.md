@@ -26,6 +26,7 @@ machinery below is as much a case study as any scenario.
 | **Candidate ×3** | One attempt each, in the voice of an engineer with a given set of habits | The rubric, and the other two attempts |
 | **Assessor** | The verdict on each attempt, scored against the rubric, plus the transferable principle | Nothing — it is the only role that sees everything |
 | **Curriculum linker** | The *Read next* links, and a report of every mechanic an attempt leaned on that no lesson teaches | — |
+| **Orchestrator** | Nothing on the page. It runs the other four, adjudicates what the review gates report, and assembles | The attempts, until every one of them is finished — it must not write one, having read the rubric |
 
 The blindness is the whole mechanism. A candidate that has seen the rubric writes toward it, and the common
 answer collapses into a strawman — which would make the comparison worthless, because the interesting thing
