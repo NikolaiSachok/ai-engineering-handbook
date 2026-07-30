@@ -50,10 +50,21 @@ function BlogListPageMetadata(props: Props): ReactNode {
 }
 
 function EnglishOnlyNote(): ReactNode {
+  // Derived, never retyped. This sentence used to hard-code "English, Russian and Slovak"
+  // and would have gone quietly wrong the day German shipped — an untranslated string in
+  // JSX that no gate reads. `releasedLanguages` comes from RELEASED_LOCALES, so a future
+  // locale updates it by launching.
+  const {siteConfig} = useDocusaurusContext();
+  const languages = (siteConfig.customFields?.releasedLanguages ?? []) as string[];
+  const languageList =
+    languages.length > 1
+      ? `${languages.slice(0, -1).join(', ')} and ${languages[languages.length - 1]}`
+      : (languages[0] ?? 'English');
+
   return (
     <Admonition type="note" title="These field notes are English-only — on purpose">
       <p>
-        The handbook's lessons ship in English, Russian and Slovak. These field notes
+        The handbook's lessons ship in {languageList}. These field notes
         don't. I haven't yet gotten automated translation of <em>informal</em> prose to
         a bar I'd publish under my name, and this loose, first-person register is exactly
         where machine translation shows its seams worst — the calques, the flattened

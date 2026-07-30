@@ -25,8 +25,13 @@ import type * as Preset from '@docusaurus/preset-classic';
 // Launching a locale = move it from UNRELEASED_LOCALES to RELEASED_LOCALES (one
 // line); its `localeConfigs` label is already set below, so nothing else changes.
 const DEFAULT_LOCALE = 'en';
-const RELEASED_LOCALES = ['en', 'ru', 'sk']; // Slovak launched 2026-07-15; both courses now ship complete in all three
-const UNRELEASED_LOCALES: string[] = ['de']; // German in progress (from 2026-07-28): built+validated in CI, gated out of the deployed dropdown
+// German launched 2026-07-30 on the RAG course ALONE (#383) — the first locale to ship
+// without covering every course. That is what per-course `locales` exists for: RAG claims
+// `de` and ships 39/39 pages; AI SDLC does not claim it (#284/#285 unstarted), so the German
+// navbar does not link it, the landing card does not advertise German for it, and the parity
+// gate does not require a German tree. Design Scenarios is English-only by declaration.
+const RELEASED_LOCALES = ['en', 'ru', 'sk', 'de']; // Slovak 2026-07-15; German 2026-07-30
+const UNRELEASED_LOCALES: string[] = []; // none in flight
 const INCLUDE_UNRELEASED = process.env.HANDBOOK_INCLUDE_UNRELEASED === '1';
 const LOCALES = [...RELEASED_LOCALES, ...(INCLUDE_UNRELEASED ? UNRELEASED_LOCALES : [])];
 const BASE_URL = '/ai-engineering-handbook/';
@@ -42,6 +47,35 @@ const LOCALE_LABELS: Record<string, string> = {
   sk: 'Slovenčina',
   de: 'Deutsch',
 };
+
+// The same locales named in English, for use inside English PROSE. Kept separate from the
+// endonyms above on purpose: "…ships in English, Русский, Slovenčina and Deutsch" reads as a
+// bug in an English sentence, while endonyms are exactly right in a language picker.
+const LOCALE_ENGLISH_NAMES: Record<string, string> = {
+  en: 'English',
+  ru: 'Russian',
+  sk: 'Slovak',
+  de: 'German',
+};
+
+// Both name tables must cover every locale the site knows about. Without this, adding a
+// locale and forgetting one table yields `undefined` — rendered as the string "undefined" in
+// a language picker or mid-sentence in the blog's note, which is precisely the silent-staleness
+// class the derived lists were introduced to remove. Fail at config load instead.
+for (const loc of [...RELEASED_LOCALES, ...UNRELEASED_LOCALES]) {
+  for (const [table, name] of [
+    [LOCALE_LABELS, 'LOCALE_LABELS'],
+    [LOCALE_ENGLISH_NAMES, 'LOCALE_ENGLISH_NAMES'],
+  ] as const) {
+    if (!table[loc]) {
+      throw new Error(
+        `Locale '${loc}' is missing from ${name}. Every released or unreleased locale needs ` +
+          'an entry in BOTH name tables: the endonym for pickers and cards, the English name ' +
+          'for English prose.',
+      );
+    }
+  }
+}
 
 // --- Courses (docs instances) — the hub's single source of truth -------------
 // This site is a HUB of independent AI-engineering courses, not one book. Each
@@ -395,6 +429,17 @@ const config: Config = {
     // behaviour silent — `ru` and `sk` have advertised a translated "Field notes" label
     // over English posts since launch, with nothing telling the reader.
     //
+    // Every shipped locale's name IN ENGLISH, in declaration order — for English PROSE, not
+    // for pickers. Exists so a sentence about "which languages this handbook is in" is
+    // DERIVED rather than retyped: the blog's English-only note used to hard-code "English,
+    // Russian and Slovak" in untranslated JSX, which silently went wrong the day a fourth
+    // locale shipped.
+    //
+    // Deliberately NOT `LOCALE_LABELS`, which holds endonyms (`Русский`, `Slovenčina`).
+    // Endonyms are right on the landing cards — a reader scans them for their own language —
+    // and wrong inside an English sentence, where "…ship in English, Русский, Slovenčina and
+    // Deutsch" reads as a bug. Two audiences, two lists.
+    releasedLanguages: RELEASED_LOCALES.map((loc) => LOCALE_ENGLISH_NAMES[loc]),
     // Empty for `en`, where nothing is a fallback.
     englishOnlyPaths:
       CURRENT_LOCALE === DEFAULT_LOCALE

@@ -15,8 +15,11 @@ building this handbook *using* the SDLC it teaches. Deliberately English-only �
 standing note on the blog index for why.
 
 Built with [Docusaurus](https://docusaurus.io/). It ships in **English** (default, served
-at the site root), **Russian** (`/ru/`) and **Slovak** (`/sk/`) — with Mermaid diagrams and
-offline local search in every locale.
+at the site root), **Russian** (`/ru/`), **Slovak** (`/sk/`) and **German** (`/de/`) — with Mermaid
+diagrams and offline local search in every locale. Coverage is **per course**, not site-wide:
+German currently covers **RAG & Agents** only, and Design Scenarios is English-only by declaration.
+A course a locale does not cover is not linked from that locale's navigation, still resolves by
+URL, and says so on arrival.
 
 ## Run locally
 
@@ -53,8 +56,9 @@ Output is generated into `build/` and can be served with any static host.
 - `src/pages/index.tsx` — the landing hub. Its course cards derive from the `COURSES` array in
   `docusaurus.config.ts`, the single source of truth the navbar, footer and search index also read.
 - `i18n/<locale>/` — one tree per non-default locale (docs + theme strings), served at `/<locale>/`:
-  Russian at `/ru/` and Slovak at `/sk/` today. Every one of them is audience-primary: written natively,
-  never machine-translated.
+  Russian at `/ru/`, Slovak at `/sk/` and German at `/de/` today. Every one of them is audience-primary:
+  written natively, never machine-translated. A locale need not cover every course — scope lives in each
+  course's `locales` in `COURSES`, which the parity gate reads instead of assuming site-wide coverage.
 - `editorial/` — the style canon: a thin cross-language router (`style-canon.md`) plus a per-language folder
   `canon/<lang>/`, each holding the shared course-independent language rules (`_language.md`) and one
   per-course term ledger (`rag.md`, `ai-sdlc.md`, …).
