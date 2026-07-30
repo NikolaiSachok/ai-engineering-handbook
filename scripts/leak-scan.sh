@@ -24,6 +24,7 @@ EXCLUDES=(
   --exclude-dir=build
   --exclude-dir=.docusaurus
   --exclude-dir=.cache-loader
+  --exclude-dir=.sol-out       # locale-review gate output: the judge echoes its own workdir
   --exclude=package-lock.json
   --exclude=yarn.lock
   --exclude=pnpm-lock.yaml
