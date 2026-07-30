@@ -50,8 +50,14 @@
  *
  * usage: cardwidth.mjs <site-relative-path> [expected-lang] [maxLines]
  *        cardwidth.mjs --self-test
+ *
+ * NOTE ON THE LAZY IMPORT of playwright, below. It is imported on the MEASUREMENT path only, not
+ * at module top level, so that `--self-test` runs with no dependencies installed at all. The
+ * logic the self-test covers — composing the URL so it always carries the baseUrl — has nothing
+ * to do with a browser, and a top-level import made the self-test fail in CI with
+ * ERR_MODULE_NOT_FOUND on a checkout that had not run `npm ci`. A self-test that needs the
+ * production dependency stack is a self-test that gets skipped.
  */
-import { chromium } from 'playwright';
 
 const SITE_PATH = '/ai-engineering-handbook';
 const BASE = (process.env.BASE_URL ?? 'http://localhost:3210').replace(/\/$/, '');
@@ -109,6 +115,17 @@ if (!rel) {
   process.exit(2);
 }
 const url = pageUrl(rel);
+
+// Imported here, not at top level: see the note in the header. Fail with an actionable message
+// rather than a bare ERR_MODULE_NOT_FOUND.
+let chromium;
+try {
+  ({ chromium } = await import('playwright'));
+} catch (e) {
+  console.error('FAIL: playwright is not installed — run `npm ci` before measuring.');
+  console.error(`       (${e.code ?? e.message})`);
+  process.exit(2);
+}
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 360, height: 1400 }, deviceScaleFactor: 3 });
