@@ -9,14 +9,24 @@ building this handbook with the SDLC it teaches. See "Editorial config" for the 
 
 **Locale model (EN-canonical).** English is the **default locale** — it lives in the top-level `docs/` and
 serves at the site root `/`. Every other locale is a parallel tree under
-`i18n/<locale>/docusaurus-plugin-content-docs/current/` served at `/<locale>/` — today Russian at `/ru/` and
-**Slovak** (launched 2026-07-15) at `/sk/`, with the live list held in
-`RELEASED_LOCALES`/`UNRELEASED_LOCALES` in `docusaurus.config.ts`, never in a copy here. That is only the
-URL/serving structure: **every non-default locale stays audience-primary in *authoring*** (written
+`i18n/<locale>/docusaurus-plugin-content-docs/current/` served at `/<locale>/` — today Russian at `/ru/`,
+**Slovak** (launched 2026-07-15) at `/sk/` and **German** (launched 2026-07-30) at `/de/`, with the live list
+held in `RELEASED_LOCALES`/`UNRELEASED_LOCALES` in `docusaurus.config.ts`, never in a copy here. That is only
+the URL/serving structure: **every non-default locale stays audience-primary in *authoring*** (written
 natively per the workflow below, never machine-translated).
+- **COVERAGE IS PER COURSE, NOT SITE-WIDE (from the DE launch on).** A released locale does **not** imply
+  every course. Each course declares its `locales` in `COURSES` — German launched on **RAG & Agents alone**
+  (AI SDLC German is unstarted; Design Scenarios is English-only by declaration) — and the gates read that
+  declaration instead of assuming site-wide coverage. Each course also declares `untranslatedPolicy`:
+  `'pending'` **hides** it from a locale that lacks it (advertising a course in a language it is not in is a
+  promise not kept), `'by-design'` **keeps it visible** (or readers in that locale never discover it).
+  **Hiding is a navigation decision, never a routing one** — the route still resolves, and a swizzled
+  `@theme/Layout` shows an English-fallback notice on arrival. **Never switch the reader's locale to match a
+  page**: locale is a property of the reader, lives in the URL prefix, and a silent switch is not undone by
+  going back.
 - **LOCALE PARITY (from the SK launch on).** Every locale in `RELEASED_LOCALES` is public. Every content PR
-  that adds or changes a page in one locale **either updates its counterpart in every other released locale
-  in the same PR or files a parity issue** — the deployed build runs `onBrokenLinks: 'throw'` over every
+  that adds or changes a page in one locale **either updates its counterpart in every other locale that
+  course claims, in the same PR, or files a parity issue** — the deployed build runs `onBrokenLinks: 'throw'` over every
   released locale, so a broken or missing link in any of them fails the deploy. Authoring a new lesson means
   **every released locale** via the authoring-team skill, then that locale's canon
   (`editorial/canon/<lang>/`) + `scripts/i18n-link-check.sh` gate it. **Link parity is

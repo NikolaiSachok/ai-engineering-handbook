@@ -25,8 +25,13 @@ import type * as Preset from '@docusaurus/preset-classic';
 // Launching a locale = move it from UNRELEASED_LOCALES to RELEASED_LOCALES (one
 // line); its `localeConfigs` label is already set below, so nothing else changes.
 const DEFAULT_LOCALE = 'en';
-const RELEASED_LOCALES = ['en', 'ru', 'sk']; // Slovak launched 2026-07-15; both courses now ship complete in all three
-const UNRELEASED_LOCALES: string[] = ['de']; // German in progress (from 2026-07-28): built+validated in CI, gated out of the deployed dropdown
+// German launched 2026-07-30 on the RAG course ALONE (#383) — the first locale to ship
+// without covering every course. That is what per-course `locales` exists for: RAG claims
+// `de` and ships 39/39 pages; AI SDLC does not claim it (#284/#285 unstarted), so the German
+// navbar does not link it, the landing card does not advertise German for it, and the parity
+// gate does not require a German tree. Design Scenarios is English-only by declaration.
+const RELEASED_LOCALES = ['en', 'ru', 'sk', 'de']; // Slovak 2026-07-15; German 2026-07-30
+const UNRELEASED_LOCALES: string[] = []; // none in flight
 const INCLUDE_UNRELEASED = process.env.HANDBOOK_INCLUDE_UNRELEASED === '1';
 const LOCALES = [...RELEASED_LOCALES, ...(INCLUDE_UNRELEASED ? UNRELEASED_LOCALES : [])];
 const BASE_URL = '/ai-engineering-handbook/';
@@ -42,6 +47,35 @@ const LOCALE_LABELS: Record<string, string> = {
   sk: 'Slovenčina',
   de: 'Deutsch',
 };
+
+// The same locales named in English, for use inside English PROSE. Kept separate from the
+// endonyms above on purpose: "…ships in English, Русский, Slovenčina and Deutsch" reads as a
+// bug in an English sentence, while endonyms are exactly right in a language picker.
+const LOCALE_ENGLISH_NAMES: Record<string, string> = {
+  en: 'English',
+  ru: 'Russian',
+  sk: 'Slovak',
+  de: 'German',
+};
+
+// Both name tables must cover every locale the site knows about. Without this, adding a
+// locale and forgetting one table yields `undefined` — rendered as the string "undefined" in
+// a language picker or mid-sentence in the blog's note, which is precisely the silent-staleness
+// class the derived lists were introduced to remove. Fail at config load instead.
+for (const loc of [...RELEASED_LOCALES, ...UNRELEASED_LOCALES]) {
+  for (const [table, name] of [
+    [LOCALE_LABELS, 'LOCALE_LABELS'],
+    [LOCALE_ENGLISH_NAMES, 'LOCALE_ENGLISH_NAMES'],
+  ] as const) {
+    if (!table[loc]) {
+      throw new Error(
+        `Locale '${loc}' is missing from ${name}. Every released or unreleased locale needs ` +
+          'an entry in BOTH name tables: the endonym for pickers and cards, the English name ' +
+          'for English prose.',
+      );
+    }
+  }
+}
 
 // --- Courses (docs instances) — the hub's single source of truth -------------
 // This site is a HUB of independent AI-engineering courses, not one book. Each
@@ -88,6 +122,20 @@ type Course = {
   // this field exists to close. `en` must always be present — the English tree is the
   // source every other locale is compared against.
   locales: string[];
+  // WHY a course is missing from a locale — which decides whether that locale's
+  // navigation hides it or shows it with a caveat. Consulted only for locales the course
+  // does NOT claim; irrelevant for the ones it does.
+  //
+  //   'pending'   — it will be translated, just not yet. HIDE it in that locale:
+  //                 advertising a course in a language it is not in is a promise not kept.
+  //   'by-design' — it will never be translated. KEEP it visible, because hiding it
+  //                 forever means readers in that locale never discover it exists.
+  //
+  // Hiding is a NAVIGATION decision, never a routing one. The route still builds and still
+  // resolves — shared links, search-engine results and cross-course links must keep working
+  // — it simply is not advertised. See the English-fallback notice for what a reader who
+  // arrives that way is told.
+  untranslatedPolicy: 'pending' | 'by-design';
   live: boolean;       // true = content shipped; false = placeholder / in progress
   inNavbar: boolean;   // add a docSidebar item to the navbar yet?
   // The course's slice of the footer sitemap, in order. `path` is appended to
@@ -115,6 +163,7 @@ const COURSES: Course[] = [
       'Production RAG and agentic systems from first principles — ingestion, retrieval, ' +
       'generation, agents, and the eval, guardrails and LLMOps that keep them honest.',
     locales: ['en', 'ru', 'sk', 'de'],
+    untranslatedPolicy: 'pending',
     live: true,
     inNavbar: true,
     footerLinks: [
@@ -138,7 +187,14 @@ const COURSES: Course[] = [
     blurb:
       'The AI-assisted software development lifecycle: planning, building, reviewing and ' +
       'shipping when AI agents are part of the team.',
-    locales: ['en', 'ru', 'sk', 'de'],
+    // NOT `de` yet — German AI SDLC is #284/#285, unstarted. The RAG course launched
+    // German ahead of it (#383), and a released locale that a course does not claim is
+    // exactly what per-course scope exists to express: the parity gate stops requiring a
+    // German tree here, the landing card stops advertising German for this course, and the
+    // German navbar stops linking it. **Add `'de'` back the moment #284/#285 land** — that
+    // single edit re-arms all three.
+    locales: ['en', 'ru', 'sk'],
+    untranslatedPolicy: 'pending',
     live: true,
     inNavbar: true,
     footerLinks: [
@@ -169,6 +225,11 @@ const COURSES: Course[] = [
       'three ways — the common answer, the strong one, and the over-built one — with the ' +
       'tradeoffs that separate them.',
     locales: ['en'],
+    // 'by-design', not 'pending': English-only is this course's declaration (see the blurb
+    // above), so a non-English locale should still SEE it rather than have it hidden
+    // forever. Currently moot because `inNavbar` is false, but the policy is declared so the
+    // day it is advertised the answer is already recorded rather than re-argued.
+    untranslatedPolicy: 'by-design',
     live: false,
     inNavbar: false,
     footerLinks: [
@@ -202,7 +263,32 @@ for (const c of COURSES) {
         'LOCALE_LABELS (and to the released/unreleased lists) in the same change.',
     );
   }
+  if (c.untranslatedPolicy !== 'pending' && c.untranslatedPolicy !== 'by-design') {
+    throw new Error(
+      `Course '${c.id}' declares no valid untranslatedPolicy ('pending' | 'by-design'). It ` +
+        'decides whether a locale that lacks this course hides it or shows it, and there is ' +
+        'no default: guessing would either hide an English-only course forever or advertise ' +
+        'an untranslated one.',
+    );
+  }
 }
+
+// The locale THIS build is producing. Docusaurus re-evaluates this config once per locale
+// and sets DOCUSAURUS_CURRENT_LOCALE for each — verified empirically: the four per-locale
+// passes report en/ru/sk/de. The very first evaluation, before any locale build starts,
+// has it UNDEFINED, so it falls back to DEFAULT_LOCALE — which is safe precisely because
+// `en` is the one locale every course is required to claim (asserted above), making the
+// fallback the permissive-but-correct case rather than a silent hide.
+const CURRENT_LOCALE = process.env.DOCUSAURUS_CURRENT_LOCALE ?? DEFAULT_LOCALE;
+
+// Should this course be ADVERTISED in the locale being built?
+//
+// Navigation only — this never removes a route. `/de/ai-sdlc/…` still builds and still
+// resolves; it is simply not linked from the German navbar or footer, because linking it
+// would promise German content that does not exist. A reader who arrives by shared link or
+// search engine gets the page plus the English-fallback notice.
+const advertisedInThisLocale = (c: Course): boolean =>
+  c.locales.includes(CURRENT_LOCALE) || c.untranslatedPolicy === 'by-design';
 
 const DEFAULT_COURSE = COURSES[0];
 // Every course's route base path — the set of docs instances the local search
@@ -330,6 +416,40 @@ const config: Config = {
         .map((loc) => LOCALE_LABELS[loc]),
       live: c.live,
     })),
+    // Route prefixes whose content is ENGLISH in the locale being built, so a reader who
+    // arrives there can be told rather than left to notice. Computed from the same
+    // declarations the navigation filter uses, so the two cannot drift.
+    //
+    // Two sources, and note they are NOT the same as "hidden from the navbar":
+    //   * a course this locale does not claim — hidden from nav AND English on arrival;
+    //   * the blog, which is English-only by declaration in every locale — VISIBLE in nav
+    //     (readers should find the making-of series) and English on arrival.
+    // The second is why this list exists separately from the nav filter: visibility and
+    // language are different questions, and conflating them is what made the current
+    // behaviour silent — `ru` and `sk` have advertised a translated "Field notes" label
+    // over English posts since launch, with nothing telling the reader.
+    //
+    // Every shipped locale's name IN ENGLISH, in declaration order — for English PROSE, not
+    // for pickers. Exists so a sentence about "which languages this handbook is in" is
+    // DERIVED rather than retyped: the blog's English-only note used to hard-code "English,
+    // Russian and Slovak" in untranslated JSX, which silently went wrong the day a fourth
+    // locale shipped.
+    //
+    // Deliberately NOT `LOCALE_LABELS`, which holds endonyms (`Русский`, `Slovenčina`).
+    // Endonyms are right on the landing cards — a reader scans them for their own language —
+    // and wrong inside an English sentence, where "…ship in English, Русский, Slovenčina and
+    // Deutsch" reads as a bug. Two audiences, two lists.
+    releasedLanguages: RELEASED_LOCALES.map((loc) => LOCALE_ENGLISH_NAMES[loc]),
+    // Empty for `en`, where nothing is a fallback.
+    englishOnlyPaths:
+      CURRENT_LOCALE === DEFAULT_LOCALE
+        ? []
+        : [
+            ...COURSES.filter((c) => !c.locales.includes(CURRENT_LOCALE)).map(
+              (c) => c.basePath,
+            ),
+            '/blog',
+          ],
   },
 
   // Released (deployed) builds throw on any dead internal link — the hard gate for
@@ -505,7 +625,10 @@ const config: Config = {
         // COURSES: a course appears here only once its `inNavbar` flag is true, so
         // a course can be authored in-tree before it is advertised. The default
         // instance needs no `docsPluginId`; named instances reference their own id.
-        ...COURSES.filter((c) => c.inNavbar).map((c) => ({
+        // ...and only in a locale that course is available in — see
+        // `advertisedInThisLocale`. A course the current locale does not have is not linked
+        // here, though its routes still resolve.
+        ...COURSES.filter((c) => c.inNavbar && advertisedInThisLocale(c)).map((c) => ({
           type: 'docSidebar' as const,
           sidebarId: c.sidebarId,
           ...(c.id === 'default' ? {} : {docsPluginId: c.id}),
@@ -535,7 +658,10 @@ const config: Config = {
       // Adding a course = adding it to COURSES with its `footerLinks`; no edit here.
       style: 'dark',
       links: [
-        ...COURSES.filter((c) => c.inNavbar).map((c) => ({
+        // Same locale filter as the navbar: the footer is the only always-visible
+        // navigation on phones, so a course hidden from one must be hidden from the other or
+        // the promise is merely relocated.
+        ...COURSES.filter((c) => c.inNavbar && advertisedInThisLocale(c)).map((c) => ({
           title: c.navbarLabel,
           items: c.footerLinks.map((l) => ({
             label: l.label,
