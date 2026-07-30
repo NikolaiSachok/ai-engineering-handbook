@@ -75,6 +75,28 @@ about the question, so the question was thrown away rather than the answers edit
 to state the strongest one-sentence case for each side, and the fact that makes each available, before any
 attempt was written. That check now runs before the candidates do.
 
+**A question can be contested and still go unexplored.** The memory scenario passed that new check — four
+architectures, each defensible, each defeated by a different fact in the prompt. Three of the four then went
+unvisited or half-visited, and the fourth was empty. The reason was not the question: all three sets of habits
+described engineers who build stores, so no agent was equipped to argue for building almost nothing and
+re-deriving state from records that already exist. Proving a question is contested and casting agents who can
+occupy the contested ground are two different jobs, and only the first had a check. The empty position was also
+the one the prompt defeats *on cost*, which is why the standard about tail-heavy spending drew nothing from any
+attempt — the rubric row was reachable, and nobody had been cast to reach it.
+
+**A prompt that ends in a list gets answered as a list.** The same scenario's prompt closed on an enumeration —
+*what persists, what expires, what is never written* — and all three agents answered in that order, using those
+words as their section headings. It is the only prompt of the four to end that way and the only one whose blind
+attempts share a skeleton. The wording stayed as it shipped, because rewriting a prompt after the attempts have
+answered it makes the printed question no longer the one they were asked.
+
+**An agent hands back the words it was given.** Two of that scenario's three attempts reproduced their own
+persona brief nearly verbatim — one of them three times over, in a line about a summary becoming the only
+surviving record of something that mattered. The briefs are printed above each attempt, so a reader can see the
+seam, which is the honest outcome: the reasoning underneath was still independent and still divergent, but the
+phrasing was borrowed, and the brief now has to say so explicitly. Briefs had also been growing — 42 words, then
+80, then 87, then 110 — and a longer brief is more material to recite.
+
 ## The gates, and the one that had to be inverted
 
 A scenario passes through the same layered checks as the rest of the handbook — an editorial team, a

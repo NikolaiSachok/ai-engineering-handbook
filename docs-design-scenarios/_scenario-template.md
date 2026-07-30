@@ -113,12 +113,33 @@ that gets no credit is a strawman by another route.
 
 ## Where they actually disagree
 
-Two to four disagreements where the attempts genuinely contradict each other. Each is a decision the reader
-will have to make themselves, so state both positions, and where one of them is right, say so. This is where
-the teaching concentrates; a scenario whose attempts only differ in thoroughness was not a hard enough
-question. One attempt may win every disagreement here — that happens when it is genuinely the better answer.
-What must not happen is that nothing anywhere on the page puts a losing attempt ahead: if no verdict credits
-the other two over the winner, you have written an answer key.
+Each disagreement below is a decision you will have to make yourself.
+
+### Topic: one position or the other
+
+Two to four disagreements where the attempts genuinely contradict each other, each under an `###` heading in
+the `Topic: A or B` form above — FIXED, both the lead line and the heading shape. They are recurring strings,
+and a settled shape that lives only in a review ledger gets forked by the next page: scenario 3 forked it
+0-of-4 and scenario 4 forked it 0-of-5, while the one rule that had been written into THIS file stopped being
+forked immediately. **A rule ships into this template or it does not ship.**
+
+Each is a decision the reader will have to make themselves, so state both positions, and where one of them is
+right, say so. This is where the teaching concentrates; a scenario whose attempts only differ in thoroughness
+was not a hard enough question. One attempt may win every disagreement here — that happens when it is
+genuinely the better answer. What must not happen is that nothing anywhere on the page puts a losing attempt
+ahead: if no verdict credits the other two over the winner, you have written an answer key.
+
+**Exclusivity claims are the most expensive sentence on the page, and have been a defect on every scenario so
+far.** "The only design that…", "does what the other two skip", "both are wrong", "all three are compliant" —
+each is a new factual claim about a population, and a reader falsifies it by scrolling. Budget **one
+exclusivity claim per breath**, and read each against its actual population: sometimes that is the three
+attempts, sometimes the whole corpus (one "the only page that…" was falsified by `docs/glossary.md`), and
+sometimes a regulatory judgement the page is not entitled to make.
+
+A shared blind spot is not a disagreement. If all three did the same thing and none of them checked it, it can
+close this section as a final `###` — flagged as the exception in the lead — but it does not become a fifth
+`##`, and the page's own voice must assess what the attempts did rather than proposing an architecture of its
+own and then grading it.
 
 ## The principle
 
@@ -146,9 +167,16 @@ What no gate catches is the link that resolves and is wrong — read the target 
 
 ## If they push
 
-Open with one line naming who is pushing and what follows — nothing else on the page establishes that an
-interviewer exists, and a reader arriving from a search result has not read the course intro. Then two or
-three follow-up questions, each as a blockquote in the interviewer's voice, followed by a short paragraph on
+These are the [two|three] follow-ups an interviewer reaches for next, and what each one exposes.
+
+That opener is FIXED — copy it, changing only the count. It is the one line establishing that an interviewer
+exists at all, which nothing else on the page does and which a reader arriving from a search result has not
+read on the intro; and it is a recurring string, so four pages independently invented four wordings of it
+before it was written down here. It carries no register of its own on purpose: an opener that promises the
+probes are "fatal if you recited someone else's answer" is interview-coach warmth, which this course does not
+have.
+
+Then two or three follow-up questions, each as a blockquote in the interviewer's voice, followed by a short paragraph on
 what it exposes. (Blockquote, not bold: these run several sentences, and the bold budget is for term anchors,
 not for whole paragraphs.) Each must be a question that defeats a reader who memorised the strongest attempt
 and comes easily to one who reasoned their way to it. This section is the page's anti-memorisation defence.

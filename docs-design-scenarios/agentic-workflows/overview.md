@@ -25,6 +25,9 @@ none of them raise an error. They return a plausible answer, and the system repo
   outcome eval, when the outcome label lands two weeks late and a credit can buy it.
 - **[Framework or your own primitives](/design-scenarios/agentic-workflows/framework-or-primitives)** — the
   LangGraph question, asked where the record you produce outlives the decision by more than a year.
+- **[What an agent should remember, and what it must not](/design-scenarios/agentic-workflows/agent-memory)** —
+  persist, expire, never write; and what a workflow that has been running for eleven weeks is allowed to trust
+  when it wakes.
 
-Five more are being written: agent memory, tools that fail, guardrails at the boundary, observing a
-non-deterministic system, and when not to build an agent at all.
+Four more are being written: tools that fail, guardrails at the boundary, observing a non-deterministic
+system, and when not to build an agent at all.
