@@ -77,7 +77,7 @@
     "U+2014 em dash": {"re": "—", "instead": "the SPACED en dash – "},
     "guillemets": {"re": "»|«", "instead": "„…“"},
     "tight percent": {"re": "\\d%", "instead": "20 + U+202F + %"},
-    "du-Anrede": {"re": "\\b(du|dich|dein|deine|deinem|deinen)\\b", "instead": "Sie / Ihr"},
+    "du-Anrede": {"re": "\\b(du|dich|dein|deine|deinem|deinen)\\b", "instead": "Sie / Ihr", "scope": "own_voice", "why": "NARROWED 2026-07-30 to the book's OWN VOICE. The corpus addresses its reader as `Sie`, so a `du` in the narration is a defect — but a QUOTED PROMPT EXAMPLE is addressed to a MODEL, not to the reader, and German prompt examples idiomatically take `du`: „Nenne deine Quellen“, „Fasse dich kurz“. Unscoped, this rule fired on both, on correct shipped prose. Two independent scanners produced the identical false positive on the same construction, which is the signal to NARROW a rule rather than learn to skip it: an over-broad ban trains the renderer to ignore the scanner, after which a real hit goes past too."},
     "bare { anchor": {"re": "(?<!\\\\)\\{#", "instead": "\\{#id} with the BACKSLASH — a bare { parses as JSX and hard-fails the build"}
   },
 

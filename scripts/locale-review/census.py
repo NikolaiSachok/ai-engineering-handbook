@@ -111,6 +111,26 @@ def strip_markup(line: str) -> str:
     return line
 
 
+def outside_quotes(text: str) -> str:
+    """Drop German-quoted spans („…“).
+
+    Used by the Anrede check ONLY, and narrowly. The corpus addresses its reader as `Sie`, so a
+    `du` in the book's own voice is a defect. But a QUOTED PROMPT EXAMPLE is text addressed to a
+    model rather than to the reader — „Nenne deine Quellen“ is the string a reader would send to
+    an LLM, and German prompt examples idiomatically take `du`. Asserting over it makes the rule
+    fire on correct content.
+
+    That distinction matters more than the one hit: an assertion with a known-false finding
+    trains the author to skip the scanner, after which a real hit goes past too. So the rule is
+    NARROWED here, with the reason recorded, rather than carrying an ignore list. It stays fully
+    live in the book's own voice, which is what it was written to protect.
+
+    Deliberately scoped to this one check: a quoted span is still governed by the dash, quote and
+    percent rules, because those are about typography and apply to quoted German too.
+    """
+    return re.sub(r"„[^“]*“", " ", text)
+
+
 # --------------------------------------------------------------------------- the rules
 
 CHECKS = [
@@ -133,7 +153,7 @@ CHECKS = [
     ("Swiss ss for ß",            lambda t: len(re.findall(r"\b(gross|heissen|Strasse|weiss)\b", t)), None, "manual read: Swiss variants"),
     ("bare { heading id",         lambda t: len(re.findall(r"(?<!\\)\{#", t)),             0,    "== 0; anchors need the BACKSLASH or the build hard-fails"),
     ("\\{#id} anchors",           lambda t: len(re.findall(r"\\\{#", t)),                  None, "the correct form"),
-    ("du/dein Anrede",            lambda t: len(re.findall(r"\b(du|dich|dein|deine|deinem|deinen)\b", t)), 0, "== 0; the corpus address form is Sie"),
+    ("du/dein Anrede",            lambda t: len(re.findall(r"\b(du|dich|dein|deine|deinem|deinen)\b", outside_quotes(t))), 0, "== 0 in the book's OWN voice; quoted prompt examples exempt (see outside_quotes)"),
 ]
 
 BALANCES = [("„ opening quote", "“ closing quote (U+201C)"), ("‚ single opening", "‘ single closing")]
@@ -354,6 +374,14 @@ def self_test() -> int:
     if all_text.count('"') == 0:
         print("  FAIL the fixture no longer reproduces the defect — it must contain markup quotes")
         fails.append("fixture reproduces the defect")
+
+    print("  -- the Anrede rule must hold in the book's voice and exempt a quoted prompt")
+    check("a `du` in the book's own voice is still a finding",
+          len(re.findall(r"\bdeine\b", outside_quotes("Nennen Sie deine Quellen."))), 1)
+    check("a `du` inside a quoted prompt example is exempt",
+          len(re.findall(r"\bdeine\b", outside_quotes("Ein Prompt, der \u201eNenne deine Quellen\u201c sagt."))), 0)
+    check("the exemption does not swallow the whole line",
+          "sagt" in outside_quotes("Ein Prompt, der \u201eNenne deine Quellen\u201c sagt."), True)
 
     check("U+202F percent seen on a prose line", len(re.findall("\\d\u202f%", prose_text)), 1)
     check("the em dash inside a JSX attribute is NOT counted", prose_text.count("\u2014"), 0)

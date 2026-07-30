@@ -67,6 +67,19 @@ def load_rules(banlist_path: pathlib.Path, skip_groups: set[str]):
     return rules
 
 
+def own_voice(line: str) -> str:
+    """Drop German-quoted spans („…“), for rules whose `scope` is `own_voice`.
+
+    A rule about how the BOOK addresses its reader must not fire on text the book QUOTES. The
+    Anrede rule fired on „Nenne deine Quellen“ and „Fasse dich kurz“ — prompt examples addressed
+    to a model, where German idiomatically takes `du`. Both were correct shipped prose.
+
+    A rule declares this itself, in the ban list, with its reason. That is deliberate: the
+    alternative is an ignore list, and a gate with an ignore list is a gate nobody reads.
+    """
+    return re.sub(r"„[^“]*“", " ", line)
+
+
 def scan(targets, rules):
     """Return {(group, name): [(path, lineno, line, matched), ...]}."""
     hits = collections.defaultdict(list)
@@ -74,8 +87,9 @@ def scan(targets, rules):
         for i, line in enumerate(f.read_text(encoding="utf-8").split("\n"), 1):
             if any(m in line for m in REJECTION_MARKERS):
                 continue
-            for group, name, rx, _spec in rules:
-                for m in rx.finditer(line):
+            for group, name, rx, spec in rules:
+                subject = own_voice(line) if spec.get("scope") == "own_voice" else line
+                for m in rx.finditer(subject):
                     hits[(group, name)].append((str(f), i, line.strip()[:170], m.group(0)))
     return hits
 
@@ -205,6 +219,26 @@ def self_test():
         (dd / "clean.md").write_text("Ein unauffaelliger deutscher Satz ohne Befund.\n",
                                      encoding="utf-8")
         check("a clean line produces no hit", scan([dd / "clean.md"], rules), {})
+
+        # An `own_voice` rule must hold in the narration and exempt a quoted prompt example.
+        anrede = [r for r in rules if r[1] == "du-Anrede"]
+        check("the du-Anrede rule declares scope own_voice",
+              bool(anrede) and anrede[0][3].get("scope"), "own_voice")
+        if anrede:
+            (dd / "voice.md").write_text("Wenn du das liest, ist es ein Befund.\n", encoding="utf-8")
+            check("a `du` in the book's own voice is still a hit",
+                  len(scan([dd / "voice.md"], anrede)), 1)
+            (dd / "quoted.md").write_text(
+                "Ein Prompt, der „Nenne deine Quellen“ sagt, ist korrekte Prosa.\n",
+                encoding="utf-8")
+            check("a `du` inside a quoted prompt example is NOT a hit",
+                  len(scan([dd / "quoted.md"], anrede)), 0)
+            # The exemption must not disable the rule for unscoped rules on the same line.
+            unscoped = [(g, n, rx, {k: v for k, v in s.items() if k != "scope"})
+                        for g, n, rx, s in anrede]
+            check("without the scope declaration the same line WOULD be a hit "
+                  "(this is the false positive that forced the narrowing)",
+                  len(scan([dd / "quoted.md"], unscoped)), 1)
 
         # Fail closed on a malformed list rather than silently drop the rule.
         bad = dd / "bad.json"

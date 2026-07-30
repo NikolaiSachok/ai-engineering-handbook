@@ -107,7 +107,7 @@ um einen Fehler in der Indexierung zu beheben. Was der Produktivbetrieb zusätzl
 Möglichkeit, die Antwort zu verweigern, und genau die haben die meisten Demos nicht einmal im Entwurf. Ein
 Demo gibt **immer top-K** zurück – top-K ist ein Ausschnitt und kein Urteil, und ein Ranking nach
 Ähnlichkeit liefert seine fünf besten Kandidaten, ob nun einer davon Ihre Frage betrifft oder keiner.
-**Setzen Sie eine Score-Untergrenze hinter die Stufe, deren Scores etwas bedeuten.** Die zusammengeführten
+**Setzen Sie eine Score-Untergrenze hinter der Stufe an, deren Scores etwas bedeuten.** Die zusammengeführten
 Scores einer hybriden Suche – das Ranking aus der dichten und das aus der lexikalischen Suche, in einem
 zusammengefasst – sind nicht auf eine vergleichbare Skala kalibriert, ein Schwellenwert auf einem solchen
 Score ist deshalb annähernd willkürlich; der Score eines Cross-Encoder-Rerankers ist der, für den Sie eine
