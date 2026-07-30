@@ -1,0 +1,24 @@
+/**
+ * The English-fallback notice. Deliberately quiet: it is information, not a warning — the
+ * page is perfectly usable, it is simply in another language than the interface around it.
+ * So no alarm colour, no icon, no dismiss button.
+ */
+
+.notice {
+  /* Full-bleed above the content, so it reads as a property of the page rather than of one
+     column — and so it lands the same way on a doc, a blog post and a standalone page. */
+  padding: 0.6rem 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--ifm-color-emphasis-700);
+  background: var(--ifm-color-emphasis-100);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+/* Both themes come from Infima's emphasis scale, which already inverts under
+   `[data-theme='dark']`, so the notice follows the reader's theme with no second rule. One
+   nudge is still needed: on a dark ground the same emphasis step reads too loud. */
+[data-theme='dark'] .notice {
+  color: var(--ifm-color-emphasis-600);
+}

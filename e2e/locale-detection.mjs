@@ -82,12 +82,29 @@ async function run() {
     await ctx.close();
   }
 
-  // ---- 4. Fresh other-language browser (de) → English fallback (stays EN) ----
+  // ---- 4. Fresh browser in a language the site does NOT ship → English fallback ----
+  //
+  // The fixture used to be `de-DE`, asserting `!/\/ru\//`. Both halves were wrong, and both
+  // failed in the same direction — towards a vacuous pass:
+  //
+  //   * German is a locale this site is actively translating, so the day it launches a
+  //     `de-DE` browser correctly redirects to `/de/…` — which still contains no `/ru/`, so
+  //     the assertion keeps passing while testing the OPPOSITE of what its name claims.
+  //   * `!/\/ru\//` only ever ruled out one specific locale, so any other locale prefix
+  //     satisfied it. It could not detect a wrong redirect in general.
+  //
+  // So: use a language the site will not plausibly ship (`ja-JP`), and assert the real
+  // invariant POSITIVELY — no locale prefix at all, i.e. English served from the root.
   {
-    const ctx = await browser.newContext({locale: 'de-DE'});
+    const ctx = await browser.newContext({locale: 'ja-JP'});
     const page = await ctx.newPage();
     const url = await gotoSettled(page, `${SITE}/${LESSON}/`);
-    check('unsupported language (de) falls back to English', !/\/ru\//.test(url), `landed ${url}`);
+    const localePrefix = url.slice(SITE.length).match(/^\/([a-z]{2})(?:-[A-Za-z]{2,4})?\//);
+    check(
+      'a language the site does not ship falls back to English (no locale prefix)',
+      localePrefix === null,
+      `landed ${url}${localePrefix ? ` — unexpected locale prefix /${localePrefix[1]}/` : ''}`,
+    );
     await ctx.close();
   }
 
