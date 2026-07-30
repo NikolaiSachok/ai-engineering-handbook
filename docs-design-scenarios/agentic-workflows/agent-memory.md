@@ -2,7 +2,7 @@
 id: agent-memory
 title: What an agent should remember, and what it must not
 sidebar_position: 4
-description: What a long-running agent persists, what it lets expire, and what it may never write down. Three attempts at a workflow that runs for weeks, wakes on a newer deploy each time, and must never tell a user their money is safe when it isn't.
+description: What a long-running agent persists, what it must let expire, and what it may never write down. Three attempts at a memory design for a workflow that runs for weeks, usually wakes on a newer deploy than the one that opened it, and must never tell a user their money is safe when it isn't.
 # The reveal is the method. A page TOC lists every heading inside the collapsed reveal —
 # naming all three attempts and the principle before the reader has committed to an answer.
 hide_table_of_contents: true
@@ -33,17 +33,22 @@ hide_table_of_contents: true
 
 :::note[Why this question]
 
-Two of the postings this course samples ask for memory across multi-step workflows, which usually gets read as
-"wire up a store". The phrase hides three different obligations, and this prompt pulls them apart. What
-**persists** is whatever a woken process may read to work out where it had got to. What **expires** is whatever
-stops being allowed to exist once a retention rule or a deletion request reaches it — and *reaching* it is the
-work, because one fact copied into an index, a trace and a cached prompt has to die in all four places. What is
-**never written** is different in kind again: material that must pass through the agent and must not survive
-it, like a one-time code that has to be usable and must not be storable.
+A **wake**, since the prompt counts them: one resumed run. The workflow comes back on an event, reads, decides,
+and suspends again, and it is both the unit of cost here and the unit of correctness.
 
-The axis under test is what a wake is allowed to trust. Any answer will produce a list of things to store; what
-separates them is whether the list keeps what the world reported apart from what the agent concluded, and
-whether it prices that against the per-wake budget it actually has.
+Two of the postings this course samples ask for memory across multi-step workflows, which usually gets read as
+"wire up a store". The phrase hides obligations that behave nothing alike. What **persists** is whatever survives
+the suspend — the durable record a later run is allowed to draw on. What **expires** splits in two, and the
+prompt supplies one of each: a *retention rule* is a clock you can schedule against, while a *deletion request*
+is an erasure you must be able to perform on demand, mid-workflow, whether or not a clock was due. Both are
+harder than they sound for the same reason — a fact sits in its own row and copies of it sit in an index, a trace
+and a cached prompt, so it has to die in four places. What is **never written** is different in kind again:
+material that must pass through the agent and must not survive it, like a one-time code that has to be usable and
+must not be storable.
+
+Then the prompt asks a last question separately, and the separation is the point: which slice of that durable
+record a given wake actually loads. Keeping and reading are not the same decision, and an answer can be careful
+about one while never stating the other.
 
 :::
 
@@ -52,7 +57,7 @@ whether it prices that against the per-wake budget it actually has.
 Three model-written attempts follow. Each comes from a separate agent given one engineer's habits and the
 prompt above. No agent saw the other two, and none saw the scoring standard the verdicts are written against —
 that was fixed before any attempt existed, and a separate assessor applies it. The attempts introduce figures
-of their own; where one of those is load-bearing and unchecked, the verdict under that attempt says so. The
+of their own; where one of those is load-bearing and unchecked, the verdict under that attempt says so. That
 arrangement is described in [how these are made](/design-scenarios/how-these-are-made).
 
 <Reveal>
@@ -119,14 +124,17 @@ Two mechanisms. First, the state machine has no transition into `stopped` that a
 
 <Verdict>
 
-The judged move is the rolling summary — "rewritten each wake so the eleven-week outliers don't grow
-unbounded" — read back on every wake. It buys bounded context on a 77-day workflow, and A alone says where the
-mail alias and vault handles live. It costs A its own best idea: A tags every fact with `source`
-(`bank_feed` / `tool_result` / `model_inference`) and rightly calls that "exactly what's missing today", then
-funnels mixed-provenance content into one prose blob under one tag, laundering the attribution its own 1.2%
-answer depends on. The read path is unpriced too — "a couple of thousand tokens … sits comfortably inside the
-per-wake share" asserts the arithmetic instead of doing it, and never names a model tier, the one thing that
-decides whether it is true. One-time codes are also both "never persisted" and given "a 15-minute TTL".
+A's load-bearing move is the rolling summary — "rewritten each wake so the eleven-week outliers don't grow
+unbounded", then read back on the wake after that. The cost is A's own best idea. A tags every fact with
+`source` (`bank_feed` / `tool_result` / `merchant_mail` / `model_inference`) and rightly calls that "exactly
+what's missing today", then writes mixed-provenance content into one prose blob that carries a single tag over
+sources the tag cannot distinguish. A wake reads "the last three ledger entries in full", so recent provenance
+survives item by item; older material arrives either as that blob or as "top-k semantic hits" over mail and
+portal text, and only the second of those is still traceable to a source. On a 77-day case the blob is carrying
+most of the history. A is also right that merchant procedural
+memory is "the tier that matters most" — but "`user_id` is the partition key across all four tiers" falsifies
+it, because a shared tier cannot be user-partitioned, so the deletion cascade cannot reach the one store
+holding facts learned from a user's mail. The read cost is asserted, never computed.
 
 </Verdict>
 
@@ -187,13 +195,15 @@ Boring, inspectable at 3am, and the close decision comes from the bank, not from
 <Verdict>
 
 B passes the budget by changing the denominator, not the prompt: "~60% exit here, no model", and a
-`pending_confirm` state that "sleeps on feed diffs and costs no inference". That is the strongest move on the
-page. Two cracks. "Never a prior model output as input" is falsified by B's own read list — the 800-token
-merchant playbook is model-proposed ("The agent may *propose* playbook changes from observed failures"); the
-honest rule is never *ungated* model output, and the risk simply moved into one eval gate on a fact shared by
-every open workflow at that merchant. And "TTLs: raw mail 30 days" strands every `artifact_ref` on an
-eleven-week workflow at day 30, while traces "carry IDs, not content" — the evidence expires while the case is
-still open. The 60/40 split is invented.
+`pending_confirm` state that "sleeps on feed diffs and costs no inference". C reaches the same conclusion — "most
+wakes must not be inference at all" — but B is the only one that puts a number on the split, and the number is
+B's own invention, unchecked. The sharper crack is
+"~2.3k tok in, bounded by construction": that bound needs forty gated fact rows inside 600 tokens, about fifteen
+tokens for a seven-field row carrying a payload. It will not hold, so the cap is asserted rather than
+constructed — the one defect B is otherwise strongest for refusing. And the merchant playbook is a third
+persisted store, model-proposed ("The agent may *propose* playbook changes from observed failures"), which both
+"Nothing else persists" and "Never a prior model output as input" deny; the honest rule is never *ungated* model
+output, on a fact shared by every open workflow at that merchant.
 
 </Verdict>
 
@@ -246,131 +256,158 @@ Things I'd want in the same design rather than deferred: a policy layer over the
 
 <Verdict>
 
-Credit first: three things here nobody else buys. Raw artifacts kept "30 days or close + 7, whichever is
-later" is the only retention policy that survives the 77-day tail. Pinning "the prompt + policy + fold version
-into each StateTransition" is the only design where a week-nine workflow stays interpretable on a newer deploy.
-And its attribution test is the sharpest — a bad read is "an Observation whose `extractor_ver` disagrees with
-`raw_ref` on replay", separating bad parse from bad tool. The price is the WAKE BRIEF, which C's own words call
-"cache-only", "transient", rebuilt by a fold that is "deterministic, pure": a third store that saves only CPU,
-yet still needs a version key and a deletion entry. Same instinct in the closer — "this as a standalone memory
-service" — offered to three engineers who owe 1,700 more merchant flows.
+C buys two things no other attempt does, and sharpens a third. Keeping raw artefacts "30 days or close + 7,
+whichever is later" is the only rule that carries the raw material through the 77-day tail — B strands its mail
+bodies at day 30, and A keeps only embedded chunks of it. And C alone pins "the prompt + policy + fold version
+into each StateTransition", so a week-nine judgement can be read back under the code that made it; B's upcasting
+reader migrates the data, not the decision. Its attribution test is the sharpest of the three: a bad read is "an
+Observation whose `extractor_ver` disagrees with `raw_ref` on replay", which is a test rather than a label on the
+channel. The price is the wake brief. C's own words call it "cache-only" and "transient", rebuilt by a fold that
+is "deterministic, pure" — an extra store that saves only CPU, and one C then has to key by "ledger offset *and*
+fold version" to keep valid. C closes off the obvious objection (the projections "all die together" on a key
+destroy), which is the point: the store is defensible and it is still a third moving part bought to avoid
+recomputing a pure function. C's last paragraph shows the same instinct: "this as a standalone memory service",
+offered to three engineers who owe 1,700 more merchant flows.
 
 </Verdict>
 
 ## Where they actually disagree
 
-**1. Does a model-written summary belong in the wake's read path?**
-A says yes — the rolling summary is read every wake and rewritten from its own predecessor. B says categorically
-no: "No rolling summary, no agent notes carried forward, no 'context' blob… Never a prior model output as input
-— that is how a bad read becomes canon on wake seven." C agrees ("Speculation persisted becomes evidence to the
-next wake"). **B and C are right, and the reason is mechanical rather than stylistic:** A's own answer to the
-1.2% is per-fact provenance, and a summary is one blob with one provenance covering mixed sources. The summary
-destroys exactly the attribution A built the schema to provide.
+Each disagreement below is a decision you will have to make yourself. The last entry is the exception: it is
+the one thing all three did the same way, and none of them checked.
 
-**2. What counts as bank-feed evidence that a charge stopped?**
-A: "only a bank-feed confirmation writes it." B: "no new charge past the next expected bill date, or an explicit
+### The wake's read path: a model-written summary or typed facts only
+
+A says the summary belongs there. It is read every wake, and rewriting it each wake means rewriting it from its
+own predecessor. B says categorically no: "No rolling summary, no agent notes carried forward, no 'context'
+blob … Never a prior model output as input — that is how a bad read becomes canon on wake seven." C agrees
+("Speculation persisted becomes evidence to the next wake"). B and C are right, and the reason is mechanical:
+A's own answer to the 1.2% is per-fact provenance, and a summary is one blob with one provenance covering mixed
+sources. So A's schema can attribute the 1.2% on replay, while the summary a wake reads alongside it cannot —
+and the summary is what carries the history once a case is older than three ledger entries.
+
+### Evidence a charge stopped: a confirmation or an absence over a window
+
+A: "only a bank-feed confirmation writes it". B: "no new charge past the next expected bill date, or an explicit
 merchant confirmation ID plus one clean cycle." C: "two independent attestations: a merchant-side confirmation
-*and* one full billing cycle with no charge." **B and C are right on the mechanism.** A bank feed emits
-charges, not cancellations — the only feed evidence of a stopped subscription is an *absence* over a window,
-and absence-of-evidence needs a named window. A never names one, so its "bank-feed confirmation" is a state
+*and* one full billing cycle with no charge on the feed." B and C are right on the mechanism. A bank feed emits
+charges, not cancellations — the only feed evidence of a stopped subscription is an *absence* over a window, and
+absence-of-evidence needs a named window. A never names one, so its "bank-feed confirmation" is a state
 transition with no trigger.
 
-**3. What happens to an open workflow when a deletion request lands?**
+### Deletion mid-workflow: pseudonymise and keep running or terminate
+
 A pseudonymises and keeps running — "a tombstone that keeps the workflow runnable on pseudonymous state
-(merchant, amount, stage) with identity fields nulled." B: "degrades to its pseudonymised typed facts **or**
-terminates." C: "hard-fails to a terminal `abandoned_user_deleted`." All three are compliant; they differ on
-whether exercising a privacy right silently kills an in-flight money recovery. C's is the harshest and the only
-one that loses the user's refund with no way to tell them — you just deleted them. **A's default is the most
-user-serving here, and B's is the best framed**, because B is the only one that states the choice exists rather
-than hard-coding it. This is a product decision the reader has to make, not a completeness gap.
+(merchant, amount, stage) with identity fields nulled." B: "degrades to its pseudonymised typed facts or
+terminates." C: "hard-fails to a terminal `abandoned_user_deleted`". All three honour the 30-day obligation the
+prompt states; they differ on whether exercising a privacy right silently kills an in-flight money recovery. C
+hard-codes losing it, and once the identity fields are gone there is nobody left to tell. A's default keeps the
+recovery running. B is the only one that leaves both open — "degrades to its pseudonymised typed facts **or**
+terminates" — but it is a bare disjunction, and B never says who picks or on what basis. All three leave that
+unanswered, which is the gap: this is a policy question wearing a schema question's clothes, and none of the
+three hands it to whoever should own it.
 
-**4. Should shared merchant knowledge be pinned to the workflows running under it?**
-C says yes — "version-pinned", with the fold, policy and prompt version stamped into each StateTransition and
-"lineage back to the workflows that justified it, so a regression is attributable." B versions and eval-gates
-it but does not pin per workflow: B migrates "facts and state position", and its playbook is retrieved live by
-`(merchant_id, state)`. A gives it a 180-day TTL plus "re-validate on failure". **C is right, and it is right
-about the thing B itself named as the danger.** B's own argument — "three engineers cannot review 2,000 flows as
-code, but they can review diffs to 2,000 rows" — implies a bad promoted row steers every live workflow at that
-merchant the moment it lands. Without a pin, a workflow in week nine silently switches playbook mid-flight and
-no replay can say which version drove which decision. C paid for a lot of machinery; this is one place it earns
-its keep.
+### Shared merchant knowledge: pinned per workflow or read live
 
-**5. Is the stronger evidence bar free?**
-B says the mechanism enforcing it takes cost away: "`pending_confirm` is cheap: it sleeps on feed diffs and
+C comes closest to pinning: the merchant card is "version-pinned", and each StateTransition carries "the prompt +
+policy + fold version" — note that the playbook version is not itself in that list, so even C stamps the
+machinery and not the merchant knowledge. B versions and eval-gates the playbook but retrieves it live by
+`(merchant_id, state)`, migrating "facts and state position". A gives it a 180-day TTL plus "re-validate on
+failure". C's instinct is the right one, and what makes it right is a consequence B states without drawing:
+"three engineers cannot review 2,000 flows as code, but they can review diffs to 2,000 rows" is an argument about
+reviewability, and reviewability at that scale implies the reach — a promoted row lands on every live workflow at
+that merchant at once. So a workflow in week nine can switch playbook mid-flight, and no replay can say which
+version drove which decision. None of the three closes that, and C only narrows it.
+
+### A stricter close condition: absorbed by a cheap state or paid for in wakes
+
+B says the mechanism that enforces it removes cost: "`pending_confirm` is cheap: it sleeps on feed diffs and
 costs no inference. That state also absorbs your eleven-week tail, which is otherwise the thing that eats the
-budget." C says it is bought, and names the currency: "You trade a slower truthful answer for never lying." A
-never meets the question, having named no window at all. **C is right that it is paid for, and both are wrong
-about the size.** Requiring a billing cycle before a workflow may close moves typical close from six days
-toward thirty-odd, and every extra day sits in the open inventory — the ~45,000 concurrent workflows grow, each
-accruing wakes, and wakes are the unit the $12,000 is divided into. B is correct that an idle `pending_confirm`
-wake costs no inference; what gets charged is the *number* of them, and neither attempt multiplies it.
-Strengthening the quality bar and holding the budget draw on the same account, so a design that moves one owes
-an estimate to the other.
+budget." C says it is bought: "You trade a slower truthful answer for never lying." A never meets the question,
+having named no window at all. C is right that it is paid for, and neither sizes it. Requiring a full billing
+cycle before a workflow may close moves typical close from six days toward thirty-odd, if the subscriptions bill
+monthly. Every extra day sits in the open inventory. The ~45,000 concurrent workflows grow, each accruing wakes.
+B is right that an idle `pending_confirm` wake costs no inference, and a wake that costs nothing subtracts
+nothing — the objection is not that free wakes eat the allowance. It is that a longer hold does not only add free
+wakes. A case held open for a billing cycle collects more merchant replies and more contested feed lines, and
+those are exactly the wakes B routes *to* a model. At 4,000 starts a day a thirty-five-day mean puts about
+140,000 workflows open at once instead of 45,000, holding three times the inventory for a year before the tail
+even arrives. Neither attempt does that multiplication, and the page cannot do it for them: what a stricter close
+costs depends on how many of the added wakes carry something a model has to read, which is a number this prompt
+does not supply. That is the estimate a design owes when it moves the quality bar.
 
-## The position nobody took
+### What all three agreed on, and none of them priced
 
-A fourth position is available here, and none of the three takes it: persist almost nothing, and re-derive the
-workflow's state at each wake from the mail thread and the bank feed. Those two are already durable, already
-externally auditable, and already the records a disputed claim will be settled against — a second copy is a
-divergence bug three engineers have to keep honest forever, and not having one removes every stale-memory false
-close at the root. What defeats it is the budget: ten cents buys roughly nine wakes at a penny each, and
-re-reading an eleven-week thread on the three-in-a-hundred workflows that wake forty-odd times spends the
-entire envelope on reconstructing what you already knew. It is the cheapest design to own and the most
-expensive to run; which of those two you can afford is the decision.
+All three keep a durable record of things the mail thread and the bank feed already hold — what the merchant said,
+what the bank shows. Take those two as durable and as the records a disputed claim gets settled against, and that
+overlap becomes a divergence three engineers have to keep honest for as long as a workflow lives. Every
+stale-memory false close starts in the overlap. What none of the three does is price the alternative: re-reading
+those two sources at each wake instead of trusting a copy of what they said. The arithmetic is available. Ten
+cents buys nine wakes at about a penny each; nine wakes over an eleven-day mean is a wake every day and a bit, so
+an eleven-week case takes sixty-odd of them, all drawing on the same ten cents. Those cases are subsidised by the
+six-day median today, and re-reading a growing thread on every one of sixty wakes is what spends the subsidy on
+reconstructing what was already known.
+
+Note the limit of that comparison, which is also why it is not a fourth attempt: the overlap is partial. Neither
+the mail thread nor the bank feed holds the tool-call ledger of portal actions, or the state-machine position, so
+a design that re-derives everything would have to re-drive the portals, not merely re-read two feeds. The honest
+version is narrower than it first looks — and still unpriced by all three.
 
 ## The principle
 
-> A summary can only ever cite itself, so nothing an agent may later have to defend should be read from one.
+> A summary carries one provenance for everything inside it, so nothing an agent may later have to defend should
+> be read from one.
 
 </Reveal>
 
 :::tip[Read next]
 
 - [Plan search & memory](/rag-agents/part-2-agents/planning-loops/deep-dive) — the handbook's memory
-  taxonomy: working, episodic, semantic, procedural, and paging between a window and a store. Read it knowing
-  it argues the *other* side of the summary question, presenting a model-written reflection buffer read back on
-  the next attempt as the canonical pattern.
+  taxonomy: working, episodic, semantic, procedural, and paging between a window and a store. Start here if the
+  words in the attempts' diagrams are unfamiliar — and read its section on reflection buffers against what the
+  attempts do, because the lesson and this page do not agree.
 - [Sampling, SLOs & budgets](/rag-agents/part-1-rag/cross-cutting/observability/deep-dive) — redaction before
   the trace store, retention set by tier, and the reversible-versus-irreversible masking axis where a
-  recoverable value makes the key itself the liability. This is what lets you judge whether per-user key
-  destruction is a mechanism or a slogan.
+  recoverable value makes the key itself the liability. This is what lets you judge whether a design that
+  promises one deletion switch has named a mechanism or a slogan.
 - [Graphs & durable execution](/rag-agents/part-2-agents/orchestration-frameworks/deep-dive) — checkpointers,
-  `thread_id`, and what a woken process actually loads to resume. It is also the only page that separates
-  thread-scoped checkpoint state from a cross-thread store keyed per user.
+  `thread_id`, and what a woken process actually loads to resume. It is also where thread-scoped checkpoint
+  state is separated from a cross-thread store keyed per user.
 - [The arithmetic: context, caching, and the retry tax](/ai-sdlc/part-5-scale-governance/cost-economics/deep-dive)
-  — the cost decomposition per attempt, and why re-sending state grows context cost quadratically in turns.
-  The arithmetic behind "most wakes must not be model calls".
+  — the cost decomposition of one model call, and why re-sending state grows context cost quadratically in
+  turns. The arithmetic behind deciding how many of nine wakes may be model calls at all.
 - [Injection defence & red-teaming](/rag-agents/part-1-rag/cross-cutting/guardrails/deep-dive) — where PII gets
   caught and how it is masked, on input before the logs and the provider call, and detection priced as a
-  precision/recall tradeoff. Relevant to any answer that strips one-time codes with a pattern match.
+  precision/recall tradeoff. Relevant to any design that strips one-time codes with a pattern match.
 
 :::
 
 ## If they push
 
-The interviewer has your design and now goes looking for the seams. Each of these is easy if you reasoned your
-way to your answer and fatal if you recited someone else's.
+These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 
 > A merchant changes its cancellation flow on Tuesday. Twelve hundred workflows are mid-flight against the old
 > flow; forty of them are in week nine. What changes in your design — and what happens to the facts those forty
 > are already carrying?
 
 A memorised answer describes the new flow. The question is about the old one: stored derived state is now
-wrong, and the design owes a way to detect that, invalidate it, or re-derive it. The forty are the test, because
-they are the ones whose stored facts are oldest and whose replay window has most likely expired.
+wrong, and the design has to detect that, invalidate it, or re-derive it. The forty are the test, because their
+stored facts are the oldest and the raw material behind them is the likeliest to have aged out under a
+retention rule.
 
 > A deletion request arrives for a user with three closed workflows and one open one. Enumerate every place a
 > fact about them exists in your design, and say which a delete actually reaches. For any it cannot, say what
 > you would have had to do differently at write time.
 
-Rehearsed answers name the primary store. The enumeration is the point — indexes, event payloads, shared
-merchant facts, traces, caches — and so is the admission of which are unreachable. "What you would have done
-differently at write time" is where the second half of the question lives: deletion is a property you build in,
-not a job you schedule.
+The enumeration is the whole question, and the primary store is the easy entry on it. The list is longer — indexes, event payloads, shared merchant facts,
+traces, caches — and the answer has to say which of those a delete cannot reach. The harder half is what would
+have had to be done differently at write time: deletion is a property you build in, not a job you schedule.
 
 > Your inference budget drops to two cents per workflow. What is the first thing your design stops remembering,
 > and which failure surfaces first?
 
-This cannot be recalled, only derived: it asks the candidate to rank their own memory tiers by marginal value
-against the quality bar they committed to, and then to name what breaks. An answer that trims everything
-evenly has no ranking.
+Two cents across nine wakes is about a fifth of a penny each, which on the attempts' own figures does not fund a
+single model call on a two-thousand-token context. So this is not a trimming exercise: it asks which wakes stop
+using a model at all, and therefore which stored things stop being worth keeping. Ordering memory by marginal
+value against the quality bar cannot be recalled from anyone's answer — it has to be derived from the one the
+candidate gave.
