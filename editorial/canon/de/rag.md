@@ -1796,3 +1796,119 @@ den MCP-Referenten trägt. **Ein Gate ist nur so gut wie seine Eingabe, und die 
   Rate-Limit oder Bezahlschranke nicht nehmen konnten (`mehrschrittig`, `Handlungsspielraum`,
   `Rückwärtskante`, `Kontextüberlastung`). Sie stehen im bindenden Blatt als **NICHT GEMESSEN**, nie als
   Null. **Ein späterer Durchgang soll sie nehmen, nicht erben.**
+
+### Phase 7 (2026-07-29/30) – Welle 3, Teil III: Belegdurchgang UND Prosa
+
+*Die erste Welle, in der Belegdurchgang und Renderdurchgang zusammenfallen – zehn deutsche Seiten von
+`part-3-production/` (Teilübersicht, die Karte `production-failures`, vier Lektionen mit ihren
+Vertiefungen), ausgeliefert in MR #352. Sieben Slices über die englischen Quelldateien, **jeder Slice
+zweimal und unabhängig**: vierzehn Blätter, danach ein Zusammenführungsdurchgang über alle vierzehn.*
+
+#### Die Zahlen, gemessen und nicht geschätzt
+
+Nachgezählt am 2026-07-30 gegen den ausgelieferten Baum, nicht aus dem Auftrag übernommen:
+
+- **10 Seiten, 2 019 hinzugefügte Zeilen**; die strukturelle Parität lief über **37 deutsche Dateien**.
+- **Das bindende Blatt hat 749 Zeilen** über 7 Slices; die sieben Slice-Ledger zusammen **3 456**.
+- **222 Termini** waren auf die sieben Slices verteilt.
+- **Der Ban-Scan trug 68 Regeln** in fünf Gruppen.
+- **Mermaid**: 8 Dateien mit Diagrammen, **90 beschriftungstragende Zeilen, 134 Beschriftungsstrings** –
+  im Englischen und im Deutschen dieselbe Zahl, was die einzige Paritätsaussage ist, die diese Oberfläche
+  überhaupt zulässt.
+- **Karten**: nur `production-failures` trägt sie – 8 InfoCard-Blöcke, 57 Beschriftungsplätze, 91
+  Attributstrings, davon 75 gerenderte deutsche Prosa. Bei 360 px gemessen: **73 Strings, 0 über dem
+  Drei-Zeilen-Budget, 0 unter der 11-px-Grenze**. Das Spurenetikett trägt **DEMO / PRODUKTION** in voller
+  Länge (76,5 px in einer 275 px breiten Spur) – der Rückfall `PROD` wurde nie gebraucht.
+- **Typografie**: über die hinzugefügten Zeilen U+2014 = 0, Anführungszeichen ausgeglichen, keine
+  Guillemets, kein `du`. Über den gesamten ausgelieferten deutschen Baum: **68 Vorkommen von
+  Ziffer + U+202F + %** und **0 jeder anderen Prozentform**.
+- **Der Registerprüfer lief wiederholt je Seite**: 28 Urteilsdateien, **334 Blöcke, 313 angenommen, 21
+  verworfen** – 8 davon erfundene Zitate, 13 ohne benannten Befund. **Die Null früherer Wellen ist damit
+  eine Welleneigenschaft und keine Methodeneigenschaft**; getragen hat nicht die Null, sondern dass kein
+  erfundenes Zitat je auf eine Arbeitsliste gelangt ist.
+
+#### Vier Termini hatte kein Slice – und der schlimmste war der mit der größten Sichtbarkeit
+
+Das Doppeln schützt gegen eine falsche Antwort. Gegen eine **fehlende Frage** schützt es nicht. Vier
+Termini waren **keinem Slice zugewiesen** und mussten ohne Attestierung als HOUSE bzw. OPEN geregelt
+werden, damit kein Renderer sie erfindet: `der Ergebnisspeicher`, `der semantische Cache`, `Failover` und
+`Fallbacks`.
+
+**`Fallback` ist der Fall, der die Klasse erklärt.** `rag.md` §2 führte ihn längst als *settled kept-EN* –
+**ohne §1.1-Zeile**, also ohne Genus, ohne Plural, ohne Genitiv. Das ist die `Admission-Control`-Gestalt
+aus Welle 2, wörtlich wiederholt: **ein Zeiger auf eine leere Zelle sieht genauso aus wie ein Zeiger auf
+eine gefüllte.** Und es traf den **sichtbarsten Terminus der Welle ohne Eigentümer**: 10 Vorkommen in 5
+Dateien, eine H3, eine Mermaid-Beschriftung und die Fußzeile der neuen Begriffe. Die Regelung heißt
+deshalb **„kein Artikel erfinden“** und nicht: ein Genus.
+
+**Die Folgerung für die nächste Welle ist eine Reihenfolge, keine Ermahnung: die Termliste wird gegen die
+Vereinigung der Slice-Zuweisungen gediffed, BEVOR die Slices laufen.** Abdeckung ist ein eigenes Gate und
+nicht ein Nebenprodukt von Korrektheit.
+
+#### Der Prozessbefund: nichts war festgeschrieben, bis alles fertig war
+
+Dieser Eintrag hält ihn fest, weil er teurer war als jeder sprachliche Befund der Welle.
+
+Der Belegdurchgang lief **zweimal**. Der Renderdurchgang ist **zweimal abgebrochen, bevor eine einzige
+Zeile geschrieben war**, und **jeder Abbruch hat ein Worktree hinterlassen, das ausgelieferte Arbeit
+zurückgenommen hätte** – das erste auf dem Stand der i18n-Gates, das zweite auf dem Stand der Registrierung
+des dritten Kurses. Das zweite **existiert am 2026-07-30 noch**, sechs Commits hinter `origin/main`, mit
+null eigenen Commits: ein Arbeitsbaum, in dem jede Datei, die `origin/main` seither bekommen hat, als
+lokale Löschung erscheint. **Wer darin blind committet, revertiert gemergte Arbeit** – und der Befund ist
+nicht „ein Agent war unachtsam“, sondern: **ein abgebrochener Auftrag hinterlässt keinen leeren Zustand,
+sondern einen scharfen.**
+
+Dann hat eine Sitzungsgrenze den dritten Anlauf mit **zehn gleichzeitig laufenden Renderern** beendet, und
+**neun Seiten waren verloren, weil nichts festgeschrieben war, bis alles fertig sein würde.** *(Die beiden
+Zahlen stammen aus dem Protokoll des ausführenden Durchgangs und sind aus der Git-Historie nicht
+rekonstruierbar – sie stehen hier als Bericht, nicht als Messung.)*
+
+**Der Neustart hat je Seite festgeschrieben und über vier weitere Serverausfälle hinweg nichts verloren.**
+Das ist in der Historie nachprüfbar: der Zweig trägt **dreizehn Commits** – acht Renderschritte einzeln
+nach Seite, vier Reparaturrunden auf `production-failures` und einen Merge. Zwei dieser Commit-Titel sind
+selbst der Beleg für die Regel, dass eine Reparatur eine Änderung ist: *„fix a syntax break the last
+repair introduced“* und *„rounds 5–7, and three defects the repairs …“*.
+
+**Die Regel, die daraus in den Kanon gehört: Festschreiben je Einheit, nicht je Auftrag.** Ein Durchgang,
+der erst am Ende committet, hat die Wahrscheinlichkeit seines Werkzeugs zur Voraussetzung – und ein
+Fachbuch übersetzt sich nicht in einer Sitzung.
+
+#### Zwei Zeilen wurden gemeldet statt entschieden – und sind jetzt entschieden
+
+MR #352 hat beide ausdrücklich offengelassen. Nachgetragen am 2026-07-30:
+
+1. **Das Genus von `Demo`.** Der Registerprüfer hat das Neutrum in **zehn Urteilen aus vier Stichproben**
+   beanstandet, `_language.md` §9.1 schrieb die H1 dieser Seite mit dem Neutrum wörtlich aus, und **eine
+   §1.1-Zeile gab es nicht** – der Renderer hatte also nichts, worauf er zeigen konnte, und der Prüfer nichts,
+   was ihn widerlegt. Attestiert und **als Neutrum geschlossen** (§1.1.a): Duden führt **zwei Homografen und
+   keiner trifft den Referenten** (*die Demo* = Demonstration, *das Demo* = Demoaufnahme), **DWDS** führt das
+   Lemma als **„die oder das Demo“** und nennt als Bedeutung 2 genau die Softwareversion. **Beide Genera sind
+   für diese Bedeutung standardsprachlich**; die Beanstandung war eine Variantenpräferenz und kein Befund. Der
+   Korpus stand **7 : 1** für das Neutrum, und das eine Femininum war der Defekt – **ein Referent, ein Genus**.
+2. **Die Fügung „hinter die Stufe“ im gebundenen Mustersatz für die Score-Untergrenze.** Repariert zu
+   **„Setzen Sie eine Score-Untergrenze hinter der Stufe an, deren Scores etwas bedeuten.“** Der Beleg kommt
+   aus dem eigenen Korpus, nicht aus einem Urteil: `serving/deep-dive.md` schreibt **„setzen Sie die
+   Obergrenze dort an“** – Sie-Imperativ, dieselbe Grenzen-Wortfamilie, dasselbe Verb mit Dativ – und dieselbe
+   Seite schreibt zwölf Absätze später **„eine Score-Untergrenze hinter dem Reranking“** im Dativ. Die
+   englische Vorlage lautet *„put a score floor after the stage whose scores mean something“*; das
+   Richtungsakkusativ mit `setzen` war deren Bau, nicht der deutsche.
+
+#### Was dieser Durchgang NICHT konnte – und was offen bleiben MUSS
+
+- **Das bindende Blatt der Welle ist nie in das Repository gelangt.** 749 Zeilen, sieben Slice-Ledger,
+  vierzehn Blätter – alles davon lag in einem Arbeitsverzeichnis, und **`_language.md` trägt bis zum
+  2026-07-30 null mit *(Welle 3)* markierte Registerzeilen** (Welle 1: 84, Welle 2: 18). Die zehn Seiten sind
+  also gegen ein Blatt gerendert worden, das **kein Gate gesehen hat und kein Nachfolger erben kann.** Das ist
+  die gemeinsame Ursache der beiden Zeilen oben: das fehlende `Demo`-Genus und der defekte Mustersatz stehen
+  beide in einem Dokument, das nie versioniert wurde. **Der Nachtrag der Welle-3-Registerzeilen nach §1.1 ist
+  offene Arbeit und gehört in einen eigenen Durchgang**, nicht in diesen Eintrag.
+- **Kein natives Ohr und kein unabhängiges Modell hat die Sätze gelesen, die das Blatt bindet.** Das Blatt
+  sagt das über sich selbst: alle Kollokationsprüfungen liefen gegen Wörterbücher, und **eine auf englischer
+  Kollokation gebaute deutsche Fügung übersteht genau diese Prüfung.** Genau so ist der Mustersatz oben
+  entstanden – gefunden hat ihn erst das Gate der gerenderten Seite, eine Datei weiter unten.
+- **Zwei ausgelieferte Defekte sind gemeldet und ausdrücklich nicht repariert** (W3-30, W3-31): sie liegen
+  außerhalb der Dateiliste dieser Welle, und nach der Welle-2-Lehre greift ein Durchgang, der eine Datei nur
+  *gezählt* hat, nicht in sie hinein. Jeder trägt Zählung und Zitatsatz, damit jemand handeln kann, der die
+  Datei gelesen hat.
+- **Die Mermaid-Beschriftungen sind nicht gegen das 360-px-Budget gemessen.** Mehrere gebundene deutsche
+  Strings sind länger als ihre englischen Vorlagen. Das gehört an das Rendergate; §5 sagt, welche.
