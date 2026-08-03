@@ -214,25 +214,27 @@ const COURSES: Course[] = [
   // course claims `['en']` and the i18n gates scope themselves to it (the `locales`
   // field above explains the mechanism). The landing card derives "English" from the
   // same list, so a reader in any locale sees what they are getting before clicking.
-  // `live: false` until the first batch lands — the card shows "In progress" and its
-  // CTA points at the intro, which describes the plan.
+  // `live: true` since 2026-08-03: the first batch is complete — eight scenarios, one archetype
+  // (agentic workflows). `inNavbar` flipped in the same change, which also adds the footer
+  // column and the landing card's "Live" badge; all three read this one flag, so do not expect
+  // to advertise the course on one surface and not another.
   {
     id: 'design-scenarios',
     basePath: '/design-scenarios',
     sidebarId: 'designScenariosSidebar',
     navbarLabel: 'Design Scenarios',
     blurb:
-      'Hard design questions from published AI-engineering job postings, each worked through ' +
-      'three ways — the common answer, the strong one, and the over-built one — with the ' +
-      'tradeoffs that separate them.',
+      'Hard design questions from published AI-engineering job postings, each answered three ' +
+      'ways by agents working blind, then assessed against a rubric written before any of them ' +
+      'ran — with the tradeoffs that separate the answers.',
     locales: ['en'],
     // 'by-design', not 'pending': English-only is this course's declaration (see the blurb
     // above), so a non-English locale should still SEE it rather than have it hidden
     // forever. Currently moot because `inNavbar` is false, but the policy is declared so the
     // day it is advertised the answer is already recorded rather than re-argued.
     untranslatedPolicy: 'by-design',
-    live: false,
-    inNavbar: false,
+    live: true,
+    inNavbar: true,
     footerLinks: [
       {label: 'Introduction', path: ''},
       {label: 'Agentic workflows', path: 'agentic-workflows/overview'},
