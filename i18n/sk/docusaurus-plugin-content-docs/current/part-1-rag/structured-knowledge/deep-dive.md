@@ -183,7 +183,7 @@ ktoré ešte nepadlo.
 (shapes graph)** a späť dostaneš **validačnú správu (validation report)**. Pre systémy s LLM je to najdôležitejší
 kus a zároveň ten najčastejšie vynechaný, lebo je to deterministická brána nad pravdepodobnostným producentom:
 extraktor navrhuje, graf tvarov rozhoduje a správa ti presne povie, ktoré obmedzenie neprešlo. Argument, prečo
-taká brána do pipeline vôbec patrí, vedie lekcia [vrstvené brány](/sk/ai-sdlc/part-3-verification/layered-gates);
+taká brána do pipeline vôbec patrí, vedie lekcia [vrstvené brány](/ai-sdlc/part-3-verification/layered-gates);
 SHACL je jeden konkrétny spôsob, ako ju postaviť.
 
 **SPARQL — ako sa spýtam?** [SPARQL 1.1](https://www.w3.org/TR/sparql11-query/) (odporúčanie z roku 2013)

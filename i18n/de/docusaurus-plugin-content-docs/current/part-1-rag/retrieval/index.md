@@ -59,6 +59,8 @@ Im Unternehmen beantwortet das Retrieval mehr als die Frage, ob etwas der Bedeut
 - **Nach Metadaten filtern** – nach den Feldern, die beim Chunking angehängt wurden: Datum, Abteilung, Dokumenttyp, Sprache. „Nur Personaldokumente nach 2024.“
 - **Die Zugriffssteuerung (access control, ACL).** Die Berechtigungen greifen *vor* der Rückgabe, damit niemand einen Chunk erhält, auf den er keinen Zugriff hat (das Beispiel mit der Gehaltsliste aus der Lektion zur Ingestion). Das ist eine harte Anforderung: Ein System, das ein gesperrtes Dokument allein wegen seiner Relevanz herausgibt, hat einen Sicherheitsvorfall verursacht und nicht bloß einen Qualitätseinbruch. Üblich ist der Pre-Filter – erst anhand der Berechtigungen filtern, dann suchen.
 
+Die Zugriffssteuerung liest sich hier wie eine Mechanik des Retrievals, sie entscheidet aber etwas viel Größeres mit. Ein Filter kann für jede anfragende Person ein anderer sein; die Gewichte eines Modells sind für alle dieselben. Diese Asymmetrie entscheidet darüber, wo das Wissen einer Organisation überhaupt liegen darf – siehe [wann Sie die Gewichte ändern](../../part-3-production/llmops/deep-dive.md).
+
 ## Die Pipeline im Ganzen
 
 ```text

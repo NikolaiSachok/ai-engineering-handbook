@@ -25,6 +25,9 @@ Schritt ist immer derselbe: feststellen, welches der beiden vorliegt.
   werden: die Frage umformulieren, hybride Suche, Reranking, Filter und Zugriffssteuerung.
 - **[Generation](./generation/index.md)** – wie die Antwort an den abgerufenen Kontext zurückgebunden wird:
   Grounding, Quellenangaben, eine ehrliche Antwortverweigerung statt einer Erfindung.
+- **[Strukturiertes Wissen](./structured-knowledge/index.md)** – was zu tun ist, wenn die Antwort in keiner
+  Passage steht: kontrollierte Vokabulare und Ontologien, Knowledge Graphs, die semantische Schicht und
+  Text-to-SQL. Und, für jedes davon, ob es seinen Aufbau wert ist.
 - **Querschnittsthemen** – was sich keinem einzelnen Schritt zuordnen lässt:
   [Evaluierung](./cross-cutting/evaluation/index.md) (woran Sie erkennen, dass das System funktioniert),
   [Guardrails](./cross-cutting/guardrails/index.md) (die Leitplanken, die es absichern),
@@ -38,9 +41,9 @@ Kontext und ein Embedding sind. Vertiefte Mathematik brauchen Sie nicht – wir 
 
 :::note[Bearbeitungsstand]
 
-Teil I liegt in seiner Grundfassung vollständig vor – jede Lektion ist veröffentlicht: Ingestion,
-Retrieval, Generation und die Querschnittsthemen (Evaluierung, Guardrails, Observability). 🚧 Ein zweiter
-Durchgang steht noch aus, der jede Schicht vertieft; die Themen dafür stehen auf den Lektionsseiten unter
-„Als Nächstes: Teil 2 der Lektion“.
+Teil I ist vollständig – jede Lektion ist veröffentlicht, und jede trägt ihren zweiten Durchgang als
+Vertiefung: Ingestion, Retrieval, Generation, strukturiertes Wissen und die Querschnittsthemen (Evaluierung,
+Guardrails, Observability). Zur Vertiefung einer Lektion kommen Sie über den Hinweis „Als Nächstes: Teil 2
+der Lektion“ auf ihrer Seite.
 
 :::

@@ -59,7 +59,7 @@ Schéma sa vypláca na troch oddelených miestach. Vedz, za ktoré z nich platí
 z odseku vyššie a práve tu vracia najlacnejšia štruktúra najviac.
 
 **Validácia.** Vrstva obmedzení vie odmietnuť extrahované tvrdenie, ktoré schéme odporuje — hranu zamestnania
-mieriacu na dokument namiesto organizácie, dátum mimo povoleného rozsahu. Tak vznikne deterministická brána nad pravdepodobnostným producentom — presne taký mechanizmus odporúča v kurze AI SDLC lekcia [vrstvené brány a rozmanitosť mechanizmov](/sk/ai-sdlc/part-3-verification/layered-gates). Schéma je to, čo takú
+mieriacu na dokument namiesto organizácie, dátum mimo povoleného rozsahu. Tak vznikne deterministická brána nad pravdepodobnostným producentom — presne taký mechanizmus odporúča v kurze AI SDLC lekcia [vrstvené brány a rozmanitosť mechanizmov](/ai-sdlc/part-3-verification/layered-gates). Schéma je to, čo takú
 bránu vôbec *umožňuje*, lebo brána potrebuje niečo, voči čomu bude kontrolovať.
 
 **Dopyt.** Ak chceš otázku priradiť k pojmu, a nie k úryvku, potrebuješ model pojmov. To je druhý význam

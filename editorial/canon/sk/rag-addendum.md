@@ -50,14 +50,24 @@ uvedených ho majú a ten dôkaz sa zapisuje sem, aby ho nikto nemusel hľadať 
 - **`riadený slovník`** — doložené na slovenských knihovnícko-metadátových zdrojoch (InfoLib, euroekonom.sk).
   Český tvar je `řízený slovník`, takže slovenské znenie je zároveň správne z hľadiska antibohemizmovej brány.
 
-## 2a. Krížne odkazy medzi kurzami musia niesť prefix lokality
+## 2a. Krížne odkazy medzi kurzami — jeden tvar pre všetky lokality
 
-**Pravidlo:** v slovenských stránkach sa na iný kurz odkazuje `/sk/ai-sdlc/…`, nikdy `/ai-sdlc/…`.
+**Pravidlo:** odkazuj holým `/ai-sdlc/part-3-verification/layered-gates`, **bez** prefixu lokality — rovnako
+ako v anglickom zdroji.
 
-Docusaurus pridá k absolútnemu markdown-odkazu `baseUrl`, ale **nie prefix lokality**. Holý `/ai-sdlc/…`
-skopírovaný z anglického zdroja teda ticho vyhodí slovenského čitateľa na anglickú stránku — a automatická
-detekcia lokality ho nezachráni, lebo tá sa spúšťa iba vtedy, keď nie je nastavená cookie. Odkaz sa vykreslí,
-vráti 200 a je zlý: **je správny pre iného čitateľa.** Žiadna brána v repozitári to dnes nechytá.
+`baseUrl` lokalizovanej zostavy **už obsahuje** segment lokality (`/ai-engineering-handbook/sk/`), takže
+absolútna markdown-cesta sa sama zmení na `/ai-engineering-handbook/sk/ai-sdlc/…` a čitateľ zostáva v
+slovenčine. Overené zostavením všetkých štyroch lokalít 2026-08-03: `href` vo vygenerovanom HTML je
+`/ai-engineering-handbook/sk/ai-sdlc/part-3-verification/layered-gates` a cieľová trasa existuje.
+
+:::danger[Tu sa už raz pomýlilo — nezopakuj to]
+
+Prvý návrh tejto sekcie hovoril opak („daj `/sk/ai-sdlc/…`"). Je to **nesprávne** a **rozbíja to zostavu**:
+`npm run build` spadne s `Docusaurus found broken links`, lebo cesta ukáže na neexistujúcu trasu. Chyba
+vznikla ako vierohodná úvaha o tom, ako sa skladá `baseUrl`, poslala sa ďalej ako fakt a naraz sa dostala do
+troch lokalít. **Pravidlo o odkazoch overuje zostava, nie úvaha** — jeden `npm run build` odpovie za minútu.
+
+:::
 
 ## 9a. Otvorené — dedené defekty, ktoré lokalizačný prechod nemá právo opraviť
 

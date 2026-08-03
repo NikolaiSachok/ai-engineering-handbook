@@ -239,6 +239,103 @@ das getan hat, misst Faithfulness.
 Qualitätshebel, aber dem Grounding nachgeordnet: Die Gestaltung darf niemals eine Quellenangabe, einen
 Vorbehalt oder eine ehrliche Antwortverweigerung fallen lassen.
 
+<a id="structured-knowledge"></a>
+
+## Strukturiertes Wissen \{#structured-knowledge}
+
+**Das kontrollierte Vokabular** (*controlled vocabulary*) – eine feste Liste zugelassener Bezeichnungen. Die
+günstigste Struktur, die es gibt, und die, die einen Extraktor daran hindert, für dieselbe Beziehung drei
+Namen zu erfinden.
+
+**Die Taxonomie** (*taxonomy*) – eine hierarchische Gliederung der Bezeichnungen eines Vokabulars; sie bringt
+Aggregation, Vererbung und Fragen nach Ober- und Unterbegriffen.
+
+**Die Ontologie** (*ontology*) – Klassen, Eigenschaften und die Einschränkungen, denen sie unterliegen: ein Modell der
+Domäne statt einer Liste ihrer Etiketten. Sie bringt Validierung und die Ableitung von Fakten, die niemand
+hingeschrieben hat, zum Preis dauerhafter menschlicher Pflege.
+
+**RDF** – das Modell der Tripel: Jeder Fakt ist ein Subjekt, ein Prädikat und ein Objekt.
+
+**OWL 2** – die Ontologiesprache des W3C mit formal definierter, modelltheoretischer Bedeutung; sie ist es,
+die maschinelles Schlussfolgern möglich macht. Ihre **Profile** (EL, QL, RL) tauschen Ausdrucksstärke gegen
+Berechenbarkeit, und eines davon zu wählen ist eine echte Ingenieursentscheidung.
+
+**SHACL** – eine Sprache zur Validierung von RDF: Ein **Shapes-Graph** nennt die Bedingungen, ein
+**Datengraph** wird dagegen geprüft, und heraus kommt ein **Validierungsbericht**. Der deterministische
+Kontrollpunkt, den ein probabilistischer Extraktor passieren muss.
+
+**SPARQL** – die Abfragesprache für RDF; sie gleicht Muster auf einem gerichteten, beschrifteten Graphen ab,
+auch über relationale Daten, die eine Zwischenschicht als RDF zeigt.
+
+**Der Knowledge Graph** (Wissensgraph) – Entitäten als Knoten und Beziehungen als Kanten, aus einem Korpus
+herausgezogen oder von Hand gepflegt.
+
+**GraphRAG** – das Retrieval über einen Knowledge Graph, der aus Ihren Dokumenten gebaut wurde; als Eigenname
+Microsofts Referenzimplementierung.
+
+**Die Extraktion des Graphen** (*graph extraction*) – der Durchlauf des Sprachmodells, der aus Chunks Entitäten,
+Beziehungen und Covariates macht. Die teure Phase, und die, die darüber entscheidet, ob weiter hinten
+überhaupt etwas stimmt.
+
+**TextUnit** – GraphRAGs Name für einen Quell-Chunk, die Einheit, über die die Extraktion läuft. Seine Größe
+ist eine Entwurfsentscheidung und keine bloße Voreinstellung: Größere Einheiten bedeuten weniger Aufrufe und
+mehr Entitäten je Aufruf – und eine geringere Wahrscheinlichkeit, dass das Modell dem richtigen Paar auch die richtige Beziehung
+zuschreibt.
+
+**Covariates / die Extraktion der Aussagen** (*covariate / claim extraction*) – Aussagen über Tatsachen, jede
+mit einem bewerteten Status und einer Zeitangabe; in GraphRAG optional und standardmäßig aus, weil sie erst
+mit an die eigene Domäne angepassten Prompts nützlich wird.
+
+**Die Bildung von Communitys / der hierarchische Leiden-Algorithmus** (*community detection / hierarchical
+Leiden*) – die rekursive Gruppenbildung, die Entitäten zu ineinandergeschachtelten Communitys zusammenfasst,
+sodass Zusammenfassungen auf mehreren Ebenen entstehen.
+
+**Der Community-Report** – die beim Aufbau erzeugte Zusammenfassung einer Community, mit einer knappen
+Übersicht und ihren wichtigsten Entitäten, Beziehungen und Aussagen. Das ist es, was für eine Frage an das
+ganze Korpus tatsächlich gelesen wird.
+
+**Local Search** – eine Abfragemethode des Graphen: die Nachbarschaft einer Entität, kombiniert mit den
+Roh-Chunks. Der Graph liefert die Struktur, die Belege liefert nach wie vor die Prosa.
+
+**Global Search** – Map-Reduce über jeden Community-Report, für Fragen an das Korpus als Ganzes. Je Abfrage
+teuer – und zugleich die Methode, die den Aufbau eines Graphen überhaupt rechtfertigt.
+
+**DRIFT Search** – Kontext aus den Communitys, in eine lokale Abfrage eingefaltet, damit sie breiter ansetzt.
+
+**Die Duplikaterkennung** (*entity resolution*) – die Entscheidung, dass `Acme Corp` und `Acme Corporation`
+ein Knoten sind. Der Schritt, der am ehesten enttäuscht, weil die verbreiteten Systeme für Graph-RAG über den
+Vergleich der Zeichenketten zusammenführen.
+
+**Zu viel und zu wenig zusammenführen** (*over-merging / under-merging*) – die beiden Richtungen desselben
+Fehlers: Verschiedene Entitäten zu verschmelzen erfindet Verbindungen, eine Entität zu zerfasern verdeckt
+sie. Geben Sie beides getrennt an; eine einzelne Zahl für die Genauigkeit lässt das eine im anderen
+verschwinden.
+
+**Precision auf den extrahierten Tripeln** (*extraction precision*) – der Anteil der extrahierten Tripel, die
+gegen ihren Quelltext wahr sind, gemessen an einer gelabelten Stichprobe. Das Maß für Richtigkeit, das die
+Metriken des Retrievals nicht liefern können.
+
+**Die semantische Schicht** (*semantic layer*) – zwei verschiedene Dinge unter einem Namen. Das eine ist die
+**Kennzahlenschicht** (*metrics layer*): eine Modellierungsebene über einem Warehouse, in der eine Kennzahl
+einmal definiert wird, mit ihren Verknüpfungen, ihren zulässigen Filtern und ihren Dimensionen. Das andere ist
+die semantische Schicht über der sprachlichen Schicht – eine Äußerung wird einem Begriff der Domäne
+zugeordnet statt einer Passage, damit Antworten widerspruchsfrei und nachprüfbar werden.
+
+**Das semantische Modell** (*semantic model*) – die Modellierungseinheit einer Kennzahlenschicht; sie erklärt
+die Bestandteile darunter und die Kennzahlen, die darauf aufbauen.
+
+**Measure / Dimension / Entität** – die Bestandteile eines semantischen Modells: die Größen, die Arten, sie zu
+schneiden, und die Schlüssel, über die verknüpft wird.
+
+**Die Meta API** – der Endpunkt einer semantischen Schicht, über den ein Agent herausfindet, was abfragbar
+ist. Die strukturierte Entsprechung eines Tool-Schemas: Sie beseitigt das Fehlerbild, bei dem ein Modell eine
+Kennzahl erfindet, die vernünftig klingt und gar nicht existiert.
+
+**Text-to-SQL** – aus einer Frage in natürlicher Sprache SQL erzeugen. Gegen ein rohes Schema muss das Modell
+die Abfrage *herleiten* – fachliche Verknüpfungen, fachliche Datumsspalten, unsaubere Werte, ungeschriebene
+Regeln; gegen eine semantische Schicht *wählt* es eine definierte Kennzahl aus, eine kleinere Entscheidung,
+deren Fehler sichtbar ist.
+
 <a id="evaluation"></a>
 
 ## Evaluierung \{#evaluation}
@@ -273,6 +370,20 @@ LLM-Judges, die sich deshalb über mehr Beispiele nicht herausmitteln: der Posit
 zuerst gezeigte Antwort – dagegen hilft, die Reihenfolge zu tauschen und Konsistenz zu verlangen), der
 Ausführlichkeitsbias (länger liest sich als besser) und Self-Preference, im Paper *self-enhancement bias*
 (Ausgaben im eigenen Stil). ↗ [arXiv](https://arxiv.org/abs/2306.05685)
+
+**Korrelierte Fehler** (*correlated error*) – zwei Modelle versagen bei denselben Eingaben aus demselben
+Grund. Ein zweites Modell senkt den Fehler nur insoweit, wie seine Fehler mit denen des ersten nicht
+korrelieren – und von zwei Spitzenmodellen, deren Trainingskorpora einander überlappen, ist zu
+erwarten, dass sie sich genau dort am stärksten einig sind, wo ihre gemeinsamen Trainingsdaten am dünnsten
+sind. Unabhängigkeit kommt aus einer anderen *Informationsquelle* – einer Prüfung gegen Belege, einer
+deterministischen Zusicherung, einem ausführbaren Test, einem menschlichen Label –, nicht von einem anderen
+Anbieter.
+
+**Kontextunabhängigkeit und Unabhängigkeit der Fehlerverteilung** (*context independence vs
+error-distribution independence*) – zwei Eigenschaften, die dieses Handbuch in der Evaluierung
+*Unabhängigkeit* nennt. Die erste hält den Entwurf von einer prüfenden Instanz innerhalb eines Modells fern
+(Chain-of-Verification). Die zweite ist die Eigenschaft über Modelle hinweg, die korrelierte Fehler
+wegnehmen. Wer die erste hat, hat damit noch nicht die zweite.
 
 **Offline und online** (*offline vs online eval*) – am Goldstandard vor der Bereitstellung messen
 (Regressionen in der CI) gegenüber dem Messen im Produktivbetrieb (Nutzerfeedback, A/B-Tests).
@@ -1122,6 +1233,13 @@ Antwort bepunktet und damit das erwünschte Verhalten belohnt.
 **die Distillation (model distillation)** – ein kleineres Schülermodell darauf trainieren, die Ausgaben eines
 größeren Lehrermodells nachzuahmen; das kostet ein wenig Qualität und senkt die Kosten der Bereitstellung
 deutlich.
+
+**die Context-Distillation (context distillation)** – ein Modell darauf trainieren, sich so zu verhalten, als
+läge ein Kontext vor – ein langer System-Prompt, eine Richtlinie, ausgearbeitete Beispiele –, ohne ihn zur
+Laufzeit überhaupt mitzugeben. Sie beantwortet die Frage, wie Sie aufhören, diese Prompt-Token bei jeder
+Anfrage zu bezahlen, und verlangt den üblichen Preis dieser Leiter: Das Verhalten ist danach in den Gewichten
+eingefroren, eine geänderte Richtlinie heißt also erneut trainieren. Das Prompt-Caching löst dieselbe Rechnung
+ohne diesen Tausch.
 
 **das fortgesetzte Vortraining (continued pre-training)** – das Vortraining eines Basismodells auf großen
 Fachdaten ohne Labels weiterführen, bevor überhaupt auf eine Aufgabe hin angepasst wird.
