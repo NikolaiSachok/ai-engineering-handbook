@@ -25,6 +25,9 @@ looking at.
   transformation, hybrid search, reranking, filters and access control.
 - **[Generation](./generation/index.md)** — how to ground the answer in the retrieved context: grounding,
   citations, an honest refusal instead of invention.
+- **[Structured knowledge](./structured-knowledge/index.md)** — what to do when the answer isn't in any
+  passage: controlled vocabularies and ontologies, knowledge graphs, the semantic layer and text-to-SQL,
+  and when each is worth its build cost.
 - **Cross-cutting concerns** — what doesn't reduce to a single step: [eval](./cross-cutting/evaluation/index.md)
   (knowing the system works), [guardrails](./cross-cutting/guardrails/index.md) (keeping it safe),
   [observability](./cross-cutting/observability/index.md) (seeing what it does in production).

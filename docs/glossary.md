@@ -204,6 +204,75 @@ the context looks implausible. Faithfulness is what measures whether it did.
 **Answer-shaping** — controlling the answer's format, tone, and length. A real quality lever, but subordinate
 to grounding: shaping must never drop a citation, a caveat, or an honest refusal.
 
+<a id="structured-knowledge"></a>
+
+## Structured knowledge \{#structured-knowledge}
+
+**Controlled vocabulary** — a fixed list of permitted terms. The cheapest structure there is, and the one
+that stops an extractor inventing three names for the same relation.
+
+**Taxonomy** — a hierarchy over a vocabulary's terms, which buys roll-up, inheritance, and broader/narrower
+queries.
+
+**Ontology** — classes, properties and the constraints between them: a model of the domain rather than a
+list of its labels. Buys validation and the inference of facts nobody stated, at the price of permanent
+human maintenance.
+
+**RDF** — the triple model: every fact is a subject, a predicate and an object.
+
+**OWL** — the W3C ontology language with formally defined, model-theoretic meaning; what makes machine
+inference possible. Its **profiles** (EL, QL, RL) trade expressivity for tractability, and choosing one is a
+real engineering decision.
+
+**SHACL** — a language for validating RDF: a **shapes graph** states the conditions, a **data graph** is
+checked against it, and the result is a **validation report**. The deterministic gate over a probabilistic
+extractor.
+
+**SPARQL** — the query language for RDF, matching patterns over a directed labelled graph, including over
+relational data exposed as RDF through middleware.
+
+**Knowledge graph** — entities as nodes and relations as edges, extracted from a corpus or curated by hand.
+
+**GraphRAG** — retrieval over a knowledge graph built from your documents; as a proper noun, Microsoft's
+reference implementation.
+
+**Graph extraction** — the LLM pass that turns chunks into entities, relationships and covariates. The
+expensive phase, and the one that decides whether anything downstream is true.
+
+**Covariate / claim extraction** — factual statements with an evaluated status and time bounds; optional in
+GraphRAG and off by default, because it needs domain prompt tuning to be useful.
+
+**Community detection / hierarchical Leiden** — the recursive clustering that groups entities into nested
+communities, so summaries exist at several levels of granularity.
+
+**Community report** — the build-time summary of one community, with an executive overview and its key
+entities, relations and claims. What a corpus-level question actually reads.
+
+**Local search / global search / DRIFT search** — the graph query methods: an entity's neighbourhood
+combined with raw chunks; map-reduce over every community report, for questions about the corpus as a whole;
+and community context folded into a local query to widen its starting point.
+
+**Entity resolution** — deciding that `Acme Corp` and `Acme Corporation` are one node. Where graph projects
+usually disappoint, because the popular systems merge by string matching.
+
+**Over-merging / under-merging** — the two directions of resolution error: fusing distinct entities invents
+connections, fragmenting one entity hides them. Report them separately; a single accuracy figure hides one
+inside the other.
+
+**Extraction precision** — the share of extracted triples that are true against their source text, measured
+on a labelled sample. The correctness measure retrieval metrics cannot give you.
+
+**Semantic layer** — two different things under one name. **(a)** the metrics layer: a modelling tier over a
+warehouse where a metric is defined once, with its joins, legal filters and dimensions. **(b)** resolving an
+utterance to a domain concept rather than to a passage, so answers are consistent and auditable.
+
+**Semantic model / measure / dimension / entity** — the parts of a metrics layer: the quantities, the ways
+to slice them, and the join keys that connect them.
+
+**Text-to-SQL** — generating SQL from a natural-language question. Against a raw schema the model must
+*derive* the query — business joins, business dates, dirty values, unwritten rules; against a semantic layer
+it *selects* a defined metric, a smaller decision whose failure is visible.
+
 <a id="evaluation"></a>
 
 ## Evaluation \{#evaluation}
