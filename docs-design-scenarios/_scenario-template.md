@@ -62,6 +62,14 @@ defect this wording replaced. Link `/design-scenarios/how-these-are-made` rather
 may have arrived from search and never seen the intro. If the prompt is corrected after the attempts were
 written, say so here and say whether any attempt used the figure.
 
+The pre-registration clause is **"pre-registered before the attempts it judges existed, by an interviewer
+that has never read an attempt."** Use that wording, not "before any attempt existed" — a run whose first
+round converges is discarded and its prompt and rubric are rewritten, so on those pages "any attempt" is
+false while "the attempts it judges" stays true. Scenario 10 shipped the accurate version, and the editorial
+gate reverted it to the sibling boilerplate, because **an accurate divergent claim is indistinguishable from
+an inconsistency** to a pass whose job is consistency. Keeping the universally-true wording here is what
+stops that from recurring on every future page.
+
 <Reveal>
 
 <!-- ATTEMPT HEADINGS — the default, and the one authorised variant.
