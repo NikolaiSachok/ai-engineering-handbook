@@ -215,8 +215,10 @@ const COURSES: Course[] = [
   // field above explains the mechanism). The landing card derives "English" from the
   // same list, so a reader in any locale sees what they are getting before clicking.
   // `live: true` since 2026-08-03: the first batch is complete — eight scenarios on one archetype
-  // (agentic workflows), and a second track (lead & client-facing) has opened since with one
-  // scenario in it. `inNavbar` flipped in the same change, which also adds the footer column and
+  // (agentic workflows). Two further tracks have opened since, each with one scenario: lead &
+  // client-facing, and production LLM. Every new track needs a footer entry added below — the footer
+  // is the only always-visible navigation on a phone, so a track missing from it is a track that is
+  // hard to reach. `inNavbar` flipped in the same change, which also adds the footer column and
   // the landing card's "Live" badge; all three read this one flag, so do not expect to advertise
   // the course on one surface and not another.
   {
@@ -239,6 +241,7 @@ const COURSES: Course[] = [
       {label: 'Introduction', path: ''},
       {label: 'Agentic workflows', path: 'agentic-workflows/overview'},
       {label: 'Lead & client-facing', path: 'lead-and-client-facing/overview'},
+      {label: 'Production LLM', path: 'production-llm/overview'},
       {label: 'How these are made', path: 'how-these-are-made'},
     ],
   },

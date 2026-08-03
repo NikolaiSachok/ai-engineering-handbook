@@ -54,7 +54,8 @@ code, and has already heard a simpler story.
 
 Three model-written attempts follow. Each comes from a separate agent given one engineer's habits and the
 prompt above. No agent saw the other two, and none saw the scoring standard the verdicts are written against —
-that was fixed before any attempt existed, and a separate assessor applies it. The attempts introduce figures
+that was pre-registered before the attempts it judges existed, by an interviewer that has never read an
+attempt, and a separate assessor applies it. The attempts introduce figures
 of their own; where one of those is load-bearing and unchecked, the page says so. That arrangement is
 described in [how these are made](/design-scenarios/how-these-are-made).
 

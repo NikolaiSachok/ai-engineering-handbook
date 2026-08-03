@@ -1607,3 +1607,156 @@ together, and the config blurb moves with them.
 than was needed* rather than as *redundancy/failover* (the syntax rules that sense out), but its
 valence is mildly reproachful — "наворотил" — where the label should describe a competent engineer.
 Acceptable unglossed on a card; on a scenario page, gloss it at first use.
+
+## Scenario `making-it-wrong-less-often` (production-llm track, Gate 5, 2026-08-04)
+
+**First page of a second track, and the first inline scenario→scenario link in the course.** The ledger
+stops recording at #5; four shipped pages are unrecorded, so this entry uses the slug, not an ordinal, and
+every measurement below was re-taken against the LIVE corpus rather than quoted from a recorded row.
+
+**SCOPING CONFLICT — UNRESOLVED, for the author to settle.** This run's brief FROZE the prompt (report,
+never edit: three agents answered it exactly as printed and the page asserts that). The ledger's line 119
+classifies the prompt as *frame*, i.e. full-pass:
+
+> The **frame** takes the full pass: prompt, `Why this question`, the commit line, the provenance paragraph,
+> every `<Verdict>`, `Where they actually disagree`, `The principle`, `Read next`, `If they push`.
+
+The brief won for this run. **Not reconciled in either direction.** Cheap fact for whoever settles it: the
+prompt was read read-only against the full canon and is clean under either reading — British throughout, no
+hyphenated range, no reserved word misused, magnitude numeral register. The conflict costs nothing here and
+must be settled before a page whose prompt is *not* clean.
+
+**Block strings — the provenance paragraph forked in six places and was restored.** Six sibling pages carry
+"none saw **the scoring standard** the verdicts are written against — that was fixed before any attempt
+existed, and a separate assessor applies it" byte-exactly. This page shipped `scoring rubric`, `and nothing
+else`, an expanded interviewer clause, and a split sentence. Restored, keeping the two page-specific
+additions that earn their place: `this scenario is arithmetic most of the way down` and `the page says so`
+(the latter precedented by `when-not-to-build-an-agent`, and correct here because the *disagreement* section,
+not only a verdict, prices the unchecked figure). **The recurring mechanism: this paragraph lives in the
+ledger and not in `_scenario-template.md`, and it forks on every page that does not copy a sibling. Put it in
+the template.** Everything else byte-exact: the commit line and its second sentence, both frontmatter comment
+lines, the tier labels, the persona furniture, the disagreement lead with its exception clause,
+`The principle`, `Read next`, `If they push`, `<Verdict>` blank lines.
+
+**`gold set` → `golden set` in the FRAME only.** Corpus 43 × `golden set` in 14 files, **0 × `gold set`**
+outside this page. Two of three attempts say `gold set`, so this is the recurring frame-instance split —
+sixth page, sixth time (`top-k` #1, `artefact` #2, `superstep` #3, `artefacts` #4, `last-good` #5). Corrected
+at four frame sites plus one straggler the first pass missed (`the gold labels` → `the adjudicated labels`,
+caught by the cold read). Left untouched in the attempts and inside every quotation. **The two-range
+mechanical sweep is now overdue by four pages.**
+
+**Bold budget — measured, ledger method, and "under-use is the trend" no longer holds.** Frame **5 / 234
+prose lines = 0.021**; attempts 8.03 per 1,000 words (their register, excluded from the budget). Series:
+0.035 → 0.021 → 0.007 → 0.026 → 0.032 → 0.023 → 0.061 → 0.030 → **0.021**. Cap ~0.36; nothing near it.
+One §8 breach fixed: a **two-line multi-part clause** in bold under `What none of them checked`, shortened to
+its claim clause. The other three single-sentence item leads in that block **stand** — `observing-a-non-
+deterministic-system` and `when-not-to-build-an-agent` already ship the shape, and a Gate-5 pass may not
+reverse an incumbent it did not evidence. **Author's ruling wanted: is a bolded single-sentence item lead
+inside the shared-blind-spot closer a definition-list lead (§8 permits) or a bolded ruling (§8 bars)? Three
+pages now depend on the answer.**
+
+**Figures — ALL ON PROBATION** (no self-blessing; the pass that shipped them may not protect them).
+Struck at the gate: **`flanks onto` / `the flank`** (0 corpus occurrences; failed the cold naive read outright
+— "flanks onto" is not a construction English has, and it sat in a bolded jump-in surface) → `goes after` /
+`the move`; **`in the round`** ×2 (0 corpus occurrences, interview register against a SETTLED anti-coach rule)
+→ `of the three` and `any of them produced` — note the second: `of the three` misreads as *of three
+sentences* when the head noun is `sentence`, so the substitution is **not** mechanical; **`epistemics`** (the
+exact rejected token) → `ways of knowing`; **`A slip narrows the design`** (a slip is an event, not an agent)
+→ `Taking the high end instead`. Surviving, on probation: **`the noise floor`**, **`graded by luck`**,
+**`mistaken a draw for a result`** (flagged: `draw` in the sampling sense is defined only INSIDE the reveal,
+and this line renders outside it — the sports reading is a live misparse). Reuse, not coinage, recorded so no
+later pass re-probates them: **`the instrument`** (established course vocabulary — `model-routing`,
+`trajectory-vs-outcome`, `when-not-to-build`, `ai-sdlc/part-1-foundation/overview`), the **`buy` family**
+(one sense each, cleanest since #5), **`wearing the same name`** (corpus-wide family), **`Worse is the
+close.`** (the elliptical count/verdict sentence, fourth page running — a fifth settles it as house cadence).
+**`disposition` CLEARED**: the rejected row bars Attempt C's *coinage on #2*; no attempt here uses the word
+and the frame's use is ordinary English. **The canon binds SENSE, not the string — check the sense before
+enforcing a rejected row.**
+
+**The reveal boundary had its densest page yet — six breaches, all fixed.** `If they push` carried **six bare
+attempt letters and six reveal-only mechanisms** in the one section written for a reader who may never expand
+the `<details>`; `Read next` named two of the page's own H3s by term (`the gold-set disagreement`, `the
+two-minute disagreement`) and one attempt-shared design (`the two-stage chapter-then-heading build`).
+**NEW SUB-SHAPE, ON PROBATION: outside the reveal, refer to attempts by COUNT and position in the argument,
+never by letter** — "all three answers spend them…", "Two of the three… The third…". The recast keeps the
+claim falsifiable while naming nothing the reader cannot see. **Residual cost the cold read named and the
+author should weigh: the reader can no longer check the A/B/C mapping by scrolling.**
+
+**The anti-coach row caught the judge-of-persons shape a THIRD time.** "**An engineer who** reasoned their way
+to a design can trade those three… **One who** assembled a stack of techniques cannot" is the rejected "This
+**separates candidates** whose verification is independent … from **those who**" verbatim in structure.
+Recast onto answers with the row's own pattern. **A cold reader then objected that an *answer* cannot reason,
+trade or say — the actor–verb rule pulling against the anti-coach rule.** Held the anti-coach recast: these
+are *spoken* interview answers, so the verbs fit, and the canon rule is SETTLED while the objection was one
+reader's. **Recorded because the tension is real and will recur: when the anti-coach row forces a human
+subject out, the replacement noun must be one that can plausibly take the section's verbs.**
+
+**Cross-course link names — the one-destination-one-name row caught its first collision.**
+`guardrails-at-the-boundary:315` labels `part-1-rag/generation/deep-dive` by its `sidebar_label`
+(**Self-verification & structured output**); this page labelled it by its `title` (**Generation — deep
+dive**). Both legal alone; the result was one destination under two names in one course. Normalised to the
+incumbent (guardrails shipped first — `94372bd` before `dac94e0`). **Promote the row from ON PROBATION to
+SETTLED**, and record the names now fixed by first use: `production-failures` → *Why AI systems fail in
+production* · `layered-gates` → *Layered gates and mechanism diversity* · `review-at-volume` → *Reviewing
+agent output at volume* · `generation/deep-dive` → *Self-verification & structured output* ·
+`retrieval/deep-dive` → *Retrieval — deep dive* (first linked here, so this page fixes it). **Known residue:
+bullets 2 and 3 now name two halves of one lesson pair by two different conventions (`title` vs
+`sidebar_label`). That is the row working as designed, not a defect — but say so, or the next pass "fixes"
+it back.**
+
+**NEW ROW, ON PROBATION — the inline scenario→scenario link.** First cross-link between two scenario pages in
+running prose. It shipped as `[another scenario's question](…)` with the destination's real title sitting
+*outside* the link in the same sentence. **Rule: an inline scenario link goes on the target's own title.**
+Second rule the shape needs: **an inline cross-scenario link may state what the other scenario ASKS, never
+what it concludes** — the reader may not have read it, and the reveal discipline does not travel across pages.
+
+**A gloss beside a byte-perfect label can still be wrong — and this page had two.** Both `Read next` label
+sets were correct; two glosses misdescribed their destinations. (a) Bullet 1 attributed the
+frozen-versus-rotating discipline to "the gold-set disagreement", which turns on a different axis entirely
+(enriched vs random) — retargeted to the destination's own words. (b) Bullet 3 said "a verification pass must
+not see **the reasoning** it is checking"; the destination withholds **the draft / baseline response**, and
+holds self-consistency and chain-of-verification explicitly apart, which the gloss collapsed into one.
+**A correct label is not a pass. Open the destination and check what the gloss claims it teaches.**
+
+**`Why this question` — the box RESOLVED the principle, and the fix cost two rounds.** The shipped box named
+both of the principle's numbers in the principle's own terms ("Two facts… pull against each other" +
+"a second question the scenario does not settle for you" ↔ *the two numbers the brief leaves you to compute
+yourself*; "what that instrument is capable of telling anyone ten weeks from now" ↔ *what the instrument that
+will judge you can actually resolve*; "the only place a check can finally be resolved is a person's attention
+— already spent down to the minute" ↔ *whose minutes absorb every check you add*). It also carried two
+**orphan** claims no verdict delivers, one of them contradicted by Attempt A's own legality check.
+**This passed the ledger's barred-items list** (no tier label, no fourth tier, agentless trap) — the list was
+checking the wrong axis. **New rule: the box is checked against THE PRINCIPLE, proposition by proposition,
+not only against the barred-items list. If the box states a conclusion the reveal is supposed to deliver, it
+is a leak however clean it is on the list.** Rewrite kept to prompt-given facts (nine people's minutes, the
+capped envelope, the ninety-minute clock, closed headcount, one measurement at a fixed size) and states no
+conclusion about whether the instrument can resolve anything. Final length **80 words**, at the template's
+floor — the first rewrite came in at 69 and the cold read caught it.
+
+**THE GATE'S OWN FIX INTRODUCED A FALSE CLAIM — caught by the cold read, as designed.** The first rewrite of
+the box asserted "every cost lands somewhere that is **already full** — nine people's minutes, a fixed
+inference envelope, a ninety-minute filing clock." **False of the envelope: €2,100 against €9,000 is 23%
+consumed**, and the page states €6,900 of headroom twice in its own voice. Worse, it asserted in the framing
+box the precise error Verdict A convicts Attempt A of committing, so a reader who believed the box could not
+follow the verdict. Corrected to "lands on a budget somebody else already fixed… None of them can be raised
+inside ten weeks". **Second consecutive page on which the gate's own first round of fixes shipped a new false
+claim. The edit-auditor pass — a fresh agent given the gate's own diff and told to verify every NEW assertion
+against source — is what caught it, and it is now mandatory, not optional.**
+
+**Mechanical lesson worth more than the page: a whole-file rewrap is a content-editing operation.** Re-wrapping
+paragraphs to restore the house column after in-place edits stripped the two-space continuation indent from
+every `Read next` list item and split a markdown link across a line inside its own label. Both were caught by
+re-inspecting the block, not by the word-content assertion the script carried (it passed — the words were
+identical). **A whitespace-only assertion does not protect list structure or inline constructs. Rewrap
+paragraph-by-paragraph with lists and links excluded, and re-read the rendered blocks afterwards.**
+
+**Jurisdiction — observed inside the attempts, deliberately left standing.** Attempt A's US `realize` and
+`artifact` (the frame is clean, `artefact`); `gold set` in A and C; Attempt B's `replay harness` (the term the
+extended row bars *in the frame* — and `harness` appears exactly once page-wide, so the frame never picked it
+up: the first clean run for that row); `top-8` in B; three names for one instrument (A `held-out set`,
+B `frozen set`, C `frozen internal gold set`) — the page's best evidence of independent authorship;
+hyphenated ranges `4-5×` / `€9-10k` inside A, reproduced faithfully inside quotation marks while the frame
+uses en dashes in its own voice two lines later. **That pairing is the worked example the numeral row needed:
+the en-dash rule governs paraphrase, the byte-exact rule governs quotation, and both apply in one paragraph
+without conflict.** **Zero mechanical errors inside the three attempt bodies**, and — first time in the
+series — **no ASCII diagram in any attempt**, breaking a five-page run. For the pipeline owner.

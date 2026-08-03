@@ -36,9 +36,11 @@ The first batch is complete. Eight scenarios, one archetype —
 [what a document is allowed to do](/design-scenarios/agentic-workflows/guardrails-at-the-boundary),
 [what the dashboard cannot see](/design-scenarios/agentic-workflows/observing-a-non-deterministic-system) and
 [the work that should stay a workflow](/design-scenarios/agentic-workflows/when-not-to-build-an-agent).
-A second archetype has since opened — lead & client-facing — and carries one scenario,
-[where the knowledge lives](/design-scenarios/lead-and-client-facing/where-the-knowledge-lives).
-Nothing else in it is written yet.
+Two further archetypes have since opened, each carrying one scenario: lead & client-facing, with
+[where the knowledge lives](/design-scenarios/lead-and-client-facing/where-the-knowledge-lives),
+and production LLM, with
+[making it wrong less often](/design-scenarios/production-llm/making-it-wrong-less-often).
+Nothing else in either is written yet.
 
 :::
 
