@@ -33,9 +33,9 @@ none of them raise an error. They return a plausible answer, and the system repo
 - **[What a document is allowed to do](/design-scenarios/agentic-workflows/guardrails-at-the-boundary)** — a
   supplier's PDF becomes a legally binding record; containment or detection, and which personal data the record
   is obliged to keep.
-
 - **[What the dashboard cannot see](/design-scenarios/agentic-workflows/observing-a-non-deterministic-system)** —
   a pipeline whose every step returns success and whose output is well-formed and wrong; what to record, and how
   anyone finds out before an outsider does.
-
-One more is being written: when not to build an agent at all.
+- **[The work that should stay a workflow](/design-scenarios/agentic-workflows/when-not-to-build-an-agent)** —
+  an accredited laboratory where everything points at autonomy and one act cannot be taken back; which pieces of
+  work take a model, and which must not.
