@@ -34,4 +34,8 @@ none of them raise an error. They return a plausible answer, and the system repo
   supplier's PDF becomes a legally binding record; containment or detection, and which personal data the record
   is obliged to keep.
 
-Two more are being written: observing a non-deterministic system, and when not to build an agent at all.
+- **[What the dashboard cannot see](/design-scenarios/agentic-workflows/observing-a-non-deterministic-system)** —
+  a pipeline whose every step returns success and whose output is well-formed and wrong; what to record, and how
+  anyone finds out before an outsider does.
+
+One more is being written: when not to build an agent at all.
