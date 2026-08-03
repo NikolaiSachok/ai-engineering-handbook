@@ -302,6 +302,17 @@ position bias (favours the first option — mitigate by swapping order and requi
 bias (longer = better), self-preference / self-enhancement (its own style).
 ↗ [arXiv](https://arxiv.org/abs/2306.05685)
 
+**Correlated error** — the assumption a judge rests on and the one no bias mitigation touches: a second model
+lowers error only insofar as its errors are uncorrelated with the first's. Two frontier models trained on
+overlapping corpora against similar objectives are often one mechanism, agreeing hardest where their shared
+training data is thinnest. Independence comes from a different *information source* — a grounded check, a
+deterministic assertion, an executable test, a human label — not from a different vendor.
+
+**Context independence vs error-distribution independence** — two things this handbook calls independence.
+The first withholds the draft's reasoning from a verifier inside one model (chain-of-verification); the
+second is the property across two models that correlated error denies. Having the first does not give you the
+second.
+
 **Offline vs online eval** — evaluating on a golden set before deploy (regression in CI) versus measuring
 in production (user feedback, A/B).
 

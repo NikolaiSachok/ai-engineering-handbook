@@ -90,6 +90,18 @@ One more limit, without overclaiming it: the paper flags that LLM judges are wea
 
 Those three biases share a property that's easy to get backwards: they are *systematic*. Random error averages out as you run more examples; a systematic skew does not — run ten thousand comparisons and position bias tilts all ten thousand the same way. The correction is protocol design and calibration; more data does nothing for it.
 
+### The assumption underneath the pattern: a second model is not automatically a second mechanism
+
+Everything above treats the judge's problems as *biases* — skews with names and mitigations. Underneath them sits an assumption none of those mitigations touch, and it is the one the whole pattern rests on: **a second model reduces error only to the extent that its errors are uncorrelated with the first's.**
+
+The AI SDLC course makes this argument in full, about verification gates rather than about models. Its most demanding tier exists to prevent "a compliance chain that is long but mechanistically uniform — six gates that are all the same kind of gate, blind to the same class, and therefore, against that class, no better than one" ([layered gates and mechanism diversity](/ai-sdlc/part-3-verification/layered-gates)). That argument extends to models exactly. Two frontier models trained on overlapping web-scale corpora against similar objectives are, for a great many inputs, **one mechanism** — and they agree hardest where their shared training data is thinnest, which is where your failures live. The judge is most likely to endorse the answer precisely where you needed it to object.
+
+This is why the different-model-family rule above is necessary and not sufficient. That rule was justified by self-preference, a *style* skew, and a different vendor genuinely fixes it. It says nothing about two different families having read the same internet. **What buys independence is a different information source, not a different logo**: a retrieval-grounded check against a document the generator never saw, a deterministic assertion, an executable test, a schema validation, a human label. Each of those fails in a way a language model does not. A second API key does not.
+
+One distinction to keep straight, because this handbook uses "independence" for two different things. Chain-of-verification in the [generation deep dive](../../generation/deep-dive.md) keeps the verifier from seeing the draft's reasoning: that is **context independence**, inside a single model, and it buys something real. It is not **error-distribution independence** across models. A team that adopted chain-of-verification has not thereby acquired the property this section is about, and conflating the two is how a system ends up with two checks and one blind spot.
+
+None of this makes the judge unusable — it remains the only way to grade free-form text at volume. It changes what you may claim from it. A judge agreeing with your generator is weak evidence; a judge disagreeing is strong evidence. Build the escalation around the disagreements, and keep at least one gate in the chain that is not a language model at all.
+
 ### Two ways to score: one answer at a time, or two head to head
 
 **Pointwise** grading — single-answer grading — hands the judge one answer and asks for an absolute score against a rubric, optionally reference-guided, meaning the reference answer rides along in the judge's prompt. It's cheap, it scales, and it gives you an absolute number you can threshold. The catch is that absolute scores drift: what the judge calls a 7 today it may call a 6 next week, and calibrating those numbers across runs is genuinely hard.

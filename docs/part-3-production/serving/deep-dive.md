@@ -61,6 +61,16 @@ The engine behind those internals was overhauled recently: vLLM re-architected i
 
 **Quantisation** is the last lever, trading precision for memory and speed. The baseline is FP16 or BF16. FP8, native on Hopper and Blackwell tensor cores, is near-lossless and the default first stop in 2026; INT8 (W8A8) goes further; INT4 weight-only, via AWQ or GPTQ, cuts weight VRAM by roughly three-quarters — enough to fit a 70B model on a single GPU — at a moderate quality cost. A separate axis is **KV-cache quantisation**: storing the KV cache in FP8 roughly doubles the tokens a given pool holds, buying longer contexts or more concurrency. Every one of these trades throughput and memory against quality; there is no free precision.
 
+Quantisation gets confused with two other operations constantly, including by experienced engineers, because all three are filed mentally under *make the model cheaper* and two of them touch weights. They are not interchangeable, and the difference is what each one actually changes:
+
+| Operation | What it changes | Training involved | Whose decision |
+|---|---|---|---|
+| **Quantisation** | the *representation* of the weights — fewer bits per number, same model | none; a post-training conversion | serving |
+| **Distillation** | produces a *different, smaller model* trained to imitate a larger teacher's outputs | yes — you get new weights and a new model to evaluate | customisation |
+| **Fine-tuning** | *these* weights, so the model behaves differently | yes — on your data | customisation |
+
+Only the first is a serving decision, which is why it lives on this page; the other two sit on the [customisation ladder](../cloud-platforms/deep-dive.md). Worth flagging a fourth use of the same word, because it appears in this handbook: the **distilled finding** carried between hops in the [agentic RAG deep dive](../../part-2-agents/agentic-rag/deep-dive.md) is a compaction of retrieved text inside a single request. No training, no new weights — the same verb doing an unrelated job.
+
 ## When a model no longer fits on one GPU
 
 Some models simply do not fit on a single GPU, and then you split them — but how you split decides what hardware you need. **Tensor parallelism** shards each layer's weight matrices across several GPUs. Every layer then needs an all-reduce to recombine the partial results, which makes it communication-heavy and demands a fast interconnect — NVLink — so it belongs inside a single node. In vLLM it is the `tensor_parallel_size` knob. **Pipeline parallelism** cuts the other way: it splits the layers into stages, puts each stage on a different GPU or node, and streams micro-batches from stage to stage. That needs far less communication, so it tolerates a slower interconnect and works across nodes — at the cost of a pipeline "bubble," the idle time while the pipe fills and drains. Its knob is `pipeline_parallel_size`.
