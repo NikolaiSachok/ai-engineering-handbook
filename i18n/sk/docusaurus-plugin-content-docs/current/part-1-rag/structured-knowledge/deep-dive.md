@@ -34,7 +34,7 @@ dobre zdokumentované jednotlivé fázy. Jeho [indexovanie](https://microsoft.gi
 6. **Embedovanie textu** — vektory, lebo graf vektorový index nenahrádza.
 
 ```mermaid
-flowchart LR
+flowchart TB
     D["Zdrojové dokumenty"] --> P1["1. Zloženie TextUnits<br/>(predvolene 1 200 tokenov)"]
     P1 --> P2["2. Spracovanie dokumentov<br/>(prepojenie na zdroj)"]
     P2 --> P3["3. Extrakcia grafu<br/>prechod LLM cez každý chunk"]

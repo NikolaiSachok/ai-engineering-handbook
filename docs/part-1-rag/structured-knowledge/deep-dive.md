@@ -41,7 +41,7 @@ heard of and because its pipeline is documented stage by stage. Its
 6. **Text embedding** — vectors, because the graph doesn't replace the vector index.
 
 ```mermaid
-flowchart LR
+flowchart TB
     D["Source documents"] --> P1["1. Compose TextUnits<br/>(1,200-token default)"]
     P1 --> P2["2. Document processing<br/>(path back to source)"]
     P2 --> P3["3. Graph extraction<br/>LLM pass over every chunk"]

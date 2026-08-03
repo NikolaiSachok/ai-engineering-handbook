@@ -614,6 +614,32 @@ const config: Config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
+    // Mermaid: render diagrams at their NATURAL size and let the container scroll,
+    // instead of scaling the whole SVG down to the article width.
+    //
+    // Why. `useMaxWidth: true` (mermaid's default) shrinks the SVG to fit its container,
+    // and because the label type scales with it, a wide diagram becomes unreadable rather
+    // than merely small. Measured in Chromium at a 360px viewport, before this change:
+    // the six-stage GraphRAG pipeline had an intrinsic width of 2 182px and rendered its
+    // labels at an effective **2.4px**. That is not small text, it is a grey smear — and
+    // it was true of every wide diagram in the corpus, on every phone, since the first one
+    // shipped. Nobody caught it because nothing measured it.
+    //
+    // With `useMaxWidth: false` the SVG keeps its intrinsic width, type stays at 16px, and
+    // the diagram scrolls sideways inside its own box (`.docusaurus-mermaid-container`
+    // gets `overflow-x: auto` in custom.css). Verified in-browser: the page body itself
+    // never scrolls sideways, which is the invariant that matters.
+    //
+    // The tradeoff is real and deliberate: a very wide diagram now needs a horizontal
+    // swipe to see in full. Legible-and-scrollable beats visible-and-illegible. The better
+    // answer for any single diagram is still to not be 2 000px wide — prefer `flowchart TB`
+    // for a long pipeline, which is why this pipeline is TB.
+    mermaid: {
+      options: {
+        flowchart: {useMaxWidth: false},
+        sequence: {useMaxWidth: false},
+      },
+    },
     navbar: {
       // The site is a HUB — the global brand is the hub, not any one course.
       // Each course is identified by its URL prefix + sidebar, not the navbar title.

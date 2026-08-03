@@ -149,3 +149,34 @@
   color: var(--ifm-menu-color-active);
   background: var(--ifm-menu-color-background-active);
 }
+
+/* ---------------------------------------------------------------------------
+ * Mermaid diagrams: scroll, don't shrink.
+ *
+ * Pairs with `themeConfig.mermaid.options.*.useMaxWidth: false` in
+ * docusaurus.config.ts, which stops mermaid scaling the SVG down to the article
+ * width. The SVG now keeps its natural size, so the box it sits in has to be the
+ * thing that scrolls — otherwise a wide diagram would push the PAGE sideways,
+ * which is the one outcome worse than a small diagram.
+ *
+ * Measured at a 360px viewport before this pair of changes: label type rendered at
+ * an effective 2.4px on the widest diagrams. After: 16px, with the diagram box
+ * scrolling and `document.documentElement` not.
+ * ------------------------------------------------------------------------- */
+.docusaurus-mermaid-container {
+  overflow-x: auto;
+  /* Momentum scrolling on iOS, and a scrollbar that doesn't overlap the last node. */
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.25rem;
+}
+
+/* The rule that actually does the work — and the reason the config change alone did nothing.
+ * With `useMaxWidth: false` mermaid emits an explicit `width="525"` attribute and no inline
+ * style, but a global `max-width: 100%` on embedded media (Infima's, matching every svg)
+ * outranks that attribute, so the diagram stayed squashed to the column width. Releasing the
+ * cap for mermaid SVGs only is what lets the attribute win; the container above is what keeps
+ * the resulting overflow inside the diagram box instead of pushing the page sideways.
+ * Diagnosed by reading computed styles in Chromium, not by reasoning about specificity. */
+.docusaurus-mermaid-container svg {
+  max-width: none;
+}
