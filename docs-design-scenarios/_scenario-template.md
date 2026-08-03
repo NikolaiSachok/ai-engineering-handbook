@@ -197,6 +197,25 @@ Two rules that decide whether the page can ship at all:
 2. **Honesty.** An attempt is a reconstruction of how an engineer at that level reasons. Analysing an
    approach nobody here has shipped is analysis, not a claim. Narrating a first-person war story that did not
    happen is neither — it is a fabrication.
+3. **Quotation marks mean somebody wrote it.** A double-quoted string in the frame — a verdict, the
+   disagreements, the framing box, the probes — must occur in an attempt or in the lesson being cited.
+   A phrase the page coins takes *italics* instead. Verified mechanically by `check-quotes.sh`.
+
+   **What may change inside a quotation, and what may not.** The line is not "any difference is a defect".
+   It is: **an alteration that carries information is forbidden; an alteration that only reflects the
+   quotation's new position in a host sentence is permitted.** So:
+
+   | Adjustment | Verdict | Why |
+   |---|---|---|
+   | Lower-casing the source's sentence-initial capital to sit mid-sentence | **permitted, silently** | The capital records where the sentence sat, not what was said. Bracketing every one (`"[t]he checkpointer…"`) is precise and unreadable. |
+   | Re-glyphing quotation marks *inside* a quotation (`"…"` → `'…'`) | **permitted** | Forced by the outer delimiter being spent. Carries nothing. |
+   | Adding or removing emphasis (`*`, `**`, backticks) | **forbidden** | Emphasis is stress, and stress is meaning. Shipped once as `**or**` over a plain `or`. |
+   | Substituting terminal punctuation — a full stop for the source's dash or comma | **forbidden** | It ends the sentence early and silently drops what qualified it. Found live: an attempt's refusal quoted as ending at "…on the same case." where the source runs "…— because pricing that costs more reviewer hours than I have." A costed refusal was published as a flat one. Elide with `…` instead. |
+   | Changing case anywhere but the first character | **forbidden** | Can alter a product name or an acronym. |
+
+   The case rule is deliberately narrow: the tolerance is on the **first character of the fragment**, never
+   on the source text. Lower-casing a whole document to compare would also forgive a change in the middle of
+   a quotation, which is exactly the class that can rewrite a claim.
 
 Two devices carry the answer/assessment boundary, and both are load-bearing:
 

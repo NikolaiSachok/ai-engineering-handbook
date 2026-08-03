@@ -306,8 +306,9 @@ reviewer variance, not ground truth.
 ### Correct-action labels: author them or grade invariants
 
 C builds a policy spec per exception type plus ~1,500 adjudicated cases as the grading substrate. B never
-authors correct-action labels at all; the nearest it comes is a refusal: "I'm not measuring the
-counterfactual — whether a human would have done better on the same case." It grades invariants over 300
+authors correct-action labels at all; the nearest it comes is a costed refusal: "I'm not measuring the
+counterfactual — whether a human would have done better on the same case — because pricing that costs more
+reviewer hours than I have." It grades invariants over 300
 replayable cases instead. Which of them is right depends on whether the action has a determined answer.
 Reroute-versus-escalate on a parcel with no fresh scan is precondition-determined, and C's three-tier policy
 (correct / acceptable-but-expensive / forbidden) is the right way to encode that without pinning one correct
