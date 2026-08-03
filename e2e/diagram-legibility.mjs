@@ -1,39 +1,51 @@
-// Diagram legibility gate — measures every mermaid diagram at a phone viewport.
+// Diagram legibility & fit gate — every mermaid diagram, phone and desktop.
 //
-// Why this exists. Mermaid's default `useMaxWidth: true` scales a whole diagram down to its
-// container, label type included, so a wide diagram does not become small — it becomes a grey
+// Why this exists. Mermaid's default `useMaxWidth: true` scaled whole diagrams down to their
+// container, label type included, so a wide diagram did not become small — it became a grey
 // smear. Measured 2026-08-03 against the shipped site: **37 of 42 diagrams rendered below the
-// 11px legibility floor at 360px**, several at 2.4–4.5px, and had done since the first one
-// shipped. Nothing in the repo measured it, so nobody knew. The fix (config `useMaxWidth: false`
-// + `overflow-x: auto` on the container, see docusaurus.config.ts and custom.css) took all 42
-// to 16px. This script is what keeps them there.
+// 11px legibility floor at 360px**, several at 2.4px, and had done since the first one shipped.
+// Nothing measured it, so nobody knew.
 //
-// The number that matters is `effectiveFont`: CSS font-size x the scale the SVG was squashed to.
+// TWO things are asserted, because passing one and failing the other still ships a bad page:
+//   1. LEGIBILITY — effective label size (CSS font-size x the scale the SVG was squashed to)
+//      must clear 11px. A diagram can be present and unreadable.
+//   2. FIT — how many diagrams need horizontal scrolling. A legible diagram that opens with
+//      its first node off-screen is still awkward; that was a real defect (#438), found by
+//      screenshot after this gate's first version passed it.
+//
+// Only (1) FAILS the run. Fit is REPORTED against a baseline, not asserted, because most of
+// these diagrams are genuinely wider than a 360px column and no layout setting changes that —
+// a responsive LR/TB switcher was built and measured and moved the number from 37 to 33, which
+// did not justify overriding a core theme component. Driving the count down is authoring work:
+// simpler diagrams, shorter labels, fewer parallel branches. The baseline exists so that work
+// shows up as progress and a REGRESSION still fails the gate.
 //
 // Usage:
 //   npm run build && npm run serve -- --port 3312 --no-open &
-//   node e2e/diagram-legibility.mjs                     # local only
-//   COMPARE_LIVE=1 node e2e/diagram-legibility.mjs      # also measure the deployed site
+//   node e2e/diagram-legibility.mjs
 //
 // Requires Playwright chromium: npx playwright install chromium
 import {chromium} from 'playwright';
 import {readFileSync, readdirSync, statSync} from 'fs';
 import {join} from 'path';
 
-const LIVE = 'https://nikolaisachok.com/ai-engineering-handbook/';
-const LOCAL = 'http://localhost:3312/ai-engineering-handbook/';
+const LOCAL = process.env.BASE_URL
+  ? `${process.env.BASE_URL.replace(/\/$/, '')}/ai-engineering-handbook/`
+  : 'http://localhost:3313/ai-engineering-handbook/';
 const FLOOR = 11;
+// Measured 2026-08-03 after the legibility fix. Lower it as diagrams get simplified; never raise
+// it to make a red run green.
+const SCROLL_BASELINE = 66;
+const WIDTHS = [[360, 'phone'], [1440, 'desktop']];
 
-// Find every EN doc page containing a mermaid block, and map it to its route.
 const pages = [];
 function walk(dir, base) {
   for (const f of readdirSync(dir)) {
     const p = join(dir, f);
     if (statSync(p).isDirectory()) walk(p, base);
     else if (f.endsWith('.md') && readFileSync(p, 'utf8').includes('```mermaid')) {
-      let route = p.replace(/^docs-?/, '').replace(/\.md$/, '').replace(/\/index$/, '/');
-      route = base + route.replace(/^\//, '');
-      pages.push({file: p, route});
+      const route = p.replace(/^docs[^/]*\//, '').replace(/\.md$/, '').replace(/\/index$/, '/');
+      pages.push(base + route);
     }
   }
 }
@@ -43,62 +55,88 @@ walk('docs-design-scenarios', 'design-scenarios/');
 
 const browser = await chromium.launch();
 
-async function measure(base, route) {
-  const ctx = await browser.newContext({viewport: {width: 360, height: 900}});
+async function measure(route, vw) {
+  const ctx = await browser.newContext({viewport: {width: vw, height: 900}});
   const page = await ctx.newPage();
   try {
-    await page.goto(base + route, {waitUntil: 'networkidle', timeout: 40000});
+    await page.goto(LOCAL + route, {waitUntil: 'networkidle', timeout: 45000});
     await page.waitForSelector('svg[id^="mermaid"]', {timeout: 15000});
-    await page.waitForTimeout(350);
+    // The responsive picker settles after its first container measurement.
+    await page.waitForTimeout(500);
     const r = await page.evaluate(() => {
       const out = [];
       for (const svg of document.querySelectorAll('svg[id^="mermaid"]')) {
         const box = svg.getBoundingClientRect();
         const vb = svg.getAttribute('viewBox');
         const intrinsic = vb ? parseFloat(vb.split(/\s+/)[2]) : box.width;
+        const cont = svg.closest('.docusaurus-mermaid-container');
         let mf = Infinity;
         for (const t of svg.querySelectorAll('text,.nodeLabel')) {
           const fs = parseFloat(getComputedStyle(t).fontSize);
           if (fs > 0) mf = Math.min(mf, fs);
         }
-        out.push({eff: +(mf * (box.width / intrinsic)).toFixed(1), intrinsic: Math.round(intrinsic)});
+        out.push({
+          eff: mf === Infinity ? null : +(mf * (box.width / intrinsic)).toFixed(1),
+          scrolls: cont ? cont.scrollWidth > cont.clientWidth + 1 : false,
+        });
       }
       return {
         diagrams: out,
-        bodyScrollsSideways: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+        bodyScrollsSideways:
+          document.documentElement.scrollWidth > document.documentElement.clientWidth,
       };
     });
     await ctx.close();
     return r;
   } catch (e) {
     await ctx.close();
-    return {diagrams: [], error: e.message.slice(0, 40)};
+    return {diagrams: [], error: e.message.slice(0, 50)};
   }
 }
 
-console.log(`Measuring ${pages.length} pages with mermaid, at 360px.\n`);
-let liveBad = 0, localBad = 0, liveTotal = 0, localTotal = 0, bodyOverflow = [];
+console.log(`Measuring ${pages.length} pages, at ${WIDTHS.map(([w]) => w + 'px').join(' and ')}.\n`);
+
+let illegible = 0;
+let scrolling = 0;
+let total = 0;
+const bodyBad = [];
 const rows = [];
 
-for (const {route} of pages) {
-  const a = process.env.COMPARE_LIVE ? await measure(LIVE, route) : {diagrams: []};
-  const b = await measure(LOCAL, route);
-  const aMin = a.diagrams.length ? Math.min(...a.diagrams.map((d) => d.eff)) : null;
-  const bMin = b.diagrams.length ? Math.min(...b.diagrams.map((d) => d.eff)) : null;
-  liveTotal += a.diagrams.length; localTotal += b.diagrams.length;
-  liveBad += a.diagrams.filter((d) => d.eff < FLOOR).length;
-  localBad += b.diagrams.filter((d) => d.eff < FLOOR).length;
-  if (b.bodyScrollsSideways) bodyOverflow.push(route);
-  rows.push([route, aMin, bMin]);
+for (const route of pages) {
+  let worst = 99;
+  let anyScroll = false;
+  for (const [vw] of WIDTHS) {
+    const r = await measure(route, vw);
+    total += r.diagrams.length;
+    for (const d of r.diagrams) {
+      if (d.eff !== null && d.eff < FLOOR) illegible++;
+      if (d.eff !== null) worst = Math.min(worst, d.eff);
+      if (d.scrolls) {
+        scrolling++;
+        anyScroll = true;
+      }
+    }
+    if (r.bodyScrollsSideways) bodyBad.push(`${route} @${vw}px`);
+  }
+  rows.push([route, worst === 99 ? null : worst, anyScroll]);
 }
 
-rows.sort((x, y) => (x[1] ?? 99) - (y[1] ?? 99));
-console.log('worst-first (min effective font per page):');
-console.log('  live   local   route');
-for (const [route, a, b] of rows.slice(0, 14)) {
-  const mark = b !== null && b >= FLOOR ? ' ok' : ' STILL BELOW';
-  console.log(`  ${String(a ?? '-').padStart(5)}  ${String(b ?? '-').padStart(5)}   ${route}${mark}`);
+rows.sort((a, b) => Number(b[2]) - Number(a[2]) || (a[1] ?? 99) - (b[1] ?? 99));
+console.log('  font  scroll  route');
+for (const [route, font, scroll] of rows.slice(0, 14)) {
+  console.log(`  ${String(font ?? '-').padStart(4)}  ${scroll ? 'YES   ' : 'no    '}  ${route}`);
 }
-console.log(`\nDiagrams below the ${FLOOR}px floor:  live ${liveBad}/${liveTotal}   local ${localBad}/${localTotal}`);
-console.log(`Pages whose BODY scrolls sideways after the change: ${bodyOverflow.length ? bodyOverflow.join(', ') : 'none (invariant held)'}`);
+
+console.log(`\nBelow the ${FLOOR}px floor:      ${illegible}/${total}`);
+console.log(`Needing horizontal scroll: ${scrolling}/${total}`);
+console.log(`Page body scrolls sideways: ${bodyBad.length ? bodyBad.join(', ') : 'nowhere (invariant held)'}`);
+
 await browser.close();
+if (scrolling > SCROLL_BASELINE) {
+  console.log(`\nREGRESSION — horizontal-scroll count rose above the ${SCROLL_BASELINE} baseline.`);
+} else if (scrolling < SCROLL_BASELINE) {
+  console.log(`\nIMPROVED — ${SCROLL_BASELINE - scrolling} fewer than baseline. Lower SCROLL_BASELINE to ${scrolling}.`);
+}
+const ok = illegible === 0 && bodyBad.length === 0 && scrolling <= SCROLL_BASELINE;
+console.log(ok ? '\nPASS — legibility floor held, fit within baseline' : '\nFAIL');
+process.exit(ok ? 0 : 1);

@@ -180,3 +180,23 @@
 .docusaurus-mermaid-container svg {
   max-width: none;
 }
+
+/* Centred, because a vertical diagram is usually much narrower than the column and reads as
+ * a mistake when it hugs the left edge. `safe center` is deliberate: plain `center` centres
+ * overflowing content too, which pushes the FIRST node off the left edge and out of reach —
+ * unreachable, since you cannot scroll left of the origin. `safe` falls back to start
+ * alignment exactly when the content overflows, so a wide diagram still begins at its
+ * beginning. */
+.docusaurus-mermaid-container {
+  display: flex;
+  justify-content: safe center;
+}
+
+/* flex-shrink MUST be 0. A flex item shrinks by default, which silently re-squashed the SVG
+ * back to the column width — measured 4.5px effective type, i.e. the exact defect #437 fixed,
+ * reintroduced by the centring that was meant to be cosmetic. It also masked itself: nothing
+ * overflowed, so the scroll check reported everything fine. */
+.docusaurus-mermaid-container > svg,
+.docusaurus-mermaid-container > div > svg {
+  flex-shrink: 0;
+}
