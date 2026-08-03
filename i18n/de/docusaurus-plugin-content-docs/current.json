@@ -27,10 +27,6 @@
     "message": "Querschnittsthemen",
     "description": "The label for category 'Cross-cutting' in sidebar 'handbookSidebar'"
   },
-  "sidebar.handbookSidebar.category.Cross-cutting.link.generated-index.description": {
-    "message": "Drei Dinge laufen durch alle Stufen der Pipeline und lassen sich keinem einzelnen Schritt zuordnen: woran Sie erkennen, dass das System funktioniert (Evaluation), wie Sie für seine Sicherheit sorgen (Guardrails) und wie Sie sehen, was es im Produktivbetrieb tut (Observability). Wir beginnen mit der Evaluation – ohne sie fehlt der Maßstab, an dem sich alles Übrige ausrichten lässt.",
-    "description": "The generated-index page description for category 'Cross-cutting' in sidebar 'handbookSidebar'"
-  },
   "sidebar.handbookSidebar.category.Evaluation": {
     "message": "Evaluierung",
     "description": "The label for category 'Evaluation' in sidebar 'handbookSidebar'"

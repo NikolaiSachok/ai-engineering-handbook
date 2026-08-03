@@ -27,10 +27,6 @@
     "message": "Prierezové aspekty",
     "description": "The label for category 'Cross-cutting' in sidebar 'handbookSidebar'"
   },
-  "sidebar.handbookSidebar.category.Cross-cutting.link.generated-index.description": {
-    "message": "Tri veci prechádzajú všetkými fázami pipeline a nedajú sa zredukovať na jediný krok: ako zistíš, že systém funguje (Evaluation), ako ho udržíš bezpečný (Guardrails) a ako uvidíš, čo robí v produkcii (Observability). Začíname hodnotením — bez neho nie je podľa čoho ladiť zvyšok.",
-    "description": "The generated-index page description for category 'Cross-cutting' in sidebar 'handbookSidebar'"
-  },
   "sidebar.handbookSidebar.category.Evaluation": {
     "message": "Evaluation",
     "description": "The label for category 'Evaluation' in sidebar 'handbookSidebar'"

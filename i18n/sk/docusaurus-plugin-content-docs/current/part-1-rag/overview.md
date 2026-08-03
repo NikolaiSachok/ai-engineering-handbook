@@ -27,7 +27,7 @@ rieši jednu z týchto dvoch porúch a prvým krokom je vždy zistiť, ktorá z 
 - **[Štruktúrované znalosti](./structured-knowledge/index.md)** — čo robiť, keď odpoveď nie je v žiadnom
   úryvku: riadené slovníky a ontológie, znalostné grafy, sémantická vrstva a text-to-SQL. Pri každom z týchto riešení lekcia
   vysvetľuje, kedy sa ho oplatí zaviesť.
-- **Prierezové aspekty** — to, čo sa nedá zúžiť na jediný krok: [eval](./cross-cutting/evaluation/index.md)
+- **[Prierezové aspekty](./cross-cutting/index.md)** — to, čo sa nedá zúžiť na jediný krok: [eval](./cross-cutting/evaluation/index.md)
   (vedieť, že systém funguje), [guardrails](./cross-cutting/guardrails/index.md) (udržať ho v bezpečných
   medziach), [observability](./cross-cutting/observability/index.md) (vidieť, čo robí v produkcii).
 

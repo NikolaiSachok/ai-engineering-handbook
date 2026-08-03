@@ -28,7 +28,7 @@ Schritt ist immer derselbe: feststellen, welches der beiden vorliegt.
 - **[Strukturiertes Wissen](./structured-knowledge/index.md)** – was zu tun ist, wenn die Antwort in keiner
   Passage steht: kontrollierte Vokabulare und Ontologien, Knowledge Graphs, die semantische Schicht und
   Text-to-SQL. Und, für jedes davon, ob es seinen Aufbau wert ist.
-- **Querschnittsthemen** – was sich keinem einzelnen Schritt zuordnen lässt:
+- **[Querschnittsthemen](./cross-cutting/index.md)** – was sich keinem einzelnen Schritt zuordnen lässt:
   [Evaluierung](./cross-cutting/evaluation/index.md) (woran Sie erkennen, dass das System funktioniert),
   [Guardrails](./cross-cutting/guardrails/index.md) (die Leitplanken, die es absichern),
   [Observability](./cross-cutting/observability/index.md) (woran Sie sehen, was es im Produktivbetrieb
