@@ -97,6 +97,30 @@ seam, which is the honest outcome: the reasoning underneath was still independen
 phrasing was borrowed, and the brief now has to say so explicitly. Briefs had also been growing — 42 words, then
 80, then 87, then 110 — and a longer brief is more material to recite.
 
+## Two ways of casting three attempts
+
+The three attempts are not always cast the same way, and which form a page uses is decided by the
+casting rather than by preference.
+
+Most pages cast by **tier** — the common answer, the strong one, the over-built one. That works when
+the interesting spread is between levels of skill, and the common answer earns its place by being the
+one a real interviewer hears most.
+
+Some questions do not divide that way. Before any candidate runs, the interviewer has to show that the
+question is genuinely contested: the strongest one-sentence case for each defensible option, and the
+fact in the prompt that makes that case available. When that artefact comes back with several
+architectures that a competent engineer could each argue, casting three personas by skill level wastes
+the disagreement — all three converge and one defensible option goes unexplored because nobody was
+equipped to argue it. On those pages the three are cast by **position** instead, and the headings name
+the stance.
+
+The trap worth recording, because it cost a run: an option can look castable and not be. One scenario's
+artefact listed *build no agent at all* as a defensible position, flagged it as certain to go unexplored,
+and had a persona built specifically to argue it — and that candidate built three model-using components
+anyway. The prompt contained work that made refusing it require exactly the moves the scoring standard
+forbids, so the position was defensible on paper and uninhabitable in practice. A pole now gets checked
+against the disqualifying list before anyone is cast on it.
+
 ## The gates, and the one that had to be inverted
 
 A scenario passes through the same layered checks as the rest of the handbook — an editorial team, a
