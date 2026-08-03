@@ -215,6 +215,90 @@ alebo kontext vyzerá nepravdepodobne. Faithfulness je práve to, čo meria, či
 **Answer-shaping (tvarovanie odpovede)** — riadenie formátu, tónu a dĺžky odpovede. Reálna páka kvality, ale
 podriadená opretiu o kontext: tvarovanie nesmie nikdy zahodiť citáciu, výhradu ani úprimné odmietnutie.
 
+<a id="structured-knowledge"></a>
+
+## Štruktúrované znalosti \{#structured-knowledge}
+
+**Riadený slovník (controlled vocabulary)** — pevný zoznam povolených termínov. Najlacnejšia štruktúra, aká
+existuje, a zároveň tá, ktorá zabráni extraktoru vymyslieť pre jeden vzťah tri názvy.
+
+**Taxonómia (taxonomy)** — hierarchia nad termínmi slovníka; umožňuje zoskupovať výsledky na nadradených
+úrovniach, dediť vlastnosti a pýtať sa na širšie aj užšie pojmy.
+
+**Ontológia (ontology)** — triedy, vlastnosti a obmedzenia medzi nimi: model domény, nie zoznam jej označení.
+Umožňuje validovať dáta a odvodzovať fakty, ktoré nikto nevyslovil, za cenu trvalej údržby ľuďmi.
+
+**RDF** — model trojíc: každý fakt je subjekt, predikát a objekt.
+
+**OWL 2** — ontologický jazyk W3C s formálne definovaným, modelovo-teoretickým významom; práve on umožňuje
+strojové odvodzovanie. Jeho **profily** (EL, QL, RL) vymieňajú vyjadrovaciu silu za efektívnosť
+odvodzovania a voľba profilu je skutočné inžinierske rozhodnutie.
+
+**SHACL** — jazyk na validáciu RDF: **graf tvarov (shapes graph)** definuje podmienky, **dátový graf (data
+graph)** sa voči nim kontroluje a výsledkom je **validačná správa (validation report)**. Deterministická brána
+nad pravdepodobnostným extraktorom.
+
+**SPARQL** — dopytovací jazyk pre RDF; porovnáva vzory nad orientovaným označeným grafom, a to aj nad
+relačnými dátami vystavenými ako RDF cez medzivrstvu.
+
+**Znalostný graf (knowledge graph)** — entity ako uzly a vzťahy ako hrany, buď vyextrahované z korpusu, alebo
+zostavené ručne.
+
+**GraphRAG** — vyhľadávanie nad znalostným grafom postaveným z tvojich dokumentov. Ako vlastné meno je
+GraphRAG názov referenčnej implementácie od Microsoftu.
+
+**Extrakcia grafu (graph extraction)** — spracovanie chunkov modelom LLM, pri ktorom vzniknú entity, vzťahy a kovariáty. Ide o nákladnú fázu, od ktorej závisí správnosť všetkého, čo nasleduje po nej.
+
+**TextUnit** — názov, ktorý GraphRAG dáva zdrojovému chunku, teda jednotke, nad ktorou beží extrakcia. Jej
+veľkosť je návrhové rozhodnutie, nie predvoľba: väčšie jednotky znamenajú menej volaní extrakcie a viac entít
+na jedno volanie — a menšiu šancu, že model priradí vzťah správnej dvojici.
+
+**Kovariát / extrakcia tvrdení (covariate / claim extraction)** — slovom `covariate` označuje GraphRAG tvrdenie priradené k entite: vecný výrok so zaznamenaným stavom overenia a obdobím platnosti. Extrakcia
+tvrdení je v GraphRAG voliteľná a predvolene vypnutá, lebo bez doladenia promptu na doménu nie je užitočná.
+
+**Detekcia komunít / hierarchický Leiden (community detection / hierarchical Leiden)** — rekurzívne
+zhlukovanie, ktoré entity zoskupuje do vnorených komunít, takže zhrnutia existujú na viacerých úrovniach
+podrobnosti.
+
+**Správa o komunite (community report)** — zhrnutie jednej komunity vytvorené počas indexovania, s manažérskym zhrnutím a s kľúčovými entitami, vzťahmi a tvrdeniami. Práve z týchto správ čerpá global search pri otázkach o celom korpuse.
+
+**Local search (lokálne vyhľadávanie)** — grafová metóda dopytovania: okolie entity spojené so surovými
+chunkami. Graf dodáva štruktúru, dôkaz naďalej dodáva text.
+
+**Global search (globálne vyhľadávanie)** — map-reduce nad všetkými správami o komunitách, pre otázky
+o korpuse ako celku. Každý globálny dopyt je nákladný; práve kvôli tomuto typu otázok sa však graf stavia.
+
+**DRIFT search** — lokálne vyhľadávanie doplnené o kontext komunity, vďaka ktorému môže dopyt začať zo širšieho tematického rámca.
+
+**Stotožňovanie entít (entity resolution)** — rozhodnutie, že `Acme Corp` a `Acme Corporation` sú jeden uzol.
+Krok, ktorý najpravdepodobnejšie sklame, lebo populárne grafové RAG systémy zlučujú porovnávaním reťazcov.
+
+**Prílišné / nedostatočné zlučovanie (over-merging / under-merging)** — dva smery chyby pri stotožňovaní:
+zlepenie odlišných entít vymyslí spojenia, rozdrobenie jednej entity ich skryje. Vykazuj ich zvlášť; jediné
+číslo presnosti nechá jedno schovať sa vnútri druhého.
+
+**Presnosť extrakcie (extraction precision)** — podiel extrahovaných trojíc, ktoré sú voči svojmu zdrojovému
+textu pravdivé, meraný na označkovanej vzorke. Miera správnosti, akú ti metriky vyhľadávania nedajú.
+
+**Sémantická vrstva (semantic layer)** — dve rôzne veci pod jedným menom. Prvou je **vrstva metrík**:
+modelovacia vrstva nad dátovým skladom, v ktorej je metrika zadefinovaná raz, aj so svojimi spojeniami,
+prípustnými filtrami a dimenziami. Druhou je sémantická vrstva nad jazykovou vrstvou — priradenie výpovede
+k doménovému pojmu namiesto k úryvku, aby boli odpovede konzistentné a auditovateľné.
+
+**Sémantický model (semantic model)** — modelovacia jednotka vrstvy metrík; deklaruje časti nižšie a metriky
+postavené nad nimi.
+
+**Miera / dimenzia / entita (measure / dimension / entity)** — časti sémantického modelu: samotné veličiny,
+spôsoby, akými sa dajú členiť, a kľúče spojenia, ktoré ich prepájajú.
+
+**Meta API** — introspekčné rozhranie sémantickej vrstvy, cez ktoré agent zistí, aké metriky a dimenzie môže v dopyte použiť.
+Štruktúrovaná obdoba definície nástroja: odstraňuje chybu, pri ktorej si model vymyslí metriku, čo znie
+rozumne a neexistuje.
+
+**Text-to-SQL** — generovanie SQL z otázky v prirodzenom jazyku. Nad surovou schémou musí model dopyt
+*odvodiť* — biznisové spojenia tabuliek, biznisové dátumy, neupratované hodnoty, nenapísané pravidlá; nad
+sémantickou vrstvou *vyberá* zadefinovanú metriku, čo je menšie rozhodnutie s viditeľnou chybou.
+
 <a id="evaluation"></a>
 
 ## Evaluation \{#evaluation}
@@ -243,6 +327,14 @@ embeddingov s pôvodnou otázkou — *(1/N) Σ cos(E_gen_i, E_orig)*. Meria zhod
 počtom príkladov nevyrušia: position bias (uprednostňuje prvú možnosť — rieši sa prehodením poradia
 a požiadavkou na konzistentnosť), verbosity bias (dlhšie = lepšie), self-preference / self-enhancement
 (vlastný štýl). ↗ [arXiv](https://arxiv.org/abs/2306.05685)
+
+**Korelovaná chyba (correlated error)** — dva modely zlyhávajú na tých istých vstupoch z tej istej príčiny.
+Druhý model zníži chybovosť len do tej miery, do akej jeho chyby nekorelujú s chybami prvého — a od dvoch
+hraničných modelov trénovaných na prekrývajúcich sa korpusoch treba čakať, že sa najsilnejšie zhodnú práve
+tam, kde je ich spoločných trénovacích dát najmenej. Nezávislosť prináša iný *zdroj informácie* — kontrola opretá o nezávislý dokument, deterministická podmienka, spustiteľný test, ľudská značka —, nie iný dodávateľ.
+
+**Nezávislosť kontextu vs nezávislosť rozdelenia chýb (context independence vs error-distribution
+independence)** — dve odlišné vlastnosti, ktoré táto príručka pri hodnotení označuje slovom *nezávislosť*. Prvá zatají návrh overovateľovi vnútri jedného modelu (chain-of-verification). Druhá hovorí o tom, že dva modely nechybujú na tých istých vstupoch — a práve túto vlastnosť korelovaná chyba oslabuje. Mať prvú ešte neznamená mať druhú.
 
 **Offline vs online eval** — hodnotenie na golden sete pred nasadením (regresie v CI) verzus meranie
 v produkcii (spätná väzba od používateľov, A/B).
@@ -932,6 +1024,10 @@ každej odpovedi priradí skóre, s odmenou za želané správanie.
 
 **Model distillation (destilácia modelu)** — trénovanie menšieho modelu-žiaka, aby napodobňoval výstupy
 väčšieho modelu-učiteľa, výmenou trochy kvality za výrazne nižšie náklady na serving.
+
+**Context distillation (kontextová destilácia)** — trénovanie modelu tak, aby sa správal, ako keby bol
+prítomný nejaký kontext — dlhý systémový prompt, politika, rozpracované príklady —, hoci sa mu pri inferencii
+nepodáva. Zníži počet tokenov promptu v každej požiadavke, no platí za to obvyklú cenu celého rebríka: správanie je odteraz zamrznuté vo váhach, takže zmena pravidiel znamená trénovať znova. Podobnú úsporu prinesie aj cachovanie promptu, pri ktorom správanie vo váhach nezamrzne.
 
 **Continued pre-training (pokračujúce predtrénovanie)** — rozšírenie predtrénovania základného modelu na
 veľkých neoznačených doménových dátach, pred akýmkoľvek ladením na konkrétnu úlohu.

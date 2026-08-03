@@ -26,8 +26,8 @@ slug: /
 
 ## Структура
 
-- **[Часть I — RAG](./part-1-rag/overview.md):** ingestion, retrieval, generation и сквозные аспекты (eval,
-  guardrails, observability) статического конвейера.
+- **[Часть I — RAG](./part-1-rag/overview.md):** ingestion, retrieval, generation, структурированные знания и
+  сквозные аспекты (eval, guardrails, observability) статического конвейера.
 - **[Часть II — Агенты](./part-2-agents/overview.md):** agentic RAG, использование инструментов, планирование
   и циклы, мультиагентные системы, фреймворки оркестрации, [MCP](https://modelcontextprotocol.io).
 - **[Часть III — Production и LLMOps](./part-3-production/overview.md):** сервинг на [FastAPI](https://fastapi.tiangolo.com) + Docker,

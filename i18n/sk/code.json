@@ -326,7 +326,7 @@
     "description": "Card call-to-action for an in-progress course"
   },
   "landing.course.rag-agents.blurb": {
-    "message": "RAG a agentové systémy pre produkciu od prvých princípov — Ingestion, Retrieval, Generation, agenti a eval, guardrails a LLMOps, ktoré im nedovolia klamať.",
+    "message": "RAG a agentové systémy pre produkciu od prvých princípov — Ingestion, Retrieval, Generation, štruktúrované znalosti, agenti a eval, guardrails a LLMOps, ktoré im nedovolia klamať.",
     "description": "Landing card blurb for the RAG & Agents course"
   },
   "landing.course.ai-sdlc.blurb": {

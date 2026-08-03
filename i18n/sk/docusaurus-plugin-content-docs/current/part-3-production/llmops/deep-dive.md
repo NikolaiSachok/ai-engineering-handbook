@@ -49,6 +49,14 @@ flowchart TD
     T --> R["Regresia? Vráť sa na predošlú /<br/>odpoj LoRA adaptér"]
 ```
 
+V skutočnej organizácii o tejto voľbe často rozhodnú dve otázky ešte skôr, než sa vôbec dostaneš k tomu, či ide o znalosti, alebo o správanie. Obe táto príručka rozoberá inde — a tam ich architektonický dôsledok nie je vidieť.
+
+Oprávnenia jednotlivých používateľov žijú vo filtri pri vyhľadávaní a v zamrznutých váhach žiť nedokážu. [Prehĺbenie vrstvy Retrieval](../../part-1-rag/retrieval/deep-dive.md) učí riadenie prístupu ako mechaniku vyhľadávania — preosej pred vyhľadávaním, nikdy nefiltruj až potom —, takže sa číta ako detail toho, ako sa dopyt spracuje. Jeho väčší dôsledok je architektonický: filter môže byť pre každého žiadateľa iný, váha nie. Čokoľvek sa doladený model naučil, dostane každý volajúci. V organizácii so stupňovaným prístupom k vlastným znalostiam preto toto kritérium rozhodne o architektúre samo, ešte pred akýmkoľvek prepočtom nákladov. Doladiť sa dá správanie a formát; znalosti ostávajú za filtrom, lebo filter je jediné miesto, kde sa dá uplatniť oprávnenie.
+
+Strom vyššie nezachytáva ešte jednu vetvu: pomer medzi veľkosťou korpusu a kapacitou kontextového okna. [Prehĺbenie vrstvy Generation](../../part-1-rag/generation/deep-dive.md) učí dlhý kontext dôkladne, no ako problém *skladania* vnútri RAG — lost-in-the-middle, efektívny kontext nie je veľkosť kontextového okna. Obrátene je to otázka, ktorá stojí pred všetkým ostatným: ak sa celý korpus zmestí a ostane malý, niet dôvod stavať vrstvu vyhľadávania ani ospravedlňovať doladenie a každá pridaná vrstva by nemala čo robiť. Výhradu už to prehĺbenie stanovilo a táto stránka ju neopakuje — *to, že sa niečo zmestí, ešte neznamená, že tomu model venuje pozornosť* —, takže „zmestí sa“ je miesto, kde test začína, nie kde končí. Kvalitu vyhľadávania si na vlastných otázkach zmeraj skôr, než vrstvu vyhľadávania zmažeš.
+
+Ani jedno z tých kritérií nenahrádza argument o čerstvosti; posúdiť ich však treba ešte pred ním. Čerstvosť ti povie, či fakty vo váhach *môžu* žiť. Tieto dve ti povedia, či tam žiť *smú* — a či ten aparát vôbec potrebuješ.
+
 ## Riadenie výdavkov
 
 Cenové páky platformy — zľavy za záväzok využitia, násobky cachovania promptu, dávkový režim zhruba za polovicu ceny, medziregionálny egress — sú predmetom [prehĺbenia o cloudových platformách](../cloud-platforms/deep-dive.md) a potiahnuť každú z nich je inžinierske rozhodnutie. Riadenie (governance) je vrstva nad nimi. Jej úloha: spraviť výdavky viditeľnými, mať za ne majiteľa a ohraničiť ich naprieč tímami, aby sa páky naozaj ťahali a aby žiaden tím ticho nevyčerpal celý rozpočet sám. Úvod lekcie umiestnil rozpočty na LLM gateway (LLM-brána); toto je organizácia postavená okolo nich.
@@ -133,6 +141,7 @@ flowchart LR
 ## Čo si odniesť z lekcie
 
 - Dolaďuj až naposledy, keď prompt a RAG narazili na strop, a len na medzeru v správaní, formáte, tóne či zručnosti — nikdy pre čerstvé znalosti, čo je úloha retrievera. Doladený model je pripnutý artefakt na tej istej eval bráne ako každé nasadenie, vrátený opätovným pripnutím predchodcu alebo odpojením LoRA adaptéra.
+- Ešte pred rozhodovaním medzi znalosťami a správaním posúď dve kritériá. Oprávnenia konkrétneho používateľa vieš uplatniť vo filtri pri vyhľadávaní, vo váhach modelu nie — stupňovaný prístup preto môže sám určiť architektúru. A ak sa korpus zmestí do kontextu a ostane malý, nemusí byť čo vyhľadávať ani čo dolaďovať — hoci to, že sa niečo zmestí, ešte neznamená, že tomu model venuje pozornosť.
 - Metódy idú od ľahkej po ťažkú: SFT na označených pároch, DPO na dvojiciach preferovanej a odmietnutej odpovede, RFT s odmenou od gradera, ktorého si zadefinuješ, a LoRA / PEFT, ktoré trénuje vymeniteľný adaptér nad zamrznutými váhami. Ponuky poskytovateľov za nimi sú datovaná momentka na overenie.
 - Riadenie výdavkov robí náklady viditeľnými, vlastnenými a ohraničenými: priraď na aplikačnej vrstve (volanie LLM je transakcia bez majetku na označenie), showback prevádzkuj vždy, chargeback pridaj až vtedy, keď je priradenie dôveryhodné, a rozpočty aj predvolenú trasu na lacný model vynucuj na bráne.
 - Na releasovej strane regresie ju eval brána zablokuje ešte pred vydaním a postupné vydávanie ju automaticky vráti pri prelomenej proxy kvality alebo nákladov, tam kde by dashboard len na chyby a latenciu ostal zelený. Každý artefakt potrebuje cestu späť — a index ju má jedine vtedy, keď je verziovaný.

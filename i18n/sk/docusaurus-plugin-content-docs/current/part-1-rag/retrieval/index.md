@@ -59,6 +59,8 @@ V podnikovom prostredí vyhľadávanie odpovedá na viac než „je toto význam
 - **Filtrovanie podľa metadát (metadata filtering)** nad poliami pripojenými pri delení na chunky: dátum, oddelenie, typ dokumentu, jazyk. „Len HR dokumenty po roku 2024.“
 - **Riadenie prístupu (access control).** Oprávnenia sa uplatnia *skôr*, než sa výsledky vrátia, takže používateľ fyzicky nedostane chunk, ku ktorému nemá prístup (príklad mzdovej evidencie z lekcie o ingestion). Je to tvrdá požiadavka: systém, ktorý vráti obmedzený dokument len na základe významovej podobnosti, nespôsobil pokles kvality, ale bezpečnostný incident. Zvyčajné usporiadanie je pre-filter (filter pred vyhľadávaním) — najprv preosej podľa oprávnení, až potom vyhľadávaj.
 
+Riadenie prístupu tu vyzerá ako mechanika vyhľadávania, rozhoduje však o čomsi oveľa väčšom. Filter môže byť pre každého používateľa iný, model však pracuje pre všetkých s rovnakými váhami. Práve táto asymetria určuje, kde vôbec smú znalosti organizácie žiť — pozri [kedy meniť váhy](../../part-3-production/llmops/deep-dive.md).
+
 ## Celá pipeline
 
 ```text
