@@ -73,12 +73,12 @@ sidebar_position: 2
 flowchart TD
     SDK["SDK приложения"] -->|событие| WEB["Langfuse Web<br/>приём и API"]
     WEB -->|подтверждение| SDK
-    WEB -->|сырое тело| BLOB[("Объектное хранилище (blob):<br/>сырые события")]
-    WEB -->|ссылка в очередь| REDIS[("Redis / Valkey:<br/>очередь + кэш")]
+    WEB -->|сырое тело| BLOB[("Объектное хранилище:<br/>сырые события")]
+    WEB -->|ссылка| REDIS[("Redis / Valkey:<br/>очередь + кэш")]
     WORKER["Воркер Langfuse"] -->|читает| REDIS
     WORKER -->|читает| BLOB
-    WORKER -->|пишет| CH[("ClickHouse (OLAP):<br/>трейсы · наблюдения · score")]
-    WEB <-->|конфиг, промпты| PG[("PostgreSQL (OLTP):<br/>проекты, настройки")]
+    WORKER -->|пишет| CH[("ClickHouse (OLAP):<br/>трейсы · наблюдения")]
+    WEB <-->|конфиг| PG[("PostgreSQL (OLTP):<br/>проекты, настройки")]
     WEB -->|отдаёт консоль| UI["Консоль оператора"]
 ```
 
@@ -203,7 +203,7 @@ OTel и OpenInference. Сменить бэкенд — это правка ко�
 систему, а OTel служит соединительной тканью между ними.
 
 ```mermaid
-flowchart LR
+flowchart TB
     W["Ограничители<br/>оборачивают прод"] --> PROD["Прод-система"]
     PROD -->|спаны по OTel| OBS["Наблюдаемость"]
     OBS -->|плохие трейсы| GS["golden set"]

@@ -134,7 +134,7 @@ red-team-функции предлагают и платформы. Так за�
 Вся связка целиком — с точками, куда встают продукты этого урока:
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph W["Ограничители: Guardrails AI / NeMo Guardrails / Llama Guard / Granite Guardian"]
         P[Прод-система]
     end

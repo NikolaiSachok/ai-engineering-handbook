@@ -34,14 +34,14 @@ The principle underneath it all: bound at the scarce resource, not at the connec
 
 ```mermaid
 flowchart TB
-    R["Requests arrive"] --> AL
+    R["Requests arrive"] --> SEM
     subgraph AL["App layer"]
-        SEM["Semaphore — concurrency cap N"] --> Q{"Bounded queue<br/>max depth D"}
-        Q -->|"Queue full"| SHED["Shed — fast-fail 429 / 503 + Retry-After"]
+        SEM["Semaphore<br/>concurrency cap N"] --> Q{"Bounded queue<br/>depth D"}
+        Q -->|"Queue full"| SHED["Shed<br/>429 / 503<br/>+ Retry-After"]
     end
-    Q -->|"Admitted"| IS
+    Q -->|"Admitted"| SCHED
     subgraph IS["Inference server"]
-        SCHED["Admission — max_num_seqs cap"] --> GPU["GPU — KV-cache pool"]
+        SCHED["Admission<br/>max_num_seqs"] --> GPU["GPU<br/>KV-cache pool"]
     end
 ```
 
@@ -80,7 +80,7 @@ The rule of thumb falls straight out of the communication cost: tensor paralleli
 And the same discipline applies as everywhere else: don't shard a model that fits. One that sits comfortably on a single GPU serves more cheaply replicated than split, because sharding only adds communication overhead for nothing. Parallelism earns its keep for models that do not fit, or to cut latency — it is never free throughput.
 
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph TP["Tensor parallelism — within one node"]
         direction LR
         G0["GPU 0<br/>half of each layer"] <-->|NVLink| G1["GPU 1<br/>half of each layer"]

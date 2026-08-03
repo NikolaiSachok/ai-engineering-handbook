@@ -50,7 +50,7 @@ Die Übergabe an den nächsten Agenten geht von Punkt zu Punkt. Ein Agent packt 
 Das Modell ist älter, als es aussieht. Unabhängige Spezialisten – die **Wissensquellen** – arbeiten nicht dadurch zusammen, dass sie einander aufrufen, sondern dadurch, dass sie aus einer gemeinsamen globalen Datenstruktur lesen und in sie schreiben, eben dem Blackboard, während eine **Steuerung** entscheidet, welcher Spezialist als Nächstes handeln darf. Keiner wendet sich unmittelbar an einen anderen; jeder beobachtet das Blackboard und trägt bei, sobald er am aktuellen Stand etwas verbessern kann. Die Architektur stammt aus dem Spracherkennungssystem Hearsay-II, das an der Carnegie Mellon University zwischen 1971 und 1976 entstanden ist; die kanonische Darstellung stammt aus Stanford: H. Penny Niis zweiteiliger Überblick „Blackboard Systems“ (*AI Magazine*, Bd. 7, 1986). Stellen Sie sich ein Team vor einer echten Tafel vor: Alle sehen dieselbe Tafel, wer helfen kann, schreibt eine Zeile dazu, und eine Steuerung entscheidet, wer als Nächstes schreibt. Drei Teile, und das ist die ganze Architektur – das Blackboard (der gemeinsame Zustand), die Wissensquellen (die Spezialisten) und die Steuerung (der Scheduler).
 
 ```mermaid
-flowchart TB
+flowchart LR
     KS1["Wissensquelle 1"] <--> BB[("Blackboard · gemeinsamer Zustand")]
     KS2["Wissensquelle 2"] <--> BB
     KS3["Wissensquelle 3"] <--> BB
@@ -104,9 +104,13 @@ Die Regelschicht, die das begrenzt, ist das Budget als Regel aus Teil 1, ausgede
 ```mermaid
 flowchart TD
     Total["Budget für die ganze Aufgabe"] --> Orch["Der Orchestrator teilt zu"]
-    Orch --> W1["Worker · Teilbudget"]
-    Orch --> W2["Worker · Teilbudget"]
-    Orch --> W3["Worker · Teilbudget"]
+    Orch --> Workers
+    subgraph Workers["Teilbudgets je Worker"]
+        direction LR
+        W1["Worker"]
+        W2["Worker"]
+        W3["Worker"]
+    end
     Orch -. "Obergrenze für Breite und Tiefe" .-> Lim["begrenzt Breite und Rekursion"]
 ```
 

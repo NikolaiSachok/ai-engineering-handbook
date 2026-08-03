@@ -35,13 +35,15 @@ Fasst das Modell hartnäckig Aufrufe zu einem Batch zusammen, die nicht zusammen
 Als Bild: Drei Aufrufe verlassen das Modell, Ihre Anwendung führt sie nebenläufig aus, und ihre Ergebnisse kommen gemeinsam als eine Nachricht zurück.
 
 ```mermaid
-flowchart LR
-  M["Modell"] --> TC1["tool call: read_orders(...)"]
-  M --> TC2["tool call: read_inventory(...)"]
-  M --> TC3["tool call: read_pricing(...)"]
-  TC1 --> R["Ihre Anwendung führt sie nebenläufig aus"]
-  TC2 --> R
-  TC3 --> R
+flowchart TB
+  M["Modell"] --> Calls
+  subgraph Calls["Drei Tool-Calls in einer Modellantwort"]
+    direction LR
+    TC1["read_orders(...)"]
+    TC2["read_inventory(...)"]
+    TC3["read_pricing(...)"]
+  end
+  Calls --> R["Ihre Anwendung führt sie nebenläufig aus"]
   R --> C["Alle Ergebnisse einsammeln"]
   C --> M2["Modell arbeitet weiter"]
 ```
@@ -71,7 +73,7 @@ Was das Constrained-Decoding-Verfahren einbringt, lässt sich genau angeben: woh
 Derselbe Mechanismus als Schleife: Das Schema wird einmal überführt, danach maskiert jeder Decoding-Schritt und wählt aus dem Rest aus.
 
 ```mermaid
-flowchart LR
+flowchart TB
   S["JSON Schema"] --> G["In eine Grammatik überführen"]
   G --> Step["Bei jedem Decoding-Schritt"]
   Step --> Cand["Kandidaten für das nächste Token"]

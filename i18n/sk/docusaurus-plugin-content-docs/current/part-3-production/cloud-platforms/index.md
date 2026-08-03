@@ -15,12 +15,12 @@ Tokeny z modelu dostaneš tromi spôsobmi a všetky tri ležia na jednej osi, me
 
 ```mermaid
 flowchart TD
-    APP["Tvoja aplikácia / aplikačná služba z lekcie o servingu"] --> OWN["Vlastné GPU + inference server"]
-    APP --> VENDOR["Priame API dodávateľa modelu"]
-    APP --> CLOUD["Cloudová AI-platforma"]
-    OWN --> OWNX["Maximálna kontrola, maximálna prevádzková réžia"]
-    VENDOR --> VENDORX["Najjednoduchší štart: dáta idú k dodávateľovi, samostatná zmluva"]
-    CLOUD --> CLOUDX["Model vnútri perimetra cloudu: IAM, fakturácia, sieť, audit"]
+    APP["Tvoja aplikácia"] --> OWN["Vlastné GPU<br/>+ inference server"]
+    APP --> VENDOR["Priame API<br/>dodávateľa modelu"]
+    APP --> CLOUD["Cloudová<br/>AI-platforma"]
+    OWN --> OWNX(["Maximálna kontrola,<br/>maximálna prevádzková réžia"])
+    VENDOR --> VENDORX(["Najjednoduchší štart,<br/>dáta idú von,<br/>samostatná zmluva"])
+    CLOUD --> CLOUDX(["Vnútri tvojho perimetra:<br/>IAM, fakturácia, audit"])
 ```
 
 :::tip[▶ Video]

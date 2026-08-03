@@ -42,7 +42,7 @@ Ergebnis zurück; die Schleife läuft weiter. Das ist der Ablauf aus [Tool-Einsa
 derselbe. Anders ist nur das Nachrichtenformat.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Defs["Tool-Definitionen"] --> M["Modell"]
     M --> TC["tool call"]
     TC --> X["Ihr Code führt ihn aus"]

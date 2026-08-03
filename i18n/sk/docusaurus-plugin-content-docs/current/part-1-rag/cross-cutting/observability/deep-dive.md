@@ -106,14 +106,15 @@ Tu sa slučka z Časti 1 stáva prevádzkovou. Tracy, ktoré regresia označí, 
 flowchart TB
   M["Kvalita / latencia / náklad / časový rad"] --> DR{"Štatisticky skutočný pokles?"}
   DR -->|"áno"| A["Priradiť naprieč spanmi tracu"]
-  A --> C1["Klesli skóre vyhľadávania?<br/>(re-ingest / zmena indexu)"]
-  A --> C2["Pohol sa gen_ai.response.model?<br/>(poskytovateľ vymenil model)"]
-  A --> C3["Zmenila sa šablóna promptu?<br/>(nasadenie)"]
-  A --> C4["Posunulo sa rozloženie vstupov?<br/>(nové druhy dopytov)"]
-  C1 --> CE["Skorelovať nástup so zmenovou udalosťou"]
-  C2 --> CE
-  C3 --> CE
-  C4 --> CE
+  A --> Causes
+  subgraph Causes["Možné príčiny"]
+    direction LR
+    C1["Klesli skóre vyhľadávania?<br/>(re-ingest / zmena indexu)"]
+    C2["Pohol sa gen_ai.response.model?<br/>(poskytovateľ vymenil model)"]
+    C3["Zmenila sa šablóna promptu?<br/>(nasadenie)"]
+    C4["Posunulo sa rozloženie vstupov?<br/>(nové druhy dopytov)"]
+  end
+  Causes --> CE["Skorelovať nástup so zmenovou udalosťou"]
   CE --> F["Zlyhávajúce tracy →<br/>nové prípady v golden sete"]
   F --> E["Späť do evaluácie"]
 ```

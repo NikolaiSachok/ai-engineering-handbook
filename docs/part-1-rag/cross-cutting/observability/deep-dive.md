@@ -62,14 +62,15 @@ And here the loop from Part 1 becomes operational. The traces a regression flags
 flowchart TB
     M["Quality / latency / cost<br/>time series"] --> DR{"Statistically real drop?"}
     DR -->|"yes"| A["Attribute across trace spans"]
-    A --> C1["Retrieval scores fell?<br/>(re-ingest / index change)"]
-    A --> C2["gen_ai.response.model moved?<br/>(provider rolled the model)"]
-    A --> C3["Prompt template changed?<br/>(a deploy)"]
-    A --> C4["Input distribution shifted?<br/>(new kinds of query)"]
-    C1 --> CE["Correlate onset with a change event"]
-    C2 --> CE
-    C3 --> CE
-    C4 --> CE
+    A --> Causes
+    subgraph Causes["Candidate causes"]
+        direction LR
+        C1["Retrieval scores fell?<br/>(re-ingest / index change)"]
+        C2["gen_ai.response.model moved?<br/>(provider rolled the model)"]
+        C3["Prompt template changed?<br/>(a deploy)"]
+        C4["Input distribution shifted?<br/>(new kinds of query)"]
+    end
+    Causes --> CE["Correlate onset with a change event"]
     CE --> F["Failing traces →<br/>new golden-set cases"]
     F --> E["Back into eval"]
 ```

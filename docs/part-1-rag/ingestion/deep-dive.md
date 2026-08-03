@@ -24,7 +24,7 @@ It helps to see document types as a ladder of escalating difficulty rather than 
 The modern answer is **layout-aware parsing**: detect structure first, extract second. Instead of scraping glyphs in file order, a parser runs a vision or layout model that detects regions on the page — title, paragraph, table, figure, list, header, footer — and works out the reading order *before* it pulls any text. Then it emits structured Markdown or JSON that preserves the hierarchy and the tables. That reordering is the whole delta over a legacy flat extractor.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Raw["Raw document: PDF / scan / HTML"] --> Layout["Layout detection: regions + Reading order"]
     Layout --> OCR["OCR if image-only"]
     OCR --> Tables["Table structure recovery"]

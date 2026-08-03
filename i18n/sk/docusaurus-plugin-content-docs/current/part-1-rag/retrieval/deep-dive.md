@@ -40,7 +40,7 @@ score(d) = Σ_i  1 / (k + rank_i(d))
 Konštanta `k = 60` je empirické východisko z článku. Sploští to, ako prudko klesá príspevok dokumentu s pozíciou, takže jediné prvé miesto nedokáže ovládnuť zlúčené poradie. Vážený variant `Σ wᵢ / (k + rankᵢ(d))` ti dovolí jeden retriever uprednostniť. RRF je robustný práve preto, že nepotrebuje nijakú kalibráciu — normalizačný problém obíde, namiesto toho, aby ho riešil, a preto je v mnohých vektorových databázach predvolenou fúziou.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Q["Dopyt"] --> D["Dense vyhľadávanie"]
     Q --> B["BM25 vyhľadávanie"]
     D --> LD["Zoradený zoznam (dense)"]
@@ -106,7 +106,7 @@ Filtrovanie má otázku umiestnenia, ktorá rozhoduje o správnosti aj rýchlost
 Kompromis je teda medzi pre-filtrom, ktorý je správny, ale môže byť pomalý, a post-filtrom, ktorý je rýchly, ale môže vrátiť primálo — a jeden prípad tú voľbu ruší úplne: riadenie prístupu nie je nikdy post-filter. Ak sa kontrola oprávnení uplatní až po vyhľadávaní, systém už zoradil obsah, ktorý používateľ vidieť nesmie, a môže potichu vrátiť primálo — oprávnenia musia rezať pred vyhľadávaním, presne ako žiadala bezpečnostná požiadavka z prvej časti. Moderné vektorové databázy čoraz častejšie ponúkajú jednofázové filtrované ANN, ktoré predikát zabuduje priamo do prechodu — tak dostaneš správnosť aj rýchlosť naraz, namiesto toho, aby si jedno menil za druhé.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Q["Dopyt"] --> Rt["Smerovanie: ktorý index"]
     Rt --> Pf["Pre-filter: ACL + metadáta"]
     Pf --> AN["ANN vyhľadávanie"]

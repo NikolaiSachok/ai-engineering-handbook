@@ -77,16 +77,16 @@ HTTP-трафик.
 ```mermaid
 sequenceDiagram
     participant U as Пользователь
-    participant A as Сервис приложения (FastAPI)
+    participant A as Сервис приложения
     participant R as Retrieval
-    participant M as LLM (провайдер или инференс-сервер)
+    participant M as LLM
     U->>A: POST /ask
     A->>R: Поиск по базе знаний
     R-->>A: Выдача (чанки)
     A->>M: Генерация (stream: true)
     M-->>A: Токены (SSE)
     A-->>U: SSE-события, токен за токеном
-    Note over U,A: Статус 200 ушёл с первыми байтами.<br/>Сбой на середине передаётся событием внутри потока
+    Note over U,A: Статус 200 уже ушёл —<br/>сбой передаётся внутри потока
 ```
 
 За выигрыш в TTFT стриминг берёт плату, причём дважды. Первое — он ломает привычную модель обработки
@@ -191,7 +191,7 @@ batching)** — новые запросы подсаживаются в уже �
 вопрос следующего урока, про [облачные AI-платформы](../cloud-platforms/index.md).
 
 ```mermaid
-flowchart LR
+flowchart TB
     C[Клиент] --> A["Сервис приложения (FastAPI)<br/>Аутентификация → RAG-пайплайн →<br/>Ограничители → Учёт"]
     A -->|Аренда| P["Provider API<br/>(OpenAI, Anthropic, ...)"]
     A -->|Своё железо| I["Инференс-сервер (vLLM / SGLang)<br/>Непрерывный батчинг, KV-кэш"]

@@ -21,7 +21,7 @@ Part 1's "self-correction" and "iterative retrieval" were mechanisms described i
 Drawn out, the CRAG path is a three-way branch on the evaluator's score:
 
 ```mermaid
-flowchart LR
+flowchart TB
     R["Retrieve"] --> E["Retrieval evaluator"]
     E -- "Correct" --> Ref["Refine — keep relevant fragments"]
     E -- "Ambiguous" --> Comb["Combine — refined docs + web"]
@@ -71,7 +71,7 @@ The failure mode this all guards against is concrete: carry the raw chunks from 
 Drawn as a chain, each hop earns its keep by shrinking what it passes on:
 
 ```mermaid
-flowchart LR
+flowchart TB
     R1["Hop 1: retrieve"] --> D1["Distill finding + cite"]
     D1 --> R2["Hop 2: finding + retrieve"]
     R2 --> D2["Distill finding + cite"]

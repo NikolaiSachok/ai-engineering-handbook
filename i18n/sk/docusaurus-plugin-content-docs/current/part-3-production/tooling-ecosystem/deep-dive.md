@@ -36,13 +36,13 @@ Dôvodom pre všetky tie pohyblivé časti je **ingestion cesta**, ktorú sa opl
 
 ```mermaid
 flowchart LR
-    SDK["Aplikačné SDK"] -- "udalosť" --> WEB["Langfuse Web<br/>(ingestion API + konzola)"]
+    SDK["Aplikačné SDK"] -- "udalosť" --> WEB["Langfuse Web<br/>ingestion API<br/>+ konzola"]
     WEB -- "surové telo" --> S3["S3 / blob-úložisko"]
-    WEB -- "referencia do fronty" --> REDIS["Redis / Valkey<br/>(fronta + cache)"]
-    WEB <-- "OLTP: používatelia, projekty, prompty" --> PG["PostgreSQL"]
+    WEB -- "referencia" --> REDIS["Redis / Valkey<br/>fronta + cache"]
+    WEB <-- "OLTP" --> PG["PostgreSQL"]
     WORKER["Langfuse Worker"] -- "číta referenciu" --> REDIS
     WORKER -- "číta telo" --> S3
-    WORKER -- "upsert tracov / observations / scores" --> CH["ClickHouse (OLAP)"]
+    WORKER -- "upsert" --> CH["ClickHouse<br/>OLAP"]
     UI["Konzola"] --> WEB
 ```
 
@@ -119,7 +119,7 @@ Skladať tie produkty vôbec umožňuje **OpenTelemetry** (OTel) — a práve k 
 Háčik, ktorý štípe v praxi: neinštrumentuj dvakrát. Spusti SDK-natívny tracing a OTel inštrumentáciu naraz a každý span dostaneš dvakrát — zdvojené dáta, dvojnásobná cena ingestion a prehľady, ktoré potichu počítajú všetko dva razy. Vyber jednu cestu vysielania a druhú vypni.
 
 ```mermaid
-flowchart LR
+flowchart TB
     GR["Guardrails<br/>obaľujú produkčný systém"] --> PROD["Produkčný systém"]
     PROD -- "spany (OTel — šev)" --> OBS["Observability<br/>Langfuse / Phoenix"]
     OBS -- "zlé tracy → golden set (šev)" --> GS["Golden set"]

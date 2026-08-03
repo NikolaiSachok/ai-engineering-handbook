@@ -88,7 +88,7 @@ Rollback je pre kód triviálny, no pre každý z piatich artefaktov je jemne in
 Existuje jedna releasová kontrola silnejšia než čokoľvek uplatnené na jednotlivú zmenu: organizácia rozhodne, že *žiadne* vydania sa teraz nedejú. To je release freeze (zmrazenie vydávania) a to, čo ho spravuje, je politika rozpočtu chýb — predmet ďalšej sekcie.
 
 ```mermaid
-flowchart LR
+flowchart TB
     C["Zmena"] --> EG{"Eval brána<br/>(golden set)"}
     EG -->|"pod prahom"| BLK["Zablokované — oprav, skús znova"]
     EG -->|"prejde"| CAN["Canary<br/>(časť živej premávky)"]
@@ -130,7 +130,7 @@ Posledná zmena: niektoré úlohy nikdy neuspejú. Poškodený dokument, prompt,
 Keď Batch API poskytovateľa sadne — nezávislé požiadavky, výsledky do dňa — použi ho: lacnejší na polovičnej úrovni a bez workerov na prevádzku. Vlastnú frontu prevádzkuj len vtedy, keď je práca pipeline, ktorú ovládaš, potrebuje tvoj vlastný výpočet alebo sa musí striedať s tvojimi vlastnými systémami.
 
 ```mermaid
-flowchart LR
+flowchart TB
     P["Producent<br/>zaradí → job id"] --> Q["Fronta úloh<br/>(protitlak: ohranič prácu v behu)"]
     Q --> WP["Fond workerov<br/>(ack po vykonaní, spoločný rozpočet)"]
     WP -->|"úspech"| RS["Úložisko výsledkov<br/>(poll / webhook)"]

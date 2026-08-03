@@ -62,7 +62,7 @@ Carlo Tree Search, MCTS), но уже по действиям агента: ро
 почти никогда не отбивается.
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph Search["Поиск по дереву планов"]
         R["Задача"] --> A["Ветка A · балл 0.8"]
         R --> B["Ветка B · балл 0.3"]
@@ -230,7 +230,7 @@ Agentic RAG](../agentic-rag/deep-dive.md), где та же идея разоб�
 умолчанию она не нужна.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph Window["Окно контекста · «main context»"]
         WM["Рабочая память: план, последние наблюдения"]
     end

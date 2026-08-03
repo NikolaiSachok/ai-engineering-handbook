@@ -119,7 +119,7 @@ Now the defences, layered — no single one is sufficient, which is the whole id
 **Sandboxing.** Run untrusted servers with constrained privileges — containerised, network-restricted, filesystem-scoped — so that a compromise is contained instead of catastrophic. This matters most for local stdio servers, which otherwise inherit your machine's full privileges.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph Untrusted["Untrusted server"]
         R["resources"]
         TR["tool results"]

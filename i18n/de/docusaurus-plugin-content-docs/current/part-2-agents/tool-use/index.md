@@ -47,7 +47,7 @@ Der Mechanismus besteht aus vier Schritten, und die Schleife dahinter kennen Sie
 - **Das Modell arbeitet weiter** – es sieht das Ergebnis und ruft daraufhin entweder ein weiteres Tool auf oder antwortet.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Defs["Tool-Definitionen"] --> M["Modell"]
     M --> TC["tool call: sql_query(...)"]
     TC --> X["Ihr Code führt die Abfrage aus"]

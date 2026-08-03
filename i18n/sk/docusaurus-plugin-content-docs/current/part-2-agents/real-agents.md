@@ -23,7 +23,7 @@ IBM rámcuje presne to napätie, na ktorom stojí celý tento záverečný diel:
 Každý agent dostáva ruky rovnako. Nástroj deklaruješ ako názov, slovný opis a JSON Schema jeho argumentov; model vyjadrí štruktúrovaný zámer (structured intent) — ktorý nástroj a s akými argumentmi — no sám nespustí nič; tvoj kód volanie vykoná a výsledok podá späť; slučka pokračuje. To je spiatočná cesta, ktorej sa hovorí tool use (používanie nástrojov), niekde aj function calling (volanie funkcií), a je rovnaká u všetkých troch dodávateľov. Mení sa iba tvar prenosu.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Defs["Definície nástrojov"] --> M["Model"]
     M --> TC["tool call"]
     TC --> X["Tvoj kód ho vykoná"]

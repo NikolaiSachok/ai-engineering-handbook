@@ -52,7 +52,7 @@ Der Grund für den Aufwand: Eine Bitte ist keine Garantie, und unter Last zeigt 
 **Constrained Decoding** beseitigt die Möglichkeit, statt ihre Wahrscheinlichkeit zu senken. Die Struktur wird *während* der Erzeugung erzwungen: In jedem Decoding-Schritt legt das Schema – zuvor in eine Grammatik überführt – fest, welche nächsten Token zulässig sind, und bei der Tokenauswahl wird jedes Token maskiert, das das Schema verletzen würde; ausgegeben werden können also von vornherein nur schemakonforme Token. Eine missratene Ausgabe ist damit nicht mehr unwahrscheinlich, sondern konstruktionsbedingt ausgeschlossen. (Der Begriff steht aus der Lektion über den Tool-Einsatz bereits im Glossar; hier ist es derselbe Mechanismus, nur auf die Form der Antwort gerichtet.)
 
 ```mermaid
-flowchart LR
+flowchart TB
     S["Schema / Grammatik"] --> M["Token-Maske in jedem Schritt"]
     L["Logits des LLM für das nächste Token"] --> M
     M --> V["Nur schemakonforme Token auswählen"]

@@ -40,14 +40,14 @@ Základný princíp: ohranič pri vzácnom zdroji, nie pri spojení. Čakajúce 
 
 ```mermaid
 flowchart TB
-    R["Prichádzajú požiadavky"] --> AL
+    R["Prichádzajú požiadavky"] --> SEM
     subgraph AL["Aplikačná vrstva"]
-        SEM["Semafor — strop súbežnosti N"] --> Q{"Ohraničená fronta<br/>max. hĺbka D"}
-        Q -->|"Fronta plná"| SHED["Zhodenie — rýchle odmietnutie 429 / 503 + Retry-After"]
+        SEM["Semafor<br/>strop súbežnosti N"] --> Q{"Ohraničená fronta<br/>hĺbka D"}
+        Q -->|"Fronta plná"| SHED["Zhodenie<br/>429 / 503<br/>+ Retry-After"]
     end
-    Q -->|"Prijaté"| IS
+    Q -->|"Prijaté"| SCHED
     subgraph IS["Inference server"]
-        SCHED["Kontrola prijatia — strop max_num_seqs"] --> GPU["GPU — pool KV-cache"]
+        SCHED["Kontrola prijatia<br/>max_num_seqs"] --> GPU["GPU<br/>pool KV-cache"]
     end
 ```
 
@@ -90,7 +90,7 @@ Orientačné pravidlo vypadne rovno z ceny komunikácie: tenzorový paralelizmus
 Tá istá disciplína ako všade: nerozdeľuj model, ktorý sa zmestí. Ten, čo pohodlne sedí na jednom GPU, obslúžiš lacnejšie replikovaný než rozštiepený, lebo rozdelenie len pridá komunikačnú réžiu za nič. Paralelizmus sa oplatí pri modeloch, ktoré sa nezmestia, alebo na zníženie latencie — priepustnosť zadarmo nikdy nedostaneš.
 
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph TP["Tenzorový paralelizmus — v rámci jedného uzla"]
         direction LR
         G0["GPU 0<br/>polovica každej vrstvy"] <-->|NVLink| G1["GPU 1<br/>polovica každej vrstvy"]

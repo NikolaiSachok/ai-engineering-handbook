@@ -25,13 +25,15 @@ sidebar_position: 2
 предполагает эту независимость сама, а среда выполнения её не проверяет.
 
 ```mermaid
-flowchart LR
-    M["Модель"] --> TC1["tool call: search(...)"]
-    M --> TC2["tool call: sql_query(...)"]
-    M --> TC3["tool call: get_weather(...)"]
-    TC1 --> R["Среда выполнения запускает вызовы разом"]
-    TC2 --> R
-    TC3 --> R
+flowchart TB
+    M["Модель"] --> Calls
+    subgraph Calls["Три вызова в одном ответе модели"]
+        direction LR
+        TC1["search(...)"]
+        TC2["sql_query(...)"]
+        TC3["get_weather(...)"]
+    end
+    Calls --> R["Среда выполнения запускает вызовы разом"]
     R --> TR["tool result ×3, собраны вместе"]
     TR --> Cont["Модель продолжает"]
 ```
@@ -80,7 +82,7 @@ JSON); Gemini берёт схему — подмножество OpenAPI. Схе
 удаче и не по проверке постфактум.
 
 ```mermaid
-flowchart LR
+flowchart TB
     S["JSON Schema"] --> G["Грамматика"]
     G --> D["Шаг декодинга: токены-кандидаты"]
     D --> Mask["Маскируем невалидные токены"]

@@ -50,7 +50,7 @@ The whole discipline compresses into one loop. It's the spine of this lesson —
 end, the closing image of the handbook:
 
 ```mermaid
-flowchart LR
+flowchart TB
     C["Change<br/>prompt / model / index / config"] --> E["Eval in CI<br/>golden set"]
     E -- "fail" --> C
     E -- "pass" --> D["Deploy<br/>canary / shadow"]
@@ -208,7 +208,7 @@ you saw at the top of this page runs on quality *and* on dollars.
 Here is the section's lever map, laid over the request path:
 
 ```mermaid
-flowchart LR
+flowchart TB
     Q["Request"] --> SC{"Semantic cache"}
     SC -- "hit" --> R["Stored answer"]
     SC -- "miss" --> T["Prompt assembly: token diet"]

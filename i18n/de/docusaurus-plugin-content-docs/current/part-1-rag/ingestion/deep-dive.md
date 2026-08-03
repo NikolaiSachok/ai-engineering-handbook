@@ -28,7 +28,7 @@ Es hilft, die Dokumenttypen als Leiter zunehmender Schwierigkeit zu sehen statt 
 Die moderne Antwort ist **ein Parsing, das die Struktur zuerst erkennt**: erst die Struktur bestimmen, dann den Text herausholen. Statt Glyphen in der Reihenfolge der Datei abzugreifen, setzt ein solcher Parser ein Bild- oder Layoutmodell ein, das Regionen auf der Seite erkennt – Titel, Absatz, Tabelle, Abbildung, Liste, Kopfzeile, Fußzeile – und die Lesereihenfolge bestimmt, *bevor* er den Text extrahiert. Danach gibt er strukturiertes Markdown oder JSON aus, in dem Hierarchie und Tabellen erhalten sind. Darin liegt der entscheidende Unterschied zu einem herkömmlichen Extraktor, der die Struktur gar nicht erst ansieht.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Raw["Rohdokument: PDF / Scan / HTML"] --> Layout["Layouterkennung: Regionen + Lesereihenfolge"]
     Layout --> OCR["OCR, wenn nur Bild"]
     OCR --> Tables["Tabellenstruktur wiederherstellen"]

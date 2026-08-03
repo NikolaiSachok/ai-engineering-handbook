@@ -50,7 +50,7 @@ Handoff is point-to-point. One agent packages context and passes it to exactly o
 The model is older than it looks. Independent specialists — **knowledge sources** — collaborate not by calling each other but by reading from and writing to a shared global data structure, the blackboard, while a **control** component decides which specialist gets to act next. No specialist addresses another directly; each one watches the board and contributes opportunistically, whenever the current state is something it can improve. The architecture came out of the Hearsay-II speech-understanding system built at Carnegie Mellon around 1971–1976, and its canonical description is H. Penny Nii's two-part survey "Blackboard Systems" (*AI Magazine*, vol. 7, 1986), written at Stanford. Picture a team around a literal blackboard: everyone sees the same board, anyone adds a line when they can help, and a controller decides who writes next. Three parts, that's the whole architecture — the board (shared state), the knowledge sources (specialists), and the control (scheduler).
 
 ```mermaid
-flowchart TB
+flowchart LR
     KS1["Knowledge source 1"] <--> BB[("Blackboard · shared state")]
     KS2["Knowledge source 2"] <--> BB
     KS3["Knowledge source 3"] <--> BB
@@ -104,9 +104,13 @@ The policy layer that keeps it bounded is Part 1's budget-as-policy, extended fr
 ```mermaid
 flowchart TD
     Total["Whole-task budget"] --> Orch["Orchestrator allocates"]
-    Orch --> W1["Worker · sub-budget"]
-    Orch --> W2["Worker · sub-budget"]
-    Orch --> W3["Worker · sub-budget"]
+    Orch --> Workers
+    subgraph Workers["Per-worker sub-budgets"]
+        direction LR
+        W1["Worker"]
+        W2["Worker"]
+        W3["Worker"]
+    end
     Orch -. "fan-out cap · depth cap" .-> Lim["bound width + recursion"]
 ```
 

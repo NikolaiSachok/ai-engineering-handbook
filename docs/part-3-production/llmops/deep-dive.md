@@ -81,7 +81,7 @@ Rollback is trivial for code and subtly different for each of the five artefacts
 There is one release control stronger than anything applied per-change: the organisation deciding that *no* releases happen right now. That is the release freeze, and what governs it is the error-budget policy — the subject of the next section.
 
 ```mermaid
-flowchart LR
+flowchart TB
     C["Change"] --> EG{"Eval gate<br/>(golden set)"}
     EG -->|below threshold| BLK["Blocked — fix, retry"]
     EG -->|pass| CAN["Canary<br/>(slice of live traffic)"]
@@ -123,7 +123,7 @@ The last change is that some jobs never succeed. A malformed document, a prompt 
 When the provider Batch API fits — independent requests, results within a day — use it: it is cheaper on the half-price tier and there are no workers to operate. Run your own queue only when the work is a pipeline you control, needs your own compute, or has to interleave with your own systems.
 
 ```mermaid
-flowchart LR
+flowchart TB
     P["Producer<br/>enqueue → job id"] --> Q["Job queue<br/>(backpressure: bound in-flight)"]
     Q --> WP["Worker pool<br/>(ack after work, shared rate budget)"]
     WP -->|success| RS["Result store<br/>(poll / webhook)"]

@@ -33,13 +33,15 @@ Neparalelizuj naslepo ani **zápisy s vedľajším účinkom** (side-effectful w
 Keď model opakovane zoskupuje volania, ktoré by zoskupovať nemal, oprav to priamo v systémovom prompte — presne tento postup uvádza aj dokumentácia: „Only batch tool calls that are independent of each other.“ (v preklade: zoskupuj len volania, ktoré sú navzájom nezávislé). Model volania zoskupuje na základe vlastného predpokladu o ich nezávislosti; v systémovom prompte tento predpoklad nahradíš výslovným pravidlom.
 
 ```mermaid
-flowchart LR
-    M["Model"] --> TC1["tool call: read_orders(...)"]
-    M --> TC2["tool call: read_inventory(...)"]
-    M --> TC3["tool call: read_pricing(...)"]
-    TC1 --> R["Tvoja aplikácia ich spustí súbežne"]
-    TC2 --> R
-    TC3 --> R
+flowchart TB
+    M["Model"] --> Calls
+    subgraph Calls["Tri volania nástrojov v jednej odpovedi"]
+        direction LR
+        TC1["read_orders(...)"]
+        TC2["read_inventory(...)"]
+        TC3["read_pricing(...)"]
+    end
+    Calls --> R["Tvoja aplikácia ich spustí súbežne"]
     R --> C["Zber všetkých výsledkov"]
     C --> M2["Model pokračuje"]
 ```
@@ -65,7 +67,7 @@ Obmedzené dekódovanie nie je zadarmo. Má svoju cenu aj obmedzenia — a nieke
 Ujasni si, čo presne ti obmedzené dekódovanie zaručuje: dostaneš *správne sformované, podľa schémy platné* argumenty — JSON sa naparsuje, typy sedia, enumy sú dodržané. Nezaručí ti, že argumenty sú *správne*, ani že model siahol po *správnom* nástroji. Štruktúra nie je sémantika — a práve tejto medzere sa venuje celá sekcia o validácii nižšie.
 
 ```mermaid
-flowchart LR
+flowchart TB
     S["JSON Schema"] --> G["Kompilácia na gramatiku"]
     G --> Step["Na každom kroku dekódovania"]
     Step --> Cand["Kandidáti na ďalší token"]

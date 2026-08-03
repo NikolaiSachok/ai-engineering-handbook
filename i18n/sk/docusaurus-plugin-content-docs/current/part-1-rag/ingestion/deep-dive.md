@@ -28,7 +28,7 @@ Typy dokumentov si zoraď podľa stúpajúcej náročnosti — nie je to jeden p
 Moderná odpoveď znie: parsovanie **layout-aware** (s ohľadom na rozloženie strany) — najprv rozpoznať štruktúru, až potom vyťahovať text. Namiesto toho, aby glyfy pozbieral v poradí ich uloženia v súbore, parser najprv pustí vizuálny model alebo model rozloženia, ktorý na strane rozpozná oblasti — nadpis, odsek, tabuľku, obrázok, zoznam, hlavičku, pätu — a určí poradie čítania, a až potom siahne po texte. Výsledok vracia ako štruktúrovaný Markdown alebo JSON so zachovanou hierarchiou aj tabuľkami. Celý rozdiel oproti staršiemu plochému extraktoru je práve v tomto obrátenom poradí krokov.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Raw["Surový dokument: PDF / sken / HTML"] --> Layout["Rozpoznanie rozloženia: oblasti + poradie čítania"]
     Layout --> OCR["OCR pri čisto obrázkovom dokumente"]
     OCR --> Tables["Obnova štruktúry tabuliek"]

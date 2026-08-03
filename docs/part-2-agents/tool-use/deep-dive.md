@@ -33,13 +33,15 @@ When the model keeps batching things it shouldn't, the documented fix is the pro
 The batch, drawn out — three calls fan out to the runtime and their results fan back in as one message:
 
 ```mermaid
-flowchart LR
-    M["Model"] --> TC1["tool call: read_orders(...)"]
-    M --> TC2["tool call: read_inventory(...)"]
-    M --> TC3["tool call: read_pricing(...)"]
-    TC1 --> R["Your runtime runs them concurrently"]
-    TC2 --> R
-    TC3 --> R
+flowchart TB
+    M["Model"] --> Calls
+    subgraph Calls["Three tool calls in one turn"]
+        direction LR
+        TC1["read_orders(...)"]
+        TC2["read_inventory(...)"]
+        TC3["read_pricing(...)"]
+    end
+    Calls --> R["Your runtime runs them concurrently"]
     R --> C["Collect every result"]
     C --> M2["Model continues"]
 ```
@@ -67,7 +69,7 @@ So be exact about what strict decoding buys. It guarantees well-formed, schema-v
 The same mechanism as a loop — schema compiles once, then every decoding step masks and samples:
 
 ```mermaid
-flowchart LR
+flowchart TB
     S["JSON Schema"] --> G["Compile to a grammar"]
     G --> Step["At each decoding step"]
     Step --> Cand["Candidate next tokens"]

@@ -40,7 +40,7 @@ score(d) = Σ over lists  1 / (k + rank_i(d))
 The constant `k = 60` is the paper's empirical default. It flattens how steeply a document's contribution falls with rank, so a single first-place finish can't dominate the fused order. A weighted variant, `Σ wᵢ / (k + rankᵢ(d))`, lets you favour one retriever. RRF is robust precisely because it needs no calibration — it sidesteps the normalisation problem entirely rather than solving it, which is why it's the default fusion in many vector databases.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Q["Query"] --> D["Dense search"]
     Q --> B["BM25 search"]
     D --> LD["Ranked list (dense)"]
@@ -106,7 +106,7 @@ Filtering has a placement question that decides both correctness and speed: does
 So the tradeoff is pre-filter's correct-but-can-be-slow against post-filter's fast-but-can-under-return, and one case removes the choice entirely: access control is never post-filter. A permission check applied after retrieval has already ranked on content the user may not see, and can silently under-return — permissions have to cut before the search, exactly as Part 1's security requirement demanded. Modern vector databases increasingly offer a single-stage filtered ANN that integrates the predicate into the traversal, which is how you get correctness and speed together instead of trading one for the other.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Q["Query"] --> Rt["Route: which index"]
     Rt --> Pf["Pre-filter: ACL + metadata"]
     Pf --> AN["ANN search"]

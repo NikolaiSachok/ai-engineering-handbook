@@ -112,7 +112,7 @@ Vyberať z epizodickej pamäte je samo osebe úloha RAG. Nemôžeš do okna nali
 Ostáva hranica, na ktorú každý dlhý beh raz narazí — samotné kontextové okno. **MemGPT** (Charles Packer a kol., arXiv:2310.08560, 12. okt 2023) naň odpovedá tým, že si požičia pamäťovú hierarchiu operačného systému. Kontextové okno ber ako „hlavný kontext“ (rýchly, malý, ako RAM) a vonkajšie úložisko ako „vonkajší kontext“ (veľký, pomalý, ako disk) a nechaj model stránkovať informácie dnu a von cez volania nástrojov. Agent potom pracuje nad dátami oveľa väčšími než jeho okno. Toto je **virtuálna správa kontextu (virtual context management)** a je to mechanizmus, vďaka ktorému pracovná pamäť fakticky prekročí limit kontextu namiesto toho, aby v ňom ostala uväznená.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph Main["Hlavný kontext · okno · RAM"]
         WM["Pracovná pamäť:<br/>plán · nedávne pozorovania"]
     end

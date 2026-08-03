@@ -124,7 +124,7 @@ standard — but the reasoning behind each step holds up.
 Here is the whole production loop with the product names attached — the Part I linkage, productized:
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph GR["Guardrails: Guardrails AI / NeMo Guardrails / Llama Guard / Granite Guardian"]
         P["Production system"]
     end
