@@ -289,7 +289,7 @@ taking first.
 - [LLMOps — deploy, monitor, cost](/rag-agents/part-3-production/llmops/) — the catalogue every attempt draws
   its levers from, with the honest clauses attached: prompt caching and its write premium, semantic caching
   and its false-hit risk, eval-in-CI, and why "a canary that answers fast, cheap, and slightly wrong is a
-  failing canary."
+  failing canary — and only quality metrics will say so."
 - [Metric internals & judge calibration](/rag-agents/part-1-rag/cross-cutting/evaluation/deep-dive) — why
   faithfulness scores 1.0 on an answer grounded in the wrong context, and what a run of 500–1000 human
   groundedness labels actually buys: a judge-versus-human agreement number, and the systematic biases more

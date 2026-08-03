@@ -37,7 +37,7 @@ A **wake**, since the prompt counts them: one resumed run. The workflow comes ba
 and suspends again, and it is both the unit of cost here and the unit of correctness.
 
 Two of the postings this course samples ask for memory across multi-step workflows, which usually gets read as
-"wire up a store". The phrase hides obligations that behave nothing alike. What **persists** is whatever survives
+*wire up a store*. The phrase hides obligations that behave nothing alike. What **persists** is whatever survives
 the suspend — the durable record a later run is allowed to draw on. What **expires** splits in two, and the
 prompt supplies one of each: a *retention rule* is a clock you can schedule against, while a *deletion request*
 is an erasure you must be able to perform on demand, mid-workflow, whether or not a clock was due. Both are
