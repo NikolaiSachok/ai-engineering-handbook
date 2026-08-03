@@ -214,10 +214,11 @@ const COURSES: Course[] = [
   // course claims `['en']` and the i18n gates scope themselves to it (the `locales`
   // field above explains the mechanism). The landing card derives "English" from the
   // same list, so a reader in any locale sees what they are getting before clicking.
-  // `live: true` since 2026-08-03: the first batch is complete — eight scenarios, one archetype
-  // (agentic workflows). `inNavbar` flipped in the same change, which also adds the footer
-  // column and the landing card's "Live" badge; all three read this one flag, so do not expect
-  // to advertise the course on one surface and not another.
+  // `live: true` since 2026-08-03: the first batch is complete — eight scenarios on one archetype
+  // (agentic workflows), and a second track (lead & client-facing) has opened since with one
+  // scenario in it. `inNavbar` flipped in the same change, which also adds the footer column and
+  // the landing card's "Live" badge; all three read this one flag, so do not expect to advertise
+  // the course on one surface and not another.
   {
     id: 'design-scenarios',
     basePath: '/design-scenarios',
@@ -230,14 +231,14 @@ const COURSES: Course[] = [
     locales: ['en'],
     // 'by-design', not 'pending': English-only is this course's declaration (see the blurb
     // above), so a non-English locale should still SEE it rather than have it hidden
-    // forever. Currently moot because `inNavbar` is false, but the policy is declared so the
-    // day it is advertised the answer is already recorded rather than re-argued.
+    // forever. The course is now in the navbar, so this policy is live rather than hypothetical.
     untranslatedPolicy: 'by-design',
     live: true,
     inNavbar: true,
     footerLinks: [
       {label: 'Introduction', path: ''},
       {label: 'Agentic workflows', path: 'agentic-workflows/overview'},
+      {label: 'Lead & client-facing', path: 'lead-and-client-facing/overview'},
       {label: 'How these are made', path: 'how-these-are-made'},
     ],
   },

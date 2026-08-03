@@ -36,7 +36,9 @@ The first batch is complete. Eight scenarios, one archetype —
 [what a document is allowed to do](/design-scenarios/agentic-workflows/guardrails-at-the-boundary),
 [what the dashboard cannot see](/design-scenarios/agentic-workflows/observing-a-non-deterministic-system) and
 [the work that should stay a workflow](/design-scenarios/agentic-workflows/when-not-to-build-an-agent).
-Whether a second archetype follows is being decided.
+A second archetype has since opened — lead & client-facing — and carries one scenario,
+[where the knowledge lives](/design-scenarios/lead-and-client-facing/where-the-knowledge-lives).
+Nothing else in it is written yet.
 
 :::
 
@@ -87,9 +89,10 @@ They are abstracted to role archetypes, and no employer is named. The constraint
 the engineering hard, not to identify anyone.
 
 Those archetypes are also how the scenarios are grouped. Each scenario is tagged with the kind of
-role that asks it, and the tags become tracks. The first track is **agentic workflows** —
-orchestration, tools, state, and the cost and quality tradeoffs that come with them. A track opens
-when the postings ask for that kind of role often enough to fill one.
+role that asks it, and the tags become tracks. The first is **agentic workflows** — orchestration,
+tools, state, and the cost and quality tradeoffs that come with them. The second is **lead &
+client-facing** — decisions that have to be sequenced and then defended to whoever signs them off.
+A track opens when the postings ask for that kind of role often enough to fill one.
 
 ---
 
