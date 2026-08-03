@@ -2,7 +2,7 @@
 id: where-the-knowledge-lives
 title: Where the knowledge lives
 sidebar_position: 1
-description: Four collections, 400 million tokens, part of it under per-customer NDA, and a commercial director who has heard that a competitor trained a model on their manuals over a weekend. Three attempts at deciding where an organisation's knowledge should live, and which constraint gets applied first.
+description: Four collections, 400 million tokens, one of them under per-customer NDA, and a commercial director who has heard that a counterpart at another manufacturer trained a model on their own manuals over a weekend. Three attempts at deciding where an organisation's knowledge should live, and which criterion to apply first.
 # The reveal is the method. A page TOC lists every heading inside the collapsed reveal —
 # naming all three attempts and the principle before the reader has committed to an answer.
 hide_table_of_contents: true
@@ -10,18 +10,20 @@ hide_table_of_contents: true
 
 # Where the knowledge lives
 
-Four collections hold what this assistant would have to know, and they cannot all be treated the same way.
-Six thousand manuals and drawing sets, a third of them scans. Eleven thousand service bulletins, arriving at
-forty a month, any of which can cancel an earlier one. Ninety thousand free-text reports written by engineers
-at customer sites. And fourteen hundred commissioning dossiers full of other people's trade secrets.
+Four collections hold what an assistant would have to know, and they cannot all be treated the same way.
+Six thousand two hundred manuals and drawing sets, a third of them scans. Eleven thousand service bulletins,
+forty more every month, any of which can supersede an earlier one. Ninety thousand free-text reports written
+by engineers at customer sites. And fourteen hundred commissioning dossiers full of other people's trade
+secrets.
 
 The people who need the answers are mostly not employees: 600 of the 910 work for nineteen dealer companies,
-on nineteen different contracts. The last internal knowledge tool was switched off after part of a dossier
-reached a public chatbot, and nobody noticed for three weeks.
+on contracts that differ from one another. The last internal knowledge tool was switched off after part of a
+dossier reached a public chatbot, and nobody noticed for three weeks.
 
 So the difficulty is not which method grounds an assistant in a private body of knowledge. It is that the
-properties deciding it — who may read what, what may leave the building, what a usable answer has to carry,
-what a question is allowed to cost — do not all point the same way, and one of them has to be applied first.
+properties deciding that question do not all point the same way: what a question is allowed to cost, how fast
+the material underneath it goes out of date, who may read what, what makes an answer admissible, what may
+leave the building. One of them has to be applied first.
 
 > You've joined a manufacturer of industrial food-processing lines — mixers, fillers, thermal tunnels — thirty-four years in the business. 480 employees, 3,100 installed lines across 1,900 customer sites in 26 countries. You are being brought in to decide the shape of an assistant that answers technical questions about that equipment, and to defend that decision to the group commercial director, who signs it off, does not read code, and has already heard from a counterpart at another manufacturer that they "just trained the model on their manuals" over a weekend.
 >
@@ -39,29 +41,28 @@ what a question is allowed to cost — do not all point the same way, and one of
 
 Every option here can be made to sound reasonable in a paragraph, which is why *which method* is the wrong
 thing to ask a lead. This question asks for the ordering: which property of the situation you test first, and
-what that test eliminates before you get to the next one. The facts are arranged so that volatility, who may
-read what, what may leave the building, cost per question and the shape of an admissible answer do not all
-push the same way — so an ordering that works on these facts has to say what each criterion rules *out*,
-by name, rather than what it prefers. The second half, addressed to someone holding a budget and a competing
-anecdote, is not a communication exercise bolted on. It is where the ordering either survives contact or turns
-out to have been a preference.
+what that test eliminates before you get to the next one. The facts are arranged so that the deciding
+properties do not all push the same way: volatility, who may read what, what may leave the building, cost per
+question, the shape of an admissible answer. An ordering that works on these facts therefore has to say what
+each criterion rules *out*, by name, rather than what it prefers. The second half is not a communication
+exercise bolted on. It puts the same decision a second time to someone who holds the budget, does not read
+code, and has already heard a simpler story.
 
 :::
 
 **Answer it before you read on.** Out loud or on paper, whichever you'd do at a whiteboard.
 
-Three model-written attempts follow. Each comes from a separate agent, given one engineer's habits and the
-prompt above and nothing else. No agent saw the other two, and none saw the rubric the verdicts are written
-against: an interviewer wrote that rubric before any attempt existed and never read the answers, and a
-separate assessor wrote every verdict below against it. The attempts introduce figures of their own; where one
-of those is load-bearing and unchecked, the page says so. That arrangement is described
-in [how these are made](/design-scenarios/how-these-are-made).
+Three model-written attempts follow. Each comes from a separate agent given one engineer's habits and the
+prompt above. No agent saw the other two, and none saw the scoring standard the verdicts are written against —
+that was fixed before any attempt existed, and a separate assessor applies it. The attempts introduce figures
+of their own; where one of those is load-bearing and unchecked, the page says so. That arrangement is
+described in [how these are made](/design-scenarios/how-these-are-made).
 
 <Reveal>
 
 ## Attempt A — the common answer
 
-*Persona given to the agent: reaches for the pattern the write-ups have converged on and is good at assembling it — thinks in components, treats numbers as an implementation detail to settle once the design is agreed.*
+*Persona given to the agent: Reaches for the pattern the write-ups have converged on and is good at assembling it — thinks in components, treats numbers as an implementation detail to settle once the design is agreed.*
 
 **How I'd order the decision.** I don't start from the architecture, I start from the constraints that eliminate architectures, hardest-first — the non-negotiable ones collapse the option space fastest, and everything downstream is then a tuning question. The order here: confidentiality, then corpus shape against the context window, then the answer contract, then latency and unit cost, then the calendar.
 
@@ -86,28 +87,29 @@ tuning question." The first filter does genuine work — "every query is filtere
 entitlements *before* the retriever ever scores anything. Not filtered after; a post-filter still means the
 model saw it" — and rules two things out by name. A criterion with a branch attached, not a consideration.
 
-The second filter is what this attempt calls "the load-bearing call," and it both wins and breaks there. It
+The second filter is what this attempt calls "the load-bearing call", and it both wins and breaks there. It
 wins by being the only attempt to state the corpus-to-window ratio out loud: 400M against 1M is "a factor of
 four hundred". It breaks by explaining the pilot — "61 out of 100 is what you get when the right passage
-happens to be in the slice you pasted." The prompt says the graders could not agree why it missed; this
-supplies the cause they could not, and attaches it to the wrong object: the pilot pasted a 700,000-token
+happens to be in the slice you pasted." The prompt says the graders could not agree why it missed. The attempt
+supplies the cause they could not — and attaches it to the wrong object. The pilot pasted a 700,000-token
 slice, not the 300,000-token family pack just introduced.
 
-The costlier failure is the fourth filter. Every input needed to price this sits in the prompt and it spends
-none of them: 300k per question is "real money," retrieval is "an order of magnitude cheaper" (30–50× on its
-own 6–10k figure), and "the €260k envelope has room" for an index, an embedding refresh, a self-hosted tier
-and inference — an asserted fit, on a budget never divided by 432,000. It is the only attempt producing no
-computed euro figure anywhere — and an assertion, unlike a wrong computation, leaves nothing to check.
+The costlier failure is the fourth filter. Every input needed to price this sits in the prompt, and the
+attempt spends none of them: 300k per question is "real money", retrieval is "an order of magnitude cheaper"
+(30–50× on its own 6–10k figure), and "the €260k envelope has room" for an index, an embedding refresh, "the
+hosted tier" and inference. An asserted fit, on a budget never divided by 432,000. It is the only attempt
+producing no computed euro figure anywhere — and an assertion, unlike a wrong computation, leaves nothing to
+check.
 
 Best move nobody else makes: splitting retrieval by question shape — BM25 for bulletin numbers, dense for
-"symptom-shaped questions asked in field language" — engineering against the incumbent's stated failure mode
-without ever naming it.
+"symptom-shaped questions asked in field language" — engineering against the existing search's stated failure
+mode without ever naming it.
 
 </Verdict>
 
 ## Attempt B — the strong answer
 
-*Persona given to the agent: has operated a knowledge system that the people who depended on it stopped trusting; prices a thing before proposing it, and will not put up a figure not divided out personally.*
+*Persona given to the agent: Has operated a knowledge system that the people who depended on it stopped trusting; prices a thing before proposing it, and will not put up a figure not divided out personally.*
 
 I order the criteria so the ones that change the *shape* of the system come before the ones that change its *tuning*. Cost and model choice are tuning. The first two here are shape.
 
@@ -137,13 +139,13 @@ The strongest single move in the set is here, and it is not an AI move. "The dos
 all. Temperatures, dwell times, line speeds, one dossier per line — that's a table." Extract once, serve exact
 values by serial number from inside the network, account-team check at query time, **no model in the path**.
 It dissolves the scenario's sharpest tension rather than resolving it: no model, no surface to defend. It is
-the only attempt to take the model out of the dossier path, and the rubric anticipated two resolutions, not
-three.
+the only attempt to take the model out of the dossier path; the rubric anticipated two resolutions, and this
+is a third.
 
 The arithmetic is the cleanest of the three — €0.72/question at 300k, €311k/year against €260k, €0.037 at
-12k+800, €16k/year — though "cleanest" here means internally consistent. Like C, it treats €2.40/M as the rate
-a repeatedly-loaded 300,000-token pack attracts, and never marks that as the assumption its elimination turns
-on. Unlike C, it leaves itself a second leg: latency, "confirmatory rather than decisive — but it
+12k+800, €16k/year. But *cleanest* here means internally consistent. Like C, it treats €2.40/M as the
+rate a repeatedly-loaded 300,000-token pack attracts, and never marks that as the assumption its elimination
+turns on. Unlike C, it leaves itself a second leg: latency, "confirmatory rather than decisive — but it
 independently rules out the same thing."
 
 Then it hands the director the wrong label on its own best number: "the weekend approach costs €311,000 a
@@ -152,15 +154,15 @@ inference, not dearer — so the sentence answering the director's anecdote inve
 refutation that follows ("it still can't tell an engineer which revision it read") is the correct one and does
 not need the number.
 
-Two more things it alone does: it names what would stop it — if the field reports cannot be scrubbed by
-December, March runs on manuals and bulletins, "and he hears that in December, not in March" — and it states
-what fine-tuning *does* change ("how a model writes, not what it knows"), then declines to use it.
+Two more things it alone does. It names what would stop it: if the field reports cannot be scrubbed by
+December, March runs on manuals and bulletins, "and he hears that in December, not in March." And it states
+what fine-tuning *does* change — "how a model writes, not what it knows" — then declines to use it.
 
 </Verdict>
 
 ## Attempt C — the over-built answer
 
-*Persona given to the agent: designs for the system as it will have to be in three years; brings the complete shape rather than a first slice, and is comfortable defending its size.*
+*Persona given to the agent: Designs for the system as it will have to be in three years; brings the complete shape rather than a first slice, and is comfortable defending its size.*
 
 **The ordering principle**
 
@@ -215,40 +217,42 @@ times are in the parameters, there is no user for whom they are not, and no way 
 retraining." One criterion, three named eliminations, each with a mechanism.
 
 Its proudest move is the masking boundary, and it does not hold as stated. "Dossier values are substituted
-with placeholders before anything leaves our network, and rehydrated on our side after generation... The
+with placeholders before anything leaves our network, and rehydrated on our side after generation … The
 vendor sees 'commissioning temperature: [P1]'. The engineer sees 84°C. Both constraints hold." The policy
 quoted in the prompt covers *customer identifiers and process settings*. This mechanism substitutes values
-only — and the query it exists to serve is a field engineer asking what a **named customer's** line was set
-to, so the identifier is in the request before any value is masked. Half the policy is unhandled inside a
-sentence declaring both constraints satisfied — and a masked value is also one the model cannot reason over.
+only. The query it exists to serve is a field engineer asking what a **named customer's** line was set to, so
+the identifier is in the request before any value is masked. Half the policy is unhandled inside a sentence
+declaring both constraints satisfied. A masked value is also one the model cannot reason over.
 
 The rest is disciplined. The 1,700 dossier-less lines become a safety rule: the failure mode is "quietly
-answering from a similar line's settings — the one wrong answer that reaches a guarded area." The arithmetic
-recomputes. But "long context per question is not a design choice here, it is arithmetically excluded" is the
-set's only single-leg elimination — nothing else in the six criteria touches the family pack — so the whole
-exclusion rests on €2.40/M applying to a 300,000-token prefix reused all day, and it never asks. The ask then
-names four subsystems by component — "the entitlement model, the supersession graph, the evaluation harness
-and the logging" — to a man who does not read code, and it is the only director section that does.
+answering from a similar line's settings — the one wrong answer that reaches a guarded area." The elimination
+arithmetic recomputes. But "long context per question is not a design choice here, it is arithmetically
+excluded" rests on one leg only: nothing else in the six criteria touches the family pack. The whole exclusion
+therefore turns on €2.40/M applying to a 300,000-token prefix reused all day, and C never asks whether it
+does. The ask then names four subsystems by component — "the entitlement model, the supersession graph, the
+evaluation harness and the logging" — to a man who does not read code. It is the only director section that
+does.
 
 </Verdict>
 
 ## Where they actually disagree
 
 Each disagreement below is a decision you will have to make yourself. The last entry is the exception: not a
-disagreement but an assumption all three made and none of them named — and the difference in what each one had
-left standing if it turned out to be wrong.
+disagreement but a set of assumptions all three made and none of them named. It also asks what would still be
+standing if one of those assumptions turned out to be wrong.
 
 ### Where a customer's commissioning numbers come from: masked through the vendor, a model you host, or no model at all
 
 One collision, three incompatible answers. C sends the question through the vendor with the values replaced
-and rehydrates them on return — the vendor sees a placeholder, the entitled engineer sees the number. A stands
-up a second, self-hosted model tier so that process settings never transit the vendor at all. B takes the
-model out of that path entirely: one dossier per line, temperatures, dwell times and line speeds, served by
-serial number from a structured store with the account-team check at query time.
+and rehydrates them on return — the vendor sees a placeholder, the entitled engineer sees the number. A keeps
+two tiers and says the dossier one probably wants to run on a model you host, so that process settings never
+transit the vendor at all. B takes the model out of that path entirely. One dossier per line — temperatures,
+dwell times and line speeds — served by serial number from a structured store, with the account-team check at
+query time.
 
-These are not degrees of thoroughness. Each forecloses the others' surface, they price differently, and they
-answer different question shapes: B's cannot paraphrase or reason over what it returns, C's cannot compare a
-masked value against a spec, A's buys a second model to run and keep current. B's is the strongest of the
+These are not degrees of thoroughness. They exclude one another, and they price differently. They answer
+different question shapes too: B's cannot paraphrase or reason over what it returns, and C's cannot compare a
+masked value against a spec. A's pays for a second model to run and keep current. B's is the strongest of the
 three, and the reason is not that it is more thorough — it is that there is no model in the path to defend.
 C's is the one that does not hold as stated, for the reason its verdict gives: the policy it quotes covers
 identifiers as well as settings, and the request it exists to serve names the customer. B and C then attach the
@@ -264,23 +268,22 @@ contaminated at all, though its own ingestion metadata carries a confidentiality
 answer.
 
 The same fact reads both ways: free text written after a site visit, at a customer, by an engineer who was
-looking at that customer's machine. Nothing in the prompt classifies it, which is precisely the point. Only
-one of the three treats an unclassified collection as a thing to find out about before deciding, and a
-confidentiality criterion applied first is worth what it is worth only if it is applied to every collection
-rather than to the one already labelled.
+looking at that customer's machine. Nothing in the prompt classifies it, which is the point. Only one of the
+three treats an unclassified collection as a thing to find out about before deciding. A confidentiality
+criterion applied first only counts if it reaches every collection, not just the one already labelled.
 
 ### The counterpart's weekend story: a defective method, or a method for a different situation
 
-A refutes it on the merits — the manuals change forty times a month, and training bakes knowledge in. C
+A refutes it on the merits: the corpus changes forty times a month, it says, and training bakes knowledge in. C
 concedes it and denies its relevance: probably true, and that manufacturer was not holding customers' process
 settings under NDA, or it is and has not found the problem yet. B kills it on a ground neither of the others
-uses — admissibility, before cost is raised at all: a trained model cannot say which revision a sentence came from,
-cannot be un-taught when a bulletin is superseded, and cannot express a rule that differs per customer.
+uses: admissibility, raised before cost. A trained model cannot say which revision a sentence came from, and
+cannot be un-taught when a bulletin is superseded.
 
 The choice decides what the director believes on the way out of the room: that his counterpart was foolish, or
 that his counterpart was differently situated. A refutes on volatility, which is true of this corpus and says
-nothing about the counterpart's. B never has to take a position at all, because a method that cannot cite the
-revision it read is inadmissible here whatever it did elsewhere.
+nothing about the counterpart's; C takes the second option openly. B never has to take a position at all,
+because a method that cannot cite the revision it read is inadmissible here whatever it did elsewhere.
 
 ### The dossier path: the cheap win, or the expensive deferral
 
@@ -288,68 +291,64 @@ C schedules dossiers second, because that path is mostly compliance work. A puts
 the dossier tier behind it. B calls it the cheapest thing on the list and the one that answers the question
 field engineers actually ring in with.
 
-Identical facts, opposite classification — and the divergence traces straight back to the first one on this
-list, because whether the dossier path is cheap depends entirely on whether there is a model in it. Decide
-that question and this one is already decided; decide this one first and you have priced a path whose shape
-you have not chosen.
+Identical facts, opposite classification — and the divergence traces straight back to where a customer's
+commissioning numbers come from, because whether the dossier path is cheap depends entirely on whether there
+is a model in it. Decide that question and this one is already decided; decide this one first and you have
+priced a path whose shape you have not chosen.
 
 ### What all three assumed, and none of them named
 
-All three apply a confidentiality criterion first, and all three are right to. A and C then put an in-house
-component inside the €260,000 by name — a self-hosted tier, an in-house path for dossiers — while B's
-in-network store is never costed at all. None of them asks whether that budget covers infrastructure, or only
-inference.
+All three apply a confidentiality criterion first, and all three are right to. A and C both fold an in-house
+component into the €260,000 — A's "hosted tier", C's "in-house path for dossiers" — while B's in-network store
+is never costed at all. None of them asks whether that budget covers infrastructure, or only inference.
 
 The sharper one is underneath the arithmetic. Two of the three price the machine-family pack at the contracted
 €2.40 per million and eliminate it on the result; the third asserts the same conclusion without producing a
-figure. The computations that exist recompute correctly. What is missing is one sentence naming the rate and
-the reuse pattern as the assumption the elimination turns on, so that a reader knows which number would have
-to move for the option to come back.
+figure. The eliminations recompute correctly. What is missing is one sentence naming the rate and the reuse
+pattern as the assumption the elimination turns on. A reader would then know which number would have to move
+for the option to come back.
 
 The same defect sits under every retrieval estimate here. The prompt supplies no per-question token count, so
-each attempt invents one — six to ten thousand for A, twelve thousand plus eight hundred for B, twenty
-thousand for C — and every *this fits inside the budget* conclusion is a function of a number its own author
-chose. C's €27,000 a year is its 20,000-token window multiplied out and nothing else. None of the three labels
-that figure as an assumption either: C hedges it, B states it flat, A gives a range and never prices it.
+each attempt invents one: six to ten thousand for A, twelve thousand plus eight hundred for B, twenty thousand
+for C. Every *this fits inside the budget* conclusion is therefore a function of a number its own author chose,
+and C's €27,000 a year rests entirely on its own 20,000-token figure. None of the three labels that figure as
+an assumption either: C hedges it, B states it flat, A gives a range and never prices it.
 
-B leaves itself a second leg — latency, which it marks as confirmatory
-rather than decisive — and so survives losing the first. C hardens its figure into an exclusion and has
-nothing behind it.
+B leaves itself a second leg — latency, which it marks as confirmatory rather than decisive — and so
+survives losing the first. C hardens its figure into an exclusion and has nothing behind it.
 
 And none of the three so much as mentions the system these engineers use today. The prompt puts a full-text
-bulletin search in the building that already returns in under a second and fails for one stated and narrow
-reason, and no attempt uses it as a baseline, a fallback, or a comparison — the one place the phrase turns up
-at all is B, describing the speed of its own dossier lookup. It is the only piece of software in the prompt
-that is already fast, already deployed, and already trusted for the questions it can answer.
+bulletin search in the building — it already returns in under a second, and it fails for one stated and narrow
+reason. No attempt uses it as a baseline, a fallback, or a comparison; the one attempt it turns up in at all
+is B, describing the speed of its own dossier lookup. It is the only piece of software in the prompt that is
+already fast, already deployed, and already in use for the questions it can answer.
 
 ## The principle
 
 > Apply first the criteria that no later engineering can undo — who may read what, what may leave the
-> building, what makes an answer admissible — and make each elimination binding by computing it from the
-> numbers you were handed, remembering that a computed elimination binds only as tightly as the price or
-> volume assumed inside it, so the option you just closed stays closed only if you can name the number whose
-> change would reopen it.
+> building, what makes an answer admissible — then make each elimination binding by computing it from the
+> numbers you were handed, and name the price or volume the computation assumed, because that is the number
+> whose change reopens the option you just closed.
 
 </Reveal>
 
 :::tip[Read next]
 
-- [Fine-tuning, spend & queues](/rag-agents/part-3-production/llmops/deep-dive) — the two criteria the
-  eliminations on this page rest on, in the curriculum's own terms: a permission is expressible as a retrieval
-  filter and not as a weight, and corpus against context window is a prior question rather than a cost one.
+- [Fine-tuning, spend & queues](/rag-agents/part-3-production/llmops/deep-dive) — the two criteria this
+  question turns on, in the curriculum's own terms: a permission is expressible as a retrieval filter and not
+  as a weight, and corpus against context window is a prior question rather than a cost one.
 - [Fusion, ranking & metrics](/rag-agents/part-1-rag/retrieval/deep-dive) — why access control has to cut
-  before the search rather than after it, which A and C both insist on, and the cost neither prices: a
-  selective pre-filter fights the vector index unless the engine supports filtered search natively.
+  before the search, not after it, and what cutting there costs: a selective pre-filter fights the vector
+  index unless the engine supports filtered search natively.
 - [Cost, agents & sovereignty](/rag-agents/part-3-production/cloud-platforms/deep-dive) — the customisation
-  ladder none of the three priced: B puts a long-context figure on the weekend approach and nobody prices a
-  tune at all. Also the serving fee under a tuned endpoint, and the catch under a self-hosted tier — frontier
-  capability lags sovereign and air-gapped environments.
-- [Structured knowledge](/rag-agents/part-1-rag/structured-knowledge/) — the general form of taking the model
-  out of the dossier path: against a governed semantic layer a model selects a defined query instead of
-  deriving one, with access policies applied deterministically before the data is read.
+  ladder, and what each rung costs to serve: the fee that sits under a fine-tuned endpoint, and the catch
+  under self-hosting, where frontier capability lags in sovereign and air-gapped environments.
+- [Structured knowledge](/rag-agents/part-1-rag/structured-knowledge/) — the case where the answer is a lookup
+  and not a passage: against a governed semantic layer a model selects a defined metric instead of deriving a
+  query, with access policies applied deterministically before the data is read.
 - [Metric internals & judge calibration](/rag-agents/part-1-rag/cross-cutting/evaluation/deep-dive) — the
-  pilot's real finding. Two engineers who cannot agree why an answer missed have produced an opinion rather
-  than a label; inter-annotator agreement, chance-corrected, is how you find that out before you rebuild.
+  pilot's real finding. Two engineers who cannot agree why an answer missed have produced an opinion, not a
+  label; inter-annotator agreement, chance-corrected, is how you find that out before you rebuild.
 
 :::
 
@@ -361,32 +360,31 @@ These are the three follow-ups an interviewer reaches for next, and what each on
 > competitor. What in your design changes, and what does not?
 
 This separates a design where access is a runtime property of the request from one where it was settled at
-build time. All three attempts put a confidentiality criterion first, though only A and C describe a filter
-that cuts before retrieval, and B's runtime check sits on its structured dossier store. The easy half should
-follow from any of them: the filter is a data change, and nothing is rebuilt. The harder half is what a flag cannot revoke — anything the old
-entitlement already produced and something else now holds. A cached answer, a summary written into an index, a
-tuned artefact, an evaluation set assembled from real documents. An answer that stops at *we change the
-entitlement table* has not asked where else that content went.
+build time. In the first, the easy half follows: the rule is a data change, and nothing is rebuilt. The harder
+half is what a permission change cannot revoke — anything the old permission already produced and something
+else now holds. A cached answer, a summary written into an index, a fine-tuned artefact, an evaluation set
+assembled from real documents. An answer that stops at *we change who may read what* has not asked where else
+that content went.
 
 > The commercial director comes back with a quote for a fine-tune that the vendor says will make the answers
 > 'sound like us'. What does that buy him, and what does it leave exactly where it was?
 
 This is the same question the weekend story asked, arriving with an authority figure behind it, and the tell
-is whether the answer can say yes and no in the same breath. Tuning can genuinely fix answer shape and house
-vocabulary, which is the failure the summer pilot actually exhibited — fluent paragraphs carrying none of the
-three mandatory elements. It moves nothing about supersession, nothing about per-customer permission, and
-nothing about citing a revision that did not exist when the weights were frozen. Worth noticing: none of the
-three attempts proposes a tuned model for anything, including format. Only C demolishes it on confidentiality;
-A refutes it on volatility and B on admissibility. Only B names what tuning would still change — "how a model
-writes, not what it knows" — and even it does not come back to ask what that is worth once the knowledge
-question is settled elsewhere.
+is whether the answer can say yes and no in the same breath. A fine-tune can genuinely fix answer shape and
+house vocabulary, which is the failure the summer pilot actually exhibited — fluent paragraphs carrying none
+of the three mandatory elements. It moves nothing about supersession, nothing about per-customer permission,
+and nothing about citing a revision that did not exist when the weights were frozen. Refusing it on one ground
+is not the same as refusing it on another. A refusal that rests on how often the bulletins change leaves the
+confidentiality argument untouched, and a refusal that rests on confidentiality says nothing about a corpus
+that moves. Suppose the knowledge question is settled some other way. An answer that never comes back to price
+what a fine-tune would still change has refused without deciding.
 
 > Six months in, answers are good and the service desk says it is slower than the old bulletin search. What do
 > you look at first, and what would you be willing to make worse?
 
-This forces a named trade rather than a promise to optimise: context size, rerank depth, a small-model first
-pass, a separate route for the questions that are lookups. It also walks the candidate back to the thing every
-attempt on this page stepped over. The old search is sub-second and useless to anyone who does not already
-know the bulletin number, so the desk may be comparing two different classes of question, and which class got
-slower is the first thing to establish. Someone who has been paged for this says which percentile they mean
-before saying what they would spend to move it.
+This forces a named trade rather than a promise to optimise: how much context is retrieved, how deep the
+ranking pass goes, whether a cheaper model takes the first pass, whether lookups get their own route. It also
+comes back to the system already in the building. The old search is sub-second and useless to anyone who does
+not already know the bulletin number. So the desk may be comparing two different classes of question, and
+which class got slower is the first thing to establish. The trade stays unnamed until the answer names the
+percentile it means and what it would spend to move that number.

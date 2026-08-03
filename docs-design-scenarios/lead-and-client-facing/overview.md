@@ -11,10 +11,9 @@ A track for the decisions that have to be explained as well as made. Elsewhere i
 what a system should do. Here it is what a lead is actually asked: in what order, ruling out what, on whose
 authority — and then whether the answer survives being repeated by somebody who was not in the room.
 
-Scenarios here share a shape. The engineering is not the hard part; the engineering is settled in a paragraph
-and then has to be chosen between. What separates answers is the ordering — which property of the situation
-gets tested first, what that test eliminates before the next one runs — and whether the elimination was
-computed from the numbers on the table or merely asserted with conviction. The second half is a translation
+Scenarios here share a shape. The engineering is not the hard part; the options are settled in a paragraph
+and then have to be chosen between. What separates answers is the ordering — which property of the situation
+gets tested first, and what that test eliminates before the next one runs. The second half is a translation
 problem: the same decision put to a commercial director, a regulator, or a client who has heard a simpler
 story from a competitor, without the argument turning into either a lecture or a promise.
 
