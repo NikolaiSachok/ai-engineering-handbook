@@ -29,7 +29,6 @@ flowchart TB
     P3 --> P4["4. Den Graphen anreichern<br/>Communitys per hierarchischem Leiden-Algorithmus"]
     P4 --> P5["5. Communitys zusammenfassen<br/>Durchlauf des Modells über jede Community"]
     P5 --> P6["6. Text einbetten<br/>Der Vektorindex verschwindet nicht"]
-    P3 -.->|"Extraktion der Aussagen: optional, standardmäßig aus"| CL["Covariates / Aussagen"]
 ```
 
 Zwei Einzelheiten aus dieser Liste lohnt es sich herauszuheben – die eine erklärt, warum globale Fragen überhaupt funktionieren, die andere verändert Ihre Kalkulation des Aufbaus.

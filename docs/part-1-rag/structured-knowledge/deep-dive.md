@@ -48,7 +48,6 @@ flowchart TB
     P3 --> P4["4. Graph augmentation<br/>hierarchical Leiden communities"]
     P4 --> P5["5. Community summarisation<br/>LLM pass over every community"]
     P5 --> P6["6. Text embedding<br/>the vector index does not go away"]
-    P3 -.->|"claim extraction: optional, off by default"| CL["Covariates / claims"]
 ```
 
 Two details in that list are worth pulling out — one explains why global questions work at all, the other
