@@ -41,7 +41,6 @@ flowchart TB
     P3 --> P4["4. Rozšírenie grafu<br/>hierarchické komunity podľa Leidena"]
     P4 --> P5["5. Sumarizácia komunít<br/>prechod LLM cez každú komunitu"]
     P5 --> P6["6. Embedovanie textu<br/>vektorový index nezaniká"]
-    P3 -.->|"extrakcia tvrdení: voliteľná, predvolene vypnutá"| CL["Kovariáty / tvrdenia"]
 ```
 
 Z toho zoznamu sa oplatí vytiahnuť dva detaily — jeden vysvetľuje, prečo globálne otázky vôbec fungujú, druhý
