@@ -4,8 +4,9 @@ A hub of first-principles courses on production AI engineering. Two courses ship
 each complete and each available in every language the site ships in:
 
 - **RAG & Agents** (`/rag-agents`) — production RAG (retrieval-augmented generation) and
-  agentic systems: ingestion, retrieval, generation, agents, plus the eval, guardrails and
-  LLMOps that keep them honest. Part I — RAG, Part II — Agents, Part III — Production & LLMOps.
+  agentic systems: ingestion, retrieval, generation, structured knowledge, agents, plus the
+  eval, guardrails and LLMOps that keep them honest. Part I — RAG, Part II — Agents,
+  Part III — Production & LLMOps.
 - **AI SDLC** (`/ai-sdlc`) — the AI-assisted software development lifecycle: planning,
   building, reviewing and shipping when AI agents are part of the team. Parts I–V, plus
   optional deep-dives.

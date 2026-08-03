@@ -19,6 +19,10 @@
     "message": "Generation",
     "description": "The label for category 'Generation' in sidebar 'handbookSidebar'"
   },
+  "sidebar.handbookSidebar.category.Structured knowledge": {
+    "message": "Štruktúrované znalosti",
+    "description": "The label for category 'Structured knowledge' in sidebar 'handbookSidebar'"
+  },
   "sidebar.handbookSidebar.category.Cross-cutting": {
     "message": "Prierezové aspekty",
     "description": "The label for category 'Cross-cutting' in sidebar 'handbookSidebar'"

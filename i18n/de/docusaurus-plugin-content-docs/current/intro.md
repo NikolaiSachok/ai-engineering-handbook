@@ -29,8 +29,8 @@ System mit einem Sprachmodell zum Einsatz kommen.
 
 ## Struktur
 
-- **[Teil I – RAG](./part-1-rag/overview.md):** Ingestion, Retrieval, Generation und die Querschnittsthemen
-  (Evaluation, Guardrails, Observability) der statischen Pipeline.
+- **[Teil I – RAG](./part-1-rag/overview.md):** Ingestion, Retrieval, Generation, strukturiertes Wissen und
+  die Querschnittsthemen (Evaluation, Guardrails, Observability) der statischen Pipeline.
 - **[Teil II – Agenten](./part-2-agents/overview.md):** Agentic RAG, Tool-Einsatz, Planung und Schleifen,
   Multi-Agenten-Systeme, Orchestrierungs-Frameworks, [MCP](https://modelcontextprotocol.io).
 - **[Teil III – Produktivbetrieb und LLMOps](./part-3-production/overview.md):** Serving mit [FastAPI](https://fastapi.tiangolo.com) und Docker,

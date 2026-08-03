@@ -67,6 +67,16 @@ Jadro pod týmito mechanizmami nedávno prepracovali: vLLM prestaval svoj zákla
 
 Kvantizácia (quantisation) je posledná páka — vymieňa presnosť za pamäť a rýchlosť. Základnou úrovňou je FP16 alebo BF16. FP8, natívny na tenzorových jadrách Hopper a Blackwell, je takmer bezstratový a v roku 2026 prvá voľba; INT8 (W8A8) ide ďalej; INT4 iba na váhach, cez AWQ alebo GPTQ, zreže pamäť váh v VRAM zhruba o tri štvrtiny — dosť na to, aby sa 70B model zmestil na jedno GPU — za mierne zhoršenie kvality. Samostatnou osou je kvantizácia KV-cache (KV-cache quantisation): keď KV-cache uložíš v FP8, zhruba zdvojnásobíš počet tokenov, ktoré daný pool udrží, a získaš tým dlhšie kontexty alebo väčšiu súbežnosť. Každá z týchto výmen kladie priepustnosť a pamäť proti kvalite; presnosť nie je zadarmo.
 
+Kvantizáciu si ľudia pravidelne zamieňajú s dvoma ďalšími operáciami: všetky tri majú znížiť náklady na model a dve z nich zahŕňajú tréning. Rozlišuje ich to, čo každá z nich mení:
+
+| Operácia | Čo mení | Je v tom tréning | Čie je to rozhodnutie |
+|---|---|---|---|
+| **Kvantizácia** | *reprezentáciu* čísel — menej bitov na váhu alebo aktiváciu, ten istý model | pri metódach po tréningu, aké sa používajú v servingu, žiadny (tréning s ohľadom na kvantizáciu existuje, ale je to voľba v čase prispôsobenia) | serving |
+| **Destilácia (model distillation)** | *iný, menší model*, trénovaný napodobňovať výstupy väčšieho učiteľa | áno — nové váhy a nový model na vyhodnotenie | prispôsobenie |
+| **Fine-tuning (doladenie modelu)** | samotné váhy, takže sa model správa inak | áno — na tvojich dátach | prispôsobenie |
+
+Rozhodnutím v servingu je len prvá z nich, a preto stojí na tejto stránke; zvyšné dve patria na [rebrík prispôsobenia](../cloud-platforms/deep-dive.md). Treba odlíšiť ešte jeden význam slova *destilovať*, ktorý s tými tromi nesúvisí: **vydestilovaný nález**, ktorý sa medzi krokmi prenáša v [prehĺbení vrstvy Agentic RAG](../../part-2-agents/agentic-rag/deep-dive.md), je zhutnený vyhľadaný text vnútri jedinej požiadavky. Žiadny tréning, žiadne nové váhy — rovnaké sloveso, celkom iná operácia.
+
 ## Keď sa model už nezmestí na jedno GPU
 
 Niektoré modely sa na jedno GPU jednoducho nezmestia, a vtedy ich rozdelíš — lenže spôsob rozdelenia rozhoduje o tom, aký hardvér budeš potrebovať.
@@ -114,6 +124,7 @@ To rozhoduje, kedy po ňom siahnuť. Špičková, nárazová, vývojová alebo d
 - Worker je proces — dá ti jadrá, nie súbežnosť; slučka udalostí už strieda stovky čakajúcich požiadaviek, takže počet workerov sa riadi jadrami a prácou viazanou na CPU. Blokujúce volanie v asynchrónnej obslužnej funkcii zmrazí každú požiadavku v procese, tak ho presuň na vlákno — a pri vypínaní daj dlhým streamom čas dobehnúť.
 - Neohraničená súbežnosť LLM-službu rozloží a Littleov zákon urobí aj z nízkej miery požiadaviek vysokú súbežnosť. Ohranič ju semaforom a ohraničenou frontou, prebytok zhoď cez `429` a `Retry-After` a strop polož na vzácny GPU- alebo poskytovateľský slot, nie na lacné spojenie.
 - Vnútri inferenčného servera priepustnosť pochádza z plánovania na úrovni iterácie (iteration-level scheduling), prefillu po častiach (chunked prefill) a cachovania prefixu nad stránkovanou KV-cache — a práve tá KV-cache sa stane stropom dávno predtým, než GPU dôjde výpočet. Kvantizácia vymieňa kvalitu za pamäť, z ktorej je ten strop postavený.
+- Kvantizácia, destilácia a fine-tuning sa zaraďujú spolu pod „nech je to lacnejšie“ a zameniteľné nie sú: rozhodnutím v servingu je len kvantizácia — zmena toho, ako sú čísla reprezentované, urobená po tréningu —, kým zvyšné dve vyrobia nové váhy, ktoré musíš vyhodnotiť, a patria na rebrík prispôsobenia.
 - Model rozdeľuj medzi GPU len vtedy, keď sa nezmestí: tenzorový paralelizmus v rámci uzla cez NVLink, zreťazený paralelizmus naprieč uzlami, dátovo paralelné repliky, keď sa už zmestí. Rozdelenie ti dá kapacitu, ktorú si nemal; priepustnosť ti zadarmo nedá nikdy.
 - Na Kubernetes je GPU celočíselný zdroj, ktorý vie MIG alebo delenie v čase (time-slicing) rozdeliť na menšie. Autoškáluj podľa hĺbky fronty a využitia GPU, nikdy podľa CPU, a rátaj s tým, že studený štart urobí každé reaktívne doškálovanie neskorým.
 - Serverless GPU prenajíma kapacitu po sekundách a škáluje na nulu, pričom to platí latenciou studeného štartu, ktorú snímky pamäte a teplé fondy len zmierňujú. Sadne nárazovej a dávkovej záťaži; ustálená je lacnejšia na stále teplom GPU.

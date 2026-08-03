@@ -34,7 +34,10 @@ Autonomie wird nicht eingebaut, weil sie gerade in Mode ist. Eine feste Pipeline
 - **Mehrschrittige Fragen.** „Wer leitet die Abteilung, die Richtlinie X erlassen hat?“ Mit einer Suche ist
   das nicht zu holen: erst Richtlinie X finden, daraus die Abteilung – und erst dann, wer sie leitet. Die
   zweite Abfrage entsteht aus dem Ergebnis der ersten. Diesen zweiten Schritt kann eine statische Pipeline
-  gar nicht gehen.
+  gar nicht gehen. Das ist zugleich die günstige Antwort auf Mehrschrittigkeit: Die Zerlegung braucht keinen
+  Extraktionslauf und kein Schema. Deshalb argumentiert
+  [strukturiertes Wissen](../../part-1-rag/structured-knowledge/index.md), dass ein Knowledge Graph über eine
+  *andere* Klasse von Fragen gerechtfertigt werden muss als über diese.
 - **Fragen, die überhaupt kein Retrieval brauchen.** „Übersetze die vorige Antwort ins Englische“ oder
   „Wie viel sind 15 % von 200?“ Statisches RAG gräbt trotzdem in der Datenbank und mischt unbrauchbaren
   Kontext dazu. Ein Agent kann entscheiden, dass es hier nichts zu suchen gibt.

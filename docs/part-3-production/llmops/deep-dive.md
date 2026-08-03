@@ -46,6 +46,14 @@ flowchart TD
     T --> R["Regresses? Repin previous /<br/>detach LoRA adapter"]
 ```
 
+Two criteria settle this decision in a real organisation before the knowledge-versus-behaviour question is even reached. This handbook teaches both of them elsewhere, in a role that hides what they decide here.
+
+Per-user permissions live in a retrieval filter, and they cannot live in frozen weights. The [retrieval deep dive](../../part-1-rag/retrieval/deep-dive.md) teaches access control as a retrieval mechanic — cut before the search, never post-filter — so it reads as a detail of how a query is run. Its larger consequence is architectural: a filter can differ per requester, and a weight cannot. Whatever a tuned model learned, every caller gets. So in an organisation with tiered access to its own knowledge, this criterion decides the architecture on its own, before any cost model runs. The tunable surface is behaviour and format; the knowledge stays behind a filter, because a filter is the only place a permission can be applied.
+
+Corpus size against the context window is the branch the tree above doesn't draw. The [generation deep dive](../../part-1-rag/generation/deep-dive.md) teaches long context carefully, but as a *packing* problem inside RAG — lost-in-the-middle, effective context is not context-window size. Turned around, it is a prior question: if the whole corpus fits and stays small, there is no retrieval layer to build and no tune to justify, and any machinery you add has no job. The caveat is the one that deep dive already establishes and this page will not restate — *fitting is not being attended to* — so "it fits" is where the test starts, not where it ends. Measure retrieval quality on your own questions before you delete a retrieval layer.
+
+Neither criterion replaces the freshness argument above; both run before it. Freshness tells you whether facts *can* live in weights. These two tell you whether they are *allowed* to, and whether you need the machinery at all.
+
 ## Governing the spend
 
 The platform-pricing levers — committed-use discounts, prompt-cache multipliers, the roughly-half-price batch tier, cross-region egress — are the cloud-platforms deep-dive's subject, and pulling each one is an engineering choice. Governance is the layer above them. Its job is to make spend visible, owned, and bounded across teams, so the levers actually get pulled and no single team can quietly exhaust the budget. Part 1 put budgets at the gateway; this is the organisation built around them.
@@ -126,6 +134,7 @@ flowchart LR
 ## What to take away
 
 - Fine-tune last, after prompt and RAG have hit a ceiling, and only for a behaviour, format, tone, or skill gap — never for fresh knowledge, which is the retriever's job. A tuned model is a pinned artefact on the same eval gate as any deploy, rolled back by re-pinning the predecessor or detaching the LoRA adapter.
+- Two criteria run before the knowledge-versus-behaviour question: per-user permissions are expressible as a retrieval filter and not as a weight, so tiered access decides the architecture on its own; and if the corpus fits and stays small there may be nothing to retrieve or tune at all — though fitting is not the same as being attended to.
 - The methods run light to heavy: SFT on labelled pairs, DPO on preferred-vs-rejected pairs, RFT with the reward from a grader you define, and LoRA / PEFT training a swappable adapter over frozen weights. The provider offerings behind them are a dated snapshot to re-check.
 - Spend governance makes cost visible, owned, and bounded: attribute at the application layer because an LLM call is a transaction with no asset to tag, run showback always, add chargeback only once attribution is trusted, and enforce budgets and a default cheap-model route at the gateway.
 - On the release side of a regression, the eval gate blocks it before it ships and progressive delivery auto-rolls-back on a breached quality or cost proxy, where an error-and-latency dashboard alone would stay green. Every artefact needs a rollback path — and the index only has one if it is versioned.

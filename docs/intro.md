@@ -26,8 +26,8 @@ scratch — instead we show the **AI delta**, what actually changes when you app
 
 ## Structure
 
-- **[Part I — RAG](./part-1-rag/overview.md):** ingestion, retrieval, generation, and the cross-cutting
-  concerns (eval, guardrails, observability) of the static pipeline.
+- **[Part I — RAG](./part-1-rag/overview.md):** ingestion, retrieval, generation, structured knowledge, and
+  the cross-cutting concerns (eval, guardrails, observability) of the static pipeline.
 - **[Part II — Agents](./part-2-agents/overview.md):** agentic RAG, tool use, planning and loops,
   multi-agent systems, orchestration frameworks, [MCP](https://modelcontextprotocol.io).
 - **[Part III — Production & LLMOps](./part-3-production/overview.md):** serving on [FastAPI](https://fastapi.tiangolo.com) + Docker,

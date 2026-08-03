@@ -1912,3 +1912,86 @@ MR #352 hat beide ausdrücklich offengelassen. Nachgetragen am 2026-07-30:
   Datei gelesen hat.
 - **Die Mermaid-Beschriftungen sind nicht gegen das 360-px-Budget gemessen.** Mehrere gebundene deutsche
   Strings sind länger als ihre englischen Vorlagen. Das gehört an das Rendergate; §5 sagt, welche.
+
+## §9 Batch `structured-knowledge` (2026-08-03) — Termentscheidungen
+
+Gerendert in der Lokalisierungsphase des Batches `part-1-rag/structured-knowledge` (#405/#406/#407). Der
+Renderer war auf `i18n/de/` beschränkt und konnte diese Zeilen nicht selbst eintragen; sie stehen hier, weil
+die Nachtrag-Regel dieses Kanons sie **vor der zweiten Verwendung** verlangt.
+
+**Statuszeichen** wie in §1: SETTLED (belegt) · WEAK (plausibel, dünn belegt) · HOUSE (Hausentscheidung,
+transparent gebildet) · OPEN (ungeklärt) · DISPUTED. Der Eigentümer kann Deutsch nicht prüfen (~A1), deshalb
+trägt **jede** Zeile eine Quelle oder ein ehrliches „keine Attestierung gefunden".
+
+| EN | DE | Status | Beleg |
+|---|---|---|---|
+| structured knowledge | **strukturiertes Wissen** | HOUSE | transparentes Kompositum aus zwei Duden-Wörtern; trägt Titel, Kategorieschlüssel und Blurb |
+| controlled vocabulary | **das kontrollierte Vokabular** | SETTLED | de.wikipedia-Lemma *Kontrolliertes Vokabular* |
+| ontology / taxonomy | **die Ontologie / die Taxonomie** | SETTLED | de.wikipedia *Ontologie (Informatik)*, stellt beide ausdrücklich gegenüber; beide bereits im ausgelieferten DE-Korpus |
+| knowledge graph | **der Knowledge Graph** (Glosse *Wissensgraph*) | SETTLED | de.wikipedia führt das Lemma unter **Knowledge Graph**: „Ein Knowledge Graph (deutsch: Wissensgraph)…" — das deutsche Wort steht in der Klammer, also führt Englisch (§1.0) |
+| RDF triple | **das Tripel** (Subjekt, Prädikat, Objekt) | SETTLED | de.wikipedia *RDF* |
+| graph / node / edge | **der Graph, des Graphen, die Graphen; der Knoten; die Kante** | SETTLED | de.wikipedia *Graph (Graphentheorie)*; 26 Vorkommen im ausgelieferten Korpus, n-Deklination |
+| OWL 2 | **OWL 2**, ausgeschrieben **die Web Ontology Language** | SETTLED | de.wikipedia-Lemma, feminin |
+| SHACL / SPARQL | artikellos, Klasse 1 | SETTLED (Schreibung) / **OPEN (Genus)** | de.wikipedia hat ein SPARQL-Lemma, **kein SHACL-Lemma** — artikellos gehalten, statt ein Genus zu erfinden |
+| shapes graph / data graph / validation report | **der Shapes-Graph / der Datengraph / der Validierungsbericht** | **WEAK** | keine deutsche Attestierung; §1.3.3 erlaubt das deutsche Kompositum **nur mit englischem Original in Pflichtklammer** — so ausgeliefert |
+| **entity resolution** | **die Duplikaterkennung** | SETTLED | de.wikipedia-Lemma *Duplikaterkennung*, dessen Definitionssatz genau unseren Referenten trifft. ⛔ *Entitätsauflösung* nur auf zwei maschinenübersetzten Marketingseiten — nach der MT-Regel disqualifiziert. ⛔ *Deduplikation* ist im Kanon bereits an die Ingestion-Dedup gebunden |
+| **semantic layer** | **die semantische Schicht** | **WEAK** | codecentric.de (nativ deutsch, keine Übersetzung) definiert und flektiert sie fünfmal. Die Lehnform ist mit **gespaltenem Genus** attestiert (*das* vs. *der*) — genau das MT-Signal, das §1 als lautestes nennt, deshalb gewinnt die deutsche Form |
+| metrics layer | **die Kennzahlenschicht** (*metrics layer*) | **WEAK — AUF PROBE** | in diesem Batch geprägt. *Kennzahl* ist in deutschen BI-Quellen einheitlich; das Kompositum selbst ist unbelegt, daher Pflichtklammer nach §1.3.3. Ging **ungeschützt** ins Gate und überstand vier Runden |
+| measure / dimension / entity; metric | **Measure / Dimension / Entität**; metric → **die Kennzahl** | WEAK | codecentric + deutsche BI-Quellen |
+| community (GraphRAG) | **die Community**, Pl. *Communitys* — **nie nackt** | SETTLED (Paradigma) / HOUSE (Bindung) | Duden: feminin, Pl. *Communitys* — aber der Eintrag kennt **nur** den Sinn „Personengruppe". Klassische Falschsinn-Falle, deshalb bei Erstnennung gebunden (Klasse „richtig, aber nie nackt") |
+| community report | **der Community-Report** | HOUSE | §45 E1 Nomen+Nomen → Bindestrich; Genus von *der Report* |
+| local / global / DRIFT / basic search | **Local / Global / DRIFT / Basic Search** | Klasse 1 | GraphRAG-Methodennamen, Eigennamen |
+| TextUnit / Covariates | **TextUnits / Covariates**; Lauftermini **der Chunk** / **die Aussage** | Klasse 1 | GraphRAG-Artefaktnamen; für beide **kein Genus erfunden** |
+| community detection | **die Bildung von Communitys**; **der hierarchische Leiden-Algorithmus** | **OPEN → umschrieben** | **keine deutsche Attestierung gefunden**; de.wikipedia hat weder *Louvain-Methode* noch *Modularität (Netzwerk)*. Umschrieben, statt *Gemeinschaftserkennung* zu prägen |
+| extraction precision | **Precision auf den extrahierten Tripeln** (artikellos) | folgt Kanon | §1 führt `Recall/Precision` als DISPUTED — *artikelfrei verwenden*; eingehalten |
+| over-/under-merging | **zu viel / zu wenig zusammenführen** (verbal) | HOUSE | bewusst **kein** Nomen geprägt |
+| correlated error | **korrelierte Fehler** | WEAK | deutsche Statistik-Standardnutzung (regorz-statistik.de, uni-ulm Fehlerrechnung) |
+| context / error-distribution independence | **die Kontextunabhängigkeit / die Unabhängigkeit der Fehlerverteilung** | HOUSE | transparent, keine Prägung |
+| context distillation | **die Context-Distillation** | Korpusvorrang | das ausgelieferte DE-Glossar führt bereits **die Distillation** (feminin) mit *Schüler-/Lehrermodell*; Bindestrich nach §45 E1 |
+| OWL inference | **ableiten / das Schlussfolgern** — **nicht** *die Inferenz* | HOUSE | §1.2 reserviert *die Inferenz* für Modellinferenz beim Serving. Echte Sinnkollision; die Reservierung bleibt |
+
+### §9.1 Zwei Zeilen brauchen eine menschliche Entscheidung
+
+**`die Kennzahlenschicht`** und **`die Duplikaterkennung`** tragen den Batch inhaltlich und sind die beiden
+Zeilen, bei denen eine muttersprachliche Prüfung am meisten wert wäre — die erste, weil sie **in diesem
+Durchgang geprägt** wurde und damit unter das No-self-blessing-Verbot fällt; die zweite, weil sie eine
+plausible, grammatisch einwandfreie Alternative (*Entitätsauflösung*) verdrängt, die ein nicht
+deutschsprachiger Prüfer **nicht** von der belegten Form unterscheiden kann. Genau dafür existiert die Regel
+„das Lemma zitieren, nicht das Kompositum prägen".
+
+### §9.2 Kursübergreifende Links — ein Tarif für alle Lokalitäten
+
+Verlinke **nackt**: `/ai-sdlc/part-3-verification/layered-gates`, **ohne** Lokalitätspräfix. Der `baseUrl`
+eines lokalisierten Builds enthält das Lokalitätssegment **bereits**
+(`/ai-engineering-handbook/de/`), sodass der absolute Markdown-Pfad von selbst zu
+`/ai-engineering-handbook/de/ai-sdlc/…` wird und der Leser in der deutschen Lokalität bleibt. Am 2026-08-03
+mit einem Build aller vier Lokalitäten überprüft.
+
+:::danger[Hier wurde bereits geirrt]
+
+Ein erster Entwurf dieser Regel forderte das Gegenteil (`/de/ai-sdlc/…`). Das ist **falsch** und **bricht den
+Build**: `npm run build` scheitert mit `Docusaurus found broken links`. Der Fehler entstand als plausible
+Überlegung dazu, wie `baseUrl` zusammengesetzt wird, wurde als Tatsache weitergereicht und landete auf einen
+Schlag in drei Lokalitäten. **Eine Linkregel prüft der Build, nicht die Überlegung.**
+
+:::
+
+Weil AI SDLC **keine deutsche Übersetzung** hat, führt dieser Link auf englischen Inhalt in deutscher
+Oberfläche samt ausgeliefertem Hinweis. Deshalb trägt die Linkstelle den Marker
+„(die Seite liegt nur auf Englisch vor)" — wörtlich die Formulierung aus `code.json`, damit der Leser
+dieselbe Wendung liest, die ihn bei der Ankunft empfängt. Und deshalb wird die Stelle als **indirekte Rede
+ohne Anführungszeichen** gerendert: deutsche Anführungszeichen würden eine deutsche Seite behaupten, die es
+nicht gibt.
+
+### §9.3 Was das Gate an diesem Batch NICHT gesehen hat
+
+Ehrlich protokolliert, weil eine Lücke, die niemand nennt, als Abdeckung gelesen wird:
+
+- Der **~25-Einträge-Glossarabschnitt** wurde nie direkt gegatet — nur quergeprüft und ban-gescannt.
+- **Neun der elf bearbeiteten Dateien** liefen nie durchs Gate; nur `evaluation/deep-dive.md`, und das nur,
+  weil es eine ganze H3 bekam.
+- Das Gate **stichprobt, es zählt nicht auf**: verbleibende 8 bzw. 9 Funde sind acht bzw. neun geprüfte
+  Stellen, keine Seitenfreigabe.
+- **22 von 25 Funden in `evaluation/deep-dive.md` betreffen bereits ausgelieferte Prosa** aus der Juli-Welle.
+  Gegen `origin/main` verifiziert und **unangetastet gelassen** — fremde Wellen umzuschreiben ist nicht
+  Aufgabe dieses Batches. Sie sind eine echte Arbeitsliste für den Eigentümer jener Seite.
