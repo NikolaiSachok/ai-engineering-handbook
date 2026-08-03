@@ -64,6 +64,28 @@ written, say so here and say whether any attempt used the figure.
 
 <Reveal>
 
+<!-- ATTEMPT HEADINGS — the default, and the one authorised variant.
+     DEFAULT (use unless the exception below applies): "the common answer" / "the strong answer" /
+     "the over-built answer". These name the course's three quality tiers, the framing-box rule
+     ("name no quality tier here") is defined against them, and five scenarios use them.
+
+     VARIANT — headings name the POSITIONS instead, when casting followed the contestedness
+     artefact and one archetype therefore went uncast. Introduced on scenario 6, where the artefact
+     named five defensible options and flagged one ("reduce the agent's authority") as certain to go
+     unexplored unless deliberately cast; the over-built persona was dropped for it. There was then
+     no over-built attempt, and labelling one of the three that way would have been false.
+
+     Which to use is decided by the CASTING, not by preference:
+       - cast the three archetypes  -> tier headings, and the verdicts should map onto the tiers;
+       - cast against the artefact  -> position headings ("the layered answer", "the provable
+         answer", "the minimal-authority answer"), and the run report MUST name which archetype went
+         uncast and why.
+     A position heading still has to be decodable cold: a reader arriving from search reads the
+     heading before the attempt, so it names a stance, never a score.
+
+     Open question for the pilot exit (#341): whether to retrofit position headings across the
+     course or keep the two forms side by side. Do not resolve it inside one page. -->
+
 ## Attempt A — the common answer
 
 *Persona given to the agent: the habits of the engineer this attempt reconstructs — how they think, and what they have never had to do. NOT a competence level: a persona described as "competent, well-read" produces a near-senior answer, because a model asked how good someone is answers well.*

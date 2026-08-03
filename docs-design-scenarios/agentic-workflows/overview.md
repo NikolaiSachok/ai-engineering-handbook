@@ -28,9 +28,10 @@ none of them raise an error. They return a plausible answer, and the system repo
 - **[What an agent should remember, and what it must not](/design-scenarios/agentic-workflows/agent-memory)** —
   persist, expire, never write; and what a workflow that has been running for eleven weeks is allowed to trust
   when it wakes.
-
 - **[When an agent may try again](/design-scenarios/agentic-workflows/tools-that-fail)** — a nightly chain breaks
   at 03:12 with nobody awake; what the agent may retry, and what it may publish without a signature.
+- **[What a document is allowed to do](/design-scenarios/agentic-workflows/guardrails-at-the-boundary)** — a
+  supplier's PDF becomes a legally binding record; containment or detection, and which personal data the record
+  is obliged to keep.
 
-Three more are being written: guardrails at the boundary, observing a non-deterministic system, and when not to
-build an agent at all.
+Two more are being written: observing a non-deterministic system, and when not to build an agent at all.
