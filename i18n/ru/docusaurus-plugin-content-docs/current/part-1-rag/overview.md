@@ -27,7 +27,7 @@ RAG (retrieval-augmented generation) — это способ заставить 
 - **[Структурированные знания](./structured-knowledge/index.md)** — что делать, когда ответа нет ни в одном
   фрагменте: контролируемые словари и онтологии, графы знаний, семантический слой и text-to-SQL. И про каждый вариант —
   когда затраты на него оправданы.
-- **Сквозные аспекты** — то, что не сводится к одному шагу: [eval](./cross-cutting/evaluation/index.md) (узнать,
+- **[Сквозные аспекты](./cross-cutting/index.md)** — то, что не сводится к одному шагу: [eval](./cross-cutting/evaluation/index.md) (узнать,
   что система работает), [guardrails](./cross-cutting/guardrails/index.md) (удержать её в безопасных рамках),
   [observability](./cross-cutting/observability/index.md) (видеть, что она делает в проде).
 

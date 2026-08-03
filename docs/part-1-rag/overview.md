@@ -28,7 +28,7 @@ looking at.
 - **[Structured knowledge](./structured-knowledge/index.md)** — what to do when the answer isn't in any
   passage: controlled vocabularies and ontologies, knowledge graphs, the semantic layer and text-to-SQL.
   And, for each, whether it's worth its build cost.
-- **Cross-cutting concerns** — what doesn't reduce to a single step: [eval](./cross-cutting/evaluation/index.md)
+- **[Cross-cutting concerns](./cross-cutting/index.md)** — what doesn't reduce to a single step: [eval](./cross-cutting/evaluation/index.md)
   (knowing the system works), [guardrails](./cross-cutting/guardrails/index.md) (keeping it safe),
   [observability](./cross-cutting/observability/index.md) (seeing what it does in production).
 
