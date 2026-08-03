@@ -46,13 +46,20 @@ A single worked answer teaches you what someone concluded. It does not teach you
 alternatives were worse, and that is where the reasoning lives.
 
 So each scenario carries three attempts, written independently and without sight of each other or of
-the rubric:
+the rubric. Most pages cast the three by how good the answer is:
 
 - **The common answer** — the one you will hear most often, and the one most write-ups stop at. It
   is never a strawman: plausible, popular, and usually wrong in one specific place.
 - **The strong answer** — what someone who has run such a system in production reasons through,
   constraints first.
 - **The over-built answer** — the complete architecture, arrived at before the problem earned it.
+
+Some questions do not divide that way, and on those the three are cast by **position** instead — the
+layered answer against the provable one, the purchased instrument against the borrowed label. That
+happens when the interesting disagreement is between defensible architectures rather than between
+levels of skill, and those pages name the stance in the heading rather than the tier. It is a
+deliberate choice per scenario, not an inconsistency: [how these are made](/design-scenarios/how-these-are-made)
+sets out when each form applies.
 
 Then a verdict on each, and one sentence stating the principle that carries to other scenarios.
 

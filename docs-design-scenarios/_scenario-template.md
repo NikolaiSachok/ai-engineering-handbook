@@ -97,7 +97,7 @@ habits rather than as a competence level — how this engineer thinks, and what 
 
 <Verdict>
 
-110–140 words, the band the worked example actually lands in. Where it breaks, what it buys, what
+110–140 words was the band the first worked example landed in, and the batch did not hold it — the eight shipped pages run 148 to 438, rising as the assessor's fact-flagging got sharper. Treat 150–300 as the real target and anything past 350 as a signal that the verdict is re-arguing what *Where they actually disagree* exists to argue. Do not pad a short one. Where it breaks, what it buys, what
 it costs. Name the actual move being judged and quote it. Never a checklist of the rubric rows it missed —
 the mechanism of the failure is the teaching. Check every criticism against the attempt's own text before
 you ship it: a verdict a reader can falsify by scrolling up costs the page more than a missed flaw does.
