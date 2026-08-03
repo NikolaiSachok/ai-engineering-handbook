@@ -61,15 +61,15 @@ The engine behind those internals was overhauled recently: vLLM re-architected i
 
 **Quantisation** is the last lever, trading precision for memory and speed. The baseline is FP16 or BF16. FP8, native on Hopper and Blackwell tensor cores, is near-lossless and the default first stop in 2026; INT8 (W8A8) goes further; INT4 weight-only, via AWQ or GPTQ, cuts weight VRAM by roughly three-quarters — enough to fit a 70B model on a single GPU — at a moderate quality cost. A separate axis is **KV-cache quantisation**: storing the KV cache in FP8 roughly doubles the tokens a given pool holds, buying longer contexts or more concurrency. Every one of these trades throughput and memory against quality; there is no free precision.
 
-Quantisation gets confused with two other operations constantly, including by experienced engineers, because all three are filed mentally under *make the model cheaper* and two of them touch weights. They are not interchangeable, and the difference is what each one actually changes:
+Quantisation gets confused with two other operations, because all three file under *make the model cheaper* and two of them involve training. What separates them is what each one changes:
 
 | Operation | What it changes | Training involved | Whose decision |
 |---|---|---|---|
-| **Quantisation** | the *representation* of the weights — fewer bits per number, same model | none; a post-training conversion | serving |
-| **Distillation** | produces a *different, smaller model* trained to imitate a larger teacher's outputs | yes — you get new weights and a new model to evaluate | customisation |
-| **Fine-tuning** | *these* weights, so the model behaves differently | yes — on your data | customisation |
+| **Quantisation** | the *representation* of the numbers — fewer bits per weight or activation, same model | none for the post-training methods used in serving (quantisation-aware training exists, but it is a customisation-time choice) | serving |
+| **Distillation** | *a different, smaller model*, trained to imitate a larger teacher's outputs | yes — new weights and a new model to evaluate | customisation |
+| **Fine-tuning** | the weights themselves, so the model behaves differently | yes — on your data | customisation |
 
-Only the first is a serving decision, which is why it lives on this page; the other two sit on the [customisation ladder](../cloud-platforms/deep-dive.md). Worth flagging a fourth use of the same word, because it appears in this handbook: the **distilled finding** carried between hops in the [agentic RAG deep dive](../../part-2-agents/agentic-rag/deep-dive.md) is a compaction of retrieved text inside a single request. No training, no new weights — the same verb doing an unrelated job.
+Only the first is a serving decision, which is why it lives on this page; the other two sit on the [customisation ladder](../cloud-platforms/deep-dive.md). Worth flagging one more thing this handbook calls *distilled*, because it is none of the three: the **distilled finding** carried between hops in the [agentic RAG deep dive](../../part-2-agents/agentic-rag/deep-dive.md) is a compaction of retrieved text inside a single request. No training, no new weights — the same verb doing an unrelated job.
 
 ## When a model no longer fits on one GPU
 
@@ -114,6 +114,7 @@ That decides when to reach for it. Spiky, bursty, dev or batch traffic suits ser
 - A worker is a process — it buys you cores, not concurrency; the event loop already interleaves hundreds of waiting requests, so worker count tracks cores and CPU-bound work. A blocking call in an async handler freezes every request in the process, so offload it to a thread, and on shutdown give long streams time to finish.
 - Unbounded concurrency wrecks an LLM service, and Little's Law makes even a low request rate a high concurrency. Bound it with a semaphore and a bounded queue, shed excess with 429 and Retry-After, and put the cap at the scarce GPU or provider slot rather than the cheap connection.
 - Inside an inference server the throughput comes from iteration-level scheduling, chunked prefill and prefix caching over a paged KV cache — and that KV cache becomes the ceiling long before the GPU runs out of compute. Quantisation trades quality for the memory the ceiling is made of.
+- Quantisation, distillation and fine-tuning get filed together as "make it cheaper" and are not interchangeable: only quantisation is a serving decision — a post-training change to how the numbers are represented — while the other two produce new weights you have to evaluate, and belong on the customisation ladder.
 - Shard a model across GPUs only when it does not fit: tensor parallelism within a node over NVLink, pipeline parallelism across nodes, data-parallel replicas when it already fits. Sharding buys capacity you didn't have; it never hands you throughput for free.
 - On Kubernetes a GPU is a whole-integer resource that MIG or time-slicing can subdivide. Autoscale on queue depth and GPU utilisation, never on CPU, and count on cold start to make every reactive scale-up late.
 - Serverless GPU rents capacity by the second and scales to zero, paying for it in a cold-start latency that snapshots and warm pools only soften. It fits bursty and batch traffic; steady load is cheaper on an always-warm GPU.

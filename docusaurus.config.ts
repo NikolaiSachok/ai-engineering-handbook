@@ -161,7 +161,8 @@ const COURSES: Course[] = [
     navbarLabel: 'RAG & Agents',
     blurb:
       'Production RAG and agentic systems from first principles — ingestion, retrieval, ' +
-      'generation, agents, and the eval, guardrails and LLMOps that keep them honest.',
+      'generation, structured knowledge, agents, and the eval, guardrails and LLMOps that ' +
+      'keep them honest.',
     locales: ['en', 'ru', 'sk', 'de'],
     untranslatedPolicy: 'pending',
     live: true,

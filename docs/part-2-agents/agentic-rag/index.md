@@ -30,8 +30,8 @@ Agency isn't added just to be fashionable. A fixed `retrieve → generate` genui
 
 - **Multi-hop questions.** "Who leads the department that issued policy X?" One search won't get it: first
   find policy X, from it learn the department, and only then the head. The second query is built from the
-  result of the first. A static pipeline physically can't take that second step. Worth knowing that this is
-  the cheap answer to multi-hop: decomposition needs no extraction pass and no schema, which is why
+  result of the first. A static pipeline physically can't take that second step. This is also the cheap
+  answer to multi-hop: decomposition needs no extraction pass and no schema. That is why
   [structured knowledge](../../part-1-rag/structured-knowledge/index.md) argues a knowledge graph has to be
   justified by a *different* question class than this one.
 - **Queries that need no retrieval at all.** "Translate the previous answer into English," or "what's 15% of

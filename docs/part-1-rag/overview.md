@@ -26,8 +26,8 @@ looking at.
 - **[Generation](./generation/index.md)** — how to ground the answer in the retrieved context: grounding,
   citations, an honest refusal instead of invention.
 - **[Structured knowledge](./structured-knowledge/index.md)** — what to do when the answer isn't in any
-  passage: controlled vocabularies and ontologies, knowledge graphs, the semantic layer and text-to-SQL,
-  and when each is worth its build cost.
+  passage: controlled vocabularies and ontologies, knowledge graphs, the semantic layer and text-to-SQL.
+  And, for each, whether it's worth its build cost.
 - **Cross-cutting concerns** — what doesn't reduce to a single step: [eval](./cross-cutting/evaluation/index.md)
   (knowing the system works), [guardrails](./cross-cutting/guardrails/index.md) (keeping it safe),
   [observability](./cross-cutting/observability/index.md) (seeing what it does in production).
@@ -39,8 +39,8 @@ deep math required — we explain from first principles.
 
 :::note[Status]
 
-Part I's base is complete — every lesson is published: Ingestion, Retrieval, Generation, and the
-cross-cutting concerns (eval, guardrails, observability). 🚧 A second pass is still ahead — deepening each
-layer (topics listed in the "Next — going deeper" notes on the lesson pages).
+Part I is complete — every lesson is published, and each carries its deep-dive second pass: Ingestion,
+Retrieval, Generation, Structured knowledge, and the cross-cutting concerns (eval, guardrails,
+observability). Follow the "Next — part 2 of the lesson" pointer on any lesson page to reach its deep dive.
 
 :::

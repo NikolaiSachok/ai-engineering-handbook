@@ -86,9 +86,9 @@ is this person even allowed to see."
   incident, not merely a dip in quality. The usual arrangement is a pre-filter — screen by permissions
   first, then search.
 
-Access control reads as a retrieval mechanic here, and it carries a second consequence that reaches much
-further: a filter can differ per requester, and a weight cannot. That one asymmetry decides where an
-organisation's knowledge is allowed to live at all — see
+Access control reads as a retrieval mechanic here, but it also decides something much larger. A filter can
+be different for every requester; a model's weights are the same for everyone. That asymmetry decides where
+an organisation's knowledge is allowed to live — see
 [when to change the weights](../../part-3-production/llmops/deep-dive.md).
 
 ## The full pipeline

@@ -220,7 +220,7 @@ human maintenance.
 
 **RDF** — the triple model: every fact is a subject, a predicate and an object.
 
-**OWL** — the W3C ontology language with formally defined, model-theoretic meaning; what makes machine
+**OWL 2** — the W3C ontology language with formally defined, model-theoretic meaning; what makes machine
 inference possible. Its **profiles** (EL, QL, RL) trade expressivity for tractability, and choosing one is a
 real engineering decision.
 
@@ -239,6 +239,10 @@ reference implementation.
 **Graph extraction** — the LLM pass that turns chunks into entities, relationships and covariates. The
 expensive phase, and the one that decides whether anything downstream is true.
 
+**TextUnit** — GraphRAG's name for a source chunk, the unit extraction runs over. Its size is a design
+decision, not a default: larger units mean fewer extraction calls and more entities per call, and a worse
+chance the model attributes a relation to the right pair.
+
 **Covariate / claim extraction** — factual statements with an evaluated status and time bounds; optional in
 GraphRAG and off by default, because it needs domain prompt tuning to be useful.
 
@@ -248,12 +252,16 @@ communities, so summaries exist at several levels of granularity.
 **Community report** — the build-time summary of one community, with an executive overview and its key
 entities, relations and claims. What a corpus-level question actually reads.
 
-**Local search / global search / DRIFT search** — the graph query methods: an entity's neighbourhood
-combined with raw chunks; map-reduce over every community report, for questions about the corpus as a whole;
-and community context folded into a local query to widen its starting point.
+**Local search** — a graph query method: an entity's neighbourhood combined with raw chunks. The graph
+supplies the structure, the prose still supplies the evidence.
 
-**Entity resolution** — deciding that `Acme Corp` and `Acme Corporation` are one node. Where graph projects
-usually disappoint, because the popular systems merge by string matching.
+**Global search** — map-reduce over every community report, for questions about the corpus as a whole.
+Expensive per query, and the method that justifies building a graph in the first place.
+
+**DRIFT search** — community context folded into a local query, to widen its starting point.
+
+**Entity resolution** — deciding that `Acme Corp` and `Acme Corporation` are one node. The step most likely
+to disappoint, because the popular graph-RAG systems merge by string matching.
 
 **Over-merging / under-merging** — the two directions of resolution error: fusing distinct entities invents
 connections, fragmenting one entity hides them. Report them separately; a single accuracy figure hides one
@@ -262,12 +270,20 @@ inside the other.
 **Extraction precision** — the share of extracted triples that are true against their source text, measured
 on a labelled sample. The correctness measure retrieval metrics cannot give you.
 
-**Semantic layer** — two different things under one name. **(a)** the metrics layer: a modelling tier over a
-warehouse where a metric is defined once, with its joins, legal filters and dimensions. **(b)** resolving an
-utterance to a domain concept rather than to a passage, so answers are consistent and auditable.
+**Semantic layer** — two different things under one name. One is the **metrics layer**: a modelling tier
+over a warehouse where a metric is defined once, with its joins, legal filters and dimensions. The other is
+the semantic layer over the linguistic layer — resolving an utterance to a domain concept rather than to a
+passage, so answers are consistent and auditable.
 
-**Semantic model / measure / dimension / entity** — the parts of a metrics layer: the quantities, the ways
-to slice them, and the join keys that connect them.
+**Semantic model** — the modelling unit of a metrics layer, declaring the parts below and the metrics built
+on them.
+
+**Measure / dimension / entity** — the parts of a semantic model: the quantities, the ways to slice them,
+and the join keys that connect them.
+
+**Meta API** — the semantic layer's introspection endpoint, through which an agent discovers what is
+queryable. The structured analogue of a tool schema: it removes the failure where a model invents a metric
+that sounds reasonable and does not exist.
 
 **Text-to-SQL** — generating SQL from a natural-language question. Against a raw schema the model must
 *derive* the query — business joins, business dates, dirty values, unwritten rules; against a semantic layer
@@ -302,16 +318,16 @@ position bias (favours the first option — mitigate by swapping order and requi
 bias (longer = better), self-preference / self-enhancement (its own style).
 ↗ [arXiv](https://arxiv.org/abs/2306.05685)
 
-**Correlated error** — the assumption a judge rests on and the one no bias mitigation touches: a second model
-lowers error only insofar as its errors are uncorrelated with the first's. Two frontier models trained on
-overlapping corpora against similar objectives are often one mechanism, agreeing hardest where their shared
-training data is thinnest. Independence comes from a different *information source* — a grounded check, a
-deterministic assertion, an executable test, a human label — not from a different vendor.
+**Correlated error** — two models failing on the same inputs for the same reason. A second model lowers
+error only insofar as its errors are uncorrelated with the first's, and two frontier models trained on
+overlapping corpora should be expected to agree hardest where their shared training data is thinnest.
+Independence comes from a different *information source* — a grounded check, a deterministic assertion, an
+executable test, a human label — not from a different vendor.
 
-**Context independence vs error-distribution independence** — two things this handbook calls independence.
-The first withholds the draft's reasoning from a verifier inside one model (chain-of-verification); the
-second is the property across two models that correlated error denies. Having the first does not give you the
-second.
+**Context independence vs error-distribution independence** — two properties this handbook names
+*independence* in evaluation. The first withholds the draft from a verifier inside one model
+(chain-of-verification). The second is the across-models property that correlated error takes away. Having
+the first does not give you the second.
 
 **Offline vs online eval** — evaluating on a golden set before deploy (regression in CI) versus measuring
 in production (user feedback, A/B).
@@ -1014,6 +1030,11 @@ each answer, rewarding the behaviour you want.
 
 **Model distillation** — training a smaller student model to imitate a larger teacher's outputs, trading a
 little quality for much lower serving cost.
+
+**Context distillation** — training a model to behave as though a context were present — a long system
+prompt, a policy, worked examples — without supplying it at inference. It answers "how do I stop paying for
+these prompt tokens on every request", and charges the ladder's usual price: the behaviour is frozen in
+weights, so changing the policy means training again. Prompt caching solves the same bill without the trade.
 
 **Continued pre-training** — extending a base model's pre-training on large unlabelled domain data, before
 any task-specific tuning.
