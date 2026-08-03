@@ -22,7 +22,7 @@ Microsofts GraphRAG ist die Referenzimplementierung, an der man das Ganze am bes
 6. **Text einbetten** – Vektoren, denn der Graph ersetzt den Vektorindex nicht.
 
 ```mermaid
-flowchart LR
+flowchart TB
     D["Quelldokumente"] --> P1["1. TextUnits bilden<br/>(Voreinstellung 1200 Token)"]
     P1 --> P2["2. Dokumente verarbeiten<br/>(Weg zurück zur Quelle)"]
     P2 --> P3["3. Den Graphen extrahieren<br/>Durchlauf des Modells über jeden Chunk"]
