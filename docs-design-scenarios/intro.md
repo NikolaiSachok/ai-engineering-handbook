@@ -27,15 +27,16 @@ arrangement, including what it cannot buy.
 
 :::note[Status]
 
-In progress. Seven scenarios are published —
+The first batch is complete. Eight scenarios, one archetype —
 [routing queries across models](/design-scenarios/agentic-workflows/model-routing),
 [knowing an agent works](/design-scenarios/agentic-workflows/trajectory-vs-outcome),
 [framework or your own primitives](/design-scenarios/agentic-workflows/framework-or-primitives),
 [what an agent should remember, and what it must not](/design-scenarios/agentic-workflows/agent-memory),
-[when an agent may try again](/design-scenarios/agentic-workflows/tools-that-fail) and
-[what a document is allowed to do](/design-scenarios/agentic-workflows/guardrails-at-the-boundary) and
-[what the dashboard cannot see](/design-scenarios/agentic-workflows/observing-a-non-deterministic-system). The
-last of the first batch is being written.
+[when an agent may try again](/design-scenarios/agentic-workflows/tools-that-fail),
+[what a document is allowed to do](/design-scenarios/agentic-workflows/guardrails-at-the-boundary),
+[what the dashboard cannot see](/design-scenarios/agentic-workflows/observing-a-non-deterministic-system) and
+[the work that should stay a workflow](/design-scenarios/agentic-workflows/when-not-to-build-an-agent).
+Whether a second archetype follows is being decided.
 
 :::
 
