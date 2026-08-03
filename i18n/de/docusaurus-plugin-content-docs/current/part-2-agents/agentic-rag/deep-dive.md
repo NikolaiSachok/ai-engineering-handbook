@@ -21,7 +21,7 @@ Die Selbstkorrektur und das iterative Retrieval aus Teil 1 waren Mechanismen, di
 Als Diagramm ist der Weg durch CRAG eine Verzweigung in drei Richtungen, und der Konfidenzwert des Bewerters entscheidet, welche davon genommen wird:
 
 ```mermaid
-flowchart LR
+flowchart TB
     R["Retrieval"] --> E["Bewerter der Dokumente"]
     E -- "korrekt" --> Ref["Verfeinern – relevante Fragmente behalten"]
     E -- "mehrdeutig" --> Comb["Verbinden – verfeinerte Dokumente + Web"]
@@ -71,7 +71,7 @@ Das Fehlerbild, gegen das das alles schützt, ist konkret: Schleppen Sie die Roh
 Als Kette gezeichnet – jeder Hop verdient seinen Platz damit, dass er kleiner macht, was er weitergibt:
 
 ```mermaid
-flowchart LR
+flowchart TB
     R1["Hop 1: abrufen"] --> D1["Befund destillieren + Quelle nennen"]
     D1 --> R2["Hop 2: Befund + abrufen"]
     R2 --> D2["Befund destillieren + Quelle nennen"]

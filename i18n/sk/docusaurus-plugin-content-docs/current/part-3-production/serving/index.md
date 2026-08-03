@@ -44,16 +44,16 @@ Používateľ nevníma celkový čas generovania — vníma **time-to-first-toke
 ```mermaid
 sequenceDiagram
     participant U as Používateľ
-    participant S as App-služba (FastAPI)
+    participant S as App-služba
     participant R as Vyhľadávanie
-    participant M as LLM (poskytovateľ / inference server)
+    participant M as LLM
     U->>S: POST /ask
     S->>R: Vyhľadaj
     R-->>S: Najlepšie fragmenty
     S->>M: Generuj (stream: true)
     M-->>S: Útržky tokenov (SSE)
     S-->>U: SSE udalosti, token po tokene
-    Note over S,U: Stavový kód 200 odišiel s prvými bajtmi — chyba uprostred prúdu musí prísť vnútri prúdu (in-band)
+    Note over S,U: Stavový kód 200 už odišiel — chyba musí prísť vnútri prúdu
 ```
 
 Streaming potichu rozbije chybový model, na ktorý si sa celú kariéru spoliehal: stavový kód HTTP odíde s prvými bajtmi, takže keď sa generovanie v polovici pokazí, dvestovka je už odoslaná a nijaký stavový kód ju nevezme späť. Chyby sa musia prenášať in-band, ako chybová udalosť vo vnútri prúdu — presne to robia API poskytovateľov — a každý klient musí počítať s prúdom, ktorý uprostred odpovede odumrie.
@@ -105,7 +105,7 @@ Zhodujú sa aj na úrovni protokolu. Inference servery vystavujú **OpenAI-compa
 Zostáva architektonické ponaučenie: čisté rozdelenie práce. Vrstva FastAPI vlastní produkt: autentifikáciu, orchestráciu RAG, guardrails, streaming k používateľovi, účtovanie. Inference server vlastní GPU: batching, KV-cache, načítanie modelu. Ich zreťazenie — app-služba vpredu, inference server vzadu — je štandardná architektúra pri prevádzke u seba; a keď namiesto toho použiješ API poskytovateľa, štrukturálne sa nemení nič, len si tú druhú škatuľu prenajal. Či ju prenajať, alebo vlastniť, je presne otázka lekcie o [cloudových platformách](../cloud-platforms/index.md).
 
 ```mermaid
-flowchart LR
+flowchart TB
     C["Klient"] --> A["App-služba (FastAPI)<br/>autentifikácia → RAG pipeline<br/>→ guardrails → účtovanie"]
     A -- Prenájom --> P["API poskytovateľa<br/>(OpenAI, Anthropic, ...)"]
     A -- Vlastníctvo --> V["Inference server (vLLM / SGLang)<br/>continuous batching, KV-cache"]

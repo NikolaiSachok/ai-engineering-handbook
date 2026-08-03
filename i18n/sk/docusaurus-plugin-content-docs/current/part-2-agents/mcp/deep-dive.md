@@ -123,7 +123,7 @@ Teraz obrany, vo vrstvách — žiadna sama osebe nestačí, o to práve pri obr
 **Sandbox** (izolované prostredie s obmedzenými právami). Nedôveryhodné servery spúšťaj izolovane — v kontajneri, s obmedzenou sieťou, s ohraničeným súborovým systémom — aby bola kompromitácia zapuzdrená namiesto katastrofálnej. Najviac na ňom záleží pri lokálnych stdio serveroch, ktoré inak zdedia plné práva tvojho stroja.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph Untrusted["Nedôveryhodný server"]
         R["zdroje"]
         TR["výsledky nástrojov"]

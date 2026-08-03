@@ -62,14 +62,15 @@ Und hier wird die Schleife aus Teil 1 zur Betriebspraxis. Die Traces, an denen s
 flowchart TB
     M["Zeitreihe für<br/>Qualität / Latenz / Kosten"] --> DR{"Statistisch belastbarer Einbruch?"}
     DR -->|"ja"| A["Über die Spans des Traces zuordnen"]
-    A --> C1["Retrieval-Scores gefallen?<br/>(erneute Ingestion / Änderung am Index)"]
-    A --> C2["gen_ai.response.model geändert?<br/>(Anbieter hat die Modellversion gewechselt)"]
-    A --> C3["Prompt-Vorlage geändert?<br/>(ein Deployment)"]
-    A --> C4["Verteilung der Eingaben verschoben?<br/>(neue Art von Frage)"]
-    C1 --> CE["Beginn mit einem Änderungsereignis in Beziehung setzen"]
-    C2 --> CE
-    C3 --> CE
-    C4 --> CE
+    A --> Causes
+    subgraph Causes["Mögliche Ursachen"]
+        direction LR
+        C1["Retrieval-Scores gefallen?<br/>(erneute Ingestion / Änderung am Index)"]
+        C2["gen_ai.response.model geändert?<br/>(Anbieter hat die Modellversion gewechselt)"]
+        C3["Prompt-Vorlage geändert?<br/>(ein Deployment)"]
+        C4["Verteilung der Eingaben verschoben?<br/>(neue Art von Frage)"]
+    end
+    Causes --> CE["Beginn mit einem Änderungsereignis in Beziehung setzen"]
     CE --> F["Fehlgeschlagene Traces →<br/>neue Fälle im Goldstandard"]
     F --> E["Zurück in die Evaluierung"]
 ```

@@ -35,7 +35,7 @@ Spoločný menovateľ: skutočný dopyt potrebuje premenlivý počet krokov a vo
 V jadre je jednoduchá **slučka agenta** (agent loop). Točí sa dovtedy, kým model neusúdi, že má na odpoveď dosť.
 
 ```mermaid
-flowchart LR
+flowchart TB
     R["Úvaha<br/>čo viem, čo mi chýba"] --> Q{"Dosť?"}
     Q -- "áno" --> Ans["Odpoveď"]
     Q -- "nie" --> D["Rozhodnutie<br/>ktorá akcia"]

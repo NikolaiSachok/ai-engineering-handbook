@@ -25,7 +25,7 @@ Sebaoprava a iteratívne vyhľadávanie boli v prvej časti mechanizmy v abstrak
 Celé je to **plug-and-play** — nadstavba nad ľubovoľným existujúcim RAG bez úprav, bez pretrénovania generátora.
 
 ```mermaid
-flowchart LR
+flowchart TB
     R["Vyhľadanie"] --> E["Hodnotiteľ vyhľadávania"]
     E -- "Correct (dobrá)" --> Ref["Spresniť — ponechať relevantné fragmenty"]
     E -- "Ambiguous (nejasná)" --> Comb["Skombinovať — spresnené dokumenty + web"]
@@ -79,7 +79,7 @@ Tri návyky udržia prenášaný kontext čistý.
 Spôsob zlyhania, ktorému to bráni, je konkrétny: nes so sebou surové chunky z každého kroku a kontext napuchne, kým model nestratí niť a na otázku kroku 3 neodpovie z dôkazov kroku 1. Odpoveď je plynulá, o *čosi* opretá — a nesprávna; a to je najťažší druh chyby na odhalenie ďalej v reťazci.
 
 ```mermaid
-flowchart LR
+flowchart TB
     R1["Krok 1: vyhľadanie"] --> D1["Vydestilovať nález + odkaz"]
     D1 --> R2["Krok 2: nález + vyhľadanie"]
     R2 --> D2["Vydestilovať nález + odkaz"]

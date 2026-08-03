@@ -49,7 +49,7 @@ It has a few parts. It's the same loop as in Agentic RAG, only the action is now
 - The model **continues**: seeing the result, it either calls another tool or answers.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Defs["Tool definitions"] --> M["Model"]
     M --> TC["tool call: sql_query(...)"]
     TC --> X["Your code runs the query"]

@@ -54,7 +54,7 @@ Model je starší, než vyzerá. Nezávislí špecialisti — **znalostné zdroj
 Architektúra vzišla zo systému na porozumenie reči Hearsay-II, ktorý postavili na Carnegie Mellon približne v rokoch 1971–1976; jej kanonický opis je dvojdielny prehľad H. Penny Niiovej „Blackboard Systems“ (*AI Magazine*, roč. 7, 1986), napísaný na Stanforde. Predstav si tím okolo skutočnej tabule: každý vidí tú istú tabuľu, ktokoľvek pridá riadok, keď vie pomôcť, a jeden koordinátor rozhoduje, kto píše ďalší. Tri časti, a to je celá architektúra — tabuľa (spoločný stav), znalostné zdroje (špecialisti) a riadiaca zložka (plánovač).
 
 ```mermaid
-flowchart TB
+flowchart LR
     KS1["Znalostný zdroj 1"] <--> BB["Blackboard · spoločný stav"]
     KS2["Znalostný zdroj 2"] <--> BB
     KS3["Znalostný zdroj 3"] <--> BB
@@ -112,9 +112,13 @@ Vrstva politiky, ktorá to drží na uzde, je *rozpočet ako politika* z prvej �
 ```mermaid
 flowchart TD
     Total["Rozpočet celej úlohy"] --> Orch["Orchestrátor prideľuje"]
-    Orch --> W1["Vykonávateľ · čiastkový rozpočet"]
-    Orch --> W2["Vykonávateľ · čiastkový rozpočet"]
-    Orch --> W3["Vykonávateľ · čiastkový rozpočet"]
+    Orch --> Workers
+    subgraph Workers["Čiastkové rozpočty vykonávateľov"]
+        direction LR
+        W1["Vykonávateľ"]
+        W2["Vykonávateľ"]
+        W3["Vykonávateľ"]
+    end
     Orch -. "strop rozvetvenia · strop hĺbky" .-> Lim["ohraničí šírku a rekurziu"]
 ```
 

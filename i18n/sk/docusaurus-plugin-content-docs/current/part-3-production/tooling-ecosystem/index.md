@@ -64,7 +64,7 @@ Poradie nižšie je vec úsudku — rozumná predvoľba pre typický produktový
 Potom celá produkčná slučka aj s menami produktov — to, čo Prvá časť príručky nakreslila v pojmoch, teraz zabalené do produktu.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph GR["Guardrails: Guardrails AI / NeMo Guardrails / Llama Guard / Granite Guardian"]
         P["Produkčný systém"]
     end

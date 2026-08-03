@@ -39,7 +39,7 @@ the tool-use round-trip from [tool-use](./tool-use/index.md), and it is identica
 the shape on the wire changes.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Defs["Tool definitions"] --> M["Model"]
     M --> TC["tool call"]
     TC --> X["Your code runs it"]

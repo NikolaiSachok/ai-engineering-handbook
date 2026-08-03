@@ -52,7 +52,7 @@ The reason to bother is that "just ask" is best-effort, and best-effort breaks u
 **Constrained decoding** removes the possibility rather than lowering its odds. It enforces structure *during* generation: at each decoding step the schema — compiled to a grammar — defines which next tokens are legal, and the sampler masks out every token that would break the schema, so only schema-valid tokens can be emitted at all. Malformed output stops being unlikely and becomes structurally impossible. (The term is already in the glossary from the tool-use lesson; this is the same mechanism, pointed at answer formatting.)
 
 ```mermaid
-flowchart LR
+flowchart TB
     S["Schema / grammar"] --> M["Token mask at each step"]
     L["LLM next-token logits"] --> M
     M --> V["Sample only schema-valid tokens"]

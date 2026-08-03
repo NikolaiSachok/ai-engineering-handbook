@@ -21,12 +21,12 @@ Cloud, auf der Modelle als **verwaltete Endpunkte** in der Cloud laufen, die Sie
 
 ```mermaid
 flowchart TD
-    APP["Ihre Anwendung<br/>der App-Dienst aus der Serving-Lektion"] --> OWN["Eigene GPUs + Inferenz-Engine"]
-    APP --> VENDOR["Direkte API des Modellanbieters"]
-    APP --> CLOUD["Die verwaltete KI-Plattform der Cloud"]
+    APP["Ihre Anwendung"] --> OWN["Eigene GPUs<br/>+ Inferenz-Engine"]
+    APP --> VENDOR["Direkte API<br/>des Modellanbieters"]
+    APP --> CLOUD["Verwaltete<br/>KI-Plattform der Cloud"]
     OWN --> OWN2(["Größtmögliche Kontrolle,<br/>voller Betriebsaufwand"])
-    VENDOR --> VENDOR2(["Einfachster Einstieg:<br/>Daten gehen zum Anbieter,<br/>eigener Vertrag"])
-    CLOUD --> CLOUD2(["Das Modell hinter dem Perimeter der Cloud:<br/>IAM, Abrechnung, Netz, Audit"])
+    VENDOR --> VENDOR2(["Einfachster Einstieg,<br/>Daten gehen raus,<br/>eigener Vertrag"])
+    CLOUD --> CLOUD2(["Hinter Ihrem Perimeter:<br/>IAM, Abrechnung, Audit"])
 ```
 
 :::tip[▶ Video]

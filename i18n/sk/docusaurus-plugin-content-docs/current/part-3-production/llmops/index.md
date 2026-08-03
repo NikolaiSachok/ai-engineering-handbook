@@ -36,7 +36,7 @@ Spolu s artefaktom sa zmenilo aj testovanie. Výstupy sú nedeterministické a k
 Celá disciplína sa stláča do jedinej slučky. Je chrbticou tejto lekcie — a napokon aj uzatvárajúcim obrazom celej príručky.
 
 ```mermaid
-flowchart LR
+flowchart TB
     C["Zmena<br/>prompt / model / index / konfig"] --> E["Eval v CI<br/>golden set"]
     E -- "neprejde" --> C
     E -- "prejde" --> D["Nasadenie<br/>canary / shadow"]
@@ -124,7 +124,7 @@ Práca, ktorá počká, nemá platiť interaktívnu cenu. Nočné obohacovanie k
 Zrelá prax — bežná, hoci nie štandard — sú tokenové rozpočty na tím a na funkciu s alertmi, vynucované tam, kadiaľ už aj tak tečie všetka premávka: na bráne. A do kontrolného zoznamu pred nasadením pribudne prehľad nákladov, lebo úvodný rozdiel tejto lekcie platí aj pre náklady: zmena promptu je zmena nákladov. Slučka z hlavičky tejto stránky beží na kvalite aj na dolároch.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Q["Požiadavka"] --> SC{"Sémantická cache"}
     SC -- "zásah" --> R["Uložená odpoveď"]
     SC -- "minutie" --> T["Zostavenie promptu: tokenová diéta"]

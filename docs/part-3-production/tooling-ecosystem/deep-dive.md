@@ -36,13 +36,13 @@ The reason for all these moving parts is the ingestion path, and it is worth tra
 
 ```mermaid
 flowchart LR
-    SDK["Application SDK"] -- "event" --> WEB["Langfuse Web<br/>(ingestion API + console)"]
+    SDK["Application SDK"] -- "event" --> WEB["Langfuse Web<br/>ingestion API<br/>+ console"]
     WEB -- "raw body" --> S3["S3 / blob storage"]
-    WEB -- "queue reference" --> REDIS["Redis / Valkey<br/>(queue + cache)"]
-    WEB <-- "OLTP: users, projects, prompts" --> PG["PostgreSQL"]
-    WORKER["Langfuse Worker"] -- "reads reference" --> REDIS
+    WEB -- "queue ref" --> REDIS["Redis / Valkey<br/>queue + cache"]
+    WEB <-- "OLTP" --> PG["PostgreSQL"]
+    WORKER["Langfuse Worker"] -- "reads ref" --> REDIS
     WORKER -- "reads body" --> S3
-    WORKER -- "upsert traces / observations / scores" --> CH["ClickHouse (OLAP)"]
+    WORKER -- "upsert" --> CH["ClickHouse<br/>OLAP"]
     UI["Console UI"] --> WEB
 ```
 
@@ -119,7 +119,7 @@ What actually lets these products compose is **OpenTelemetry**, and this is the 
 The gotcha that bites in practice: don't double-instrument. Run SDK-native tracing and OTel instrumentation at the same time and you get every span twice — duplicated data, doubled ingestion cost, and dashboards that quietly double-count. Pick one emission path and disable the other.
 
 ```mermaid
-flowchart LR
+flowchart TB
     GR["Guardrails<br/>wrap the prod system"] --> PROD["Production system"]
     PROD -- "spans (OTel — the seam)" --> OBS["Observability<br/>Langfuse / Phoenix"]
     OBS -- "bad traces → golden set (the seam)" --> GS["Golden set"]

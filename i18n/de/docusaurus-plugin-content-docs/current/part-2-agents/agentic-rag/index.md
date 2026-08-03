@@ -59,7 +59,7 @@ Im Kern steht eine einfache Schleife, der **Agent Loop**. Sie dreht sich, bis da
 entscheidet, dass es antworten kann:
 
 ```mermaid
-flowchart LR
+flowchart TB
     R["Nachdenken<br/>Was habe ich, was fehlt?"] --> Q{"Reicht es?"}
     Q -- "ja" --> Ans["Antworten"]
     Q -- "nein" --> D["Entscheiden<br/>welche Aktion"]

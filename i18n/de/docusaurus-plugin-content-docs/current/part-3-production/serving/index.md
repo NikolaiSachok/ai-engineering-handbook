@@ -85,16 +85,16 @@ Proxys und Load-Balancer hindurch.
 ```mermaid
 sequenceDiagram
     participant U as Nutzer
-    participant S as App-Dienst (FastAPI)
+    participant S as App-Dienst
     participant R as Retrieval
-    participant M as LLM (Anbieter oder Inferenz-Engine)
+    participant M as LLM
     U->>S: POST /ask
     S->>R: Suche
     R-->>S: Top-Chunks
     S->>M: Generieren (stream: true)
     M-->>S: Token-Pakete (SSE)
     S-->>U: SSE-Ereignisse, Token für Token
-    Note over S,U: Der Statuscode 200 ist längst übertragen – ein Fehler mitten im Strom muss im selben Kanal reisen
+    Note over S,U: Der Statuscode 200 ist längst weg – Fehler reisen im selben Kanal
 ```
 
 Streaming macht das Fehlermodell unbrauchbar, auf das Sie sich Ihr ganzes Berufsleben lang verlassen
@@ -224,7 +224,7 @@ sich strukturell nichts: Sie haben den zweiten Baustein dann einfach gemietet. M
 genau das ist die Frage der Lektion über [Cloud-KI-Plattformen](../cloud-platforms/index.md).
 
 ```mermaid
-flowchart LR
+flowchart TB
     C[Client] --> A["App-Dienst (FastAPI):<br/>Authentifizierung → RAG-Pipeline → Guardrails → Abrechnung"]
     A -->|Mieten| P["API des Anbieters<br/>(OpenAI, Anthropic, ...)"]
     A -->|Eigenbetrieb| V["Inferenz-Engine (vLLM / SGLang):<br/>Continuous Batching, KV-Cache"]

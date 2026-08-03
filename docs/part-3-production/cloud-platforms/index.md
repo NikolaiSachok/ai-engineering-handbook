@@ -20,12 +20,12 @@ models run as **managed endpoints** inside the cloud you already use.
 
 ```mermaid
 flowchart TD
-    APP["Your application<br/>the app service from the serving lesson"] --> OWN["Your own GPUs + inference server"]
-    APP --> VENDOR["Direct model-vendor API"]
-    APP --> CLOUD["The cloud's managed AI platform"]
+    APP["Your application"] --> OWN["Your own GPUs<br/>+ inference server"]
+    APP --> VENDOR["Direct<br/>model-vendor API"]
+    APP --> CLOUD["The cloud's<br/>managed AI platform"]
     OWN --> OWN2(["Maximum control,<br/>maximum ops burden"])
-    VENDOR --> VENDOR2(["Simplest start:<br/>data goes to the vendor,<br/>separate contract"])
-    CLOUD --> CLOUD2(["The model inside the cloud perimeter:<br/>IAM, billing, network, audit"])
+    VENDOR --> VENDOR2(["Simplest start,<br/>data leaves,<br/>separate contract"])
+    CLOUD --> CLOUD2(["Inside your perimeter:<br/>IAM, billing, audit"])
 ```
 
 :::tip[▶ Video]

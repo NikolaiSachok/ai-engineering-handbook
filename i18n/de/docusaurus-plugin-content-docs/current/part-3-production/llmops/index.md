@@ -53,7 +53,7 @@ Die ganze Disziplin verdichtet sich zu einer einzigen Schleife. Sie ist das Rüc
 Sie am Ende sehen werden, das Schlussbild des Handbuchs:
 
 ```mermaid
-flowchart LR
+flowchart TB
     C["Änderung<br/>Prompt / Modell / Index / Konfiguration"] --> E["Evaluierung in der CI<br/>Goldstandard"]
     E -- "scheitert" --> C
     E -- "besteht" --> D["Deployment<br/>Canary / Shadow"]
@@ -241,7 +241,7 @@ entscheidet über Qualität *und* über Geld.
 Die Hebel dieses Abschnitts, eingezeichnet in den Anfragepfad:
 
 ```mermaid
-flowchart LR
+flowchart TB
     Q["Anfrage"] --> SC{"Semantischer Cache"}
     SC -- "Treffer" --> R["gespeicherte Antwort"]
     SC -- "kein Treffer" --> T["Prompt-Aufbau: Token sparen"]

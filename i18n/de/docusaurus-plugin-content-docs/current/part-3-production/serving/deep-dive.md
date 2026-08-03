@@ -34,14 +34,14 @@ Dahinter steht ein einziges Prinzip: Begrenzen Sie an der knappen Ressource, nic
 
 ```mermaid
 flowchart TB
-    R["Anfragen treffen ein"] --> AL
+    R["Anfragen treffen ein"] --> SEM
     subgraph AL["Anwendungsschicht"]
-        SEM["Semaphor – Obergrenze für die Nebenläufigkeit: N"] --> Q{"Begrenzte Queue<br/>max. Länge D"}
-        Q -->|"Queue voll"| SHED["Abweisen – sofort 429 / 503 + Retry-After"]
+        SEM["Semaphor<br/>Obergrenze Nebenläufigkeit N"] --> Q{"Begrenzte Queue<br/>Länge D"}
+        Q -->|"Queue voll"| SHED["Abweisen<br/>429 / 503<br/>+ Retry-After"]
     end
-    Q -->|"Zugelassen"| IS
+    Q -->|"Zugelassen"| SCHED
     subgraph IS["Inferenz-Engine"]
-        SCHED["Annahme – Obergrenze max_num_seqs"] --> GPU["GPU – KV-Cache-Pool"]
+        SCHED["Annahme<br/>max_num_seqs"] --> GPU["GPU<br/>KV-Cache-Pool"]
     end
 ```
 
@@ -80,7 +80,7 @@ Die Faustregel ergibt sich unmittelbar aus den Kommunikationskosten: Tensor-Para
 Und es gilt dieselbe Disziplin wie überall sonst: Zerlegen Sie kein Modell, das passt. Eines, das bequem auf eine einzelne GPU passt, lässt sich repliziert billiger betreiben als zerlegt, denn das Zerlegen bringt nur zusätzlichen Kommunikationsaufwand, ohne dass ihm ein Gewinn gegenübersteht. Parallelität verdient sich ihren Platz bei Modellen, die nicht passen, oder wenn es um Latenz geht – umsonst ist der Durchsatz dabei nie.
 
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph TP["Tensor-Parallelität – innerhalb eines Knotens"]
         direction LR
         G0["GPU 0<br/>die Hälfte jeder Schicht"] <-->|NVLink| G1["GPU 1<br/>die Hälfte jeder Schicht"]

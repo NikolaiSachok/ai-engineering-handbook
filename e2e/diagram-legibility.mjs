@@ -33,25 +33,45 @@ const LOCAL = process.env.BASE_URL
   ? `${process.env.BASE_URL.replace(/\/$/, '')}/ai-engineering-handbook/`
   : 'http://localhost:3313/ai-engineering-handbook/';
 const FLOOR = 11;
-// Measured 2026-08-03 after the legibility fix. Lower it as diagrams get simplified; never raise
-// it to make a red run green.
-const SCROLL_BASELINE = 66;
+// Measured 2026-08-03 over all four locales (336 measurements). The authoring pass took it from
+// 267 to 147 — long chains re-authored as `TB`, fan-outs stacked inside a `direction LR` subgraph,
+// sub-labels moved into the prose that already carried them. Lower it as diagrams get simplified;
+// NEVER raise it to make a red run green.
+const SCROLL_BASELINE = 147;
 const WIDTHS = [[360, 'phone'], [1440, 'desktop']];
 
 const pages = [];
-function walk(dir, base) {
+function walk(dir, base, strip) {
   for (const f of readdirSync(dir)) {
     const p = join(dir, f);
-    if (statSync(p).isDirectory()) walk(p, base);
+    if (statSync(p).isDirectory()) walk(p, base, strip);
     else if (f.endsWith('.md') && readFileSync(p, 'utf8').includes('```mermaid')) {
-      const route = p.replace(/^docs[^/]*\//, '').replace(/\.md$/, '').replace(/\/index$/, '/');
+      const route = p.slice(strip.length).replace(/\.md$/, '').replace(/\/index$/, '/');
       pages.push(base + route);
     }
   }
 }
-walk('docs', 'rag-agents/');
-walk('docs-ai-sdlc', 'ai-sdlc/');
-walk('docs-design-scenarios', 'design-scenarios/');
+// Every locale, not just English. The locale renders are SEPARATE FILES that drift from the
+// English source — measured 2026-08-03, a Russian diagram was 2 062px while its English
+// counterpart was 635px, because the two had been authored into different shapes. A gate that
+// reads only `docs/` cannot see that, and three of the four readerships were unmeasured.
+const COURSES = [
+  ['docs', 'rag-agents/', 'docusaurus-plugin-content-docs'],
+  ['docs-ai-sdlc', 'ai-sdlc/', 'docusaurus-plugin-content-docs-ai-sdlc'],
+  ['docs-design-scenarios', 'design-scenarios/', 'docusaurus-plugin-content-docs-design-scenarios'],
+];
+const LOCALES = ['', 'ru/', 'sk/', 'de/'];
+for (const [dir, base, plugin] of COURSES) {
+  for (const loc of LOCALES) {
+    const root = loc ? `i18n/${loc.slice(0, -1)}/${plugin}/current` : dir;
+    try {
+      statSync(root);
+    } catch {
+      continue; // a course need not be translated into every locale
+    }
+    walk(root, loc + base, root + '/');
+  }
+}
 
 const browser = await chromium.launch();
 

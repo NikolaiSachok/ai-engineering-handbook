@@ -37,7 +37,7 @@ Mechanizmus sa skladá z niekoľkých častí a beží v tej istej slučke ako a
 - Model **pokračuje**: keď vidí výsledok, buď zavolá ďalší nástroj, alebo odpovie.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Defs["Definície nástrojov"] --> M["Model"]
     M --> TC["tool call: sql_query(...)"]
     TC --> X["Tvoj kód spustí dopyt"]

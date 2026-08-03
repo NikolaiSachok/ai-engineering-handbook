@@ -53,7 +53,7 @@ pipeline offers a fixed one.
 At the core is a simple loop. It spins until the model decides it's ready to answer:
 
 ```mermaid
-flowchart LR
+flowchart TB
     R["Reason<br/>what I know, what I lack"] --> Q{"Enough?"}
     Q -- "yes" --> Ans["Answer"]
     Q -- "no" --> D["Decide<br/>which action"]

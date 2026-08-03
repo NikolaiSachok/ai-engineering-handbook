@@ -44,7 +44,7 @@ score(d) = Σ über die Listen  1 / (k + rank_i(d))
 Die Konstante `k = 60` ist der empirische Vorgabewert aus dem Paper. Der Wert dämpft, wie steil der Beitrag eines Dokuments mit dem Rang fällt. So kann ein einzelner erster Platz die resultierende Reihenfolge nicht beherrschen. Eine gewichtete Variante, `Σ wᵢ / (k + rankᵢ(d))`, lässt Sie einen Retriever bevorzugen. RRF braucht keine Score-Normierung – darin liegt seine Robustheit: Es umgeht das Normierungsproblem, statt es zu lösen, und ist deshalb in vielen Vektordatenbanken das voreingestellte Verfahren zum Zusammenführen.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Q["Frage"] --> D["Dense Retrieval"]
     Q --> B["BM25"]
     D --> LD["Ranking (dense)"]
@@ -110,7 +110,7 @@ Beim Filtern stellt sich eine Frage der Platzierung, die über Richtigkeit und G
 Die Abwägung lautet also: Der Pre-Filter ist richtig, kann aber langsam werden; der Post-Filter ist schnell, kann aber zu wenig zurückgeben. Ein Fall nimmt Ihnen die Wahl ganz ab: Die Zugriffssteuerung ist nie ein Post-Filter. Eine Berechtigungsprüfung nach dem Retrieval kommt zu spät – in die Reihenfolge sind dann bereits Inhalte eingeflossen, die die fragende Person gar nicht sehen darf, und zurückgeben kann das System am Ende stillschweigend zu wenig. Die Berechtigungen müssen die Kandidatenmenge schon vor der Suche einschränken, genau so, wie es die Sicherheitsanforderung aus Teil 1 verlangt hat. Moderne Vektordatenbanken bieten zunehmend eine einstufige gefilterte ANN-Suche an, die das Prädikat in den Durchlauf hineinzieht; so bekommen Sie Richtigkeit und Geschwindigkeit zusammen, statt das eine gegen das andere einzutauschen.
 
 ```mermaid
-flowchart LR
+flowchart TB
     Q["Frage"] --> Rt["Routing: welcher Index"]
     Rt --> Pf["Pre-Filter: ACL + Metadaten"]
     Pf --> AN["ANN-Suche"]

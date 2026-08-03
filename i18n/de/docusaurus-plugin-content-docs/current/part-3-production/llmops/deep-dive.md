@@ -81,7 +81,7 @@ Für Code ist der Rollback trivial und für jedes der fünf Artefakte ein wenig 
 Es gibt eine Steuerung des Release, die stärker ist als alles, was sich je Änderung anwenden lässt: dass die Organisation entscheidet, *jetzt* finde überhaupt kein Release statt. Das ist der Stopp aller Releases, und was ihn regelt, ist die Richtlinie zum Fehlerbudget – das Thema des nächsten Abschnitts.
 
 ```mermaid
-flowchart LR
+flowchart TB
     C["Änderung"] --> EG{"Evaluierung<br/>(Goldstandard)"}
     EG -->|"unter dem Schwellenwert"| BLK["Blockiert – beheben, wiederholen"]
     EG -->|besteht| CAN["Canary Release<br/>(ein Teil des laufenden Verkehrs)"]
@@ -123,7 +123,7 @@ Die letzte Änderung ist, dass manche Jobs nie gelingen. Ein fehlerhaftes Dokume
 Passt die Batch API des Anbieters – unabhängige Anfragen, Ergebnisse innerhalb eines Tages –, dann nehmen Sie sie: Im Batch-Tarif kostet sie etwa die Hälfte, und es gibt keine Worker zu betreiben. Betreiben Sie eine eigene Queue nur dann, wenn die Arbeit eine Pipeline ist, die Sie selbst führen, wenn sie eigene Rechenleistung braucht oder wenn sie sich mit Ihren eigenen Systemen verschränken muss.
 
 ```mermaid
-flowchart LR
+flowchart TB
     P["Producer<br/>in die Queue stellen → Job-ID"] --> Q["Job-Queue<br/>(Backpressure: laufende Arbeit begrenzen)"]
     Q --> WP["Worker-Pool<br/>(bestätigt erst nach der Ausführung, gemeinsames Ratenbudget)"]
     WP -->|Erfolg| RS["Ergebnisspeicher<br/>(Abruf / Webhook)"]

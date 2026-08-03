@@ -106,7 +106,7 @@ Retrieving from episodic memory is itself a RAG problem. You cannot pour every p
 That leaves the ceiling every long run eventually hits — the context window itself. **MemGPT** (Charles Packer et al., arXiv:2310.08560, 12 Oct 2023) answers it by borrowing the operating system's memory hierarchy. Treat the context window as "main context" — fast, small, like RAM — and an external store as "external context" — large, slow, like disk — and let the model page information in and out with tool calls. The agent then works over data far larger than its window. This is virtual context management, and it is the mechanism that lets working memory effectively exceed the context limit instead of being trapped inside it.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph Main["Main context · window · RAM"]
         WM["Working memory:<br/>plan · recent observations"]
     end

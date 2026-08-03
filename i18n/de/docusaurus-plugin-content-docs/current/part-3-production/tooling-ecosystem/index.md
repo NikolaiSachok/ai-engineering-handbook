@@ -150,7 +150,7 @@ Hier ist die ganze Schleife des Produktivbetriebs, diesmal mit den Namen der Pro
 Teil I, in Produktform:
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph GR["Guardrails: Guardrails AI / NeMo Guardrails / Llama Guard / Granite Guardian"]
         P["Produktivsystem"]
     end

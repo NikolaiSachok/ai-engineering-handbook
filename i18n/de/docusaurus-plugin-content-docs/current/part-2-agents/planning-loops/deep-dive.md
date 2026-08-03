@@ -106,7 +106,7 @@ Aus dem episodischen Gedächtnis abzurufen ist selbst ein RAG-Problem. Sie könn
 Bleibt die Decke, an die jeder lange Durchlauf irgendwann stößt – das Kontextfenster selbst. **MemGPT** (Charles Packer et al., arXiv:2310.08560, 12. Oktober 2023) antwortet darauf, indem es sich die Speicherhierarchie eines Betriebssystems ausleiht. Behandeln Sie das Kontextfenster als „main context“ – schnell, klein, wie RAM – und einen externen Speicher als „external context“ – groß, langsam, wie eine Festplatte –, und lassen Sie das Modell Information über Tool-Calls ein- und auslagern. Der Agent arbeitet dann mit Datenmengen, die weit größer sind als sein Kontextfenster. Das ist *virtual context management*, und es ist der Mechanismus, mit dem das Arbeitsgedächtnis die Grenze des Kontextfensters überschreiten kann, statt darin gefangen zu bleiben.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph Main["Hauptkontext · Kontextfenster · RAM"]
         WM["Arbeitsgedächtnis:<br/>Plan · letzte Beobachtungen"]
     end

@@ -119,7 +119,7 @@ Jetzt die Abwehr, in Schichten – keine einzelne reicht, und genau darin besteh
 **Sandboxing.** Lassen Sie nicht vertrauenswürdige Server mit eingeschränkten Rechten laufen – in einem Container, mit beschränktem Netzzugang, auf einen Ausschnitt des Dateisystems begrenzt –, damit ein erfolgreicher Angriff eingegrenzt bleibt, statt katastrophal zu werden. Am wichtigsten ist das bei lokalen `stdio`-Servern, die sonst die vollen Rechte Ihres Rechners erben.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph Untrusted["Nicht vertrauenswürdiger Server"]
         R["Ressourcen"]
         TR["Tool-Results"]

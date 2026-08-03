@@ -56,7 +56,7 @@ Dôvod: „len poprosiť“ je v lepšom prípade iba pokus — a ten sa pod zá
 **Obmedzené dekódovanie (constrained decoding)** tú možnosť neodstraňuje znížením pravdepodobnosti, ale úplne. Štruktúru vynucuje počas generovania: v každom kroku dekódovania schéma (skompilovaná do gramatiky) určuje, ktoré ďalšie tokeny sú prípustné, a vzorkovač zamaskuje (vylúči) každý token, ktorý by schému porušil, takže vôbec môžu vyjsť len tokeny platné podľa schémy. Zle sformovaný výstup prestáva byť nepravdepodobný a stáva sa štruktúrne nemožným. (Termín je v glosári už z lekcie o volaní nástrojov; je to ten istý mechanizmus, namierený na formát odpovede.)
 
 ```mermaid
-flowchart LR
+flowchart TB
     S["Schéma / gramatika"] --> M["Maska tokenov na každom kroku"]
     L["Logity (surové skóre) ďalšieho tokenu"] --> M
     M --> V["Navzorkuj len tokeny platné podľa schémy"]

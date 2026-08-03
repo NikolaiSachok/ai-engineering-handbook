@@ -36,13 +36,13 @@ Der Grund für diesen ganzen Apparat ist der Pfad der Ingestion, und es lohnt si
 
 ```mermaid
 flowchart LR
-    SDK["Anwendungs-SDK"] -- "Ereignis" --> WEB["Langfuse Web<br/>(Ingestion-API + Konsole)"]
+    SDK["Anwendungs-SDK"] -- "Ereignis" --> WEB["Langfuse Web<br/>Ingestion-API<br/>+ Konsole"]
     WEB -- "rohe Nutzlast" --> S3["S3 / Blob-Speicher"]
-    WEB -- "Queue-Verweis" --> REDIS["Redis / Valkey<br/>(Queue + Cache)"]
-    WEB <-- "OLTP: Nutzer, Projekte, Prompts" --> PG["PostgreSQL"]
+    WEB -- "Verweis" --> REDIS["Redis / Valkey<br/>Queue + Cache"]
+    WEB <-- "OLTP" --> PG["PostgreSQL"]
     WORKER["Langfuse Worker"] -- "liest den Verweis" --> REDIS
     WORKER -- "liest die Nutzlast" --> S3
-    WORKER -- "Upsert: Traces / Observations / Scores" --> CH["ClickHouse (OLAP)"]
+    WORKER -- "Upsert" --> CH["ClickHouse<br/>OLAP"]
     UI["Konsolen-UI"] --> WEB
 ```
 
@@ -119,7 +119,7 @@ Dass diese Produkte überhaupt zusammenspielen, liegt an **OpenTelemetry**, und 
 Die Falle, die in der Praxis zuschnappt: nie doppelt instrumentieren. Lassen Sie das SDK-eigene Tracing und die Instrumentierung über OTel gleichzeitig laufen, bekommen Sie jeden Span doppelt – doppelte Daten, doppelte Kosten für die Ingestion und Dashboards, die stillschweigend doppelt zählen. Entscheiden Sie sich für einen Weg, auf dem die Spans entstehen, und schalten Sie den anderen ab.
 
 ```mermaid
-flowchart LR
+flowchart TB
     GR["Guardrails<br/>umgeben das Produktivsystem"] --> PROD["Produktivsystem"]
     PROD -- "Spans (OTel – die Nahtstelle)" --> OBS["Observability<br/>Langfuse / Phoenix"]
     OBS -- "schlechte Traces → Goldstandard (die Nahtstelle)" --> GS["Goldstandard"]

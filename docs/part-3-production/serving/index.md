@@ -73,16 +73,16 @@ is simpler and passes proxies and load balancers as the ordinary HTTP it is.
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant S as App service (FastAPI)
+    participant S as App service
     participant R as Retrieval
-    participant M as LLM (provider or inference server)
+    participant M as LLM
     U->>S: POST /ask
     S->>R: Search
     R-->>S: Top chunks
     S->>M: Generate (stream: true)
     M-->>S: Token chunks (SSE)
     S-->>U: SSE events, token by token
-    Note over S,U: The 200 left with the first bytes — a mid-stream error must travel in-band
+    Note over S,U: The 200 already left — errors go in-band
 ```
 
 Streaming quietly breaks the error model you've relied on your whole career. The HTTP status goes out with
@@ -193,7 +193,7 @@ changes — you've simply rented the second box. Whether to rent it or own it is
 [cloud-platforms](../cloud-platforms/index.md) lesson.
 
 ```mermaid
-flowchart LR
+flowchart TB
     C[Client] --> A["App service (FastAPI):<br/>auth → RAG pipeline → guardrails → accounting"]
     A -->|Rent| P["Provider API<br/>(OpenAI, Anthropic, ...)"]
     A -->|Own| V["Inference server (vLLM / SGLang):<br/>continuous batching, KV cache"]
