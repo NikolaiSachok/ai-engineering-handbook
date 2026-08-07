@@ -68,7 +68,7 @@ Základný tvar je graf **uzlov-nástrojov s podmienenými hranami** (tool-nodes
 
 Perzistencia sa objaví ako **checkpointer** — pamäťový komponent, ktorý ukladá stav, aby sa beh dal pozastaviť a neskôr obnoviť, a jednotlivé thready (vlákno — rozhovor/beh) drží oddelene, aby sa dva rozhovory nezliali do seba.
 
-Nad tým sedí prerušenie **human-in-the-loop (HITL)** (schválenie človekom): uzol, kde sa slučka zastaví, aby to človek schválil, a potom pokračuje presne odtiaľ, kde zastala. To je human-in-the-loop z [plánovania a slučiek](../planning-loops/index.md), teraz povýšený na plnohodnotný uzol v grafe namiesto ručného tlačidla stop.
+Nad tým sedí prerušenie **human-in-the-loop (HITL)** (schválenie človekom): uzol, kde sa slučka zastaví, aby to človek schválil. Po schválení sa celý uzol vykoná znova od začiatku. To je human-in-the-loop z [plánovania a slučiek](../planning-loops/index.md), teraz povýšený na plnohodnotný uzol v grafe namiesto ručného tlačidla stop.
 
 Pre tímy ti framework podá **supervízora alebo konštrukciu „crew“** (supervisor / crew construct) — orchestrátora z lekcie o multiagentových systémoch, predpripraveného, takže topológiu konfiguruješ namiesto toho, aby si ju kódil.
 

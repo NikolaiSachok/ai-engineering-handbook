@@ -106,7 +106,7 @@ Graphen selbst zusammenzusetzen.
 Die Persistenz taucht als **Checkpointer** auf – eine Komponente, die den Zustand sichert, sodass ein Durchlauf angehalten
 und später wieder aufgenommen werden kann, und die getrennte Threads getrennt hält, damit zwei Gespräche nicht
 ineinanderlaufen. Darüber sitzt der **Human-in-the-Loop (HITL)**: ein Knoten, an dem die Schleife anhält, damit ein
-Mensch freigibt, und der danach genau dort fortsetzt, wo sie stehengeblieben ist. Das ist der Human-in-the-Loop aus
+Mensch freigibt; nach der Freigabe läuft dieser Knoten noch einmal von vorn. Das ist der Human-in-the-Loop aus
 [Planung und Schleifen](../planning-loops/index.md), jetzt zu einem vollwertigen Knoten im Graphen befördert statt zu
 einem Knopf, den jemand von Hand drückt.
 
