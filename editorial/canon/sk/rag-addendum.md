@@ -86,3 +86,18 @@ nepatria do lokalizačného PR. Zapísané, aby sa nestratili.
   `## Celá pipeline` v `retrieval/index.md` proti `statický pipeline` v `part-1-rag/overview.md`. Nové stránky
   použili **mužský rod**, lebo sa viažu na `intro.md` a `part-1-rag/overview.md`. Zjednotenie korpusu je práca
   pre consistency-editora, nie pre render lokality.
+
+## 1b. Dávka `part-2-agents/orchestration-frameworks` — oprava faktu o prerušení (lokalizácia, 2026-08-07)
+
+Prechod zosynchronizoval do ru/sk/de opravu: prerušený uzol LangGraphu **nepokračuje** tam, kde sa zastavil,
+ale vykoná sa nanovo od prvého riadka. V tom istom prechode sme vlastnú nálepku krížového odkazu **zaviedli aj
+stiahli** — druhý riadok tabuľky je tu práve preto, aby sa stiahnutý tvar nevrátil.
+
+| Termín (EN) | Slovenské znenie | Status |
+|---|---|---|
+| `idempotency-key discipline` — nálepka krížového odkazu na `../tool-use/deep-dive.md` | **zásada kľúča idempotencie** | SETTLED. Zložené z inkumbenta `rag.md` §1 „kľúč idempotencie (idempotency key)". Hlavové podstatné meno **`zásada`** je korpusové: `multi-agent/index.md` prekladá tú istú anglickú konštrukciu ako „zásada z používania nástrojov". ⛔ **`disciplína`** — v korpuse vyhradená pre *odbor* („hodnotiaca disciplína", „disciplína návrhu"); samostatne sa číta ako sebadisciplína |
+| ~~`at-most-once discipline`~~ — „zásada vykonania operácie najviac raz", potom „zásada „účinok nanajvýš raz"" | **OBE STIAHNUTÉ 2026-08-07** | Dôvod **nie je štylistický, ale adresný: nálepka pomenovala pojem, ktorý cieľová stránka nepoužíva.** `../tool-use/deep-dive.md` učí **idempotenciu** a **kľúč idempotencie**; reťazec „at-most-once" sa na nej nevyskytuje v žiadnej lokalite. Náhrada — riadok vyššie. Tým padla aj otvorená otázka `najviac` / `nanajvýš`: slovo je zo stránky preč |
+
+**Pravidlo, kvôli ktorému je druhý riadok zapísaný.** Nálepka krížového odkazu sa stavia z **termínu, ktorý na
+cieľovej stránke doslova stojí**. Poradie výberu ostáva: inkumbent (register §1, cieľová stránka, glosár) — a
+až keď inkumbent neexistuje, nový tvar. Pre cudzí pojem nerazí nový termín.

@@ -360,6 +360,7 @@ ReAct, MRL, RRF, nDCG, MRR, LATS, MemGPT, MaxSim, code identifiers, product name
 | **die Obergrenze / das Limit** | cap | ⛔ „das Cap" nackt. *A budget is a cap* → „**Ein Budget ist eine Obergrenze**" *(Welle 1)* |
 | **mehrsprachig** | multilingual | Duden definiert *multilingual* über das deutsche Wort; als Modellnamensteil unangetastet *(Welle 1)* |
 | **die Rechteausweitung** | privilege escalation | de.wikipedia-Lemma; ⛔ *eskalieren* für „stufenweise zunehmen" *(Welle 1)* |
+| **die Disziplin des Idempotency-Keys** | at-most-once discipline *(Link-Label, `orchestration-frameworks`)* | **NEU 2026-08-07 — Ersatz für eine zurückgezogene Eigenprägung.** ⛔ *die At-most-once-Regel* **samt ihrer Glosse** „(die Wirkung tritt maximal einmal ein)". Der Rückzugsgrund ist **nicht stilistisch, sondern referenziell: das Label benannte einen Begriff, den die Zielseite nicht führt** — `../tool-use/deep-dive.md` lehrt *die Idempotenz* und *den Idempotency-Key*, und die Zeichenfolge „At-most-once" kommt dort in **keiner** Lokalität vor. Die Glosse fiel mit, weil sie nur wegen der Klasse-2-Erstnennung nötig war; *Idempotenz* und *Idempotency-Key* sind gesetzt und werden auf der Zielseite glossenfrei eingeführt. Genitiv nach §1.1: *des Idempotency-Keys*. Kopfnomen *Disziplin*: `_language.md` §1.2 |
 
 ---
 
