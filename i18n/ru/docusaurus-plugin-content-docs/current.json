@@ -63,6 +63,10 @@
     "message": "Фреймворки оркестрации",
     "description": "The label for category 'Orchestration frameworks' in sidebar 'handbookSidebar'"
   },
+  "sidebar.handbookSidebar.category.Durable runs": {
+    "message": "Устойчивые прогоны",
+    "description": "The label for category 'Durable runs' in sidebar 'handbookSidebar'"
+  },
   "sidebar.handbookSidebar.category.MCP and agent protocols": {
     "message": "MCP и протоколы агентов",
     "description": "The label for category 'MCP and agent protocols' in sidebar 'handbookSidebar'"

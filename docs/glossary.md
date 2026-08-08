@@ -741,6 +741,61 @@ workflows) versus building the graph in code (add_node / add_edge).
 **Human-in-the-loop (HITL)** — a pause point where a human approves or intervenes before the loop continues;
 in a framework, a first-class interrupt node.
 
+<a id="durable-runs"></a>
+
+## Agents — durable runs \{#durable-runs}
+
+**System of record** — the store that is authoritative for what happened: if it and any derived store
+disagree, it is right and the other one gets rebuilt. In an agent system it is usually a domain record that
+predates the framework and will outlive it, not the checkpointer.
+
+**Authoritative vs derived state** — the explicit, once-only decision about which of two stores holds truth
+and which can be deleted and reconstructed with nothing of value lost. There is no third, partly-authoritative
+option; two writers to one truth is the defect.
+
+**Single-writer discipline** — exactly one component may write the authoritative record, so consistency is a
+property of the design instead of a race to reason about during an incident.
+
+**Projection direction** — the named one-way flow of state from the authoritative record into the derived
+store (record → checkpoint). Left unnamed it turns bidirectional by accident, one convenience field at a time.
+
+**Reconciliation on resume** — a resumed run takes its *position* from the checkpoint and re-derives *what
+actually completed* from the authoritative record before it acts.
+
+**New linked run** — the right shape for reopening a closed record: a fresh execution that carries a reference
+to the original and reads the retained record as its input. Distinct from resuming a suspended run, where an
+execution genuinely is waiting to continue.
+
+**Durable execution engine** — the general, non-AI category for running a multi-step process with state
+durable at step granularity and a pause you can resume: Temporal, AWS Step Functions, and the
+scheduled-pipeline neighbours Apache Airflow, Prefect, and Dagster.
+
+**Delivery semantics** — what an engine promises about a step that may be retried: **exactly-once**,
+**at-least-once** (duplicated work — what idempotency keys are for), or **at-most-once** (lost work — which no
+key protects against).
+
+**Step identity** — the identifier saying *which* step of *which* run this is. Combined with run identity it
+yields an idempotency key constant across retries and unique across executions; derive it from the work's own
+content, never from its position in a plan that can be regenerated.
+
+**Super-step** — one iteration over a graph's nodes: nodes running in parallel share a super-step, sequential
+nodes fall into separate ones. It is the boundary at which state is written and merged.
+
+**Reducer / state merge** — a function declared on a state key that says how two values written in the same
+super-step combine. Without one, parallel writes to that key raise an error instead of picking a winner; with
+one, the merge you declared is the merge you get — including a discarding one.
+
+**Determinism and replay** — the requirement that orchestration code reproduce the same decisions when re-run,
+so an engine can reconstruct a run from its recorded history.
+
+**Workflow versioning** — how a code change reaches runs already in flight: pinning a run to a version of the
+code, or branching inside the code so old and new histories both replay.
+
+**Bus factor** — how many people can carry a system: the number who could keep it running and change it
+safely if the others left. It measures familiarity, not lines of code — a small hand-written loop several
+engineers have each read can score higher than a framework exactly one person has ever debugged under
+pressure. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Bus_factor)
+
 <a id="mcp"></a>
 
 ## Agents — MCP and agent protocols \{#mcp}

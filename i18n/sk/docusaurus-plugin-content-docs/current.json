@@ -63,6 +63,10 @@
     "message": "Orchestračné frameworky",
     "description": "The label for category 'Orchestration frameworks' in sidebar 'handbookSidebar'"
   },
+  "sidebar.handbookSidebar.category.Durable runs": {
+    "message": "Obnoviteľné behy",
+    "description": "The label for category 'Durable runs' in sidebar 'handbookSidebar'"
+  },
   "sidebar.handbookSidebar.category.MCP and agent protocols": {
     "message": "MCP a protokoly agentov",
     "description": "The label for category 'MCP and agent protocols' in sidebar 'handbookSidebar'"

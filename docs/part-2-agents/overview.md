@@ -27,6 +27,8 @@ latency, cost, and debugging difficulty. The engineering job isn't to "make it m
   and when NOT to split one agent.
 - **[Orchestration frameworks](./orchestration-frameworks/index.md)** — [LangGraph](https://www.langchain.com/langgraph), [LangChain](https://www.langchain.com), Microsoft Agent
   Framework, [CrewAI](https://www.crewai.com): what they add on top of a bare loop, and when to skip them.
+- **[Durable runs](./durable-runs/index.md)** — who owns run state when a checkpointer meets a system of
+  record, and how a resumed run avoids paying twice for work already done.
 - **[MCP and agent protocols](./mcp/index.md)** — a standardised way for an agent to reach tools and data; [MCP](https://modelcontextprotocol.io)
   versus [A2A](https://a2a-protocol.org).
 - **[Real agents — Claude, OpenAI, Gemini](./real-agents.md)** — the capstone: every Part II technique run
@@ -40,7 +42,8 @@ concerns** — here eval and observability move from nice-to-have to mandatory.
 :::note[Status]
 
 Part II's base is complete — every lesson is published: Agentic RAG, tool use, planning & loops, multi-agent
-systems, orchestration frameworks, MCP, and the closing capstone on real agents (Claude, OpenAI, Gemini).
+systems, orchestration frameworks, durable runs, MCP, and the closing capstone on real agents (Claude,
+OpenAI, Gemini).
 🚧 A second pass is still ahead — deepening each layer (topics listed in the "Next — going deeper" notes on
 the lesson pages).
 

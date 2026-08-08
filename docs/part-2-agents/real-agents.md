@@ -1,7 +1,7 @@
 ---
 id: real-agents
 title: Real agents — Claude, OpenAI, Gemini
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 # Claude, OpenAI, Gemini illustrate the techniques

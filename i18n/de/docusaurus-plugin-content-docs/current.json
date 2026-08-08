@@ -63,6 +63,10 @@
     "message": "Orchestrierungs-Frameworks",
     "description": "The label for category 'Orchestration frameworks' in sidebar 'handbookSidebar'"
   },
+  "sidebar.handbookSidebar.category.Durable runs": {
+    "message": "Durable Runs",
+    "description": "The label for category 'Durable runs' in sidebar 'handbookSidebar'"
+  },
   "sidebar.handbookSidebar.category.MCP and agent protocols": {
     "message": "MCP und Agentenprotokolle",
     "description": "The label for category 'MCP and agent protocols' in sidebar 'handbookSidebar'"

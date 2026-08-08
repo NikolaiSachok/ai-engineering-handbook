@@ -707,6 +707,69 @@ agentov v konfigurácii (YAML/JSONC, deklaratívne pracovné postupy) oproti sta
 **Human-in-the-loop (HITL) (schválenie človekom)** — bod pauzy, kde človek schváli alebo zasiahne skôr, než
 slučka pokračuje; vo frameworku plnohodnotný uzol-prerušenie.
 
+<a id="durable-runs"></a>
+
+## Agents — obnoviteľné behy \{#durable-runs}
+
+**Systém záznamu (system of record)** — úložisko, ktoré je autoritatívne pre to, čo sa stalo: ak sa jeho
+údaje nezhodujú s ktorýmkoľvek odvodeným úložiskom, platí ono a to druhé sa nanovo zostaví. V agentovom
+systéme túto úlohu zvyčajne plní doménový záznam, ktorý existoval už pred frameworkom a pretrvá aj po ňom,
+nie checkpointer.
+
+**Autoritatívny verzus odvodený stav (authoritative vs derived state)** — jednorazové a výslovné rozhodnutie,
+ktoré z dvoch úložísk obsahuje rozhodujúce údaje a ktoré možno bez straty čohokoľvek hodnotného odstrániť
+a nanovo zostaviť. Čiastočne autoritatívna tretia možnosť neexistuje; ak jednu pravdu zapisujú dva
+komponenty, návrh je chybný.
+
+**Zásada jediného zapisovateľa (single-writer discipline)** — autoritatívny záznam smie zapisovať presne
+jeden komponent. Konzistentnosť je potom vlastnosťou návrhu a pri incidente nemusíš analyzovať súperiace
+zápisy.
+
+**Smer projekcie (projection direction)** — pomenovaný jednosmerný prenos stavu z autoritatívneho záznamu do
+odvodeného úložiska, teda záznam → checkpoint. Bez výslovne určeného smeru sa tok postupne stane
+obojsmerným, jedno pomocné pole za druhým.
+
+**Zosúladenie pri obnovení behu (reconciliation on resume)** — obnovený beh prevezme svoju *pozíciu*
+z checkpointu, ale *skutočne dokončenú prácu* si pred ďalšou činnosťou znova odvodí z autoritatívneho
+záznamu.
+
+**Nový prepojený beh (new linked run)** — správny tvar opätovného otvorenia uzavretého záznamu: nové
+vykonávanie, ktoré odkazuje na pôvodný beh a ako vstup načíta uchovaný záznam. Líši sa od obnovenia
+pozastaveného behu, pri ktorom pôvodné vykonávanie naozaj čaká na pokračovanie.
+
+**Engine odolného vykonávania (durable execution engine)** — všeobecná kategória mimo oblasti AI pre
+vykonávanie viackrokových procesov, ktorých stav zostáva zachovaný na úrovni jednotlivých krokov a ktoré
+možno pozastaviť a obnoviť: Temporal, AWS Step Functions a susedia zo sveta plánovaných dátových pipeline
+Apache Airflow, Prefect a Dagster.
+
+**Sémantika doručenia (delivery semantics)** — čo engine sľubuje o kroku, ktorý sa môže zopakovať:
+**exactly-once**, **at-least-once** (zdvojená práca — na to slúžia kľúče idempotencie) alebo
+**at-most-once** (stratená práca — pred tou nijaký kľúč neochráni).
+
+**Identita kroku (step identity)** — identifikátor určujúci, *ktorý* krok *ktorého* behu to je. Spolu
+s identitou behu dáva kľúč idempotencie nemenný pri opakovaných pokusoch a jedinečný medzi vykonaniami;
+odvodzuj ju z obsahu samotnej práce, nikdy z jej pozície v pláne, ktorý sa môže nanovo vygenerovať.
+
+**Super-step** — jedna iterácia cez uzly grafu: paralelne spustené uzly patria do rovnakého super-stepu,
+sekvenčné uzly do samostatných. Práve na jeho hranici sa stav zapisuje a zlučuje.
+
+**Reducer / zlúčenie stavu (reducer / state merge)** — funkcia deklarovaná na kľúči stavu, ktorá určuje, ako
+sa spoja dve hodnoty zapísané v tom istom super-stepe. Bez nej paralelné zápisy do toho kľúča vyhodia chybu
+namiesto toho, aby vybrali víťaza; s ňou dostaneš presne to zlúčenie, ktoré si deklaroval — vrátane
+zahadzujúceho.
+
+**Determinizmus a replay (determinism and replay)** — požiadavka, aby orchestračný kód pri opätovnom
+spustení zopakoval rovnaké rozhodnutia, takže engine dokáže beh zrekonštruovať zo zaznamenanej histórie.
+
+**Verzovanie workflowov (workflow versioning)** — ako sa zmena kódu dostane k behom, ktoré už prebiehajú:
+beh sa pripne ku konkrétnej verzii kódu, alebo sa vetví priamo v kóde, takže sa prehrá stará aj nová
+história.
+
+**Bus factor** — koľkí ľudia systém unesú: počet tých, ktorí by ho dokázali udržať v prevádzke a bezpečne
+meniť, keby ostatní odišli. Meria dôvernú znalosť, nie počet riadkov kódu — malá ručne napísaná slučka,
+ktorú si niekoľko inžinierov prečítalo od začiatku do konca, môže dopadnúť lepšie než framework, ktorý pod
+tlakom ladil jediný človek. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Bus_factor)
+
 <a id="mcp"></a>
 
 ## Agents — MCP a protokoly agentov \{#mcp}
