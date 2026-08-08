@@ -28,6 +28,8 @@ vyššie náklady a náročnejšie ladenie. Inžinierska úloha nie je „spravi
 - **[Orchestračné frameworky](./orchestration-frameworks/index.md)** — [LangGraph](https://www.langchain.com/langgraph),
   [LangChain](https://www.langchain.com), Microsoft Agent Framework, [CrewAI](https://www.crewai.com): čo
   pridávajú nad holú slučku a kedy sa bez nich zaobísť.
+- **[Obnoviteľné behy](./durable-runs/index.md)** — kto vlastní stav behu, keď sa checkpointer stretne so
+  systémom záznamu, a ako sa obnovený beh vyhne druhej platbe za už dokončenú prácu.
 - **[MCP a protokoly agentov](./mcp/index.md)** — štandardizovaný spôsob, akým agent siahne po nástrojoch
   a dátach; [MCP](https://modelcontextprotocol.io) verzus [A2A](https://a2a-protocol.org).
 - **[Reálni agenti — Claude, OpenAI, Gemini](./real-agents.md)** — záver časti: každá technika Časti II
@@ -41,7 +43,8 @@ a observability menia zo želateľných na povinné.
 :::note[Stav]
 
 Základ Časti II je hotový — publikované sú všetky lekcie: Agentic RAG, používanie nástrojov, plánovanie
-a slučky, multiagentové systémy, orchestračné frameworky, MCP a záverečná lekcia o reálnych agentoch (Claude,
+a slučky, multiagentové systémy, orchestračné frameworky, obnoviteľné behy, MCP a záverečná lekcia o reálnych
+agentoch (Claude,
 OpenAI, Gemini). 🚧 Ešte je pred nami druhý prechod — prehĺbenie každej vrstvy; témy sú v poznámkach „Ďalej —
 druhá časť lekcie“ na stránkach lekcií.
 

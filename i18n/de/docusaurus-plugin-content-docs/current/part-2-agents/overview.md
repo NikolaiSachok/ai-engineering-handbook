@@ -32,6 +32,9 @@ Aufgabe wirklich braucht**.
 - **[Orchestrierungs-Frameworks](./orchestration-frameworks/index.md)** – [LangGraph](https://www.langchain.com/langgraph), [LangChain](https://www.langchain.com), Microsoft Agent
   Framework, [CrewAI](https://www.crewai.com): was sie einer selbst gebauten `while`-Schleife voraushaben und wann
   Sie besser darauf verzichten.
+- **[Durable Runs](./durable-runs/index.md)** – wem der Run-State gehört, wenn ein Checkpointer auf ein
+  führendes System trifft, und wie ein fortgesetzter Durchlauf vermeidet, bereits erledigte Arbeit ein
+  zweites Mal zu bezahlen.
 - **[MCP und Agentenprotokolle](./mcp/index.md)** – ein standardisierter Weg, über den ein Agent an Tools
   und Daten kommt; [MCP](https://modelcontextprotocol.io) gegen [A2A](https://a2a-protocol.org).
 - **[Echte Agenten – Claude, OpenAI, Gemini](./real-agents.md)** – der Abschluss dieses Teils: jede Technik
@@ -46,7 +49,7 @@ Der gesamte Teil I, vor allem die Schicht **Retrieval** – der Agent ruft sie a
 :::note[Bearbeitungsstand]
 
 Teil II liegt in seiner Grundfassung vollständig vor – jede Lektion ist veröffentlicht: Agentic RAG,
-Tool-Einsatz, Planung und Schleifen, Multi-Agenten-Systeme, Orchestrierungs-Frameworks, MCP und der
+Tool-Einsatz, Planung und Schleifen, Multi-Agenten-Systeme, Orchestrierungs-Frameworks, Durable Runs, MCP und der
 Abschluss dieses Teils über die echten Agenten (Claude, OpenAI, Gemini). 🚧 Ein zweiter Durchgang steht
 noch aus, der jede Schicht vertieft; die Themen dafür stehen auf den Lektionsseiten unter
 „Als Nächstes: die Vertiefung“.

@@ -899,6 +899,74 @@ Konfiguration beschreiben (YAML/JSONC, deklarative Workflows), statt den Graphen
 **der Human-in-the-Loop (HITL)** – ein Haltepunkt, an dem ein Mensch freigibt oder eingreift, bevor die Schleife
 weiterläuft; in einem Framework ein vollwertiger Knoten, der den Durchlauf unterbricht.
 
+<a id="durable-runs"></a>
+
+## Agenten – Durable Runs \{#durable-runs}
+
+**das führende System (system of record)** – der Speicher, der dafür maßgeblich ist, was geschehen ist:
+Weicht ein abgeleiteter Speicher von ihm ab, hat er recht, und der andere wird neu aufgebaut. In einem
+Agentensystem ist das meist ein Fachdatensatz, der vor dem Framework bestand und es überdauern wird, und
+nicht der Checkpointer.
+
+**maßgeblicher gegen abgeleiteten State (authoritative vs derived state)** – die ausdrückliche, einmalig zu
+treffende Entscheidung darüber, welcher von zwei Speichern die Wahrheit hält und welcher sich ohne Verlust
+von Wert löschen und rekonstruieren lässt. Eine dritte, teilweise maßgebliche Möglichkeit gibt es nicht;
+zwei schreibende Instanzen für eine Wahrheit sind der Defekt.
+
+**die Ein-Schreiber-Disziplin (single-writer discipline)** – genau eine Komponente darf den maßgeblichen
+Fachdatensatz schreiben. Dadurch ist die Konsistenz eine Eigenschaft des Entwurfs und nicht eine Race
+Condition, über die während eines Incidents nachgedacht werden muss.
+
+**die Projektionsrichtung (projection direction)** – der benannte, einseitige Fluss des States vom
+maßgeblichen Fachdatensatz in den abgeleiteten Speicher (Fachdatensatz → Checkpoint). Bleibt sie unbenannt,
+wird sie versehentlich beidseitig, ein bequemes Feld nach dem anderen.
+
+**der Abgleich beim Fortsetzen (reconciliation on resume)** – ein fortgesetzter Durchlauf entnimmt dem
+Checkpoint seine *Position* und ermittelt anhand des maßgeblichen Fachdatensatzes erneut, *was tatsächlich
+abgeschlossen ist*, bevor er handelt.
+
+**der neue, verknüpfte Durchlauf (new linked run)** – die richtige Gestalt für das Wiederaufgreifen eines
+abgeschlossenen Datensatzes: eine frische Ausführung, die auf das Original verweist und den aufbewahrten
+Datensatz als Eingabe liest. Sie unterscheidet sich von der Fortsetzung eines angehaltenen Durchlaufs, bei
+der tatsächlich eine Ausführung auf ihre Weiterführung wartet.
+
+**die Durable-Execution-Engine** – die allgemeine, nicht auf AI beschränkte Kategorie für das Ausführen
+eines mehrstufigen Prozesses mit einem Zustand, der auf Step-Ebene dauerhaft ist, und einer Pause, aus der
+heraus fortgesetzt werden kann: Temporal, AWS Step Functions sowie die Nachbarn aus dem Umfeld der
+geplanten Pipelines – Apache Airflow, Prefect und Dagster.
+
+**die Zustellsemantik (delivery semantics)** – was eine Engine für einen Step zusagt, der wiederholt werden
+kann: exactly-once, at-least-once (doppelt ausgeführte Arbeit – dafür gibt es Idempotency-Keys) oder
+at-most-once (verlorene Arbeit – davor schützt kein Key).
+
+**die Step-Identität (step identity)** – die Kennung, die sagt, *welcher* Step *welches* Durchlaufs dies
+ist. Zusammen mit der Run-Identität ergibt sie einen Idempotency-Key, der über Wiederholungen konstant und
+über Ausführungen hinweg eindeutig ist; leiten Sie sie aus dem Inhalt der Arbeit ab, nie aus ihrer Position
+in einem Plan, der neu erzeugt werden kann.
+
+**der Knotenübergang (Super-Step)** – ein Durchgang über die Knoten eines Graphen: Nebenläufig ausgeführte
+Knoten teilen sich einen Knotenübergang, nacheinander ausgeführte fallen in getrennte. Es ist die Grenze,
+an der der State geschrieben und zusammengeführt wird.
+
+**der Reducer / der State-Merge** – eine Funktion, die auf einem State-Key deklariert wird und festlegt,
+wie zwei Werte zusammengeführt werden, die im selben Knotenübergang geschrieben wurden. Ohne sie lösen
+nebenläufige Schreibzugriffe auf diesen Key einen Fehler aus, statt einen Gewinner zu küren; mit ihr gilt
+der Merge, den Sie deklariert haben – auch ein verwerfender.
+
+**Determinismus und Replay (determinism and replay)** – die Anforderung, dass orchestrierender Code bei
+erneuter Ausführung dieselben Entscheidungen hervorbringt, damit eine Engine einen Durchlauf aus seiner
+aufgezeichneten Historie rekonstruieren kann.
+
+**die Workflow-Versionierung (workflow versioning)** – wie eine Codeänderung Durchläufe erreicht, die
+bereits laufen: einen Durchlauf an eine Version des Codes binden oder im Code verzweigen, sodass alte und
+neue Historien beide erneut ausgeführt werden können.
+
+**der Bus-Faktor (bus factor)** – wie viele Personen ein System tragen können: die Zahl derer, die es am
+Laufen halten und sicher ändern könnten, wenn die übrigen wegfielen. Er misst die Vertrautheit und nicht
+die Zahl der Codezeilen – eine kleine, selbst geschriebene Schleife, die mehrere Entwickler jeweils gelesen
+haben, kann höher liegen als ein Framework, in dem genau eine Person je unter Druck nach Fehlern gesucht
+hat. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Bus_factor)
+
 <a id="mcp"></a>
 
 ## Agenten – MCP und Agentenprotokolle \{#mcp}
