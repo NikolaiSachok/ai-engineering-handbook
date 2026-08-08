@@ -6,9 +6,9 @@ slug: /part-1-rag/structured-knowledge/
 # Keď odpoveď nie je v žiadnom úryvku
 
 Časť I doteraz na každej stránke mlčky predpokladala jedno: že znalosti prichádzajú ako **súvislý text**.
-Rozparsuj dokumenty, rozdeľ ich na chunky (kúsky), chunky zaembedduj, vyhľadaj, preusporiadaj, vygeneruj. Celý pipeline je postavený na jednej stávke: že niekde v korpuse leží úryvok, ktorý po nájdení obsahuje odpoveď.
+Rozparsuj dokumenty, rozdeľ ich na chunky (kúsky), chunky zaembedduj, vyhľadaj, preusporiadaj, vygeneruj. Celá pipeline je postavená na jednej stávke: že niekde v korpuse leží úryvok, ktorý po nájdení obsahuje odpoveď.
 
-Pri veľkej časti podnikových znalostí tá stávka vychádza — preto je tento pipeline predvoľbou a preto si
+Pri veľkej časti podnikových znalostí tá stávka vychádza — preto je táto pipeline predvoľbou a preto si
 zaslúžil tri lekcie. Lámu ho však tri celkom bežné otázky a každá inak:
 
 - *„Aké riziká sa opakujú v našich desiatich tisícoch zmlúv?“* — takú odpoveď neobsahuje žiadny chunk.
@@ -105,7 +105,7 @@ inde.
 
 *„Kto vedie oddelenie, ktoré vydalo smernicu X?“* vyzerá ako otázka na prechod grafom. Nie je. Rozlož ju na
 dve obyčajné vyhľadania — nájdi oddelenie, ktoré X vydalo, potom nájdi jeho vedúceho — a odpovie na ňu
-statický pipeline, ktorý už máš. To je [agentic RAG](../../part-2-agents/agentic-rag/index.md) a nepotrebuje
+statická pipeline, ktorú už máš. To je [agentic RAG](../../part-2-agents/agentic-rag/index.md) a nepotrebuje
 ani extrakčný prechod, ani schému, ani údržbu. Ak návrh na graf stojí hlavne na multi-hop otázkach, ešte
 nenašiel svoj dôvod.
 

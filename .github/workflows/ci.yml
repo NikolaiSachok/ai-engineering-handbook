@@ -114,3 +114,13 @@ jobs:
         run: bash scripts/locale-parity-check.sh --self-test
       - name: Locale structural parity
         run: bash scripts/locale-parity-check.sh
+      # Parity asserts that the locales have the same SHAPE. It says nothing about whether a
+      # locale obeys its own language canon, and two rules that were written down in
+      # editorial/canon/sk/_language.md were violated in shipped, deployed Slovak prose for
+      # months: 20 quotations closed with an ASCII quote (#431) and the gender of `pipeline`
+      # split 18 against 21 across both courses (#432). Both are valid Markdown, so the build
+      # was green throughout. A rule in a canon is documentation; only this makes it a rule.
+      - name: Slovak canon self-test
+        run: python3 scripts/sk-canon-check.py --self-test
+      - name: Slovak canon gate
+        run: python3 scripts/sk-canon-check.py

@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Prvá časť lekcie](./index.md) urobila tri rozhodnutia: kedy sa štruktúru vôbec oplatí extrahovať, kedy sa graf
 oplatí postaviť a čo prináša sémantická vrstva, len čo sa dvaja ľudia prestanú zhodovať na jednom čísle.
-Zámerne ostala na úrovni rozhodnutia. Táto stránka rozoberá technické pozadie každého z nich. Ukáže, ako extrakčný pipeline mení súvislý text na graf a koľko stojí jeho jednotlivá fáza. Vysvetlí, prečo tieto projekty sklamú práve pri zlučovaní a prečo ti metriky vyhľadávania, ktoré už máš, nepovedia, či je graf dobrý. Vysvetlí, čo presne robí každý zo štyroch štandardov formálneho stacku — RDF, OWL, SHACL, SPARQL — a prečo je namieriť model na schému dátového skladu ťažší problém než namieriť ho na definíciu metriky. Poslednú tretinu stránky tvorí to, čím sa systému kladú otázky: štyri
+Zámerne ostala na úrovni rozhodnutia. Táto stránka rozoberá technické pozadie každého z nich. Ukáže, ako extrakčná pipeline mení súvislý text na graf a koľko stojí jeho jednotlivá fáza. Vysvetlí, prečo tieto projekty sklamú práve pri zlučovaní a prečo ti metriky vyhľadávania, ktoré už máš, nepovedia, či je graf dobrý. Vysvetlí, čo presne robí každý zo štyroch štandardov formálneho stacku — RDF, OWL, SHACL, SPARQL — a prečo je namieriť model na schému dátového skladu ťažší problém než namieriť ho na definíciu metriky. Poslednú tretinu stránky tvorí to, čím sa systému kladú otázky: štyri
 grafové metódy dopytovania, text-to-SQL nad sémantickou vrstvou a router (smerovač) pred oboma.
 
 Ešte jedna hranica na začiatok. Všetko tu je stále **statické**: štruktúra vzniká pred otázkou a otázka si cez
@@ -246,7 +246,7 @@ nástroja a odstraňuje celú triedu chýb, pri ktorej si model vymyslí metriku
 
 ## Smerovanie: ako štruktúrované cesty idú do produkcie
 
-Nič na tejto stránke nenahrádza pipeline postavený v lekciách Ingestion, Retrieval a Generation. V produkcii
+Nič na tejto stránke nenahrádza pipeline postavenú v lekciách Ingestion, Retrieval a Generation. V produkcii
 štruktúrované cesty stoja *vedľa* neho a niečo rozhoduje, ktorou z nich otázka pôjde:
 
 - vyhľadaj-a-vráť otázky a „čo hovorí tento dokument“ → vektorová cesta, bez zmeny;
@@ -283,7 +283,7 @@ zlyhanie vyhľadávania, ani ako zlyhanie generovania.
 - Text-to-SQL je ťažké kvôli biznisovým spojeniam tabuliek, biznisovým dátumom, neupratovaným hodnotám
   a nenapísaným pravidlám — nie kvôli syntaxi; sémantická vrstva mení odvodzovanie na výber, robí zlú odpoveď
   viditeľnou a uplatní prístupovú politiku skôr, než sa niekto dotkne dátového skladu.
-- Celé to ide do produkcie vedľa vektorového pipeline za routerom a zlé nasmerovanie je vlastná trieda chýb.
+- Celé to ide do produkcie vedľa vektorovej pipeline za routerom a zlé nasmerovanie je vlastná trieda chýb.
 
 **[Nové pojmy](../../glossary.md#structured-knowledge)**: TextUnit, graph extraction, covariate / claim
 extraction, community detection / hierarchical Leiden, community report, local search, global search,

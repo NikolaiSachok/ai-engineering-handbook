@@ -6,7 +6,7 @@ sidebar_label: Prehľad časti
 
 # Časť III — Production a LLMOps
 
-V Častiach I a II sme poskladali samotný systém: statický RAG pipeline a agentov nad ním. Časť III je o tom,
+V Častiach I a II sme poskladali samotný systém: statickú RAG pipeline a agentov nad ním. Časť III je o tom,
 **ako to naozaj dostaneš do produkcie**: serving, cloudové platformy, ekosystém nástrojov a prevádzka. Je to
 aplikačná vrstva, ktorú trh práce pomenúva podľa nástrojov — presne tá, čo oddeľuje „u mňa na notebooku to
 funguje“ od „funguje pod záťažou, s observability a v rámci rozpočtu“.

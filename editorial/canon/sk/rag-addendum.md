@@ -69,10 +69,25 @@ troch lokalít. **Pravidlo o odkazoch overuje zostava, nie úvaha** — jeden `n
 
 :::
 
-## 9a. Otvorené — dedené defekty, ktoré lokalizačný prechod nemá právo opraviť
+## 9a. ✅ VYRIEŠENÉ 2026-08-08 — dedené defekty, ktoré lokalizačný prechod nemal právo opraviť
 
 Oba našiel render dávky `structured-knowledge`; oba sú **staršie ako táto dávka** a sú prierezové, takže
-nepatria do lokalizačného PR. Zapísané, aby sa nestratili.
+nepatrili do lokalizačného PR. Zapísané, aby sa nestratili — **a presne preto sa aj vyriešili.**
+Oba uzavreté v prechode #431/#432; **rozhodnutia žijú v `_language.md` §Typografia a §1.1**, nie tu. Táto
+sekcia ostáva ako záznam nálezu.
+
+**Čo prechod pridal k pôvodnému hláseniu — obe čísla boli podcenené:**
+
+- **Vnorená úvodzovka nebola jediná obeť.** Oprava kánonu odhalila **20 živých ASCII zatváracích úvodzoviek**
+  v už nasadenej slovenskej próze kurzu **AI-SDLC** (`glossary.md` 2×, `rules-that-hold.md` 18×) — otvorené
+  správne cez `„` (U+201E), zatvorené cez ASCII `"` (U+0022). Kurz RAG bol čistý. Pravidlo teda nebolo len
+  *neotestované* v kánone; v druhom kurze sa **rozišlo s korpusom** a nič to nemeralo. Doplnená brána
+  `scripts/sk-typography-check.py` (v CI), aby sa to už nedalo zopakovať.
+- **Rod `pipeline`: nie 6 proti 7, ale 18 proti 21.** Pôvodný počet videl len stránky, ktoré mal render pred
+  sebou, a **kurz AI-SDLC nevidel vôbec**. *Počet, ktorý zozbieral jeden prechod, je vzorka, nie census.*
+  Rozhodnutie (ženský rod, s dokladom z JÚĽŠ) je v `_language.md` §1.1.
+
+Pôvodné znenie nálezu:
 
 - **Znak vnorenej úvodzovky v `_language.md` §Typografia je poškodený.** Sekcia predpisuje `‚…'` so
   **zatváracím ASCII apostrofom (U+0027)**. To si protirečí s tou istou sekciou, ktorá `"…"` odmieta, a súbor

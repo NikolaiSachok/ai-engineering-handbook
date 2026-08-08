@@ -27,7 +27,7 @@ s LLM.
 ## Štruktúra
 
 - **Časť I — RAG:** ingestion, retrieval, generation, štruktúrované znalosti a prierezové aspekty (eval,
-  guardrails, observability) statického pipeline.
+  guardrails, observability) statickej pipeline.
 - **Časť II — Agenti:** agentic RAG, používanie nástrojov, plánovanie a slučky, multiagentové systémy,
   orchestračné frameworky, [MCP](https://modelcontextprotocol.io).
 - **Časť III — Production a LLMOps:** serving na [FastAPI](https://fastapi.tiangolo.com) + Docker, cloudové AI

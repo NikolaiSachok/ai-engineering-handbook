@@ -22,8 +22,16 @@ and the phase-by-phase decision appendix stay only in `rag.md`.
 
 ### Typografia
 
-- **Slovenské úvodzovky „…“** (dolné otváracie, horné zatváracie). Nikdy nie «…» (ruské) ani "…" (anglické
-  rovné). Vnorená úroveň: ‚…'.
+- **Slovenské úvodzovky „…“** — otváracia **U+201E**, zatváracia **U+201C**. Nikdy nie «…» (ruské) ani "…"
+  (anglické rovné, U+0022). Vnorená úroveň: **‚…‘** — otváracia **U+201A**, zatváracia **U+2018**.
+  **Kódy sú súčasťou pravidla, nie poznámka pod čiarou.** Tento riadok už raz o zatváraciu vnorenú úvodzovku
+  prišiel: stal sa z nej **ASCII apostrof (U+0027)** pri odvodení z recenzie s rozbitým kódovaním, a pravidlo
+  si roky protirečilo s vlastnou vetou o rovných úvodzovkách bez toho, aby si to niekto všimol — **lebo ho
+  žiadna stránka nepoužila.** Štýlové pravidlo, ktoré ešte nikto nepoužil, nie je ustálené; je *neotestované*,
+  a prvá stránka, ktorá ho použije, je jeho test. Znak, ktorý oko nerozlíši, sa preto v kánone pomenúva
+  **číslom**, a overuje sa cez `scripts/locale-review/codepoints.py` — nikdy pohľadom.
+  Výnimka, ktorá je normou korpusu: **názov cudzieho diela v citácii si ponecháva vlastné rovné úvodzovky**
+  (*"Don't Blame the Large Language Model"*) — rovnako v EN aj RU, takže to nie je defekt.
 - **Desatinná čiarka**: 0,5; 0,36; nie „0.5“. Rozsahy pomlčkou (en-dash), bez medzier: 10–20%.
 - **Percento píš tesne k číslu: 10–20%, 28,7%.** Projektová konvencia, zjednotená naprieč kurzami
   (2026-07): novšie príručky uprednostňujú tesný zápis a celý korpus (EN, RU aj SK) ho už používa.
@@ -211,6 +219,24 @@ PREDMETU**, nie podľa anglického originálu; opakované `model vydá…` sa fl
   chunkov; embedding → embeddingy, embeddingov; framework → frameworku, frameworky; trace → tracov; span →
   spanov; token → tokenov, tokenmi. Latinský koreň, slovenská koncovka; bez apostrofu (na rozdiel od ruského
   „bi-encoder'а“ — v slovenčine sa píše „bi-encoderu“ priamo).
+- **Rod NESKLONNÝCH prevzatých termínov — pravidlo, nie hlasovanie.** Odrážka vyššie platí pre termíny, ktoré
+  sa **skloňujú**: morfologicky sa začlenia a sú **mužské neživotné**. Termín, ktorý ostáva **nesklonný**, sa
+  riadi iným pravidlom — slovenčina mu prideľuje rod podľa **významovo príbuzného slovenského slova**
+  (JÚĽŠ SAV, *Kultúra slova* 2003/6, L. Navrátil, „Neohybnosť v ohybných slovných druhoch“: jury → porota,
+  whisky → pálenka, avenue → ulica ⇒ feminína; taxi → auto, resumé → zhrnutie ⇒ neutrá). **Nie je to
+  nedôslednosť medzi dvoma odrážkami — sú to dve triedy slov**, a práve táto zámena vyrobila rozkol nižšie.
+- **`pipeline` je ŽENSKÉHO rodu a nesklonná** (rozhodnuté 2026-08-08): *tá pipeline, celá pipeline, statická
+  pipeline, statickú pipeline, vedľa vektorovej pipeline, pipeline, ktorá volá*. Významový ekvivalent je
+  **linka / reťaz / postupnosť** — všetko feminína. Formálny protiargument (výslovnosť /pajplajn/ sa končí na
+  spoluhlásku ⇒ maskulínum) je slabší: pri nesklonnom prevzatí rozhoduje významový ekvivalent, a písané `-e`
+  nie je slovenská koncovka žiadneho rodu. **Prečo to bolo treba rozhodnúť:** korpus mal rod rozdvojený
+  **18× mužský proti 21× ženskému**, naprieč OBOMA kurzami — vrátane nadpisu `## Celá pipeline`
+  (`retrieval/index.md`) proti `statický pipeline` na rámcovej stránke `part-1-rag/overview.md`. Zjednotené na
+  ženský rod (18 miest). ⚠️ **Údaj „6 proti 7“ v `rag-addendum.md` §9a podceňoval rozsah trojnásobne** —
+  počítal len holé tvary na stránkach, ktoré mal render pred sebou, a kurz AI-SDLC nevidel vôbec. *Poučenie:
+  počet, ktorý zozbieral jeden prechod, je vzorka, nie census.*
+  ✓ **Nie je defekt:** „podiel pipeline, ktorý nemôže bežať súbežne“ (`ai-sdlc/glossary.md`) — `ktorý` sa
+  zhoduje s `podiel`, nie s `pipeline`.
 - **Popisy v Mermaid-schémach:** názvy protokolových artefaktov ostávajú anglické („tool call: …“, „tool
   result: …“); obyčajné slová-popisy sledujú jazyk stránky a majú veľké začiatočné písmeno („Rozhodnutie“,
   „Model“, „Odpoveď“).
