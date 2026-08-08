@@ -43,11 +43,11 @@ flowchart TB
             CA["Klient A"]
             CB["Klient B"]
         end
-        SL["Lokálny server · nástroje/zdroje/prompty"]
+        SL["Lokálny server<br/>nástroje/zdroje/prompty"]
         CA -->|"stdio"| SL
     end
     subgraph Untrusted["Sieť — prekročená hranica dôvery"]
-        SR["Vzdialený server · nástroje/zdroje/prompty"]
+        SR["Vzdialený server<br/>nástroje/zdroje/prompty"]
     end
     CB -->|"streamable HTTP"| SR
 ```

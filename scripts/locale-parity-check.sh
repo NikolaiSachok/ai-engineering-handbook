@@ -18,7 +18,26 @@
 #   3. heading anchors   — identical ORDERED sequence of explicit `\{#id}` heading ids
 #   4. component counts  — identical counts of `<InfoCard`, `<Node`, `<YouTube`
 #   5. fenced blocks     — identical count per fence language (```text excepted)
+#  5b. mermaid shape     — identical layout direction, node-id set and edge count per diagram
 #   6. numeric drift     — no percentage/decimal figure differing in value between the two
+#
+# --- Why 5b exists, added 2026-08-03 -----------------------------------------------------------
+#
+# Check 5 weighs a fence; it never looks inside one. So a diagram could be authored into a
+# completely different picture in one locale and every check above would still pass. Measured
+# against the shipped corpus: 28 diagrams had drifted, 27 of them Russian. One rendered at
+# 2 062px where its English counterpart was 635px, because two English diagrams had been merged
+# into a single horizontal row. Another put the local MCP server OUTSIDE the trust boundary that
+# English puts it inside — and carried a caption asserting the opposite of what English teaches.
+# All of it shipped, in a corpus with six other parity checks and a full CI suite.
+#
+# What 5b compares is the GRAPH, never the words: layout direction (TD and TB normalised — they
+# are the same axis), the set of node ids, and the edge count. Node ids are not content; they are
+# the diagram's code, and holding them equal is what makes four locale files diffable. Everything
+# a translator legitimately changes — every label, every edge label, every note — is stripped
+# before ids are read, because label prose is full of words that look like identifiers
+# (`LD["Ranked list (dense)"]` would otherwise yield a phantom node `list`). Two of the self-test
+# cases are anti-false-positive controls for exactly that.
 #
 # --- What was relaxed, and on what evidence ----------------------------------------------------
 #

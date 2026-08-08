@@ -18,9 +18,9 @@ flowchart TD
     APP["Tvoja aplikácia"] --> OWN["Vlastné GPU<br/>+ inference server"]
     APP --> VENDOR["Priame API<br/>dodávateľa modelu"]
     APP --> CLOUD["Cloudová<br/>AI-platforma"]
-    OWN --> OWNX(["Maximálna kontrola,<br/>maximálna prevádzková réžia"])
-    VENDOR --> VENDORX(["Najjednoduchší štart,<br/>dáta idú von,<br/>samostatná zmluva"])
-    CLOUD --> CLOUDX(["Vnútri tvojho perimetra:<br/>IAM, fakturácia, audit"])
+    OWN --> OWN2(["Maximálna kontrola,<br/>maximálna prevádzková réžia"])
+    VENDOR --> VENDOR2(["Najjednoduchší štart,<br/>dáta idú von,<br/>samostatná zmluva"])
+    CLOUD --> CLOUD2(["Vnútri tvojho perimetra:<br/>IAM, fakturácia, audit"])
 ```
 
 :::tip[▶ Video]

@@ -70,16 +70,15 @@ sidebar_position: 2
 база существуют ровно затем, чтобы гасить всплески.
 
 ```mermaid
-flowchart TD
-    SDK["SDK приложения"] -->|событие| WEB["Langfuse Web<br/>приём и API"]
-    WEB -->|подтверждение| SDK
-    WEB -->|сырое тело| BLOB[("Объектное хранилище:<br/>сырые события")]
-    WEB -->|ссылка| REDIS[("Redis / Valkey:<br/>очередь + кэш")]
-    WORKER["Воркер Langfuse"] -->|читает| REDIS
-    WORKER -->|читает| BLOB
-    WORKER -->|пишет| CH[("ClickHouse (OLAP):<br/>трейсы · наблюдения")]
-    WEB <-->|конфиг| PG[("PostgreSQL (OLTP):<br/>проекты, настройки")]
-    WEB -->|отдаёт консоль| UI["Консоль оператора"]
+flowchart LR
+    SDK["SDK приложения"] -- "событие" --> WEB["Langfuse Web<br/>приём и API<br/>+ консоль"]
+    WEB -- "сырое тело" --> S3["S3 / объектное хранилище"]
+    WEB -- "ссылка" --> REDIS["Redis / Valkey<br/>очередь + кэш"]
+    WEB <-- "OLTP" --> PG["PostgreSQL"]
+    WORKER["Воркер Langfuse"] -- "читает ссылку" --> REDIS
+    WORKER -- "читает тело" --> S3
+    WORKER -- "upsert" --> CH["ClickHouse<br/>OLAP"]
+    UI["Консоль оператора"] --> WEB
 ```
 
 Как это разворачивают — лестница по масштабу. Docker Compose годится для разработки и проверки на одной
@@ -204,12 +203,12 @@ OTel и OpenInference. Сменить бэкенд — это правка ко�
 
 ```mermaid
 flowchart TB
-    W["Ограничители<br/>оборачивают прод"] --> PROD["Прод-система"]
+    GR["Ограничители<br/>оборачивают прод"] --> PROD["Прод-система"]
     PROD -->|спаны по OTel| OBS["Наблюдаемость"]
     OBS -->|плохие трейсы| GS["golden set"]
     GS --> EVAL["Eval в CI"]
     EVAL -->|проверка перед деплоем| PROD
-    EVAL -->|red-teaming, ASR| W
+    EVAL -->|red-teaming, ASR| GR
 ```
 
 Про сам red-teaming здесь — только распорядок; теория живёт в

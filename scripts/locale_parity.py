@@ -131,6 +131,77 @@ def fences(text: str) -> list[tuple[str, str]]:
     return out
 
 
+def strip_mermaid_labels(body: str) -> str:
+    """Remove every label body from a mermaid fence, leaving only ids, arrows and keywords.
+
+    Necessary before reading ids, because label prose is full of words that look like ids:
+    `LD["Ranked list (dense)"]` yields a phantom node `list`, and the sequence message
+    `S->>M: Generate (stream: true)` yields a phantom `Generate`. Both are translated text and
+    would make this check fire on every correct translation.
+
+    Order matters. Quoted labels go first because they may themselves contain brackets. Then the
+    three UNQUOTED edge-label forms mermaid accepts — `-->|yes, it's X|`, `-. prune .->`,
+    `-- reads body -->` — each of which otherwise leaks its words. Then message and note text
+    after a colon. Bracket pairs are peeled innermost-out so `[("...")]` and `(["..."])` collapse.
+    """
+    b = re.sub(r'"[^"]*"', "", body)
+    b = re.sub(r"\|[^|]*\|", "|", b)
+    b = re.sub(r"-\.[^.\n]*\.->", "-.->", b)
+    b = re.sub(r"--\s+[^->\n]+\s+-->", "-->", b)
+    b = re.sub(r"==\s+[^=>\n]+\s+==>", "==>", b)
+    b = re.sub(r"(?m):.*$", "", b)
+    for _ in range(4):
+        new = re.sub(r"\[[^\[\]]*\]|\{[^{}]*\}|\([^()]*\)", "", b)
+        if new == b:
+            break
+        b = new
+    return b
+
+
+MERMAID_KEYWORDS = {
+    "flowchart", "graph", "sequenceDiagram", "subgraph", "direction", "end", "participant",
+    "Note", "over", "as", "loop", "alt", "opt", "par", "rect", "activate", "deactivate",
+    "LR", "RL", "TB", "TD", "BT",
+}
+
+
+def mermaid_shape(body: str) -> tuple[str | None, frozenset[str], int]:
+    """A diagram's SHAPE: layout direction, the set of node ids, and the edge count.
+
+    Label text is excluded on purpose — translating a label is the entire point of a locale. What
+    must not differ is the graph: same nodes, same wiring, same axis. Ids are not content, they are
+    the diagram's code, and holding them equal across locales is what makes four files diffable.
+
+    Why this check exists at all: measured 2026-08-03, 27 of the Russian renders had drifted into
+    genuinely different diagrams — one was 2 062px where its English counterpart was 635px because
+    two English diagrams had been merged into one; another put the local MCP server OUTSIDE the
+    trust boundary that English puts it inside, and carried a caption asserting the opposite of
+    what English teaches. Every one of those shipped. The heading, anchor and fence-count checks
+    above all passed, because none of them looks INSIDE a fence.
+    """
+    direction = None
+    m = re.search(r"^\s*(?:flowchart|graph)\s+(\w+)", body, re.M)
+    if m:
+        # TD and TB are the same axis in mermaid; normalise so a locale writing the other spelling
+        # is not reported as a defect.
+        direction = "TB" if m.group(1) in ("TB", "TD") else m.group(1)
+    elif re.search(r"^\s*sequenceDiagram", body, re.M):
+        direction = "sequence"
+
+    ids = set(re.findall(r"^\s*participant\s+(\w+)", body, re.M))
+    ids |= set(re.findall(r"subgraph\s+([A-Za-z_][\w-]*)", body))
+    stripped = strip_mermaid_labels(body)
+    if direction == "sequence":
+        for a, b in re.findall(r"(\w+)\s*(?:-|--)?(?:->>|-->>|->|-->|<<-|x|\))\s*(\w+)", stripped):
+            ids |= {a, b}
+    else:
+        for line in stripped.splitlines():
+            line = re.sub(r"^\s*(subgraph|direction|end)\b.*", "", line)
+            ids |= set(re.findall(r"\b([A-Za-z_][\w-]*)\b", line))
+    edges = len(re.findall(r"(-\.->|-->>|<-->|-->|---|==>|->>|<--)", stripped))
+    return direction, frozenset(ids - MERMAID_KEYWORDS), edges
+
+
 def numeric_tokens(text: str) -> set[str]:
     """Percentages and decimal figures, normalised across locale number punctuation.
 
@@ -318,6 +389,30 @@ def compare_pair(locale: str, released: bool, src: str, tgt: str, rep: Report) -
             1 for (_, ba), (_, bb) in zip(fa, fb) if ba != bb
         )
 
+        # 5b. mermaid diagram SHAPE — inside the fence the count check above only weighs
+        #
+        # A diagram is four files, and until 2026-08-03 nothing compared them. Only run when the
+        # counts already agree; otherwise the count failure above is the finding and this would
+        # just repeat it against mismatched pairs.
+        ma = [b for lang, b in fa if lang == "mermaid"]
+        mb = [b for lang, b in fb if lang == "mermaid"]
+        if len(ma) == len(mb):
+            for n, (ba, bb) in enumerate(zip(ma, mb), start=1):
+                da, ia, ea = mermaid_shape(ba)
+                db, ib, eb = mermaid_shape(bb)
+                if (da, ia, ea) == (db, ib, eb):
+                    continue
+                rep.fail(f"{where} — mermaid diagram #{n} differs in SHAPE, not just wording:")
+                if da != db:
+                    print(f"    layout direction: en={da} {locale}={db}")
+                if ia != ib:
+                    if sorted(ia - ib):
+                        print(f"    node id(s) missing in {locale}: {sorted(ia - ib)}")
+                    if sorted(ib - ia):
+                        print(f"    node id(s) only in {locale}:    {sorted(ib - ia)}")
+                if ea != eb:
+                    print(f"    edge count: en={ea} {locale}={eb}")
+
         # 6. numeric drift
         na, nb = numeric_tokens(en), numeric_tokens(loc)
         only_en, only_loc = na - nb, nb - na
@@ -457,6 +552,90 @@ SELF_TEST_CASES = [
         {"docs/x.md": "# T\n"},
         1,
         "does not claim 'en'",
+    ),
+    # --- mermaid diagram shape. Each case reproduces one of the 28 drifts found 2026-08-03, all
+    # of which shipped past every other check in this file because none of them looks INSIDE a
+    # fence. The last two are anti-false-positive controls: this check must stay silent on a
+    # correct translation, or it trains the reader to ignore it.
+    (
+        "diagram: translated labels only → passes",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": '# T\n\n```mermaid\nflowchart TB\n    A["Query"] --> B["Answer"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                '# T\n\n```mermaid\nflowchart TB\n    A["Запрос"] --> B["Ответ"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        0,
+        "1 file(s) in structural parity",
+    ),
+    (
+        "diagram: renamed node id → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": '# T\n\n```mermaid\nflowchart TB\n    A["Query"] --> B["Answer"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                '# T\n\n```mermaid\nflowchart TB\n    Q["Запрос"] --> B["Ответ"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "differs in SHAPE",
+    ),
+    (
+        "diagram: flipped layout direction → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": '# T\n\n```mermaid\nflowchart TB\n    A["Query"] --> B["Answer"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                '# T\n\n```mermaid\nflowchart LR\n    A["Запрос"] --> B["Ответ"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "layout direction",
+    ),
+    (
+        "diagram: dropped edge → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md":
+                '# T\n\n```mermaid\nflowchart TB\n    A["Q"] --> B["A"]\n    A --> C["C"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                '# T\n\n```mermaid\nflowchart TB\n    A["З"] --> B["О"]\n    C["Ц"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "edge count",
+    ),
+    (
+        "diagram: TD vs TB is the same axis → passes (anti-false-positive)",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": '# T\n\n```mermaid\nflowchart TB\n    A["Query"] --> B["Answer"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                '# T\n\n```mermaid\nflowchart TD\n    A["Запрос"] --> B["Ответ"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        0,
+        "1 file(s) in structural parity",
+    ),
+    (
+        "diagram: words inside labels and edge labels are not ids → passes",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": (
+                '# T\n\n```mermaid\nflowchart TB\n'
+                '    A["Ranked list (dense)"] -->|"no, it is a skill"| B["Answer"]\n'
+                '    B -. prune .-> C["End"]\n```\n'
+            ),
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md": (
+                '# T\n\n```mermaid\nflowchart TB\n'
+                '    A["Ранжированный список (плотный)"] -->|"нет, это навык"| B["Ответ"]\n'
+                '    B -. отсекаем .-> C["Конец"]\n```\n'
+            ),
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        0,
+        "1 file(s) in structural parity",
     ),
 ]
 
