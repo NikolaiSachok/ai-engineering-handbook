@@ -30,7 +30,7 @@ jobs:
     name: Build (both locales)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 20
@@ -55,7 +55,7 @@ jobs:
     name: Markdown lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 20
@@ -69,7 +69,7 @@ jobs:
     name: Generic leak scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Generic leak scan
         run: bash scripts/leak-scan.sh
 
@@ -77,7 +77,7 @@ jobs:
     name: Icon register drift check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # The icon assets must live under src/ to be importable, and the canon that documents them
       # lives in editorial/. This asserts the two have not drifted apart.
       - name: Icon register drift check
@@ -87,7 +87,7 @@ jobs:
     name: Locale-review instrument self-tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # The tools in scripts/locale-review/ are not build gates — they produce the work list a
       # translator acts on. A broken build gate goes red; a broken INSTRUMENT returns a
       # confident, well-formed, wrong answer, which is what happened eight separate times
@@ -101,7 +101,7 @@ jobs:
     name: Locale structural parity
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # The build proves a locale's pages EXIST and link correctly; it says nothing about whether a
       # translated page still has the same sections, the same card nodes or the same figures as its
       # English source. This asserts the shape (see the script header for what is asserted, what was
