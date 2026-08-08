@@ -8,7 +8,7 @@ sidebar_label: Prehľad časti
 
 RAG (retrieval-augmented generation) je spôsob, ako prinútiť LLM odpovedať podľa **tvojich** dokumentov, a nie
 podľa toho, čo má zapamätané z tréningu. Pred generovaním systém nájde relevantné kúsky tvojich dát a vloží ich
-modelu do kontextu. Časť I rozoberá túto cestu ako **statický pipeline**: pevnú postupnosť krokov, rovnakú pre
+modelu do kontextu. Časť I rozoberá túto cestu ako **statickú pipeline**: pevnú postupnosť krokov, rovnakú pre
 každý dopyt.
 
 Celou časťou prechádza jedno diagnostické pravidlo: rozdeliť zlyhanie podľa toho, kde vzniklo. Zlá odpoveď býva

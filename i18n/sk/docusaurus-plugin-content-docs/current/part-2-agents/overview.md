@@ -6,7 +6,7 @@ sidebar_label: Prehľad časti
 
 # Časť II — Agenti
 
-V Časti I si poskladal **statický pipeline**: dopyt beží pevnou cestou, `retrieve → generate`, a tú cestu
+V Časti I si poskladal **statickú pipeline**: dopyt beží pevnou cestou, `retrieve → generate`, a tú cestu
 riadi kód. Časť II odovzdáva riadenie modelu. Z pipeline sa stáva **slučka, ktorú vedie sám model (LLM)**:
 rozhoduje, či vôbec vyhľadávať, čo hľadať, ktorý nástroj použiť a kedy skončiť. To je agent.
 

@@ -866,7 +866,7 @@ vnímajú ako pokazený, kým odpoveď s výhradou vnímajú len ako pomalú.
 ## Production — serving \{#serving}
 
 **Serving** — prevádzka modelu alebo pipeline ako sieťovej služby. Dva odlišné významy, ktoré nemožno
-zamieňať: serving aplikácie (tvoj RAG/agentový pipeline za API) a serving modelu (samotný beh LLM-inferencie).
+zamieňať: serving aplikácie (tvoja RAG/agentová pipeline za API) a serving modelu (samotný beh LLM-inferencie).
 
 **Inferencia (inference)** — model počíta výstupy zo vstupov v produkcii — dopredný prechod ako služba, na
 rozdiel od trénovania. To, čo si buď kupuješ cez API poskytovateľa, alebo prevádzkuješ na vlastných GPU.
@@ -1002,7 +1002,7 @@ Throughput, úroveň Reserved v Bedrock).
 
 **Batch mode (dávkový režim)** — zľavnený asynchrónny spôsob spracovania pre neinteraktívne záťaže.
 
-**Managed RAG (spravovaný RAG)** — platformou zabalený pipeline od ingestion po retrieval (Bedrock Knowledge
+**Managed RAG (spravovaný RAG)** — platformou zabalená pipeline od ingestion po retrieval (Bedrock Knowledge
 Bases, Azure Foundry IQ nad AI Search, Vertex RAG Engine); vymieňa jemné ladenie za rýchlosť.
 
 **Vendor lock-in (uviaznutie u dodávateľa)** — závislosť, ktorú vytvárajú platformovo špecifické nadstavby

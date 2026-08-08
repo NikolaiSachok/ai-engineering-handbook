@@ -13,7 +13,7 @@ Produkcia z toho postupne odoberie všetko: systém beží ako služba, pre iný
 
 Pod slovom **serving** (prevádzka modelu alebo pipeline ako sieťovej služby) sa skrývajú dve odlišné úlohy; a zmiešať ich je najrýchlejší spôsob, ako sa stratiť.
 
-Serving aplikácie znamená, že svoj pipeline — vyhľadávanie, slučku agenta, **guardrails** (bezpečnostné mantinely) — zabalíš do API-služby, ktorú volajú klienti. Serving modelu znamená samotný beh LLM-**inferencie** (inference): model počíta výstupy zo vstupov, **dopredný prechod** (forward pass) ako produkčná služba.
+Serving aplikácie znamená, že svoju pipeline — vyhľadávanie, slučku agenta, **guardrails** (bezpečnostné mantinely) — zabalíš do API-služby, ktorú volajú klienti. Serving modelu znamená samotný beh LLM-**inferencie** (inference): model počíta výstupy zo vstupov, **dopredný prechod** (forward pass) ako produkčná služba.
 
 Väčšina tímov robí len to prvé; model ostáva za API poskytovateľa a beh inferencie je práca niekoho iného, prenajatá po tokenoch. Táto lekcia pokrýva oboje, v tomto poradí: najprv aplikačnú vrstvu, ktorú potrebuje každý, potom inferenčnú vrstvu pre tímy, čo si model prevádzkujú u seba.
 
@@ -74,7 +74,7 @@ Nič z toho nie je exotické — časové limity, opakovania, rate limity (strop
 
 ## Docker — v čom je to s AI naozaj iné
 
-Ak tvoj kontajner obaľuje len aplikáciu — pipeline, ktorý volá API poskytovateľov — AI tu prakticky nič nemení. Je to bežný štíhly Python image; pravidlá poznáš: malé vrstvy, žiadne zabudované tajomstvá (secrets), konfigurácia z prostredia. Zabaliť LLM-aplikáciu do kontajnera znamená jednoducho zabaliť do kontajnera Python službu.
+Ak tvoj kontajner obaľuje len aplikáciu — pipeline, ktorá volá API poskytovateľov — AI tu prakticky nič nemení. Je to bežný štíhly Python image; pravidlá poznáš: malé vrstvy, žiadne zabudované tajomstvá (secrets), konfigurácia z prostredia. Zabaliť LLM-aplikáciu do kontajnera znamená jednoducho zabaliť do kontajnera Python službu.
 
 Všetko sa zmení, keď v kontajneri býva samotný model.
 

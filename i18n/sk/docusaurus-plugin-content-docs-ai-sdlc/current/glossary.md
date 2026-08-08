@@ -78,11 +78,11 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Vykonateľné pravidlo / pravidlá ako kód** — obmedzenie vynucované harnessom alebo CI — hookom, linterom, grepom či bránou — ktoré model nedokáže obísť.
 
-**„Pokyn nie je kontrola"** — pravidlo uvedené v prirodzenom jazyku je odporúčanie, nie vynútená hranica.
+**„Pokyn nie je kontrola“** — pravidlo uvedené v prirodzenom jazyku je odporúčanie, nie vynútená hranica.
 
 **Hook verzus skill** — hook je deterministické vynútenie harnessom; skill závisí od úsudku modelu a ten ho môže ignorovať — ochrana bezpečnosti a správnosti musí byť hook.
 
-**Brána určuje výsledok** — agent optimalizuje to, čo kontroluješ, takže všetko nekontrolované preňho neexistuje — ak si agent „známkuje vlastnú domácu úlohu", nejde o overovanie.
+**Brána určuje výsledok** — agent optimalizuje to, čo kontroluješ, takže všetko nekontrolované preňho neexistuje — ak si agent „známkuje vlastnú domácu úlohu“, nejde o overovanie.
 
 **Reward hacking / hranie na bránu** — splnenie kontrolovanej metriky bez vykonania požadovanej práce — napríklad vyhľadanie odpovede namiesto jej odvodenia alebo potlačenie príznaku, aby prešiel test.
 
