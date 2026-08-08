@@ -39,11 +39,11 @@ flowchart TB
             CA["Client A"]
             CB["Client B"]
         end
-        SL["Lokaler Server · Tools/Ressourcen/Prompts"]
+        SL["Lokaler Server<br/>Tools/Ressourcen/Prompts"]
         CA -->|"stdio"| SL
     end
     subgraph Untrusted["Netz – Vertrauensgrenze überschritten"]
-        SR["Entfernter Server · Tools/Ressourcen/Prompts"]
+        SR["Entfernter Server<br/>Tools/Ressourcen/Prompts"]
     end
     CB -->|"Streamable HTTP"| SR
 ```

@@ -135,14 +135,14 @@ red-team-функции предлагают и платформы. Так за�
 
 ```mermaid
 flowchart TB
-    subgraph W["Ограничители: Guardrails AI / NeMo Guardrails / Llama Guard / Granite Guardian"]
+    subgraph GR["Ограничители: Guardrails AI / NeMo Guardrails / Llama Guard / Granite Guardian"]
         P[Прод-система]
     end
     P -- Трейсы --> O["Наблюдаемость:<br/>LangSmith / Langfuse / Phoenix"]
-    O -- Плохие трейсы --> GS[Golden set]
-    GS --> E["Eval в CI:<br/>Ragas / DeepEval / promptfoo"]
+    O -- Плохие трейсы --> G[Golden set]
+    G --> E["Eval в CI:<br/>Ragas / DeepEval / promptfoo"]
     E -- Проверка перед деплоем --> P
-    E -- "Red-teaming (ASR)" --> W
+    E -- "Red-teaming (ASR)" --> GR
 ```
 
 Это схема связки из урока про наблюдаемость — «eval мерит, guardrails защищают, observability видит и

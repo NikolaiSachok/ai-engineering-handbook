@@ -37,7 +37,19 @@ const FLOOR = 11;
 // 267 to 147 — long chains re-authored as `TB`, fan-outs stacked inside a `direction LR` subgraph,
 // sub-labels moved into the prose that already carried them. Lower it as diagrams get simplified;
 // NEVER raise it to make a red run green.
-const SCROLL_BASELINE = 147;
+//
+// 147 -> 148, and this is the ONE reason the number is allowed to rise: a CORRECTNESS fix that
+// costs width, named rather than hidden. Reconciling the Russian diagrams to their English
+// sources (#442) restored two things Russian was missing, and both are wider:
+//   - `ru` multi-agent contract-net gained the `refuse` message and the note that en/sk/de all
+//     carry — it now scrolls exactly as those three already did;
+//   - `ru` MCP gained the nested trust-boundary cluster; its old flat form taught a DIFFERENT
+//     trust model, and mermaid charges ~250px of padding for a cluster inside a cluster.
+// Against that, `ru` planning-loops lost a second diagram that had been merged into it, and
+// stopped scrolling. Net +1. Flattening the MCP nesting to buy the width back was measured and
+// made it WORSE (835px vs 778px: unnested siblings lay out side by side, not stacked), so the
+// nesting stays. Do not "fix" this by flattening it again.
+const SCROLL_BASELINE = 148;
 const WIDTHS = [[360, 'phone'], [1440, 'desktop']];
 
 const pages = [];
