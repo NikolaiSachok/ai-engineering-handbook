@@ -10,6 +10,8 @@ I. časť priniesla jedno obmedzenie: softvér vytváraný agentmi obmedzuje ove
 naň odpovedá slučkou, ktorá voľne využíva lacné generovanie a vzácnu kapacitu overovania sústreďuje iba tam,
 kde môže zmeniť výsledok.
 
+*Kde to leží na [mape kurzu](../intro.md#course-map): samotná slučka — plán, dekompozícia, implementácia, dodanie, prevádzka.*
+
 Päť lekcií postupne odpovedá na jednu otázku: kde sa v skutočnosti využíva **kapacita overovania**? Najprv
 rozhoduje podoba plánu, pretože etapa musí určovať kontrolovateľnú podmienku dokončenia, nie iba opisovať
 krok. Potom veľkosť jednotky, pretože prácu dokážeš kontrolovať iba po jednotkách, na ktoré si ju rozdelil.

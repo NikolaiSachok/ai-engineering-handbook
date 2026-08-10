@@ -11,6 +11,8 @@ overovania**. I. časť túto tézu odvodzuje z dôkazov a ukazuje jej dôsledok
 obmedzenie zmierniť, musíš urobiť skôr, než agent napíše prvý riadok. V tejto časti nie je žiadny kód a
 vychádza z nej celý zvyšok kurzu.
 
+*Kde to leží na [mape kurzu](../intro.md#course-map): pod celou slučkou — to, čo musí platiť skôr, než sa spustí ktorýkoľvek krok.*
+
 Časť má dve línie. Prvé dve lekcie ti pomôžu určiť, čomu možno veriť. Dostaneš namerané dáta, podľa ktorých
 objem výstupu rastie, no kvalita aj porozumenie klesajú a sebahodnotenie zlyháva. Zároveň získaš nástroj,
 ktorým každé tvrdenie o tejto téme zaradíš podľa sily dôkazu. Ďalšie tri lekcie tvoria samotný základ:

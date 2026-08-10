@@ -17,7 +17,7 @@ IBM opisuje ten istý posun: čo sa v životnom cykle vývoja softvéru zmení, 
 
 :::
 
-## Mapa celého kurzu
+## Mapa celého kurzu \{#course-map}
 
 Celú argumentáciu nesie jeden diagram. Čítaj ho ako slučku — jeho podstatou je hrana, ktorá vedie zo živej prevádzky späť k plánovaniu.
 
@@ -41,12 +41,12 @@ Diagram zámerne nezobrazuje tri veci ako samostatné bloky, pretože by tým na
 :::note[Čítaj v diagrame aj to, čo odmieta uzavrieť do bloku]
 
 - **Overovanie** nie je samostatná fáza. Je votkané do každého rozhrania slučky — do revízie medzi ľuďmi, kritického posúdenia vygenerovanej práce aj vynútených brán, ktoré zmenu buď prepustia, alebo zastavia. Ak ho uzavrieš do bloku, vytvoríš predstavu, že overovanie stačí odbaviť ako jeden krok a ísť ďalej. Tak to nefunguje; overovanie prebieha medzi blokmi, nie v nich.
-- **Základ** (Časť I, v ktorej sa práve nachádzaš) leží pod celou slučkou: pamäť projektu, pravidlá ako kód a artefakty ako jediné rozhranie medzi fázami. Toto všetko musí byť pripravené ešte predtým, ako ktorýkoľvek agent napíše prvý riadok.
+- **Základ** (Časť I) leží pod celou slučkou: pamäť projektu, pravidlá ako kód a artefakty ako jediné rozhranie medzi fázami. Toto všetko musí byť pripravené ešte predtým, ako ktorýkoľvek agent napíše prvý riadok.
 - **Tri úrovne zrelosti** (soloista · malý tím · enterprise) sa vzťahujú na každý prvok — každý z nich čítaj na všetkých troch úrovniach zrelosti. Samotný postup zostáva rovnaký; rastie mechanizmus, ktorý zabezpečuje jeho dodržiavanie.
 
 :::
 
-*Mapa je obsahom kurzu.* Horný rad — plán, dekompozícia, implementácia, dodanie, prevádzka — predstavuje Časti II až IV, teda samotnú prácu. Rad základu predstavuje Časť I. Tri úrovne zrelosti sú Časť V. Ten istý diagram sa objaví na začiatku každej Časti so zvýrazneným príslušným výsekom, takže vždy budeš vedieť, kde sa nachádzaš.
+*Mapa je obsahom kurzu.* Horný rad — plán, dekompozícia, implementácia, dodanie, prevádzka — predstavuje Časti II až IV, teda samotnú prácu. Rad základu predstavuje Časť I. Tri úrovne zrelosti sú Časť V. Každá Časť sa začína tým, že povie, kde na tejto mape leží, a odkáže na ňu — takže vždy budeš vedieť, kde sa nachádzaš.
 
 ## Úprimný titulok a úprimná metóda
 

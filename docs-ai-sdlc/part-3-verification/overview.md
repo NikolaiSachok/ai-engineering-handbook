@@ -10,6 +10,8 @@ Part II put a critic gate in front of anything that lands and left it at that. P
 actually **is**, and answers by taking away one comforting assumption at a time. That subtraction is the order
 of the lessons, and it is worth reading them in it.
 
+*Where this sits on [the course map](../intro.md#course-map): the seams between the loop's stages, where verification lives instead of in a box of its own.*
+
 The first assumption to go is that a thorough gate is a covering one. It isn't: a gate's blind spot is a
 property of its *mechanism*, so you cannot tune a static analyzer into seeing a runtime state, and coverage
 comes from stacking checks that fail differently. The second is that a good chain is complete. It never is,

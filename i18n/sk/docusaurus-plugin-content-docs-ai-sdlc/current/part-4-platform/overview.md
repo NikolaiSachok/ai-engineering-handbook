@@ -10,6 +10,8 @@ sidebar_label: Prehľad časti
 presúva k platforme pod ňou. Tá určuje, aké škody môže spôsobiť chyba. Jednu zásadu z I. časti tu použijeme
 štyrikrát na štyri rôzne zdroje. **Vynucovanie zabezpečuje platforma, nikdy prompt.**
 
+*Kde to leží na [mape kurzu](../intro.md#course-map): pôda, na ktorej slučka beží — vrstva, ktorá ohraničuje škodu z chyby.*
+
 Postupujeme od najmenšieho zdroja, ktorý môžeš agentovi odoprieť. Najprv ide o prihlasovací údaj, ktorý
 agent vôbec nesmie mať. Pri programovacom agentovi môže uniknúť oveľa ľahšie než pri práci vývojára. Agent
 číta celý strom súborov, odosiela ho poskytovateľovi modelu a zapisuje svoje uvažovanie do logov. To, čo
