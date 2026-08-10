@@ -10,6 +10,8 @@ V II. časti sme zaviedli bránu kritika pre všetko, čo sa malo prijať, a ďa
 III. časť preto rozoberá podstatu brány. Postupne pritom vyvracia jednu upokojujúcu domnienku za druhou.
 Týmto poradím sa riadia aj lekcie, preto ich čítaj za sebou.
 
+*Kde to leží na [mape kurzu](../intro.md#course-map): spoje medzi krokmi slučky. Overovanie žije tam, nie vo vlastnom rámčeku.*
+
 Najprv padne domnienka, že dôkladnosť brány zabezpečí aj pokrytie. Slepé miesto brány vyplýva z jej
 *mechanizmu*, takže statický analyzátor nevyladíš tak, aby videl stav počas behu. Pokrytie získaš až vrstvením
 kontrol, ktoré zlyhávajú odlišne. Podľa druhej domnienky je dobrá reťaz úplná. Nikdy nie je. Každý únik

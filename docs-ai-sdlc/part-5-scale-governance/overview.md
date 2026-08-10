@@ -9,6 +9,8 @@ sidebar_label: Part overview
 Everything so far described one stream of work: a loop, a chain of gates, and a platform under it. Part V asks
 what breaks when you run many at once — and the answer is four ceilings, none of which is compute.
 
+*Where this sits on [the course map](../intro.md#course-map): the three maturity tiers, read across every element of the loop.*
+
 **Sharing** is the first. Agents parallelise only across state they do not share, and the classic collision is
 banal: one working tree has one checked-out branch, so two agents building two branches in it fail by
 construction. The fix is to remove the sharing, not to coordinate access to it. **Decay** is the second: rules

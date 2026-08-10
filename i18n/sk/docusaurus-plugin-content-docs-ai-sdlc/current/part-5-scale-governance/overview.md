@@ -10,6 +10,8 @@ Doteraz sme opisovali jediný pracovný tok: slučku, reťaz brán a podkladovú
 prestane fungovať, keď takýchto tokov spustíš naraz viac. Narazíš na štyri stropy a ani jeden neurčuje
 výpočtová kapacita.
 
+*Kde to leží na [mape kurzu](../intro.md#course-map): tri úrovne zrelosti, čítané naprieč každým prvkom slučky.*
+
 Prvým je **zdieľanie**. Agenti môžu pracovať paralelne iba vtedy, keď nezdieľajú stav. Typický konflikt má
 prozaickú príčinu. V jednom pracovnom strome môže byť aktívna vždy iba jedna vetva, preto v ňom práca
 dvoch agentov na dvoch vetvách nie je z princípu možná. Riešením je spoločný stav odstrániť, nie riadiť

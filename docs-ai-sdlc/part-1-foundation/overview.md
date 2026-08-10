@@ -11,6 +11,8 @@ Part I argues that thesis from the evidence and then draws the consequence: almo
 the constraint happens **before an agent writes a line**. This is the part with no code in it, and it is the
 part the rest of the course leans on.
 
+*Where this sits on [the course map](../intro.md#course-map): underneath the loop — what has to be true before any stage runs.*
+
 It runs in two movements. The first two lessons are about knowing what is true — the measured picture
 (throughput up, quality and comprehension down, self-assessment broken) and the instrument for grading any
 claim you meet about it. The other three are the foundation itself: the setup you hand an agent, the memory it

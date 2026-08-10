@@ -11,6 +11,8 @@ the loop runs on: the layer that decides how much damage a mistake can do. It is
 applied four times to four different resources — **enforcement is a property of the platform, never of the
 prompt.**
 
+*Where this sits on [the course map](../intro.md#course-map): the ground the loop runs on — the layer that bounds how much damage a mistake can do.*
+
 The lessons widen outward from the smallest thing you can withhold. First the credential the agent should
 never hold at all, because a coding agent is a far wider channel than a developer: it reads a whole tree,
 transmits it to a model provider, logs its reasoning, and can reproduce what it read somewhere you never

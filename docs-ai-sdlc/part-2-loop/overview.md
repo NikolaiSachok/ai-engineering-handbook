@@ -10,6 +10,8 @@ Part I left you with a constraint: checking is what limits agent-built software,
 the answer to it — a loop that spends cheap generation freely and concentrates the scarce resource, review,
 at the few places where it changes the outcome.
 
+*Where this sits on [the course map](../intro.md#course-map): the loop itself — plan, decompose, implement, ship, operate.*
+
 Five lessons, and they answer one question in sequence: **where does verification actually get spent?** In
 the shape of the plan, because a stage is a done-condition you can check, not a step you can describe. In the
 size of the unit, because you control the work at the granularity you cut it into. In what crosses each

@@ -22,7 +22,7 @@ act, not just autocomplete that suggests.
 
 :::
 
-## The map for the whole course
+## The map for the whole course \{#course-map}
 
 One diagram carries the argument. Read it as a loop — the edge that returns from live operation
 to planning is the whole point.
@@ -53,7 +53,7 @@ wrong lesson:
 - **Verification** is not a stage. It is woven through every seam of the loop — review between people, a critic
   pass on the generated work, executed gates that either pass or fail. Put it in a box and you invite the idea
   that you can "do the verification step" and move on. You cannot; it happens between the boxes, not inside them.
-- **Foundation** (Part I, the Part you are in) sits under the whole loop: project memory, rules-as-code, and
+- **Foundation** (Part I) sits under the whole loop: project memory, rules-as-code, and
   artefacts as the only interface between stages. It is what must already be true before any agent writes a
   line.
 - **The three tiers** (soloist · small-team · enterprise) apply to every element — read each one at these three
@@ -62,8 +62,8 @@ wrong lesson:
 :::
 
 *The map is the table of contents.* The top row — plan, decompose, implement, ship, operate — is Parts II
-through IV, the doing. The foundation row is Part I. The three tiers are Part V. The same diagram reappears at
-the opening of each Part with that Part's slice highlighted, so you always know where you are.
+through IV, the doing. The foundation row is Part I. The three tiers are Part V. Each Part opens by saying where it
+sits on this map and linking back to it, so you always know where you are.
 
 ## The honest headline, and the honest method
 
