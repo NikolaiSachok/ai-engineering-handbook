@@ -36,7 +36,7 @@
     "description": "The label for category 'Cost and the economics of agent work' in sidebar 'aiSdlcSidebar'"
   },
   "sidebar.aiSdlcSidebar.category.The enterprise tier: audit, provenance, and what's required": {
-    "message": "Энтерпрайз-уровень: аудит, происхождение и обязательные контроли",
+    "message": "Энтерпрайз-уровень: аудит, происхождение и обязательные проверки",
     "description": "The label for category 'The enterprise tier: audit, provenance, and what's required' in sidebar 'aiSdlcSidebar'"
   }
 }
