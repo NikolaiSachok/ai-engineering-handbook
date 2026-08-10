@@ -31,7 +31,7 @@ to planning is the whole point.
 flowchart TB
     HR["HUMAN ROUTER · guardrail and judgment<br/>named checkpoints — above the loop"]
     subgraph LOOP["THE LOOP — closes on production"]
-      direction LR
+      direction TB
       PLAN["PLAN<br/>scope + architecture"] --> DEC["DECOMPOSE<br/>atomic tasks"] --> IMPL["IMPLEMENT<br/>agents in parallel"] --> SHIP["SHIP<br/>gate → rollout"] --> OPS["OPERATE<br/>production + observe"]
       OPS -->|"feedback: incidents · telemetry · drift"| PLAN
     end
@@ -61,9 +61,9 @@ wrong lesson:
 
 :::
 
-*The map is the table of contents.* The top row — plan, decompose, implement, ship, operate — is Parts II
-through IV, the doing. The foundation row is Part I. The three tiers are Part V. Each Part opens by saying where it
-sits on this map and linking back to it, so you always know where you are.
+*The map is the table of contents.* The five stages of the loop — plan, decompose, implement, ship, operate —
+are Parts II through IV, the doing. The foundation under the loop is Part I. The three tiers are Part V. Each
+Part opens by saying where it sits on this map and linking back to it, so you always know where you are.
 
 ## The honest headline, and the honest method
 

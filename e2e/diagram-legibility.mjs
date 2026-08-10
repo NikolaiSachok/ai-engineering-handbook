@@ -49,7 +49,19 @@ const FLOOR = 11;
 // stopped scrolling. Net +1. Flattening the MCP nesting to buy the width back was measured and
 // made it WORSE (835px vs 778px: unnested siblings lay out side by side, not stacked), so the
 // nesting stays. Do not "fix" this by flattening it again.
-const SCROLL_BASELINE = 148;
+//
+// 148 -> 151, and the second admissible reason to rise: NEW COVERAGE, not new scrolling. The
+// route derivation below did not honour `slug:` frontmatter, so the three AI-SDLC course intros
+// (en/ru/sk) were requested at a 404 and measured zero diagrams each while still being counted
+// as pages — the course's main diagram had never been measured in any locale. Honouring the slug
+// adds 6 measurements (352 -> 358); three of them scroll, all at 360px, where a 507px diagram in
+// a 328px column always will. The same pass re-authored that diagram from a five-across
+// `direction LR` row to a `direction TB` column (1 324px -> 507px en, 1 428 -> 530 ru,
+// 1 406 -> 519 sk), which is why the other three — the 1440px desktop measurements — do NOT
+// scroll: measured at the built site, the article column is 823px at a 1440px viewport and caps
+// at 958px from 1920px up, so the old row overflowed on every display that exists. Had the
+// coverage been fixed without the re-authoring, this number would be 154, not 151.
+const SCROLL_BASELINE = 151;
 const WIDTHS = [[360, 'phone'], [1440, 'desktop']];
 
 const pages = [];
@@ -57,8 +69,19 @@ function walk(dir, base, strip) {
   for (const f of readdirSync(dir)) {
     const p = join(dir, f);
     if (statSync(p).isDirectory()) walk(p, base, strip);
-    else if (f.endsWith('.md') && readFileSync(p, 'utf8').includes('```mermaid')) {
-      const route = p.slice(strip.length).replace(/\.md$/, '').replace(/\/index$/, '/');
+    else if (f.endsWith('.md')) {
+      const src = readFileSync(p, 'utf8');
+      if (!src.includes('```mermaid')) continue;
+      // A `slug:` in the frontmatter OVERRIDES the file path, and deriving the route from the
+      // path alone silently loses the page. Found 2026-08-09: each course intro declares
+      // `slug: /`, so `docs-ai-sdlc/intro.md` was requested as `ai-sdlc/intro` — a 404. The
+      // fetch threw, the catch below returned zero diagrams, and the AI-SDLC course's main
+      // diagram (all three locales) had never been measured by this gate at all, in any locale,
+      // while the summary line still counted the page. Honour the slug.
+      const slug = src.match(/^---\r?\n[\s\S]*?^slug:\s*(\S+)\s*$[\s\S]*?^---\r?$/m)?.[1];
+      const route = slug
+        ? slug.replace(/^\/+/, '')
+        : p.slice(strip.length).replace(/\.md$/, '').replace(/\/index$/, '/');
       pages.push(base + route);
     }
   }
@@ -133,12 +156,19 @@ let scrolling = 0;
 let total = 0;
 const bodyBad = [];
 const rows = [];
+// A page that never loaded used to be indistinguishable from a page with no defects: the catch
+// above returns zero diagrams, every counter stays put, and the run prints PASS. That is how
+// three unmeasured pages hid behind a green gate for six days. Unreachable is now a FAILURE.
+const unreachable = [];
 
 for (const route of pages) {
   let worst = 99;
   let anyScroll = false;
   for (const [vw] of WIDTHS) {
     const r = await measure(route, vw);
+    if (r.error || r.diagrams.length === 0) {
+      unreachable.push(`${route} @${vw}px (${r.error ?? 'no diagram rendered'})`);
+    }
     total += r.diagrams.length;
     for (const d of r.diagrams) {
       if (d.eff !== null && d.eff < FLOOR) illegible++;
@@ -162,6 +192,7 @@ for (const [route, font, scroll] of rows.slice(0, 14)) {
 console.log(`\nBelow the ${FLOOR}px floor:      ${illegible}/${total}`);
 console.log(`Needing horizontal scroll: ${scrolling}/${total}`);
 console.log(`Page body scrolls sideways: ${bodyBad.length ? bodyBad.join(', ') : 'nowhere (invariant held)'}`);
+console.log(`Pages that failed to measure: ${unreachable.length ? unreachable.join(', ') : 'none'}`);
 
 await browser.close();
 if (scrolling > SCROLL_BASELINE) {
@@ -169,6 +200,7 @@ if (scrolling > SCROLL_BASELINE) {
 } else if (scrolling < SCROLL_BASELINE) {
   console.log(`\nIMPROVED — ${SCROLL_BASELINE - scrolling} fewer than baseline. Lower SCROLL_BASELINE to ${scrolling}.`);
 }
-const ok = illegible === 0 && bodyBad.length === 0 && scrolling <= SCROLL_BASELINE;
+const ok =
+  illegible === 0 && bodyBad.length === 0 && scrolling <= SCROLL_BASELINE && unreachable.length === 0;
 console.log(ok ? '\nPASS — legibility floor held, fit within baseline' : '\nFAIL');
 process.exit(ok ? 0 : 1);
