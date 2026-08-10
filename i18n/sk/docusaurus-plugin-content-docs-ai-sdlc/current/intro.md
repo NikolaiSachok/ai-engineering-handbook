@@ -25,7 +25,7 @@ Celú argumentáciu nesie jeden diagram. Čítaj ho ako slučku — jeho podstat
 flowchart TB
     HR["ČLOVEK-SMEROVAČ · poistka a úsudok<br/>pomenované kontrolné body — nad slučkou"]
     subgraph LOOP["SLUČKA — uzatvára sa na produkcii"]
-      direction LR
+      direction TB
       PLAN["PLÁN<br/>rozsah + architektúra"] --> DEC["DEKOMPOZÍCIA<br/>atomické úlohy"] --> IMPL["IMPLEMENTÁCIA<br/>agenti paralelne"] --> SHIP["DODANIE<br/>brána → nasadenie"] --> OPS["PREVÁDZKA<br/>produkcia + pozorovanie"]
       OPS -->|"spätná väzba: incidenty · telemetria · drift"| PLAN
     end
@@ -46,7 +46,7 @@ Diagram zámerne nezobrazuje tri veci ako samostatné bloky, pretože by tým na
 
 :::
 
-*Mapa je obsahom kurzu.* Horný rad — plán, dekompozícia, implementácia, dodanie, prevádzka — predstavuje Časti II až IV, teda samotnú prácu. Rad základu predstavuje Časť I. Tri úrovne zrelosti sú Časť V. Každá Časť sa začína tým, že povie, kde na tejto mape leží, a odkáže na ňu — takže vždy budeš vedieť, kde sa nachádzaš.
+*Mapa je obsahom kurzu.* Päť fáz slučky — plán, dekompozícia, implementácia, dodanie, prevádzka — predstavuje Časti II až IV, teda samotnú prácu. Základ pod slučkou predstavuje Časť I. Tri úrovne zrelosti sú Časť V. Každá Časť sa začína tým, že povie, kde na tejto mape leží, a odkáže na ňu — takže vždy budeš vedieť, kde sa nachádzaš.
 
 ## Úprimný titulok a úprimná metóda
 
