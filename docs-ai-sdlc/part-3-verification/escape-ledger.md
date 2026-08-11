@@ -43,7 +43,7 @@ get through.
 
 ## What escapes actually look like
 
-Here is the shape from a verification chain I ran in production — a six-gate automated chain in front of a human
+Here is the shape from a verification chain I ran in production — a five-gate automated chain in front of a human
 eyeball, the same one [Lesson 1](./layered-gates/index.md) drew. Over its life, roughly **seven distinct defect
 classes reached the human or a user despite passing every automated gate.** Each one, recorded, named a real
 blind spot:
