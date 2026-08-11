@@ -53,9 +53,9 @@ number doesn't carry across (`MEASURED`, vendor). Read the structure, not the fi
 generate; the orchestrator decides what counts as done.
 
 This is Lesson 1's verifiable stage, now sized. A stage is atomic when you can verify it in one pass — small
-enough that the check is real, large enough that the boundary earns its overhead. Below that line you lose
-checkability; above it you pay overload. Decomposition is where you set the line, and it is the last cheap place
-to set it.
+enough that the check is real, large enough that the boundary earns its overhead. Cut above that size and you
+lose checkability; cut below it and you pay overload. Decomposition is where you set the line, and it is the
+last cheap place to set it.
 
 :::tip[▶ Video]
 
