@@ -21,7 +21,7 @@ Pred začlenením výsledku prácu skontroluje kritik — a práve tu sa zbieha 
 
 ## Keď je celý cyklus priveľa
 
-Rozsah cyklu sa riadi rizikom zmeny a nie každá úloha nesie rovnaké riziko. Použi celý obrad „plán — kontrola — implementácia — kritik“ na opravu jediného riadka a dostaneš [kladivo, o ktorom píše Böckeler](https://martinfowler.com/articles/harness-engineering.html): šestnásť akceptačných kritérií pre preklep (`REPORTED`). Platí tu rovnaký úsudok ako v Lekcii 2: prispôsob proces tomu, o čo ide. Jednorazový skript nepotrebuje bránu kritika; zmena autentifikácie v produkcii potrebuje obe brány a pri druhej človeka. Cyklus je riadiaci systém — prispôsobuj ho blast radius, nie každému stlačeniu klávesu.
+Rozsah cyklu sa riadi rizikom zmeny a nie každá úloha nesie rovnaké riziko. Použi celý obrad „plán — kontrola — implementácia — kritik“ na opravu jediného riadka a dostaneš to kladivo, [na ktoré narazila Böckeler](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html): šestnásť akceptačných kritérií pre malú chybu (`REPORTED`). Platí tu rovnaký úsudok ako v Lekcii 2: prispôsob proces tomu, o čo ide. Jednorazový skript nepotrebuje bránu kritika; zmena autentifikácie v produkcii potrebuje obe brány a pri druhej človeka. Cyklus je riadiaci systém — prispôsobuj ho blast radius, nie každému stlačeniu klávesu.
 
 :::tip[▶ Video]
 
