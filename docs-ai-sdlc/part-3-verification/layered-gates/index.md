@@ -111,7 +111,8 @@ diversity, and every gate's blind spot must be named.** What changes is who name
   design exercise with an owner — the security world's [defense in depth](https://csrc.nist.gov/glossary/term/defense_in_depth),
   where no single control is trusted and each assumes the one in front of it will sometimes fail. *The failure it
   prevents:* a compliance chain that is long but mechanistically uniform — six gates that are all the same kind of
-  gate, blind to the same class, and therefore, against that class, no better than one.
+  gate, blind to the same class, and therefore, against that class, no better than one. The number matches
+  the chain above; the gates do not.
 
 ## What to take away
 
