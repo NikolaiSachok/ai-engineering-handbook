@@ -19,8 +19,8 @@ of steps, and a list of steps is not yet a plan you can run an agent against —
 when a step is actually *finished*, as opposed to merely reported finished. An agent will tell you it added auth.
 The question the plan has to answer in advance is: **how would I know, without asking it?**
 
-So the unit of a plan is not the step but the **done-condition** — the concrete, inspectable fact that becomes
-true when the stage is genuinely complete. "Auth is done" is a hope. "A request without a valid token gets a 401,
+So the unit of a plan is not the step but the **done-condition** — something concrete you can inspect, and that still
+holds every time you check it, once the stage is genuinely complete. "Auth is done" is a hope. "A request without a valid token gets a 401,
 and here's the test that asserts it" is a done-condition. The difference is whether completion is something you
 can *confirm* or something you have to *believe*. In a loop where generation is cheap and trust is the expensive
 thing, the done-condition is the unit of trust — and stages are just the intervals between two checks you can
@@ -108,7 +108,8 @@ describe.** What changes is how independent and how enforced that check has to b
 ## What to take away
 
 - A step is a thing to do; a stage is a thing you can confirm is done. Plan in stages, and give each one a
-  **done-condition** — the inspectable fact that turns true when it's genuinely complete.
+  **done-condition** — an inspectable condition that holds every time you check it, once the stage is
+  genuinely complete.
 - Prefer **checkable** (computational) done-conditions over **inferential** ones. If a stage can only be
   confirmed by a model vouching for it, cut the stage smaller or more concrete.
 - Size the stage to the check, not to the model's confidence. Generation is cheap; six verifiable stages cost

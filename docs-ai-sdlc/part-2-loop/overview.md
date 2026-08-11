@@ -47,8 +47,8 @@ overload thread but is not load-bearing.
 
 ## What changes after this part
 
-You can read a plan and say whether agents can be run against it: whether each stage names a fact that turns
-true, whether the units are sized to a check you could actually perform, and whether anything crosses a
+You can read a plan and say whether agents can be run against it: whether each stage names a condition that holds
+every time you check it, whether the units are sized to a check you could actually perform, and whether anything crosses a
 boundary that no one can inspect. You can also place yourself in the work — which checkpoints are yours
 because nothing else can hold them, and which you can hand over without losing the thing that made the loop
 trustworthy.
