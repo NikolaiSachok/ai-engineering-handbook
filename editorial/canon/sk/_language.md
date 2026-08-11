@@ -206,6 +206,14 @@ PREDMETU**, nie podľa anglického originálu; opakované `model vydá…` sa fl
   precision (iné veličiny).
 - **AI** — latinkou vo všetkých pozíciách („AI-delta“, „AI-nástroje“, „AI-platformy“), **nikdy „UI“** ako
   omyl a nikdy nie domáca skratka. Norma korpusu (intro.md, popisy videí).
+- **Rod skutočnej osoby sa berie z osoby, nie z vety** (2026-08-11, issue #565). Anglické `who`, `their`,
+  `they` rod nenesú, takže slovenčina ho musí **doplniť** — a presne tu korpus zlyhal: „Böckeler
+  z Thoughtworks, **ktorý** by radšej kontroloval kód…“ o Birgitte Böckelerovej (tá istá chyba nezávisle
+  vznikla aj v RU). Overuj **podľa osoby**, nie podľa anglickej vety: tá to neukáže. Zhodu kontroluj celú —
+  vzťažné zámeno, minulý čas, prístavky („výskumníčka“, „autorka“). **Jedno meno — jeden rod v celom
+  korpuse**, a dá sa to overiť `grep`om na priezvisko: chyba žila na jednej stránke, kým `rules-that-hold.md`
+  o tej istej Böckelerovej písal správne („ponúkla“, „výskumníčka“). Žiadny z troch kontrolórov to nechytí:
+  kritik vernosti porovnáva tvrdenia s angličtinou a v angličtine rod nie je.
 - **LLM-as-a-judge** — iba plný tvar (nie „LLM-as-judge“).
 - **lost-in-the-middle** — so spojovníkmi vo všetkých pozíciách.
 - **nDCG, MRR, RRF, BM25, ACL, HyDE, ReAct, TTFT, SSE, SLA, IAM, OTel, LLMOps, FinOps** — pevné písanie, ako
