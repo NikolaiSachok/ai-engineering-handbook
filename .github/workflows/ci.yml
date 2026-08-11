@@ -124,3 +124,14 @@ jobs:
         run: python3 scripts/sk-canon-check.py --self-test
       - name: Slovak canon gate
         run: python3 scripts/sk-canon-check.py
+      # Russian earned the same gate the same way. Four rulings live in editorial/canon/ru/ and
+      # all four were violated in shipped prose: «ИИ» 52 times (#539), a spaced percent sign in
+      # two files of one course (#544), plus the «контроли» plural and «гейт» that owner
+      # rulings had already retired. Twice the rule survived only as an ILLUSTRATION and the
+      # illustration taught the losing form — the decimal-comma example was written «34,85 %»
+      # against 175 tight instances, and it then survived a full page rebuild because the
+      # writer copied the canon's own example.
+      - name: Russian canon self-test
+        run: python3 scripts/ru-canon-check.py --self-test
+      - name: Russian canon gate
+        run: python3 scripts/ru-canon-check.py
