@@ -44,7 +44,7 @@ prvá lekcia aj pri radení samotných brán.
 Skutočným predpokladom je **brána kritika** z II. časti. Táto časť ju rozoberá na súčasti, preto budú jej
 argumenty podstatne presvedčivejšie, ak túto bránu už poznáš. Druhým východiskom je zistenie z lekcie
 *Pravidlá, ktoré platia* v I. časti: agent optimalizuje presne to, čo kontroluješ. Tretia tunajšia lekcia
-z tohto zistenia vychádza a zámerne ho neopakuje.
+z tohto zistenia vychádza a dôkazy preň už znovu nerozoberá.
 
 ## Čo sa mení po tejto časti
 
