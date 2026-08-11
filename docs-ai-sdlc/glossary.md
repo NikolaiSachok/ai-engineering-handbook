@@ -91,7 +91,7 @@ its section here. The list grows as the course does.
 
 **Verifiable stage** — a unit of a plan defined by a done-condition you can confirm, not by a step you can describe; the interval between two checks you can actually run.
 
-**Done-condition** — the concrete, inspectable fact that becomes true when a stage is genuinely complete (a passing test, a 401 on an untokened request), as opposed to the agent merely reporting it done.
+**Done-condition** — the concrete, inspectable condition that holds every time you check it, once a stage is genuinely complete (a passing test, a 401 on an untokened request), as opposed to the agent merely reporting it done.
 
 **Checkable vs inferential control** — a done-condition confirmed by a deterministic check that can't be talked out of a failure (checkable / computational) versus one confirmed by a model's judgment (inferential); prefer the former, and treat a stage that admits only the latter as not yet cut small or concrete enough.
 

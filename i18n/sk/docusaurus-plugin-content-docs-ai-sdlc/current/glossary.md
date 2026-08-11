@@ -102,7 +102,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Overiteľná etapa** — jednotka plánu, ktorú určuje podmienka dokončenia, ktorú vieš potvrdiť, nie krok, ktorý vieš opísať; úsek medzi dvoma kontrolami, ktoré môžeš skutočne vykonať.
 
-**Podmienka dokončenia** — konkrétna, kontrolovateľná skutočnosť, ktorá začne platiť, keď je etapa naozaj dokončená (úspešný test, odpoveď `401` na požiadavku bez tokenu), na rozdiel od obyčajného oznámenia agenta, že je hotová.
+**Podmienka dokončenia** — konkrétna podmienka, ktorú vieš skontrolovať a ktorá platí pri každom overení, keď je etapa naozaj dokončená (úspešný test, odpoveď `401` na požiadavku bez tokenu), na rozdiel od obyčajného oznámenia agenta, že je hotová.
 
 **Overiteľný verzus na úsudku založený kontrolný mechanizmus** — podmienka dokončenia potvrdená buď deterministickou kontrolou, ktorej neúspešný výsledok nemožno zmeniť presviedčaním (overiteľný, čiže výpočtový mechanizmus), alebo úsudkom modelu (mechanizmus založený na úsudku). Uprednostni prvý a etapu, ktorá umožňuje iba druhý, považuj za zatiaľ nedostatočne malú alebo konkrétnu.
 

@@ -11,7 +11,7 @@ Prvá časť sa skončila pri jedinom obmedzení: [úzkym miestom pri softvéri 
 
 Prirodzeným impulzom je rozdeliť cieľ na *veci, ktoré treba urobiť*: vytvoriť kostru API, pridať autentifikáciu, pripojiť klienta. To je zoznam krokov, nie však plán, podľa ktorého už môžeš nechať pracovať agenta. Nič v ňom totiž nehovorí, kedy je krok naozaj *dokončený* a kedy agent iba oznámil, že ho dokončil. Agent ti povie, že pridal autentifikáciu. Plán musí vopred odpovedať na otázku: **ako to zistím bez toho, aby som sa ho pýtal?**
 
-Jednotkou plánu preto nie je krok, ale **podmienka dokončenia** — konkrétna, kontrolovateľná skutočnosť, ktorá začne platiť, keď je etapa naozaj dokončená. „Autentifikácia je hotová“ je nádej. „Požiadavka bez platného tokenu dostane `401` a tu je test, ktorý to overuje“ je podmienka dokončenia. Rozdiel je v tom, či vieš dokončenie *potvrdiť*, alebo mu musíš *uveriť*. V cykle, kde je generovanie lacné a dôvera drahá, je podmienka dokončenia jednotkou dôvery — a etapy sú iba úseky medzi dvoma kontrolami, ktoré môžeš skutočne vykonať.
+Jednotkou plánu preto nie je krok, ale **podmienka dokončenia** — niečo konkrétne, čo vieš skontrolovať a čo platí pri každom overení, keď je etapa naozaj dokončená. „Autentifikácia je hotová“ je nádej. „Požiadavka bez platného tokenu dostane `401` a tu je test, ktorý to overuje“ je podmienka dokončenia. Rozdiel je v tom, či vieš dokončenie *potvrdiť*, alebo mu musíš *uveriť*. V cykle, kde je generovanie lacné a dôvera drahá, je podmienka dokončenia jednotkou dôvery — a etapy sú iba úseky medzi dvoma kontrolami, ktoré môžeš skutočne vykonať.
 
 ## Overiteľné má prednosť pred úsudkom
 
@@ -53,7 +53,7 @@ Na každej úrovni platí rovnaký princíp: **etapu určuje podmienka dokončen
 
 ## Čo si odniesť
 
-- Krok je niečo, čo treba urobiť; etapa je niečo, pri čom vieš potvrdiť dokončenie. Plánuj v etapách a každej daj **podmienku dokončenia** — kontrolovateľnú skutočnosť, ktorá začne platiť, keď je etapa naozaj hotová.
+- Krok je niečo, čo treba urobiť; etapa je niečo, pri čom vieš potvrdiť dokončenie. Plánuj v etapách a každej daj **podmienku dokončenia** — podmienku, ktorú vieš skontrolovať a ktorá platí pri každom overení, keď je etapa naozaj hotová.
 - Uprednostni **overiteľné** (výpočtové) podmienky dokončenia pred podmienkami **založenými na úsudku**. Ak môže dokončenie etapy potvrdiť iba model, ktorý sa zaň zaručí, zmenši alebo spresni etapu.
 - Veľkosť etapy prispôsob kontrole, nie sebaistote modelu. Generovanie je lacné; šesť overiteľných etáp nestojí takmer nič a dáva ti šesť včasných príležitostí zachytiť problém.
 - Toto je úzke miesto overovania presunuté do plánovania: plán s overiteľnými etapami vopred určuje, kde sa bude overovať a či môže overovanie uspieť.
