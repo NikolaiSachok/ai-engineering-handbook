@@ -39,8 +39,8 @@ recommends for the gates themselves.
 
 The real prerequisite is Part II's **critic gate** — this part is its deconstruction, so the argument lands
 much harder if you have it. Behind that sits one measurement from Part I's *Rules that hold*: an agent
-optimizes exactly what you check. Lesson 3 here is built on that finding and deliberately does not restate
-it.
+optimizes exactly what you check. Lesson 3 here is built on that finding and does not re-argue the evidence
+for it.
 
 ## What changes after this part
 
