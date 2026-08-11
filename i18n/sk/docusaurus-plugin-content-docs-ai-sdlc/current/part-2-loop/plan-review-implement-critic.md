@@ -31,13 +31,13 @@ IBM vysvetľuje, ako používať model v úlohe automatizovaného kritika. Je to
 
 :::
 
-## Tri úrovne — jednotlivec · malý tím · veľká organizácia
+## Tri úrovne zrelosti: soloista · malý tím · enterprise
 
 Pri každom rozsahu platí rovnaký princíp: **cyklus zahŕňa kontrolu pred začatím práce a bránu pred začlenením výsledku; túto bránu nespravuje ten istý aktér, ktorý vytvoril kontrolovaný výstup.** Mení sa iba to, kto bránu spravuje.
 
-- **Jednotlivec.** Si autor aj kritik, preto ich oddeľ naozaj: pred implementáciou samostatne skontroluj svoj plán a pred začlenením samostatne skontroluj svoj diff; medzi týmito dvoma úkonmi musí byť výstup generátora. *Čomu tým zabrániš:* písaniu a „kontrole“ v jednom kroku, čo v skutočnosti nie je kontrola.
+- **Soloista.** Si autor aj kritik, preto ich oddeľ naozaj: pred implementáciou samostatne skontroluj svoj plán a pred začlenením samostatne skontroluj svoj diff; medzi týmito dvoma úkonmi musí byť výstup generátora. *Čomu tým zabrániš:* písaniu a „kontrole“ v jednom kroku, čo v skutočnosti nie je kontrola.
 - **Malý tím.** Plán skontroluje druhý človek a zlúčenie stráži ďalší človek alebo spoločné CI, ktoré autor nemôže upravovať. Kritik nie je autor. *Čomu tým zabrániš:* formálnej kontrole na potvrdenie, keď brána síce existuje, ale vždy všetko prepustí.
-- **Veľká organizácia.** Kontrola plánu aj brána pred zlúčením sú vynútené a preukázateľne nezávislé od implementátora; implementátor nemôže rozhodnutie kritika obísť. *Čomu tým zabrániš:* bráne ovládanej implementačným tímom, ktorá je bránou iba podľa názvu.
+- **Enterprise.** Kontrola plánu aj brána pred zlúčením sú vynútené a preukázateľne nezávislé od implementátora; implementátor nemôže rozhodnutie kritika obísť. *Čomu tým zabrániš:* bráne ovládanej implementačným tímom, ktorá je bránou iba podľa názvu.
 
 ## Čo si odniesť
 

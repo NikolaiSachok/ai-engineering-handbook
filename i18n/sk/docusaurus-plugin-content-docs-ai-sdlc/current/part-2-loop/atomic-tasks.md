@@ -33,13 +33,13 @@ IBM ukazuje rozdelenie medzi orchestrátora a vykonávateľov ako architektúru.
 
 :::
 
-## Tri úrovne — jednotlivec · malý tím · veľká organizácia
+## Tri úrovne zrelosti: soloista · malý tím · enterprise
 
 Na každej úrovni platí rovnaké pravidlo: **prácu dokážeš kontrolovať len s takou podrobnosťou, s akou ju dekomponuješ.** Mení sa len to, čo tvorí hranicu.
 
-- **Jednotlivec.** Rozdeľ prácu na časti, ktoré dokážeš prečítať naraz; hranicou je tvoja vlastná pozornosť. *Akému zlyhaniu to predchádza:* zmena je príliš veľká na kontrolu, no napriek tomu ju schváliš, pretože opätovné čítanie by už vyžadovalo viac práce než dôvera.
+- **Soloista.** Rozdeľ prácu na časti, ktoré dokážeš prečítať naraz; hranicou je tvoja vlastná pozornosť. *Akému zlyhaniu to predchádza:* zmena je príliš veľká na kontrolu, no napriek tomu ju schváliš, pretože opätovné čítanie by už vyžadovalo viac práce než dôvera.
 - **Malý tím.** Dohodnite si hranice úloh vopred a každej jednotke určte vlastníka; hranicou je pull request, ktorý možno reálne skontrolovať. *Akému zlyhaniu to predchádza:* veľkosť jednotky sa riadi sebadôverou autora a na kontrolu sa dostane zmena, ktorú v skutočnosti nikto nedokáže preveriť.
-- **Veľká organizácia.** Dekompozícia sa stáva súčasťou pipeline — veľkosť jednotiek sa prispôsobuje nezávislej kontrole a auditu, nie pohodliu. *Akému zlyhaniu to predchádza:* práca sa zoskupí do takých veľkých balíkov, že preukázateľne nezávislá kontrola sa zmení na formálne odklepnutie.
+- **Enterprise.** Dekompozícia sa stáva súčasťou pipeline — veľkosť jednotiek sa prispôsobuje nezávislej kontrole a auditu, nie pohodliu. *Akému zlyhaniu to predchádza:* práca sa zoskupí do takých veľkých balíkov, že preukázateľne nezávislá kontrola sa zmení na formálne odklepnutie.
 
 ## Čo si z toho odniesť
 

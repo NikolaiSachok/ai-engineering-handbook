@@ -27,13 +27,13 @@ IBM vysvetľuje štruktúru vybudovanú okolo agenta. Pozri sa na ňu optikou te
 
 :::
 
-## Tri úrovne — jednotlivec · malý tím · podnik
+## Tri úrovne zrelosti: soloista · malý tím · enterprise
 
 Na každej úrovni platí rovnaký princíp: **človek je smerovač nad cyklom, nie fáza vnútri neho — a rola smerovača nesmie splynúť so samotnou prácou.** Mení sa iba to, kto ju zastáva a ako sa vynucuje.
 
-- **Jednotlivec.** Zastávaš všetky roly: plánovača, implementátora, kritika aj smerovača. Dôležité je nenechať rolu smerovača rozpustiť sa v ostatných troch. Naďalej si stanovuj vlastné podmienky dokončenia a vedome rozhoduj o začlenení zmeny, aj keď pracuješ sám. *Akému zlyhaniu to bráni:* nestaneš sa fázou vo vlastnom cykle a neschváliš svoj výstup iba preto, že si ho sám vytvoril.
+- **Soloista.** Zastávaš všetky roly: plánovača, implementátora, kritika aj smerovača. Dôležité je nenechať rolu smerovača rozpustiť sa v ostatných troch. Naďalej si stanovuj vlastné podmienky dokončenia a vedome rozhoduj o začlenení zmeny, aj keď pracuješ sám. *Akému zlyhaniu to bráni:* nestaneš sa fázou vo vlastnom cykle a neschváliš svoj výstup iba preto, že si ho sám vytvoril.
 - **Malý tím.** Rozdeľ roly tak, aby smerovač — ten, kto zodpovedá za podmienky dokončenia a rozhodnutie o začlenení — nebol implementátorom. Za ľudskú bránu má zodpovedať konkrétny človek, nie „tím“. *Akému zlyhaniu to bráni:* rozptýlenej zodpovednosti, pri ktorej sú všetci vnútri cyklu a nikto nad ním.
-- **Podnik.** Kontrolné body človeka sú vynucované a preukázateľne nezávislé: schválenie zmeny s veľkým dosahom je rola, ktorú tím implementujúci danú zmenu nesmie zastávať. Ide o rovnakú nezávislosť dvoch strán, akú [časť I spájala so SLSA a reguláciou DORA](../part-1-foundation/verification-bottleneck.md). *Akému zlyhaniu to bráni:* premene human-in-the-loop na políčko v kontrolnom zozname súladu — na meno vo formulári, ktorého nositeľ v skutočnosti nemohol skontrolovať to, čo podpísal.
+- **Enterprise.** Kontrolné body človeka sú vynucované a preukázateľne nezávislé: schválenie zmeny s veľkým dosahom je rola, ktorú tím implementujúci danú zmenu nesmie zastávať. Ide o rovnakú nezávislosť dvoch strán, akú [časť I spájala so SLSA a reguláciou DORA](../part-1-foundation/verification-bottleneck.md). *Akému zlyhaniu to bráni:* premene human-in-the-loop na políčko v kontrolnom zozname súladu — na meno vo formulári, ktorého nositeľ v skutočnosti nemohol skontrolovať to, čo podpísal.
 
 ## Čo si odniesť
 

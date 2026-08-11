@@ -43,13 +43,13 @@ IBM ukazuje, ako agent rozloží cieľ na pracovný postup — teda plánovací 
 
 :::
 
-## Tri úrovne — jednotlivec · malý tím · podnik
+## Tri úrovne zrelosti: soloista · malý tím · enterprise
 
 Na každej úrovni platí rovnaký princíp: **etapu určuje podmienka dokončenia, ktorú vieš overiť, nie krok, ktorý vieš opísať.** Mení sa iba požadovaná nezávislosť kontroly a dôslednosť jej vynucovania.
 
-- **Jednotlivec.** Podmienku dokončenia vieš za minútu skontrolovať pohľadom alebo spustiť — test, diff, stránku, ktorá sa načíta. Celá disciplína spočíva v tom, že etapu neoznačíš za dokončenú iba na základe tvrdenia agenta. *Čomu to zabraňuje:* premárnenému víkendu, počas ktorého si staval na etape, ktorá len „vyzerala“ hotová.
+- **Soloista.** Podmienku dokončenia vieš za minútu skontrolovať pohľadom alebo spustiť — test, diff, stránku, ktorá sa načíta. Celá disciplína spočíva v tom, že etapu neoznačíš za dokončenú iba na základe tvrdenia agenta. *Čomu to zabraňuje:* premárnenému víkendu, počas ktorého si staval na etape, ktorá len „vyzerala“ hotová.
 - **Malý tím.** Podmienky dokončenia sú zapísané v pláne a zdieľané, takže sa dvaja ľudia vopred zhodnú, čo pri každej etape znamená „hotovo“. *Čomu to zabraňuje:* etapa je podľa autora hotová, podľa kontrolóra nie — a zistí sa to až pri zlúčení, nie pri plánovaní.
-- **Podnik.** Podmienka dokončenia je vynucovaná brána, ktorú vyhodnocuje preukázateľne nezávislá kontrola, nie riadok v dokumente, nad ktorým môže implementátor mávnuť rukou. *Čomu to zabraňuje:* etapám, ktoré sa vo veľkom samy osvedčujú, takže „hotovo“ potichu začne znamenať „človek, ktorý to vytvoril, tvrdí, že je to hotové“.
+- **Enterprise.** Podmienka dokončenia je vynucovaná brána, ktorú vyhodnocuje preukázateľne nezávislá kontrola, nie riadok v dokumente, nad ktorým môže implementátor mávnuť rukou. *Čomu to zabraňuje:* etapám, ktoré sa vo veľkom samy osvedčujú, takže „hotovo“ potichu začne znamenať „človek, ktorý to vytvoril, tvrdí, že je to hotové“.
 
 ## Čo si odniesť
 

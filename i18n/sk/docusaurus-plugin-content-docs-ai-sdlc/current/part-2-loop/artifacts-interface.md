@@ -35,13 +35,13 @@ IBM vysvetľuje presun kontextu medzi krokmi agentného procesu — praktickú s
 
 :::
 
-## Tri úrovne — jednotlivec · malý tím · podnik
+## Tri úrovne zrelosti: soloista · malý tím · enterprise
 
 Princíp platí pri každej mierke: **hranicu musí prekročiť artefakt, ktorý môže niekto preskúmať.** Mení sa iba to, kto ho kontroluje a ako dlho musí pretrvať.
 
-- **Jednotlivec.** Odovzdanie práce si zapíš — do súboru s plánom, diffu alebo uloženého výstupu testov — namiesto toho, aby si ho držal v hlave či v chate. *Akému zlyhaniu to zabráni:* rozhodnutie zostalo iba v rozhovore a o týždeň ho už nemožno zrekonštruovať.
+- **Soloista.** Odovzdanie práce si zapíš — do súboru s plánom, diffu alebo uloženého výstupu testov — namiesto toho, aby si ho držal v hlave či v chate. *Akému zlyhaniu to zabráni:* rozhodnutie zostalo iba v rozhovore a o týždeň ho už nemožno zrekonštruovať.
 - **Malý tím.** Spoločné, verzované artefakty sú zmluvou medzi ľuďmi a etapami: pull request je artefakt a návrhový dokument je artefakt. *Akému zlyhaniu to zabráni:* dvaja ľudia majú odlišné predstavy o tom, „na čom sme sa dohodli“, pričom ani jedna nie je zapísaná.
-- **Podnik.** Artefakty tvoria auditnú stopu — každé prekročenie hranice zanechá trvalý, kontrolovateľný záznam, ktorého rozsah aj uchovávanie sú zámerne nastavené. *Akému zlyhaniu to zabráni:* rozhranie buď nemožno auditovať (nič nie je zapísané), alebo sa topí v údajoch (zapísané je všetko a nič sa neodstraňuje).
+- **Enterprise.** Artefakty tvoria auditnú stopu — každé prekročenie hranice zanechá trvalý, kontrolovateľný záznam, ktorého rozsah aj uchovávanie sú zámerne nastavené. *Akému zlyhaniu to zabráni:* rozhranie buď nemožno auditovať (nič nie je zapísané), alebo sa topí v údajoch (zapísané je všetko a nič sa neodstraňuje).
 
 ## Čo si odniesť
 
