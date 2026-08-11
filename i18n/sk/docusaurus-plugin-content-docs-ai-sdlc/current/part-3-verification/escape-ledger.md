@@ -20,7 +20,7 @@ To je celý artefakt. Soloistovi stačí jeden riadok v tabuľke; v enterprise p
 
 ## Ako úniky vyzerajú v praxi
 
-Takto vyzerali úniky vo verifikačnom reťazci, ktorý som prevádzkoval v produkcii — išlo o automatizovaný reťazec šiestich brán, po ktorom nasledovala ľudská vizuálna kontrola, teda ten istý reťazec, ktorý sme znázornili v [Lekcii 1](./layered-gates/index.md). Počas jeho životnosti sa približne **sedem rôznych tried chýb dostalo až k človeku alebo používateľovi, hoci prešli všetkými automatizovanými bránami.** Každý zaznamenaný únik odhalil skutočné slepé miesto:
+Takto vyzerali úniky vo verifikačnom reťazci, ktorý som prevádzkoval v produkcii — išlo o automatizovaný reťazec piatich brán, po ktorom nasledovala ľudská vizuálna kontrola, teda ten istý reťazec, ktorý sme znázornili v [Lekcii 1](./layered-gates/index.md). Počas jeho životnosti sa približne **sedem rôznych tried chýb dostalo až k človeku alebo používateľovi, hoci prešli všetkými automatizovanými bránami.** Každý zaznamenaný únik odhalil skutočné slepé miesto:
 
 - Triedu **porušení pravidiel interakcie**, ktoré dokázal postrehnúť iba človek pri používaní UI — zachytila ju až vizuálna kontrola, automatizovaný reťazec nikdy. Následne sme ju *premenili na pravidlo* a pridali do súboru pravidiel ako explicitne kontrolovanú podmienku.
 - Triedu chýb súvisiacich s **pomerom strán a orezaním**, ktorú nenapadlo vyhodnocovať v žiadnom priechode — pomery vykresleného výstupu voči zdroju sa jednoducho nikdy nemerali, takže chyba **prechádzala počas celého životného cyklu artefaktu, až kým ju nenahlásil používateľ.**
