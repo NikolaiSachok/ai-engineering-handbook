@@ -206,7 +206,7 @@ PREDMETU**, nie podľa anglického originálu; opakované `model vydá…` sa fl
   precision (iné veličiny).
 - **AI** — latinkou vo všetkých pozíciách („AI-delta“, „AI-nástroje“, „AI-platformy“), **nikdy „UI“** ako
   omyl a nikdy nie domáca skratka. Norma korpusu (intro.md, popisy videí).
-- **Rod skutočnej osoby sa berie z osoby, nie z vety** (2026-08-11, issue #565). Anglické `who`, `their`,
+- **Všetko, čo sa týka skutočnej osoby, sa berie z osoby, nie z vety** (2026-08-11, issues #565 a #473). Anglické `who`, `their`,
   `they` rod nenesú, takže slovenčina ho musí **doplniť** — a presne tu korpus zlyhal: „Böckeler
   z Thoughtworks, **ktorý** by radšej kontroloval kód…“ o Birgitte Böckelerovej (tá istá chyba nezávisle
   vznikla aj v RU). Overuj **podľa osoby**, nie podľa anglickej vety: tá to neukáže. Zhodu kontroluj celú —
@@ -214,6 +214,11 @@ PREDMETU**, nie podľa anglického originálu; opakované `model vydá…` sa fl
   korpuse**, a dá sa to overiť `grep`om na priezvisko: chyba žila na jednej stránke, kým `rules-that-hold.md`
   o tej istej Böckelerovej písal správne („ponúkla“, „výskumníčka“). Žiadny z troch kontrolórov to nechytí:
   kritik vernosti porovnáva tvrdenia s angličtinou a v angličtine rod nie je.
+  **Rod je len jeden prípad.** Angličtina rovnako pokojne nechá neurčené, *čím sa človek zaoberá*:
+  „Böckeler formulates the same problem **from the harness-engineering side**“ je hľadisko, nie činnosť.
+  **Podľa osoby overuj každé tvrdenie o nej: rod, rolu, pozíciu, pracovisko, autorstvo, čo presne
+  urobila.** Väzby „from the X side“, „who would…“, „at Y“ opisujú pozíciu alebo príslušnosť — dopĺňať
+  ich nesmieš.
 - **LLM-as-a-judge** — iba plný tvar (nie „LLM-as-judge“).
 - **lost-in-the-middle** — so spojovníkmi vo všetkých pozíciách.
 - **nDCG, MRR, RRF, BM25, ACL, HyDE, ReAct, TTFT, SSE, SLA, IAM, OTel, LLMOps, FinOps** — pevné písanie, ako
