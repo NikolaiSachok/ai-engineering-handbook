@@ -48,7 +48,7 @@ whole module — because it *offers* to, and the offer is persuasive. That inver
 sized to the generator's reach instead of to your ability to check them, and the gap between "looks done" and "is
 done" widens exactly as the stakes rise. Birgitta Böckeler's blunt version of the same trap: an agent asked to do
 a large, loosely-bounded chunk turns
-[a small bug into "4 user stories with a total of 16 acceptance criteria"](https://martinfowler.com/articles/harness-engineering.html) —
+[a small bug into "4 user stories with a total of 16 acceptance criteria"](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) —
 ceremony that looks like rigor while the one thing that mattered, a check you could actually run, never arrives
 (`REPORTED`, her own practice).
 

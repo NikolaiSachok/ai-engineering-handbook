@@ -43,8 +43,8 @@ step you can't skip.
 ## When the loop is too much
 
 The loop is priced for change-risk, and not every task carries it. Run the full plan-review-implement-critic
-ceremony on a one-line fix and you get [Böckeler's sledgehammer](https://martinfowler.com/articles/harness-engineering.html) —
-sixteen acceptance criteria for a typo (`REPORTED`). The judgment is the one from Lesson 2: size the process to
+ceremony on a one-line fix and you get the sledgehammer [Böckeler ran into](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) —
+sixteen acceptance criteria for a small bug (`REPORTED`). The judgment is the one from Lesson 2: size the process to
 what is at stake. A throwaway script does not need a critic gate; a change to production authentication needs
 both gates and a human standing at the second one. The loop is a control system — you scale it to the blast
 radius, not to every keystroke.
