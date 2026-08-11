@@ -26,7 +26,7 @@ the classes it *can* see, while the real gap stays exactly as open as before.
 
 Birgitta Böckeler names the same problem from the harness-engineering side. Reviewing coding-agent controls, she
 asks the question most teams never do: [*"If sensors never fire, is that a sign of high quality or inadequate
-detection mechanisms?"*](https://martinfowler.com/articles/sensors-for-coding-agents.html) (`REPORTED`, her own
+detection mechanisms?"*](https://martinfowler.com/articles/harness-engineering.html) (`REPORTED`, her own
 practice) — and reaches for mutation testing to answer it, because the only way to know whether a gate can catch
 anything is to inject a defect and see if it fires. In one case she found a file reporting *100% statement
 coverage* that had **no unit tests at all**; the coverage was real, but it measured that a line had *executed*,
