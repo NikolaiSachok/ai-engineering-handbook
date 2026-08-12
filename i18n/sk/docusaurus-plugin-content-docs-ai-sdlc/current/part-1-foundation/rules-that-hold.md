@@ -94,4 +94,4 @@ Základné pravidlo platí pri každej veľkosti: **ak sa dá pravidlo vykonať,
 
 - Problém prompt injection stále nie je vyriešený — podľa dostupných správ obranné mechanizmy vo väčšine prípadov naďalej zlyhávajú. Do svojho modelu hrozieb preto nekriticky nepreberaj tvrdenie dodávateľa, že „sme to opravili“.
 
-**[Nové pojmy](../glossary.md#rules-that-hold)**: vykonateľné pravidlo / pravidlá ako kód, „pokyn nie je kontrola“, hook verzus skill, brána určuje výsledok, reward hacking / hranie na bránu, blast radius, policy-as-code, princíp najnižších oprávnení (least privilege), zastarávanie pravidiel, vlastník konzistencie.
+**[Nové pojmy](../glossary.md#rules-that-hold)**: vykonateľné pravidlo / pravidlá ako kód, „pokyn nie je kontrola“, hook verzus skill, brána určuje výsledok, reward hacking / hranie na bránu, blast radius, policy-as-code, zastarávanie pravidiel, vlastník konzistencie.

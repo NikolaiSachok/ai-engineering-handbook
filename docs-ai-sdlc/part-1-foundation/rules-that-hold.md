@@ -209,4 +209,4 @@ changes is how close to the blast radius the enforcement sits.
 - Prompt injection is not solved — reported defenses still fail most of the time — so no vendor's "we fixed it"
   belongs in your threat model.
 
-**[New terms](../glossary.md#rules-that-hold)**: executable rule / rules-as-code, "an instruction is not a control", hook vs skill, the gate defines the artifact, reward hacking / gaming the gate, blast radius, policy-as-code, least privilege, drift / rule rot, consistency owner.
+**[New terms](../glossary.md#rules-that-hold)**: executable rule / rules-as-code, "an instruction is not a control", hook vs skill, the gate defines the artifact, reward hacking / gaming the gate, blast radius, policy-as-code, drift / rule rot, consistency owner.
