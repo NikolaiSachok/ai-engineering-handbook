@@ -10,15 +10,15 @@ sidebar_position: 2
 filter, but a box small enough that a *successful* injection does no lasting damage. It named three dials —
 filesystem, egress, environment — and asserted the platform enforces them. This page opens the box. What each
 boundary actually is, what a successful attack at the layer above buys the attacker, what stops it here, and
-where real sandboxes quietly leak. The through-line is the one from the
-[layered-gates deep dive](../../part-3-verification/layered-gates/index.md): no single boundary is trusted, and
-each is designed assuming the one in front of it will sometimes fail — [defense in depth](./index.md), applied
-to capability instead of detection.
+where real sandboxes quietly leak. The through-line is the one from
+[layered gates](../../part-3-verification/layered-gates/index.md): no single boundary is trusted, and
+each is designed assuming the one in front of it will sometimes fail —
+[defense in depth](../../glossary.md#layered-gates), applied to capability instead of detection.
 
 ## The confinement stack, boundary by boundary
 
-Four boundaries, weakest-assumption first. Read them as a stack: each one exists because the one above it can
-be defeated.
+Four boundaries, outermost first — which is also weakest first, because the outer wall is the one to trust
+least. Read them as a stack: each one exists because the one in front of it can be defeated.
 
 **Process and namespace isolation.** The agent runs with its own view of the system — its own filesystem
 mounts, process table, and network stack — usually a container. This is the outer wall, and its honest
@@ -31,8 +31,8 @@ the *first* layer and not the only one.
 another process — is a call into the kernel. A syscall filter (**seccomp** on Linux) restricts which of those
 calls the process may make at all, so even arbitrary code execution inside the box cannot reach an operation
 the filter forbids. The design choice that decides its worth is **default-deny**: allow the small set the task
-needs and refuse the rest, rather than block a blocklist of known-bad calls and hope you enumerated them —
-the same closed-world argument Part 1 made for permissions.
+needs and refuse the rest, rather than block a blocklist of known-bad calls and hope you enumerated them.
+Part 1 made the same move for the grant — read by default, write as a separate and narrower one.
 
 **Filesystem confinement.** A read-only root, one writable scratch directory, and — the load-bearing part —
 **no mount that reaches host secrets, other projects, or the container runtime's own socket**. The writable
@@ -48,8 +48,8 @@ shouldn't" into a non-event, because the data has nowhere to go.
 ## The threat model is one question per boundary
 
 A boundary is only meaningful against a stated attack, so make the threat model explicit and per-layer. For
-each one, ask: *if an injection fully succeeds at the layer above, what does it buy the attacker, and what
-stops it here?*
+each one, ask: *if an injection fully succeeds at the layer in front of it, what does it buy the attacker, and
+what stops it here?*
 
 - Injection makes the agent **run arbitrary code** → process isolation keeps that code off the host's own
   process space.
@@ -70,7 +70,8 @@ who did not picture the attack.
 - **The mounted runtime socket.** Bind-mounting the container runtime's control socket into the box hands
   anything inside it the ability to start a new, unconfined container — a full escape through the front door.
   It is a well-known misconfiguration precisely because it is so tempting for tooling that wants to manage
-  containers (`REPORTED`, a standard finding in container-security guidance).
+  containers (`REPORTED`, [OWASP's Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
+  makes it Rule #1: access to the socket is equivalent to unrestricted root on the host).
 - **The over-broad egress allowlist.** Allowlisting a whole cloud or CDN range to reach one service inside it
   reopens the exfiltration path, because the same range will proxy a request onward to anywhere.
 - **`--privileged`, or piling on capabilities.** Granting the box broad kernel capabilities to make one thing
@@ -78,17 +79,17 @@ who did not picture the attack.
   omnipotent token from Part 1.
 - **Ambient credentials inside the box.** A secret in the environment of the sandboxed process defeats the
   whole point: the box confines what the agent can *reach*, but a credential you handed it is already reached.
-  This is [Lesson 1's invariant](./index.md) at the sandbox boundary.
+  This is [Part 1's invariant](./index.md) at the sandbox boundary.
 - **The shared cache across runs.** A writable cache or state directory reused between tasks lets one run
   influence the next — a slower, quieter channel than the network, and an easy one to forget when everything
   else is locked down.
 
-## The cost, and the thing that makes it worthless
+## The cost, and the two ways it becomes theatre
 
 The box is not free: it adds start-up latency, image and policy maintenance, and a debugging surface where "it
-works outside the sandbox" is a sentence you will say often. Part 1's trade still holds — a boundary the
-platform enforces removes a class of interference rather than managing it — but two failure modes turn a
-sandbox into theatre.
+works outside the sandbox" is a sentence you will say often. Part 1's argument still holds — a boundary the
+platform enforces does not depend on the agent's cooperation, so a successful injection stays survivable —
+but two failure modes turn a sandbox into theatre.
 
 The first is **drift**, the [rule-rot argument](../../part-5-scale-governance/drift-and-rot.md) applied to
 policy: a seccomp profile or egress allowlist that no longer matches what the task does gets widened "just to
@@ -102,7 +103,8 @@ a fact about one laptop. That is the same standard the whole course applies to e
 
 ## What to take away
 
-- The sandbox is a **stack of boundaries**, each assuming the one before it fails: process isolation, syscall
+- The sandbox is a **stack of boundaries**, each assuming the one in front of it fails: process isolation,
+  syscall
   filter, filesystem confinement, egress. Coverage is a property of the stack — mechanism diversity for
   capability.
 - A **container is an isolation boundary, not a hard security boundary** on its own — it shares the host
