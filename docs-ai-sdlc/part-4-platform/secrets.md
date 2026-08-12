@@ -7,8 +7,8 @@ sidebar_position: 1
 
 Parts I through III lived inside the loop — planning, decomposing, generating, gating. Part IV is the ground the
 loop runs on: the **platform**, the production layer that decides how much damage a mistake can do. It opens
-with the oldest rule in the book, because agents have quietly made it larger. The rule is: **a secret never
-reaches the agent or the repo.** A human developer who would never paste a production key into a source file is
+with the oldest rule in the book, because agents have quietly made it larger. The old rule is: **a secret's
+value never reaches the repository.** A human developer who would never paste a production key into a source file is
 one narrow, trusted channel. A coding agent is a wide, replicating one — it reads the entire tree, carries
 whatever it reads into a third-party model call, logs its own reasoning, and then acts. Every one of those is a
 new place a credential can escape from. The old advice "don't commit secrets" now has a second surface that is
@@ -75,18 +75,21 @@ secret is rotated, not deleted.** Because history is permanent, editing the file
 action that closes the exposure is revoking the credential at its source and issuing a new one. Rewriting
 history is cleanup, not remediation — assume the value was captured the moment it was pushed.
 
-The scale of the problem is real and worth stating carefully. GitGuardian's *State of Secrets Sprawl* reports
-millions of new leaked credentials found in public commits each year, a count that has risen with the volume of
-AI-assisted commits (`REPORTED`). Read it through the course's vendor rule: GitGuardian sells secret scanning,
-so the number is a claim about the *scale of the problem it addresses*, directionally credible but not an
-independent measurement. The direction is the point — machine-speed commit volume moves secret sprawl the wrong
-way, which is exactly why the block has to be automatic.
+The scale of the problem is real and worth stating carefully. GitGuardian's
+[*State of Secrets Sprawl 2026*](https://blog.gitguardian.com/the-state-of-secrets-sprawl-2026/), published
+March 2026 on 2025 data, reports **28.65 million** new hardcoded secrets in public GitHub commits, up **34%**
+year over year — and, closer to this lesson's point, a **3.2%** secret-leak rate in commits assisted by a
+coding agent against a **1.5%** baseline across all public commits (`REPORTED`). Read it through the course's
+vendor rule: GitGuardian sells secret scanning, so these are claims about the *scale of the problem it
+addresses*, directionally credible but not an independent measurement. The rate is the part that matters —
+roughly double, rather than simply more commits — which is exactly why the block has to be automatic. The
+report's own caveat belongs here too: a developer still chooses what to accept and push.
 
 ## The three tiers — soloist · small-team · enterprise
 
-The invariant holds at every scale — **the secret's value reaches neither the repo nor the agent** — and, as
-the intro's blast-radius rule predicts, the closer a credential sits to real damage the shorter its life must
-be. What changes across tiers is the mechanism that enforces it.
+The invariant holds at every scale — **the secret's value reaches neither the repository nor the agent's
+context** — and the blast-radius rule returns here in credential form: the closer a credential sits to real
+damage, the shorter its life must be. What changes across tiers is the mechanism that enforces it.
 
 - **Soloist.** A gitignored `.env` read into the environment, plus a pre-commit secret scanner you actually
   install. *The failure it prevents:* a key pasted into a config file that the agent then commits to a public
