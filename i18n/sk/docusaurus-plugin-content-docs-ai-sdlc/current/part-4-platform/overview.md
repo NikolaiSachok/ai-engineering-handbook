@@ -7,8 +7,10 @@ sidebar_label: Prehľad časti
 # Časť IV — Platforma
 
 Časti I až III sa venovali práci v slučke: plánovaniu, dekompozícii, generovaniu a bránam. IV. časť sa
-presúva k platforme pod ňou. Tá určuje, aké škody môže spôsobiť chyba. Jednu zásadu z I. časti tu použijeme
-štyrikrát na štyri rôzne zdroje. **Vynucovanie zabezpečuje platforma, nikdy prompt.**
+presúva k platforme pod ňou. Tá určuje, aké škody môže spôsobiť chyba. Vetu *pokyn nie je kontrola*
+z I. časti tu použijeme štyrikrát: na to, čo agent uchováva, kam dosiahne, s akými dátami pracuje a ako
+rýchlo sa dá jeho zmena zastaviť, keď už beží. Pre túto vrstvu znie tá istá zásada takto: **vynucovanie
+zabezpečuje platforma, nikdy prompt.**
 
 *Kde to leží na [mape kurzu](../intro.md#course-map): pôda, na ktorej slučka beží — vrstva, ktorá ohraničuje škodu z chyby.*
 
@@ -42,11 +44,12 @@ sem, je únikom. Patrí do registra z III. časti spolu s názvom brány, ktorá
 
 ## Predpoklady
 
-Z lekcie *Pravidlá, ktoré platia* v I. časti potrebuješ jedinú vetu. *Pokyn nie je kontrola.* Všetky štyri
-lekcie túto zásadu uplatňujú na úrovni platformy a viaceré odkazujú na tie isté incidenty. Preto ti tu tá
-jedna lekcia dá viac než II. a III. časť spolu. Rozmanitosť mechanizmov z III. časti sa tu uplatní dvakrát.
-Deterministický skener na secrets dopĺňa kontrolu pri revízii; sandbox sa zas dopĺňa s rozsahom pridelených
-oprávnení. Preto pomôže aj prvá lekcia III. časti.
+Veta z úvodu pochádza z lekcie *Pravidlá, ktoré platia* v I. časti. Všetky štyri lekcie túto zásadu
+uplatňujú na úrovni platformy a viaceré odkazujú na tie isté incidenty. Preto ti tu tá jedna lekcia dá viac
+než II. a III. časť spolu. Rozmanitosť mechanizmov z III. časti sa tu uplatní dvakrát. Deterministický
+skener na secrets dopĺňa kontrolu pri revízii; sandbox sa zas dopĺňa s rozsahom pridelených oprávnení. Z
+III. časti preto potrebuješ prvú lekciu aj register únikov. Posledná lekcia tejto časti doň zapisuje vždy,
+keď sa chyba dostane do produkcie.
 
 ## Čo sa mení po tejto časti
 

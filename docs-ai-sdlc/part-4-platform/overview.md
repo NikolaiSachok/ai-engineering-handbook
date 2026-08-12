@@ -7,9 +7,10 @@ sidebar_label: Part overview
 # Part IV — The Platform
 
 Parts I through III lived inside the loop — planning, decomposing, generating, gating. Part IV is the ground
-the loop runs on: the layer that decides how much damage a mistake can do. It is one sentence from Part I,
-applied four times to four different resources — **enforcement is a property of the platform, never of the
-prompt.**
+the loop runs on: the layer that decides how much damage a mistake can do. It takes one sentence from Part I
+— *an instruction is not a control* — and applies it four times over: to what the agent holds, what it can
+reach, what it looks at, and how fast its change can be stopped once it is live. Stated for this layer:
+**enforcement is a property of the platform, never of the prompt.**
 
 *Where this sits on [the course map](../intro.md#course-map): the ground the loop runs on — the layer that bounds how much damage a mistake can do.*
 
@@ -38,10 +39,11 @@ Part III's ledger with the gate that missed it named.
 
 ## Prerequisites
 
-One sentence from Part I's *Rules that hold*: an instruction is not a control. Every lesson here is that
-sentence at the platform layer, and several cite the same incidents, so that one lesson buys you more here
-than Parts II and III together. Part III's **mechanism diversity** returns twice — the deterministic secret
-scanner composed with review, and the box composed with the grant — so its first lesson helps too.
+The sentence this part opens on, from Part I's *Rules that hold*. Every lesson here is that sentence at the
+platform layer, and several cite the same incidents, so that one lesson buys you more here than Parts II and
+III together. Two more from Part III: **mechanism diversity** returns twice — the deterministic secret
+scanner composed with review, and the box composed with the grant — and the **escape ledger**, which the last
+lesson writes into every time a defect reaches production.
 
 ## What changes after this part
 
