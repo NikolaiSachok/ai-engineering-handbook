@@ -11,7 +11,7 @@ from stacking gates that fail differently. It left two things asserted rather th
 *tell* whether a gate detects anything at all — the claim behind "if you have never watched a gate fail on a
 planted defect, you only know it is quiet." Second, that the chain has a correct *order* — mechanical, then
 semantic, then aesthetic. This page makes both concrete: the method that measures detection power, and the
-arithmetic that fixes the order. Part 1 is assumed throughout; the blind-spot frame and mechanism diversity
+economics that fixes the order. Part 1 is assumed throughout; the blind-spot frame and mechanism diversity
 are not re-argued, only built on.
 
 ## Coverage measures execution; mutation testing measures detection
@@ -82,7 +82,7 @@ it is a periodic audit of your gates' detection power, not a per-commit gate its
 Part 1 fixed the sequence — mechanical, then semantic, then aesthetic — and called ordering "part of the
 design." Here is why that specific order, argued from cost rather than taste.
 
-Order the chain by **cost to invalidate downstream work**, cheapest-to-invalidate first. The reasoning is a
+Order the chain by **cost to invalidate downstream work**, most-invalidating first. The reasoning is a
 dependency, not a preference: a behavior fix changes what the screen does, which can change what it should
 *look* like, so any aesthetic judgment made before the behavior was settled may have to be redone. Grading
 appearance before function risks paying for the aesthetic pass twice. Run the pass whose fixes most disturb the
@@ -114,7 +114,7 @@ last regardless of its run cost, because nothing waits on it.
   the ones you failed to imagine.
 - **Equivalent mutants and compute cost are real.** Treat the score as a direction, not a target to max out,
   and run it as a periodic audit of your gates, not a per-commit gate.
-- **The chain's order is economic:** cheapest-to-invalidate and cheapest-to-run both point the same way, so
+- **The chain's order is economic:** most-invalidating-first and cheapest-to-run-first point the same way, so
   run mechanical before semantic before aesthetic — the later, more expensive judgments then land on a surface
   that has stopped moving.
 

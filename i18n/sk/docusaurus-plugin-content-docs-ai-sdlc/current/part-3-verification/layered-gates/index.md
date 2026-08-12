@@ -68,6 +68,6 @@ Základné pravidlo platí pri každej veľkosti: **jedna brána je jediným bod
 
 :::note[Ďalej — druhá časť lekcie]
 
-**[Mutačné testovanie a poradie reťaze](./deep-dive.md)** — prehĺbenie: ako *odmerať* detekčnú silu brány namiesto dôvery v jej ticho, prečo je mutation score čestná metrika, a aritmetika poradia prechodov, pri ktorej ide prvý ten, ktorý je najlacnejšie znehodnotiť.
+**[Mutačné testovanie a poradie reťaze](./deep-dive.md)** — prehĺbenie: ako *odmerať* detekčnú silu brány namiesto dôvery v jej ticho, prečo je mutation score čestná metrika, a ekonomika poradia prechodov, pri ktorej ide prvý ten, ktorého opravy znehodnotia najviac nadväzujúcej práce.
 
 :::

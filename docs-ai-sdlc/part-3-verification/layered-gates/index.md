@@ -64,7 +64,7 @@ strictness but in the kind of thing they can perceive.
 Ordering is part of the design, not an afterthought. Run the passes **mechanical → semantic → aesthetic**, and
 lock the order — reviewing whether a screen *looks* right before checking whether its controls *work* wastes the
 aesthetic pass critiquing screens that a behavior fix will invalidate anyway. Order the chain by how much a fix
-at each stage moves the surface underneath it, cheapest-to-invalidate first.
+at each stage moves the surface underneath it, most-invalidating first.
 
 :::tip[▶ Video]
 
@@ -133,6 +133,6 @@ diversity, and every gate's blind spot must be named.** What changes is who name
 
 :::note[Next — part 2 of the lesson]
 
-**[Mutation testing and the order of the chain](./deep-dive.md)** — the deep dive: how to *measure* a gate's detection power instead of trusting its silence, why mutation score is the honest metric, and the arithmetic of ordering a chain so the cheapest-to-invalidate pass runs first.
+**[Mutation testing and the order of the chain](./deep-dive.md)** — the deep dive: how to *measure* a gate's detection power instead of trusting its silence, why mutation score is the honest metric, and the economics of ordering a chain so the pass whose fixes invalidate the most runs first.
 
 :::
