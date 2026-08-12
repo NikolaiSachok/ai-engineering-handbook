@@ -89,13 +89,13 @@ appearance before function risks paying for the aesthetic pass twice. Run the pa
 passes after it *first*, so the later, more expensive judgments are made against a surface that has stopped
 moving.
 
-The second ordering runs the same direction, which is why the chain has one order and not a tension between
-two. Order also by **cost per run**, cheapest-to-run first, so the expensive gate only ever examines what
+The second ordering usually runs the same direction, so most of the time the chain has one order and no
+choice to make. Order also by **cost per run**, cheapest-to-run first, so the expensive gate only ever examines what
 already survived everything cheaper. A deterministic grep is fractions of a cent and instant; a semantic
 review is a model call; a human is the scarce input from [review at volume](../review-at-volume.md). Putting
 the grep first is not only about invalidation — it means the model and the human never spend their budget on a
-defect a free check would have caught. Both orderings point the same way: cheap-and-foundational before
-expensive-and-dependent.
+defect a free check would have caught. Where the two disagree, invalidation wins and run cost is the tie-breaker — the second corollary below is
+exactly that case. Usually they agree: cheap-and-foundational before expensive-and-dependent.
 
 Two corollaries fall out once the principle is explicit. A gate that is expensive *and* catches a
 foundational defect class is a signal to build a cheaper gate for that class upstream, not to reorder the
@@ -114,8 +114,8 @@ last regardless of its run cost, because nothing waits on it.
   the ones you failed to imagine.
 - **Equivalent mutants and compute cost are real.** Treat the score as a direction, not a target to max out,
   and run it as a periodic audit of your gates, not a per-commit gate.
-- **The chain's order is economic:** most-invalidating-first and cheapest-to-run-first point the same way, so
-  run mechanical before semantic before aesthetic — the later, more expensive judgments then land on a surface
+- **The chain's order is economic:** most-invalidating-first is the rule and cheapest-to-run-first is the
+  tie-breaker; they usually agree, so run mechanical before semantic before aesthetic — the later, more expensive judgments then land on a surface
   that has stopped moving.
 
 **[New terms](../../glossary.md#layered-gates)**: mutation testing, mutant (killed / survived), mutation score, mutation operator, equivalent mutant, coverage vs detection, cost-to-invalidate ordering, cost-per-run ordering.
