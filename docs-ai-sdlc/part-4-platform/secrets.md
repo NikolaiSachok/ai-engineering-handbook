@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # A secret the agent never holds cannot leak
 
-Part I through III lived inside the loop — planning, decomposing, generating, gating. Part IV is the ground the
+Parts I through III lived inside the loop — planning, decomposing, generating, gating. Part IV is the ground the
 loop runs on: the **platform**, the production layer that decides how much damage a mistake can do. It opens
 with the oldest rule in the book, because agents have quietly made it larger. The rule is: **a secret never
 reaches the agent or the repo.** A human developer who would never paste a production key into a source file is
