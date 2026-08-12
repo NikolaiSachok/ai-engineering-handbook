@@ -90,8 +90,6 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Policy-as-code** — politiky ako kód, ktoré sa vynucujú v pipeline a podliehajú auditu — podniková podoba vykonateľných pravidiel.
 
-**Princíp najnižších oprávnení (least privilege)** — agent má prístup presne k tým prostriedkom, ktoré potrebuje na aktuálnu úlohu, a k ničomu navyše.
-
 **Zastarávanie pravidiel** — rozpad súboru pravidiel bez mechanizmu na odhaľovanie neaktuálnosti — konštanty sa rozídu, skopírovaný kód zostarne, nahradené pravidlá prežívajú a súbory si na styčných miestach protirečia; odlišným javom je drift pravidiel spôsobený `context rot`, pri ktorom sa nemenia pravidlá, ale ich výklad.
 
 **Vlastník konzistencie** — rola zodpovedná za zosúlaďovanie súboru pravidiel tak, aby dva záväzné súbory nemohli predpisovať protichodné riešenia.
@@ -254,7 +252,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 ## Najnižšie oprávnenia a sandbox \{#least-privilege-and-sandboxing}
 
-**Princíp najnižších oprávnení (least privilege)** — zásada, podľa ktorej agent dostane prístup iba ku konkrétnym prostriedkom a operáciám, ktoré jeho aktuálna úloha potrebuje.
+**Princíp najnižších oprávnení (least privilege)** — agent dostane len také oprávnenia, aké potrebuje na aktuálnu úlohu, nie širšie práva pre prípad budúcej potreby: ku konkrétnemu prostriedku, iba na čítanie, ak úloha nevyžaduje zápis, s krátkym časom platnosti a pod samostatnou identitou, ktorú možno odvolať nezávisle od ostatných.
 
 **Sandboxing (izolované spúšťanie)** — vynútené oddelenie procesu od zvyšku systému hranicami súborového systému, siete a prostredia, ktoré agent nedokáže sám prekročiť.
 

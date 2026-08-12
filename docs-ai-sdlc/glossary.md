@@ -81,8 +81,6 @@ its section here. The list grows as the course does.
 
 **Policy-as-code** — enforced-in-the-pipeline, audited rules — the enterprise form of executable rules.
 
-**Least privilege** — the agent can reach exactly the resources its current task needs, and no more.
-
 **Drift / rule rot** — the decay of a rule corpus with no staleness mechanism: constants diverge, copied code goes stale, superseded rules survive, and seams between files contradict.
 
 **Consistency owner** — the role accountable for reconciling a corpus so that two authoritative files can't prescribe opposite things.
