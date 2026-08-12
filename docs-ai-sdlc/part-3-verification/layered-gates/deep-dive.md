@@ -9,14 +9,14 @@ sidebar_position: 2
 [Part 1](./index.md) argued that a gate's blind spot is a property of its mechanism, and that coverage comes
 from stacking gates that fail differently. It left two things asserted rather than shown. First, that you can
 *tell* whether a gate detects anything at all — the claim behind "if you have never watched a gate fail on a
-planted defect, you only know it is quiet." Second, that the chain has a correct *order* — mechanical, then
+defect you planted, you do not know what it is blind to — you only know it is quiet." Second, that the chain has a correct *order* — mechanical, then
 semantic, then aesthetic. This page makes both concrete: the method that measures detection power, and the
 economics that fixes the order. Part 1 is assumed throughout; the blind-spot frame and mechanism diversity
 are not re-argued, only built on.
 
 ## Coverage measures execution; mutation testing measures detection
 
-The trap Part 1 named — a file at 100% statement coverage with no assertions — is not an anomaly. It is what
+The trap Part 1 named — a file at 100% statement coverage that had no unit tests at all — is not an anomaly. It is what
 coverage *is*. Coverage answers "did this line run while the tests ran," a question about the test's reach.
 It says nothing about whether the line's behavior was *checked*, which is the question you actually care
 about. The two come apart completely: a test that executes every line and asserts nothing scores 100% and
@@ -32,8 +32,8 @@ The mutation operators are the vocabulary of small defects, and naming a few mak
 
 - **Statement deletion** — remove a line. A test that never notices a missing statement is asserting nothing
   about it.
-- **Boundary mutation** — turn `<` into `<=`, `>` into `>=`. This is the off-by-one class, the one Part 1's
-  escape ledger keeps recording, made injectable on purpose.
+- **Boundary mutation** — turn `<` into `<=`, `>` into `>=`. This is the off-by-one class — the very example
+  the [escape ledger](../escape-ledger.md) uses to separate a bug from a class — made injectable on purpose.
 - **Return-value and constant mutation** — return a fixed value, flip a boolean, bump a constant. Catches
   assertions that check shape but not value.
 
@@ -43,14 +43,14 @@ input that is generated rather than remembered.
 
 ## Why it is the escape ledger, run forwards
 
-Part 1's [escape ledger](../escape-ledger.md) learns from defects that reached production: it is reactive by
+The [escape ledger](../escape-ledger.md) of Lesson 2 learns from defects that reached production: it is reactive by
 construction, because you cannot record an escape that has not happened yet. Mutation testing is the same
 discipline pointed the other way. Instead of waiting for a defect class to burn you and then adding the gate,
 you *manufacture* the defect, confirm whether any gate catches it, and add the gate before the class ever
 ships. It converts the ledger from a record of past pain into a generator of the next probe.
 
 That reframing also exposes the method's own ceiling, and it is the same one the ledger has. The mutation
-operators are a **probe list** — the exact bias Part 1 warned about, now one level up. A mutation tool injects
+operators are a **probe list** — the exact bias the escape ledger warned about, now one level up. A mutation tool injects
 the defect classes its authors thought to encode: boundary flips, deletions, operator swaps. A defect class no
 operator expresses — a whole missing screen, a semantic contract nobody encoded as a rule — produces no mutant,
 so it is never tested for, so the gate's blindness to it stays invisible. A high mutation score proves your
