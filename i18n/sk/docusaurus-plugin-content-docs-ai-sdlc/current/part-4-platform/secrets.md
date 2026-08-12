@@ -15,7 +15,7 @@ Invariant je jedna veta a s rozsahom sa nemení: **hodnota secretu sa nedostane 
 
 **Kontext agenta** je kanál, ktorý nemáš celý pod kontrolou. Všetko, čo agent pri práci prečíta, odchádza poskytovateľovi modelu, môže sa tam uchovať alebo zapísať do logu a môže sa vrátiť aj späť von — do vygenerovaného súboru, do opisu pull requestu, do riadka logu, do komentára. Človek si secret prečíta a zabudne ho; agent si ho prečíta a môže ho *zopakovať* tam, kam si sa nikdy nepozrel. Secret teda nesmie ležať nikde, kam agenta smeruješ — a v praxi to znamená, že v kóde nemá byť vôbec.
 
-## Za behu odkazuj, nikdy nevkladaj
+## Odkaz v kóde, hodnota až za behu
 
 Invariant drží v každom rozsahu jediný mechanizmus: secrety žijú *mimo* kódu ako *odkazy* a do bežiaceho procesu sa rozbaľujú až za behu. Kód číta názov — `DATABASE_URL`, `STRIPE_KEY` — nikdy nie doslovnú hodnotu. Hodnotu vloží do prostredia procesu niečo, čo agent ani repozitár nikdy nevidia. Presne to je princíp konfigurácie, ktorý [manifest twelve-factor](https://12factor.net/config) formuluje ako prísne oddelenie konfigurácie od kódu (`ASSERTED`, a takmer všeobecná prax): agent dostane konfiguračnú plochu, ktorú na svoju prácu potrebuje — *názvy* vecí, ktoré prepája — a nedostane tú tajnú, ktorú nepotrebuje.
 
@@ -35,7 +35,7 @@ IBM prechádza správu secretov ako samostatnú disciplínu — uloženie, vklad
 
 :::
 
-## Keď secret aj tak unikne: skenuj, blokuj, rotuj
+## Keď prevencia nestačí: skenuj, blokuj, rotuj
 
 Prevencia nie je plán, a tak platforma skladá tie isté dva mechanizmy, aké III. časť použila pri [návrhu brán](../part-3-verification/layered-gates/index.md). **Deterministický** skener secretov — grep podľa vzorov a entropie, napríklad gitleaks alebo natívne skenovanie poskytovateľa — je lacná brána, ktorá doslovný kľúč zachytí ešte pred zápisom do histórie. Voči prihlasovacím údajom v nezvyčajnom tvare je slepý presne tak, ako je grep slepý voči parafráze, takže sa skladá s revíziou; na bežný prípad je však rýchla doslovná brána presne to pravé.
 

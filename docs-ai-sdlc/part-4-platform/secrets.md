@@ -30,7 +30,7 @@ request description, a log line, a comment. A human reads a secret and forgets i
 may *reproduce* it somewhere you never looked. So the secret must not sit anywhere the agent is pointed, which
 in practice means it must not sit in the code at all.
 
-## Reference at runtime, never embed
+## A reference in the code, the value at runtime
 
 One mechanism makes the invariant hold at every scale: secrets live *outside* the code as *references*, and are
 resolved into the running process only at runtime. Code reads a name — `DATABASE_URL`, `STRIPE_KEY` — never a
@@ -60,7 +60,7 @@ makes dangerous — the repo and the agent's context.
 
 :::
 
-## When it leaks anyway: scan, block, rotate
+## When prevention is not enough: scan, block, rotate
 
 Prevention is not a plan, so the platform composes the same two-mechanism layering Part III used for
 [gate design](../part-3-verification/layered-gates/index.md). A **deterministic** secret scanner — a pattern-and-entropy
