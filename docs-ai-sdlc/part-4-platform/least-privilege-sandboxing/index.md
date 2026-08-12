@@ -73,8 +73,10 @@ at machine speed, on instructions partly composed of text it just read.
 Least privilege handles the risks you enumerated. Sandboxing handles the rest — and the rest is where agents
 are genuinely different from scripts, because an agent's next action is influenced by content it reads. An
 issue description, a web page, a dependency's README can carry text that reads to the model as instruction.
-This is **prompt injection**, and it sits at the top of [OWASP's Top 10 for LLM applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-(`ASSERTED`, community-consensus ranking). The uncomfortable part is that you cannot reliably detect it — the
+This is **prompt injection**, and it is LLM01 in
+[OWASP's GenAI LLM Top 10](https://genai.owasp.org/) — first place for the third year running in the 2026
+edition, published August 2026 (`ASSERTED`, community-consensus ranking; OWASP is a community security
+project, not a regulator, so read it as consensus rather than compliance). The uncomfortable part is that you cannot reliably detect it — the
 malicious input is just text, and the model's job is to take text seriously. So the design goal is not a
 perfect filter. It is that a *successful* injection is survivable: the agent's capabilities are small enough
 that the worst instruction it can be tricked into following does no lasting damage.
