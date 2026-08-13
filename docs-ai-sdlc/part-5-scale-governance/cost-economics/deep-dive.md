@@ -14,10 +14,11 @@ are illustrative — plug in your provider's — but the *shape* of the sums is 
 
 ## One attempt, decomposed
 
-A model call bills two streams at two rates: **input** (everything you send — system prompt, rules, brief,
-prior turns, tool results) and **output** (what it generates). Output usually costs several times more per
-token than input, which fools people into watching the output. For agent work the trap is that input
-*volume* dwarfs output volume, so the cheaper-per-token stream is the larger bill:
+An attempt bills two streams at two rates, summed over every turn it takes: **input** (everything you
+send — system prompt, rules, brief, prior turns, tool results) and **output** (what it generates).
+Output usually costs several times more per token than input, which fools people into watching the
+output. For agent work the trap is that input *volume* dwarfs output volume, so the
+cheaper-per-token stream is the larger bill:
 
 ```text
 attempt_cost = input_tokens × input_rate + output_tokens × output_rate
@@ -34,11 +35,11 @@ grows by roughly a constant amount per turn, the total input billed across the t
 it is the sum `1 + 2 + … + N`, which is **`O(N²)`**. Double the turns and you roughly *quadruple* the input
 cost.
 
-That single fact reorganises where you look. It is why a task that "took twice as long" costs four times as
-much, why a bloated context is expensive on every turn and not just once, and why the
-[rules-corpus bloat](../drift-and-rot.md) from the drift lesson has a bill attached, not only a quality
-cost. Trimming what rides in context is the highest-leverage cost move in agent work, and it is invisible on a
-price list that quotes one call.
+That single fact reorganises where you look. It is why a task that took twice as many turns pays
+roughly four times the input cost, why a bloated context is expensive on every turn and not just
+once, and why the [rules-corpus bloat](../drift-and-rot.md) from the drift lesson has a bill
+attached, not only a quality cost. Trimming what rides in context is the highest-leverage cost
+move in agent work, and it is invisible on a price list that quotes one call.
 
 ## Prompt caching bends the curve back
 
@@ -82,19 +83,20 @@ Put two models against each other. An expensive one at price `C` and first-try r
 | 0.30 | 0.5 C / 0.30 = 1.67 C | *more* expensive |
 
 The break-even is clean: the cheaper model wins only when `p_cheap / p_expensive > price_cheap / price_expensive`
-— its success rate must beat the expensive model's by at least the price ratio. Half the price buys nothing if
-it comes with less than half the reliability. This is the whole of "retry rate outweighs sticker price,"
-reduced to one inequality you can actually measure.
+— its success rate must beat the expensive model's by at least the price ratio. Half the price buys
+nothing at exactly half the reliability, and costs you more below it. This is the whole of "retry
+rate outweighs sticker price," reduced to one inequality you can actually measure.
 
 ## The lines a token discount cannot touch
 
 One closing sum keeps the others honest. Two of the four cost buckets from Part 1 — **verification** and
-**human review** — do not move with token price. Semantic gates are model calls that scale with how much you
-generate; human review is priced in salary and scales with nothing you can buy. So a token-price optimisation
-is bounded the way Amdahl bounds any speedup: if human review is, say, 40% of the total cost of a change, then
-*no* token discount, however deep, can reduce the total by more than the remaining 60%. When verification and
-review dominate, shaving the token bill optimises the smallest lever — which is exactly why Part 1 insisted the
-binding constraint is priced in salary, not tokens.
+**human review** — do not shrink the way generation does. Semantic gates are themselves model calls, but their
+volume is set by how many checks you run, not by the tariff; human review is priced in salary, and its
+throughput is not for sale. So a token-price optimisation is bounded the way Amdahl bounds any speedup: if
+human review is, say, 40% of the total cost of a change, then *no* token discount, however deep, can reduce
+the total by more than the remaining 60% — and in practice by less, since part of that 60% is
+verification. When verification and review dominate, shaving the token bill optimises the smallest
+lever — which is exactly why Part 1 insisted the binding constraint is priced in salary, not tokens.
 
 ## What to take away
 
@@ -110,6 +112,6 @@ binding constraint is priced in salary, not tokens.
 - **Retry tax:** `cost_per_accepted ≈ attempt_cost / p`. A cheaper model wins only if
   `p_cheap / p_expensive > price_cheap / price_expensive` — reliability has to beat the price gap.
 - **A token discount is Amdahl-bounded** by the verification and human-review fractions, which no token price
-  touches. When review dominates, the token bill is the smallest lever.
+  touches. When verification and review dominate, the token bill is the smallest lever.
 
 **[New terms](../../glossary.md#cost-and-the-economics-of-agent-work)**: attempt-cost decomposition, input/output rate asymmetry, quadratic context re-send, prompt caching (stable prefix), batch discount, retry tax, break-even success rate, Amdahl bound on token savings.

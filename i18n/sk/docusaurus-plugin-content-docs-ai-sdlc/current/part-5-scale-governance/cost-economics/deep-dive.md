@@ -14,10 +14,11 @@ poskytovateľa), no o výške účtu rozhoduje práve *tvar* týchto súčtov.
 
 ## Rozklad jedného pokusu
 
-Pri volaní modelu sa účtujú dva prúdy s odlišnými sadzbami: **vstup** (všetko, čo odosielaš — systémový prompt,
-pravidlá, zadanie, predchádzajúce kroky, výsledky nástrojov) a **výstup** (to, čo model vygeneruje). Výstup
-zvyčajne stojí za token niekoľkonásobne viac než vstup, a preto ľudia sledujú najmä jeho. Pri práci agentov je
-však objem vstupu násobne väčší než objem výstupu, takže vyšší účet napokon vytvorí lacnejší prúd:
+Pri jednom pokuse sa účtujú dva prúdy s odlišnými sadzbami, sčítané za všetky jeho kroky: **vstup** (všetko, čo
+odosielaš — systémový prompt, pravidlá, zadanie, predchádzajúce kroky, výsledky nástrojov) a **výstup** (to, čo
+model vygeneruje). Výstup zvyčajne stojí za token niekoľkonásobne viac než vstup, a preto ľudia sledujú najmä
+jeho. Pri práci agentov je však objem vstupu násobne väčší než objem výstupu, takže vyšší účet napokon vytvorí
+lacnejší prúd:
 
 ```text
 attempt_cost = input_tokens × input_rate + output_tokens × output_rate
@@ -34,11 +35,11 @@ krokov a kontext sa v každom zväčší približne o rovnaký objem, celkový �
 jedného kroku. Tvorí ho súčet `1 + 2 + … + N`, teda **`O(N²)`**. Dvojnásobný počet krokov znamená približne
 *štvornásobné* náklady na vstup.
 
-Tento fakt mení poradie priorít. Vysvetľuje, prečo úloha, ktorá „trvala dvakrát dlhšie“, môže stáť štyrikrát
-viac, prečo za nafúknutý kontext platíš pri každom kroku, nielen raz, aj prečo má
-[nafúknutý korpus pravidiel](../drift-and-rot.md) z lekcie o drifte okrem následkov na kvalite aj priamu
-cenovku. Najväčšiu úsporu pri práci agentov prináša zmenšenie kontextu, no z cenníka jedného volania to
-neuvidíš.
+Tento fakt mení poradie priorít. Vysvetľuje, prečo za úlohu, ktorá si vyžiadala dvojnásobný počet krokov,
+zaplatíš približne štvornásobok nákladov na vstup, prečo za nafúknutý kontext platíš pri každom kroku, nielen
+raz, aj prečo má [nafúknutý korpus pravidiel](../drift-and-rot.md) z lekcie o drifte okrem následkov na kvalite
+aj priamu cenovku. Najväčšiu úsporu pri práci agentov prináša zmenšenie kontextu, no z cenníka jedného volania
+to neuvidíš.
 
 ## Prompt caching zmierňuje rast nákladov
 
@@ -84,20 +85,21 @@ Porovnaj dva modely. Drahý model s cenou `C` a úspešnosťou prvého pokusu `0
 | 0.30 | 0.5 C / 0.30 = 1.67 C | *more* expensive |
 
 Hranica rentability je jednoznačná: lacnejší model sa oplatí iba vtedy, keď `p_cheap / p_expensive > price_cheap / price_expensive`
-— pomer jeho úspešnosti k drahšiemu modelu musí byť vyšší než pomer ich cien. Polovičná cena nič neprinesie,
-ak spolu s ňou klesne spoľahlivosť pod polovicu. Celé tvrdenie, že „miera opakovaných pokusov preváži nad
-cenníkovou cenou“, sa tak zmestí do jednej nerovnosti, ktorú vieš merať.
+— pomer jeho úspešnosti k drahšiemu modelu musí byť vyšší než pomer ich cien. Polovičná cena neprinesie nič
+pri presne polovičnej spoľahlivosti a pod ňou ťa už bude stáť viac. Celé tvrdenie, že „miera opakovaných
+pokusov preváži nad cenníkovou cenou“, sa tak zmestí do jednej nerovnosti, ktorú vieš merať.
 
 ## Položky, ktoré zľava na tokenoch nezmení
 
 Posledný súčet zasadí ostatné do správneho rámca. Dve zo štyroch nákladových položiek z prvej časti —
-**overovanie** a **ľudská revízia** — od ceny tokenov nezávisia. Sémantické brány síce používajú volania
-modelu, no ich náklady rastú s objemom generovaného výstupu; ľudská revízia sa oceňuje mzdou a žiadnym nákupom
-ju nezrýchliš. Optimalizáciu ceny tokenov preto obmedzuje Amdahlov zákon rovnako ako každé iné zrýchlenie:
-ak ľudská revízia tvorí napríklad 40% celkových nákladov na zmenu, ani ľubovoľne veľká zľava na tokenoch
-nezníži celok o viac než zvyšných 60%. Keď prevládajú náklady na overovanie a revíziu, šetrenie na tokenoch
-optimalizuje najmenšiu položku. Práve preto prvá časť tvrdila, že rozhodujúce obmedzenie je ocenené v mzdách,
-nie v tokenoch.
+**overovanie** a **ľudská revízia** — neklesajú tak, ako klesajú náklady na generovanie. Sémantické brány sú
+samy osebe volania modelu, ich objem však určuje počet kontrol, ktoré spustíš, nie cena tokenov; ľudská
+revízia sa oceňuje mzdou a žiadnym nákupom ju nezrýchliš. Optimalizáciu ceny tokenov preto obmedzuje Amdahlov
+zákon rovnako ako každé iné zrýchlenie: ak ľudská revízia tvorí napríklad 40% celkových nákladov na zmenu, ani
+ľubovoľne veľká zľava na tokenoch nezníži celok o viac než zvyšných 60% — a v praxi ešte menej, pretože časť
+z tých 60% tvorí overovanie. Keď prevládajú náklady na overovanie a revíziu, šetrenie na tokenoch optimalizuje
+najmenšiu položku. Práve preto prvá časť tvrdila, že rozhodujúce obmedzenie je ocenené v mzdách, nie
+v tokenoch.
 
 ## Čo si odniesť
 
@@ -114,6 +116,6 @@ nie v tokenoch.
 - **Daň za opakovania:** `cost_per_accepted ≈ attempt_cost / p`. Lacnejší model sa oplatí iba vtedy, keď
   `p_cheap / p_expensive > price_cheap / price_expensive` — spoľahlivosť musí vyvážiť rozdiel v cene.
 - **Úsporu na tokenoch obmedzuje Amdahlov zákon** cez podiel overovania a ľudskej revízie, ktoré cena tokenov
-  nemení. Ak prevláda revízia, účet za tokeny je najmenšia páka.
+  nemení. Ak prevláda overovanie a revízia, účet za tokeny je najmenšia páka.
 
 **[Nové pojmy](../../glossary.md#cost-and-the-economics-of-agent-work)**: rozklad nákladov pokusu, asymetria vstupnej a výstupnej sadzby, kvadratické opakované posielanie kontextu, prompt caching (stabilný prefix), zľava za batch, daň za opakovania, hranica rentability podľa úspešnosti, Amdahlovo obmedzenie úspor na tokenoch.
