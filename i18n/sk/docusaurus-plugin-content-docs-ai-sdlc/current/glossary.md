@@ -372,9 +372,9 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Náklady na prijatú zmenu (cost per accepted change)** — poctivá jednotka ekonomiky agentov: všetko, čo sa minulo na ceste k zmene, ktorá prežila reťaz brán, vrátane opakovaných pokusov, opustených behov, volaní na overovanie a času revízie. Náklady na token sú cenník, nie meranie.
 
-**Miera opakovaných pokusov (retry rate)** — koľko pokusov potrebuje zmena, kým dosadne. Pri poctivom menovateli váži viac než cenníková cena: lacnejší model, ktorý potrebuje viac pokusov, býva ten drahší.
+**Miera opakovaných pokusov (retry rate)** — koľko pokusov potrebuje zmena, kým dosadne. Pri poctivom menovateli váži viac než cenníková cena: lacnejší model, ktorý potrebuje viac pokusov, je ten drahší vždy, keď jeho úspešnosť klesne viac než jeho cena.
 
-**Náklady na kontext (context cost)** — opakovaná cena za to, čo agent číta pri každom pokuse znova (repozitár, korpus pravidiel, zadanie). Pri práci agentov býva najväčšou položkou účtu a z odhadu podľa cenníka vypadne úplne.
+**Náklady na kontext (context cost)** — opakovaná cena za to, čo agent číta pri každom pokuse znova (repozitár, korpus pravidiel, zadanie). Pri práci agentov býva najväčšou položkou účtu za tokeny a z odhadu podľa cenníka vypadne úplne.
 
 **Náklady na overovanie (verification cost)** — volania modelu, ktoré spotrebujú samotné sémantické brány. Rastú s objemom výstupu, takže flotila, ktorá vygeneruje dvakrát toľko, zaplatí dvakrát toľko aj za kontrolu.
 

@@ -5,9 +5,9 @@ slug: /part-5-scale-governance/cost-economics/
 
 # Jednotkou sú náklady na prijatú zmenu, nie náklady na token
 
-Ceny tokenov cituje každý a užitočné sú zo všetkých čísel najmenej. Hovoria, koľko stojí jeden pokus — lenže
-pokusy si nekupuješ. Kupuješ si **zmeny, ktoré prežili reťaz brán**. Zvoľ nesprávny menovateľ a pomýliš sa aj
-vo všetkom, čo z neho vyvodíš: lacný model, ktorý potrebuje tri pokusy a záchranu od človeka, lacný nie je, a
+Ceny tokenov cituje každý a užitočné sú zo všetkých čísel najmenej. Oceňujú jednu zložku pokusu, lenže pokusy
+si nekupuješ. Kupuješ si **zmeny, ktoré prežili reťaz brán**. Zvoľ nesprávny menovateľ a pomýliš sa aj vo
+všetkom, čo z neho vyvodíš: lacný model, ktorý potrebuje tri pokusy a záchranu od človeka, lacný nie je, a
 drahý model, ktorému to vyjde na prvýkrát, môže byť tá výhodná kúpa.
 
 ## Najprv oprav menovateľ
@@ -31,18 +31,19 @@ naozaj nemáš kde dokúpiť.
 <YouTube id="7gMg98Hf3uM" title="What Makes Large Language Models Expensive? — IBM Technology" />
 
 IBM rozoberá, kam pri prevádzke veľkého modelu odchádzajú peniaze — parametre, kontext a výpočtový výkon za
-každým z nich. Ber to ako *inferenčnú* polovicu účtu; táto lekcia tvrdí, že pri práci agentov býva o
-ekonomike málokedy rozhodujúca práve tá polovica.
+každým z nich. Ber to ako *cenovú* stranu účtu — koľko stojí obslúžiť jedno volanie. Táto lekcia tvrdí, že pri
+práci agentov o ekonomike málokedy rozhoduje práve cenová strana: rozhoduje počet volaní, kontext, ktorý každé
+z nich nesie, a čas ľudskej revízie.
 
 :::
 
 ## Kam peniaze naozaj odchádzajú
 
-Štyri položky, zhruba v poradí, v akom ich tímy podceňujú.
+Štyri položky.
 
 **Kontext.** Agenti čítajú stále dokola. Ten istý repozitár, ten istý korpus pravidiel, to isté zadanie sa
 posielajú znova pri každom pokuse a za každého agenta. Pri práci agentov býva kontext najväčšou samostatnou
-položkou účtu a zároveň tou, na ktorú sa pri odhade z cenníka zabúda úplne — aj preto má
+položkou účtu za tokeny a zároveň tou, na ktorú sa pri odhade z cenníka zabúda úplne — aj preto má
 [nafúknutý korpus pravidiel](../drift-and-rot.md) z predchádzajúcej lekcie priamu cenovku, nielen následky na
 kvalite.
 
@@ -72,9 +73,9 @@ všetkým lacnejším.
 
 A poctivo drž aj druhú stranu, teda prínos. [Metóda](../../intro.md) z úvodu kurzu tu platí naplno: objem výstupu
 merateľne stúpa, no či stúpa aj *hodnota*, doložené nie je — aj výskumníci Microsoftu, ktorí majú v rukách
-jedny z najväčších nameraných nárastov priepustnosti v odbore, píšu, že zlúčený pull request nie je to isté
-ako hodnota, ktorú prinesie (`REPORTED`). Metrika nákladov na zlúčenú zmenu, ktorá sa zlepšuje, kým sa ďalej
-po prúde nezlepšuje nič, optimalizovala menovateľ, nie firmu. K nákladovej metrike preto pridaj jednu metriku
+jedny z najväčších nameraných nárastov priepustnosti v odbore, píšu (`REPORTED`), že zlúčený pull request nie
+je to isté ako hodnota, ktorú prinesie. Metrika nákladov na zlúčenú zmenu, ktorá sa zlepšuje, kým sa ďalej po
+prúde nezlepšuje nič, optimalizovala menovateľ, nie firmu. K nákladovej metrike preto pridaj jednu metriku
 výsledku, pri ktorej by ti bolo trápne vidieť rovnú čiaru.
 
 ## Tri úrovne zrelosti: soloista · malý tím · enterprise
@@ -97,7 +98,7 @@ sa vymknú.**
 - **Náklady na prijatú zmenu sú jediná poctivá jednotka.** Do čitateľa patria opakované pokusy, opustené behy,
   volania na overovanie aj čas revízie.
 - Pri tejto jednotke **preváži miera opakovaných pokusov nad cenníkovou cenou** a lacnejší model, ktorý
-  potrebuje viac pokusov, býva ten drahší.
+  potrebuje viac pokusov, je ten drahší vždy, keď jeho úspešnosť klesne viac než jeho cena.
 - **Na kontext sa pri odhade zabúda** — agenti čítajú stále dokola, takže nafúknutý korpus pravidiel má
   cenovku, nielen následky na kvalite.
 - **Ľudská revízia je vstup, ktorý sa výdavkami nezväčší.** Úzke miesto overovania je ekonomické obmedzenie
@@ -113,6 +114,6 @@ sa vymknú.**
 
 :::note[Ďalej — druhá časť lekcie]
 
-**[Aritmetika: kontext, cachovanie a daň za opakovania](./deep-dive.md)** — prehĺbenie: prečo je kontext zvyčajne najväčšia položka, ako prompt caching a dávkovanie menia súčet, a rozpísané čísla za nákladom na prijatú zmenu.
+**[Aritmetika: kontext, cachovanie a daň za opakovania](./deep-dive.md)** — prehĺbenie: prečo je kontext zvyčajne najväčšia položka účtu, ako prompt caching a dávkovanie menia súčet, a rozpísané čísla za nákladom na prijatú zmenu.
 
 :::
