@@ -49,10 +49,11 @@ flotila vyrobí prácu na prerobenie.
   zlúč ich potom zámerne.
 - **Zmeny schémy a ďalšie jednosmerné zmeny.** Dve súbežné migrácie nad jednou databázou sú race condition
   (súbehová chyba), ktorú nechceš objaviť až v produkcii; postup
-  [rozšíriť → migrovať → zúžiť](../part-4-platform/environments-migrations-data.md) zo IV. časti počíta s
-  jednou rukou naraz.
+  [rozšíriť → migrovať → zúžiť](../part-4-platform/environments-migrations-data.md) zo IV. časti platí len
+  vtedy, keď ho vedie jedna ruka.
 - **Integrácia.** Generovanie sa paralelizuje, zlučovanie nie. Reťaz brán a front na zlúčenie sú zámerne
-  jednoprúdové — prechádza sa nimi po jednom, pretože práve tam sa protichodná práca uvádza do súladu.
+  jednoprúdové — prechádza nimi vždy len jedna zmena, pretože práve tam sa protichodná práca uvádza do
+  súladu.
 
 Ľahko sa prehliadne štvrtý prípad: **revízia, ktorá číta živú vetvu, kým iný agent hýbe stromom**, sleduje
 pohyblivý cieľ. Čítaj zo vzdialeného repozitára alebo čítaj v izolácii.
@@ -91,7 +92,7 @@ si koordinoval prístup k nemu, a veľkosť flotily prispôsob tomu, čo reťaz 
   zrevidovať na jedno posedenie. *Akému zlyhaniu to predchádza:* dvaja agenti v jednom checkoute vyrobia
   commit, ktorý mieša ich prácu, a upratovanie stojí viac, než koľko paralelný beh ušetril.
 - **Malý tím.** Izolácia zabudovaná do nástrojov namiesto spoliehania sa na to, že si na ňu niekto spomenie,
-  sériový front na zlučovanie a výslovný zoznam artefaktov, na ktoré smie v danom okamihu siahať iba jedna
+  sériový front na zlúčenie a výslovný zoznam artefaktov, na ktoré smie v danom okamihu siahať iba jedna
   úloha. *Akému zlyhaniu to predchádza:* dve paralelné úlohy dopisujú do toho istého zdieľaného korpusu a
   druhý zápis potichu zmaže prvý.
 - **Enterprise.** Kapacita flotily plánovaná podľa nameranej priepustnosti overovania, izolácia vynútená

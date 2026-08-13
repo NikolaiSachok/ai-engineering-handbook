@@ -49,9 +49,9 @@ produce work that has to be redone.
   changelog. Run those sequentially, or have each task emit its own fragment and merge deliberately.
 - **Schema and other one-way changes.** Two concurrent migrations against one database is not a race you want
   to discover in production; Part IV's [expand → migrate → contract](../part-4-platform/environments-migrations-data.md)
-  assumes one hand at a time.
-- **Integration.** Generation parallelises; merging does not. The gate chain and the merge queue are a single
-  file, by design — that is where conflicting work is reconciled.
+  sequence only holds when one hand runs it.
+- **Integration.** Generation parallelises; merging does not. The gate chain and the merge queue admit one change at
+  a time, by design — that is where conflicting work is reconciled.
 
 There is a fourth, easy to miss: **a review that reads a live branch while another agent is mutating the tree**
 sees a moving target. Read from the remote, or read in isolation.
