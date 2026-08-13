@@ -5,8 +5,8 @@ slug: /part-5-scale-governance/cost-economics/
 
 # The unit is cost per accepted change, not cost per token
 
-Token prices are the number everyone quotes and the least useful one available. They describe what one attempt
-costs, and attempts are not what you are buying — you are buying **changes that survived the gate chain**. Get
+Token prices are the number everyone quotes and the least useful one available. They price one ingredient of an
+attempt, and attempts are not what you are buying — you are buying **changes that survived the gate chain**. Get
 the denominator wrong and every conclusion downstream is wrong too: the cheap model that needs three attempts
 and a human rescue is not cheap, and the expensive one that lands first time may be the bargain.
 
@@ -32,18 +32,19 @@ of.
 <YouTube id="7gMg98Hf3uM" title="What Makes Large Language Models Expensive? — IBM Technology" />
 
 IBM breaks down where the money goes in running a large model — parameters, context, and the compute behind
-each. Read it as the *inference* half of the bill; this lesson's argument is that for agent work the inference
-half is rarely the half that decides whether the economics work.
+each. Read it as the *price* side of the bill — what one call costs to serve. This lesson's argument is that
+for agent work the price side is rarely what decides whether the economics work: the volume of calls, the
+context each one carries, and the human review time are.
 
 :::
 
 ## Where the money actually goes
 
-Four buckets, roughly in the order teams underestimate them.
+Four buckets.
 
 **Context.** Agents re-read. The same repository, the same rules corpus, the same task brief get re-sent
-across attempts and across agents. Context is usually the largest single line item in an agentic workload and
-the one people forget entirely when estimating from a price list — which is also why the
+across attempts and across agents. Context is usually the largest single line item on an agentic workload's
+token bill and the one people forget entirely when estimating from a price list — which is also why the
 [bloated rule corpus](../drift-and-rot.md) from the previous lesson has a direct bill attached, not just a
 quality cost.
 
@@ -75,9 +76,9 @@ cheaper.
 And keep the value side honest. The course's opening
 [method](../../intro.md) applies with full force here: output is measurably up, and whether *value* is up is not
 established — Microsoft's own researchers, holding some of the largest measured throughput gains in the field,
-still write that a merged pull request is not the same as the value it delivers (`REPORTED`). A cost-per-merged
--change metric that improves while nothing downstream improves has optimised the denominator, not the business.
-Pair the cost metric with one outcome metric you would be embarrassed to see flat.
+still write (`REPORTED`) that a merged pull request is not the same as the value it delivers. A
+cost-per-merged-change metric that improves while nothing downstream improves has optimised the denominator,
+not the business. Pair the cost metric with one outcome metric you would be embarrassed to see flat.
 
 ## The three tiers — soloist · small-team · enterprise
 
@@ -98,8 +99,8 @@ before it runs away.**
 
 - **Cost per accepted change is the only honest unit.** Retries, abandoned runs, verification calls, and review
   time all belong in the numerator.
-- Under that unit, **retry rate outweighs sticker price**, and a cheaper model that needs more attempts is
-  usually the more expensive one.
+- Under that unit, **retry rate outweighs sticker price**, and a cheaper model that needs more attempts is the
+  more expensive one whenever its success rate falls further than its price.
 - **Context is the line item people forget** — agents re-read constantly, so a bloated rules corpus has a bill
   attached, not just a quality cost.
 - **Human review is the input that does not scale with spend.** The verification bottleneck is an economic
@@ -115,6 +116,6 @@ before it runs away.**
 
 :::note[Next — part 2 of the lesson]
 
-**[The arithmetic: context, caching, and the retry tax](./deep-dive.md)** — the deep dive: why context is usually the largest line item, how prompt caching and batching change the sum, and the worked numbers behind cost per accepted change.
+**[The arithmetic: context, caching, and the retry tax](./deep-dive.md)** — the deep dive: why context is usually the largest line item on the bill, how prompt caching and batching change the sum, and the worked numbers behind cost per accepted change.
 
 :::

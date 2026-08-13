@@ -329,9 +329,9 @@ its section here. The list grows as the course does.
 
 **Cost per accepted change** — the honest unit of agent economics: everything spent reaching a change that survived the gate chain, including retries, abandoned runs, verification calls, and review time. Cost per token is a price list, not a measurement.
 
-**Retry rate** — how many attempts a change takes to land. Under the honest denominator it outweighs sticker price: a cheaper model needing more attempts is usually the more expensive one.
+**Retry rate** — how many attempts a change takes to land. Under the honest denominator it outweighs sticker price: a cheaper model needing more attempts is the more expensive one whenever its success rate falls further than its price.
 
-**Context cost** — the recurring price of what the agent re-reads on every attempt (repository, rules corpus, brief). Usually the largest line item in agentic workloads and the one price-list estimates omit entirely.
+**Context cost** — the recurring price of what the agent re-reads on every attempt (repository, rules corpus, brief). Usually the largest line item on an agentic workload's token bill and the one price-list estimates omit entirely.
 
 **Verification cost** — the model calls the semantic gates themselves consume. It scales with output, so a fleet that generates twice as much pays twice as much to check it.
 
