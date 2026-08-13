@@ -9,7 +9,8 @@ sidebar_position: 2
 [Part 1](./index.md) argued the design goal for an agent that reads untrusted text: not a perfect injection
 filter, but a box small enough that a *successful* injection does no lasting damage. It named three dials —
 filesystem, egress, environment — and asserted the platform enforces them. This page opens the box. What each
-boundary actually is, what a successful attack at the layer above buys the attacker, what stops it here, and
+boundary actually is, what a successful attack at the layer in front of it buys the attacker, what stops it
+here, and
 where real sandboxes quietly leak. The through-line is the one from
 [layered gates](../../part-3-verification/layered-gates/index.md): no single boundary is trusted, and
 each is designed assuming the one in front of it will sometimes fail —
