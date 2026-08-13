@@ -28,7 +28,7 @@ Ak sa zlá zmena aj tak stane, užitočná otázka znie, koľko používateľov 
 
 **Vrátenie zmeny musí spúšťať automat, nie človek.** Zvyšovanie podielu, ktoré postupuje podľa harmonogramu a cúva až vtedy, keď si to niekto všimne, je pomalá brána prezlečená za rýchlu. Naviaž ho na signály vyššie: prekročenie miery chýb alebo latencie ho zastaví a obráti bez čakania na niečí úsudok. Ľudský úsudok je tá vzácna vec, ktorú ti III. časť kázala [míňať zámerne](../part-3-verification/review-at-volume.md); všimnúť si pohyb metriky nie je miesto, kde ho minúť.
 
-Existuje aj nameraný náznak, že si táto hrana pozornosť zaslúži. Správa DORA z roku 2025 zistila negatívny vzťah medzi používaním AI a stabilitou dodávania — a ako trval úvod, stupeň `MEASURED` má len v tom slabom zmysle rozsiahleho sebahodnotiaceho prieskumu, teda ide o vnímanie, nie o telemetriu. Neoprávňuje to na „AI zhoršuje tímy“. Oprávňuje presne na jedno: keď sa generovanie zrýchli, náraz pohltí cesta sprístupnenia a obnovy, takže tú cestu stavaj zámerne.
+Existuje aj nameraný náznak, že si táto hrana pozornosť zaslúži. Správa [DORA](https://dora.dev/dora-report-2025/) z roku 2025 zistila negatívny vzťah medzi používaním AI a stabilitou dodávania — a ako trval úvod, stupeň `MEASURED` má len v tom slabom zmysle rozsiahleho sebahodnotiaceho prieskumu, teda ide o vnímanie, nie o telemetriu. Neoprávňuje to na „AI zhoršuje tímy“. Oprávňuje presne na jedno: nestabilita, ktorú prieskum zaznamenal, sa týka práve *dodávania* — teda cesty sprístupnenia a obnovy — takže tú cestu stavaj zámerne a nespoliehaj sa, že vydrží.
 
 :::tip[▶ Video]
 
@@ -42,13 +42,13 @@ Existuje aj nameraný náznak, že si táto hrana pozornosť zaslúži. Správa 
 
 Vrátenie zmeny, ktoré si žiada zelené CI, nové zostavenie a nasadenie, nie je núdzový vypínač. Je to nádej s dodacou lehotou — a zlyhá presne v situácii, pre ktorú existuje, teda keď je časťou problému sama pipeline. Vypnutie musí byť *zmena stavu*, nie *zostavenie*: prepni flag, presuň váhu premávky, vráť smerovanie. Nech je mechanizmus akýkoľvek, skúška je jediná otázka — dokáže ho jeden človek použiť za pár sekúnd bez toho, aby vznikol nový artefakt?
 
-Flotily majú na tom vypínači ešte druhú polohu, ktorú samostatný vývojár nepozná. Zastaviť *zmenu* je vrátenie; zastaviť jej *zdroj* znamená pozastaviť agentov. Flotila, ktorá ďalej generuje nad základom, ktorý si práve vrátil, ti ten problém s chuťou postaví znova alebo naskladá ďalšiu prácu na základ, ktorému už neveríš. Runbook preto potrebuje oboje: vrátiť artefakt a zastaviť slučku, ktorá ho vyrobila — [človek-smerovač](../part-2-loop/roles-and-the-human.md) tu vykonáva jediný zásah, ktorý sa nedá delegovať na to, čo sa práve zastavuje.
+Flotily majú na tom vypínači ešte druhú polohu, ktorú samostatný vývojár nepozná. Zastaviť *zmenu* je vrátenie; zastaviť jej *zdroj* znamená pozastaviť agentov. Flotila, ktorá ďalej generuje nad základom, ktorý si práve vrátil, ti ten problém s chuťou postaví znova alebo naskladá ďalšiu prácu na základ, ktorému už neveríš. Runbook preto potrebuje oboje: vrátiť artefakt a zastaviť slučku, ktorá ho vyrobila — [človek-smerovač](../part-2-loop/roles-and-the-human.md) tu vykonáva zásah, ktorý sa zo svojej podstaty nedá delegovať na to, čo sa práve zastavuje.
 
 ## Tri úrovne zrelosti: soloista · malý tím · enterprise
 
 Invariant sa nehýbe: **zmena je v produkcii pozorovateľná, k svojmu publiku sa dostáva postupne a jeden človek ju vie za pár sekúnd zastaviť bez nového zostavenia.** Škáluje sa to, koľko z toho beží bez človeka v ceste.
 
-- **Soloista.** Sledovanie chýb, ktoré ťa naozaj zobudí, flag prepínateľný z telefónu a predchádzajúca verzia pripravená obslúžiť prevádzku. *Akému zlyhaniu to predchádza:* o niekoľko dní sa od používateľa dozvieš, že nové vydanie pokazilo registráciu — a potom ti hodinu trvá, kým to vrátiš.
+- **Soloista.** Sledovanie chýb, ktoré ťa naozaj zobudí, flag, ktorý zapneš najprv sebe a hŕstke známych používateľov a až potom všetkým, prepínateľný z telefónu, a predchádzajúca verzia pripravená obslúžiť prevádzku. *Akému zlyhaniu to predchádza:* o niekoľko dní sa od používateľa dozvieš, že nové vydanie pokazilo registráciu — a potom ti hodinu trvá, kým to vrátiš.
 - **Malý tím.** Dashboardy naviazané na hŕstku dohodnutých signálov, canary alebo percentuálne nasadzovanie ako predvolený postup, automatické vrátenie zmeny pri prekročení hranice a spísaný runbook, ktorý menuje, kto čo prepína. *Akému zlyhaniu to predchádza:* počas zvyšovania podielu každý predpokladá, že ten graf sleduje niekto iný.
 - **Enterprise.** SLO s rozpočtami chýb, ktoré riadia tempo sprístupňovania, progresívne dodávanie s automatizovanou analýzou, auditované postupy núdzového vypnutia nacvičované ako požiarny poplach a vyhodnotenie incidentov, ktoré plní register únikov. *Akému zlyhaniu to predchádza:* schopnosť vrátiť zmenu, ktorá sa mimo prezentácie nikdy neskúšala a odhalí sa počas incidentu, pre ktorý bola napísaná.
 

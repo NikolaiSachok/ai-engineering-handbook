@@ -98,10 +98,11 @@ correction, not a boast: the biggest structural gap in the current writing is th
 internal QA rather than on live operation. A well-run loop detects and reverts a bad change *by the system*,
 before a user has to complain.
 
-There is a measured hint that the feedback edge is where the value hides. DORA's 2025 report finds that AI
-adoption carries a negative relationship with delivery *stability* — acceleration can expose weaknesses
-downstream. Read it carefully, though: that finding is `MEASURED` only in the weak sense of a self-reported
-survey of roughly 5,000 respondents. It is perception, not telemetry, and it does not license "AI makes teams
+There is a measured hint that the feedback edge is where the value hides.
+[DORA's 2025 report](https://dora.dev/dora-report-2025/) finds that AI adoption carries a negative
+relationship with delivery *stability* — acceleration can expose weaknesses downstream. Read it carefully,
+though: that finding is `MEASURED` only in the weak sense of a self-reported survey of roughly 5,000
+respondents. It is perception, not telemetry, and it does not license "AI makes teams
 faster" or "AI makes teams slower." It licenses exactly one thing: the closing edge deserves the attention
 Parts IV and V will give it.
 
