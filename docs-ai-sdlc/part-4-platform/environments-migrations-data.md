@@ -98,7 +98,7 @@ proven — from one rehearsed restore, to per-migration reversibility, to drills
   machine, and one rehearsed restore so you know the backup works. *The failure it prevents:* discovering that
   the only copy of real data was the one the agent just rewrote.
 - **Small-team.** A non-production environment as the default target, a masked or synthetic dataset produced by
-  a repeatable pipeline rather than by hand, expand/contract migrations with a CI gate on destructive
+  a repeatable pipeline rather than by hand, expand → migrate → contract migrations with a CI gate on destructive
   statements, and point-in-time recovery with a periodic restore drill. *The failure it prevents:* the
   "temporary" production dump that quietly becomes the team's shared test fixture.
 - **Enterprise.** Provable environment isolation, data classification driving masking policy automatically, a
@@ -118,7 +118,7 @@ proven — from one rehearsed restore, to per-migration reversibility, to drills
 - **Expand → migrate → contract.** Additive by default, each step independently reversible, contraction as its
   own deliberate change — and a deterministic gate on destructive statements, because at generation speed
   nobody reliably spots the one dangerous line.
-- **A backup you have never restored is not a backup.** Rehearse recovery so that whether rollback is possible
+- **A backup you have never restored is not a backup.** Rehearse recovery so that whether you can recover
   is a fact you own, not a claim the agent makes.
 
 **[New terms](../glossary.md#environments-migrations-and-real-data)**: realistic-not-real data, data masking vs anonymisation, referential integrity, distribution tail, expand–migrate–contract (parallel change), destructive-statement gate, rehearsed restore, point-in-time recovery.
