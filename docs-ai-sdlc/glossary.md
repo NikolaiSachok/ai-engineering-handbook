@@ -355,7 +355,7 @@ its section here. The list grows as the course does.
 
 **Break-even success rate** — the bar a cheaper model must clear: it wins only when `p_cheap / p_expensive > price_cheap / price_expensive`. Half the price buys nothing below half the reliability. *(deep dive)*
 
-**Amdahl bound on token savings** — verification and human review do not move with token price, so a token discount can reduce total cost of a change by at most the fraction that is *not* review. When review dominates, the token bill is the smallest lever. *(deep dive)*
+**Amdahl bound on token savings** — a token discount cannot reach human review, which is priced in salary, nor the volume of verification, which is set by how many checks you run rather than by the tariff. So it can reduce the total cost of a change by at most the remaining fraction, and when verification and review dominate, the token bill is the smallest lever. *(deep dive)*
 
 ## The enterprise tier: audit, provenance, and what's required \{#the-enterprise-tier-audit-provenance-and-whats-required}
 
