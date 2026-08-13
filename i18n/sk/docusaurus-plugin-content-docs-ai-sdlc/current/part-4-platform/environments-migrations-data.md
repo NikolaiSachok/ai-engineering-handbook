@@ -48,7 +48,7 @@ Záloha, ktorú si nikdy neobnovil, nie je záloha; je to neoverené tvrdenie o 
 Invariant sa nemení: **agent pracuje nad vierohodnou kópiou a existuje cesta späť, ktorú už niekto naozaj prešiel.** Škáluje sa to, ako kópia vzniká a ako silno je vratnosť preukázaná — od jednej nacvičenej obnovy cez vratnosť každej migrácie až po nácviky voči stanovenému cieľu.
 
 - **Soloista.** Lokálna databáza naplnená počiatočnými dátami, ktorú smie agent beztrestne zničiť, produkčné prihlasovacie údaje nikde v blízkosti stroja a jedna nacvičená obnova, aby si vedel, že záloha funguje. *Akému zlyhaniu to predchádza:* až po prepísaní dát agentom zistíš, že to bola jediná kópia skutočných údajov.
-- **Malý tím.** Neprodukčné prostredie ako predvolený cieľ, maskovaná alebo syntetická množina z opakovateľnej pipeline namiesto ručnej výroby, migrácie postupom rozšíriť/zúžiť s bránou v CI na deštruktívne príkazy a obnova k bodu v čase s pravidelným nácvikom. *Akému zlyhaniu to predchádza:* z „dočasného“ produkčného dumpu sa potichu stane spoločná testovacia vzorka celého tímu.
+- **Malý tím.** Neprodukčné prostredie ako predvolený cieľ, maskovaná alebo syntetická množina z opakovateľnej pipeline namiesto ručnej výroby, migrácie postupom rozšíriť → migrovať → zúžiť s bránou v CI na deštruktívne príkazy a obnova k bodu v čase s pravidelným nácvikom. *Akému zlyhaniu to predchádza:* z „dočasného“ produkčného dumpu sa potichu stane spoločná testovacia vzorka celého tímu.
 - **Enterprise.** Preukázateľne oddelené prostredia, klasifikácia dát, ktorá automaticky riadi politiku maskovania, samostatné schvaľovanie zužujúcich migrácií a obnova po havárii testovaná voči stanovenému cieľovému bodu obnovy a stanovenému cieľovému času obnovy (RPO a RTO). *Akému zlyhaniu to predchádza:* schopnosť obnovy existuje na papieri, nepatrí nikomu a prvýkrát sa vyskúša počas incidentu, pre ktorý bola napísaná.
 
 ## Čo si odniesť
@@ -57,6 +57,6 @@ Invariant sa nemení: **agent pracuje nad vierohodnou kópiou a existuje cesta s
 - Použiteľná syntetická alebo maskovaná množina zachová **referenčnú integritu** a **škaredý chvost rozdelenia**. Vzorky s jedinou bezproblémovou cestou vyrobia zelené testy bez výpovede.
 - Maskovanie nie je anonymizácia. Spätné priradenie osôb prepojením zdrojov aj zapamätávanie v generátoroch sú skutočné; ber kópiu ako menej rizikovú, nikdy ako bezrizikovú.
 - **Rozšíriť → migrovať → zúžiť.** Predvolene aditívne, každý krok samostatne vratný, zúženie ako vlastná zámerná zmena — a deterministická brána na deštruktívne príkazy, lebo pri rýchlosti generovania si ten jeden nebezpečný riadok nikto spoľahlivo nevšimne.
-- **Záloha, ktorú si nikdy neobnovil, nie je záloha.** Nacvič obnovu, aby otázka, či sa dá vrátiť späť, bola fakt, ktorý vlastníš, a nie tvrdenie, ktoré vyslovil agent.
+- **Záloha, ktorú si nikdy neobnovil, nie je záloha.** Nacvič obnovu, aby otázka, či sa vieš obnoviť, bola fakt, ktorý vlastníš, a nie tvrdenie, ktoré vyslovil agent.
 
 **[Nové pojmy](../glossary.md#environments-migrations-and-real-data)**: vierohodné, nie reálne dáta, maskovanie dát verzus anonymizácia, referenčná integrita, chvost rozdelenia, rozšíriť–migrovať–zúžiť (paralelná zmena), brána na deštruktívne príkazy, nacvičená obnova, obnova k bodu v čase.
