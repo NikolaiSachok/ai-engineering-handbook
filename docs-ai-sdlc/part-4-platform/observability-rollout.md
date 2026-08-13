@@ -51,11 +51,12 @@ stops and reverses it without waiting for judgment. Human judgment is the scarce
 [spend deliberately](../part-3-verification/review-at-volume.md); noticing a metric move is not where to spend
 it.
 
-There is a measured hint that this edge deserves the attention. DORA's 2025 report finds AI adoption carries a
-*negative* relationship with delivery stability — and, as the introduction insisted, that is `MEASURED` only in
-the weak sense of a large self-reported survey, perception rather than telemetry. It does not license "AI makes
-teams worse." It licenses precisely one thing: when generation accelerates, the part that absorbs the shock is
-the release and recovery path, so build that part deliberately.
+There is a measured hint that this edge deserves the attention.
+[DORA's 2025 report](https://dora.dev/dora-report-2025/) finds AI adoption carries a *negative* relationship with
+delivery stability — and, as the introduction insisted, that is `MEASURED` only in the weak sense of a large
+self-reported survey, perception rather than telemetry. It does not license "AI makes
+teams worse." It licenses precisely one thing: the instability it reports is instability in *delivery* — the
+release and recovery path — so build that part deliberately instead of assuming it will hold.
 
 :::tip[▶ Video]
 
@@ -79,8 +80,8 @@ Fleets add a second position to the switch that single-developer workflows do no
 is a rollback; stopping the *source* means pausing the agents. A fleet that is still generating against a base
 you have just reverted will cheerfully rebuild the problem, or stack new work on a foundation you no longer
 trust. So the runbook needs both: revert the artefact, and halt the loop that produced it — the
-[human router](../part-2-loop/roles-and-the-human.md) exercising the one intervention that cannot be delegated
-to the thing being stopped.
+[human router](../part-2-loop/roles-and-the-human.md) exercising an intervention that, by construction, cannot
+be delegated to the thing being stopped.
 
 ## The three tiers — soloist · small-team · enterprise
 
@@ -88,9 +89,10 @@ The invariant does not move: **a change is observable in production, reaches its
 stopped by one person in seconds without a rebuild.** What scales is how much of it runs without a human in the
 path.
 
-- **Soloist.** Error tracking that actually pages you, a flag you can flip from your phone, and the previous
-  version kept ready to serve. *The failure it prevents:* learning from a user, days later, that the release
-  broke sign-up — and then needing an hour to undo it.
+- **Soloist.** Error tracking that actually pages you, a flag you turn on for yourself and a handful of known
+  users before everyone, flippable from your phone, and the previous version kept ready to serve.
+  *The failure it prevents:* learning from a user, days later, that the release broke sign-up — and then
+  needing an hour to undo it.
 - **Small-team.** Dashboards tied to a handful of agreed signals, canary or percentage rollout as the default,
   automated revert on threshold breach, and a written runbook naming who flips what. *The failure it prevents:*
   everyone assuming someone else is watching the graph during a ramp.
