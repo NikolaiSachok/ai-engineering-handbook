@@ -91,20 +91,18 @@ pokusov preváži nad cenníkovou cenou“, sa tak zmestí do jednej nerovnosti,
 
 ## Položky, ktoré zľava na tokenoch nezmení
 
-Posledný súčet zasadí ostatné do správneho rámca. Dve zo štyroch nákladových položiek z prvej časti —
-**overovanie** a **ľudská revízia** — neklesajú tak, ako klesajú náklady na generovanie. Sémantické brány sú
-samy osebe volania modelu, ich objem však určuje počet kontrol, ktoré spustíš, nie cena tokenov; ľudská
-revízia sa oceňuje mzdou a žiadnym nákupom ju nezrýchliš. Optimalizáciu ceny tokenov preto obmedzuje Amdahlov
-zákon rovnako ako každé iné zrýchlenie: ak ľudská revízia tvorí napríklad 40% celkových nákladov na zmenu, ani
-ľubovoľne veľká zľava na tokenoch nezníži celok o viac než zvyšných 60% — a v praxi ešte menej, pretože časť
-z tých 60% tvorí overovanie. Keď prevládajú náklady na overovanie a revíziu, šetrenie na tokenoch optimalizuje
-najmenšiu položku. Práve preto prvá časť tvrdila, že rozhodujúce obmedzenie je ocenené v mzdách, nie
-v tokenoch.
+Posledný súčet zasadí ostatné do správneho rámca. Zo štyroch nákladových položiek z prvej časti je mimo dosahu
+ceny tokenov jediná — **ľudská revízia**: oceňuje sa mzdou a žiadnym nákupom ju nezrýchliš. **Overovanie** je
+samo volaním modelu, takže ho zľava zníži tiež; čo zľava nedokáže, je znížiť počet kontrol, ktoré spustíš.
+Optimalizáciu ceny tokenov preto obmedzuje Amdahlov zákon rovnako ako každé iné zrýchlenie: ak ľudská revízia
+tvorí napríklad 40% celkových nákladov na zmenu, ani ľubovoľne veľká zľava na tokenoch nezníži celok o viac
+než zvyšných 60%. Keď prevláda revízia, šetrenie na tokenoch optimalizuje najmenšiu položku. Práve preto prvá
+časť tvrdila, že rozhodujúce obmedzenie je ocenené v mzdách, nie v tokenoch.
 
 ## Čo si odniesť
 
-- **Rozlož náklady pokusu:** `input × input_rate + output × output_rate`. Výstup stojí za token viac, no objem
-  vstupu je oveľa väčší, a preto účet určuje vstup.
+- **Rozlož náklady pokusu:** `input_tokens × input_rate + output_tokens × output_rate`. Výstup stojí za token
+  viac, no objem vstupu je oveľa väčší, a preto účet určuje vstup.
 - **Opakované posielanie kontextu rastie ako `O(N²)`:** model bez stavu číta pri každom kroku celý prepis,
   takže zdvojnásobenie počtu krokov približne zoštvornásobí náklady na vstup. Najviac ušetríš skrátením
   kontextu.
@@ -115,7 +113,7 @@ v tokenoch.
   interaktívne kroky doň nepatria. Rozhoduje, či na výsledok čaká človek.
 - **Daň za opakovania:** `cost_per_accepted ≈ attempt_cost / p`. Lacnejší model sa oplatí iba vtedy, keď
   `p_cheap / p_expensive > price_cheap / price_expensive` — spoľahlivosť musí vyvážiť rozdiel v cene.
-- **Úsporu na tokenoch obmedzuje Amdahlov zákon** cez podiel overovania a ľudskej revízie, ktoré cena tokenov
-  nemení. Ak prevláda overovanie a revízia, účet za tokeny je najmenšia páka.
+- **Úsporu na tokenoch obmedzuje Amdahlov zákon** cez podiel ľudskej revízie, ktorý cena tokenov nemení. Ak
+  prevláda revízia, účet za tokeny je najmenšia páka.
 
 **[Nové pojmy](../../glossary.md#cost-and-the-economics-of-agent-work)**: rozklad nákladov pokusu, asymetria vstupnej a výstupnej sadzby, kvadratické opakované posielanie kontextu, prompt caching (stabilný prefix), zľava za batch, daň za opakovania, hranica rentability podľa úspešnosti, Amdahlovo obmedzenie úspor na tokenoch.
