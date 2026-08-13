@@ -34,9 +34,14 @@ contains only the happy path is a test fixture pretending to be a corpus.
 
 One honest caveat belongs here, because the technique is often oversold. Masking is not automatically
 anonymisation. A dataset scrubbed of direct identifiers can often be re-identified by joining it against
-another source, and synthetic data generated from real data can memorise and reproduce parts of it
-(`REPORTED`, a persistent finding in the privacy literature). Treat a masked or synthetic set as *lower* risk,
-not *no* risk, and keep it out of public repositories accordingly.
+another source: [Rocher et al.](https://www.nature.com/articles/s41467-019-10933-3) estimate that **99.98%**
+of Americans are correctly re-identifiable from **15 demographic attributes**, and conclude that current
+de-identification practice does not meet the anonymisation standard GDPR assumes (`REPORTED`). Synthetic data
+is not the way out either — across the generators tested by
+[Stadler et al.](https://www.usenix.org/conference/usenixsecurity22/presentation/stadler), synthetic data
+either failed to prevent inference about individual source records or lost the utility it was generated for
+(`REPORTED`). Treat a masked or synthetic set as *lower* risk, not *no* risk, and keep it out of public
+repositories accordingly.
 
 :::tip[▶ Video]
 
@@ -73,8 +78,8 @@ to the one file type where a mistake is not revertible by editing code.
 ## Rollback is something you build, not something you hope for
 
 A backup you have never restored is not a backup; it is an untested assertion about a file. This is exactly
-Part III's point about a gate you have never watched fail — quiet is not the same as working — moved to the
-recovery path. The only thing that establishes recovery is a rehearsed restore: take the backup, bring up a
+Part III's point about [a gate you have never watched fail](../part-3-verification/layered-gates/index.md) —
+quiet is not the same as working — moved to the recovery path. The only thing that establishes recovery is a rehearsed restore: take the backup, bring up a
 throwaway environment from it, and check that the data is actually there and coherent.
 
 The [Replit incident](https://incidentdatabase.ai/cite/1152/) from the previous lesson has a second lesson
@@ -85,9 +90,9 @@ is irrelevant. When it is not, the fastest confident voice in the room wins, and
 
 ## The three tiers — soloist · small-team · enterprise
 
-The invariant is constant: **the agent works against a realistic copy, and every structural change is
-individually reversible by a procedure someone has actually run.** What scales is how the copy is produced and
-how strongly reversibility is proven.
+The invariant is constant: **the agent works against a realistic copy, and there is a way back that
+someone has actually run.** What scales is how the copy is produced and how strongly reversibility is
+proven — from one rehearsed restore, to per-migration reversibility, to drills against a stated objective.
 
 - **Soloist.** A seeded local database the agent can freely destroy, production credentials nowhere near the
   machine, and one rehearsed restore so you know the backup works. *The failure it prevents:* discovering that
@@ -97,8 +102,8 @@ how strongly reversibility is proven.
   statements, and point-in-time recovery with a periodic restore drill. *The failure it prevents:* the
   "temporary" production dump that quietly becomes the team's shared test fixture.
 - **Enterprise.** Provable environment isolation, data classification driving masking policy automatically, a
-  separate approval path for contracting migrations, and disaster recovery tested against stated RPO and RTO
-  objectives. *The failure it prevents:* a recovery capability that exists on paper, is owned by no one, and is
+  separate approval path for contracting migrations, and disaster recovery tested against a stated recovery point objective and
+  recovery time objective (RPO and RTO). *The failure it prevents:* a recovery capability that exists on paper, is owned by no one, and is
   first exercised during the incident it was meant for.
 
 ## What to take away

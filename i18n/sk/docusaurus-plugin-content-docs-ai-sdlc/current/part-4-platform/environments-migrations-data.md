@@ -15,7 +15,7 @@ Prvý je regulačný a tvrdý: kópia osobných údajov sú stále osobné údaj
 
 Alternatívou je dátová množina, ktorá zachová *tvar* produkcie a nezachová *ľudí*: generované syntetické záznamy alebo maskovaná podmnožina. O použiteľnosti rozhodujú dve vlastnosti. Musí prežiť **referenčná integrita (referential integrity)** — ak si cudzie kľúče v maskovaných dátach prestanú sedieť, testy prejdú z dôvodov, ktoré s kódom nesúvisia. A musí prežiť **rozdelenie hodnôt (distribution)** vrátane toho škaredého chvosta: prázdny reťazec, meno s apostrofom, adresa so 400 znakmi, riadok starší než posledná zmena schémy. Syntetické dáta, v ktorých je iba bezproblémová cesta, nie sú korpus — je to testovacia vzorka, ktorá sa naň iba hrá.
 
-Patrí sem jedno poctivé upozornenie, lebo táto technika sa často predáva lepšie, než aká je. Maskovanie nie je automaticky anonymizácia. Dátová množina zbavená priamych identifikátorov sa často dá spätne priradiť k osobám prepojením s iným zdrojom a generátor syntetických dát si môže zapamätať kusy skutočných dát a zopakovať ich (`REPORTED`, opakované zistenie vo výskume ochrany súkromia). Maskovanú aj syntetickú množinu preto ber ako *menej* rizikovú, nie ako *bezrizikovú*, a podľa toho ju do verejných repozitárov nedávaj.
+Patrí sem jedno poctivé upozornenie, lebo táto technika sa často predáva lepšie, než aká je. Maskovanie nie je automaticky anonymizácia. Dátová množina zbavená priamych identifikátorov sa často dá spätne identifikovať prepojením s iným zdrojom: [Rocher a kol.](https://www.nature.com/articles/s41467-019-10933-3) odhadujú, že **99,98 %** Američanov možno správne spätne identifikovať z **15 demografických atribútov**, a uzatvárajú, že súčasná prax odstraňovania identifikátorov nespĺňa štandard anonymizácie, s ktorým počíta GDPR (`REPORTED`). Ani syntetické dáta nie sú východiskom — naprieč generátormi testovanými [Stadlerom a kol.](https://www.usenix.org/conference/usenixsecurity22/presentation/stadler) syntetické dáta buď nezabránili odvodzovaniu informácií o jednotlivých záznamoch zo zdroja, alebo stratili úžitkovú hodnotu, pre ktorú boli vytvorené (`REPORTED`). Maskovanú aj syntetickú množinu preto ber ako *menej* rizikovú, nie ako *bezrizikovú*, a podľa toho ju do verejných repozitárov nedávaj.
 
 :::tip[▶ Video]
 
@@ -39,17 +39,17 @@ Každý krok sa dá vrátiť samostatne, a práve táto vlastnosť rozhoduje, ke
 
 ## Možnosť vrátiť sa musíš postaviť, nie v ňu dúfať
 
-Záloha, ktorú si nikdy neobnovil, nie je záloha; je to neoverené tvrdenie o súbore. Presne to hovorila III. časť o bráne, ktorú si nikdy nevidel zlyhať — ticho nie je to isté čo funkčnosť — len prenesené na cestu obnovy. Obnovu preukáže jedine nacvičený postup: vezmi zálohu, postav z nej dočasné prostredie a over, že dáta tam naozaj sú a držia spolu.
+Záloha, ktorú si nikdy neobnovil, nie je záloha; je to neoverené tvrdenie o súbore. Presne to hovorila III. časť o [bráne, ktorú si nikdy nevidel zlyhať](../part-3-verification/layered-gates/index.md) — ticho nie je to isté čo funkčnosť — len prenesené na cestu obnovy. Obnovu preukáže jedine nacvičený postup: vezmi zálohu, postav z nej dočasné prostredie a over, že dáta tam naozaj sú a držia spolu.
 
 [Incident v Replite](https://incidentdatabase.ai/cite/1152/) z predchádzajúcej lekcie v sebe ukrýva ešte druhé poučenie. Agent zničil produkčné dáta a potom tvrdil, že návrat späť nie je možný — a mýlil sa (`REPORTED`). Zaujímavé zlyhanie nie je to nepravdivé tvrdenie; je ním fakt, že mu nikto nedokázal okamžite odporovať. Keď je obnova známy a odskúšaný postup, názor agenta na to, či je vôbec možná, nikoho nezaujíma. Keď taký postup nie je, vyhrá najrýchlejší sebaistý hlas v miestnosti — a môže patriť jazykovému modelu.
 
 ## Tri úrovne zrelosti: soloista · malý tím · enterprise
 
-Invariant sa nehýbe: **agent pracuje nad vierohodnou kópiou a každá štrukturálna zmena sa dá samostatne vrátiť postupom, ktorý už niekto naozaj vykonal.** Škáluje sa to, ako kópia vzniká a ako silno je vratnosť preukázaná.
+Invariant sa nemení: **agent pracuje nad vierohodnou kópiou a existuje cesta späť, ktorú už niekto naozaj prešiel.** Škáluje sa to, ako kópia vzniká a ako silno je vratnosť preukázaná — od jednej nacvičenej obnovy cez vratnosť každej migrácie až po nácviky voči stanovenému cieľu.
 
 - **Soloista.** Lokálna databáza naplnená počiatočnými dátami, ktorú smie agent beztrestne zničiť, produkčné prihlasovacie údaje nikde v blízkosti stroja a jedna nacvičená obnova, aby si vedel, že záloha funguje. *Akému zlyhaniu to predchádza:* až po prepísaní dát agentom zistíš, že to bola jediná kópia skutočných údajov.
 - **Malý tím.** Neprodukčné prostredie ako predvolený cieľ, maskovaná alebo syntetická množina z opakovateľnej pipeline namiesto ručnej výroby, migrácie postupom rozšíriť/zúžiť s bránou v CI na deštruktívne príkazy a obnova k bodu v čase s pravidelným nácvikom. *Akému zlyhaniu to predchádza:* z „dočasného“ produkčného dumpu sa potichu stane spoločná testovacia vzorka celého tímu.
-- **Enterprise.** Preukázateľne oddelené prostredia, klasifikácia dát, ktorá automaticky riadi politiku maskovania, samostatné schvaľovanie zužujúcich migrácií a obnova po havárii testovaná voči stanoveným cieľom RPO a RTO. *Akému zlyhaniu to predchádza:* schopnosť obnovy existuje na papieri, nepatrí nikomu a prvýkrát sa vyskúša počas incidentu, pre ktorý bola napísaná.
+- **Enterprise.** Preukázateľne oddelené prostredia, klasifikácia dát, ktorá automaticky riadi politiku maskovania, samostatné schvaľovanie zužujúcich migrácií a obnova po havárii testovaná voči stanovenému cieľovému bodu obnovy a stanovenému cieľovému času obnovy (RPO a RTO). *Akému zlyhaniu to predchádza:* schopnosť obnovy existuje na papieri, nepatrí nikomu a prvýkrát sa vyskúša počas incidentu, pre ktorý bola napísaná.
 
 ## Čo si odniesť
 
