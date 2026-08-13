@@ -89,7 +89,7 @@ Hranica rentability je jednoznačná: lacnejší model sa oplatí iba vtedy, ke�
 pri presne polovičnej spoľahlivosti a pod ňou ťa už bude stáť viac. Celé tvrdenie, že „miera opakovaných
 pokusov preváži nad cenníkovou cenou“, sa tak zmestí do jednej nerovnosti, ktorú vieš merať.
 
-## Položky, ktoré zľava na tokenoch nezmení
+## Položka, ktorú zľava na tokenoch nezmení
 
 Posledný súčet zasadí ostatné do správneho rámca. Zo štyroch nákladových položiek z prvej časti je mimo dosahu
 ceny tokenov jediná — **ľudská revízia**: oceňuje sa mzdou a žiadnym nákupom ju nezrýchliš. **Overovanie** je

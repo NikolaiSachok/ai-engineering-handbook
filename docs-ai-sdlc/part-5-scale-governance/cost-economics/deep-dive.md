@@ -88,7 +88,7 @@ rate must stay above half the expensive model's, which is 0.40. Half the price b
 half the reliability, and costs you more below it. This is the whole of "retry
 rate outweighs sticker price," reduced to one inequality you can actually measure.
 
-## The lines a token discount cannot touch
+## The line a token discount cannot touch
 
 One closing sum keeps the others honest. Of the four cost buckets from Part 1, only **human review** is
 beyond the reach of token price — it is paid in salary, and its throughput is not for sale.
