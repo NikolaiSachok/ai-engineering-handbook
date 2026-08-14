@@ -7,6 +7,12 @@ sidebar_position: 6
 
 Pravidlo, o ktorého dodržiavanie agenta iba *požiadaš*, je odporúčanie. Pravidlo, ktoré *nedokáže obísť*, je zábrana. Na tomto jedinom rozdiele stojí celá lekcia. Ide pritom o jedno z mála tvrdení v tomto kurze, ktoré podporujú až tri nezávislé zdroje: názory popredných odborníkov v odbore, záznamy podnikových incidentov a skutočný súbor produkčných pravidiel. Všetky dospeli k rovnakému záveru rôznymi cestami bez toho, aby sa navzájom citovali. Keď sa nezávislé zdroje takto jednoznačne zhodujú, treba to otvorene povedať a ukázať všetky tri. Stupne dôkazov z 2. lekcie — `MEASURED` (namerané), `REPORTED` (hlásené), `ASSERTED` (tvrdené) — používame aj tu. Záleží na nich viac než zvyčajne, pretože najsilnejším zdrojom je súbor správ o incidentoch a najslabšia je samotná zhoda názorov.
 
+:::note[Z praxe]
+
+Praktický príklad presne tohto rozdielu z tvorby príručky opisujem v článku [Kurz o vývoji s pomocou AI som vytvoril tak, že som s ňou sám vyvíjal](/blog/building-a-course-by-doing-it) — kontrola zachytila nesprávnu citáciu len preto, že bola samostatným krokom pracovného postupu, nie iba pokynom, ktorý sa pri vypracúvaní konceptu dal preskočiť.
+
+:::
+
 ## Tri zdroje vedú k rovnakému záveru
 
 Začnime názormi, teda najmenej presvedčivým dôkazom. Ľudia, ktorí sa profesionálne zaoberajú programovacími agentmi, bez vzájomnej dohody dospeli k rovnakému stanovisku v otázke, o ktorej sa počas roka 2025 viedli spory: trvalé pravidlá zapísané prózou sú tou najslabšou zábranou, akú môžeš vytvoriť. [Inžinieri Anthropic](https://code.claude.com/docs/en/best-practices) priamo opísali výhodu vynútiteľných kontrol: *„hooky sú deterministické a zaručujú, že sa daná akcia vykoná“* (`ASSERTED`, dodávateľ). [Birgitta Böckeler z Thoughtworks](https://martinfowler.com/articles/sensors-for-coding-agents.html) rovnako priamo opísala slabinu nevynútených pokynov. Vytvorila nástroj na kontrolu udržiavateľnosti, agentom pomocou pokynu v AGENTS.md zadala, aby ho spúšťali, a sledovala výsledok: *„Je to zároveň dosť nespoľahlivé. Musela som sa agentov veľakrát pýtať, prečo ani raz nespustili kontrolu pomocou snímačov“* (`REPORTED`, jej vlastná prax). Na jednej strane dodávateľ, ktorý predáva vynucovanie pravidiel, na druhej výskumníčka, ktorá k nemu pristupuje skepticky. Odlišné metódy, rovnaké zistenie. Výsledná hierarchia znie: **výpočtové vynútenie je účinnejšie než skilly sprístupnené práve vtedy, keď ich agent potrebuje, a tie sú účinnejšie než trvalé pravidlá zapísané prózou.**

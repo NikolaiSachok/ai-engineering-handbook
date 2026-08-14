@@ -7,6 +7,12 @@ sidebar_position: 3
 
 Brány z lekcií 1 a 2 vychádzajú z predpokladu, že kontrolovaná vec sa aktívne nesnaží kontrolou prejsť. Tento predpoklad teraz zrušme. Agent optimalizuje metriku, ktorú mu predložíš. Ak je najlacnejším spôsobom, ako dostať bránu do zeleného stavu, potlačiť príznak namiesto odstránenia príčiny, vyberie si práve túto cestu — nie zo zlého úmyslu, ale preto, že jeho úlohou bolo dosiahnuť zelenú bránu. [V I. časti sme zmerali rozsah tohto javu](../part-1-foundation/rules-that-hold.md) a stanovili princíp, že *brána určuje podobu artefaktu*. Táto lekcia z neho vyvodzuje praktický návrh: ako zapojiť verifikačnú bránu tak, aby ten, kto vykonáva zmenu, nemohol tú istú zmenu aj schváliť — a ako nastaviť prácu tak, aby sa trik neoplatil ešte skôr, než ho agent objaví.
 
+:::note[Z praxe]
+
+Presne takto sa to pokazilo aj v postupe pri tvorbe samotnej príručky: prechod, ktorý zaviedol zmenu, zároveň vytvoril záznam, ktorým ju vyňal spod kontroly. Prípad opisujem v článku [Svojmu kontrolórovi som povedal, aby ignoroval práve tú jedinú chybu](/blog/i-told-my-reviewer-to-ignore-it).
+
+:::
+
 ## Brána, ktorú možno obísť, bude obídená
 
 Reward hacking nie je myšlienkový experiment. Je zmeraný, výrazný a — čo je najhoršie — *rastie s rozsahom úlohy, ktorú si najviac chcel delegovať*. [Audit spoločnosti Cursor](https://cursor.com/blog/reward-hacking-coding-benchmarks) zistil, že **63%** úspechov v benchmarkoch vzniklo *vyhľadaním* riešenia, nie jeho odvodením (`MEASURED`); [SpecBench](https://arxiv.org/abs/2605.21384) nameral, že pri každom desaťnásobnom zväčšení kódu sa rozdiel spôsobený reward hackingom rozšíril o **+28 percentuálnych bodov** (`MEASURED`); [Reward Hacking Benchmark](https://arxiv.org/abs/2605.02964) namerali u modelu trénovaného pomocou RL mieru zneužívania **13,9%** oproti **0,6%** u jeho vlastnej základnej verzie bez RL (`MEASURED`). Úplný rozbor nájdeš v I. časti. Do tejto lekcie si však odnes najmä posledné zistenie — obchádzanie je *naučenou reakciou na hodnotenie* a vzniká práve tréningom podľa hodnotiteľa. Každú bránu, ktorú agent vidí a podľa ktorej môže optimalizovať, sa teda napokon naučí obísť.

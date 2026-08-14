@@ -113,6 +113,49 @@ def components(text: str) -> dict[str, int]:
     return {tag: text.count(tag) for tag in COMPONENTS}
 
 
+ADMON_OPEN = re.compile(r"^(:{3,})([a-z]+)(?:\[(.*)\])?\s*$")
+ADMON_CLOSE = re.compile(r"^:{3,}\s*$")
+
+
+def admonitions(text: str) -> list[tuple[str, bool, bool, bool]]:
+    """Every admonition in document order as (kind, titled, padded_open, padded_close).
+
+    The title TEXT is deliberately not compared — translating «:::note[Field note]» to
+    «:::note[Из практики]» is the point of a locale. What must hold is that the block exists, is
+    the same kind, and either carries a title in both locales or in neither.
+
+    Why this check exists: an admonition carries no heading, so the heading and anchor checks above
+    are structurally blind to one vanishing. Measured 2026-08-14 — all four `Field note` blocks of
+    the AI-SDLC course, 189 words of first-hand material present in English and Russian, were
+    absent from Slovak, and this file passed clean on every one of those pages.
+
+    Padding is included because it is the same class of defect one level down: a block whose
+    opening directive is not followed by a blank line renders as a different thing in some
+    processors, and three Russian pages had drifted that way unnoticed.
+    """
+    lines, out, stack, fence = strip_frontmatter(text).splitlines(), [], [], False
+    for i, line in enumerate(lines):
+        if re.match(r"^ *(```|~~~)", line):
+            fence = not fence
+            continue
+        if fence:
+            continue
+        m = ADMON_OPEN.match(line)
+        if m:
+            stack.append((m.group(2), m.group(3) is not None, i))
+            continue
+        if ADMON_CLOSE.match(line) and stack:
+            kind, titled, start = stack.pop()
+            out.append((
+                start,
+                kind,
+                titled,
+                start + 1 < len(lines) and lines[start + 1].strip() == "",
+                i - 1 > start and lines[i - 1].strip() == "",
+            ))
+    return [t[1:] for t in sorted(out)]
+
+
 def fences(text: str) -> list[tuple[str, str]]:
     """Every fenced block as (language, body). Unlabelled fences report as '(none)'."""
     out, lang, buf = [], None, []
@@ -376,6 +419,24 @@ def compare_pair(locale: str, released: bool, src: str, tgt: str, rep: Report) -
                 if ca[tag] != cb[tag]:
                     print(f"    {tag}: en={ca[tag]} {locale}={cb[tag]}")
 
+        # 4b. admonition blocks — the one content container with no heading (see admonitions())
+        da, db = admonitions(en), admonitions(loc)
+        if [k for k, *_ in da] != [k for k, *_ in db]:
+            rep.fail(f"{where} — admonition blocks differ: a whole block is missing or added, and "
+                     f"no heading changes when one does:")
+            print(f"    en:     {[k for k, *_ in da]}")
+            print(f"    {locale}: {[k for k, *_ in db]}")
+        else:
+            for n, (x, y) in enumerate(zip(da, db), start=1):
+                if x[1] != y[1]:
+                    rep.fail(f"{where} — admonition #{n} (:::{x[0]}): title present in "
+                             f"{'en' if x[1] else locale} and absent in "
+                             f"{locale if x[1] else 'en'}")
+                if x[2:] != y[2:]:
+                    rep.fail(f"{where} — admonition #{n} (:::{x[0]}) blank-line padding differs: "
+                             f"en=(after open {x[2]}, before close {x[3]}) "
+                             f"{locale}=(after open {y[2]}, before close {y[3]})")
+
         # 5. fenced blocks — count per language; content is the locale's own (see the .sh header)
         fa, fb = fences(en), fences(loc)
         count_a = Counter(l for l, _ in fa if l not in COUNT_EXEMPT_FENCES)
@@ -632,6 +693,69 @@ SELF_TEST_CASES = [
                 '    A["Ранжированный список (плотный)"] -->|"нет, это навык"| B["Ответ"]\n'
                 '    B -. отсекаем .-> C["Конец"]\n```\n'
             ),
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        0,
+        "1 file(s) in structural parity",
+    ),
+    # --- admonition blocks. The first case is the one that shipped: four `Field note` blocks, 189
+    # words of first-hand material, present in English and Russian and absent from Slovak, with this
+    # file passing clean on every page because an admonition carries no heading. The last case is
+    # the anti-false-positive control — translating the title is the point of a locale.
+    (
+        "admonition: translated title only → passes",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\n:::note[Field note]\n\nBody.\n\n:::\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                "# T\n\n:::note[Из практики]\n\nТекст.\n\n:::\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        0,
+        "1 file(s) in structural parity",
+    ),
+    (
+        "admonition: whole block missing from the locale → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\nLead.\n\n:::note[Field note]\n\nBody.\n\n:::\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md": "# T\n\nВступление.\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "admonition blocks differ",
+    ),
+    (
+        "admonition: title dropped in the locale → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\n:::note[Field note]\n\nBody.\n\n:::\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                "# T\n\n:::note\n\nТекст.\n\n:::\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "title present in en",
+    ),
+    (
+        "admonition: blank-line padding dropped in the locale → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\n:::note[Field note]\n\nBody.\n\n:::\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                "# T\n\n:::note[Из практики]\nТекст.\n:::\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "blank-line padding differs",
+    ),
+    (
+        "admonition: a `:::` inside a fence is not an admonition → passes",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\n```md\n:::note[Field note]\n:::\n```\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                "# T\n\n```md\n:::note[Из практики]\n:::\n```\n",
             "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
         },
         0,
