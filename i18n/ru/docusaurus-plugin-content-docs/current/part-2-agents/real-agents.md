@@ -1,7 +1,7 @@
 ---
 id: real-agents
 title: Реальные агенты — Claude, OpenAI, Gemini
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 # Три вывески, одни и те же приёмы

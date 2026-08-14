@@ -1,7 +1,7 @@
 ---
 id: real-agents
 title: Reálni agenti — Claude, OpenAI, Gemini
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 # Claude, OpenAI a Gemini nosia tie isté techniky pod inými menami

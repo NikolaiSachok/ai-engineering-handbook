@@ -14,6 +14,7 @@
 # things it must. Per locale, per course tree, against the English source:
 #
 #   1. file set          — identical set of relative .md paths
+#  1b. frontmatter      — block present in both; `id` and `sidebar_position` equal
 #   2. heading shape     — identical H1/H2 count and level sequence per file
 #   3. heading anchors   — identical ORDERED sequence of explicit `\{#id}` heading ids
 #   4. component counts  — identical counts of `<InfoCard`, `<Node`, `<YouTube`
@@ -21,6 +22,24 @@
 #   5. fenced blocks     — identical count per fence language (```text excepted)
 #  5b. mermaid shape     — identical layout direction, node-id set and edge count per diagram
 #   6. numeric drift     — no percentage/decimal figure differing in value between the two
+#
+# --- Why 1b exists, added 2026-08-15 -----------------------------------------------------------
+#
+# This file used to strip the frontmatter and say so in a comment: the fields that must match "are
+# already enforced by the build's sidebar assembly". That is true of a field that DISAGREES and
+# false of a block that is ABSENT. Docusaurus infers a doc id from the path and a title from the H1,
+# so a page whose frontmatter vanished still builds — it just quietly loses `sidebar_position` and
+# moves in the sidebar.
+#
+# Measured 2026-08-15: a rebuilt Russian glossary shipped with its entire block missing, and every
+# check here passed — headings, anchors, components, admonitions, fences, figures. The block is the
+# one part of a page with no prose to compare, which is exactly why nothing looked at it. On its
+# first corpus run 1b also caught a defect nobody had filed: `part-2-agents/real-agents.md` sat at
+# `sidebar_position: 8` in English and `7` in all three translations, colliding with `mcp` — so the
+# lesson's place in the sidebar differed between the English site and every translated one.
+#
+# Only `id` and `sidebar_position` are compared by value. `title` and `description` are translated
+# by design and `slug` may localise; one of the self-test cases is the control for exactly that.
 #
 # --- Why 4b exists, added 2026-08-14 -----------------------------------------------------------
 #

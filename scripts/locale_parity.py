@@ -50,9 +50,38 @@ def read(path: str) -> str:
 
 
 def strip_frontmatter(text: str) -> str:
-    """Drop the YAML block. Its titles/descriptions are translated by design, and the fields that
-    must match (id, sidebar_position) are already enforced by the build's sidebar assembly."""
+    """Drop the YAML block before comparing prose. Titles are translated by design; the structural
+    fields are compared separately by frontmatter() below."""
     return re.sub(r"\A---\n.*?\n---\n", "", text, flags=re.S)
+
+
+def frontmatter(text: str) -> dict[str, str] | None:
+    """The YAML block as a flat dict, or None when the file has none.
+
+    Split out from strip_frontmatter(), whose original premise was wrong. It said the fields that
+    must match "are already enforced by the build's sidebar assembly" — true of a field that
+    DISAGREES, false of a block that is ABSENT. Docusaurus infers a doc id from the path and a title
+    from the H1, so a page whose frontmatter vanished still builds; it just quietly loses its
+    `sidebar_position` and moves.
+
+    Measured 2026-08-15: a rebuilt Russian glossary shipped with its whole block missing and every
+    check in this file passed — headings, anchors, components, admonitions, fences, figures. The
+    block is the one part of a page with no prose to compare, which is exactly why nothing looked.
+    """
+    m = re.match(r"\A---\n(.*?)\n---\n", text, flags=re.S)
+    if not m:
+        return None
+    out = {}
+    for line in m.group(1).splitlines():
+        k, sep, v = line.partition(":")
+        if sep:
+            out[k.strip()] = v.strip().strip('"\'')
+    return out
+
+
+# Fields a translation must carry unchanged. `title` and `description` are translated by design and
+# `slug` may localise, so only the two deciding identity and placement are compared by value.
+FRONTMATTER_SAME = ("id", "sidebar_position")
 
 
 def headings(text: str, max_level: int = 2) -> list[int]:
@@ -384,6 +413,19 @@ def compare_pair(locale: str, released: bool, src: str, tgt: str, rep: Report) -
         en, loc = read(os.path.join(src, rel)), read(os.path.join(tgt, rel))
         where = f"{locale}/{src}/{rel}"
 
+        # 1b. frontmatter — presence, then the two structural fields (see frontmatter())
+        fa, fb = frontmatter(en), frontmatter(loc)
+        if (fa is None) != (fb is None):
+            rep.fail(f"{where} — frontmatter block present in "
+                     f"{'en' if fa is not None else locale} and absent in "
+                     f"{locale if fa is not None else 'en'}; the page still builds without it and "
+                     f"silently loses its sidebar position")
+        elif fa is not None and fb is not None:
+            for key in FRONTMATTER_SAME:
+                if fa.get(key) != fb.get(key):
+                    rep.fail(f"{where} — frontmatter `{key}` differs: "
+                             f"en={fa.get(key)!r} {locale}={fb.get(key)!r}")
+
         # 2. heading shape
         a, b = headings(en), headings(loc)
         if a != b:
@@ -693,6 +735,44 @@ SELF_TEST_CASES = [
                 '    A["Ранжированный список (плотный)"] -->|"нет, это навык"| B["Ответ"]\n'
                 '    B -. отсекаем .-> C["Конец"]\n```\n'
             ),
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        0,
+        "1 file(s) in structural parity",
+    ),
+    # --- frontmatter. The first case is the one that shipped: a rebuilt page lost its whole block
+    # and every other check in this file passed. The third is the anti-false-positive control —
+    # `title` is translated by design and must never fail.
+    (
+        "frontmatter: whole block missing from the locale → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "---\nid: x\nsidebar_position: 7\n---\n\n# T\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md": "# T\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "frontmatter block present in en",
+    ),
+    (
+        "frontmatter: sidebar_position differs → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "---\nid: x\nsidebar_position: 7\n---\n\n# T\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                "---\nid: x\nsidebar_position: 8\n---\n\n# T\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "frontmatter `sidebar_position` differs",
+    ),
+    (
+        "frontmatter: translated title only → passes",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "---\nid: x\ntitle: Glossary\nsidebar_position: 7\n---\n\n# T\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                "---\nid: x\ntitle: Глоссарий\nsidebar_position: 7\n---\n\n# T\n",
             "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
         },
         0,
