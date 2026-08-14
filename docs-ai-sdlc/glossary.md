@@ -285,6 +285,8 @@ its section here. The list grows as the course does.
 
 **Deploy/release separation** — shipping code and enabling behaviour as two distinct acts, usually via a feature flag, so the audience for a change becomes a dial that can be turned without another deploy.
 
+**Feature flag** — a switch that turns a behaviour on or off without a new build or another deploy.
+
 **Staged rollout (canary · ramp)** — exposing a change to a small population first and widening it in steps, converting a binary release event into a bounded one.
 
 **Automated revert** — binding the rollout ramp to thresholds so a breach stops and reverses it without waiting for a human to notice; noticing a metric move is not a good use of scarce human attention.
@@ -324,6 +326,8 @@ its section here. The list grows as the course does.
 **Never-fired rule** — a check that has caught nothing for a long time. It is either guarding a class that no longer occurs or is broken and being trusted for its silence; planting a violation tells you which.
 
 **Memory drift** — the same decay in project memory: superseded decisions left standing beside the ones that replaced them, read by the agent as current fact.
+
+**Superseded decision** — a decision replaced by a later one and marked as no longer in force, kept only as the history of how the current one was reached.
 
 ## Cost and the economics of agent work \{#cost-and-the-economics-of-agent-work}
 
