@@ -114,8 +114,8 @@ pôvod patrí.
   (OWASP, bezpečnosť a zraniteľnosti). Musí ho **generovať build**, pretože flotila pridáva závislosti
   rýchlejšie, než ich ktokoľvek dokáže sledovať ručne.
 - **in-toto a Sigstore zabezpečujú nepopierateľnosť:** in-toto je podpísaná obálka, ktorá hashom viaže obsah
-  tvrdenia k artefaktu; podpisovanie bez dlhodobého kľúča v Sigstore viaže podpis na krátkodobú identitu
-  pracovného procesu — princíp najnižších oprávnení uplatnený na podpisovanie.
+  tvrdenia k artefaktu; podpisovanie bez dlhodobého kľúča v Sigstore viaže podpis na krátkodobé poverenie
+  vydané pod identitu pracovného procesu — princíp najnižších oprávnení uplatnený na podpisovanie.
 - **Tri odpovede nemožno zlúčiť do jednej:** SBOM = *čo je vnútri*, pôvod = *ako artefakt vznikol*, podpis =
   *nemožno ho zmeniť ani poprieť*.
 - **Oddelenie právomocí vyžaduje odlišné identity,** ktoré vynucuje platforma, a schválenie, ktoré človek naozaj
