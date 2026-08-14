@@ -43,8 +43,8 @@ with them. Every ceiling here is that one constraint, priced differently.
 Part I's **verification bottleneck**, read as a claim about *capacity* rather than about quality — the first
 lesson here caps fleet size with it directly. Then Part I's *Project memory* and *Rules that hold*, because
 the second lesson is entirely about what becomes of both once the code moves out from under them. The cost
-lesson prices Part III's semantic gates and Part IV's per-task credentials, and the closing lesson assumes
-Part III's separation-of-duties argument.
+lesson prices Part III's semantic gates and borrows Part IV's per-task credentials to make spend
+attributable, and the closing lesson assumes Part III's separation-of-duties argument.
 
 ## What changes after this part
 
