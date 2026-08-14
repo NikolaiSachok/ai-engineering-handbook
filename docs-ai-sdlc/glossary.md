@@ -319,7 +319,7 @@ its section here. The list grows as the course does.
 
 **Silent decay** — going out of date without any signal, the defining hazard of prose rules and of project memory, which reads as description and therefore is never audited.
 
-**Rule ownership / rule expiry** — the two fields almost never written next to a rule: who is accountable for it, and when it is next checked against the code. Without an owner, corpora only grow, because deleting always feels riskier than keeping.
+**Rule ownership / rule expiry** — the two fields almost never written next to a rule: who is accountable for it, and what triggers its next check against the code. Without an owner, corpora only grow, because deleting always feels riskier than keeping.
 
 **Never-fired rule** — a check that has caught nothing for a long time. It is either guarding a class that no longer occurs or is broken and being trusted for its silence; planting a violation tells you which.
 

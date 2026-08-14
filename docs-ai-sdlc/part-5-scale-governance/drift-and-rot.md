@@ -14,21 +14,22 @@ convention and quietly ignores it, an agent reads it and complies.
 
 ## Three ways a rule corpus decays
 
-The failure has three distinct shapes, and they need different remedies.
+The failure has three distinct shapes, and each wants a different remedy: a check that fails, a
+review that reconciles, a deletion.
 
 **Staleness.** The rule describes a structure that no longer exists — a directory that moved, a wrapper that
 was replaced, a pattern the team abandoned two refactors ago. The agent faithfully reproduces the old world
 inside the new one.
 
-**Contradiction.** Two rules, added months apart by people solving different problems, now conflict. Nothing
-detects this, because each was reasonable when written. The agent resolves the conflict by picking one — not
+**Contradiction.** Two rules, added months apart by people solving different problems, now conflict. Nothing is
+looking for it, because each was reasonable when written. The agent resolves the conflict by picking one — not
 always the same one, which is worse than picking badly, because the behaviour is now nondeterministic and
 nobody can reproduce the complaint.
 
 **Bloat.** The corpus grows because adding a rule is the cheapest possible response to any incident. Past a
 point, the important constraints are diluted by accumulated trivia, and what happens next is the part people
-miss: a corpus too large to fit the working context gets *truncated*, and neither you nor the agent gets to
-choose which rules survive the cut.
+miss: a corpus too large to fit the working context gets *truncated*, and at that point neither you nor the
+agent gets to choose which rules survive the cut.
 
 ## Executable rules rot loudly; prose rules rot silently
 
@@ -53,9 +54,9 @@ invisibly, and the bill arrives as agents confidently building against a world t
 
 ## Ownership and expiry: the part nobody assigns
 
-Every rule needs two things written next to it that almost never are: **who owns it** and **when it is next
-looked at**. Without an owner the rule belongs to everyone, which means it belongs to no one and is never
-deleted — deletion feels riskier than leaving it, so corpora only ever grow.
+Every rule needs two things written next to it that almost never are: **who owns it** and **what
+triggers the next review**. Without an owner the rule belongs to everyone, which means it belongs to
+no one and is never deleted — deletion feels riskier than leaving it, so corpora only ever grow.
 
 Two mechanisms make maintenance real rather than aspirational.
 
@@ -87,8 +88,9 @@ triggered.
 - **Soloist.** Prefer checks over prose, date-stamp what stays prose, and delete aggressively — you are the
   only reader and a bloated corpus costs you context you need. *The failure it prevents:* an agent rebuilding
   a structure you abandoned months ago, confidently, because your own notes still describe it.
-- **Small-team.** An owner per rule area, rules reviewed when the code they describe changes (not on a separate
-  calendar nobody keeps), and contradictions resolved at review rather than left for an agent to arbitrate.
+- **Small-team.** An owner per rule area, rules reviewed when the code they describe changes — a better
+  trigger than a date, wherever the rule maps to code — and contradictions resolved at review rather
+  than left for an agent to arbitrate.
   *The failure it prevents:* two conflicting rules producing nondeterministic agent behaviour that no one can
   reproduce or explain.
 - **Enterprise.** The corpus is a governed artefact: versioned, owned, with expiry and an audit trail showing

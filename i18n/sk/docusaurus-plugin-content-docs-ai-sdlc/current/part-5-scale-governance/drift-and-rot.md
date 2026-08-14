@@ -15,20 +15,21 @@ prečíta a poslúchne.
 
 ## Korpus pravidiel chátra troma spôsobmi
 
-Zlyhanie má tri odlišné tvary a každý si žiada inú nápravu.
+Zlyhanie má tri odlišné tvary a každý si žiada inú nápravu: kontrolu, ktorá zlyhá; revíziu, ktorá rozpor
+urovná; zmazanie.
 
 **Zastaranosť.** Pravidlo opisuje štruktúru, ktorá už neexistuje — presunutý adresár, nahradený wrapper, vzor,
 ktorý tím opustil pred dvoma refaktoringmi. Agent verne postaví starý svet vnútri toho nového.
 
 **Rozpor.** Dve pravidlá, ktoré s odstupom mesiacov pridali ľudia riešiaci odlišné problémy, si dnes
-protirečia. Nič to nezachytí, pretože v čase vzniku bolo každé z nich rozumné. Agent konflikt vyrieši tak, že
-si jedno vyberie — a nie vždy to isté, čo je horšie než vybrať si zle: správanie prestalo byť deterministické
-a hlásený problém nikto nezopakuje.
+protirečia. Nič také sa nehľadá, pretože v čase vzniku bolo každé z nich rozumné. Agent konflikt vyrieši tak,
+že si jedno vyberie — a nie vždy to isté, čo je horšie než vybrať si zle: správanie prestalo byť
+deterministické a hlásený problém nikto nezopakuje.
 
 **Nafúknutosť.** Korpus rastie, pretože pridať pravidlo je najlacnejšia možná reakcia na akýkoľvek incident.
 Za istou hranicou sa podstatné obmedzenia rozriedia v nánose maličkostí — a potom prichádza časť, ktorú
-väčšina ľudí prehliadne: korpus, ktorý sa už nezmestí do pracovného kontextu, sa *skráti*, pričom ani ty, ani
-agent nerozhodujete o tom, ktoré pravidlá ten rez prežijú.
+väčšina ľudí prehliadne: korpus, ktorý sa už nezmestí do pracovného kontextu, sa *skráti* a v tej chvíli už
+ani ty, ani agent nerozhodujete o tom, ktoré pravidlá ten rez prežijú.
 
 ## Vykonateľné pravidlá zastarávajú nahlas, textové potichu
 
@@ -53,8 +54,8 @@ a účet príde v podobe agentov, ktorí sebavedomo stavajú pre svet, ktorý u�
 
 ## Vlastník a platnosť: zodpovednosť, ktorú nikto nepridelí
 
-Pri každom pravidle majú byť napísané dve veci, ktoré tam takmer nikdy nie sú: **kto zaň zodpovedá** a **kedy
-sa naň najbližšie niekto pozrie**. Bez vlastníka patrí pravidlo všetkým, čiže nikomu, a nikdy sa nezmaže —
+Pri každom pravidle majú byť napísané dve veci, ktoré tam takmer nikdy nie sú: **kto zaň zodpovedá** a **čo
+spúšťa jeho najbližšiu revíziu**. Bez vlastníka patrí pravidlo všetkým, čiže nikomu, a nikdy sa nezmaže —
 mazať sa zdá riskantnejšie než nechať tak, takže korpusy vedia iba rásť.
 
 Údržbu menia z dobrého úmyslu na skutočnosť dva mechanizmy.
@@ -88,9 +89,9 @@ jeho chátranie musí niečo zviditeľniť.** Mení sa to, kto zaň zodpovedá a
   agent sebavedomo znovu postaví štruktúru, ktorú si pred mesiacmi opustil, pretože ju tvoje vlastné poznámky
   ďalej opisujú.
 - **Malý tím.** Vlastník na každú oblasť pravidiel, revízia pravidiel vtedy, keď sa mení kód, ktorý opisujú
-  (nie podľa samostatného kalendára, ktorý nikto nedodržiava), a rozpory vyriešené pri revízii namiesto toho,
-  aby ich rozhodoval agent. *Akému zlyhaniu to predchádza:* dve protirečivé pravidlá vyrobia nedeterministické
-  správanie agenta, ktoré nikto nedokáže zopakovať ani vysvetliť.
+  (všade tam, kde sa pravidlo viaže na kód, je to lepší spúšťač než dátum), a rozpory vyriešené pri revízii
+  namiesto toho, aby ich rozhodoval agent. *Akému zlyhaniu to predchádza:* dve protirečivé pravidlá vyrobia
+  nedeterministické správanie agenta, ktoré nikto nedokáže zopakovať ani vysvetliť.
 - **Enterprise.** Korpus je spravovaný artefakt: verzovaný, s vlastníkmi, s platnosťou a s auditným záznamom,
   z ktorého vidno, kedy sa každé pravidlo naposledy potvrdilo voči kódu. *Akému zlyhaniu to predchádza:*
   kontrola existuje na papieri, dva roky nezodpovedá systému a odhalí sa počas auditu, ktorý predpokladal, že
