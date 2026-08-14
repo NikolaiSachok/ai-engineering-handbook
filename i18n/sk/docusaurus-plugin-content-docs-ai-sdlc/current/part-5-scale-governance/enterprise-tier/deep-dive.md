@@ -8,11 +8,12 @@ sidebar_position: 2
 
 [Prvá časť](./index.md) vysvetlila, že na enterprise úrovni sa kontrola počíta iba vtedy, keď niekto iný než
 jej vykonávateľ dokáže spätne preukázať, že prebehla — rozhoduje dôkaz, nie samotná existencia mechanizmu.
-Pomenovala audit, nepopierateľnosť, pôvod a oddelenie právomocí; technické riešenie zhrnula ako „podpísané
-commity, SBOM a podpísané potvrdenia“. Táto stránka rozoberá konkrétne rámce, pretože práve detaily sú na tejto
-úrovni podstatné: rebrík sily pôvodu (SLSA), dva štandardy súpisu (SPDX a CycloneDX), podpisovú vrstvu, ktorá
-záznamom dáva nepopierateľnosť (in-toto a Sigstore), a otázku agentov, s ktorou žiadny z týchto rámcov pôvodne
-nepočítal. Na konci príde poctivé vymedzenie ich možností, pretože práve tie sa zvyknú zveličovať.
+Pomenovala audit, nepopierateľnosť, pôvod a oddelenie právomocí a technické riešenie nechala na úrovni SBOM na
+to, čo dnu vstúpilo, a podpísaných potvrdení na to, čo to vyrobilo. Táto stránka rozoberá konkrétne rámce,
+pretože práve detaily sú na tejto úrovni podstatné: rebrík sily pôvodu (SLSA), dva štandardy súpisu (SPDX a
+CycloneDX), podpisovú vrstvu, ktorá záznamom dáva nepopierateľnosť (in-toto a Sigstore), a otázku agentov, s
+ktorou žiadny z týchto rámcov pôvodne nepočítal. Na konci príde poctivé vymedzenie ich možností, pretože práve
+tie sa zvyknú zveličovať.
 
 ## SLSA: pôvod ako rebrík, nie políčko na odškrtnutie
 
@@ -75,11 +76,11 @@ dodatočne upraviť, je iba rozprávanie; podpis, ktorý nedokázal vytvoriť je
 ## Oddelenie právomocí, keď sú obe strany agentmi
 
 Prvá časť zdôvodnila oddelenie právomocí inžiniersky a následne aj požiadavkami na súlad. Konkrétne mechanizmy
-obe odôvodnenia spájajú. Podmienka SLSA L3, podľa ktorej kroky buildu nemajú prístup k podpisovému kľúču, a
-klasická **revízia dvoma stranami** — jeden aktér vytvára, iný schvaľuje — uplatňujú rovnaký princíp v
-rozličných vrstvách. Vo flotile fungujú iba vtedy, keď majú aktéri **skutočne odlišné identity a prihlasovacie
-údaje** a záznam jednoznačne ukazuje ich úlohy. Generujúci agent beží pod jednou identitou, revidujúci pod
-druhou a schválenie človekom predstavuje skutočný podpis konkrétnej osoby.
+obe odôvodnenia spájajú. Podmienka SLSA L3, podľa ktorej kroky buildu definované používateľom nemajú prístup k
+podpisovému kľúču, a klasická **revízia dvoma stranami** — jeden aktér vytvára, iný schvaľuje — uplatňujú
+rovnaký princíp v rozličných vrstvách. Vo flotile fungujú iba vtedy, keď majú aktéri **skutočne odlišné
+identity a prihlasovacie údaje** a záznam jednoznačne ukazuje ich úlohy. Generujúci agent beží pod jednou
+identitou, revidujúci pod druhou a schválenie človekom predstavuje skutočný podpis konkrétnej osoby.
 
 Práve posledná podmienka odhaľuje typické zlyhanie tejto úrovne. Treba ho pomenovať priamo, pretože podpis už
 má právny význam. Keď človek schvaľuje zmeny rýchlejšie, než ich dokáže reálne prečítať, nejde o dohľad, ale o
@@ -107,7 +108,8 @@ pôvod patrí.
 
 - **SLSA je rebrík, nie políčko na odškrtnutie:** na L1 údaje o pôvode existujú, ale dajú sa sfalšovať; na L2
   ich podpisuje hostovaná platforma, takže sfalšovanie vyžaduje útok; na L3 je podpisový kľúč **neprístupný
-  krokom buildu** — vo flotile teda agent, ktorý artefakt vytvoril, nemôže potvrdiť jeho pôvod.
+  krokom buildu definovaným používateľom** — vo flotile teda agent, ktorý artefakt vytvoril, nemôže potvrdiť
+  jeho pôvod.
 - **SBOM je súpis** v jednom z dvoch formátov — SPDX (Linux Foundation, súlad a licencie) alebo CycloneDX
   (OWASP, bezpečnosť a zraniteľnosti). Musí ho **generovať build**, pretože flotila pridáva závislosti
   rýchlejšie, než ich ktokoľvek dokáže sledovať ručne.
@@ -121,4 +123,4 @@ pôvod patrí.
 - **Pôvod nie je správnosť.** Tieto mechanizmy dokazujú pôvod a integritu artefaktu, nikdy nie jeho kvalitu;
   aj artefakt s úplnými potvrdeniami môže byť chybný, preto potrebuješ celý zvyšok kurzu.
 
-**[Nové pojmy](../../glossary.md#the-enterprise-tier-audit-provenance-and-whats-required)**: buildové úrovne SLSA (L1/L2/L3), podpisový kľúč neprístupný krokom buildu, formáty SBOM (SPDX / CycloneDX), potvrdenie in-toto, Sigstore / podpisovanie bez dlhodobého kľúča, transparency log, pôvod verzus správnosť, oddelenie právomocí pomocou odlišných identít.
+**[Nové pojmy](../../glossary.md#the-enterprise-tier-audit-provenance-and-whats-required)**: buildové úrovne SLSA (L1/L2/L3), podpisový kľúč neprístupný krokom buildu definovaným používateľom, formáty SBOM (SPDX / CycloneDX), potvrdenie in-toto, Sigstore / podpisovanie bez dlhodobého kľúča, transparency log, pôvod verzus správnosť, oddelenie právomocí pomocou odlišných identít.
