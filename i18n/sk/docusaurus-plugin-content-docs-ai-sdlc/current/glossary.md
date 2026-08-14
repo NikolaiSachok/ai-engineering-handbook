@@ -360,7 +360,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Tiché zastarávanie (silent decay)** — strata aktuálnosti bez akéhokoľvek signálu; charakteristické riziko textových pravidiel a pamäti projektu, ktorá sa číta ako opis, a preto ju nikto nekontroluje.
 
-**Vlastník a platnosť pravidla (rule ownership / rule expiry)** — dve políčka, ktoré pri pravidle takmer nikdy nenájdeš: kto zaň zodpovedá a kedy sa najbližšie preverí voči kódu. Bez vlastníka korpusy iba rastú, pretože mazať sa vždy zdá riskantnejšie než nechať tak.
+**Vlastník a platnosť pravidla (rule ownership / rule expiry)** — dve políčka, ktoré pri pravidle takmer nikdy nenájdeš: kto zaň zodpovedá a čo spúšťa jeho najbližšie preverenie voči kódu. Bez vlastníka korpusy iba rastú, pretože mazať sa vždy zdá riskantnejšie než nechať tak.
 
 **Nikdy neaktivované pravidlo (never-fired rule)** — kontrola, ktorá dlho nič nezachytila. Buď stráži triedu chýb, ktorá sa už nevyskytuje, alebo je pokazená a ty dôveruješ jej tichu; zámerne vložené porušenie ti povie, ktorý z prípadov to je.
 
