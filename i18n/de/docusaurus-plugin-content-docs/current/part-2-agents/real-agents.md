@@ -1,7 +1,7 @@
 ---
 id: real-agents
 title: Echte Agenten – Claude, OpenAI, Gemini
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 # Dieselben Techniken bei Claude, OpenAI und Gemini
