@@ -20,8 +20,9 @@ od kontroly, ktorá nikdy nebežala.
 ## Audit: čo sa stalo a kto sa za to zodpovedá
 
 **Auditný záznam (audit trail)** odpovedá na otázku, *kto čo urobil, kedy a z čieho poverenia* — a agenti
-pridávajú ďalší stĺpec. Záznam už musí menovať nielen zodpovedného človeka, ale aj **agenta, model a zadanie**,
-z ktorých zmena vzišla, pretože „napísala to AI“ nie je aktér a nedá sa jej nič opýtať.
+pridávajú ďalší stĺpec. Záznam už musí menovať nielen zodpovedného človeka, ale aj agenta, model a zadanie,
+z ktorých zmena vzišla (**priradenie agenta a modelu**), pretože „napísala to AI“ nie je aktér a nedá sa jej
+nič opýtať.
 
 Záznam robí hodnotným vlastnosť, ktorá sa volá **nepopierateľnosť (non-repudiation)**: vytvára ho systém ako
 vedľajší produkt práce, nepíše ho dodatočne ten, o kom vypovedá. Log, ktorý si operátor môže upraviť, je

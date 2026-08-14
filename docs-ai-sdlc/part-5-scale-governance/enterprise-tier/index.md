@@ -20,8 +20,9 @@ indistinguishable from one that never ran.
 ## Audit: what happened, and who is answerable
 
 An audit trail answers *who did what, when, and on whose authority* — and agents add a column. The record now
-has to name not only the human accountable but the **agent, the model, and the brief** that produced the
-change, because "an AI wrote it" is not an actor and cannot be asked anything later.
+has to name not only the human accountable but the agent, the model, and the brief that produced the
+change — **agent/model attribution** — because "an AI wrote it" is not an actor and cannot be asked
+anything later.
 
 The property that makes a trail worth keeping is **non-repudiation**: the record is produced by the system as
 a side effect of the work, not written afterwards by the person being recorded. A log an operator can edit is
