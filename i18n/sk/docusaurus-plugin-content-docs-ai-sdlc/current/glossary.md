@@ -90,7 +90,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Policy-as-code** — politiky ako kód, ktoré sa vynucujú v pipeline a podliehajú auditu — podniková podoba vykonateľných pravidiel.
 
-**Zastarávanie pravidiel** — rozpad súboru pravidiel bez mechanizmu na odhaľovanie neaktuálnosti — konštanty sa rozídu, skopírovaný kód zostarne, nahradené pravidlá prežívajú a súbory si na styčných miestach protirečia; odlišným javom je drift pravidiel spôsobený `context rot`, pri ktorom sa nemenia pravidlá, ale ich výklad.
+**Drift a zastarávanie pravidiel (drift / rule rot)** — rozpad súboru pravidiel bez mechanizmu na odhaľovanie neaktuálnosti — konštanty sa rozídu, skopírovaný kód zostarne, nahradené pravidlá prežívajú a súbory si na styčných miestach protirečia; odlišným javom je drift pravidiel spôsobený `context rot`, pri ktorom sa nemenia pravidlá, ale ich výklad.
 
 **Vlastník konzistencie** — rola zodpovedná za zosúlaďovanie súboru pravidiel tak, aby dva záväzné súbory nemohli predpisovať protichodné riešenia.
 
@@ -365,6 +365,8 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 **Nikdy neaktivované pravidlo (never-fired rule)** — kontrola, ktorá dlho nič nezachytila. Buď stráži triedu chýb, ktorá sa už nevyskytuje, alebo je pokazená a ty dôveruješ jej tichu; zámerne vložené porušenie ti povie, ktorý z prípadov to je.
 
 **Drift pamäti (memory drift)** — to isté chátranie v pamäti projektu: prekonané rozhodnutia zostávajú stáť vedľa tých, ktoré ich nahradili, a agent ich číta ako aktuálny fakt.
+
+**Nahradené rozhodnutie (superseded decision)** — rozhodnutie, ktoré nahradilo neskoršie a ktoré je označené ako už neplatné; zostáva len ako história toho, ako sa dospelo k tomu súčasnému.
 
 <a id="cost-and-the-economics-of-agent-work"></a>
 
