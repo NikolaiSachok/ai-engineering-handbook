@@ -9,6 +9,12 @@ Na tejto jedinej nerovnováhe stojí celý kurz. A dôkazy sú v tomto prípade 
 
 Najprv krátko k hodnoteniu tvrdení, pretože táto lekcia sa oň výrazne opiera. `MEASURED` (namerané) znamená, že účinok preukázala kontrolovaná štúdia alebo randomizovaný experiment; `REPORTED` (uvádzané) znamená, že ho opisujú ľudia z praxe, ale nikto ho samostatne neoddelil od ostatných vplyvov; `ASSERTED` (tvrdené) znamená, že ho niekto obhajuje bez merania. Pri každom čísle nižšie uvádzame aj tento stupeň dôkazu. Celú hierarchiu dôkazov vysvetľuje 2. lekcia.
 
+:::note[Z praxe]
+
+Tvrdenie tejto lekcie sa potvrdilo aj na mne samom — píšem o tom v článku [Kurz o vývoji s pomocou AI som vytvoril tak, že som s ňou sám vyvíjal](/blog/building-a-course-by-doing-it). Nesprávna citácia pochádzala z môjho vlastného zadania a zachytil ju krok kontroly, nie ja.
+
+:::
+
 ## Objem odovzdanej práce rastie — táto polovica príbehu je skutočná a výsledky sa opakujú
 
 Začnime tým, o čom niet pochýb. Ľudia, ktorí začali používať programovacích agentov ovládaných z príkazového riadka, zlučujú viac pull requestov. Účinok je veľký, trvalý a objavil sa vo viacerých firmách.

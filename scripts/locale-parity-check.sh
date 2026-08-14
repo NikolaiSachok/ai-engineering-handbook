@@ -17,9 +17,30 @@
 #   2. heading shape     — identical H1/H2 count and level sequence per file
 #   3. heading anchors   — identical ORDERED sequence of explicit `\{#id}` heading ids
 #   4. component counts  — identical counts of `<InfoCard`, `<Node`, `<YouTube`
+#  4b. admonitions      — identical ordered kinds, titled-or-not, and blank-line padding
 #   5. fenced blocks     — identical count per fence language (```text excepted)
 #  5b. mermaid shape     — identical layout direction, node-id set and edge count per diagram
 #   6. numeric drift     — no percentage/decimal figure differing in value between the two
+#
+# --- Why 4b exists, added 2026-08-14 -----------------------------------------------------------
+#
+# Everything above keys on headings, components, fences or figures. An admonition is the one content
+# container that has none of those: `:::note[Field note]` carries no heading, no MDX tag and no
+# fence, so a whole block can vanish from a locale without moving a single thing this file measures.
+# Measured against the shipped corpus: all four `Field note` blocks of the AI-SDLC course — 189
+# words of first-hand material, present in English and Russian — were absent from Slovak, and a
+# `:::warning` in the RAG ingestion deep dive was absent from Russian while German carried it. This
+# gate passed clean on all five pages, every run, for as long as they had existed.
+#
+# It was found by a session-local checker built for the Russian rebuild, which is the general point:
+# a gate gap is worth more than the defect that exposed it. The gap was a missing blank line on one
+# page; the check written to catch it swept 66 page/locale pairs and found five missing blocks.
+#
+# What 4b compares is the SHAPE, never the words: the ordered sequence of kinds, whether each block
+# carries a title in both locales, and the blank-line padding. Title TEXT is not compared —
+# translating «:::note[Field note]» to «:::note[Из практики]» is the entire point of a locale, and
+# one of the self-test cases is the anti-false-positive control for exactly that. Padding is in
+# scope because it is the same defect one level down and three Russian pages had drifted that way.
 #
 # --- Why 5b exists, added 2026-08-03 -----------------------------------------------------------
 #

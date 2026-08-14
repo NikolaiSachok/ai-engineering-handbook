@@ -7,6 +7,12 @@ sidebar_position: 2
 
 V [Lekcii 1](./layered-gates/index.md) sme zostavili reťazec brán, ktorých mechanizmy majú rôzne slepé miesta. Táto lekcia je o chybách, ktoré napriek tomu prejdú celým reťazcom — pretože sa to nevyhnutne stane. Žiadny reťazec nepokrýva všetko. Každý má medzeru, na ktorú jeho mechanizmy nedosiahnu, a poctivá otázka neznie, či niečo unikne, ale čo *urobíš* s chybou, ktorá unikla. Stačí malý krok, ktorý nerobí takmer nikto: keď sa chyba dostane do produkcie, zaznamenaj, **ktorá brána ju mala zachytiť, ale nezachytila** — a potom túto bránu oprav tak, aby už rovnaká trieda chýb nemohla uniknúť rovnakým spôsobom. Únik je meradlom tvojej detekčnej vrstvy. Ak ho zahodíš, zostane z neho len chyba, ktorú si opravil. Ak ho zaznamenáš, získaš jediný dôkaz, ktorý ti ukáže, kde má reťazec slepé miesto.
 
+:::note[Z praxe]
+
+Pri písaní tejto lekcie vznikol únik priamo v nej — opisujem ho v článku [Svojmu kontrolórovi som povedal, aby ignoroval práve tú jedinú chybu](/blog/i-told-my-reviewer-to-ignore-it). Prekladový prechod nahradil termín, ktorý už bol v súbore ustálený, vlastným novotvarom a kontrola, ktorá mala proti tejto zmene namietať, dostala od toho istého prechodu zoznam položiek, ktoré nemá označovať.
+
+:::
+
 ## Záznam v registri
 
 Analýza bez hľadania vinníka skúma, čo v systéme umožnilo zlyhaniu prejsť, nie kto urobil chybu. Register únikov uplatňuje rovnaký prístup na *brány*, nie na riešenie incidentov. Jeho základom je jeden riadok:
