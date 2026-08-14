@@ -24,7 +24,9 @@ inside the new one.
 **Contradiction.** Two rules, added months apart by people solving different problems, now conflict. Nothing is
 looking for it, because each was reasonable when written. The agent resolves the conflict by picking one — not
 always the same one, which is worse than picking badly, because the behaviour is now nondeterministic and
-nobody can reproduce the complaint.
+nobody can reproduce the complaint. The remedy is reconciliation at review: someone decides which
+rule wins and deletes the other, because an agent left to arbitrate will keep deciding it
+differently.
 
 **Bloat.** The corpus grows because adding a rule is the cheapest possible response to any incident. Past a
 point, the important constraints are diluted by accumulated trivia, and what happens next is the part people
@@ -60,8 +62,8 @@ no one and is never deleted — deletion feels riskier than leaving it, so corpo
 
 Two mechanisms make maintenance real rather than aspirational.
 
-- **Date-stamp every rule** and review the oldest first. Age is a weak signal but it is free, and it beats the
-  alternative, which is reviewing nothing.
+- **Date-stamp every rule that stays prose** and review the oldest first. Age is a weak signal but it
+  is free, and it beats the alternative, which is reviewing nothing.
 - **Treat a rule that never fires as suspect.** This is Part III's [mutation-testing argument](../part-3-verification/layered-gates/index.md)
   applied to the corpus: a check that has not caught anything in a year is either guarding a class that no
   longer occurs, or it is broken and you have been trusting silence. Both are worth knowing, and you find out

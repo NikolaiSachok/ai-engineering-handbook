@@ -24,7 +24,8 @@ ktorý tím opustil pred dvoma refaktoringmi. Agent verne postaví starý svet v
 **Rozpor.** Dve pravidlá, ktoré s odstupom mesiacov pridali ľudia riešiaci odlišné problémy, si dnes
 protirečia. Nič také sa nehľadá, pretože v čase vzniku bolo každé z nich rozumné. Agent konflikt vyrieši tak,
 že si jedno vyberie — a nie vždy to isté, čo je horšie než vybrať si zle: správanie prestalo byť
-deterministické a hlásený problém nikto nezopakuje.
+deterministické a hlásený problém nikto nezopakuje. Náprava je urovnanie pri revízii: niekto rozhodne, ktoré z
+nich platí, a druhé zmaže, pretože agent, ktorý to má rozsúdiť sám, sa bude zakaždým rozhodovať inak.
 
 **Nafúknutosť.** Korpus rastie, pretože pridať pravidlo je najlacnejšia možná reakcia na akýkoľvek incident.
 Za istou hranicou sa podstatné obmedzenia rozriedia v nánose maličkostí — a potom prichádza časť, ktorú
@@ -60,8 +61,8 @@ mazať sa zdá riskantnejšie než nechať tak, takže korpusy vedia iba rásť.
 
 Údržbu menia z dobrého úmyslu na skutočnosť dva mechanizmy.
 
-- **Každé pravidlo označ dátumom** a preveruj najstaršie ako prvé. Vek je slabý signál, ale máš ho zadarmo a
-  je lepší než alternatíva, čiže nepreverovať nič.
+- **Každé pravidlo, ktoré zostane prózou, označ dátumom** a preveruj najstaršie ako prvé.
+  Vek je slabý signál, ale máš ho zadarmo a je lepší než alternatíva, čiže nepreverovať nič.
 - **Pravidlo, ktoré sa nikdy neaktivovalo, ber ako podozrivé.** Je to
   [argument o mutačnom testovaní](../part-3-verification/layered-gates/index.md) z III. časti aplikovaný na korpus:
   kontrola, ktorá za rok nič nezachytila, buď stráži triedu chýb, ktorá sa už nevyskytuje, alebo je pokazená a
