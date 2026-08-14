@@ -410,6 +410,8 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Nepopierateľnosť (non-repudiation)** — vlastnosť, vďaka ktorej je záznam dôkazom, a nie rozprávaním: vytvára ho systém ako vedľajší produkt práce, nepíše ho dodatočne strana, o ktorej vypovedá.
 
+**Priradenie agenta a modelu (agent/model attribution)** — pripísanie zmeny konkrétnemu agentovi, modelu a zadaniu, z ktorých vznikla, aby auditný záznam odpovedal aj na otázku *čo to vytvorilo*, nielen na to, *kedy sa to dostalo do kódu*.
+
 **Pôvod (provenance)** — rodokmeň artefaktu: z ktorého zdroja, buildu, závislostí a agenta vznikol. Zaznamenáva sa pri generovaní, pretože neskoršia rekonštrukcia je hádanie.
 
 **SBOM (software bill of materials)** — súpis toho, čo do artefaktu vstúpilo; mení novo zverejnenú zraniteľnosť z vyšetrovania na vyhľadávanie.
@@ -420,9 +422,9 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Obhájiteľné overovanie (defensible verification)** — overovanie, ktoré obstojí, keď ho neskôr preskúma niekto iný. Tempo schvaľovania, ktoré by žiadny človek neudržal, v tejto skúške neobstojí ani vtedy, keď je podpis pravý.
 
-**Buildové úrovne SLSA (L1/L2/L3)** — stupne sily dôkazu o pôvode buildu. Build L1 zaznamenáva, ako artefakt vznikol, no záznam môže byť nepodpísaný a ľahko sfalšovateľný; Build L2 vyžaduje podpis hostovanej buildovej platformy; Build L3 navyše izoluje buildy, chráni platformu pred manipuláciou a oddeľuje podpisový kľúč od krokov buildu. *(deep dive)*
+**Buildové úrovne SLSA (L1/L2/L3)** — stupne sily dôkazu o pôvode buildu. Build L1 zaznamenáva, ako artefakt vznikol, no záznam môže byť nepodpísaný a ľahko sfalšovateľný; Build L2 vyžaduje podpis hostovanej buildovej platformy; Build L3 navyše izoluje buildy, chráni platformu pred manipuláciou a oddeľuje podpisový kľúč od krokov buildu definovaných používateľom. *(deep dive)*
 
-**Podpisový kľúč neprístupný krokom buildu** — požiadavka Build L3, podľa ktorej používateľom definovaný krok buildu nemôže načítať ani použiť kľúč potvrdzujúci pôvod artefaktu. Proces, ktorý artefakt vytvára, tak nedokáže sám vyrobiť dôveryhodný podpis. *(deep dive)*
+**Podpisový kľúč neprístupný krokom buildu definovaným používateľom** — požiadavka Build L3, podľa ktorej používateľom definovaný krok, ktorý *vykonáva* build, nemôže načítať ani použiť kľúč potvrdzujúci pôvod artefaktu. Proces, ktorý artefakt vytvára, tak nedokáže sám vyrobiť dôveryhodný podpis. *(deep dive)*
 
 **Formáty SBOM (SPDX / CycloneDX)** — dva prevládajúce štandardy pre súpis softvérových súčastí. SPDX modeluje najmä balíky, ich vzťahy, licencie a súlad; CycloneDX sa sústreďuje na komponenty, bezpečnosť a zraniteľnosti. *(deep dive)*
 

@@ -365,6 +365,8 @@ its section here. The list grows as the course does.
 
 **Non-repudiation** — the property that makes a trail evidence rather than narrative: it is produced by the system as a side effect of the work, not written afterwards by the party being recorded.
 
+**Agent/model attribution** — tying a change to the specific agent, model and task that produced it, so the audit trail answers *what made this* and not only *when it landed*.
+
 **Provenance** — the lineage of an artefact: which source, build, dependencies, and agent produced it. Recorded at generation time, because reconstructing it later is guesswork.
 
 **SBOM (software bill of materials)** — the inventory of what went into an artefact, which turns a newly-disclosed vulnerability into a lookup instead of an investigation.
@@ -375,9 +377,9 @@ its section here. The list grows as the course does.
 
 **Defensible verification** — verification that survives someone else's later examination. An approval rate no human could sustain fails this test even when the signature is genuine.
 
-**SLSA build levels (L1/L2/L3)** — a ladder of provenance strength: L1 the artifact carries provenance (may be unsigned, trivial to forge); L2 the provenance is signed by a hosted build platform (forging needs an attack); L3 the platform is tamper-resistant, builds are isolated, and the signing key is inaccessible to build steps. *(deep dive)*
+**SLSA build levels (L1/L2/L3)** — a ladder of provenance strength: L1 the artifact carries provenance (may be unsigned, trivial to forge); L2 the provenance is signed by a hosted build platform (forging needs an attack); L3 the platform is tamper-resistant, builds are isolated, and the signing key is inaccessible to user-defined build steps. *(deep dive)*
 
-**Signing key inaccessible to build steps** — the load-bearing SLSA L3 clause for a fleet: the thing that *runs* the build cannot reach the key that *vouches* for it, so the agent that generated an artifact cannot sign the attestation for it. *(deep dive)*
+**Signing key inaccessible to user-defined build steps** — the load-bearing SLSA L3 clause for a fleet: the user-defined steps that *run* the build cannot reach the key that *vouches* for it, so the agent that generated an artifact cannot sign the attestation for it. *(deep dive)*
 
 **SBOM dialects (SPDX / CycloneDX)** — the two dominant software-bill-of-materials standards: SPDX (Linux Foundation, ISO/IEC 5962, package-and-relationship model, compliance/licence focus) and CycloneDX (OWASP, component-centric, security/vulnerability focus). *(deep dive)*
 
