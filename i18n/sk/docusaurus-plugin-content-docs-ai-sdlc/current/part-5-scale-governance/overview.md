@@ -46,10 +46,11 @@ rovnaké obmedzenie, len zakaždým vytvára iný druh nákladov.
 ## Predpoklady
 
 Najprv potrebuješ úzke miesto overovania z I. časti, tentoraz ako tvrdenie o *kapacite*, nie o kvalite. Prvá
-lekcia podľa neho priamo určuje hornú hranicu veľkosti flotily. Potrebuješ aj pamäť projektu a pravidlá,
-ktoré platia, z I. časti. Celá druhá lekcia skúma, čo sa s nimi stane, keď sa kódová základňa ďalej mení.
-Lekcia o nákladoch vyčísli, čo stoja sémantické brány z III. časti a prístupové údaje pre jednotlivé úlohy
-zo IV. časti. Záverečná lekcia vychádza z argumentácie III. časti o oddelení právomocí.
+lekcia podľa neho priamo určuje hornú hranicu veľkosti flotily. Potrebuješ aj pamäť projektu a pravidlá, ktoré
+platia, z I. časti. Celá druhá lekcia skúma, čo sa s nimi stane, keď sa kódová základňa ďalej mení. Lekcia o
+nákladoch vyčísli, čo stoja sémantické brány z III. časti, a zo IV. časti si preberá prihlasovacie údaje
+vydávané na úlohu, aby sa výdavky dali priradiť. Záverečná lekcia vychádza z argumentácie III. časti o
+oddelení právomocí.
 
 ## Čo sa mení po tejto časti
 
