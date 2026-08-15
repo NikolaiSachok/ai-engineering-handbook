@@ -1,4 +1,17 @@
 # Keep the Docusaurus toolchain patched and drain inherited npm advisories over time.
+#
+# GROUPING IS LOAD-BEARING, not tidiness. Docusaurus and React both refuse to build when their own
+# packages sit at different versions, so a per-package PR for a family is a PR that CANNOT pass:
+#
+#   - bumping `@docusaurus/core` alone → "Invalid name=docusaurus-plugin-css-cascade-layers
+#     version number=3.10.1" (PRs #172, #173, #175)
+#   - bumping `react` without `react-dom` → "Incompatible React versions: the react and react-dom
+#     packages must have the exact same version" (PR #239)
+#
+# Ungrouped, one 3.10.1 → 3.10.2 patch produced SEVEN pull requests that each touched
+# `package-lock.json` and therefore conflicted with each other by construction; they sat open from
+# 15 July 2026 and three of them were red the whole time. The groups below make each family arrive
+# as one mergeable change.
 version: 2
 updates:
   # npm dependencies (Docusaurus core, plugins, dev tooling).
@@ -13,6 +26,39 @@ updates:
     labels:
       - "infra"
       - "chore"
+    groups:
+      # The whole Docusaurus family moves together or not at all — the build validates that every
+      # `@docusaurus/*` package and the community plugins pinned alongside them share one version.
+      docusaurus:
+        patterns:
+          - "@docusaurus/*"
+          - "docusaurus-plugin-*"
+          - "docusaurus-theme-*"
+      # react and react-dom must be byte-identical in version, and Docusaurus checks it at build
+      # time. The type packages ride along so the four never disagree.
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      # NOTE on `mermaid` / `dompurify`: both ship to the reader's browser through
+      # @docusaurus/theme-mermaid, and both are TRANSITIVE — no group here can reach them, because
+      # version updates only open PRs for direct dependencies. They move either with a Docusaurus
+      # release or by hand in the lockfile (done in this PR). Reaching them automatically needs
+      # Dependabot SECURITY updates, which require alerts to be enabled on the repository — they
+      # are currently off, which is why 36 advisories accumulated unreported.
+      #
+      # Everything else that is only ever used at build time can travel as one PR per week.
+      dev-tooling:
+        dependency-type: "development"
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@docusaurus/*"
+          - "docusaurus-plugin-*"
+          - "docusaurus-theme-*"
+          - "typescript"
 
   # GitHub Actions used by the CI and deploy workflows.
   - package-ecosystem: "github-actions"
@@ -24,3 +70,12 @@ updates:
     labels:
       - "infra"
       - "chore"
+    groups:
+      # Action bumps are independent of one another, but a single weekly PR is one CI run and one
+      # review instead of one per action.
+      actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
