@@ -687,3 +687,15 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Data policy** — a Power Platform governance rule controlling connector use and permitted combinations of connectors to constrain data movement.
 
 **Power Platform solution** — a package of platform components used to manage customisations and move them between environments; distinct from a .NET solution file.
+
+## Pipelines to Azure \{#pipelines-to-azure}
+
+**Workflow** — an automation definition containing jobs and steps that run in response to configured events.
+
+**Runner** — the machine or execution environment that runs a pipeline job's steps.
+
+**Deployment environment** — a named release target in a pipeline platform, with its own deployment configuration and protection rules; it is distinct from an `azd` environment's application configuration.
+
+**Required reviewer** — a person or team designated in an environment's protection settings to approve a deployment job before it starts.
+
+**Service connection** — an Azure DevOps resource that records the authentication configuration a pipeline uses to access an external service, such as Azure Resource Manager. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops)
