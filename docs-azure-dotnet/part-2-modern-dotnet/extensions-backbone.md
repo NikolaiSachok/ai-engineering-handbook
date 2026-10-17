@@ -161,7 +161,7 @@ Client registration supplies an object; it does not establish permission to quer
 and access setup, including the
 [deterministic production credential](https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication/best-practices#use-deterministic-credentials-in-production-environments)
 used here. Choose the model client's lifetime against that client library's own contract; II.8,
-[AI in .NET (planned)](./overview.md#whats-inside), covers those integrations.
+[AI in .NET](./ai-in-dotnet.md), covers those integrations.
 
 For several Azure clients, use
 [`Microsoft.Extensions.Azure`'s `AddAzureClients`](https://learn.microsoft.com/en-us/dotnet/azure/sdk/dependency-injection):
