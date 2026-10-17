@@ -1212,3 +1212,44 @@ same-path `ru-ru` URLs on 2026-10-18, without locale fallback; each response dec
 The count includes the separately cited fragment variants. Lesson links preserve paths, queries
 and fragments. The additional RU Visual Studio agents page was checked live as terminology
 evidence. Other vendors' URLs and internal course destinations are unchanged.
+
+## Releasing safely — terminology evidence (2026-10-18)
+
+The lesson reuses the existing deployment-slot, revision, image-digest, configuration-drift,
+ARM what-if, managed-identity, model-deployment and rollout decisions without changing their rows
+or statuses. In particular, the revision, digest, drift and what-if rows remain **ON PROBATION**;
+live documentation checks do not constitute independent review. Shared AI terminology follows
+`rag.md` §1.2: «поиск» for retrieval as an action, «оценка» for answer evaluation and «спан»
+for a telemetry operation. The canary-release and rollback forms below reuse the matching RAG
+ledger entries. No independent reviewer was run, so none of this lesson's new rows is settled.
+
+Lesson-specific usage:
+
+- Keep the settled «рабочий слот» for the App Service concept; first-use bridge «(deployment slot)».
+  Do not reinterpret the word as a capacity reservation or image store.
+- Follow `_language.md` §10 for traffic senses. Configured release allocation is «доля запросов»;
+  ingress as a network boundary is «входной трафик». Low volume is «мало запросов».
+- Candidate is «кандидат на выпуск», then «кандидат» or «новая ревизия» in explicit context;
+  known-good is «прежняя проверенная ревизия». These are descriptive phrases, not new glossary terms.
+- API takes neuter agreement («работающее API»), as required for this lesson. The ASP.NET Core
+  feature remains «минимальные API»; the singular P1 application is «минимальное API».
+- Sources keep the supplied English link titles, product names and identifiers; group labels and
+  joining prose are Russian. Preserve the four source groups and their list order.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Slot swap — App Service content and swappable-configuration exchange | **ON PROBATION** — «обмен слотами (slot swap)», then «обмен слотами». | Live-checked 2026-10-18: [Microsoft Learn RU, App Service slots](https://learn.microsoft.com/ru-ru/azure/app-service/deploy-staging-slots) describes the exchange operation and settings that stay with their slots. The native noun follows the documented «обмен» sense; reject wording that implies all settings or managed identities move with the application. |
+| Multiple revision mode — concurrent active Container Apps revisions | **ON PROBATION** — «режим нескольких ревизий (multiple revision mode)», then «режим нескольких ревизий». | Live-checked 2026-10-18: [Microsoft Learn RU, revision modes](https://learn.microsoft.com/ru-ru/azure/container-apps/revisions#revision-modes) establishes coexistence of active revisions and controlled routing. Reuse the existing «ревизия» sense; do not introduce a second name through the page's varying revision translations. |
+| Traffic weight — configured ingress percentage for a revision or label | **ON PROBATION** — «доля запросов (traffic weight)», then «доля запросов». | Live-checked 2026-10-18: [Microsoft Learn RU, traffic splitting](https://learn.microsoft.com/ru-ru/azure/container-apps/traffic-splitting?pivots=azure-cli) documents percentage allocation and a total of 100%. Rendering follows `_language.md` §10, sense 5; reject literal «вес трафика». It is configured allocation, not an exact request count in a small sample. |
+| Canary release — limited live exposure before a promotion decision | **ON PROBATION** — «канареечный релиз (canary release)», then «канареечный релиз». | REUSE `rag.md` §1.2 «канареечный релиз». Live-checked 2026-10-18: [Microsoft Learn RU, revision modes](https://learn.microsoft.com/ru-ru/azure/container-apps/revisions#revision-modes) documents concurrent active revisions; [traffic splitting](https://learn.microsoft.com/ru-ru/azure/container-apps/traffic-splitting?pivots=azure-cli) supplies the mechanism for limited exposure. The shared canon supplies the name. Observation precedes the decision to widen exposure; no automatic promotion is implied. |
+| Rollback — return to an accepted application version or configuration | **ON PROBATION** — «откат (rollback)», then «откат»; «откат маршрутизации» when only new-request routing is restored. | REUSE `rag.md` §1.2 «откат»; reject «роллбэк». Live-checked 2026-10-18: [Microsoft Learn RU, blue-green deployment](https://learn.microsoft.com/ru-ru/azure/container-apps/blue-green-deployment?pivots=azure-cli) supplies the revision-routing recovery mechanism. This does not imply reversal of already streamed output, index writes or application-wide settings. |
+| SBOM — retained inventory of artefact components and dependencies | **ON PROBATION** — kept-EN «SBOM (software bill of materials)», then «SBOM»; explain as «перечень программных компонентов и зависимостей». | Live-checked 2026-10-18: [Microsoft Learn RU, DevSecOps image SBOM guidance](https://learn.microsoft.com/ru-ru/azure/architecture/guide/devsecops/devsecops-on-aks) names SBOM and recommends generating and attaching component inventories during CI. Retain the acronym; reject treating the inventory as a vulnerability verdict. |
+| Artefact signature — cryptographic content-to-signer binding | **ON PROBATION** — «подпись артефакта (artefact signature)», then «подпись артефакта». | Live-checked 2026-10-18: [Microsoft Learn RU, Notation and Key Vault workflow](https://learn.microsoft.com/ru-ru/azure/container-registry/container-registry-tutorial-sign-build-push) documents signing, verification and trust-policy configuration. Product names remain Notation, Key Vault and ACR. Verification establishes integrity and an accepted signing identity, not vulnerability absence or answer correctness. |
+| Dependency scanning — checking dependencies for known vulnerabilities | **ON PROBATION** — «сканирование зависимостей (dependency scanning)», then «сканирование зависимостей». | Live-checked 2026-10-18: [Microsoft Learn RU, NuGet auditing](https://learn.microsoft.com/ru-ru/nuget/concepts/auditing-packages) covers package vulnerability auditing; [Defender image scanning](https://learn.microsoft.com/ru-ru/azure/container-registry/scan-images-defender) establishes the separate image scope. The lesson requires direct and transitive package coverage plus image coverage and explicit blocking rules; a warning alone does not enforce a release decision. |
+
+All 28 distinct Microsoft Learn destinations in the semantic packet returned HTTP 200 at their
+same-path `ru-ru` counterparts on 2026-10-18. Every response retained the Russian URL and declared
+`lang="ru-ru"`; query strings and fragments were preserved. This records live URL and terminology
+checks, not execution against an Azure subscription. Other vendors' URLs and internal course
+destinations remain unchanged. The source lesson's 2026-10-17 verification date and its targeted
+2026-10-18 procedure recheck remain distinct from these localization checks.
