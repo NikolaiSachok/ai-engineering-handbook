@@ -415,6 +415,22 @@ last_verified: 2026-10-17
 
 **Тестовая фикстура (test fixture)** — заранее известная конфигурация среды или данные для тестов с определённым временем жизни и ответственностью за очистку.
 
+## AI в .NET \{#ai-in-dotnet}
+
+**Microsoft.Extensions.AI** — библиотеки .NET с общими контрактами AI-клиентов и компонентами, которые можно сочетать друг с другом: например, для телеметрии, кэширования и вызова функций. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/dotnet/ai/microsoft-extensions-ai)
+
+**IChatClient** — интерфейс Microsoft.Extensions.AI для обмена сообщениями чата с сервисом модели. Возвращает готовый ответ или поток обновлений. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/dotnet/ai/ichatclient)
+
+**IEmbeddingGenerator** — контракт Microsoft.Extensions.AI для преобразования типизированных входных данных в типизированные эмбеддинги. В этом уроке используется вариант для преобразования текста в вектор: `IEmbeddingGenerator<string, Embedding<float>>`. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/dotnet/ai/iembeddinggenerator)
+
+**Адаптер поставщика (provider adapter)** — компонент, который адаптирует клиент из SDK поставщика к общему интерфейсу приложения, преобразуя типы и операции между ними.
+
+**Конвейер делегирующих клиентов (delegating client pipeline)** — последовательность обёрток над AI-клиентом. Каждая обёртка добавляет своё поведение до или после передачи операции следующему клиенту. `DelegatingChatClient` — базовый класс для обёрток чата, передающих вызовы внутреннему `IChatClient`. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/dotnet/api/microsoft.extensions.ai.delegatingchatclient?view=net-10.0-pp)
+
+**Microsoft.Extensions.VectorData** — абстракции .NET для доступа к векторным хранилищам и коллекциям типизированных записей через реализации поставщиков. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/dotnet/ai/vector-stores/overview)
+
+**Microsoft Agent Framework** — SDK Microsoft для создания агентов и рабочих процессов с поддержкой инструментов, состояния сеанса и оркестрации. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/agent-framework/overview/)
+
 ## Microsoft Foundry \{#microsoft-foundry}
 
 **Ресурс Foundry (Foundry resource)** — ресурс Azure, которому принадлежат общие бессерверные развёртывания моделей и настройки сети и безопасности. Его тип — `Microsoft.CognitiveServices/accounts`, вид — `AIServices`.

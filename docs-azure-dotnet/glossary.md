@@ -416,6 +416,22 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Test fixture** — known setup or data supplied to tests, with a defined lifetime and cleanup responsibility.
 
+## AI in .NET \{#ai-in-dotnet}
+
+**Microsoft.Extensions.AI** — .NET libraries that supply shared AI client contracts and composable behaviours such as telemetry, caching and function invocation. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai)
+
+**IChatClient** — the Microsoft.Extensions.AI interface for exchanging chat messages with a model service, returning a complete response or a stream of updates. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/ai/ichatclient)
+
+**IEmbeddingGenerator** — the Microsoft.Extensions.AI contract for converting typed inputs into typed embeddings; the text-to-vector form used here is `IEmbeddingGenerator<string, Embedding<float>>`. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/ai/iembeddinggenerator)
+
+**Provider adapter** — a component that exposes a provider's SDK client through a shared application interface, translating between their types and operations.
+
+**Delegating client pipeline** — a sequence of wrappers around an AI client, each adding behaviour before or after forwarding an operation; `DelegatingChatClient` is the base class for chat wrappers that pass calls to an inner `IChatClient`. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.ai.delegatingchatclient?view=net-10.0-pp)
+
+**Microsoft.Extensions.VectorData** — .NET abstractions for accessing vector stores and typed record collections through provider implementations. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/ai/vector-stores/overview)
+
+**Microsoft Agent Framework** — Microsoft's SDK for building agents and workflows, with support for tools, session state and orchestration. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/agent-framework/overview/)
+
 ## Microsoft Foundry \{#microsoft-foundry}
 
 **Foundry resource** — an Azure resource that holds shared serverless model deployments, networking and security settings; its type is `Microsoft.CognitiveServices/accounts` with kind `AIServices`.
