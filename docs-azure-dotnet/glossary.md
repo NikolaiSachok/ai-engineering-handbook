@@ -619,3 +619,21 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Idempotency key** — an identifier used to recognize retries of the same logical operation and prevent duplicate effects.
 
 **Workflow checkpoint** — a saved record of execution state from which a workflow can resume.
+
+## Evaluation and tracing \{#evaluation-and-tracing}
+
+**Evaluator** — a scoring method that measures a specified quality, safety or reliability property of model or application outputs.
+
+**Groundedness evaluator** — a scoring method that assesses whether a generated response is supported by its grounding context. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators)
+
+**Relevance evaluator** — a scoring method that assesses how well a generated response addresses the user's query. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators)
+
+**Offline evaluation** — assessment of a fixed set of test cases outside the live request path, used to inspect behaviour and compare application versions.
+
+**Continuous evaluation** — recurring assessment of sampled live interactions as traffic arrives, rather than a check that blocks each response before delivery.
+
+**Scheduled evaluation** — an evaluation run triggered at a configured time or recurrence, using its configured data source and scoring criteria.
+
+**Custom evaluator** — an application-defined scoring method implemented through code, a judge prompt or an external endpoint.
+
+**Trace identifier** — the identifier shared by operations belonging to one distributed trace, used to correlate their execution records. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/distributed-tracing-concepts)
