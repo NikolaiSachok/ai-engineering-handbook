@@ -128,7 +128,7 @@ for you, and `disable` fails if the exact version is missing.
 Pinning is not a way to stay on one build for three years;
 [support requires current servicing updates](https://learn.microsoft.com/en-us/dotnet/core/releases-and-support).
 A [framework-dependent application uses an installed runtime, while a self-contained publication bundles it](https://learn.microsoft.com/en-us/dotnet/core/deploying/);
-Part II.7, [Containers and Aspire](./overview.md#whats-inside), covers packaging and deployment choices.
+Part II.7, [Containers and Aspire](./containers-and-aspire.md), covers packaging and deployment choices.
 
 ## In an AI workload \{#in-an-ai-workload}
 
@@ -138,7 +138,7 @@ small public document set, with citations.
 AI client libraries change on their own release schedules, independently of .NET's LTS window:
 [package release histories](https://www.nuget.org/packages/OpenAI/) show frequent
 updates and prerelease versions. A supported runtime does not tell you which client-library behaviour
-you deployed. Part II.8, [AI in .NET](./overview.md#whats-inside), owns library selection; this lesson
+you deployed. Part II.8, [AI in .NET](./ai-in-dotnet.md), owns library selection; this lesson
 establishes how to keep the chosen dependency graph identifiable.
 
 Suppose citations disappear after an update. First compare `global.json` and `packages.lock.json`
