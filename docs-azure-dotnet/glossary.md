@@ -699,3 +699,15 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Required reviewer** — a person or team designated in an environment's protection settings to approve a deployment job before it starts.
 
 **Service connection** — an Azure DevOps resource that records the authentication configuration a pipeline uses to access an external service, such as Azure Resource Manager. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops)
+
+## Coding agents on a .NET codebase \{#coding-agents-dotnet}
+
+**Agent mode** — an IDE workflow in which an AI agent edits files, invokes tools and uses their results to continue working on a task.
+
+**Copilot cloud agent** — GitHub's remote coding agent, which works on repository tasks in a cloud development environment and proposes changes for review; also called the Copilot coding agent in Microsoft Learn.
+
+**Repository custom instructions** — versioned guidance that gives an AI assistant project context, conventions and validation commands.
+
+**Path-specific instructions** — custom instructions selected for files matching a declared path pattern.
+
+**MCP server** — a process or service that exposes tools or context to AI clients through Model Context Protocol.

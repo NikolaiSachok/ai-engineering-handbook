@@ -1174,3 +1174,41 @@ returned English HTML (`lang="en-us"`); the other 27 pages returned Russian HTML
 uses the HTTP-200 `ru-ru` URL as required by the link policy. Paths, queries and fragments are
 preserved; other vendors' URLs and internal links are unchanged. Sources keep the packet's
 English link labels, with Russian joining words and the same six groups in the same order.
+
+## Coding agents on a .NET codebase — terminology evidence (2026-10-18)
+
+This lesson reuses the existing **ON PROBATION** decisions for «закрепить версию SDK»,
+«тестовая фикстура» and «упрощённая тестовая реализация» in their recorded senses;
+«поставка ПО с помощью AI» remains the Part IV title. Their existing rows and statuses are
+unchanged. Managed identity and the application/deployment distinction follow the settled rows
+above. Shared vocabulary reuses `rag.md` §1.2: «MCP-сервер», «MCP-клиент», «поиск» for the
+retrieval action, «промпт» and «оценка» for answer-quality evaluation. The discrete-check sense
+follows the `gate` card in `ai-sdlc.md`; the linked Russian lesson titles are retained exactly.
+API is neuter in this lesson, as explicitly required for this composition.
+
+All six new rows remain **ON PROBATION**. Live Microsoft Learn evidence supports the senses
+and wording below; no independent review was run, and these decisions are not self-settled.
+Existing provisional wording is reaffirmed for this lesson without changing another section:
+[RU SDK selection](https://learn.microsoft.com/ru-ru/dotnet/core/tools/global-json),
+[RU fixture setup](https://learn.microsoft.com/ru-ru/ef/core/testing/testing-with-the-database)
+and [RU fake terminology](https://learn.microsoft.com/ru-ru/dotnet/core/testing/unit-testing-best-practices)
+were checked live again on 2026-10-18. The fake wording follows the narrower working-alternative
+sense in Learn's terminology note, rather than its inconsistent broader usage.
+Code blocks, including their comments, are byte-identical
+to English under the binding course decision. Sources retain the cited English labels and
+seven original groups in order.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Agent mode — iterative IDE editing and tool-use workflow | **ON PROBATION** — «режим агента (agent mode)», then «режим агента». | Live-checked 2026-10-18: [Microsoft Learn RU, agent mode](https://learn.microsoft.com/ru-ru/visualstudio/ide/copilot-agent-mode?view=visualstudio) uses «режим агента» and describes editing, tool calls and iteration from their results. Prefer this native noun phrase to «агентный режим». This is an IDE mode, not the remote service or the separately labelled Agent (Preview) option. |
+| Copilot cloud agent — GitHub remote repository worker | **ON PROBATION** — kept-EN «Copilot cloud agent»; native head «агент» in running prose. Retain «Copilot coding agent» only as the contextual Microsoft Learn or historical alias. | Live-checked 2026-10-18: [Microsoft Learn RU, Visual Studio agents](https://learn.microsoft.com/ru-ru/visualstudio/ide/copilot-specialized-agents) describes cloud sessions backed by the GitHub Copilot coding agent; [GitHub's current product documentation](https://docs.github.com/en/copilot/concepts/copilot-surfaces/copilot-on-github) supplies the current name. Product names stay English even where RU Learn translates their components. Reject treating backend general availability as the IDE option's preview status. |
+| Repository custom instructions — versioned project guidance for an AI assistant | **ON PROBATION** — «пользовательские инструкции репозитория (repository custom instructions)», then «инструкции репозитория» where the referent is clear. | Live-checked 2026-10-18: [Microsoft Learn RU, custom instructions](https://learn.microsoft.com/ru-ru/visualstudio/ide/copilot-chat-context?view=visualstudio) uses «пользовательские инструкции» and documents `.github/copilot-instructions.md`, project context and response references. The repository qualifier distinguishes scope; this guidance is not an enforced access policy or an independent CI check. |
+| Path-specific instructions — guidance selected by a path pattern | **ON PROBATION** — «инструкции для файлов по шаблону пути (path-specific instructions)», then «инструкции для файлов по шаблону пути» or «отдельные инструкции» in explicit context. | Live-checked 2026-10-18: [Microsoft Learn RU, instruction files](https://learn.microsoft.com/ru-ru/visualstudio/ide/copilot-chat-context?view=visualstudio) documents `.github/instructions/*.instructions.md` and `applyTo` glob matching. This descriptive Russian label names the files selected by the pattern, not the paths as instruction recipients; it is not a claimed verbatim Microsoft translation. Reject «путь-специфичные инструкции»; a shared MCP connection does not imply shared instruction discovery across clients. |
+| Model Context Protocol (MCP) — client/server tool and context protocol | **ON PROBATION** — kept-EN «Model Context Protocol (MCP)», then «MCP»; use the native head «протокол» when needed. | Live-checked 2026-10-18: [Microsoft Learn RU, Learn MCP overview](https://learn.microsoft.com/ru-ru/training/support/mcp) retains Model Context Protocol, and [Visual Studio MCP support](https://learn.microsoft.com/ru-ru/visualstudio/ide/mcp-servers?view=visualstudio) describes discovery, invocation and response handling. Preserve the protocol name and acronym rather than introducing a competing translated name. Tool access does not establish edit correctness. |
+| MCP server — process or service exposing tools or context | **ON PROBATION** — «MCP-сервер (MCP server)», then «MCP-сервер»; REUSE `rag.md` §1.2. | Live-checked 2026-10-18: [Microsoft Learn RU, Visual Studio MCP support](https://learn.microsoft.com/ru-ru/visualstudio/ide/mcp-servers?view=visualstudio) documents local and remote servers; [Learn MCP overview](https://learn.microsoft.com/ru-ru/training/support/mcp) establishes the documentation-service example. Learn varies word order; the shared canon supplies the consistent Russian compound. The process/service sense is not restricted to a physical host. |
+
+All 16 distinct Microsoft Learn destinations in the semantic packet returned HTTP 200 at their
+same-path `ru-ru` URLs on 2026-10-18, without locale fallback; each response declared `lang="ru-ru"`.
+The count includes the separately cited fragment variants. Lesson links preserve paths, queries
+and fragments. The additional RU Visual Studio agents page was checked live as terminology
+evidence. Other vendors' URLs and internal course destinations are unchanged.
