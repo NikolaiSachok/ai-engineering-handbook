@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Часть V — Проекты
-sidebar_label: Обзор части
+sidebar_label: "Часть V — Проекты"
 last_verified: 2026-10-17
 ---
 

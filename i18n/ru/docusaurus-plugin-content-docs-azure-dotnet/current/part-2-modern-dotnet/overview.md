@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Часть II — Современный .NET
-sidebar_label: Обзор части
+sidebar_label: "Часть II — Современный .NET"
 last_verified: 2026-10-17
 ---
 

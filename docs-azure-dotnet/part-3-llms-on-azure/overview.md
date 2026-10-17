@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Part III — Running LLMs on Azure
-sidebar_label: Part overview
+sidebar_label: "Part III — Running LLMs on Azure"
 last_verified: 2026-10-17
 ---
 

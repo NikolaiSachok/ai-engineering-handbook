@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Part V — Projects
-sidebar_label: Part overview
+sidebar_label: "Part V — Projects"
 last_verified: 2026-10-17
 ---
 

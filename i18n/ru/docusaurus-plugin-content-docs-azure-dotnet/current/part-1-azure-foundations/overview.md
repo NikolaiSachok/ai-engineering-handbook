@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Часть I — Основы Azure
-sidebar_label: Обзор части
+sidebar_label: "Часть I — Основы Azure"
 last_verified: 2026-10-17
 ---
 

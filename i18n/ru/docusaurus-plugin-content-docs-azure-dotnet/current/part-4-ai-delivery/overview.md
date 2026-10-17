@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Часть IV — Поставка ПО с помощью AI в стеке Microsoft
-sidebar_label: Обзор части
+sidebar_label: "Часть IV — Поставка ПО с помощью AI в стеке Microsoft"
 last_verified: 2026-10-17
 ---
 

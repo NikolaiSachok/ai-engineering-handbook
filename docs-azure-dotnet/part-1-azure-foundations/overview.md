@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Part I — Azure foundations
-sidebar_label: Part overview
+sidebar_label: "Part I — Azure foundations"
 last_verified: 2026-10-17
 ---
 

@@ -29,7 +29,9 @@ back to them rather than teaching those ideas again.
 
 :::note[Status]
 
-🚧 marks lessons not yet published in the Part rows and pages not yet written in the appendix list.
+The course is being written in stages, starting with Azure foundations and the first steps of the RAG service
+project. Each Part's overview lists all its lessons and how many are published; 🚧 marks a Part with lessons still
+to come and an appendix page not yet written.
 
 :::
 

@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Part IV — AI-assisted delivery on the Microsoft stack
-sidebar_label: Part overview
+sidebar_label: "Part IV — AI-assisted delivery on the Microsoft stack"
 last_verified: 2026-10-17
 ---
 

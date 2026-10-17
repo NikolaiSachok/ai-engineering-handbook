@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Part II — Modern .NET
-sidebar_label: Part overview
+sidebar_label: "Part II — Modern .NET"
 last_verified: 2026-10-17
 ---
 

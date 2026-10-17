@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Часть III — Запуск LLM в Azure
-sidebar_label: Обзор части
+sidebar_label: "Часть III — Запуск LLM в Azure"
 last_verified: 2026-10-17
 ---
 
