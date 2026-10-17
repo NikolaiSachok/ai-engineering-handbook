@@ -62,5 +62,25 @@
   "copyright": {
     "message": "Copyright © 2026 Nikolai Sachok. Built with Docusaurus.",
     "description": "The footer copyright"
+  },
+  "link.item.label.Part I — Azure foundations": {
+    "message": "Часть I — Основы Azure",
+    "description": "The label of footer link with label=Part I — Azure foundations linking to /azure-dotnet/part-1-azure-foundations/overview"
+  },
+  "link.item.label.Part II — Modern .NET": {
+    "message": "Часть II — Современный .NET",
+    "description": "The label of footer link with label=Part II — Modern .NET linking to /azure-dotnet/part-2-modern-dotnet/overview"
+  },
+  "link.item.label.Part III — Running LLMs on Azure": {
+    "message": "Часть III — Запуск LLM в Azure",
+    "description": "The label of footer link with label=Part III — Running LLMs on Azure linking to /azure-dotnet/part-3-llms-on-azure/overview"
+  },
+  "link.item.label.Part IV — AI-assisted delivery on the Microsoft stack": {
+    "message": "Часть IV — Поставка ПО с помощью AI в стеке Microsoft",
+    "description": "The label of footer link with label=Part IV — AI-assisted delivery on the Microsoft stack linking to /azure-dotnet/part-4-ai-delivery/overview"
+  },
+  "link.item.label.Part V — Projects": {
+    "message": "Часть V — Проекты",
+    "description": "The label of footer link with label=Part V — Projects linking to /azure-dotnet/part-5-projects/overview"
   }
 }

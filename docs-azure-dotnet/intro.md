@@ -49,7 +49,7 @@ The appendices are references to return to:
 
 - [Azure recap sheet](./recap-sheet.md) — the whole platform on a few pages, for revision.
 - Exam map 🚧 — AI-103 and AI-200 skill areas matched to lessons and project steps.
-- Glossary 🚧 — one definition for each course term.
+- [Glossary](./glossary.md) — one definition for each course term.
 
 ## How a lesson works \{#how-a-lesson-works}
 
@@ -104,8 +104,8 @@ when an example behaves differently from the current platform.
 
 ## Where to start \{#where-to-start}
 
-Part I opens with how Azure is organised; that lesson is 🚧 not yet published. Until then, the
-[RAG & Agents](/rag-agents/) course covers the retrieval ideas the first project builds on.
+Start with [How Azure is organised](./part-1-azure-foundations/how-azure-is-organised.md), the first lesson of
+Part I. The [RAG & Agents](/rag-agents/) course covers the retrieval ideas the first project builds on.
 
 ## Sources \{#sources}
 
