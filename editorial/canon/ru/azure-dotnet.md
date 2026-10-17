@@ -832,3 +832,43 @@ All 16 distinct Microsoft Learn URLs in the packet returned HTTP 200 at their sa
 counterparts on 2026-10-17, without a locale fallback. Lesson and glossary links preserve path,
 query and fragment. Additional RU terminology pages were checked live as cited above; the two
 legacy Aspire entries redirect to Aspire and are explicitly described as redirects, not RU attestation.
+
+## Safety on the platform — terminology evidence (2026-10-18)
+
+The lesson retains the existing **ON PROBATION** kept-English groundedness term from Part overview repair,
+with its explanatory Russian gloss recomposed after native finding N14:
+«groundedness detection (проверка того, подтверждают ли источники ответ)», then «groundedness detection».
+Live-checked 2026-10-18: [Microsoft Learn RU, groundedness detection](https://learn.microsoft.com/ru-ru/azure/foundry/openai/concepts/content-filter-groundedness)
+establishes comparison with supplied source material. Its varying «обоснованность» wording does not
+override the existing feature-name decision or the shared `rag.md` §1.2 grounding sense, «опора на контекст».
+The lesson also reuses «ограничители» for LLM guardrails, «поиск» for retrieval, «оценка» for evaluation
+and «трейс» for trace from that shared ledger; targeted checks of `rag-addendum.md` and `ai-sdlc.md`
+introduced no competing sense. ProblemDetails follows the ASP.NET Core row above; `title` is a body
+field, while «заголовок» means an HTTP header. The unchanged short headword
+«groundedness detection» still binds the New terms line to the glossary; the earlier ledger row
+is preserved under the course-wide section-ownership rule.
+
+All new decisions below remain **ON PROBATION**. Live documentation evidence supports the senses
+and wording; no independent reviewer was run. No existing row or status was changed. The course-wide
+ledger rule prevents settlement without independent-review evidence. A filtering block and a failure
+to execute filtering remain distinct outcomes, `safety_filtered` and `safety_unavailable`; the latter
+does not establish a policy violation. The proposed HTTP 422 and 503 mapping belongs to P1.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Content filter — platform classification and configured action on input or output | **ON PROBATION** — «фильтр содержимого (content filter)», then «фильтр содержимого». | Live-checked 2026-10-18: [Microsoft Learn RU, content filtering](https://learn.microsoft.com/ru-ru/azure/foundry-classic/foundry-models/concepts/content-filter) uses «фильтрация содержимого» and describes classification and filtering. Reject treating every detector result as a block. |
+| Severity level — category-specific harmfulness classification | **ON PROBATION** — «уровень серьёзности (severity level)», then «уровень серьёзности». | Live-checked 2026-10-18: [Microsoft Learn RU, content filtering](https://learn.microsoft.com/ru-ru/azure/foundry-classic/foundry-models/concepts/content-filter) uses severity-level terminology. House spelling supplies «ё». This is neither classifier confidence nor access permission. |
+| Severity threshold — classified severity at which blocking begins | **ON PROBATION** — «порог серьёзности (severity threshold)», then «порог серьёзности»; keep `severityThreshold` literal. | Live-checked 2026-10-18: [Microsoft Learn RU, default policies](https://learn.microsoft.com/ru-ru/azure/foundry/guardrails/default-safety-policies) attests «Порог серьезности»; [RAI policy GET schema](https://learn.microsoft.com/ru-ru/rest/api/microsoftfoundry/accountmanagement/rai-policies/get?view=rest-microsoftfoundry-accountmanagement-2025-06-01) supplies the field. Lowering the threshold broadens the blocked set, provided detection and blocking are enabled. Reject equating it with the portal blocking level. |
+| Blocking level — portal filtering strictness | **ON PROBATION** — «уровень блокировки (blocking level)», then «уровень блокировки». | Live-checked 2026-10-18: [Microsoft Learn RU, blocking levels](https://learn.microsoft.com/ru-ru/azure/foundry/guardrails/guardrails-overview#blocking-levels) explicitly uses this term and describes Low, Medium and High by blocked severities. Increasing this level broadens the blocked set; preserve the opposite direction of the ARM severity threshold. |
+| Annotation — structured detector-result metadata | **ON PROBATION** — «аннотация (annotation)», then «аннотация». | Live-checked 2026-10-18: [Microsoft Learn RU, Prompt Shields results](https://learn.microsoft.com/ru-ru/azure/foundry/openai/concepts/content-filter-prompt-shields) uses annotation wording with separate `detected` and `filtered` fields. Reject reading detection as proof that content was blocked. |
+| Prompt Shields — Microsoft prompt-attack detectors | **ON PROBATION** — kept-EN «Prompt Shields». | Live-checked 2026-10-18: [Microsoft Learn RU, Prompt Shields](https://learn.microsoft.com/ru-ru/azure/foundry/openai/concepts/content-filter-prompt-shields) retains the product name while explaining user-prompt and document attacks. Product-name policy takes precedence over translated headings. No invented Russian product name or extra parenthetical bridge. |
+| Direct prompt attack — instruction override through the user prompt | **ON PROBATION** — «прямая атака через промпт (direct prompt attack)», then «прямая атака через промпт». | Live-checked 2026-10-18: [Microsoft Learn RU, Prompt Shields](https://learn.microsoft.com/ru-ru/azure/foundry/openai/concepts/content-filter-prompt-shields) distinguishes the user-prompt attack channel. This is a descriptive Russian rendering, not a verbatim Learn label. Reject identifying every user instruction as an attack. |
+| Indirect prompt attack — instruction override through data content | **ON PROBATION** — «косвенная атака через промпт (indirect prompt attack)», then «косвенная атака через промпт». | Live-checked 2026-10-18: [Microsoft Learn RU, Prompt Shields](https://learn.microsoft.com/ru-ru/azure/foundry/openai/concepts/content-filter-prompt-shields) describes third-party documents with embedded hostile instructions. Prefer «косвенная» consistently over alternating with «непрямая»; the defining difference is the data channel. |
+| Protected-material detection — output matching against known protected text and code | **ON PROBATION** — «обнаружение защищённого материала (protected-material detection)», then «обнаружение защищённого материала». | Live-checked 2026-10-18: [Microsoft Learn RU, protected-material detection](https://learn.microsoft.com/ru-ru/azure/foundry/openai/concepts/content-filter-protected-material) uses «обнаружение защищенных материалов» and describes scanning model output. The chosen singular treats material as content. Reject claims of complete coverage or an ingestion-permission check. |
+| RAI policy — named Azure safety-control configuration referenced by a deployment | **ON PROBATION** — «политика RAI (RAI policy, responsible AI policy)», then «политика RAI»; preserve `raiPolicyName`. | Live-checked 2026-10-18: [Microsoft Learn RU, RAI policy GET](https://learn.microsoft.com/ru-ru/rest/api/microsoftfoundry/accountmanagement/rai-policies/get?view=rest-microsoftfoundry-accountmanagement-2025-06-01) describes the named `raiPolicies` resource; [deployment schema](https://learn.microsoft.com/ru-ru/azure/templates/microsoft.cognitiveservices/2025-06-01/accounts/deployments) exposes its reference. Distinguish policy creation from attachment; no claim that an existing policy is active. |
+
+All 26 distinct Microsoft Learn destinations in the packet returned HTTP 200 at their same-path
+`ru-ru` URLs on 2026-10-18, with Russian HTML and no English-locale fallback. CLI pages redirect
+to their current-view query while remaining in `ru-ru`. Authored links preserve the packet's path,
+query and fragment; internal destinations and command URLs are unchanged. These were documentation
+checks, not live Azure subscription execution. The lesson retains the packet's verification dates.
