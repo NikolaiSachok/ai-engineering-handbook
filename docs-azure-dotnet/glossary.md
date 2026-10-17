@@ -150,6 +150,32 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Node pool** — a group of Kubernetes worker nodes with common configuration, managed as a unit within a cluster.
 
+## Storing data \{#data}
+
+**Access pattern** — the reads and writes a workload needs, including lookup keys, query shapes, update frequency and freshness requirements.
+
+**Object storage** — storage that addresses named objects containing bytes and metadata; Azure Blob Storage provides this model for documents and other unstructured content.
+
+**Blob container** — a named grouping of blobs within an Azure storage account that can also serve as the scope of a data-access role assignment.
+
+**System of record** — the authoritative store for a piece of data, from which derived copies can be reconstructed or checked.
+
+**pgvector** — a PostgreSQL extension for storing and searching vectors; its extension identifier is `vector`.
+
+**Partition key** — the item property whose value determines an Azure Cosmos DB logical partition, shaping how related data and request load are distributed.
+
+**Request unit (RU)** — Azure Cosmos DB's normalized measure of database-operation work across CPU, I/O and memory; provisioned throughput is expressed in RU/s.
+
+**Consistency level** — the freshness and ordering guarantees a database read must satisfy relative to writes.
+
+**Cache-aside** — an application pattern that reads a cache first, loads from the authoritative store on a miss and places the result in the cache.
+
+**Time to live (TTL)** — the lifetime after which a stored entry expires, limiting how long it remains eligible for reuse.
+
+**Cache invalidation** — removing or replacing cached data when an underlying change makes it unsuitable for reuse.
+
+**Data-plane role** — an Azure role granting [data-plane](#how-azure-is-organised) operations, such as Storage Blob Data Reader for reading and listing blobs.
+
 ## Governance and architecture frameworks \{#governance-and-frameworks}
 
 **Azure Policy** — the Azure service that evaluates resources against configuration rules and applies their configured effects.
