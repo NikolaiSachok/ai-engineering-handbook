@@ -14,6 +14,7 @@ serves at the site root `/`. Every other locale is a parallel tree under
 held in `RELEASED_LOCALES`/`UNRELEASED_LOCALES` in `docusaurus.config.ts`, never in a copy here. That is only
 the URL/serving structure: **every non-default locale stays audience-primary in *authoring*** (written
 natively per the workflow below, never machine-translated).
+
 - **COVERAGE IS PER COURSE, NOT SITE-WIDE (from the DE launch on).** A released locale does **not** imply
   every course. Each course declares its `locales` in `COURSES` — German launched on **RAG & Agents alone**
   (AI SDLC German is unstarted; Design Scenarios is English-only by declaration) — and the gates read that
@@ -56,6 +57,7 @@ locale = add it to the `LOCALES`/`localeConfigs` in the config, no other code ch
   label English because the labels were only in `_category_.json`.)
 
 ## Audiences (every page should serve all three)
+
 1. **Learners** — any engineer studying the topic should come away understanding it: teach the *why* and
    the first principles (design tradeoffs, failure modes, "when NOT to"), not just feature lists.
 2. **Reference** — a durable record worth returning to and deepening over time.
@@ -63,9 +65,11 @@ locale = add it to the `LOCALES`/`localeConfigs` in the config, no other code ch
    guardrails, observability, clean issue/CI discipline.
 
 ## Scope & prerequisites (assume an experienced audience)
+
 The reader is an experienced engineer. **Do NOT teach the basics of commodity, non-AI-specific tools**
 (Docker, Kubernetes, cloud, a web framework, a database) — assume they know them or can pick them up from a
 good existing course. For each such tool:
+
 - **Link the canonical basics once** (official site / docs / a solid course) as a one-line *Prerequisite*,
   then move on. This is separate from the Glossary's `↗` concept refs — it's "go learn the tool elsewhere."
 - **Teach only the AI-specific delta:** what changes when this tool meets an LLM / RAG / agent workload —
@@ -90,6 +94,7 @@ are compiled against pinned runtime and package versions, and each says whether 
 live Azure. The course spec is kept in the private brief.
 
 ## Content workflow
+
 - New pages are authored via the **`authoring-team` skill**, run from the private authoring workspace that
   owns every authoring and editorial skill (the handbook is reached with `--add-dir`). The method — English locked
   first, then each target locale composed natively from its meaning, never translated sentence by sentence —
@@ -103,7 +108,9 @@ live Azure. The course spec is kept in the private brief.
   config. Run the skill on every page before publish.
 
 ### Layer-close ritual
+
 When a layer's *base* is finished, do all of this before moving on:
+
 1. **Deepen issue** — open `Deepen: <Layer>` in the `Part I/II — deepening` milestone with its topics.
 2. **On-page pointer** — a brief `:::note[Дальше — углубление слоя]` / `[Next — going deeper]` at the page
    bottom (deepening topics only; no issue/milestone refs on the public page).
@@ -115,8 +122,10 @@ A `🚧` note must mean *next-pass deepening*, never *unfinished base* — if so
 layer isn't closed.
 
 ### Editorial config (project-specific input to the editorial-team skill)
+
 The editorial **rules** live in the `editorial-team` skill — that is the single source of truth. This section
 holds only what's specific to THIS project, which the skill consumes:
+
 - **State the content type first — there is no one project-wide config.** The two content types are edited
   under different settings, and the courses' settings are the ones that used to be written here as if they
   were universal:
@@ -160,8 +169,10 @@ holds only what's specific to THIS project, which the skill consumes:
 - Tier: routine handbook pages = 2 passes/language; a flagship / LinkedIn extract gets the full team.
 
 ## Editorial gate (required before a page or article is "done")
+
 Conversational drafts are fine as **input**. Before publishing, run the **`editorial-team` skill** — it is
 the canonical, evolving spec for editorial quality, and it must pass like a build. Its gates, in brief:
+
 1. **No AI tells** — reads as written by a human (no uniform rhythm, over-signposting, listicle uniformity,
    hedging seesaw, AI-vocabulary).
 2. **Idiomatic target language + naive-reader term check** — zero anglicisms/calques; an independent
@@ -180,12 +191,14 @@ worked examples, and role breakdown live in the skill — don't restate them her
 drift).
 
 ## Honesty & scope
+
 - **General, vendor-neutral theory only** (except a platform course — see "Scope & prerequisites"). No
   confidential, employer-internal, or client-specific material; all examples are generic and invented. Only
   true, evidenced claims — no marketing.
 - License: **MIT**.
 
 ## Authoring conventions (content pages)
+
 - **Internal links → link the `.md` file, not a bare path.** Use `[x](./retrieval.md)` /
   `[x](../glossary.md)`, NOT `[x](./retrieval)` / `[x](../glossary)`. Docusaurus resolves `.md` links by
   file path and validates them at build (`onBrokenLinks: 'throw'`), so a wrong target hard-fails CI. Bare
@@ -213,12 +226,14 @@ drift).
   Sources lists and source links are the one exception — see "Scope & prerequisites").
 
 ## Structure & presentation (managing-editor gate)
+
 The handbook is one book, not a pile of pages — its structure and framing must stay uniform as it grows. A
 dedicated **managing-editor pass** (the `editorial-team` skill's managing-editor role) owns this; it runs at
 every layer-close, alongside the prose editorial pass.
 
 **Part-opener convention (uniform across ALL parts).** Every Part is fronted by a written opener page, never
 a bare auto-index:
+
 - `docs/part-N-<slug>/overview.md` (EN, default) — `id: overview`, `sidebar_label: "Part overview"` (each
   locale's mirror at `i18n/<locale>/.../current/part-N-<slug>/overview.md` carries its own localized
   `sidebar_label` — RU `"Обзор части"`), and **no**
@@ -239,10 +254,14 @@ a bare auto-index:
   sub-pages' `.md` files individually instead.
 
 **Keep the frame current (managing-editor checklist, run at each layer-close):**
+
 1. **Part opener** — add the new lesson to its «Что внутри» TOC; flip its 🚧 → a live `.md` link once
    published; refresh the status note.
 2. **Intro** (`intro.md`, in every released locale) — the Structure list matches the parts that actually
-   exist; no stale "🚧 заглушка" language once real content ships.
+   exist; no stale "🚧 заглушка" language once real content ships. **Every publish PR** (not only at
+   layer-close) updates the intro with the overview: when a Part's last lesson ships, drop its 🚧 from the
+   course map in every locale and drop the 🚧 legend from that Part's overview. `scripts/course-status-check.py`
+   (CI) enforces it from each overview's `Published: N of M` line; `--fix` applies the mechanical edits.
 3. **Curriculum ↔ milestones** — the part TOC reflects the GitHub milestone/issue plan; seed each part's TOC
    from its milestone up front, and move it when issues are added or the plan shifts.
 4. **Uniformity** — a new page matches the established skeleton (frontmatter, «Что забрать из урока», «Новые
@@ -253,6 +272,7 @@ A `🚧` anywhere must mean *planned next*, never *silently missing*.
 **Deepening / Часть 2 (a lesson's second pass).** A base lesson stays **optimal-length** — deepening is
 **never** appended to the base. Mastery-tier detail ships as a **companion «Часть 2 — Глубже» / "Part 2 —
 Deep dive"** page. The convention (piloted on Tool use, #64):
+
 - **Nest via folder + index — the base becomes the group index, so its URL is preserved.** A deepened lesson
   `docs/part-N/<lesson>.md` moves to `docs/part-N/<lesson>/index.md` (Часть 1, unchanged length; set an
   explicit `slug: /part-N/<lesson>/` so the base URL is stable), gains a sibling `deep-dive.md` (Часть 2),
@@ -286,6 +306,7 @@ Deep dive"** page. The convention (piloted on Tool use, #64):
   canon (`editorial/canon/<lang>/`) updates shipped in the same PR.
 
 ## Engineering workflow (SDLC)
+
 The handbook is itself a demonstration of engineering maturity, so it follows a real workflow — kept
 proportionate to a docs site, no ceremony for its own sake.
 
@@ -351,6 +372,7 @@ proportionate to a docs site, no ceremony for its own sake.
   didn't touch (`git status` before every commit; stage your paths explicitly, no `git add -A`).
 
 ## Local dev
+
 - EN (default): `npm run start`
 - Any other locale: `npm run start -- --locale <locale>` (e.g. `ru`) — the dev server serves one at a time.
 - Full build over every released locale (must pass before publish): `npm run build`; add

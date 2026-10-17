@@ -41,7 +41,7 @@ stream its response and cancel work when the request is no longer needed.
 
 :::note[Status]
 
-Published: 8 of 8 lessons. Pages marked 🚧 are planned.
+Published: 8 of 8 lessons.
 
 :::
 
