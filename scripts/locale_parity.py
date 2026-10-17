@@ -215,18 +215,24 @@ def strip_mermaid_labels(body: str) -> str:
     three UNQUOTED edge-label forms mermaid accepts — `-->|yes, it's X|`, `-. prune .->`,
     `-- reads body -->` — each of which otherwise leaks its words. Then message and note text
     after a colon. Bracket pairs are peeled innermost-out so `[("...")]` and `(["..."])` collapse.
+
+    Brackets are peeled BEFORE the colon strip, and within one line: an unquoted flowchart label
+    may itself hold a colon (`R[App replicas: 0..N]`), and stripping from that colon first cut the
+    closing bracket off and leaked `App` and `replicas` as phantom ids (measured 2026-10-17 on a
+    correct Russian render). Keeping the peel on one line stops an unbalanced bracket in a sequence
+    message from pairing with one on a later line.
     """
     b = re.sub(r'"[^"]*"', "", body)
     b = re.sub(r"\|[^|]*\|", "|", b)
     b = re.sub(r"-\.[^.\n]*\.->", "-.->", b)
     b = re.sub(r"--\s+[^->\n]+\s+-->", "-->", b)
     b = re.sub(r"==\s+[^=>\n]+\s+==>", "==>", b)
-    b = re.sub(r"(?m):.*$", "", b)
     for _ in range(4):
-        new = re.sub(r"\[[^\[\]]*\]|\{[^{}]*\}|\([^()]*\)", "", b)
+        new = re.sub(r"\[[^\[\]\n]*\]|\{[^{}\n]*\}|\([^()\n]*\)", "", b)
         if new == b:
             break
         b = new
+    b = re.sub(r"(?m):.*$", "", b)
     return b
 
 
@@ -667,6 +673,18 @@ SELF_TEST_CASES = [
             "docs/x.md": '# T\n\n```mermaid\nflowchart TB\n    A["Query"] --> B["Answer"]\n```\n',
             "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
                 '# T\n\n```mermaid\nflowchart TB\n    A["Запрос"] --> B["Ответ"]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        0,
+        "1 file(s) in structural parity",
+    ),
+    (
+        "diagram: unquoted label holding a colon, translated → passes",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": '# T\n\n```mermaid\nflowchart TD\n    I[HTTP ingress] --> R[App replicas: 0..N]\n```\n',
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                '# T\n\n```mermaid\nflowchart TD\n    I[Входящий трафик] --> R[Реплики: 0..N]\n```\n',
             "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
         },
         0,
