@@ -531,3 +531,27 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Azure Reservation** — a financial commitment that discounts matching provisioned-throughput usage, managed separately from the deployment that consumes capacity.
 
 **Batch deployment** — a model deployment for asynchronous groups of requests, using batch token pricing and enqueued-token quota rather than an interactive request path.
+
+## Safety on the platform \{#platform-safety}
+
+**Content filter** — a platform check that classifies content and applies configured actions, such as annotating or blocking input or output.
+
+**Severity level** — a category-specific classification of how harmful content is, rather than a measure of classifier confidence or access permission.
+
+**Severity threshold** — the classified severity at which a content filter starts blocking, including higher severities.
+
+**Blocking level** — the Foundry portal's setting for filtering strictness; a higher blocking level blocks a broader range of classified severities.
+
+**Annotation** — structured metadata reporting a detector's result and, where supported, whether the content was filtered.
+
+**Prompt Shields** — Microsoft's detectors for attempts to redirect model behaviour through user prompts or document content. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-prompt-shields)
+
+**Direct prompt attack** — an attempt to override the model's instructions through the user-prompt channel.
+
+**Indirect prompt attack** — an attempt to override the model's instructions through content supplied as data, such as a retrieved document.
+
+**Groundedness detection** — checking whether generated statements are supported by the source material supplied for the task. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-groundedness)
+
+**Protected-material detection** — checking generated output for matches to known protected text or code. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-protected-material)
+
+**RAI policy (responsible AI policy)** — a named Azure configuration of safety controls that a model deployment can reference.
