@@ -18,7 +18,7 @@ choices close the part by placing the service in a wider organisation.
 
 {/* slugs: microsoft-foundry, deployments-quotas-cost, platform-safety, rag-on-ai-search, document-ingestion, agents-on-azure, evaluation-and-tracing, ai-gateway, enterprise-ai, copilot-studio-power-platform */}
 
-- **Microsoft Foundry** 🚧 — resources, projects, the model catalog, Azure OpenAI and models from other providers. The resource and project model organises access to those models.
+- **[Microsoft Foundry](./microsoft-foundry.md)** — resources, projects, the model catalog, Azure OpenAI and models from other providers. The resource and project model organises access to those models.
 - **Model deployments, quotas and cost** 🚧 — Standard, Global, Data Zone and Provisioned deployments; TPM/RPM quotas and rate limiting. Deployment choices depend on throughput, residency and the cost model.
 - **Safety on the platform** 🚧 — content filters, Prompt Shields and groundedness detection. The lesson identifies what platform safety does not cover and links to application guardrails in [RAG & Agents](/rag-agents/).
 - **RAG on Azure AI Search** 🚧 — indexes, hybrid retrieval, semantic ranker, integrated vectorization and agentic retrieval. The comparison is between this AI Search path, pgvector and Cosmos DB vector search.
@@ -44,7 +44,7 @@ tracing and gateway controls while accounting for private access and data reside
 
 :::note[Status]
 
-Published: 0 of 10 lessons. Pages marked 🚧 are planned.
+Published: 1 of 10 lessons. Pages marked 🚧 are planned.
 
 :::
 

@@ -17,7 +17,7 @@ last_verified: 2026-10-17
 
 {/* slugs: microsoft-foundry, deployments-quotas-cost, platform-safety, rag-on-ai-search, document-ingestion, agents-on-azure, evaluation-and-tracing, ai-gateway, enterprise-ai, copilot-studio-power-platform */}
 
-- **Microsoft Foundry** 🚧 — ресурсы и проекты, каталог моделей, место Azure OpenAI и модели других поставщиков. Разберёшь, как организовать работу с моделями на платформе.
+- **[Microsoft Foundry](./microsoft-foundry.md)** — ресурсы и проекты, каталог моделей, место Azure OpenAI и модели других поставщиков. Разберёшь, как организовать работу с моделями на платформе.
 - **Развёртывания моделей, квоты и стоимость** 🚧 — типы развёртываний Standard, Global, Data Zone и Provisioned, квоты TPM/RPM, ограничения частоты запросов и размещение данных. Сопоставишь их с моделью расходов приложения.
 - **Защита на уровне платформы** 🚧 — фильтры содержимого, Prompt Shields и groundedness detection (проверка опоры ответа на источники). Разберёшь и границы этой защиты: какие риски остаются на стороне приложения и требуют ограничителей из курса [RAG & Agents](/rag-agents/).
 - **RAG на Azure AI Search** 🚧 — индексы, гибридный поиск, semantic ranker, встроенная векторизация и agentic retrieval. Сравнишь этот путь с векторным поиском в PostgreSQL через pgvector и в Cosmos DB.
@@ -38,7 +38,7 @@ last_verified: 2026-10-17
 
 :::note[Статус]
 
-Опубликовано уроков: 0 из 10. Знак 🚧 отмечает запланированные материалы.
+Опубликовано уроков: 1 из 10. Знак 🚧 отмечает запланированные материалы.
 
 :::
 
