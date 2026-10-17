@@ -305,3 +305,17 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Microsoft Defender for Cloud** — Microsoft's service for security posture assessment and workload protection, with coverage determined by enabled plans.
 
 **Cloud security posture management (CSPM)** — assessment of cloud resource configurations to identify security weaknesses and guide remediation.
+
+## Microsoft Foundry \{#microsoft-foundry}
+
+**Foundry resource** — an Azure resource that holds shared serverless model deployments, networking and security settings; its type is `Microsoft.CognitiveServices/accounts` with kind `AIServices`.
+
+**Foundry project** — a child resource within a Foundry resource that organises assets such as agents, evaluations, files and managed-compute deployments, with project access controls alongside the parent's shared settings.
+
+**Model catalog** — the discovery surface for model offerings, capabilities and deployment options; finding a model there does not create a deployment or establish subscription eligibility.
+
+**Model deployment** — a named serving configuration for a selected model and version, addressed by deployment name in deployment-based inference requests.
+
+**Inference endpoint** — the API address through which a client sends model inputs and receives outputs.
+
+**Keyless access** — authentication with Microsoft Entra ID tokens instead of a stored service API key; the caller still needs permission, and enforcing keyless-only use requires disabling local authentication.
