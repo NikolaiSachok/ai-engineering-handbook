@@ -28,7 +28,7 @@ natively per the workflow below, never machine-translated).
   that adds or changes a page in one locale **either updates its counterpart in every other locale that
   course claims, in the same PR, or files a parity issue** — the deployed build runs `onBrokenLinks: 'throw'` over every
   released locale, so a broken or missing link in any of them fails the deploy. Authoring a new lesson means
-  **every released locale** via the authoring-team skill, then that locale's canon
+  **every locale the course claims** (its `locales` in `COURSES`) via the authoring-team skill, then that locale's canon
   (`editorial/canon/<lang>/`) + `scripts/i18n-link-check.sh` gate it. **Link parity is
   not shape parity**, so `scripts/locale-parity-check.sh` gates the rest in CI: the file set, the H1/H2
   sequence, the ordered `\{#id}` heading-anchor sequence, the `<InfoCard`/`<Node`/`<YouTube` counts, the
@@ -78,15 +78,24 @@ good existing course. For each such tool:
 
 Keeps the handbook lean and respects the reader's time — no Tool-101 filler.
 
+**Per-course exception — a platform course (owner decision 2026-10-17).** The rule above, and "vendor-neutral
+theory only" under "Honesty & scope", are scoped **per course**. A course whose declared subject IS a vendor
+platform — today only **Azure & .NET** (`docs-azure-dotnet/`) — teaches that platform directly. It still
+opens each topic from the vendor-neutral problem, links the RAG & Agents or AI SDLC lesson that owns the
+underlying idea instead of re-teaching it, uses no marketing, and claims nothing it cannot source. Because
+its facts go stale, every page carries `last_verified:` in frontmatter, a visible "Verified as of" line and a
+**Sources** list of the official docs fetched at write time, with official-docs links placed beside
+version-sensitive claims (the exception to "external links live only in the Glossary"). Its code examples
+are compiled against pinned runtime and package versions, and each says whether it was also run against
+live Azure. The course spec is kept in the private brief.
+
 ## Content workflow
-- New pages are authored via the **`authoring-team` skill** (`~/.claude/skills/authoring-team`) — layered:
-  a language-agnostic **fact skeleton** (claims + sources + term decisions against the style canon, drafted
-  in EN where models reason best), then **independent native prose drafts per language in parallel** —
-  never one language translated from another's finished prose. **RU is audience-primary** (never produced
-  by translation) and lives in the parallel i18n tree
-  (`i18n/ru/docusaurus-plugin-content-docs/current/...`); **EN is the default locale** and lives in the
-  top-level `docs/`. Small mirror touch-ups to existing pages may still be translation-based — full lessons
-  are drafted natively per language.
+- New pages are authored via the **`authoring-team` skill**, run from the private authoring workspace that
+  owns every authoring and editorial skill (the handbook is reached with `--add-dir`). The method — English locked
+  first, then each target locale composed natively from its meaning, never translated sentence by sentence —
+  lives in the skill, not here. **EN is the default locale** (top-level `docs*/`); **RU is
+  audience-primary** and every other locale is composed in the same shape under `i18n/<locale>/…`. Small
+  mirror touch-ups to existing pages may still be translation-based.
 - Structure: **Part I — RAG** → **Part II — Agents**, a single-definition **Glossary**, and (later)
   per-topic case-study pages kept separate from the industry-general theory pages.
 - **Editorial gate** = the `editorial-team` skill (`~/.claude/skills/editorial-team`) — the single source of
@@ -171,8 +180,9 @@ worked examples, and role breakdown live in the skill — don't restate them her
 drift).
 
 ## Honesty & scope
-- **General, vendor-neutral theory only.** No confidential, employer-internal, or client-specific
-  material; all examples are generic and invented. Only true, evidenced claims — no marketing.
+- **General, vendor-neutral theory only** (except a platform course — see "Scope & prerequisites"). No
+  confidential, employer-internal, or client-specific material; all examples are generic and invented. Only
+  true, evidenced claims — no marketing.
 - License: **MIT**.
 
 ## Authoring conventions (content pages)
@@ -199,7 +209,8 @@ drift).
 - **Glossary external refs:** a glossary term that maps to a named algorithm/metric/technique gets ONE
   canonical link at the end of its definition — `↗ [Wikipedia](…)` for classics (BM25, cosine similarity,
   precision/recall, nDCG, MRR), `↗ [arXiv](…)` for techniques from papers (HyDE, ColBERT). Verify every URL
-  (like video links) — never from memory. External links live only in the Glossary; lessons link to it.
+  (like video links) — never from memory. External links live only in the Glossary; lessons link to it (a platform course's
+  Sources lists and source links are the one exception — see "Scope & prerequisites").
 
 ## Structure & presentation (managing-editor gate)
 The handbook is one book, not a pile of pages — its structure and framing must stay uniform as it grows. A
