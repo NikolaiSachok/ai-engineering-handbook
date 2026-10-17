@@ -245,6 +245,25 @@ const COURSES: Course[] = [
       {label: 'How these are made', path: 'how-these-are-made'},
     ],
   },
+  // Azure & .NET for AI Engineers — the one course whose declared subject IS a vendor
+  // platform, so the charter's "no commodity tools" and "vendor-neutral only" rules are
+  // scoped out for it (see CLAUDE.md, "Scope & prerequisites"). EN + RU only, 'by-design':
+  // SK/DE are not planned, and hiding it there forever would hide it from those readers.
+  // `live`/`inNavbar` flip once its first layer ships in both locales.
+  {
+    id: 'azure-dotnet',
+    basePath: '/azure-dotnet',
+    sidebarId: 'azureDotnetSidebar',
+    navbarLabel: 'Azure & .NET',
+    blurb:
+      'The Azure platform and modern .NET for senior engineers, taught through one thread: ' +
+      'building, securing and running an LLM service on Azure in .NET.',
+    locales: ['en', 'ru'],
+    untranslatedPolicy: 'by-design',
+    live: false,
+    inNavbar: false,
+    footerLinks: [{label: 'Introduction', path: ''}],
+  },
 ];
 // Validate the declared scope at config load, so a malformed declaration fails the build
 // rather than quietly reaching the gates — which read the same field and would then be

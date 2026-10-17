@@ -340,5 +340,9 @@
   "fallback.englishOnly": {
     "message": "Táto stránka je dostupná len v angličtine.",
     "description": "Shown above the content when a page is served in English because the reader’s locale has no translation of it. The surrounding interface stays in the reader’s language."
+  },
+  "landing.course.azure-dotnet.blurb": {
+    "message": "Platforma Azure a moderný .NET pre skúsených inžinierov, vysvetlené na jednej úlohe: postaviť, zabezpečiť a prevádzkovať LLM službu v Azure na .NET.",
+    "description": "Landing card blurb for the Azure & .NET course"
   }
 }

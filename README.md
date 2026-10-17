@@ -18,7 +18,8 @@ standing note on the blog index for why.
 Built with [Docusaurus](https://docusaurus.io/). It ships in **English** (default, served
 at the site root), **Russian** (`/ru/`), **Slovak** (`/sk/`) and **German** (`/de/`) — with Mermaid
 diagrams and offline local search in every locale. Coverage is **per course**, not site-wide:
-German currently covers **RAG & Agents** only, and Design Scenarios is English-only by declaration.
+German currently covers **RAG & Agents** only, Design Scenarios is English-only by declaration, and
+Azure & .NET is English and Russian.
 A course a locale does not cover is not linked from that locale's navigation, still resolves by
 URL, and says so on arrival.
 
@@ -53,6 +54,8 @@ Output is generated into `build/` and can be served with any static host.
 - `docs-design-scenarios/` — the **Design Scenarios** course, its own docs instance, served at
   `/design-scenarios`. English-only by declaration (`locales: ['en']` in `COURSES`), which the locale-parity
   gate reads rather than assuming every course ships in every released locale.
+- `docs-azure-dotnet/` — the **Azure & .NET** course, its own docs instance, served at `/azure-dotnet`.
+  English and Russian (`locales: ['en', 'ru']`); the handbook's one platform course (see `CLAUDE.md`).
 - `blog/` — the English-only **Field notes** blog, served at `/blog`.
 - `src/pages/index.tsx` — the landing hub. Its course cards derive from the `COURSES` array in
   `docusaurus.config.ts`, the single source of truth the navbar, footer and search index also read.

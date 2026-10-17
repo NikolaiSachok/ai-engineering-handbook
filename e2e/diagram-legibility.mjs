@@ -26,6 +26,7 @@
 //
 // Requires Playwright chromium: npx playwright install chromium
 import {chromium} from 'playwright';
+import {execFileSync} from 'child_process';
 import {readFileSync, readdirSync, statSync} from 'fs';
 import {join} from 'path';
 
@@ -90,11 +91,15 @@ function walk(dir, base, strip) {
 // English source — measured 2026-08-03, a Russian diagram was 2 062px while its English
 // counterpart was 635px, because the two had been authored into different shapes. A gate that
 // reads only `docs/` cannot see that, and three of the four readerships were unmeasured.
-const COURSES = [
-  ['docs', 'rag-agents/', 'docusaurus-plugin-content-docs'],
-  ['docs-ai-sdlc', 'ai-sdlc/', 'docusaurus-plugin-content-docs-ai-sdlc'],
-  ['docs-design-scenarios', 'design-scenarios/', 'docusaurus-plugin-content-docs-design-scenarios'],
-];
+// The course table is derived from docusaurus.config.ts by scripts/courses.py, never restated
+// here: a hard-coded copy silently skips every course added after it was written.
+const COURSES = execFileSync('python3', ['scripts/courses.py'], {encoding: 'utf8'})
+  .trim()
+  .split('\n')
+  .map((line) => {
+    const [base, dir, plugin] = line.split('\t');
+    return [dir, base + '/', plugin];
+  });
 const LOCALES = ['', 'ru/', 'sk/', 'de/'];
 for (const [dir, base, plugin] of COURSES) {
   for (const loc of LOCALES) {

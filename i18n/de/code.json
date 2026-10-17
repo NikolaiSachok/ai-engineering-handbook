@@ -331,5 +331,9 @@
   "fallback.englishOnly": {
     "message": "Diese Seite liegt nur auf Englisch vor.",
     "description": "Shown above the content when a page is served in English because the reader’s locale has no translation of it. The surrounding interface stays in the reader’s language."
+  },
+  "landing.course.azure-dotnet.blurb": {
+    "message": "Die Azure-Plattform und modernes .NET für erfahrene Engineers, durchgehend an einer Aufgabe erklärt: einen LLM-Dienst auf Azure mit .NET bauen, absichern und betreiben.",
+    "description": "Landing card blurb for the Azure & .NET course"
   }
 }

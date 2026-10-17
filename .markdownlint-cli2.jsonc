@@ -38,6 +38,7 @@
     "docs/**/*.md",
     "docs-ai-sdlc/**/*.md",
     "docs-design-scenarios/**/*.md",
+    "docs-azure-dotnet/**/*.md",
     "blog/**/*.md",
     "i18n/**/*.md"
   ],
