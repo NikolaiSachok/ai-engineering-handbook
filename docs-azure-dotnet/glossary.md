@@ -581,3 +581,17 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Knowledge base** — an Azure AI Search object that coordinates agentic retrieval across configured knowledge sources and holds retrieval settings.
 
 **Knowledge source** — an Azure AI Search definition of content available to a knowledge base, backed by an index or retrieved from a remote platform.
+
+## Getting documents in \{#document-ingestion}
+
+**OCR (optical character recognition)** — recognition of text characters in page images so they can be processed as machine-readable text.
+
+**Layout analysis** — extraction of a document's structural elements and their relationships, such as headings, paragraphs, tables and selection marks.
+
+**Field extraction** — mapping document content to named values in a schema, such as an invoice date or total.
+
+**Analyzer** — a Content Understanding configuration that selects content extraction behaviour and can define a field schema and generative processing.
+
+**Bounding region** — a page reference and polygon locating an extracted document element in the source page's coordinate system.
+
+**Provenance** — the record connecting derived content to its original source and the processing that produced it.
