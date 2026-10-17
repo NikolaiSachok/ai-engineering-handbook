@@ -711,3 +711,23 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Path-specific instructions** — custom instructions selected for files matching a declared path pattern.
 
 **MCP server** — a process or service that exposes tools or context to AI clients through Model Context Protocol.
+
+## Releasing safely \{#releasing-safely}
+
+**Deployment slot** — a live App Service application endpoint used to stage a version separately from production before a swap.
+
+**Slot swap** — an App Service operation that exchanges application content and swappable configuration between slots while slot-specific settings remain attached to their slots.
+
+**Multiple revision mode** — the Container Apps mode that permits several active revisions and operator-controlled traffic distribution between them.
+
+**Traffic weight** — the percentage of an application's ingress traffic assigned to a particular revision or label in its routing configuration.
+
+**Canary release** — exposing a candidate version to a limited portion of live traffic and observing its behaviour before deciding whether to increase exposure.
+
+**Rollback** — returning service to a previously accepted version or configuration; routing rollback does not reverse completed side effects or shared data changes.
+
+**SBOM (software bill of materials)** — an inventory of the software components and dependencies included in an artefact, retained to identify affected releases when component risks are discovered.
+
+**Artefact signature** — a cryptographic binding between an artefact's content and a signer, checked against a trust policy to establish integrity and an accepted signing identity.
+
+**Dependency scanning** — checking software dependencies against known vulnerability information, with coverage and release-blocking rules defined explicitly.
