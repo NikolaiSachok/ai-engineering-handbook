@@ -653,3 +653,15 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Semantic cache** — a cache that reuses a stored model response when an incoming prompt meets a semantic-similarity threshold and the configured reuse conditions.
 
 **Token metric** — a measurement of model token consumption, reported or estimated for monitoring and aggregation.
+
+## Enterprise-grade AI \{#enterprise-ai}
+
+**Shared private link** — an outbound private connection managed for Azure AI Search to reach a supported dependency, configured independently of the private endpoint that accepts client requests into Search.
+
+**Local authentication** — service authentication using a resource's own credentials, such as API keys, rather than Microsoft Entra ID tokens.
+
+**Data residency** — the location commitments that govern where a workload's data is stored or processed.
+
+**Processing boundary** — the permitted geographic scope within which a service may process a workload's inputs and outputs.
+
+**Abuse monitoring** — service-side detection and review of usage that may violate applicable terms, which can include reviewing selected prompts and completions.

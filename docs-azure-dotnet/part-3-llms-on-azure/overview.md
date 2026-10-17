@@ -26,7 +26,7 @@ choices close the part by placing the service in a wider organisation.
 - **[Agents on Azure](./agents-on-azure.md)** — Foundry Agent Service versus self-hosted Microsoft Agent Framework; tools, MCP, memory, multi-agent orchestration and approvals. The hosting choice determines where the agent runs.
 - **[Evaluation and tracing](./evaluation-and-tracing.md)** — Foundry evaluations and tracing, mapped to the evaluation lesson in [RAG & Agents](/rag-agents/). Offline and online evaluation check behaviour at different stages.
 - **[The AI gateway](./ai-gateway.md)** — API Management token limits, load balancing, failover, semantic caching and usage logging. The gateway places these controls in front of model deployments.
-- **Enterprise-grade AI** 🚧 — private networking for model endpoints, keyless access, data residency and the AI landing zone. Enterprise requirements constrain model access and data placement.
+- **[Enterprise-grade AI](./enterprise-ai.md)** — private networking for model endpoints, keyless access, data residency and the AI landing zone. Enterprise requirements constrain model access and data placement.
 - **Copilot Studio and the Power Platform** 🚧 — Power Apps, Power Automate, Dataverse and Copilot Studio. The choice between low-code and custom code includes where a workflow should call a custom API.
 
 ## Prerequisites \{#prerequisites}
@@ -44,7 +44,7 @@ tracing and gateway controls while accounting for private access and data reside
 
 :::note[Status]
 
-Published: 8 of 10 lessons. Pages marked 🚧 are planned.
+Published: 9 of 10 lessons. Pages marked 🚧 are planned.
 
 :::
 
