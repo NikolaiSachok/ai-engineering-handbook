@@ -460,6 +460,28 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Test fixture** — known setup or data supplied to tests, with a defined lifetime and cleanup responsibility.
 
+## Containers and Aspire \{#containers-and-aspire}
+
+**Container image** — a packaged filesystem and runtime configuration used to create container instances of an application.
+
+**Image digest** — the content-derived SHA-256 identifier of an image manifest, used to identify a specific image independently of a mutable tag. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-concepts#manifest-digest)
+
+**PublishContainer** — the .NET SDK target that creates a container image from a published application and a base image without requiring a Dockerfile. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/core/containers/sdk-publish)
+
+**AppHost** — an Aspire project or file that declares application resources and their relationships for orchestration. ↗ [Aspire](https://aspire.dev/get-started/app-host/)
+
+**Aspire resource** — an application component or dependency represented in the AppHost model, such as an API project or a container.
+
+**Service Defaults** — a shared C# project containing configurable setup for telemetry, health checks, service discovery and HTTP client resilience. ↗ [Aspire](https://aspire.dev/get-started/csharp-service-defaults/)
+
+**OpenTelemetry** — a vendor-neutral framework for instrumenting applications and collecting and exporting telemetry signals, including traces, metrics and logs. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel)
+
+**OTLP (OpenTelemetry Protocol)** — the protocol used to transmit OpenTelemetry signals between applications, collectors and telemetry backends. ↗ [Aspire](https://aspire.dev/fundamentals/telemetry/)
+
+**Span** — a record of one operation within a distributed trace, carrying timing, context and associated attributes.
+
+**Service discovery** — resolving a logical service name to the endpoints a client can call.
+
 ## AI in .NET \{#ai-in-dotnet}
 
 **Microsoft.Extensions.AI** — .NET libraries that supply shared AI client contracts and composable behaviours such as telemetry, caching and function invocation. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai)
