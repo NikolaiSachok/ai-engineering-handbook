@@ -21,7 +21,7 @@ Infrastructure, telemetry and governance finish the picture by making those choi
 - **[How Azure is organised](./how-azure-is-organised.md)** — tenants, management groups, subscriptions, resource groups and resources; Azure Resource Manager, regions and zones. The hierarchy is the governance and billing model.
 - **[Identity I — Microsoft Entra ID](./entra-id.md)** — users, groups, app registrations, service principals, system-assigned and user-assigned managed identities. Tokens are what an application presents when it asks for access.
 - **[Identity II — RBAC and keyless access](./rbac-and-keyless-access.md)** — roles, scopes and inheritance; control-plane versus data-plane roles, `DefaultAzureCredential` and workload identity federation. Keyless access extends to CI without stored secrets.
-- **Networking for application engineers** 🚧 — VNets, subnets, NSGs, private versus service endpoints, private DNS, PaaS VNet integration and hub-and-spoke. Ingress choices include Front Door, Application Gateway and Load Balancer.
+- **[Networking for application engineers](./networking.md)** — VNets, subnets, NSGs, private versus service endpoints, private DNS, PaaS VNet integration and hub-and-spoke. Ingress choices include Front Door, Application Gateway and Load Balancer.
 - **Choosing compute** 🚧 — App Service, Container Apps, Functions (Flex Consumption), AKS and virtual machines. The choice depends on workload shape, scaling model and operational cost.
 - **Storing data** 🚧 — Blob Storage, Azure SQL, PostgreSQL flexible server with pgvector, Cosmos DB and Azure Managed Redis. Access patterns guide the choice, including Cosmos DB request units, consistency and vector search.
 - **Messaging and events** 🚧 — Service Bus, Event Grid and Event Hubs; dead-lettering, retries and ordering. Commands, events and streams call for different messaging services.
@@ -43,7 +43,7 @@ platform governance before using them in the later parts.
 
 :::note[Status]
 
-Published: 4 of 11 lessons. Pages marked 🚧 are planned.
+Published: 5 of 11 lessons. Pages marked 🚧 are planned.
 
 :::
 
