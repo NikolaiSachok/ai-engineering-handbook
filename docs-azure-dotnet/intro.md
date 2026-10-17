@@ -44,9 +44,9 @@ project (P1) are being written now; pages marked 🚧 are not published yet.
 | IV — AI-assisted delivery on the Microsoft stack 🚧 | Pipelines, coding agents and releases you can check and roll back. |
 | V — Projects 🚧 | Build guides that join the lesson exercises into services you can run and explain. |
 
-The appendices, also not yet written, will be references to return to:
+The appendices are references to return to; those marked 🚧 are not yet written:
 
-- Azure recap sheet 🚧 — the whole platform on a few pages, for revision.
+- [Azure recap sheet](./recap-sheet.md) — the whole platform on a few pages, for revision.
 - Exam map 🚧 — AI-103 and AI-200 skill areas matched to lessons and project steps.
 - Glossary 🚧 — one definition for each course term.
 
