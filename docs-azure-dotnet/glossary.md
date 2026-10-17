@@ -595,3 +595,27 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Bounding region** — a page reference and polygon locating an extracted document element in the source page's coordinate system.
 
 **Provenance** — the record connecting derived content to its original source and the processing that produced it.
+
+## Agents on Azure \{#agents-on-azure}
+
+**Prompt agent** — a managed agent defined through configuration of instructions, model and tools rather than custom runtime code.
+
+**Hosted agent** — an agent whose custom code runs in a container on Foundry-managed infrastructure.
+
+**Function tool** — a callable operation described to a model through a name, parameters and description, with execution handled by the application.
+
+**Model Context Protocol (MCP)** — a protocol through which an AI application connects to servers exposing tools and context. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol)
+
+**Conversation** — the stored history of messages, tool calls and outputs used to continue an interaction.
+
+**Hosted-agent session** — a Foundry sandbox's compute and filesystem working state; reusing its ID does not itself restore conversation history. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/manage-hosted-sessions)
+
+**Agent Framework session** — the conversation-associated state held by `AgentSession`, including history or references to externally stored history and other state needed between runs. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/api/microsoft.agents.ai.agentsession?view=agent-framework-dotnet-latest)
+
+**Long-term memory** — selected information retained for use across separate conversations or sessions.
+
+**Approval request** — a pending proposal for a specific action that requires a decision from an authorized person before execution.
+
+**Idempotency key** — an identifier used to recognize retries of the same logical operation and prevent duplicate effects.
+
+**Workflow checkpoint** — a saved record of execution state from which a workflow can resume.
