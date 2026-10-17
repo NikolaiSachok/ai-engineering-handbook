@@ -18,17 +18,17 @@ Infrastructure, telemetry and governance finish the picture by making those choi
 
 {/* slugs: how-azure-is-organised, entra-id, rbac-and-keyless-access, networking, compute, data, messaging, secrets-and-configuration, infrastructure-as-code, observability, governance-and-frameworks */}
 
-- **How Azure is organised** 🚧 — Follow tenants, management groups, subscriptions, resource groups and resources through Azure Resource Manager. Connect that hierarchy to regions, zones, governance and billing.
-- **Identity I — Microsoft Entra ID** 🚧 — Distinguish users, groups, app registrations, service principals and managed identities. Follow the token an application presents when it asks for access.
-- **Identity II — RBAC and keyless access** 🚧 — Work through roles, scopes and inheritance, including the difference between control-plane and data-plane access. Use `DefaultAzureCredential` and workload identity federation to plan access without stored keys.
-- **Networking for application engineers** 🚧 — Trace a request through virtual networks, subnets, network security groups and private DNS. Compare private and service endpoints, PaaS network integration, ingress choices and hub-and-spoke layouts.
-- **Choosing compute** 🚧 — Compare App Service, Container Apps, Functions, AKS and virtual machines by workload shape. Scaling behaviour and operational work belong in the decision alongside the code you want to run.
-- **Storing data** 🚧 — Choose among Blob Storage, Azure SQL, PostgreSQL, Cosmos DB and Azure Managed Redis by access pattern. Include vector search, consistency and capacity in the comparison.
-- **Messaging and events** 🚧 — Separate commands, events and streams before choosing Service Bus, Event Grid or Event Hubs. Then account for retries, dead-lettering and ordering.
-- **Secrets and configuration** 🚧 — Decide what belongs in Key Vault and what belongs in App Configuration. Work through managed-identity access, permissions and rotation for secrets, keys and certificates.
-- **Infrastructure as code** 🚧 — Compare ARM, Bicep and Terraform, then place Azure Developer CLI (`azd`) in the deployment workflow. Modules, change previews and drift make infrastructure changes something you can review.
-- **Observability** 🚧 — Connect Azure Monitor, Log Analytics, Application Insights and OpenTelemetry to the questions you need to answer about a service. Practise the KQL needed to investigate its behaviour.
-- **Governance and architecture frameworks** 🚧 — Bring Azure Policy, landing zones, the Cloud Adoption Framework and the Well-Architected Framework into an architecture review. Include tags, budgets and Defender for Cloud in the operating plan.
+- **How Azure is organised** 🚧 — tenants, management groups, subscriptions, resource groups and resources; Azure Resource Manager, regions and zones. The hierarchy is the governance and billing model.
+- **Identity I — Microsoft Entra ID** 🚧 — users, groups, app registrations, service principals, system-assigned and user-assigned managed identities. Tokens are what an application presents when it asks for access.
+- **Identity II — RBAC and keyless access** 🚧 — roles, scopes and inheritance; control-plane versus data-plane roles, `DefaultAzureCredential` and workload identity federation. Keyless access extends to CI without stored secrets.
+- **Networking for application engineers** 🚧 — VNets, subnets, NSGs, private versus service endpoints, private DNS, PaaS VNet integration and hub-and-spoke. Ingress choices include Front Door, Application Gateway and Load Balancer.
+- **Choosing compute** 🚧 — App Service, Container Apps, Functions (Flex Consumption), AKS and virtual machines. The choice depends on workload shape, scaling model and operational cost.
+- **Storing data** 🚧 — Blob Storage, Azure SQL, PostgreSQL flexible server with pgvector, Cosmos DB and Azure Managed Redis. Access patterns guide the choice, including Cosmos DB request units, consistency and vector search.
+- **Messaging and events** 🚧 — Service Bus, Event Grid and Event Hubs; dead-lettering, retries and ordering. Commands, events and streams call for different messaging services.
+- **Secrets and configuration** 🚧 — Key Vault secrets, keys, certificates, RBAC and rotation; App Configuration. Managed identity provides access to both services.
+- **Infrastructure as code** 🚧 — ARM, Bicep, Terraform and Azure Developer CLI (`azd`). Change previews, drift and modules are part of managing infrastructure as code.
+- **Observability** 🚧 — Azure Monitor, Log Analytics, Application Insights and the OpenTelemetry distribution. KQL queries turn that telemetry into answers about service behaviour.
+- **Governance and architecture frameworks** 🚧 — Azure Policy, Cloud Adoption Framework landing zones, the Well-Architected Framework, tags, cost management, budgets and Defender for Cloud. These cover platform rules, architecture guidance, costs and security posture.
 
 ## Prerequisites \{#prerequisites}
 
@@ -37,9 +37,9 @@ not. Start here if subscriptions, managed identities and private endpoints are s
 
 ## What changes after this part \{#what-changes-after-this-part}
 
-You can sketch an Azure service and explain where its resources live, who can reach them and how access
-is granted. You can choose compute, storage and messaging for a stated workload, then describe how to deploy,
-observe and govern it. Those decisions become the foundation for the RAG service project.
+You can explain the resource hierarchy and access scopes, and compare network, compute, storage and
+messaging choices for a workload. You can distinguish the roles of infrastructure as code, telemetry and
+platform governance before using them in the later parts.
 
 :::note[Status]
 

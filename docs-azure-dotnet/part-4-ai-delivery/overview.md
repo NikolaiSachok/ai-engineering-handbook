@@ -18,21 +18,21 @@ code inside the same delivery process as any other change.
 
 {/* slugs: pipelines-to-azure, coding-agents-dotnet, releasing-safely */}
 
-- **Pipelines to Azure** 🚧 — Compare GitHub Actions and Azure DevOps Pipelines for deploying the service. Work through OIDC federation, environments, approvals and `azd` in CI without introducing a stored deployment secret.
-- **Coding agents on a .NET codebase** 🚧 — Use GitHub Copilot and other coding agents within a .NET repository, including agent workflows and custom instructions. Apply the loop and gates from [AI SDLC](/ai-sdlc/) to changes you can build and review.
-- **Releasing safely** 🚧 — Plan deployment slots, Container Apps revisions, traffic splitting and rollback around observable release behaviour. Include infrastructure drift and supply-chain checks in the release decision.
+- **Pipelines to Azure** 🚧 — GitHub Actions, Azure DevOps Pipelines, OIDC federation, environments, approvals and `azd` in CI. Federation gives the pipeline access without a stored deployment secret.
+- **Coding agents on a .NET codebase** 🚧 — GitHub Copilot agent mode, the coding agent, custom instructions and other agents on .NET repositories. The loop and gates from [AI SDLC](/ai-sdlc/) apply to their changes.
+- **Releasing safely** 🚧 — deployment slots, Container Apps revisions, traffic splitting, rollback, IaC drift and supply-chain checks. Slots and revisions support controlled releases and rollback.
 
 ## Prerequisites \{#prerequisites}
 
 Parts I–III: you need the Azure resource and identity model, a .NET application you can test, and an AI
-workload whose behaviour you can evaluate. [AI SDLC](/ai-sdlc/) supplies the agent workflow and verification
-ideas that this part applies to the Microsoft stack.
+workload whose behaviour you can evaluate. Return to the relevant lessons at each delivery step.
+[AI SDLC](/ai-sdlc/) supplies the agent workflow and verification ideas applied here.
 
 ## What changes after this part \{#what-changes-after-this-part}
 
-You can describe a change’s path from repository to Azure, including its deployment identity, checks and
-approval points. You can give a coding agent bounded work and review the result, then plan a release with
-signals that tell you when to continue and a rollback you can carry out.
+You can explain how a pipeline authenticates to Azure and where environments, approvals and coding-agent
+checks fit. You can compare deployment slots and Container Apps revisions, plan traffic splitting and
+rollback, and include infrastructure drift and supply-chain checks in a release.
 
 :::note[Status]
 

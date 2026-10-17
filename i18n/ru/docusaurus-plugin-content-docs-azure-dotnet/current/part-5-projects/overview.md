@@ -17,8 +17,8 @@ last_verified: 2026-10-17
 
 {/* slugs: rag-service, agent-behind-gateway, ingestion-pipeline */}
 
-- **RAG-сервис** 🚧 — цель: собрать ASP.NET Core minimal API, который отвечает на вопросы по небольшому набору открытых документов и приводит ссылки на источники. В проекте соединятся модель в Foundry, гибридный поиск Azure AI Search, Blob Storage, Key Vault через управляемое удостоверение, Container Apps, телеметрия, Bicep, `azd` и CI с OIDC.
-- **Агент за AI-шлюзом** 🚧 — цель: собрать агента с вызовом инструментов и одобрением действий человеком. Microsoft Agent Framework для .NET свяжется с API Management, Service Bus для долгих задач, EF Core и PostgreSQL, а также проверками качества в Foundry.
+- **RAG-сервис** 🚧 — цель: собрать ASP.NET Core minimal API, который отвечает на вопросы по небольшому набору открытых документов и приводит ссылки на источники. В проекте соединятся .NET 10, `Microsoft.Extensions.AI`, развёртывание модели в Foundry, гибридный поиск Azure AI Search, Blob Storage, Key Vault через управляемое удостоверение, Container Apps, Application Insights с OpenTelemetry, Bicep, `azd` и GitHub Actions с OIDC.
+- **Агент за AI-шлюзом** 🚧 — цель: собрать агента с вызовом инструментов и одобрением действий человеком. В проекте соединятся Microsoft Agent Framework для .NET, политики AI-шлюза в API Management, Service Bus для долгих задач, EF Core с PostgreSQL и проверки качества в Foundry.
 - **Конвейер загрузки документов** 🚧 — необязательный проект: обработать поступление документа и обновить поисковый индекс. Запланирована цепочка Event Grid → Functions → Content Understanding → обновление индекса, с метаданными в Cosmos DB или PostgreSQL.
 
 ## Что нужно знать заранее \{#prerequisites}
@@ -27,7 +27,7 @@ last_verified: 2026-10-17
 
 ## Что изменится после этой части \{#what-changes-after-this-part}
 
-Ты соберёшь выбранное приложение по этапам и сможешь объяснить связи между его компонентами, способ проверки результата и расходы. Практическая работа заканчивается удалением созданных ресурсов; соответствующий скрипт предусмотрен в каждом руководстве.
+Ты сможешь собрать выбранное приложение по этапам и объяснить его компоненты, проверки и расходы. Сможешь продемонстрировать результат и удалить созданные ресурсы после практической работы.
 
 :::note[Статус]
 
@@ -39,4 +39,4 @@ last_verified: 2026-10-17
 
 Проверено на 17.10.2026.
 
-- [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/azure/) — проверено 17.10.2026.
+- [Azure для разработчиков .NET](https://learn.microsoft.com/ru-ru/dotnet/azure/)

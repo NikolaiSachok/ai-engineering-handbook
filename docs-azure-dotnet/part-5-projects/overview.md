@@ -11,15 +11,18 @@ The projects join the lesson exercises into services you can run and explain. St
 then add the agent and gateway; the document ingestion pipeline is optional. This order establishes a
 working request path before adding tool actions and event-driven document processing.
 
+Each project page is intended as a build guide: a goal, architecture diagram, milestones matching the
+lessons’ **Try it** steps, a cost table, a teardown script and what you should be able to explain afterwards.
+
 *Where this sits on [the course map](../intro.md#course-map): the build guides — where the lesson exercises become complete services.*
 
 ## What's inside \{#whats-inside}
 
 {/* slugs: rag-service, agent-behind-gateway, ingestion-pipeline */}
 
-- **RAG service** 🚧 — Build an ASP.NET Core API that answers questions over a small public document set with citations. Join model access, hybrid retrieval, keyless access, telemetry and repeatable deployment in one service.
-- **Agent behind an AI gateway** 🚧 — Build a tool-calling agent with approvals and gateway controls. Add long-running work, persistent state and evaluation so you can explain what an action may do and how it is checked.
-- **Document ingestion pipeline** 🚧 — Optional: process incoming documents and update the retrieval index. Connect events, document processing and metadata storage, and account for retries along the path.
+- **RAG service** 🚧 — an ASP.NET Core minimal API over a small public document set, using .NET 10, `Microsoft.Extensions.AI`, a Foundry model deployment, Azure AI Search hybrid retrieval, Blob Storage, Key Vault via managed identity, Container Apps, Application Insights with OpenTelemetry, Bicep, `azd` and GitHub Actions with OIDC. The service answers questions with citations.
+- **Agent behind an AI gateway** 🚧 — Microsoft Agent Framework for .NET, API Management AI-gateway policies, Service Bus for long-running work, EF Core with PostgreSQL and Foundry evaluations. The agent calls tools with approvals.
+- **Document ingestion pipeline** 🚧 — an optional Event Grid → Functions → Content Understanding → index-update pipeline, with metadata in Cosmos DB or PostgreSQL. Incoming documents trigger processing and retrieval-index updates.
 
 ## Prerequisites \{#prerequisites}
 
@@ -31,10 +34,8 @@ the whole course.
 
 ## What changes after this part \{#what-changes-after-this-part}
 
-Each project page is a build guide with a goal, architecture diagram and milestones matching the lessons’
-**Try it** steps. It includes a cost table, teardown script and questions you should be able to answer about
-the result. You can use the finished service to explain the choices between its components, demonstrate
-its checks and remove the resources when the exercise is over.
+You can build the chosen application in milestones and explain its components, checks and costs.
+You can demonstrate the result and remove the resources when the exercise is over.
 
 :::note[Status]
 

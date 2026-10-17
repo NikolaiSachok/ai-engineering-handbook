@@ -29,8 +29,7 @@ back to them rather than teaching those ideas again.
 
 :::note[Status]
 
-The course is being written in stages. Azure foundations and the first steps of the RAG service
-project (P1) are being written now; pages marked 🚧 are not published yet.
+🚧 marks lessons not yet published in the Part rows and pages not yet written in the appendix list.
 
 :::
 
@@ -44,7 +43,7 @@ project (P1) are being written now; pages marked 🚧 are not published yet.
 | [IV — AI-assisted delivery on the Microsoft stack](./part-4-ai-delivery/overview.md) 🚧 | Pipelines, coding agents and releases you can check and roll back. |
 | [V — Projects](./part-5-projects/overview.md) 🚧 | Build guides that join the lesson exercises into services you can run and explain. |
 
-The appendices are references to return to; those marked 🚧 are not yet written:
+The appendices are references to return to:
 
 - [Azure recap sheet](./recap-sheet.md) — the whole platform on a few pages, for revision.
 - Exam map 🚧 — AI-103 and AI-200 skill areas matched to lessons and project steps.

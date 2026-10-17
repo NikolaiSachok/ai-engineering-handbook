@@ -18,16 +18,16 @@ choices close the part by placing the service in a wider organisation.
 
 {/* slugs: microsoft-foundry, deployments-quotas-cost, platform-safety, rag-on-ai-search, document-ingestion, agents-on-azure, evaluation-and-tracing, ai-gateway, enterprise-ai, copilot-studio-power-platform */}
 
-- **Microsoft Foundry** 🚧 — Work through the resource and project model, the model catalog and Azure OpenAI’s place in it. Include models from other providers when deciding what to deploy.
-- **Model deployments, quotas and cost** 🚧 — Compare deployment types against throughput, residency and cost requirements. Work through token and request quotas, rate limiting and the capacity a service needs.
-- **Safety on the platform** 🚧 — Examine content filters, Prompt Shields and groundedness detection. Identify what platform safety leaves to the application and connect it to the guardrails taught in [RAG & Agents](/rag-agents/).
-- **RAG on Azure AI Search** 🚧 — Build the retrieval design around indexes, hybrid retrieval and semantic ranking. Compare integrated vectorization and agentic retrieval with the alternatives in PostgreSQL and Cosmos DB.
-- **Getting documents in** 🚧 — Compare Content Understanding and Document Intelligence for OCR, layout and field extraction. Follow the path from an incoming document to text and structure suitable for RAG.
-- **Agents on Azure** 🚧 — Compare Foundry Agent Service with a self-hosted Microsoft Agent Framework application. Work through tools, MCP, memory, multi-agent orchestration and approval points.
-- **Evaluation and tracing** 🚧 — Map Foundry evaluations and tracing to the evaluation ideas in [RAG & Agents](/rag-agents/). Distinguish offline checks from online evaluation and decide what evidence each supplies.
-- **The AI gateway** 🚧 — Place API Management in front of model deployments and work through token limits, load balancing, failover, semantic caching and usage logging. Decide which controls belong at that shared boundary.
-- **Enterprise-grade AI** 🚧 — Bring private model access, keyless authentication and data residency together in an AI landing zone. Review the whole access path rather than securing each service in isolation.
-- **Copilot Studio and the Power Platform** 🚧 — Orient yourself among Power Apps, Power Automate, Dataverse and Copilot Studio. Decide when a low-code workflow fits and where it should call a custom API.
+- **Microsoft Foundry** 🚧 — resources, projects, the model catalog, Azure OpenAI and models from other providers. The resource and project model organises access to those models.
+- **Model deployments, quotas and cost** 🚧 — Standard, Global, Data Zone and Provisioned deployments; TPM/RPM quotas and rate limiting. Deployment choices depend on throughput, residency and the cost model.
+- **Safety on the platform** 🚧 — content filters, Prompt Shields and groundedness detection. The lesson identifies what platform safety does not cover and links to application guardrails in [RAG & Agents](/rag-agents/).
+- **RAG on Azure AI Search** 🚧 — indexes, hybrid retrieval, semantic ranker, integrated vectorization and agentic retrieval. The comparison is between this AI Search path, pgvector and Cosmos DB vector search.
+- **Getting documents in** 🚧 — Content Understanding and Document Intelligence for OCR, layout, field extraction and Markdown for RAG. These services turn documents into text and structure for retrieval.
+- **Agents on Azure** 🚧 — Foundry Agent Service versus self-hosted Microsoft Agent Framework; tools, MCP, memory, multi-agent orchestration and approvals. The hosting choice determines where the agent runs.
+- **Evaluation and tracing** 🚧 — Foundry evaluations and tracing, mapped to the evaluation lesson in [RAG & Agents](/rag-agents/). Offline and online evaluation check behaviour at different stages.
+- **The AI gateway** 🚧 — API Management token limits, load balancing, failover, semantic caching and usage logging. The gateway places these controls in front of model deployments.
+- **Enterprise-grade AI** 🚧 — private networking for model endpoints, keyless access, data residency and the AI landing zone. Enterprise requirements constrain model access and data placement.
+- **Copilot Studio and the Power Platform** 🚧 — Power Apps, Power Automate, Dataverse and Copilot Studio. The choice between low-code and custom code includes where a workflow should call a custom API.
 
 ## Prerequisites \{#prerequisites}
 
@@ -38,9 +38,9 @@ when you implement the .NET exercises.
 
 ## What changes after this part \{#what-changes-after-this-part}
 
-You can trace an AI request from application identity through model access and retrieval to the answer,
-and explain how you will evaluate it. You can compare managed and self-hosted agent designs, place gateway
-controls deliberately and discuss the networking, residency and cost constraints around the service.
+You can compare model deployments, quotas and costs; AI Search, pgvector and Cosmos DB retrieval;
+and managed versus self-hosted agents. You can identify the limits of platform safety and choose evaluation,
+tracing and gateway controls while accounting for private access and data residency.
 
 :::note[Status]
 
