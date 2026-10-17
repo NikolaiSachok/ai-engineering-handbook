@@ -262,7 +262,15 @@ const COURSES: Course[] = [
     untranslatedPolicy: 'by-design',
     live: false,
     inNavbar: false,
-    footerLinks: [{label: 'Introduction', path: ''}],
+    footerLinks: [
+      {label: 'Introduction', path: ''},
+      {label: 'Part I — Azure foundations', path: 'part-1-azure-foundations/overview'},
+      {label: 'Part II — Modern .NET', path: 'part-2-modern-dotnet/overview'},
+      {label: 'Part III — Running LLMs on Azure', path: 'part-3-llms-on-azure/overview'},
+      {label: 'Part IV — AI-assisted delivery on the Microsoft stack', path: 'part-4-ai-delivery/overview'},
+      {label: 'Part V — Projects', path: 'part-5-projects/overview'},
+      {label: 'Glossary', path: 'glossary'},
+    ],
   },
 ];
 // Validate the declared scope at config load, so a malformed declaration fails the build
