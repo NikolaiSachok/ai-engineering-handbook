@@ -759,3 +759,43 @@ and §2: «поиск» for retrieval, «выдача» for its results; the sib
 All 33 distinct Microsoft Learn destinations in the packet returned HTTP 200 at their same-path
 `ru-ru` counterparts on 2026-10-17, without an English-locale fallback. Inline links and Sources retain
 the source path, query and fragment. Other vendors' URLs and internal course destinations are unchanged.
+
+## Async, streaming and cancellation — terminology evidence (2026-10-17)
+
+The lesson reuses the intro's «асинхронная работа с потоками данных» for the broader async-streaming
+activity; the sequence type has its own sense below. Existing rows and statuses are unchanged.
+These decisions remain **ON PROBATION**: live Microsoft Learn evidence establishes the technical
+senses and supports wording. Accepted findings from the supplied fidelity and naturalness critiques
+were applied; no additional independent review was run. Shared AI vocabulary reuses
+`rag.md` §1.2: «поиск» for retrieval as an action and «опора на контекст» for grounding;
+SSE remains an English protocol name. All ten rows below concern this lesson's new terms.
+
+Within this lesson, `await` stays in code font; describe awaiting I/O as
+«дождись ввода-вывода через `await`» or «операция, завершения которой ждут через `await`».
+Cancellation request is «сигнал отмены»; «запрос» refers to the HTTP request.
+A durable background job (`job.durable`) is «фоновое задание с сохранением состояния»,
+then «фоновое задание»; reserve «задача» for the .NET `Task` sense.
+For a text chunk, use the first-mention bridge «фрагмент (chunk)», then «фрагмент».
+These scoped applications follow course-wide RU decisions 24, 25, 27 and 29.
+They add no glossary headwords or rows and leave the other lessons' decisions untouched.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Task — .NET object representing an operation's completion | **ON PROBATION** — «задача (task)», then «задача»; keep `Task` and `Task<T>` literal when naming the types. | Live-checked 2026-10-17: [Microsoft Learn RU, Task](https://learn.microsoft.com/ru-ru/dotnet/api/system.threading.tasks.task?view=net-10.0) uses «задача» for this object. The lesson distinguishes an operation from a sequence of updates; do not use this noun to imply a dedicated thread. |
+| Async stream — asynchronously consumed sequence | **ON PROBATION** — «асинхронный поток (async stream)», then «асинхронный поток». | Live-checked 2026-10-17: [Microsoft Learn RU, async streams](https://learn.microsoft.com/ru-ru/dotnet/csharp/asynchronous-programming/generate-consume-asynchronous-stream) uses «асинхронный поток» with `IAsyncEnumerable<T>` and `await foreach`. Distinguish the sequence from a thread and from the HTTP wire format. |
+| Server-sent events (SSE) — HTTP event-stream format | **ON PROBATION** — kept-EN «Server-sent events (SSE, события от сервера)» at first definition, then «SSE»; lower-case «server-sent events (SSE)» in the terms footer. | Live-checked 2026-10-17: [Microsoft Learn RU, Minimal API responses](https://learn.microsoft.com/ru-ru/aspnet/core/fundamentals/minimal-apis/responses?view=aspnetcore-10.0) documents `TypedResults.ServerSentEvents` and named SSE events. Reuse the shared `rag.md` protocol name; the short Russian gloss describes direction rather than renaming an API. Reject treating every JSON sequence as SSE. |
+| Cooperative cancellation — participating operations respond to a stop request | **ON PROBATION** — «кооперативная отмена (cooperative cancellation)», then «кооперативная отмена». | Live-checked 2026-10-17: [Microsoft Learn RU, cancellation](https://learn.microsoft.com/ru-ru/dotnet/standard/threading/cancellation-in-managed-threads) attests «модель кооперативной отмены» and also uses «совместная отмена». Prefer the former consistently; accepting a token alone does not establish participation. |
+| Cancellation token — operation-visible cancellation value | **ON PROBATION** — «токен отмены (cancellation token)», then «токен отмены»; keep `CancellationToken` literal. | Live-checked 2026-10-17: [Microsoft Learn RU, cancellation types](https://learn.microsoft.com/ru-ru/dotnet/standard/threading/cancellation-in-managed-threads) alternates «токен» and «маркер» and defines the value type and observation. Use «токен» consistently with this course's token vocabulary; distinguish cancellation from access tokens and model text tokens. |
+| Cancellation token source — token supplier and cancellation requester | **ON PROBATION** — «источник токена отмены (cancellation token source)», then «источник токена отмены» or «источник» when unambiguous. | Live-checked 2026-10-17: [Microsoft Learn RU, cancellation types](https://learn.microsoft.com/ru-ru/dotnet/standard/threading/cancellation-in-managed-threads) describes `CancellationTokenSource` creating a token and initiating cancellation. Wording aligns with the chosen «токен» form; reject conflation of the source with the token value. |
+| Request cancellation — ASP.NET Core HTTP request-abort signal | **ON PROBATION** — «отмена запроса (request cancellation)», then «отмена запроса»; use «прерывание HTTP-запроса» for the triggering event. | Live-checked 2026-10-17: [Microsoft Learn RU, RequestAborted](https://learn.microsoft.com/ru-ru/aspnet/core/fundamentals/use-http-context?view=aspnetcore-10.0#requestaborted) covers client or server aborts and Minimal API binding to `CancellationToken`. Do not restrict the definition to client disconnects or imply immediate detection. |
+| Linked cancellation — OR-combination of input cancellation signals | **ON PROBATION** — «связанная отмена (linked cancellation)», then «связанная отмена»; «связанный источник», «связанный токен» in explicit context. | Live-checked 2026-10-17: [Microsoft Learn RU, CreateLinkedTokenSource](https://learn.microsoft.com/ru-ru/dotnet/api/system.threading.cancellationtokensource.createlinkedtokensource?view=net-10.0) defines cancellation when any supplied token is cancelled; [RU cancellation guide](https://learn.microsoft.com/ru-ru/dotnet/standard/threading/cancellation-in-managed-threads) attests «связанный токен». Reject an all-inputs condition. |
+| Elapsed-time budget — total allowed duration before requesting cancellation | **ON PROBATION** — «ограничение общего времени выполнения (elapsed-time budget)» at first definition; in context, «общее ограничение времени» or «отведённое время». | Live-checked 2026-10-17: [Microsoft Learn RU, CancelAfter](https://learn.microsoft.com/ru-ru/dotnet/api/system.threading.cancellationtokensource.cancelafter?view=net-10.0) specifies countdown from the call and reset on subsequent calls. This is a descriptive rendering of application policy, not a quoted Microsoft term. Reject bare «бюджет»: this course reserves its established budget sense for Azure cost notifications; distinguish an idle timeout. |
+| Idle timeout — allowed time without progress | **ON PROBATION** — «тайм-аут простоя (idle timeout)», then «тайм-аут простоя». | Live-checked 2026-10-17: [Microsoft Learn RU, Web PubSub protocol](https://learn.microsoft.com/ru-ru/azure/azure-web-pubsub/reference-json-webpubsub-subprotocol) attests «тайм-аут простоя» and explicitly distinguishes it from total stream lifetime. This is terminology evidence from another protocol, not a claim that P1 uses Web PubSub or its settings. |
+
+All 28 distinct Microsoft Learn destinations in the semantic packet, plus the Task API and Web
+PubSub terminology-evidence pages, returned HTTP 200 at their same-path `ru-ru` URLs when rechecked
+on 2026-10-17. Of these 30 URLs, 29 returned Russian HTML. The
+[`TypedResults.ServerSentEvents` API page](https://learn.microsoft.com/ru-ru/dotnet/api/microsoft.aspnetcore.http.typedresults.serversentevents?view=aspnetcore-10.0)
+retained the `ru-ru` URL but returned English HTML (`lang="en-us"`), confirmed on a second request.
+The lesson keeps that URL under the binding course decision. Inline links and Sources preserve
+each path, query and fragment. Other vendors' URLs and internal course paths remain unchanged.

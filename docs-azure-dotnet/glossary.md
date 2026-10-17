@@ -382,6 +382,28 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Structured logging** — recording a stable message template with separate named values that a logging provider can preserve as queryable fields.
 
+## Async, streaming and cancellation \{#async-streaming-cancellation}
+
+**Task** — a .NET object representing an operation's eventual completion, failure or cancellation; `Task<T>` also provides its result.
+
+**Async stream** — a sequence exposed as `IAsyncEnumerable<T>` whose successive items can be awaited and consumed with `await foreach`. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/generate-consume-asynchronous-stream)
+
+**Server-sent events (SSE)** — an HTTP event-stream format for sending successive messages from a server to a client over one connection.
+
+**Cooperative cancellation** — stopping work through a shared cancellation request that each participating operation must observe and respond to.
+
+**Cancellation token** — a .NET value passed to an operation so it can observe a cancellation request. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads)
+
+**Cancellation token source** — a .NET object that supplies a token and can request cancellation for operations observing it.
+
+**Request cancellation** — the signal exposed by ASP.NET Core's `HttpContext.RequestAborted` when the client or server aborts the HTTP request.
+
+**Linked cancellation** — combining cancellation signals through a token source that is cancelled when any linked input token is cancelled.
+
+**Elapsed-time budget** — a total duration allowed for an operation, after which the application requests cancellation regardless of whether updates are still arriving.
+
+**Idle timeout** — a limit on how long an operation may go without progress, such as receiving the next stream update.
+
 ## Data access \{#data-access}
 
 **Object-relational mapper (ORM)** — a library that maps application objects to relational database tables and mediates queries and updates between them.

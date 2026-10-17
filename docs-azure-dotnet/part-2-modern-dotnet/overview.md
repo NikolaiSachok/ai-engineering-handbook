@@ -21,7 +21,7 @@ by containers and AI integration.
 - **[The .NET platform today](./dotnet-platform.md)** — runtime, SDK, LTS cadence, SDK-style project files, `dotnet` CLI and NuGet. The Framework-to-.NET table and support cadence inform the choice of platform and supported version for a project.
 - **[ASP.NET Core](./aspnet-core.md)** — hosting, middleware, routing and problem details. Minimal APIs and controllers offer different ways to organise HTTP endpoints.
 - **[The Microsoft.Extensions backbone](./extensions-backbone.md)** — dependency injection lifetimes, configuration providers, the options pattern and logging. These are the shared mechanisms the rest of the service uses.
-- **Async, streaming and cancellation** 🚧 — tasks, `IAsyncEnumerable`, server-sent events, timeouts and cancellation. Long LLM calls need both incremental responses and a way to stop work.
+- **[Async, streaming and cancellation](./async-streaming-cancellation.md)** — tasks, `IAsyncEnumerable`, server-sent events, timeouts and cancellation. Long LLM calls need both incremental responses and a way to stop work.
 - **[Data access](./data-access.md)** — EF Core migrations, change tracking and performance traps. Dapper and raw SQL are alternatives when EF Core is not the right fit.
 - **[Testing](./testing.md)** — xUnit, integration tests with `WebApplicationFactory`, Testcontainers and LLM-backed code. A model dependency changes what the tests need to check.
 - **Containers and Aspire** 🚧 — container images from `dotnet publish`, the Aspire app host, local orchestration and telemetry. Aspire brings related services and their telemetry into the local development environment.
@@ -41,7 +41,7 @@ stream its response and cancel work when the request is no longer needed.
 
 :::note[Status]
 
-Published: 6 of 8 lessons. Pages marked 🚧 are planned.
+Published: 7 of 8 lessons. Pages marked 🚧 are planned.
 
 :::
 
