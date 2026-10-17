@@ -24,7 +24,7 @@ by containers and AI integration.
 - **[Async, streaming and cancellation](./async-streaming-cancellation.md)** — tasks, `IAsyncEnumerable`, server-sent events, timeouts and cancellation. Long LLM calls need both incremental responses and a way to stop work.
 - **[Data access](./data-access.md)** — EF Core migrations, change tracking and performance traps. Dapper and raw SQL are alternatives when EF Core is not the right fit.
 - **[Testing](./testing.md)** — xUnit, integration tests with `WebApplicationFactory`, Testcontainers and LLM-backed code. A model dependency changes what the tests need to check.
-- **Containers and Aspire** 🚧 — container images from `dotnet publish`, the Aspire app host, local orchestration and telemetry. Aspire brings related services and their telemetry into the local development environment.
+- **[Containers and Aspire](./containers-and-aspire.md)** — container images from `dotnet publish`, the Aspire app host, local orchestration and telemetry. Aspire brings related services and their telemetry into the local development environment.
 - **[AI in .NET](./ai-in-dotnet.md)** — `Microsoft.Extensions.AI`, Azure OpenAI and OpenAI SDKs, vector data abstractions and Microsoft Agent Framework for .NET. Each integration serves a different role in the application.
 
 ## Prerequisites \{#prerequisites}
@@ -41,7 +41,7 @@ stream its response and cancel work when the request is no longer needed.
 
 :::note[Status]
 
-Published: 7 of 8 lessons. Pages marked 🚧 are planned.
+Published: 8 of 8 lessons. Pages marked 🚧 are planned.
 
 :::
 

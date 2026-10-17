@@ -459,6 +459,28 @@ last_verified: 2026-10-17
 
 **Тестовая фикстура (test fixture)** — заранее известная конфигурация среды или данные для тестов с определённым временем жизни и ответственностью за очистку.
 
+## Контейнеры и Aspire \{#containers-and-aspire}
+
+**Образ контейнера (container image)** — упакованная файловая система и конфигурация выполнения, на основе которых создаются экземпляры контейнеров приложения.
+
+**Дайджест образа (image digest)** — идентификатор SHA-256, вычисляемый по содержимому манифеста образа. Позволяет идентифицировать конкретный образ независимо от изменяемого тега. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/azure/container-registry/container-registry-concepts#manifest-digest)
+
+**PublishContainer** — цель .NET SDK, которая создаёт образ контейнера из опубликованного приложения и базового образа без Dockerfile. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/dotnet/core/containers/sdk-publish)
+
+**AppHost** — проект или файл Aspire, который объявляет ресурсы приложения и связи между ними для оркестрации. ↗ [Aspire](https://aspire.dev/get-started/app-host/)
+
+**Ресурс Aspire (Aspire resource)** — компонент приложения или зависимость, представленные в модели AppHost: например, проект API или контейнер.
+
+**Service Defaults** — общий C#-проект с настройками телеметрии, проверок работоспособности, обнаружения служб и устойчивости HTTP-клиента к сбоям. Эти настройки можно менять. ↗ [Aspire](https://aspire.dev/get-started/csharp-service-defaults/)
+
+**OpenTelemetry** — независимый от поставщика инструментарий для инструментирования приложений, сбора и экспорта телеметрии, включая трейсы, метрики и журналы. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/dotnet/core/diagnostics/observability-with-otel)
+
+**OTLP (OpenTelemetry Protocol)** — протокол передачи данных OpenTelemetry между приложениями, коллекторами и системами обработки телеметрии. ↗ [Aspire](https://aspire.dev/fundamentals/telemetry/)
+
+**Спан (span)** — запись об одной операции в распределённом трейсе, содержащая время выполнения, контекст и связанные атрибуты.
+
+**Обнаружение служб (service discovery)** — определение доступных клиенту адресов службы по её логическому имени.
+
 ## AI в .NET \{#ai-in-dotnet}
 
 **Microsoft.Extensions.AI** — библиотеки .NET с общими контрактами AI-клиентов и компонентами, которые можно сочетать друг с другом: например, для телеметрии, кэширования и вызова функций. ↗ [Microsoft Learn](https://learn.microsoft.com/ru-ru/dotnet/ai/microsoft-extensions-ai)
