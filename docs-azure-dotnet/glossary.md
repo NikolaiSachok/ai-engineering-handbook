@@ -360,6 +360,42 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **ProblemDetails** — a structured HTTP error representation with standard fields for problem type, title, status, detail and instance, plus optional extensions. [↗](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling-api?view=aspnetcore-10.0)
 
+## Data access \{#data-access}
+
+**Object-relational mapper (ORM)** — a library that maps application objects to relational database tables and mediates queries and updates between them.
+
+**EF Core (Entity Framework Core)** — Microsoft's .NET object-relational mapper, with LINQ querying, entity change tracking and schema migrations.
+
+**Database provider** — the database-specific implementation that connects EF Core to an engine and translates queries into that engine's query language.
+
+**DbContext** — EF Core's unit-of-work object, which provides access to the model, queries and tracked entity changes for a bounded operation.
+
+**Change tracking** — recording entity identities, states and property changes so EF Core can determine the writes needed when saving.
+
+**No-tracking query** — an EF Core query whose returned entities are not retained in the context's change tracker for later updates.
+
+**Migration** — a versioned set of schema operations that moves a database from one application model shape to another.
+
+**Model snapshot** — EF Core's saved representation of the model used as the comparison point when generating the next migration.
+
+**Projection** — selecting a specific result shape, such as a few columns, instead of returning a complete entity.
+
+**N+1 queries** — one database query followed by an additional query for each of its N results, caused by patterns such as lazy loading related data or querying inside a per-result loop. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying)
+
+**Cartesian explosion** — multiplication of result rows when a query joins several sibling collections, repeating combinations of their members.
+
+**Dapper** — a .NET micro-ORM that maps explicitly written SQL query results to objects without EF Core's entity change tracker.
+
+**Parameterized SQL** — SQL that sends data values separately from command text, preventing those values from being interpreted as SQL syntax.
+
+**Optimistic concurrency** — detecting conflicting writes by comparing a previously read token with its stored value during an update, then requiring the application to resolve a mismatch.
+
+**Concurrency token** — a property whose originally read value EF Core compares with the stored value when saving an update or delete to detect a conflicting write. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/ef/core/saving/concurrency)
+
+**Split query** — an EF Core query that loads related collections through multiple SQL queries instead of joining them all into one result. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries)
+
+**Migration bundle** — an executable artifact containing EF Core migrations that can apply schema changes without the application's source code, .NET SDK or EF tools on the target machine. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying#bundles)
+
 ## Microsoft Foundry \{#microsoft-foundry}
 
 **Foundry resource** — an Azure resource that holds shared serverless model deployments, networking and security settings; its type is `Microsoft.CognitiveServices/accounts` with kind `AIServices`.
