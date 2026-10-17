@@ -637,3 +637,19 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Custom evaluator** — an application-defined scoring method implemented through code, a judge prompt or an external endpoint.
 
 **Trace identifier** — the identifier shared by operations belonging to one distributed trace, used to correlate their execution records. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/distributed-tracing-concepts)
+
+## The AI gateway \{#ai-gateway}
+
+**AI gateway** — a proxy in the model request path that applies shared access, consumption, routing and telemetry controls.
+
+**Token-limit policy** — a gateway rule that restricts model token consumption by a rate, a quota over a period, or both.
+
+**Counter key** — the value identifying which shared consumption counter a gateway policy updates for a request.
+
+**Backend pool** — a group of backend endpoints treated as one routing target, with rules for distributing requests among them.
+
+**Circuit breaker** — a control that temporarily stops sending requests to a backend after configured failure conditions are met, allowing it time to recover.
+
+**Semantic cache** — a cache that reuses a stored model response when an incoming prompt meets a semantic-similarity threshold and the configured reuse conditions.
+
+**Token metric** — a measurement of model token consumption, reported or estimated for monitoring and aggregation.
