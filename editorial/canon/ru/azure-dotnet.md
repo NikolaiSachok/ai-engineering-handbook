@@ -694,3 +694,38 @@ All 13 distinct Microsoft Learn destinations in the testing packet returned HTTP
 same-path `ru-ru` counterparts on 2026-10-17, without a locale fallback. Paths, queries and fragments
 are preserved in the lesson and its glossary group. Additional RU terminology evidence above was
 checked live. Other vendors' URLs and internal course paths remain unchanged.
+
+## AI in .NET — terminology evidence (2026-10-17)
+
+This lesson reuses existing decisions for credentials, workload, model deployment and access roles
+without changing their rows or statuses. Shared AI vocabulary follows the targeted lookup in
+`rag.md` §1.2: «эмбеддинг», «поиск» as an action, «оркестрация» and «оценка» for model-answer
+evaluation. The client pipeline below is a sequence of forwarding wrappers, not an agent chain.
+The seven new rows remain **ON PROBATION**. The lesson was repaired against independent
+claim-fidelity and Russian-naturalness findings on 2026-10-17; these repairs do not settle the rows.
+
+Lesson-specific usage decisions:
+
+- Chunk: «фрагмент», with an English bridge at first mention (inflected here as «фрагментов (chunks)»).
+  This follows the course-wide decision; one term covers passage selection and retrieval identifiers.
+- API: masculine singular («HTTP API должен») when agreement is needed; prefer the Microsoft form
+  «минимальные API» for the ASP.NET Core feature. Live-checked 2026-10-17:
+  [Microsoft Learn RU, ASP.NET Core tutorial](https://learn.microsoft.com/ru-ru/aspnet/core/tutorials/min-web-api?view=aspnetcore-10.0)
+  uses «минимальные API» and «API-интерфейс».
+- Sources: retain the cited English source labels, product names, identifiers and versions.
+  Joining words outside link titles are Russian («и»); groups, order and list shape follow English.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Microsoft.Extensions.AI — shared AI client contracts and composable behaviours | **ON PROBATION** — kept-EN `Microsoft.Extensions.AI`; explanatory wording «общие контракты AI-клиентов». | Live-checked 2026-10-17: [Microsoft Learn RU, libraries](https://learn.microsoft.com/ru-ru/dotnet/ai/microsoft-extensions-ai) separates the abstractions package from composable function invocation, telemetry and caching. Retain the package name; do not extend its responsibility to vector storage or agent orchestration. |
+| IChatClient — chat model-access contract | **ON PROBATION** — kept-EN `IChatClient`; «интерфейс» or «контракт» in running prose. | Live-checked 2026-10-17: [Microsoft Learn RU, IChatClient](https://learn.microsoft.com/ru-ru/dotnet/ai/ichatclient) documents complete responses and streaming updates. Distinguish the client contract from HTTP delivery, which the endpoint must implement. Reject wording implying automatic HTTP streaming. |
+| IEmbeddingGenerator — typed embedding production | **ON PROBATION** — kept-EN `IEmbeddingGenerator`; explanatory wording «генератор эмбеддингов». | Live-checked 2026-10-17: [Microsoft Learn RU, IEmbeddingGenerator](https://learn.microsoft.com/ru-ru/dotnet/ai/iembeddinggenerator) uses «генератор эмбеддингов» and distinguishes input and output types. Reuse «эмбеддинг» from `rag.md` §1.2; reject the page's inconsistent «встраивание» for this sense. The lesson specialization remains `IEmbeddingGenerator<string, Embedding<float>>`. |
+| Provider adapter — bridge from provider SDK to shared application contract | **ON PROBATION** — «адаптер поставщика (provider adapter)», then «адаптер поставщика». | Live-checked 2026-10-17: [Microsoft Learn RU, IChatClient implementations](https://learn.microsoft.com/ru-ru/dotnet/ai/ichatclient) explains how provider clients expose the common interface; the [AsIChatClient reference](https://learn.microsoft.com/ru-ru/dotnet/api/microsoft.extensions.ai.openaiclientextensions.asichatclient?view=net-10.0-pp) documents the concrete adaptation. This descriptive Russian name is a composition decision, not a verbatim Microsoft term. Reject «провайдерный адаптер» and any implication of equivalent model behaviour. |
+| Delegating client pipeline — ordered wrappers forwarding model-access operations | **ON PROBATION** — «конвейер делегирующих клиентов (delegating client pipeline)», then «конвейер делегирующих клиентов» or «клиентский конвейер». | Live-checked 2026-10-17: [Microsoft Learn RU, IChatClient](https://learn.microsoft.com/ru-ru/dotnet/ai/ichatclient), the functionality-chain and custom-middleware sections, describes layered clients and delegation to an inner client; [DelegatingChatClient reference](https://learn.microsoft.com/ru-ru/dotnet/api/microsoft.extensions.ai.delegatingchatclient?view=net-10.0-pp) identifies the base class. The Russian phrase is a composition decision supported by these senses. This is a static wrapper sequence, consistent with `rag.md`'s pipeline reservation; reject «делегирующий конвейер» because the clients perform delegation. |
+| Microsoft.Extensions.VectorData — provider-backed vector-store and typed-collection abstractions | **ON PROBATION** — kept-EN `Microsoft.Extensions.VectorData`; «абстракции для векторных хранилищ» in explanations. | Live-checked 2026-10-17: [Microsoft Learn RU, vector stores](https://learn.microsoft.com/ru-ru/dotnet/ai/vector-stores/overview) describes vector-storage abstractions and provider implementations; [use vector stores](https://learn.microsoft.com/ru-ru/dotnet/ai/vector-stores/how-to/use-vector-stores) documents typed collections and records. Keep storage and search separate from embedding generation. Reject wording that guarantees equivalent filters or ranking across providers. |
+| Microsoft Agent Framework — agent and workflow SDK | **ON PROBATION** — kept-EN «Microsoft Agent Framework»; «сеанс», «рабочий процесс» and «оркестрация» for its concepts. | Live-checked 2026-10-17: [Microsoft Learn RU, overview](https://learn.microsoft.com/ru-ru/agent-framework/overview/) describes agent sessions, tools, middleware and explicit graph-based workflows. Preserve the English product name despite the localized page title. Reuse the orchestration sense in `rag.md`; do not imply every retrieve-then-generate request needs an agent framework. |
+
+All 23 distinct Microsoft Learn destinations in the AI in .NET semantic packet returned HTTP 200
+at their same-path `ru-ru` counterparts on 2026-10-17, without an English-locale fallback. The lesson
+and glossary preserve source paths, query strings and fragments; non-Learn and internal links are
+unchanged.
