@@ -82,6 +82,26 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **authorisation** — deciding whether a caller may perform a particular operation on a resource.
 
+## RBAC and keyless access \{#rbac-and-keyless-access}
+
+**Azure RBAC (role-based access control)** — the Azure authorization system for granting a principal permission to perform operations at a scope. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/role-based-access-control/overview)
+
+**Role definition** — a collection of permitted management or data operations that can be assigned to a principal.
+
+**Role assignment** — the binding of a principal, a role definition and a scope.
+
+**Inheritance** — the application of a role assignment at a parent scope to resources beneath that scope. A narrower assignment does not subtract inherited permissions.
+
+**DefaultAzureCredential** — an Azure Identity credential that tries a preconfigured chain of token sources, including developer and hosted-workload credentials. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication/credential-chains)
+
+**Deterministic credential** — an explicit credential choice that makes the intended authentication source predictable, such as `ManagedIdentityCredential` for an Azure-hosted workload.
+
+**Workload identity federation** — a trust arrangement that lets a workload exchange a token from an external identity provider for an Entra access token without a stored client secret.
+
+**Federated identity credential** — the Entra trust configuration specifying an external token's accepted issuer, subject and audience. It does not itself grant Azure resource permissions. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity)
+
+**OIDC (OpenID Connect)** — an identity protocol through which an issuer supplies an identity token. In GitHub-to-Azure federation, that token identifies the job and is exchanged for an Entra access token.
+
 ## Governance and architecture frameworks \{#governance-and-frameworks}
 
 **Azure Policy** — the Azure service that evaluates resources against configuration rules and applies their configured effects.
