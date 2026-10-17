@@ -23,7 +23,7 @@ choices close the part by placing the service in a wider organisation.
 - **[Safety on the platform](./platform-safety.md)** — content filters, Prompt Shields and groundedness detection. The lesson identifies what platform safety does not cover and links to application guardrails in [RAG & Agents](/rag-agents/).
 - **[RAG on Azure AI Search](./rag-on-ai-search.md)** — indexes, hybrid retrieval, semantic ranker, integrated vectorization and agentic retrieval. The comparison is between this AI Search path, pgvector and Cosmos DB vector search.
 - **[Getting documents in](./document-ingestion.md)** — Content Understanding and Document Intelligence for OCR, layout, field extraction and Markdown for RAG. These services turn documents into text and structure for retrieval.
-- **Agents on Azure** 🚧 — Foundry Agent Service versus self-hosted Microsoft Agent Framework; tools, MCP, memory, multi-agent orchestration and approvals. The hosting choice determines where the agent runs.
+- **[Agents on Azure](./agents-on-azure.md)** — Foundry Agent Service versus self-hosted Microsoft Agent Framework; tools, MCP, memory, multi-agent orchestration and approvals. The hosting choice determines where the agent runs.
 - **Evaluation and tracing** 🚧 — Foundry evaluations and tracing, mapped to the evaluation lesson in [RAG & Agents](/rag-agents/). Offline and online evaluation check behaviour at different stages.
 - **The AI gateway** 🚧 — API Management token limits, load balancing, failover, semantic caching and usage logging. The gateway places these controls in front of model deployments.
 - **Enterprise-grade AI** 🚧 — private networking for model endpoints, keyless access, data residency and the AI landing zone. Enterprise requirements constrain model access and data placement.
@@ -44,7 +44,7 @@ tracing and gateway controls while accounting for private access and data reside
 
 :::note[Status]
 
-Published: 5 of 10 lessons. Pages marked 🚧 are planned.
+Published: 6 of 10 lessons. Pages marked 🚧 are planned.
 
 :::
 
