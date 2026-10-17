@@ -336,6 +336,30 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Solution** — a file grouping projects for development tools and solution-level commands; it does not define a running application instance.
 
+## ASP.NET Core \{#aspnet-core}
+
+**Host** — the object that brings together an application's services, configuration, logging, server and lifetime management.
+
+**Kestrel** — ASP.NET Core's default cross-platform HTTP server. [↗](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-10.0)
+
+**Middleware** — a component in the HTTP request pipeline that can process a request and response, invoke the next component or end processing early.
+
+**Short-circuiting** — producing a response without invoking the remaining downstream request pipeline.
+
+**Endpoint** — an executable request handler with associated metadata, selected by routing to handle an HTTP request.
+
+**Minimal API** — an ASP.NET Core API approach that maps HTTP routes to handler delegates without requiring controller classes.
+
+**Controller** — a class that groups actions using ASP.NET Core MVC's endpoint conventions and features.
+
+**Route group** — a set of endpoints sharing a route prefix and endpoint conventions, such as metadata or authorisation requirements.
+
+**Parameter binding** — the process that converts request data or resolves services into arguments for an endpoint handler.
+
+**Route constraint** — a rule that restricts route matching to distinguish endpoints, rather than validate application input.
+
+**ProblemDetails** — a structured HTTP error representation with standard fields for problem type, title, status, detail and instance, plus optional extensions. [↗](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling-api?view=aspnetcore-10.0)
+
 ## Microsoft Foundry \{#microsoft-foundry}
 
 **Foundry resource** — an Azure resource that holds shared serverless model deployments, networking and security settings; its type is `Microsoft.CognitiveServices/accounts` with kind `AIServices`.
