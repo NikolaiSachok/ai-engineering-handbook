@@ -218,3 +218,34 @@ same-path `ru-ru` counterparts on 2026-10-17, without an English-locale fallback
 terminology-evidence destinations (ARM terminology, region, scope and tags) were checked live as well.
 Published lesson URLs retain the source path, query and fragment; other vendors' URLs and internal
 course paths remain as supplied in the packet.
+
+## RBAC and keyless access — terminology evidence (2026-10-17)
+
+This lesson reuses the identity-title, resource and scope decisions above at their existing status,
+and the settled control/data-plane, managed-identity, service-principal, keyless-access,
+workload-identity-federation and model-deployment senses. Only new terms from this lesson’s New terms line get rows below; the federation term already has
+a row above. All new rows remain **ON PROBATION**.
+The repair applies the supplied independent Claude fidelity and native-language findings; it does not
+promote term status or claim a new independent review.
+
+Course decisions applied here: workload is always «рабочая нагрузка»; the answering component is
+«API, которое отвечает на вопросы». Use «субъект токена» for the external-token subject, including
+readback and glossary prose; keep code identifiers literal. Use at most two English bridges per
+paragraph, only at first mention of a listed new term or a concept explicitly bridged in this ledger.
+The visible source date on this lesson is «Проверено 17.10.2026.». Existing recurring-string rows and
+other lesson sections retain their HEAD text.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Azure RBAC — role-based Azure resource authorization | **ON PROBATION** — kept-EN «Azure RBAC»; first-use gloss «управление доступом на основе ролей (role-based access control)». | Live-checked 2026-10-17: [Microsoft Learn RU, Azure RBAC](https://learn.microsoft.com/ru-ru/azure/role-based-access-control/overview) identifies the authorization system. Keep the product token in English; do not replace it with «RBAC Azure». |
+| Role definition — permitted operations | **ON PROBATION** — «определение роли (role definition)». | Live-checked 2026-10-17: [Microsoft Learn RU, role definitions](https://learn.microsoft.com/ru-ru/azure/role-based-access-control/role-definitions) attests the term and separates `Actions`/`NotActions` from `DataActions`/`NotDataActions`. It is not an assignment to a principal. |
+| Role assignment — principal, role definition and scope binding | **ON PROBATION** — «назначение роли (role assignment)». | Live-checked 2026-10-17: [Microsoft Learn RU, RBAC assignments](https://learn.microsoft.com/ru-ru/azure/role-based-access-control/overview) explicitly joins the three elements. Use the noun for the saved binding as well as the configuration action when context makes the sense clear. |
+| Inheritance — permissions from ancestor scopes | **ON PROBATION** — «наследование прав (inheritance)»; in context «унаследованные разрешения». | Live-checked 2026-10-17: [Microsoft Learn RU, scope hierarchy](https://learn.microsoft.com/ru-ru/azure/role-based-access-control/scope-overview) describes parent-to-child inheritance. A narrower allow does not subtract a broader inherited allow. Distinguish the separately recorded Cost Management tag-inheritance sense. |
+| DefaultAzureCredential — Azure Identity token-source chain | **ON PROBATION** — kept identifier `DefaultAzureCredential`; explanatory «цепочка источников токена». | Live-checked 2026-10-17: [Microsoft Learn RU, credential chains](https://learn.microsoft.com/ru-ru/dotnet/azure/sdk/authentication/credential-chains) describes the ordered credential chain and developer-tool sources. Preserve the exact class name; do not describe it as a single identity or a permission grant. |
+| Deterministic credential — explicitly selected, predictable authentication source | **ON PROBATION** — «детерминированные учётные данные (deterministic credential)»; explain through «явно выбирать источник учётных данных». | Live-checked 2026-10-17: [Microsoft Learn RU, authentication best practices](https://learn.microsoft.com/ru-ru/dotnet/azure/sdk/authentication/best-practices#use-deterministic-credentials-in-production-environments) uses «детерминированных учетных данных» and recommends a specific credential. Deterministic refers to source selection, not identical token bytes. |
+| Federated identity credential — saved external-token trust configuration | **ON PROBATION** — «учётные данные федеративного удостоверения (federated identity credential)»; contextual «запись федерации», «настройки доверия». | Live-checked 2026-10-17: [Microsoft Learn RU, user-assigned identity federation trust](https://learn.microsoft.com/ru-ru/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity) attests the noun phrase and the issuer/subject/audience match. This record grants no Azure resource permissions by itself; do not call it a stored client secret. |
+| OIDC — OpenID Connect identity protocol | **ON PROBATION** — «OIDC (OpenID Connect)»; explanatory «протокол удостоверения личности». | Live-checked 2026-10-17: [Microsoft Learn RU, OpenID Connect](https://learn.microsoft.com/ru-ru/entra/identity-platform/v2-protocols-oidc) describes the protocol and ID token; [workload federation](https://learn.microsoft.com/ru-ru/entra/workload-id/workload-identity-federation) describes exchanging the external token. Preserve OIDC casing and distinguish the identity token from the Entra access token. |
+
+All 36 distinct Microsoft Learn URLs in the packet returned HTTP 200 at their same-path `ru-ru`
+counterparts on 2026-10-17, with no English-locale redirect. Paths, queries and fragments were preserved.
+The additional OpenID Connect evidence page also returned HTTP 200. Product and role names, CLI commands and API identifiers stay in English.
