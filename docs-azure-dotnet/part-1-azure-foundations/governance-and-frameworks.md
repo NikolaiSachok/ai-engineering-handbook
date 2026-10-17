@@ -264,7 +264,7 @@ az group delete --name "$rg" --yes
 - Tags, budgets and security posture findings need follow-through. Budgets do not cap consumption,
   and configuration compliance does not establish answer quality.
 
-**[New terms](https://nikolaisachok.com/ai-engineering-handbook/azure-dotnet/glossary#governance-and-frameworks)**: Azure Policy, policy definition, policy effect, policy assignment, policy initiative, compliance state, Cloud Adoption Framework, landing zone, Well-Architected Framework, Cost Management, Microsoft Defender for Cloud, CSPM.
+**[New terms](../glossary.md#governance-and-frameworks)**: Azure Policy, policy definition, policy effect, policy assignment, policy initiative, compliance state, Cloud Adoption Framework, landing zone, Well-Architected Framework, Cost Management, Microsoft Defender for Cloud, CSPM.
 
 ## Sources \{#sources}
 

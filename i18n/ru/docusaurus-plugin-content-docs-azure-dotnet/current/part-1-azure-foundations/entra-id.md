@@ -70,7 +70,7 @@ flowchart TD
 
 При диагностике отделяй ошибки аутентификации от ошибок авторизации. Для API с bearer-аутентификацией [код 401 означает, что токен отсутствует или недействителен, в том числе из-за неверной аудитории; код 403 обычно означает, что токен действителен, но нужного разрешения нет](https://learn.microsoft.com/ru-ru/aspnet/core/security/authentication/configure-jwt-bearer-authentication?view=aspnetcore-10.0). Затем проверь, какое удостоверение запрашивает токен. Если при обращении к конечной точке Container Apps не выбрать удостоверение, назначаемое пользователем, платформа попытается использовать удостоверение, назначаемое системой, которого может вообще не быть. В конфигурации Azure Identity нужно [явно указать client ID удостоверения, назначаемого пользователем](https://learn.microsoft.com/ru-ru/azure/container-apps/managed-identity#connect-to-azure-services-in-app-code).
 
-## В AI-приложении \{#in-an-ai-workload}
+## Что это меняет для AI-сервиса \{#in-an-ai-workload}
 
 В P1 минимальное RAG API на .NET будет работать в Azure Container Apps. Во время работы API будет использовать одно управляемое удостоверение, назначаемое пользователем, для доступа к модели в Microsoft Foundry, к индексу Azure AI Search, к хранилищу Blob Storage и к Key Vault. Доступ настраивается отдельно для каждого сервиса: [Foundry](https://learn.microsoft.com/ru-ru/azure/foundry/foundry-models/how-to/configure-entra-id), [Search](https://learn.microsoft.com/ru-ru/azure/search/search-security-rbac), [Blob](https://learn.microsoft.com/ru-ru/azure/storage/blobs/authorize-access-azure-active-directory) и [Key Vault](https://learn.microsoft.com/ru-ru/azure/key-vault/general/authentication).
 
