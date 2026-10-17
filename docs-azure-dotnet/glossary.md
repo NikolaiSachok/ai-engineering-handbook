@@ -319,3 +319,23 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Inference endpoint** — the API address through which a client sends model inputs and receives outputs.
 
 **Keyless access** — authentication with Microsoft Entra ID tokens instead of a stored service API key; the caller still needs permission, and enforcing keyless-only use requires disabling local authentication.
+
+## Model deployments, quotas and cost \{#deployments-quotas-cost}
+
+**Deployment type** — the model-serving option that determines the inference-processing boundary, capacity model and billing mechanism.
+
+**Quota** — the allowance available to a subscription for a model or deployment category in the applicable scope; it permits allocation without purchasing processing capacity.
+
+**TPM (tokens per minute)** — a token-throughput rate limit; Azure OpenAI's throttling estimate differs from the token count used for billing.
+
+**RPM (requests per minute)** — a request-rate limit whose enforcement can reject bursts within shorter evaluation windows.
+
+**HTTP 429** — the “Too Many Requests” response used when the model service throttles a request.
+
+**Exponential backoff** — a retry policy that increases the delay after repeated failures; random jitter spreads retries across clients.
+
+**PTU (provisioned throughput unit)** — a unit of reserved model processing capacity; the throughput it supplies depends on the model and workload.
+
+**Azure Reservation** — a financial commitment that discounts matching provisioned-throughput usage, managed separately from the deployment that consumes capacity.
+
+**Batch deployment** — a model deployment for asynchronous groups of requests, using batch token pricing and enqueued-token quota rather than an interactive request path.
