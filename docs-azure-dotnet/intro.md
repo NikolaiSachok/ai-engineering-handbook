@@ -38,11 +38,11 @@ project (P1) are being written now; pages marked 🚧 are not published yet.
 
 | Part | What you will work through |
 |---|---|
-| I — Azure foundations 🚧 | Identity, networking, compute, data, messaging, infrastructure, observability and governance for an AI service. |
-| II — Modern .NET 🚧 | The platform, web services, configuration, async streaming, data access, testing and AI integration. |
-| III — Running LLMs on Azure 🚧 | Models, retrieval, agents, safety, evaluation and the gateway around them. |
-| IV — AI-assisted delivery on the Microsoft stack 🚧 | Pipelines, coding agents and releases you can check and roll back. |
-| V — Projects 🚧 | Build guides that join the lesson exercises into services you can run and explain. |
+| [I — Azure foundations](./part-1-azure-foundations/overview.md) 🚧 | Identity, networking, compute, data, messaging, infrastructure, observability and governance for an AI service. |
+| [II — Modern .NET](./part-2-modern-dotnet/overview.md) 🚧 | The platform, web services, configuration, async streaming, data access, testing and AI integration. |
+| [III — Running LLMs on Azure](./part-3-llms-on-azure/overview.md) 🚧 | Models, retrieval, agents, safety, evaluation and the gateway around them. |
+| [IV — AI-assisted delivery on the Microsoft stack](./part-4-ai-delivery/overview.md) 🚧 | Pipelines, coding agents and releases you can check and roll back. |
+| [V — Projects](./part-5-projects/overview.md) 🚧 | Build guides that join the lesson exercises into services you can run and explain. |
 
 The appendices are references to return to; those marked 🚧 are not yet written:
 
