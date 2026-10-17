@@ -1061,3 +1061,36 @@ Source groups, list shape and English citation labels are preserved, with Russia
 | Token metric — reported or estimated token-consumption measurement | **ON PROBATION** — «метрика токенов (token metric)», then «метрика токенов»; explanatory «метрика потребления токенов». | Live-checked 2026-10-18: [Microsoft Learn RU, llm-emit-token-metric](https://learn.microsoft.com/ru-ru/azure/api-management/llm-emit-token-metric-policy) documents token measurements sent to Application Insights. Preserve the distinction from request-level Log Analytics records and provider billing; retain «токен» rather than «маркер». |
 | APIM subscription — keyed access to an API, distinct from an Azure subscription | **ON PROBATION** — «подписка APIM» when the context could be confused with the Azure subscription; «ключ подписки» for the credential. No extra English bridge for this familiar noun. | Live-checked 2026-10-18: [Microsoft Learn RU, APIM subscriptions](https://learn.microsoft.com/ru-ru/azure/api-management/api-management-subscriptions) uses «подписка» and «ключ подписки», documents API scope and header/query credentials. [Gateway security](https://learn.microsoft.com/ru-ru/azure/api-management/secure-api-management) distinguishes subscription keys from caller authentication. Do not reuse the Azure billing/administration definition for this sense. |
 | Metric dimension; cardinality — series labels and the number of distinct series | **ON PROBATION** — «измерение» for a metric label; «кардинальность» for the number of distinct series. Explain through bounded values and the risk of discarded new series; no extra English bridges are required here. | Live-checked 2026-10-18: [Microsoft Learn RU, token metric policy](https://learn.microsoft.com/ru-ru/azure/api-management/llm-emit-token-metric-policy) describes custom dimensions and cardinality limits. Keep per-request identifiers in logs; do not equate an observation series with an individual request. |
+
+## Enterprise-grade AI — terminology evidence (2026-10-18)
+
+Layer 2 composition from the semantic packet; no independent review was run. Existing rows and
+statuses are unchanged under the binding course ledger rule. In particular, shared private link
+reuses Networking's «общий частный канал (shared private link)»; local authentication reuses
+Microsoft Foundry's «локальная аутентификация (local authentication)»; processing boundary reuses
+Governance's «географические границы обработки». Their first-use bridges are retained because all
+three are in this lesson's New terms line. Workload remains «рабочая нагрузка» throughout.
+The settled private-endpoint, private-DNS-zone, keyless-access, landing-zone and model-deployment
+senses are reused; the existing credentials, Foundry-resource, Azure-geography, purge and trace
+bridges are also retained. Retrieval as an action reuses «поиск» from `rag.md` §1.2; the shared AI
+vocabulary checks in `rag-addendum.md` and `ai-sdlc.md` introduce no different sense here.
+For this lesson, data at rest is rendered descriptively as «хранимые данные»; the sense is
+stored content, distinct from content being processed. This is not a new glossary headword.
+Workload team is expressed as «команда приложения», with the responsibility stated in context;
+selected offer is expressed through the conditions under which the selected model is provided.
+
+Only the two newly introduced concepts below receive rows. Both remain **ON PROBATION**:
+live Microsoft Learn RU checks establish evidence, not independent terminology approval.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Data residency — location commitments for workload data storage or processing | **ON PROBATION** — «размещение данных (data residency)»; specify «обязательства по размещению данных» when discussing the service's commitments. | Live-checked 2026-10-18: [Microsoft Learn RU, deployment types](https://learn.microsoft.com/ru-ru/azure/foundry/foundry-models/concepts/deployment-types) and [model data privacy](https://learn.microsoft.com/ru-ru/azure/foundry/responsible-ai/openai/data-privacy) distinguish storage location, processing geography and deployment type. The descriptive wording continues the RU intro and Part III overview; the definition explicitly retains commitments rather than merely naming a chosen resource region. Reject «резидентство данных» and any inference from a private IP to same-region processing. |
+| Abuse monitoring — service-side detection and review of potentially prohibited use | **ON PROBATION** — «мониторинг злоупотреблений (abuse monitoring)», then «мониторинг злоупотреблений». | Live-checked 2026-10-18: [Microsoft Learn RU, model data privacy](https://learn.microsoft.com/ru-ru/azure/foundry/responsible-ai/openai/data-privacy) describes abuse detection, selected-content human review and approval for modified monitoring. This descriptive rendering names the technical sense without implying that every request is reviewed. Distinguish it from application diagnostics; no-training commitments do not mean no retention. |
+
+All 25 distinct Microsoft Learn URLs in the packet returned HTTP 200 at the same-path `ru-ru`
+URLs on 2026-10-18; path, query and fragment are preserved. The GitHub Actions OIDC destination
+retains its `ru-ru` URL but returns English HTML (`lang="en-us"`); the other 24 return Russian
+HTML. The link rule is based on HTTP availability. Azure pricing URLs and internal course links
+are unchanged. Sources preserve the packet's English link labels, grouped under Russian subject
+labels with Russian joining words. The lesson's evidence date remains 17.10.2026 as locked in the
+packet; today's checks do not silently update its factual assertions.
