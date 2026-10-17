@@ -1021,3 +1021,43 @@ All 33 distinct Microsoft Learn URLs in the semantic packet returned HTTP 200 at
 were preserved in lesson and glossary links. Availability alone does not attest Russian wording:
 the terminology evidence above also used live content reads. Other vendors' URLs and internal
 course links are unchanged.
+
+## The AI gateway — terminology evidence (2026-10-18)
+
+Composed from semantic units U01–U32 and G01–G07, then repaired against all accepted findings from
+the supplied independent Claude fidelity and naturalness critiques. No additional independent
+review was run during repair; new decisions remain **ON PROBATION**. Existing rows and their
+statuses are unchanged. The settled
+«AI-шлюз (AI gateway)» is reused from the recap-sheet table; «семантический кэш» reuses `rag.md`
+§1.2. The managed-identity, model-deployment, private-endpoint and Log Analytics workspace decisions
+also apply. Embeddings use «эмбеддинги»; model/tool spans use «спаны», following the existing course
+rows and the shared RAG vocabulary. Application Insights, Log Analytics, Azure API Management,
+Azure Managed Redis and Microsoft Entra ID retain their English product names. Classic, v2,
+Developer, Consumption and the separate preview tier AI Gateway retain their documented identities.
+
+Application-customer allocation reuses «клиент приложения (tenant)», then «клиент приложения»;
+«тенант» remains reserved for the Microsoft Entra directory. Describe an allocation as a quantity
+of tokens assigned to a consumer or subscription, not «выделенный объём потребления». For token
+rate, describe the rate of spending tokens («скорость расходования токенов»), distinct from a
+period quota; reject «частота по объёму токенов». Pool routing is expressed as sending requests to
+multiple endpoints as one resource, avoiding «цель маршрутизации». These are prose repairs;
+the seven glossary headwords and the New terms list remain unchanged. The Entra link retains its
+locked EN destination and English-language cue under the closest-to-source decision rule.
+
+Live-checked on 2026-10-18: all 37 distinct Microsoft Learn destinations in the packet returned
+HTTP 200 at the same-path `ru-ru` URLs, without an English-locale redirect. Published links preserve
+paths, queries and fragments; pricing, curl and internal course links remain unchanged. A Russian
+URL may contain English reference text; availability alone does not attest a Russian term.
+The original lesson verification date is 2026-10-17; the repair-source recheck is 2026-10-18.
+Source groups, list shape and English citation labels are preserved, with Russian group headings.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Token-limit policy — gateway control of model-token consumption | **ON PROBATION** — «политика ограничения токенов (token-limit policy)», then «политика ограничения токенов». Keep `llm-token-limit` literal. | Live-checked 2026-10-18: [Microsoft Learn RU, llm-token-limit](https://learn.microsoft.com/ru-ru/azure/api-management/llm-token-limit-policy) documents rate and period-quota controls. Retain the shared «токен» vocabulary rather than its competing «маркер» rendering. The policy is not a precise currency ceiling. |
+| Counter key — selection of the shared consumption counter | **ON PROBATION** — «ключ счётчика (counter key)», then «ключ счётчика». | Live-checked 2026-10-18: [Microsoft Learn RU, counter-key attribute](https://learn.microsoft.com/ru-ru/azure/api-management/llm-token-limit-policy) describes one shared counter per key value. This is a descriptive compound grounded in that mechanism; a caller-controlled value is not proof of identity. Keep `counter-key` literal in code. |
+| Backend pool — one routing target grouping model endpoints | **ON PROBATION** — «пул серверных частей (backend pool)», then «пул серверных частей» or «пул» where unambiguous. | Live-checked 2026-10-18: [Microsoft Learn RU, backends and pools](https://learn.microsoft.com/ru-ru/azure/api-management/backends) uses «серверная часть» and describes pooled load balancing. Reject «бэкенд-пул» and slash compounds. A pool distributes existing model capacity without creating quota. |
+| Circuit breaker — temporary suspension after configured backend failures | **ON PROBATION** — «прерыватель цепи (circuit breaker)», then «прерыватель цепи» or «прерыватель» in an explicit backend context. | Live-checked 2026-10-18: [Microsoft Learn RU, APIM backends](https://learn.microsoft.com/ru-ru/azure/api-management/backends) documents trip conditions, recovery time and `Retry-After`; [Circuit Breaker pattern](https://learn.microsoft.com/ru-ru/azure/architecture/patterns/circuit-breaker) confirms the mechanism. Learn varies between several electrical renderings; the selected form is an editorial decision, not a claim of uniform Microsoft usage. Reject «разбиение цепи» as the running-prose name. |
+| Semantic cache — response reuse by meaning and configured conditions | **ON PROBATION** — «семантический кэш (semantic cache)», then «семантический кэш»; process «семантическое кэширование». | REUSE `rag.md` §1.2, «семантический кэш». Live-checked 2026-10-18: [Microsoft Learn RU, semantic lookup](https://learn.microsoft.com/ru-ru/azure/api-management/llm-semantic-cache-lookup-policy) documents similarity thresholds and `vary-by`; the [setup recipe](https://learn.microsoft.com/ru-ru/azure/api-management/azure-openai-enable-semantic-caching) supplies the external-cache and embedding dependencies. Similarity does not establish authorisation to reuse a response. |
+| Token metric — reported or estimated token-consumption measurement | **ON PROBATION** — «метрика токенов (token metric)», then «метрика токенов»; explanatory «метрика потребления токенов». | Live-checked 2026-10-18: [Microsoft Learn RU, llm-emit-token-metric](https://learn.microsoft.com/ru-ru/azure/api-management/llm-emit-token-metric-policy) documents token measurements sent to Application Insights. Preserve the distinction from request-level Log Analytics records and provider billing; retain «токен» rather than «маркер». |
+| APIM subscription — keyed access to an API, distinct from an Azure subscription | **ON PROBATION** — «подписка APIM» when the context could be confused with the Azure subscription; «ключ подписки» for the credential. No extra English bridge for this familiar noun. | Live-checked 2026-10-18: [Microsoft Learn RU, APIM subscriptions](https://learn.microsoft.com/ru-ru/azure/api-management/api-management-subscriptions) uses «подписка» and «ключ подписки», documents API scope and header/query credentials. [Gateway security](https://learn.microsoft.com/ru-ru/azure/api-management/secure-api-management) distinguishes subscription keys from caller authentication. Do not reuse the Azure billing/administration definition for this sense. |
+| Metric dimension; cardinality — series labels and the number of distinct series | **ON PROBATION** — «измерение» for a metric label; «кардинальность» for the number of distinct series. Explain through bounded values and the risk of discarded new series; no extra English bridges are required here. | Live-checked 2026-10-18: [Microsoft Learn RU, token metric policy](https://learn.microsoft.com/ru-ru/azure/api-management/llm-emit-token-metric-policy) describes custom dimensions and cardinality limits. Keep per-request identifiers in logs; do not equate an observation series with an individual request. |
