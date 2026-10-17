@@ -24,7 +24,7 @@ Infrastructure, telemetry and governance finish the picture by making those choi
 - **[Networking for application engineers](./networking.md)** — VNets, subnets, NSGs, private versus service endpoints, private DNS, PaaS VNet integration and hub-and-spoke. Ingress choices include Front Door, Application Gateway and Load Balancer.
 - **[Choosing compute](./compute.md)** — App Service, Container Apps, Functions (Flex Consumption), AKS and virtual machines. The choice depends on workload shape, scaling model and operational cost.
 - **[Storing data](./data.md)** — Blob Storage, Azure SQL, PostgreSQL flexible server with pgvector, Cosmos DB and Azure Managed Redis. Access patterns guide the choice, including Cosmos DB request units, consistency and vector search.
-- **Messaging and events** 🚧 — Service Bus, Event Grid and Event Hubs; dead-lettering, retries and ordering. Commands, events and streams call for different messaging services.
+- **[Messaging and events](./messaging.md)** — Service Bus, Event Grid and Event Hubs; dead-lettering, retries and ordering. Commands, events and streams call for different messaging services.
 - **Secrets and configuration** 🚧 — Key Vault secrets, keys, certificates, RBAC and rotation; App Configuration. Managed identity provides access to both services.
 - **Infrastructure as code** 🚧 — ARM, Bicep, Terraform and Azure Developer CLI (`azd`). Change previews, drift and modules are part of managing infrastructure as code.
 - **Observability** 🚧 — Azure Monitor, Log Analytics, Application Insights and the OpenTelemetry distribution. KQL queries turn that telemetry into answers about service behaviour.
@@ -43,7 +43,7 @@ platform governance before using them in the later parts.
 
 :::note[Status]
 
-Published: 7 of 11 lessons. Pages marked 🚧 are planned.
+Published: 8 of 11 lessons. Pages marked 🚧 are planned.
 
 :::
 

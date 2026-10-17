@@ -176,6 +176,38 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Data-plane role** — an Azure role granting [data-plane](#how-azure-is-organised) operations, such as Storage Blob Data Reader for reading and listing blobs.
 
+## Messaging and events \{#messaging}
+
+**Command** — a message asking a responsible consumer to carry out an operation.
+
+**Event** — a message reporting a change that has already happened.
+
+**Event stream** — a sequence of observations consumed over time, potentially by several independent applications.
+
+**Namespace (Service Bus)** — a container for messaging entities such as queues and topics, providing an endpoint for access. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview)
+
+**Queue** — a broker entity that holds messages for competing consumers to receive and settle.
+
+**Topic and subscription** — a publish/subscribe arrangement in which a topic routes copies of messages into independently consumed subscriptions.
+
+**Settlement** — the receiver's instruction to the broker about a received message's outcome, such as completing, abandoning or dead-lettering it.
+
+**PeekLock** — a Service Bus receive mode that temporarily locks a message for a receiver until settlement or lock expiry.
+
+**Dead-letter queue (DLQ)** — a subqueue holding messages removed from normal delivery because they were rejected or could not be processed within the delivery policy.
+
+**Message session** — a Service Bus grouping identified by `SessionId` that gives one receiver exclusive access to related messages for ordered handling.
+
+**Idempotency** — the property that repeating an operation has no additional effect beyond its first successful execution.
+
+**Duplicate detection** — a broker feature that discards repeat submissions with the same message identity within a configured interval.
+
+**Partition** — an ordered portion of an event log that can be processed independently of other portions.
+
+**Consumer group** — an independent view of an Event Hubs stream used by an application to consume events separately from other applications.
+
+**Checkpoint** — a saved processing position in a stream partition, used to resume consumption after interruption.
+
 ## Governance and architecture frameworks \{#governance-and-frameworks}
 
 **Azure Policy** — the Azure service that evaluates resources against configuration rules and applies their configured effects.
