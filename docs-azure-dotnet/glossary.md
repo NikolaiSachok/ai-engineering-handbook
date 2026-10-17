@@ -128,6 +128,28 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Web application firewall (WAF)** — a control that inspects HTTP(S) requests using web security rules to detect or block attacks.
 
+## Choosing compute \{#compute}
+
+**App Service plan** — the compute capacity and pricing tier on which one or more App Service applications run.
+
+**Container Apps environment** — the managed boundary that groups container apps and jobs with shared networking and logging configuration.
+
+**Workload profile** — a Container Apps configuration that determines the compute and memory resources available to applications assigned to it.
+
+**Replica** — a running instance of a Container Apps revision, added or removed as the application scales.
+
+**Revision** — an immutable snapshot of the app's container image and scale settings.
+
+**Scale to zero** — reducing the running instance count to zero during inactivity, with an external trigger able to start instances when work returns.
+
+**Cold start** — the startup work and delay before a new application instance can handle requests, including resource provisioning and application initialization.
+
+**Scale rule** — a declarative mapping from a demand signal, such as HTTP traffic or queue backlog, to the desired number of running instances.
+
+**Always-ready instance** — capacity deliberately kept running to reduce startup delay, with billing determined by the hosting service and plan.
+
+**Node pool** — a group of Kubernetes worker nodes with common configuration, managed as a unit within a cluster.
+
 ## Governance and architecture frameworks \{#governance-and-frameworks}
 
 **Azure Policy** — the Azure service that evaluates resources against configuration rules and applies their configured effects.
