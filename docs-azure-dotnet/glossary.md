@@ -396,6 +396,26 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Migration bundle** — an executable artifact containing EF Core migrations that can apply schema changes without the application's source code, .NET SDK or EF tools on the target machine. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying#bundles)
 
+## Testing \{#testing}
+
+**Unit test** — an executable check of an isolated piece of application behaviour.
+
+**Integration test** — an executable check that multiple application components work together across a chosen boundary.
+
+**xUnit** — a .NET testing framework that defines tests with attributes such as `Fact` and `Theory` and checks their results with assertions. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-csharp-with-xunit)
+
+**Test double** — a substitute for a dependency used to control or observe its behaviour during a test.
+
+**Fake** — a test double with a working, deliberately limited implementation.
+
+**WebApplicationFactory** — the ASP.NET Core test helper that starts an application for integration tests and allows its test-host configuration to be customised. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0)
+
+**TestServer** — ASP.NET Core's in-process server for exercising an application's HTTP pipeline in tests.
+
+**Testcontainers** — a library that manages disposable containers used as test dependencies.
+
+**Test fixture** — known setup or data supplied to tests, with a defined lifetime and cleanup responsibility.
+
 ## Microsoft Foundry \{#microsoft-foundry}
 
 **Foundry resource** — an Azure resource that holds shared serverless model deployments, networking and security settings; its type is `Microsoft.CognitiveServices/accounts` with kind `AIServices`.
