@@ -18,7 +18,7 @@ code inside the same delivery process as any other change.
 
 {/* slugs: pipelines-to-azure, coding-agents-dotnet, releasing-safely */}
 
-- **Pipelines to Azure** 🚧 — GitHub Actions, Azure DevOps Pipelines, OIDC federation, environments, approvals and `azd` in CI. Federation gives the pipeline access without a stored deployment secret.
+- **[Pipelines to Azure](./pipelines-to-azure.md)** — GitHub Actions, Azure DevOps Pipelines, OIDC federation, environments, approvals and `azd` in CI. Federation gives the pipeline access without a stored deployment secret.
 - **Coding agents on a .NET codebase** 🚧 — GitHub Copilot agent mode, the coding agent, custom instructions and other agents on .NET repositories. The loop and gates from [AI SDLC](/ai-sdlc/) apply to their changes.
 - **Releasing safely** 🚧 — deployment slots, Container Apps revisions, traffic splitting, rollback, IaC drift and supply-chain checks. Slots and revisions support controlled releases and rollback.
 
@@ -36,7 +36,7 @@ rollback, and include infrastructure drift and supply-chain checks in a release.
 
 :::note[Status]
 
-Published: 0 of 3 lessons. Pages marked 🚧 are planned.
+Published: 1 of 3 lessons. Pages marked 🚧 are planned.
 
 :::
 
