@@ -29,8 +29,9 @@ back to them rather than teaching those ideas again.
 
 :::note[Status]
 
-The course is being written in stages. Azure foundations and the first steps of the RAG service
-project (P1) are being written now; pages marked 🚧 are not published yet.
+The course is being written in stages, starting with Azure foundations and the first steps of the RAG service
+project. Each Part's overview lists all its lessons and how many are published; 🚧 marks a Part with lessons still
+to come and an appendix page not yet written.
 
 :::
 
@@ -38,13 +39,13 @@ project (P1) are being written now; pages marked 🚧 are not published yet.
 
 | Part | What you will work through |
 |---|---|
-| I — Azure foundations 🚧 | Identity, networking, compute, data, messaging, infrastructure, observability and governance for an AI service. |
-| II — Modern .NET 🚧 | The platform, web services, configuration, async streaming, data access, testing and AI integration. |
-| III — Running LLMs on Azure 🚧 | Models, retrieval, agents, safety, evaluation and the gateway around them. |
-| IV — AI-assisted delivery on the Microsoft stack 🚧 | Pipelines, coding agents and releases you can check and roll back. |
-| V — Projects 🚧 | Build guides that join the lesson exercises into services you can run and explain. |
+| [I — Azure foundations](./part-1-azure-foundations/overview.md) 🚧 | Identity, networking, compute, data, messaging, infrastructure, observability and governance for an AI service. |
+| [II — Modern .NET](./part-2-modern-dotnet/overview.md) 🚧 | The platform, web services, configuration, async streaming, data access, testing and AI integration. |
+| [III — Running LLMs on Azure](./part-3-llms-on-azure/overview.md) 🚧 | Models, retrieval, agents, safety, evaluation and the gateway around them. |
+| [IV — AI-assisted delivery on the Microsoft stack](./part-4-ai-delivery/overview.md) 🚧 | Pipelines, coding agents and releases you can check and roll back. |
+| [V — Projects](./part-5-projects/overview.md) 🚧 | Build guides that join the lesson exercises into services you can run and explain. |
 
-The appendices are references to return to; those marked 🚧 are not yet written:
+The appendices are references to return to:
 
 - [Azure recap sheet](./recap-sheet.md) — the whole platform on a few pages, for revision.
 - Exam map 🚧 — AI-103 and AI-200 skill areas matched to lessons and project steps.

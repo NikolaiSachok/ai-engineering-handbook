@@ -2,5 +2,25 @@
   "version.label": {
     "message": "Next",
     "description": "The label for version current"
+  },
+  "sidebar.azureDotnetSidebar.category.Part I — Azure foundations": {
+    "message": "Часть I — Основы Azure",
+    "description": "The label for category 'Part I — Azure foundations' in sidebar 'azureDotnetSidebar'"
+  },
+  "sidebar.azureDotnetSidebar.category.Part II — Modern .NET": {
+    "message": "Часть II — Современный .NET",
+    "description": "The label for category 'Part II — Modern .NET' in sidebar 'azureDotnetSidebar'"
+  },
+  "sidebar.azureDotnetSidebar.category.Part III — Running LLMs on Azure": {
+    "message": "Часть III — Запуск LLM в Azure",
+    "description": "The label for category 'Part III — Running LLMs on Azure' in sidebar 'azureDotnetSidebar'"
+  },
+  "sidebar.azureDotnetSidebar.category.Part IV — AI-assisted delivery on the Microsoft stack": {
+    "message": "Часть IV — Поставка ПО с помощью AI в стеке Microsoft",
+    "description": "The label for category 'Part IV — AI-assisted delivery on the Microsoft stack' in sidebar 'azureDotnetSidebar'"
+  },
+  "sidebar.azureDotnetSidebar.category.Part V — Projects": {
+    "message": "Часть V — Проекты",
+    "description": "The label for category 'Part V — Projects' in sidebar 'azureDotnetSidebar'"
   }
 }
