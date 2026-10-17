@@ -18,7 +18,7 @@ by containers and AI integration.
 
 {/* slugs: dotnet-platform, aspnet-core, extensions-backbone, async-streaming-cancellation, data-access, testing, containers-and-aspire, ai-in-dotnet */}
 
-- **The .NET platform today** 🚧 — runtime, SDK, LTS cadence, SDK-style project files, `dotnet` CLI and NuGet. The Framework-to-.NET table and support cadence inform the choice of platform and supported version for a project.
+- **[The .NET platform today](./dotnet-platform.md)** — runtime, SDK, LTS cadence, SDK-style project files, `dotnet` CLI and NuGet. The Framework-to-.NET table and support cadence inform the choice of platform and supported version for a project.
 - **ASP.NET Core** 🚧 — hosting, middleware, routing and problem details. Minimal APIs and controllers offer different ways to organise HTTP endpoints.
 - **The Microsoft.Extensions backbone** 🚧 — dependency injection lifetimes, configuration providers, the options pattern and logging. These are the shared mechanisms the rest of the service uses.
 - **Async, streaming and cancellation** 🚧 — tasks, `IAsyncEnumerable`, server-sent events, timeouts and cancellation. Long LLM calls need both incremental responses and a way to stop work.
@@ -41,7 +41,7 @@ stream its response and cancel work when the request is no longer needed.
 
 :::note[Status]
 
-Published: 0 of 8 lessons. Pages marked 🚧 are planned.
+Published: 1 of 8 lessons. Pages marked 🚧 are planned.
 
 :::
 

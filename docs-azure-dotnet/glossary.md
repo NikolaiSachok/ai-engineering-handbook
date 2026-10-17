@@ -306,6 +306,36 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Cloud security posture management (CSPM)** — assessment of cloud resource configurations to identify security weaknesses and guide remediation.
 
+## The .NET platform today \{#dotnet-platform}
+
+**Runtime** — the component that executes application code and provides execution services such as garbage collection.
+
+**SDK (software development kit)** — the tools, runtime and libraries used to create, build and run .NET applications during development.
+
+**SDK-style project** — an MSBuild project file that selects a project SDK and inherits its build rules and default file inclusion conventions.
+
+**Target framework moniker (TFM)** — the identifier in a project file that specifies the framework API surface available to that project, such as `net10.0`.
+
+**global.json** — a configuration file found in the working directory or an ancestor that controls which installed .NET SDK the tools select, independently of the project's target framework.
+
+**SDK feature band** — a group of .NET SDK versions sharing the hundreds portion of the final version component, separating tooling feature updates from patches within that band.
+
+**LTS (Long Term Support)** — the .NET release track with a three-year support window; staying supported also requires current servicing updates.
+
+**STS (Standard Term Support)** — the .NET release track with a two-year support window under the current policy, with the same requirement to apply servicing updates.
+
+**NuGet** — the .NET package system used to distribute, resolve and consume versioned libraries and tools.
+
+**PackageReference** — an MSBuild item declaring a direct NuGet package dependency for a project.
+
+**Transitive dependency** — a package required indirectly through another package in the application's dependency graph.
+
+**Restore** — the operation that resolves a project's package dependency graph and makes the required packages available for building.
+
+**Dependency lock file** — the `packages.lock.json` file recording the resolved NuGet dependency graph so restore can check it in locked mode.
+
+**Solution** — a file grouping projects for development tools and solution-level commands; it does not define a running application instance.
+
 ## Microsoft Foundry \{#microsoft-foundry}
 
 **Foundry resource** — an Azure resource that holds shared serverless model deployments, networking and security settings; its type is `Microsoft.CognitiveServices/accounts` with kind `AIServices`.
