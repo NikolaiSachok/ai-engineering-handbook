@@ -555,3 +555,29 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Protected-material detection** — checking generated output for matches to known protected text or code. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-protected-material)
 
 **RAI policy (responsible AI policy)** — a named Azure configuration of safety controls that a model deployment can reference.
+
+## RAG on Azure AI Search \{#rag-on-ai-search}
+
+**Search index** — a collection of keyed search documents whose schema defines their fields and the operations available on those fields.
+
+**Field attributes** — schema settings that determine whether a field can participate in search, be returned in results, support filters, supply sort values or produce facet counts.
+
+**Vector search profile** — a named index configuration that connects a vector field to a search algorithm and optional compression and vectorizer settings.
+
+**Hybrid query** — a search request that runs keyword and vector retrieval and combines their ranked results.
+
+**Reciprocal rank fusion (RRF)** — an algorithm that combines ranked lists using each document's position in those lists. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/hybrid-search-ranking)
+
+**Semantic ranker** — Azure AI Search's query-side capability for reranking retrieved candidates using their text and optionally extracting captions and answers.
+
+**Indexer** — an Azure AI Search component that reads a supported data source and drives the pipeline that populates an index.
+
+**Skillset** — a configuration of enrichment operations that an Azure AI Search indexer can apply to source content, such as splitting text and generating embeddings.
+
+**Integrated vectorization** — Azure AI Search's built-in indexing and query pipeline support for generating vectors through embedding skills and vectorizers.
+
+**Query vectorizer** — a configured connection through which Azure AI Search converts query input into an embedding at query time.
+
+**Knowledge base** — an Azure AI Search object that coordinates agentic retrieval across configured knowledge sources and holds retrieval settings.
+
+**Knowledge source** — an Azure AI Search definition of content available to a knowledge base, backed by an index or retrieved from a remote platform.

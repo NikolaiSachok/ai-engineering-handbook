@@ -21,7 +21,7 @@ choices close the part by placing the service in a wider organisation.
 - **[Microsoft Foundry](./microsoft-foundry.md)** — resources, projects, the model catalog, Azure OpenAI and models from other providers. The resource and project model organises access to those models.
 - **[Model deployments, quotas and cost](./deployments-quotas-cost.md)** — Standard, Global, Data Zone and Provisioned deployments; TPM/RPM quotas and rate limiting. Deployment choices depend on throughput, residency and the cost model.
 - **[Safety on the platform](./platform-safety.md)** — content filters, Prompt Shields and groundedness detection. The lesson identifies what platform safety does not cover and links to application guardrails in [RAG & Agents](/rag-agents/).
-- **RAG on Azure AI Search** 🚧 — indexes, hybrid retrieval, semantic ranker, integrated vectorization and agentic retrieval. The comparison is between this AI Search path, pgvector and Cosmos DB vector search.
+- **[RAG on Azure AI Search](./rag-on-ai-search.md)** — indexes, hybrid retrieval, semantic ranker, integrated vectorization and agentic retrieval. The comparison is between this AI Search path, pgvector and Cosmos DB vector search.
 - **Getting documents in** 🚧 — Content Understanding and Document Intelligence for OCR, layout, field extraction and Markdown for RAG. These services turn documents into text and structure for retrieval.
 - **Agents on Azure** 🚧 — Foundry Agent Service versus self-hosted Microsoft Agent Framework; tools, MCP, memory, multi-agent orchestration and approvals. The hosting choice determines where the agent runs.
 - **Evaluation and tracing** 🚧 — Foundry evaluations and tracing, mapped to the evaluation lesson in [RAG & Agents](/rag-agents/). Offline and online evaluation check behaviour at different stages.
@@ -44,7 +44,7 @@ tracing and gateway controls while accounting for private access and data reside
 
 :::note[Status]
 
-Published: 3 of 10 lessons. Pages marked 🚧 are planned.
+Published: 4 of 10 lessons. Pages marked 🚧 are planned.
 
 :::
 
