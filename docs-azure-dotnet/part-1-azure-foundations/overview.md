@@ -43,7 +43,7 @@ platform governance before using them in the later parts.
 
 :::note[Status]
 
-Published: 11 of 11 lessons. Pages marked 🚧 are planned.
+Published: 11 of 11 lessons.
 
 :::
 

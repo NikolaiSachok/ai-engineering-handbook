@@ -29,9 +29,8 @@ back to them rather than teaching those ideas again.
 
 :::note[Status]
 
-The course is being written in stages, starting with Azure foundations and the first steps of the RAG service
-project. Each Part's overview lists all its lessons and how many are published; 🚧 marks a Part with lessons still
-to come and an appendix page not yet written.
+The course is being written in stages. Each Part's overview lists all its lessons and how many are published;
+🚧 marks a Part with lessons still to come and an appendix page not yet written.
 
 :::
 
@@ -39,8 +38,8 @@ to come and an appendix page not yet written.
 
 | Part | What you will work through |
 |---|---|
-| [I — Azure foundations](./part-1-azure-foundations/overview.md) 🚧 | Identity, networking, compute, data, messaging, infrastructure, observability and governance for an AI service. |
-| [II — Modern .NET](./part-2-modern-dotnet/overview.md) 🚧 | The platform, web services, configuration, async streaming, data access, testing and AI integration. |
+| [I — Azure foundations](./part-1-azure-foundations/overview.md) | Identity, networking, compute, data, messaging, infrastructure, observability and governance for an AI service. |
+| [II — Modern .NET](./part-2-modern-dotnet/overview.md) | The platform, web services, configuration, async streaming, data access, testing and AI integration. |
 | [III — Running LLMs on Azure](./part-3-llms-on-azure/overview.md) 🚧 | Models, retrieval, agents, safety, evaluation and the gateway around them. |
 | [IV — AI-assisted delivery on the Microsoft stack](./part-4-ai-delivery/overview.md) 🚧 | Pipelines, coding agents and releases you can check and roll back. |
 | [V — Projects](./part-5-projects/overview.md) 🚧 | Build guides that join the lesson exercises into services you can run and explain. |

@@ -135,3 +135,9 @@ jobs:
         run: python3 scripts/ru-canon-check.py --self-test
       - name: Russian canon gate
         run: python3 scripts/ru-canon-check.py
+      # The course map's 🚧 went stale: Parts I and II were complete and still marked under
+      # construction in both locales. A Part's 🚧 now follows its own "Published: N of M" line.
+      - name: Course status self-test
+        run: python3 scripts/course-status-check.py --self-test
+      - name: Course status gate
+        run: python3 scripts/course-status-check.py
