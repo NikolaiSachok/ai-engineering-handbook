@@ -232,6 +232,26 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Purge protection** — a Key Vault safeguard that prevents permanent deletion of a soft-deleted vault or object before its retention period ends.
 
+## Infrastructure as code \{#infrastructure-as-code}
+
+**Infrastructure as code (IaC)** — defining intended infrastructure configuration in files that can be versioned, reviewed and used by deployment tools.
+
+**ARM template** — a declarative JSON deployment definition submitted to Azure Resource Manager, Azure's deployment and management layer.
+
+**Bicep** — Azure's declarative infrastructure language, compiled into ARM JSON templates.
+
+**Terraform state** — the stored mapping and metadata Terraform uses to connect its configuration to managed infrastructure.
+
+**Module** — in Bicep, a deployment definition called from another file, grouping resources behind parameters and outputs.
+
+**What-if** — ARM's operation for predicting the resource and property changes a proposed deployment would make without applying those changes.
+
+**Configuration drift** — divergence between an environment's actual configuration and its intended configuration in source.
+
+**Incremental deployment** — ARM's default deployment mode, which preserves resources omitted from a template while reapplying declared resources' properties; omitted properties of declared resources reset to defaults. [Deployment modes](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes).
+
+**Azure Developer CLI (`azd`)** — a tool that coordinates application packaging, infrastructure provisioning and application deployment using project configuration and infrastructure as code.
+
 ## Governance and architecture frameworks \{#governance-and-frameworks}
 
 **Azure Policy** — the Azure service that evaluates resources against configuration rules and applies their configured effects.
