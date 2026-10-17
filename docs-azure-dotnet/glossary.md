@@ -665,3 +665,25 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Processing boundary** — the permitted geographic scope within which a service may process a workload's inputs and outputs.
 
 **Abuse monitoring** — service-side detection and review of usage that may violate applicable terms, which can include reviewing selected prompts and completions.
+
+## Copilot Studio and the Power Platform \{#copilot-studio-power-platform}
+
+**Power Apps** — Microsoft's low-code application builder for canvas interfaces and model-driven applications built on Dataverse.
+
+**Power Automate** — Microsoft's workflow service for automating sequences of actions, including cloud flows triggered manually, by events or on a schedule.
+
+**Dataverse** — Microsoft's managed business-data platform with tables, relationships and role-based access for applications.
+
+**Copilot Studio** — Microsoft's low-code builder for agents and agent flows that can connect to services through tools.
+
+**Power Platform environment** — a container for managing platform assets such as apps, flows, connections and business data within a Microsoft Entra tenant.
+
+**Custom connector** — a definition that exposes an API's operations, data shapes and authentication to Power Platform callers.
+
+**Connection** — a configured instance of access to a service through a connector, using the credentials associated with that instance.
+
+**Connection reference** — a solution component that points to a connection for a specific connector, allowing operations in a solution-aware flow to bind to that connection.
+
+**Data policy** — a Power Platform governance rule controlling connector use and permitted combinations of connectors to constrain data movement.
+
+**Power Platform solution** — a package of platform components used to manage customisations and move them between environments; distinct from a .NET solution file.
