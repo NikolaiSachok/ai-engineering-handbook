@@ -360,6 +360,28 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **ProblemDetails** — a structured HTTP error representation with standard fields for problem type, title, status, detail and instance, plus optional extensions. [↗](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling-api?view=aspnetcore-10.0)
 
+## The Microsoft.Extensions backbone \{#extensions-backbone}
+
+**Dependency injection (DI)** — supplying a component's dependencies from outside it rather than constructing them inside the component.
+
+**Service lifetime** — the rule a dependency injection container uses to decide when to create and reuse a registered service instance.
+
+**Transient** — a service lifetime that creates a new instance each time the container resolves the service.
+
+**Scoped** — a service lifetime that reuses one instance within a DI scope; in an ASP.NET Core HTTP API, a request has its own DI scope.
+
+**Singleton** — a service lifetime that reuses one instance throughout a dependency injection container's lifetime.
+
+**Captive dependency** — a dependency retained by a longer-lived consumer beyond the lifetime it was intended to have.
+
+**Configuration provider** — a component that supplies configuration key-value pairs from a source such as JSON, environment variables or command-line arguments.
+
+**Options pattern** — typed access to a group of related configuration settings through an options class and options services.
+
+**Startup validation** — checking configured rules when the application starts so invalid settings prevent startup.
+
+**Structured logging** — recording a stable message template with separate named values that a logging provider can preserve as queryable fields.
+
 ## Data access \{#data-access}
 
 **Object-relational mapper (ORM)** — a library that maps application objects to relational database tables and mediates queries and updates between them.
