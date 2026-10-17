@@ -27,7 +27,7 @@ Infrastructure, telemetry and governance finish the picture by making those choi
 - **[Messaging and events](./messaging.md)** — Service Bus, Event Grid and Event Hubs; dead-lettering, retries and ordering. Commands, events and streams call for different messaging services.
 - **[Secrets and configuration](./secrets-and-configuration.md)** — Key Vault secrets, keys, certificates, RBAC and rotation; App Configuration. Managed identity provides access to both services.
 - **[Infrastructure as code](./infrastructure-as-code.md)** — ARM, Bicep, Terraform and Azure Developer CLI (`azd`). Change previews, drift and modules are part of managing infrastructure as code.
-- **Observability** 🚧 — Azure Monitor, Log Analytics, Application Insights and the OpenTelemetry distribution. KQL queries turn that telemetry into answers about service behaviour.
+- **[Observability](./observability.md)** — Azure Monitor, Log Analytics, Application Insights and the OpenTelemetry distribution. KQL queries turn that telemetry into answers about service behaviour.
 - **[Governance and architecture frameworks](./governance-and-frameworks.md)** — Azure Policy, Cloud Adoption Framework landing zones, the Well-Architected Framework, tags, cost management, budgets and Defender for Cloud. These cover platform rules, architecture guidance, costs and security posture.
 
 ## Prerequisites \{#prerequisites}
@@ -43,7 +43,7 @@ platform governance before using them in the later parts.
 
 :::note[Status]
 
-Published: 10 of 11 lessons. Pages marked 🚧 are planned.
+Published: 11 of 11 lessons. Pages marked 🚧 are planned.
 
 :::
 

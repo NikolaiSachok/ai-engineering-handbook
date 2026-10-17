@@ -252,6 +252,34 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Azure Developer CLI (`azd`)** — a tool that coordinates application packaging, infrastructure provisioning and application deployment using project configuration and infrastructure as code.
 
+## Observability \{#observability}
+
+**Observability** — the ability to investigate a running system's behaviour through the telemetry it emits.
+
+**Azure Monitor** — Azure's platform for collecting, analyzing and acting on telemetry from applications and infrastructure.
+
+**Log Analytics workspace** — the Azure resource that stores log and trace tables and provides a boundary for their configuration and query access.
+
+**Log Analytics** — the Azure portal tool for writing and running queries against log data.
+
+**Application Insights** — the application performance monitoring feature of Azure Monitor; workspace-based resources store their telemetry in a linked Log Analytics workspace.
+
+**OpenTelemetry distribution** — a bundle of the OpenTelemetry SDK, instrumentation libraries and configuration for collecting and exporting telemetry.
+
+**Request telemetry** — records describing incoming application operations, including their duration and success status.
+
+**Dependency telemetry** — records describing outgoing calls from an application to other services or systems.
+
+**KQL (Kusto Query Language)** — the query language used to filter, combine and aggregate tables in Azure Monitor Logs.
+
+**Ingestion** — receiving telemetry into the monitoring data store; collected data volume is a major billing input.
+
+**Retention** — how long a table keeps data available, set per table or inherited from the workspace default. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-retention-configure)
+
+**Sampling** — retaining only a subset of telemetry operations to reduce volume while giving up individual records.
+
+**Daily cap** — a workspace ingestion threshold that stops collection for affected tables until reset; it can leave telemetry gaps and allow billed overage.
+
 ## Governance and architecture frameworks \{#governance-and-frameworks}
 
 **Azure Policy** — the Azure service that evaluates resources against configuration rules and applies their configured effects.
