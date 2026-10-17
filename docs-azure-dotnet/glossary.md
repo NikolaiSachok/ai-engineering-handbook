@@ -47,3 +47,37 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Tag** — name-value metadata attached to an Azure resource, resource group or subscription for organisation and cost attribution; group tags are not automatically inherited by resources.
 
 **Budget** — a cost or usage target for a defined scope and period, with notifications at configured thresholds; it does not stop consumption.
+
+## Identity I — Microsoft Entra ID \{#entra-id}
+
+**Microsoft Entra ID** — a Microsoft identity and access management service for people and workloads.
+
+**user** — a directory identity representing a person who can sign in and be granted access.
+
+**security group** — a directory group whose membership can be granted access to resources together, reducing individual access assignments.
+
+**app registration** — an application's identity configuration in its home tenant, with a client ID, sign-in settings and exposed API permissions; the application object provides the template for its tenant-local service principals.
+
+**service principal** — a workload's local identity in a Microsoft Entra tenant, to which access can be granted; application registrations and managed identities have different types of service principal.
+
+**managed identity** — a workload identity with credentials managed by Azure, allowing supported workloads to obtain Microsoft Entra access tokens without handling those credentials.
+
+**system-assigned managed identity** — a managed identity tied to one Azure resource's lifecycle and deleted when that resource is deleted.
+
+**user-assigned managed identity** — a managed identity created as a separate Azure resource, with a lifecycle independent of the workloads it is attached to.
+
+**client ID** — an identifier for an application or managed identity, used to select it during authentication; knowing this identifier does not prove identity.
+
+**principal ID** — the object ID of the service principal representing a workload in a tenant, used when granting that principal access.
+
+**Azure resource ID** — the fully qualified Azure Resource Manager path identifying any Azure resource; for example, a user-assigned managed identity's `id` includes its subscription, resource group, provider, type and name.
+
+**access token** — a credential presented to a protected API for access evaluation, issued for a particular audience and with a limited validity period; unrelated to the text tokens counted by a language model.
+
+**audience** — the API a token is intended for, expressed by the `aud` claim in a JWT access token.
+
+**ID token** — an OpenID Connect token that tells a client about a user's authentication; it is not a credential for calling another API.
+
+**authentication** — establishing the identity of a caller.
+
+**authorisation** — deciding whether a caller may perform a particular operation on a resource.
