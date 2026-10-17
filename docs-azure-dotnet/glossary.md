@@ -208,6 +208,30 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **Checkpoint** — a saved processing position in a stream partition, used to resume consumption after interruption.
 
+## Secrets and configuration \{#secrets-and-configuration}
+
+**Key Vault secret** — a versioned sensitive value, such as an external service credential, that an authorised application can retrieve from Azure Key Vault.
+
+**Cryptographic key** — key material used for operations such as signing, encryption or wrapping another key; in Key Vault it is a different object type from a stored secret.
+
+**Key Vault certificate** — a versioned certificate object with an associated key and secret, managed through certificate policies and lifecycle operations.
+
+**RBAC permission model** — the Key Vault authorisation model that uses Azure role assignments for data access instead of legacy vault access policies.
+
+**Key Vault Secrets User** — the built-in Azure role that permits reading Key Vault secret contents, including the secret portion of a certificate, without granting secret-writing permissions.
+
+**Azure App Configuration** — an Azure service for centrally managing application settings and feature flags.
+
+**Label (App Configuration)** — an optional App Configuration attribute that distinguishes variants of the same key, such as values for different environments.
+
+**Key Vault reference** — a secret URI stored instead of a credential value; an App Configuration provider or Container Apps resolves it through a separately authenticated call to Key Vault.
+
+**Rotation** — replacing a credential or cryptographic object and coordinating consumer adoption so the previous version can be retired safely.
+
+**Soft delete** — retention of a deleted vault or object in a recoverable state for a configured period.
+
+**Purge protection** — a Key Vault safeguard that prevents permanent deletion of a soft-deleted vault or object before its retention period ends.
+
 ## Governance and architecture frameworks \{#governance-and-frameworks}
 
 **Azure Policy** — the Azure service that evaluates resources against configuration rules and applies their configured effects.
