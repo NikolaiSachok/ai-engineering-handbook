@@ -81,3 +81,29 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **authentication** — establishing the identity of a caller.
 
 **authorisation** — deciding whether a caller may perform a particular operation on a resource.
+
+## Governance and architecture frameworks \{#governance-and-frameworks}
+
+**Azure Policy** — the Azure service that evaluates resources against configuration rules and applies their configured effects.
+
+**Policy definition** — a reusable rule containing conditions, an effect and any parameters needed to evaluate a resource.
+
+**Policy effect** — the action associated with a matching policy condition, such as auditing, denying a request, modifying supported properties or deploying a related resource.
+
+**Policy assignment** — the binding of a policy definition or initiative to a scope, with parameter values and enforcement settings.
+
+**Policy initiative** — a group of policy definitions managed and assigned together for a shared objective; also called a policy set.
+
+**Compliance state** — the reported result of evaluating a resource against an applicable assigned policy.
+
+**Cloud Adoption Framework (CAF)** — Microsoft's guidance for planning, preparing, adopting and operating cloud environments, including governance and organisational responsibilities.
+
+**Landing zone** — a governed Azure environment with the organisation, access, networking and operational arrangements needed to host workloads.
+
+**Well-Architected Framework** — Azure workload design and review guidance organised around Reliability, Security, Cost Optimization, Operational Excellence and Performance Efficiency.
+
+**Cost Management** — Microsoft's capabilities for analysing, monitoring and optimising cloud costs.
+
+**Microsoft Defender for Cloud** — Microsoft's service for security posture assessment and workload protection, with coverage determined by enabled plans.
+
+**Cloud security posture management (CSPM)** — assessment of cloud resource configurations to identify security weaknesses and guide remediation.
