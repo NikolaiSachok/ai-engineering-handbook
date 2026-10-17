@@ -660,3 +660,37 @@ All 31 distinct Microsoft Learn destinations in the data-access lesson returned 
 same-path `ru-ru` counterparts on 2026-10-17, without an English-locale fallback. Query strings and
 fragments are preserved. Two additional terminology destinations (EF Core overview and providers)
 were checked live as well. Other vendors' URLs and internal course paths are unchanged.
+
+## Testing — terminology evidence (2026-10-17)
+
+New rows remain **ON PROBATION** after repair against the supplied independent RU fidelity
+(partial) and naturalness findings; no new independent review was run during repair. No existing
+row or status outside this lesson's section was changed. The lesson reuses «поиск» for retrieval as an action and «оценка» for the
+process of measuring quality from `rag.md` §1.2 and §2. A failed test is «тест не прошёл» or «тест
+завершился ошибкой»; a dependency incident is «сбой», not a retrieval/generation failure category.
+The existing managed-identity, model-deployment, credentials and workload decisions are reused as
+recorded above. The source's in-AI-workload heading follows the binding course-wide string.
+
+Scope note for the existing Production row: «прод» names the live environment only. Application
+code as opposed to test code is «код приложения», never «код прода». In this lesson's deployment
+warning, production environment switch means a configuration setting in the live environment,
+rendered as «переключатель в конфигурации прода», not a switch in application code.
+For the selected extent of exercised components, use the relation «что включать в тест» in the
+heading and prose, not a spatial «граница проверки»; no new term row is introduced.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Unit test — executable check of isolated application behaviour | **ON PROBATION** — «модульный тест (unit test)», then «модульный тест». | Live-checked 2026-10-17: [Microsoft Learn RU, xUnit tutorial](https://learn.microsoft.com/ru-ru/dotnet/core/testing/unit-testing-csharp-with-xunit) uses «модульный тест»; [unit-testing best practices](https://learn.microsoft.com/ru-ru/dotnet/core/testing/unit-testing-best-practices) describes isolation from external dependencies. Reject «юнит-тест» as an unnecessary replacement. |
+| Integration test — joint component check within a selected boundary | **ON PROBATION** — «интеграционный тест (integration test)», then «интеграционный тест». | Live-checked 2026-10-17: [Microsoft Learn RU, ASP.NET Core integration tests](https://learn.microsoft.com/ru-ru/aspnet/core/test/integration-tests?view=aspnetcore-10.0) attests «интеграционные тесты» and the application test host. The selected boundary limits the evidence; the name does not imply a live Azure call. |
+| xUnit — .NET test framework | **ON PROBATION** — kept-EN «xUnit»; package ID `xunit` retains its lowercase spelling. | Live-checked 2026-10-17: [Microsoft Learn RU, xUnit tutorial](https://learn.microsoft.com/ru-ru/dotnet/core/testing/unit-testing-csharp-with-xunit) uses xUnit and demonstrates `Fact`, `Theory`, `InlineData` and `Assert`. No phonetic transliteration or invented expansion. |
+| Test double — dependency substitute for control or observation | **ON PROBATION** — «тестовый двойник (test double)», then «тестовый двойник». | Live-checked 2026-10-17: [Microsoft Learn RU, EF Core testing strategy](https://learn.microsoft.com/ru-ru/ef/core/testing/choosing-a-testing-strategy) uses «тестовый двойник» for a replacement dependency. [Unit-testing terminology](https://learn.microsoft.com/ru-ru/dotnet/core/testing/unit-testing-best-practices) explicitly warns that fake/mock/stub usage varies. Preserve the packet's umbrella sense; do not call every double a mock. |
+| Fake — working test double with deliberately limited behaviour | **ON PROBATION** — «упрощённая тестовая реализация (fake)» at first mention; thereafter «тестовая реализация» with the dependency named where needed. | Live-checked 2026-10-17: [Microsoft Learn RU, unit-testing terminology](https://learn.microsoft.com/ru-ru/dotnet/core/testing/unit-testing-best-practices) distinguishes the classical working-alternative sense in its terminology note. This descriptive Russian choice preserves that narrower packet sense rather than the page's broader colloquial use of fake. Reject «подделка» and «фальшивка» in course prose; «заглушка» would collapse the distinction from stub. The exact descriptive wording is provisional, not claimed as a verbatim Learn term. |
+| WebApplicationFactory — application startup and test-host customisation helper | **ON PROBATION** — kept-EN code identifier `WebApplicationFactory`; generic use `WebApplicationFactory<Program>` unchanged. | Live-checked 2026-10-17: [Microsoft Learn RU, integration tests](https://learn.microsoft.com/ru-ru/aspnet/core/test/integration-tests?view=aspnetcore-10.0) documents application startup, `WithWebHostBuilder` and `ConfigureTestServices`. Use a Russian head noun such as «фабрика» in running prose; do not translate the API identifier. |
+| TestServer — in-process ASP.NET Core HTTP test server | **ON PROBATION** — kept-EN code identifier `TestServer`; explain as «сервер, работающий в том же процессе». | Live-checked 2026-10-17: [Microsoft Learn RU, integration tests](https://learn.microsoft.com/ru-ru/aspnet/core/test/integration-tests?view=aspnetcore-10.0) identifies `TestServer` as the in-memory test server. The packet fixes the in-process boundary; no deployed-service permission claim follows. |
+| Testcontainers — temporary dependency-container lifecycle library | **ON PROBATION** — kept-EN «Testcontainers»; preserve «Testcontainers for .NET» where naming that implementation. | Live-checked 2026-10-17: [Microsoft Learn RU, testing with a database](https://learn.microsoft.com/ru-ru/ef/core/testing/testing-with-the-database) names Testcontainers and describes automatic management of containerised database instances. [Upstream .NET documentation](https://dotnet.testcontainers.org/) supplies the implementation-specific boundary. Reject a translated or transliterated library name. |
+| Test fixture — known setup or data with an owned lifecycle | **ON PROBATION** — «тестовая фикстура (test fixture)», then «тестовая фикстура»; for the local retrieval example «фиксированный документ» or «тестовые данные» when the referent is clear. | Live-checked 2026-10-17: [Microsoft Learn RU, database test fixture](https://learn.microsoft.com/ru-ru/ef/core/testing/testing-with-the-database) uses «фикстура», illustrates known seed data, initialisation and cleanup. The packet's broader setup-or-data sense is retained, not restricted to an xUnit fixture class. Reject literal translations of fixture as a physical fitting or luminaire. |
+
+All 13 distinct Microsoft Learn destinations in the testing packet returned HTTP 200 at their
+same-path `ru-ru` counterparts on 2026-10-17, without a locale fallback. Paths, queries and fragments
+are preserved in the lesson and its glossary group. Additional RU terminology evidence above was
+checked live. Other vendors' URLs and internal course paths remain unchanged.
