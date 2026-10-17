@@ -102,6 +102,32 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 
 **OIDC (OpenID Connect)** — an identity protocol through which an issuer supplies an identity token. In GitHub-to-Azure federation, that token identifies the job and is exchanged for an Entra access token.
 
+## Networking for application engineers \{#networking}
+
+**Virtual Network (VNet)** — an isolated private address space in one region and subscription, within which resources communicate privately. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/virtual-network/concepts-and-best-practices)
+
+**Subnet** — a portion of a VNet's address space allocated to resources or a service integration, where network controls can be applied.
+
+**Network security group (NSG)** — a collection of stateful inbound and outbound packet rules that allow or deny traffic by addresses, ports and protocol, associated with a subnet or network interface. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview)
+
+**Private endpoint** — a network interface with a private IP in a VNet that connects to a supported service through Azure Private Link. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview)
+
+**Service endpoint** — a subnet configuration that supplies VNet identity to a supported Azure service over the Azure backbone while retaining the service's public destination address. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-service-endpoints-overview)
+
+**Private DNS zone** — a DNS namespace whose records can be resolved through linked VNets and appropriately configured DNS forwarding. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/dns/private-dns-virtual-network-links)
+
+**VNet integration** — a service-specific mechanism connecting a managed application's networking to a VNet; its inbound and outbound capabilities depend on the hosting service. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/app-service/overview-vnet-integration)
+
+**Ingress** — traffic arriving at the application or network boundary being discussed.
+
+**Egress** — traffic leaving the application or network boundary being discussed.
+
+**Hub-and-spoke** — a topology where workload VNets connect to a shared hub VNet for common connectivity services such as DNS, routing and traffic inspection.
+
+**VNet peering** — a connection allowing private network traffic between VNets; peering relationships are nontransitive. ↗ [Microsoft Learn](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-faq)
+
+**Web application firewall (WAF)** — a control that inspects HTTP(S) requests using web security rules to detect or block attacks.
+
 ## Governance and architecture frameworks \{#governance-and-frameworks}
 
 **Azure Policy** — the Azure service that evaluates resources against configuration rules and applies their configured effects.
