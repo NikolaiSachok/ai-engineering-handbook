@@ -986,3 +986,38 @@ Twenty-five returned Russian HTML; the AgentSession API page returned English HT
 `ru-ru` URL. The lesson and glossary use these live-checked URLs under the course link rule.
 Non-Learn URLs and internal course paths are unchanged. The source lesson's `last_verified`
 remains 2026-10-17; these checks do not imply a live-subscription exercise run.
+
+## Evaluation and tracing — terminology evidence (2026-10-18)
+
+This lesson reuses the existing trace, span, instrumentation, exporter, OpenTelemetry-distribution,
+sampling, test-fixture, model-deployment, managed-identity and Log Analytics workspace decisions.
+Shared AI senses follow the targeted lookup in `rag.md` §1.2: «оценка» for evaluation,
+«поиск» for retrieval and «модель-судья» for the judging model. `rag-addendum.md` and
+`ai-sdlc.md` supply no competing sense for this page. Evaluation as a process is «оценка»;
+its numeric result is «балл». Grounding context is the actual context supplied to generation.
+The named evaluators Groundedness, Relevance and Groundedness Pro retain their English names;
+their descriptive Russian terms below do not rename the UI or the Content Safety feature
+groundedness detection. Sources retain the packet's English link labels, with Russian joining
+words outside titles. API agreement follows the assignment's neuter convention.
+
+All eight new rows remain **ON PROBATION**. Live Microsoft Learn RU evidence establishes the
+concept and records wording; it does not constitute an independent language review. No existing
+row or status was changed and no independent review was run. The requested settlement is therefore
+limited to recording a usable decision for this lesson, without promoting its status.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Evaluator — method measuring a selected property of model or application output | **ON PROBATION** — «средство оценки (evaluator)», then «средство оценки». | Live-checked 2026-10-18: [Microsoft Learn RU, evaluation overview](https://learn.microsoft.com/ru-ru/azure/foundry/concepts/evaluation-overview) describes the evaluator/run relationship; [RAG evaluators](https://learn.microsoft.com/ru-ru/azure/foundry/concepts/evaluation-evaluators/rag-evaluators) uses «средств оценки» alongside inconsistent alternatives. Adopt the transparent native head; reject «вычислитель» and transliterated «эвалуатор» as course heads. |
+| Groundedness evaluator — response support relative to supplied context | **ON PROBATION** — «средство оценки опоры ответа на контекст (groundedness evaluator)»; named implementation «Groundedness». | Live-checked 2026-10-18: [Microsoft Learn RU, RAG evaluators](https://learn.microsoft.com/ru-ru/azure/foundry/concepts/evaluation-evaluators/rag-evaluators) retains Groundedness and distinguishes its context-based criterion from Relevance and preview Groundedness Pro. The Russian headword is retained for the glossary/New terms contract; in explanations use «проверяет, подтверждается ли ответ предоставленным контекстом» to state the relation directly. Reject literal «заземлённость». It is not a general truth score or the separate groundedness detection feature. |
+| Relevance evaluator — response relevance to the user's question | **ON PROBATION** — «средство оценки релевантности (relevance evaluator)»; named implementation «Relevance». | Live-checked 2026-10-18: [Microsoft Learn RU, RAG evaluators](https://learn.microsoft.com/ru-ru/azure/foundry/concepts/evaluation-evaluators/rag-evaluators) attests «Релевантность» and relates response to query. Reject «актуальность»: it can suggest freshness. Keep the response/query relation distinct from response/context support. |
+| Offline evaluation — fixed-case assessment outside live request handling | **ON PROBATION** — «офлайн-оценка (offline evaluation)», then «офлайн-оценка». | Live-checked 2026-10-18: [Microsoft Learn RU, evaluation overview](https://learn.microsoft.com/ru-ru/azure/foundry/concepts/evaluation-overview) and [dataset evaluation](https://learn.microsoft.com/ru-ru/azure/foundry/how-to/evaluate-generative-ai-app) establish saved-output assessment. This is an editorial rendering of the mode, not a claim of disconnected execution; reject «оценка без сети». |
+| Continuous evaluation — recurring checks of sampled live interactions as requests arrive | **ON PROBATION** — «непрерывная оценка (continuous evaluation)», then «непрерывная оценка». | Live-checked 2026-10-18: [Microsoft Learn RU, monitoring and recurring evaluation](https://learn.microsoft.com/ru-ru/azure/foundry/observability/how-to/how-to-monitor-agents-dashboard) documents the recurring mode and sampling controls. The label requires the sampled, non-blocking explanation; reject wording implying that every response is checked before delivery. |
+| Scheduled evaluation — run triggered at configured times or recurrence | **ON PROBATION** — «оценка по расписанию (scheduled evaluation)», then «оценка по расписанию». | Live-checked 2026-10-18: [Microsoft Learn RU, monitoring and recurring evaluation](https://learn.microsoft.com/ru-ru/azure/foundry/observability/how-to/how-to-monitor-agents-dashboard) supplies the time-triggered mode. Preserve configured data and criteria in the definition. Distinguish a schedule trigger from the arrival of live interactions. |
+| Custom evaluator — application-defined scoring through code, judge prompt or external endpoint | **ON PROBATION** — «собственное средство оценки (custom evaluator)», plural «собственные средства оценки»; then native form. | Live-checked 2026-10-18: [Microsoft Learn RU, custom evaluators](https://learn.microsoft.com/ru-ru/azure/foundry/concepts/evaluation-evaluators/custom-evaluators) documents all three implementation forms and uses «собственные вычислители». Adopt «собственное» with the course head «средство оценки»; reject «пользовательское» where it may suggest a tool configured by the end user. |
+| Trace identifier — shared identity of operations in one distributed trace | **ON PROBATION** — «идентификатор трейса (trace identifier)», then «идентификатор трейса». | Live-checked 2026-10-18: [Microsoft Learn RU, .NET tracing concepts](https://learn.microsoft.com/ru-ru/dotnet/core/diagnostics/distributed-tracing-concepts) describes the common trace-id and `Activity.TraceId`. REUSE the existing «трейс» head. Distinguish this execution identifier from a stable test-case identifier across runs. |
+
+All 33 distinct Microsoft Learn URLs in the semantic packet returned HTTP 200 at their same-path
+`ru-ru` counterparts on 2026-10-18, without an English-locale redirect. Paths, queries and fragments
+were preserved in lesson and glossary links. Availability alone does not attest Russian wording:
+the terminology evidence above also used live content reads. Other vendors' URLs and internal
+course links are unchanged.
