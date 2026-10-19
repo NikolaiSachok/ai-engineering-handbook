@@ -32,7 +32,7 @@ RAG-сервис может получить действительный ток
 
 Можно оставить `DefaultAzureCredential`, ограничив цепочку переменной `AZURE_TOKEN_CREDENTIALS=ManagedIdentityCredential`. Начиная с `Azure.Identity` [1.15.0 цепочка использует только этот источник](https://learn.microsoft.com/ru-ru/dotnet/azure/sdk/authentication/credential-chains#use-a-specific-credential), а начиная с версии [1.16.0 дополнительно включается режим повторных попыток для прода](https://learn.microsoft.com/ru-ru/dotnet/azure/sdk/authentication/best-practices#resilient-mode).
 
-Ниже показано, как выбрать учётные данные на C# с [API `Azure.Identity` 1.17.2 — стабильной версии пакета](https://learn.microsoft.com/ru-ru/dotnet/api/azure.identity.managedidentityid?view=azure-dotnet). Этот фрагмент **не компилировался и не запускался в Azure**; проекта, в котором можно собрать пример, пока нет. Значения `isProduction` и `runtimeClientId` поступают из конфигурации среды выполнения. Сохрани полученный объект учётных данных и повторно используй его при создании клиентов сервисов.
+Ниже показано, как выбрать учётные данные на C# с [API `Azure.Identity` 1.17.2 — стабильной версии пакета](https://learn.microsoft.com/ru-ru/dotnet/api/azure.identity.managedidentityid?view=azure-dotnet). Фрагмент собран для `net10.0` с .NET SDK 10.0.402 и пакетом `Azure.Identity` 1.17.2; проверено 19.10.2026. Оба варианта создания объекта учётных данных выполнены локально на .NET 10.0.13. Токены не запрашивались, обращения к реальной подписке Azure не выполнялись. Значения `isProduction` и `runtimeClientId` поступают из конфигурации среды выполнения. Сохрани полученный объект учётных данных и повторно используй его при создании клиентов сервисов.
 
 ```csharp
 using Azure.Core;

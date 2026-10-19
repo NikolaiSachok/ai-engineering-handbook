@@ -52,7 +52,9 @@ is `DefaultAzureCredential` with `AZURE_TOKEN_CREDENTIALS=ManagedIdentityCredent
 
 This illustrative C# fragment uses the stable `Azure.Identity` 1.17.2
 [API shape](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.managedidentityid?view=azure-dotnet).
-It was **not compiled or run against Azure**; there is no buildable example project for it yet.
+It was built for `net10.0` with .NET SDK 10.0.402 and `Azure.Identity` 1.17.2 on 2026-10-19.
+Both credential-construction branches were run locally on .NET 10.0.13; no token requests or live Azure
+calls were made.
 `isProduction` and `runtimeClientId` come from host configuration. Keep the resulting credential for
 reuse when constructing service clients.
 
