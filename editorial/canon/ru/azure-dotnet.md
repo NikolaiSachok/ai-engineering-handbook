@@ -1317,3 +1317,43 @@ are unchanged. Sources retain English link labels and the source's ten groups in
 The existing RU glossary already contains all 32 EN groups and 328 definitions in matching order;
 the locked source introduces no glossary group or New terms line for this project. The EN intro
 has no changes against origin/main, so the RU intro is unchanged.
+
+## Document ingestion pipeline — terminology evidence (2026-10-19)
+
+Layer 2 composition uses the locked semantic packet; no independent reviewer was run. The
+binding course-wide ledger rule leaves existing rows and their statuses unchanged. In particular,
+Ingestion pipeline, Worker, System topic, Event subscription, Settlement, Idempotency and Optimistic
+concurrency remain **ON PROBATION**. The lesson reuses these incumbent senses; its wording includes:
+«конвейер приёма документов (ingestion pipeline)», «воркер (worker)», «системная тема»,
+«подписка на события», «сообщить брокеру результат обработки» and
+«оптимистический контроль параллелизма». Idempotency is expressed through safe repeated writes
+with the same keys; its Russian term is not used in the lesson. The technical senses were rechecked live against
+[Microsoft Learn RU, system topics](https://learn.microsoft.com/ru-ru/azure/event-grid/system-topics),
+[message transfers, locks and settlement](https://learn.microsoft.com/ru-ru/azure/service-bus-messaging/message-transfers-locks-settlement)
+and [Cosmos DB optimistic concurrency](https://learn.microsoft.com/ru-ru/azure/cosmos-db/database-transactions-optimistic-concurrency),
+on 2026-10-19. Documentation evidence does not constitute an independent language review.
+
+Shared vocabulary reuses `rag.md` and `rag-addendum.md`: «эмбеддинг» and «поиск» for retrieval;
+the binding course decision requires «фрагмент (chunk)», then «фрагмент». A durable background
+job is «фоновое задание», keeping «задача» for .NET Task. Application work ownership is described
+with «закрепить задание за воркером» and an explicit owner and expiry; it is distinct from the
+Service Bus message lock. The same-partition document-head record is described as «запись текущего
+состояния документа». These descriptive phrases do not name additional Azure products or extend
+ETag into a cross-service transaction. The New terms line introduces only ETag.
+
+The project-specific `## What you can explain afterwards` is «## Что ты сможешь объяснить после
+проекта»; it introduces explanation questions and is distinct from the lesson takeaways heading
+«## Что перенести в свою практику». The intro and Part V overview reuse «конвейер приёма
+документов» for the processing-and-index-update sense, reserving «загрузка» for upload.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| ETag (`etag.version_token`) — server-generated item or resource version token for conditional updates | **ON PROBATION** — kept-EN «ETag»; definition «токен версии элемента или ресурса, который формирует сервер». Keep `If-Match` and `_etag` literal; no additional English bridge required. | Live-checked 2026-10-19: [Microsoft Learn RU, Cosmos DB optimistic concurrency](https://learn.microsoft.com/ru-ru/azure/cosmos-db/database-transactions-optimistic-concurrency), ETag and HTTP headers section, documents server-generated `_etag`, matching `If-Match`, HTTP 412 for a stale token and rereading the current version. Reuse the existing «оптимистический контроль параллелизма» sense. Reject treating ETag itself as a work lease, an exclusive lock or atomicity across Cosmos and Search. No independent review was run; this row remains ON PROBATION. |
+
+All 52 distinct Microsoft Learn destinations in the semantic packet returned HTTP 200 at their
+same-path `ru-ru` counterparts on 2026-10-19, with final URLs retaining the Russian locale. Published
+links preserve the source paths, queries and fragments. Executable blocks retain their English
+source bytes, including comments and prompts; only Mermaid node labels are localized. Sources
+retain the twelve English citation groups, their order and link labels; surrounding prose is Russian.
+Pricing URLs and internal course paths are unchanged. These reference checks do not claim an
+Azure deployment, an upload-to-P1-citation test or successful cloud teardown.
