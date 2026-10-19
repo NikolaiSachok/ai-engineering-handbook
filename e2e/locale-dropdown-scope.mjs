@@ -17,18 +17,19 @@ import {chromium} from 'playwright';
 const BASE = (process.env.BASE_URL ?? 'http://localhost:3210').replace(/\/$/, '');
 const SITE = `${BASE}/ai-engineering-handbook`;
 
-// [route, expected desktop dropdown labels]. The current locale is always listed.
+// [route, expected desktop dropdown labels]. A locale-prefixed route a section lacks is moved to
+// English first (e2e/locale-fallback-switch.mjs), so its picker is the English one.
 const CASES = [
   ['/', ['English', 'Русский', 'Slovenčina', 'Deutsch']],
   ['/rag-agents/', ['English', 'Русский', 'Slovenčina', 'Deutsch']],
   ['/ai-sdlc/', ['English', 'Русский', 'Slovenčina']],
   ['/azure-dotnet/', ['English', 'Русский']],
   ['/ru/azure-dotnet/', ['English', 'Русский']],
-  ['/sk/azure-dotnet/', ['English', 'Русский', 'Slovenčina']],
+  ['/sk/azure-dotnet/', ['English', 'Русский']],
   ['/design-scenarios/', ['English']],
-  ['/ru/design-scenarios/', ['English', 'Русский']],
+  ['/ru/design-scenarios/', ['English']],
   ['/blog', ['English']],
-  ['/de/blog', ['English', 'Deutsch']],
+  ['/de/blog', ['English']],
 ];
 // [route, expected mobile drawer switcher codes]; the switcher is hidden with one locale.
 const MOBILE = [

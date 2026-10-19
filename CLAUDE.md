@@ -21,10 +21,12 @@ natively per the workflow below, never machine-translated).
   declaration instead of assuming site-wide coverage. Each course also declares `untranslatedPolicy`:
   `'pending'` **hides** it from a locale that lacks it (advertising a course in a language it is not in is a
   promise not kept), `'by-design'` **keeps it visible** (or readers in that locale never discover it).
-  **Hiding is a navigation decision, never a routing one** — the route still resolves, and a swizzled
-  `@theme/Layout` shows an English-fallback notice on arrival. **Never switch the reader's locale to match a
-  page**: locale is a property of the reader, lives in the URL prefix, and a silent switch is not undone by
-  going back.
+  **Hiding is a navigation decision** — the route still builds, so shared links keep resolving. **A page the
+  reader's locale lacks is shown in English, under English chrome** (owner decision, 2026-10-19): the head script
+  `localeDetectionScript` (`docusaurus.config.ts`) and `src/clientModules/localeRouting.ts` move `/de/azure-dotnet/…`
+  to `/azure-dotnet/…`, remember the locale per tab, and move the reader back at the first page that exists in it.
+  The `preferred_locale` cookie is never written by this; any pick in a language picker is an explicit choice
+  and ends the fallback. Guarded by `e2e/locale-fallback-switch.mjs`.
 - **LOCALE PARITY (from the SK launch on).** Every locale in `RELEASED_LOCALES` is public. Every content PR
   that adds or changes a page in one locale **either updates its counterpart in every other locale that
   course claims, in the same PR, or files a parity issue** — the deployed build runs `onBrokenLinks: 'throw'` over every

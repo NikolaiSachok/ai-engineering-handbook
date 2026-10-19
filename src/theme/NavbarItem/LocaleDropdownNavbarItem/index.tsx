@@ -39,7 +39,7 @@ import type {LinkLikeNavbarItemProps} from '@theme/NavbarItem';
 import type {Props} from '@theme/NavbarItem/LocaleDropdownNavbarItem';
 
 import {capturePosition} from '@site/src/lib/localeScrollPosition';
-import {setPreferredLocale} from '@site/src/lib/localePreference';
+import {useSetPreferredLocale} from '@site/src/lib/localePreference';
 import {useAvailableLocales} from '@site/src/lib/availableLocales';
 
 import styles from './styles.module.css';
@@ -125,10 +125,10 @@ export default function LocaleDropdownNavbarItem({
   const utils = useLocaleDropdownUtils();
 
   const {
-    siteConfig: {baseUrl},
     i18n: {currentLocale},
   } = useDocusaurusContext();
   const locales = useAvailableLocales();
+  const setPreferredLocale = useSetPreferredLocale();
   const localeItems = locales.map((locale): LinkLikeNavbarItemProps => {
     const isCurrent = locale === currentLocale;
     // Keep the hash only when staying in the current locale; drop it when
@@ -140,17 +140,17 @@ export default function LocaleDropdownNavbarItem({
       to,
       target: '_self',
       autoAddBaseUrl: false,
-      // On a cross-locale switch: remember the explicit choice (so the first-visit
-      // detector never redirects against it) and capture the reader's structural
-      // position just before the full-page navigation.
-      ...(isCurrent
-        ? {}
-        : {
-            onClick: () => {
-              setPreferredLocale(locale, baseUrl);
-              capturePosition(pathnameFromTo(to));
-            },
-          }),
+      // Any pick is an explicit choice: remember it, so neither the first-visit detector
+      // nor the out-of-scope fallback routing acts against it — picking English while
+      // shown an English-only course in place of German keeps the reader in English. On a
+      // cross-locale switch, also capture the reader's structural position just before the
+      // full-page navigation.
+      onClick: () => {
+        setPreferredLocale(locale);
+        if (!isCurrent) {
+          capturePosition(pathnameFromTo(to));
+        }
+      },
       className:
         // eslint-disable-next-line no-nested-ternary
         isCurrent
