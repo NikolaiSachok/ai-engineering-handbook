@@ -1253,3 +1253,47 @@ same-path `ru-ru` counterparts on 2026-10-18. Every response retained the Russia
 checks, not execution against an Azure subscription. Other vendors' URLs and internal course
 destinations remain unchanged. The source lesson's 2026-10-17 verification date and its targeted
 2026-10-18 procedure recheck remain distinct from these localization checks.
+
+## RAG service — terminology evidence (2026-10-19)
+
+This lesson adopts the recorded **ON PROBATION** wording for search index, hybrid query,
+test double, test fixture, revision, trace, instrumentation, soft delete, purge protection,
+canary release, traffic weight and rollback. Existing rows and statuses are unchanged.
+Live rechecks of [RU hybrid search](https://learn.microsoft.com/ru-ru/azure/search/hybrid-search-overview),
+[RU testing strategy](https://learn.microsoft.com/ru-ru/ef/core/testing/choosing-a-testing-strategy),
+[RU revisions](https://learn.microsoft.com/ru-ru/azure/container-apps/revisions) and
+[RU Key Vault soft delete](https://learn.microsoft.com/ru-ru/azure/key-vault/general/soft-delete-overview)
+support the usages. Purge protection remains «защита от окончательного удаления», not
+«защита от очистки». No independent review was run, so no row is promoted to SETTLED.
+
+Shared vocabulary reuses `rag.md` §1.2: «поиск» for retrieval as an action, «эмбеддинг»,
+«трейс», «оценка» for the evaluation process, «модель-судья» and «откат».
+Targeted `rag-addendum.md` and `ai-sdlc.md` lookups introduce no competing sense here.
+Course decision 27 supplies «фрагмент (chunk)», then «фрагмент». API is neuter.
+The identity roles remain «удостоверение работающего приложения», «оператор» (the signed-in
+developer) and «удостоверение конвейера»; these do not name new Azure identity types.
+
+The five new rows describe project contracts and artefacts, not Microsoft features. Evidence
+establishes underlying operations, not verbatim Microsoft names for the project conventions.
+All five remain **ON PROBATION**. These descriptive forms need no extra English bridge;
+protected filenames, fields and flags provide the code-facing link.
+
+| EN concept / sense | RU decision | Evidence / rejected variant |
+|---|---|---|
+| Corpus manifest — local per-passage identity and provenance records | **ON PROBATION** — «манифест корпуса», then «манифест» in explicit corpus context. | Live-checked 2026-10-19: [Microsoft Learn RU, vector index](https://learn.microsoft.com/ru-ru/azure/search/vector-search-how-to-create-index) requires unique document identifiers and human-readable fields. `corpus/manifest.json` is this project's provenance and replay input, distinct from a container-image manifest. Do not imply the running API reads it. |
+| Citation validation — checking markers and metadata against retrieved sources | **ON PROBATION** — «проверка ссылок на источники»; «проверка маркеров» and «проверка метаданных ссылок» for the separate checks. | Live-checked 2026-10-19: [Microsoft Learn RU, query construction](https://learn.microsoft.com/ru-ru/azure/search/search-query-create) documents selected source fields; [Foundry evaluation](https://learn.microsoft.com/ru-ru/azure/foundry/how-to/evaluate-generative-ai-app) separately assesses generated responses. Marker membership is the application's contract, not proof of every statement's correctness. Reject «валидация цитат», which can suggest quotation fidelity. |
+| Fixture replay — resending saved HTTP cases and checking their response contract | **ON PROBATION** — «повтор запросов из фикстур»; procedural «повтори запросы» or «запусти скрипт проверки». | Live-checked 2026-10-19: [Microsoft Learn RU, testing strategy](https://learn.microsoft.com/ru-ru/ef/core/testing/choosing-a-testing-strategy) distinguishes real dependencies and test doubles. The project script checks status, shape and citation metadata. This is descriptive wording; reject «воспроизведение ответов», which implies fixed generated wording. |
+| Evaluation case identifier — fixture identity retained with captured evaluation data | **ON PROBATION** — «идентификатор случая»; «имя случая» for the fixture's `name`. | Live-checked 2026-10-19: [Microsoft Learn RU, Foundry evaluation](https://learn.microsoft.com/ru-ru/azure/foundry/how-to/evaluate-generative-ai-app) describes datasets and individual results; [tracing concepts](https://learn.microsoft.com/ru-ru/dotnet/core/diagnostics/distributed-tracing-concepts) establishes the separate trace ID. `X-Eval-Case-Id` is this project's convention, not a Microsoft header. |
+| Deletion inventory — saved ownership and recovery information for teardown | **ON PROBATION** — «перечень ресурсов для удаления»; descriptive «сохранённые имена, идентификаторы и расположения». | Live-checked 2026-10-19: [Microsoft Learn RU, workspace deletion](https://learn.microsoft.com/ru-ru/azure/azure-monitor/logs/delete-workspace) and [Key Vault soft delete](https://learn.microsoft.com/ru-ru/azure/key-vault/general/soft-delete-overview) distinguish recoverable and permanent deletion. `P1_DELETION_INVENTORY` and `artifacts/p1-cleanup.json` are project artefacts retaining the owned-resource scope through partial provisioning and deletion. An absent live group is not proof of purge. |
+
+All 63 distinct Microsoft Learn destinations in the packet returned HTTP 200 at their same-path
+`ru-ru` URLs on 2026-10-19, preserving queries and fragments. Five additional terminology URLs
+also returned HTTP 200. Three packet pages kept the Russian URL but declared English content:
+GitHub OIDC, `VectorizedQuery` and `UploadDocumentsAsync`. The lesson follows the HTTP-200
+link rule; availability alone is not lexical evidence. Executable blocks, including comments,
+are byte-identical to English; only Mermaid labels are localised. Sources retain the twenty
+English list items in order, with Russian joining words and the original link labels.
+
+The packet records that neither the English lesson's New terms line nor the English glossary's
+`#rag-service` group exists. All 32 existing glossary groups already have Russian counterparts
+in the same order. No definitions are inferred from the disambiguation-only concept register.
