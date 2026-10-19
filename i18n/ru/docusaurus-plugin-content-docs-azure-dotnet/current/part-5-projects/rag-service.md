@@ -46,7 +46,7 @@ flowchart TB
 
 ## Этапы проекта \{#milestones}
 
-### 1. Подготовь общую группу ресурсов и два развёртывания моделей
+### 1. Подготовь общую группу ресурсов и два развёртывания моделей \{#1-establish-one-resource-boundary-and-two-model-deployments}
 
 Объедини упражнения [«Как устроен Azure»](../part-1-azure-foundations/how-azure-is-organised.md#try-it), [«RBAC и доступ без ключей»](../part-1-azure-foundations/rbac-and-keyless-access.md#try-it), [«Инфраструктура как код»](../part-1-azure-foundations/infrastructure-as-code.md#try-it), [«Microsoft Foundry»](../part-3-llms-on-azure/microsoft-foundry.md#try-it) и [«Развёртывания моделей, квоты и стоимость»](../part-3-llms-on-azure/deployments-quotas-cost.md#try-it).
 
@@ -199,7 +199,7 @@ az resource list --resource-group rg-p1-rag-p1-ci --output json \
 
 **Проверка:** изучи список ресурсов, назначения ролей и сохранённые идентификаторы для удаления. По [правилам обнаружения ресурсов azd](https://learn.microsoft.com/ru-ru/azure/developer/azure-developer-cli/tooling-environment-faq#how-does-azd-find-the-azure-resource-to-deploy-my-code-to) команда `az group list --tag azd-env-name=p1-ci --query '[].name' --output tsv` должна найти группу упражнения. Если создание завершится лишь частично, используй сохранённые подписку и группу вместе со скриптом из раздела удаления ресурсов.
 
-### 2. Подготовь локальное API к проверке HTTP-контракта
+### 2. Подготовь локальное API к проверке HTTP-контракта \{#2-make-the-local-http-boundary-testable}
 
 Собери упражнения [о платформе .NET](../part-2-modern-dotnet/dotnet-platform.md#try-it), [ASP.NET Core](../part-2-modern-dotnet/aspnet-core.md#try-it), [Microsoft.Extensions](../part-2-modern-dotnet/extensions-backbone.md#try-it) и [тестировании](../part-2-modern-dotnet/testing.md#try-it) в одном решении `RagService.slnx` с проектом `src/Rag.Api/Rag.Api.csproj`. Перенеси тестовую фикстуру (test fixture) в это решение, чтобы не сопровождать второе API.
 
@@ -217,7 +217,7 @@ dotnet test RagService.slnx -c Release --no-build
 
 **Проверка:** посмотри, какие тестовые случаи обнаружены и какие ответы получены. Ответ по фиксированному документу должен ссылаться на `doc-1`. Тестам не нужны учётные данные Azure.
 
-### 3. Преврати снимки открытых страниц в доступные для поиска фрагменты
+### 3. Преврати снимки открытых страниц в доступные для поиска фрагменты \{#3-turn-public-snapshots-into-searchable-chunks}
 
 Объедини упражнения [о хранении данных](../part-1-azure-foundations/data.md#try-it) и [RAG на Azure AI Search](../part-3-llms-on-azure/rag-on-ai-search.md#try-it). Сохрани в `corpus/` небольшие снимки трёх страниц Microsoft Learn: [таблицы ролей Search](https://learn.microsoft.com/ru-ru/azure/search/search-security-rbac), [настройки ролей Search](https://learn.microsoft.com/ru-ru/azure/search/search-security-enable-roles) и [управляемых удостоверений Container Apps](https://learn.microsoft.com/ru-ru/azure/container-apps/managed-identity).
 
@@ -244,7 +244,7 @@ jq -e 'length > 0 and all(.[]; .succeeded == true)' artifacts/ingestion.json
 
 **Проверка:** получи по известному идентификатору из манифеста документ и его текст. Гибридный запрос (hybrid query) должен возвращать выбранные поля источника, но определённый порядок результатов и конкретные значения оценок здесь не гарантируются.
 
-### 4. Соедини поиск с генерацией и проверь ссылки на источники
+### 4. Соедини поиск с генерацией и проверь ссылки на источники \{#4-join-retrieval-to-generation-and-validate-citations}
 
 Объедини упражнения [«AI в .NET»](../part-2-modern-dotnet/ai-in-dotnet.md#try-it), [«RAG на Azure AI Search»](../part-3-llms-on-azure/rag-on-ai-search.md#try-it), [«Защита на уровне платформы»](../part-3-llms-on-azure/platform-safety.md#try-it) и задание о ссылках из урока [«Агенты для программирования в .NET-проекте»](../part-4-ai-delivery/coding-agents-dotnet.md#try-it).
 
@@ -342,7 +342,7 @@ done < fixtures/ask.jsonl
 
 **Проверка:** загрузи настройки Azure и запусти API через [`dotnet run`](https://learn.microsoft.com/ru-ru/dotnet/core/tools/dotnet-run): `dotnet run --project src/Rag.Api --no-launch-profile --urls http://localhost:5080`. В другом терминале выполни `bash scripts/replay.sh http://localhost:5080`. Манифест остаётся у оператора, который запускает проверку.
 
-### 5. Разверни API с удостоверением, настройками и трейсами
+### 5. Разверни API с удостоверением, настройками и трейсами \{#5-deploy-the-api-with-identity-settings-and-traces}
 
 Объедини упражнения [о вычислениях](../part-1-azure-foundations/compute.md#try-it), [секретах и конфигурации](../part-1-azure-foundations/secrets-and-configuration.md#try-it), [контейнерах и Aspire](../part-2-modern-dotnet/containers-and-aspire.md#try-it) и [наблюдаемости](../part-1-azure-foundations/observability.md#try-it). HTTP-контракт сохрани.
 
@@ -405,7 +405,7 @@ done < fixtures/ask.jsonl
 
 **Проверка:** убедись, что ревизия (revision) и её проверки работоспособности и готовности в порядке. Команда `az resource list -g rg-p1-rag-p1-ci --tag azd-service-name=api --query '[].name' -o tsv` должна найти `ca-p1-rag-api`. С разрешённого IP-адреса выполни `bash scripts/replay.sh https://<app-fqdn>`. Сравнение с локальным манифестом проверяет метаданные ссылок развёрнутого API; помещать манифест в контейнер не нужно. В Application Insights найди трейс (trace) с вызовами Search и модели. Убедись, что в обычную телеметрию не попали исходные вопросы и фрагменты. После создания инфраструктуры обновляй перечень ресурсов.
 
-### 6. Запиши пять ответов и разбери результаты оценки
+### 6. Запиши пять ответов и разбери результаты оценки \{#6-capture-five-answers-and-inspect-their-evaluation}
 
 Используй упражнение [«Оценка качества и трассировка»](../part-3-llms-on-azure/evaluation-and-tracing.md#try-it); принципы оценки разобраны в уроке [«Измерять качество, а не гадать»](/rag-agents/part-1-rag/cross-cutting/evaluation/). Запусти то же API локально в режиме `Development` с `P1_CAPTURE_EVAL=1`. Начни с пустого файла и выполни `bash scripts/replay.sh http://localhost:5080`: скрипт отправит пять вопросов последовательно, передавая имя случая в заголовке `X-Eval-Case-Id`, который нужен блоку записи данных из связанного упражнения.
 
@@ -415,7 +415,7 @@ done < fixtures/ask.jsonl
 
 **Проверка:** в файле должно быть пять строк правильного формата. Прочитай каждый ответ, затем сравни отдельные баллы и ошибки оценки. Успешный прогон пяти случаев и завершение задания оценки подтверждают работу интеграции, но не качество сервиса в проде.
 
-### 7. Настрой поставку через OIDC и отработай откат
+### 7. Настрой поставку через OIDC и отработай откат \{#7-deliver-through-oidc-and-rehearse-rollback}
 
 Возьми рабочий процесс с действиями, закреплёнными по SHA, из упражнения [«Конвейеры поставки в Azure»](../part-4-ai-delivery/pipelines-to-azure.md#try-it), обнови пути к решению и используй упражнение [«Безопасный выпуск изменений»](../part-4-ai-delivery/releasing-safely.md#try-it). Администратор заранее создаёт инфраструктуру и назначения RBAC; конвейер выполняет `azd deploy`, а не создание инфраструктуры.
 

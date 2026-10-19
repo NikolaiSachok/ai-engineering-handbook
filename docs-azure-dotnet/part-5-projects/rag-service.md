@@ -59,7 +59,7 @@ does not authenticate an HTTP caller.
 
 ## Milestones \{#milestones}
 
-### 1. Establish one resource boundary and two model deployments
+### 1. Establish one resource boundary and two model deployments \{#1-establish-one-resource-boundary-and-two-model-deployments}
 
 One application group owns the lab. Build on [How Azure is organised](../part-1-azure-foundations/how-azure-is-organised.md#try-it),
 [RBAC and keyless access](../part-1-azure-foundations/rbac-and-keyless-access.md#try-it),
@@ -241,7 +241,7 @@ Verify the environment discovery tag with
 expect this lab's group ([discovery convention](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/tooling-environment-faq#how-does-azd-find-the-azure-resource-to-deploy-my-code-to)). After a failed partial provision, retain the saved boundary and use teardown's
 recovery step. No inference has been checked yet.
 
-### 2. Make the local HTTP boundary testable
+### 2. Make the local HTTP boundary testable \{#2-make-the-local-http-boundary-testable}
 
 Make the local API testable. Join [.NET platform](../part-2-modern-dotnet/dotnet-platform.md#try-it),
 [ASP.NET Core](../part-2-modern-dotnet/aspnet-core.md#try-it),
@@ -271,7 +271,7 @@ Inspect discovered
 tests and responses: validation fails before a model call, and the fixed-document answer has `doc-1`
 as its citation. Azure credentials must not be required by these tests.
 
-### 3. Turn public snapshots into searchable chunks
+### 3. Turn public snapshots into searchable chunks \{#3-turn-public-snapshots-into-searchable-chunks}
 
 The ingestion checkpoint ends with searchable passages. Build on [Data](../part-1-azure-foundations/data.md#try-it) and
 [RAG on Azure AI Search](../part-3-llms-on-azure/rag-on-ai-search.md#try-it). Save small snapshots of
@@ -316,7 +316,7 @@ jq -e 'length > 0 and all(.[]; .succeeded == true)' artifacts/ingestion.json
 **Check:** retrieve a known manifest ID and its text.
 Require a hybrid query to return selected source fields. There is no promised ranking or score.
 
-### 4. Join retrieval to generation and validate citations
+### 4. Join retrieval to generation and validate citations \{#4-join-retrieval-to-generation-and-validate-citations}
 
 An answer now needs retrieved evidence and validated citations. Join [AI in .NET](../part-2-modern-dotnet/ai-in-dotnet.md#try-it),
 [RAG on Azure AI Search](../part-3-llms-on-azure/rag-on-ai-search.md#try-it),
@@ -438,7 +438,7 @@ done < fixtures/ask.jsonl
 Start the local API with [`dotnet run`](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-run): `dotnet run --project src/Rag.Api --no-launch-profile --urls http://localhost:5080`
 and run `bash scripts/replay.sh http://localhost:5080` in another terminal with Azure configuration loaded.
 
-### 5. Deploy the API with identity, settings and traces
+### 5. Deploy the API with identity, settings and traces \{#5-deploy-the-api-with-identity-settings-and-traces}
 
 Deployment should preserve the same HTTP contract. Apply [Compute](../part-1-azure-foundations/compute.md#try-it),
 [Secrets and configuration](../part-1-azure-foundations/secrets-and-configuration.md#try-it),
@@ -528,7 +528,7 @@ Its manifest comparison also checks deployed citation metadata, despite the cont
 trace through search and model calls in Application Insights; check that routine telemetry contains no
 raw passages or questions. Refresh the resource inventory after provisioning.
 
-### 6. Capture five answers and inspect their evaluation
+### 6. Capture five answers and inspect their evaluation \{#6-capture-five-answers-and-inspect-their-evaluation}
 
 Five saved responses make evaluation inspectable. Follow [Evaluation and tracing](../part-3-llms-on-azure/evaluation-and-tracing.md#try-it). Run the
 same API locally in Development with `P1_CAPTURE_EVAL=1`; send five sequential fixture requests using
@@ -545,7 +545,7 @@ answer yourself, then compare individual evaluation results and failures. A comp
 check the integration; they do not establish production quality.
 [Judge tokens add consumption](https://azure.microsoft.com/en-us/pricing/details/foundryobservability/).
 
-### 7. Deliver through OIDC and rehearse rollback
+### 7. Deliver through OIDC and rehearse rollback \{#7-deliver-through-oidc-and-rehearse-rollback}
 
 Continue [Pipelines to Azure](../part-4-ai-delivery/pipelines-to-azure.md#try-it) and
 [Releasing safely](../part-4-ai-delivery/releasing-safely.md#try-it). Reuse the SHA-pinned workflow,

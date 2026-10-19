@@ -27,13 +27,6 @@ For the AI ideas the course assumes, use [RAG & Agents](/rag-agents/) and [AI SD
 Their lessons explain retrieval, agents, evaluation and the development workflow; this course links
 back to them rather than teaching those ideas again.
 
-:::note[Status]
-
-The course is being written in stages. Each Part's overview lists all its lessons and how many are published;
-🚧 marks a Part with lessons still to come and an appendix page not yet written.
-
-:::
-
 ## The course map \{#course-map}
 
 | Part | What you will work through |
@@ -47,7 +40,7 @@ The course is being written in stages. Each Part's overview lists all its lesson
 The appendices are references to return to:
 
 - [Azure recap sheet](./recap-sheet.md) — the whole platform on a few pages, for revision.
-- Exam map 🚧 — AI-103 and AI-200 skill areas matched to lessons and project steps.
+- [Exam map](./exam-map.md) — AI-103 and AI-200 skill areas matched to lessons and project steps.
 - [Glossary](./glossary.md) — one definition for each course term.
 
 ## How a lesson works \{#how-a-lesson-works}
@@ -60,11 +53,11 @@ Every **Try it** step advances a project. It gives commands and an expected resu
 note, and ends with teardown. Read the cost note before creating resources; complete the teardown
 before leaving the lab.
 
-The projects 🚧 give those steps a destination:
+The projects give those steps a destination:
 
-- **P1 — RAG service:** a .NET API answering questions over a small public document set, with citations.
-- **P2 — Agent behind an AI gateway:** a tool-calling agent with approvals and a gateway controlling access.
-- **P3 — Optional ingestion pipeline:** process incoming documents and update the retrieval index.
+- **[P1 — RAG service](./part-5-projects/rag-service.md):** a .NET API answering questions over a small public document set, with citations.
+- **[P2 — Agent behind an AI gateway](./part-5-projects/agent-behind-gateway.md):** a tool-calling agent with approvals and a gateway controlling access.
+- **[P3 — Optional ingestion pipeline](./part-5-projects/ingestion-pipeline.md):** process incoming documents and update the retrieval index.
 
 ## Budget for the exercises \{#budget}
 
