@@ -69,7 +69,7 @@ flowchart TB
 
 ## Что это меняет для AI-сервиса \{#in-an-ai-workload}
 
-В P1 предстоит соединить minimal API на ASP.NET Core в Azure Container Apps, развёртывание модели (model deployment) в [Microsoft Foundry](https://learn.microsoft.com/ru-ru/azure/foundry/what-is-foundry), Azure AI Search и документы в Blob Storage. Приложение будет обращаться к Key Vault через управляемое удостоверение (managed identity) и отправлять телеметрию в Application Insights. Bicep и `azd` будут описывать и создавать инфраструктуру; GitHub Actions с OIDC — доставлять изменения. Сейчас ты только подготовишь подписку, уведомления о расходах и группу ресурсов.
+В [P1](../part-5-projects/rag-service.md) соединены minimal API на ASP.NET Core в Azure Container Apps, развёртывание модели (model deployment) в [Microsoft Foundry](https://learn.microsoft.com/ru-ru/azure/foundry/what-is-foundry), Azure AI Search и документы в Blob Storage. Приложение обращается к Key Vault через управляемое удостоверение (managed identity) и отправляет телеметрию в Application Insights. Bicep и `azd` описывают и создают инфраструктуру; GitHub Actions с OIDC — доставляет изменения. Сейчас ты только подготовишь подписку, уведомления о расходах и группу ресурсов.
 
 Подготовка документов и построение индекса разобраны в уроке [«Ingestion — индексация»](/rag-agents/part-1-rag/ingestion/). Здесь нужно решить, должны ли данные и индекс пережить удаление приложения. В лабораторной работе с общедоступными документами индекс можно построить заново, поэтому его допустимо удалять вместе с приложением. Если позднее будешь использовать общий корпус документов, который должен сохраниться после удаления приложения, управляй жизненным циклом хранилища отдельно и явно учитывай эту зависимость.
 

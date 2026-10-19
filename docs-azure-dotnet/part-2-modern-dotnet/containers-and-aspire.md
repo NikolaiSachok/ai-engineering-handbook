@@ -117,8 +117,8 @@ serve different purposes.
 
 P1 is a RAG API over a small public document set. Its destination is Azure Container Apps, with a
 Foundry model deployment, Azure AI Search, Blob Storage and Key Vault accessed through managed identity.
-The delivery work will add Bicep, azd, GitHub Actions with OIDC and Application Insights. This lesson
-prepares the API artifact and local diagnostics that those later steps will use.
+The [P1 delivery work](../part-5-projects/rag-service.md) adds Bicep, azd, GitHub Actions with OIDC and Application Insights. This lesson
+prepares the API artifact and local diagnostics that those steps use.
 
 Package the service independently of the corpus and model deployment. Changing a model endpoint or
 index name should be a configuration change rather than a reason to bake credentials or documents
@@ -131,7 +131,7 @@ you the outside duration. Retrieval and model spans can show where that time wen
 [RAG observability lesson](/rag-agents/part-1-rag/cross-cutting/observability/) owns the design of that
 pipeline trace; here the task is to make your .NET service emit and display it. ASP.NET Core and HTTP
 client instrumentation provide a starting point, but you must add application-specific operations and
-measurements deliberately; II.8, AI in .NET (planned), will cover model-call instrumentation.
+measurements deliberately; [II.8, AI in .NET](./ai-in-dotnet.md) covers model-call instrumentation.
 Do not read a generic HTTP trace as a token-usage report.
 
 Use operation names, durations and failure information before adding payloads to telemetry. Logging
@@ -148,7 +148,7 @@ work, but do not establish that production alerts, retention or Azure Monitor ex
 ## Try it \{#try-it}
 
 Build a local starting point for P1: an API process under Aspire and an image archive from the same
-API. The endpoint below reports that the API is running; retrieval and model calls come later.
+API. The endpoint below reports that the API is running; retrieval and model calls are integrated in [P1](../part-5-projects/rag-service.md).
 Use a Bash-compatible terminal with the .NET 10 SDK selected. Follow the
 [Aspire prerequisites](https://aspire.dev/get-started/prerequisites/) for your development environment;
 on Linux, [certificate trust can require distribution- and browser-specific steps](https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-10.0#trust-https-certificate-on-linux).

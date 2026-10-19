@@ -17,11 +17,10 @@ but have **not yet been run against a live subscription**. No subscription exist
 The compilation disclosures below record the local checks performed. The checks in
 this guide are expected results and acceptance criteria, not a report of a completed deployment.
 
-:::note[Draft: prerequisite unavailable]
+:::note[Prerequisite: P1]
 
-The integrated P1 RAG service guide is not yet available. The individual lesson exercises do not
-provide its deployed baseline. This page remains a draft integration plan; publication as a usable
-build guide is deferred until P1 ships and the checks below can be exercised from that baseline.
+Complete the [P1 RAG service guide](./rag-service.md) first. The individual lesson exercises do not
+provide its deployed baseline. Exercise the checks below from that baseline.
 
 :::
 

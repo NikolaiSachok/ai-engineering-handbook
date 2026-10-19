@@ -16,7 +16,7 @@ last_verified: 2026-10-17
 
 Запуск приложения описывается в `Program.cs`. Вызов `WebApplication.CreateBuilder(args)` подготавливает службы и настройки по умолчанию; через `builder.Services` ты регистрируешь дополнительные службы. Затем `Build()` создаёт приложение. После настройки конвейера и конечных точек вызов `Run()` запускает обработку запросов. **Хост (host)** объединяет конфигурацию, журналирование, внедрение зависимостей, HTTP-сервер и управление временем жизни приложения. Этот порядок разбирается в [обзоре основ ASP.NET Core](https://learn.microsoft.com/ru-ru/aspnet/core/fundamentals/?view=aspnetcore-10.0).
 
-Хост и сервер отвечают за разные задачи. Kestrel — веб-сервер по умолчанию — принимает HTTP-трафик и передаёт запрос приложению в виде `HttpContext`. Обработчику запроса не нужно знать, как запускается процесс. Поэтому P1 можно сначала разрабатывать локально, а затем упаковать то же приложение, чтобы развернуть его в Azure Container Apps.
+Хост и сервер отвечают за разные задачи. Kestrel — веб-сервер по умолчанию — принимает HTTP-трафик и передаёт запрос приложению в виде `HttpContext`. Обработчику запроса не нужно знать, как запускается процесс. Поэтому P1 можно сначала разрабатывать локально, а затем упаковать то же приложение, чтобы [развернуть его в Azure Container Apps](../part-5-projects/rag-service.md#milestones).
 
 **[Компоненты промежуточного ПО (middleware)](https://learn.microsoft.com/ru-ru/aspnet/core/fundamentals/middleware/?view=aspnetcore-10.0)** образуют упорядоченный конвейер вокруг конечной точки. Компонент может обработать запрос, вызвать следующий компонент, а после его завершения обработать ответ. Можно и сразу вернуть ответ, не вызывая оставшуюся часть конвейера: это **досрочное завершение обработки (short-circuiting)**. При возврате из вызовов компоненты обрабатывают ответ в обратном порядке. Поэтому обработчик исключений должен охватывать все этапы, на которых требуется перехватывать исключения, включая выполнение конечной точки. Для этого он должен стоять перед соответствующей частью конвейера: если поставить его после неё, он не сможет перехватить её исключения.
 
@@ -127,7 +127,7 @@ ASPNETCORE_ENVIRONMENT=Production ASPNETCORE_URLS=http://127.0.0.1:5080 \
   dotnet run --no-launch-profile
 ```
 
-Флаг [`--no-launch-profile`](https://learn.microsoft.com/ru-ru/dotnet/core/tools/dotnet-run) отключает сгенерированные настройки запуска. Переменные среды задают [среду `Production`](https://learn.microsoft.com/ru-ru/aspnet/core/fundamentals/environments?view=aspnetcore-10.0) и [локальный HTTP-адрес для приёма запросов](https://learn.microsoft.com/ru-ru/aspnet/core/fundamentals/servers/kestrel/endpoints?view=aspnetcore-10.0). HTTP через loopback используется для локального упражнения; настройка транспорта при развёртывании будет отдельной задачей.
+Флаг [`--no-launch-profile`](https://learn.microsoft.com/ru-ru/dotnet/core/tools/dotnet-run) отключает сгенерированные настройки запуска. Переменные среды задают [среду `Production`](https://learn.microsoft.com/ru-ru/aspnet/core/fundamentals/environments?view=aspnetcore-10.0) и [локальный HTTP-адрес для приёма запросов](https://learn.microsoft.com/ru-ru/aspnet/core/fundamentals/servers/kestrel/endpoints?view=aspnetcore-10.0). HTTP через loopback используется для локального упражнения; настройка транспорта при развёртывании относится к [P1](../part-5-projects/rag-service.md#milestones).
 
 Оставь сервер работающим, открой другой терминал и выполни запросы по порядку:
 

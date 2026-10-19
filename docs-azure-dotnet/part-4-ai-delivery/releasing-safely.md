@@ -106,7 +106,7 @@ restore the approved configuration.
 Traffic weights need an owner too. If the release job changes them while Bicep still declares an older
 split, a provisioning run can undo the release decision. Define how release-time routing is passed
 into the deployment configuration and reconciled afterwards.
-[IV.1 — Pipelines to Azure, planned](./overview.md#whats-inside) will explain deployment identity and
+[IV.1 — Pipelines to Azure](./pipelines-to-azure.md) explains deployment identity and
 approvals; here you use the resulting artefact and access.
 
 Before that artefact receives traffic, ask three separate supply-chain questions:
@@ -156,7 +156,7 @@ First, P1 must instrument each image with a distinct `release.id` span attribute
 and record request-correlated token usage and answer evaluations. This is the lab's required field,
 not an automatic revision property. Confirm distinct values from both revisions before splitting traffic.
 The [observability exercise](../part-1-azure-foundations/observability.md) provisions the destination;
-it does not supply this instrumentation. The planned P1 milestone must add it.
+it does not supply this instrumentation. Add it to [P1](../part-5-projects/rag-service.md#milestones) before this exercise.
 
 Choose stop conditions and an observation window before exposure. Low traffic may be inconclusive;
 add controlled requests or wait rather than promoting on silence.
@@ -170,16 +170,14 @@ queries against unchanged shared data.
 ## Try it \{#try-it}
 
 Deploy a second P1 revision, give it 10% of ingress traffic, then rehearse rollback.
-**This is a later-project exercise:** the [P1 RAG service guide is planned](../part-5-projects/overview.md#whats-inside).
-It becomes usable after P1 supplies a working API, a documented request with fixed citation/refusal
-fixtures, and the telemetry above. Those request and fixture references are not published yet;
-return here after that milestone. The compute sample is not P1.
+**This exercise requires [P1](../part-5-projects/rag-service.md):** a working API, the guide's documented request with fixed citation/refusal
+fixtures, and the telemetry above. Complete those P1 milestones before returning here. The compute sample is not P1.
 
 Require one healthy active revision, HTTP ingress, registry access and a compatible candidate image
 that has passed scanning and signature verification. Use a unique protected release tag and retain
 its digest. For the complete cleanup below, require P1's inventory to place **all** its resources in
-one dedicated resource group with nothing shared. For another layout, wait for P1's ownership and
-teardown guide before running this lab.
+one dedicated resource group with nothing shared. For another layout, do not run this lab; consult [P1's ownership and
+teardown guide](../part-5-projects/rag-service.md#teardown).
 
 These commands were checked against the current Azure CLI
 [revision reference](https://learn.microsoft.com/en-us/cli/azure/containerapp/revision?view=azure-cli-latest)

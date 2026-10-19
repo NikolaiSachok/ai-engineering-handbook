@@ -272,7 +272,7 @@ static async IAsyncEnumerable<string> ModelAsync(
 }
 ```
 
-Provider registration belongs to P1's model integration and II.8, AI in .NET. This adapter shows where
+Provider registration belongs to P1's model integration and [II.8, AI in .NET](./ai-in-dotnet.md). This adapter shows where
 the cancellation signal enters the model call; the transport need not know which provider supplies it.
 
 **Cost:** free (local only, no Azure resources). The exercise makes no external model calls.

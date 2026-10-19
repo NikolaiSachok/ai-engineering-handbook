@@ -111,7 +111,7 @@ catalog placement does not grant unrestricted use.
 
 Finally decide what may share a resource. Projects provide separate working areas within shared settings.
 Use separate resources for independent networking. Capacity depends on deployment and quota planning,
-which follows in the next lesson; resource separation alone makes no capacity guarantee.
+covered in [Model deployments, quotas and cost](./deployments-quotas-cost.md); resource separation alone makes no capacity guarantee.
 
 ## In an AI workload \{#in-an-ai-workload}
 
@@ -127,7 +127,7 @@ telemetry. These [remain separate resources with their own governance boundaries
 A Foundry project does not create or authorise all of them for you.
 
 This lesson establishes the Foundry resource, a project and the future API identity's resource-scoped
-grant. A later step attaches that identity to Container Apps and adds a model deployment. When replacing
+grant. [P1](../part-5-projects/rag-service.md) attaches that identity to Container Apps and adds a model deployment. When replacing
 the model, run the existing questions and citation checks against the replacement before accepting it.
 An unchanged API shape tells you nothing about answer quality. Use
 [Evaluation](/rag-agents/part-1-rag/cross-cutting/evaluation/) for the method behind that check.

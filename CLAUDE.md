@@ -261,7 +261,8 @@ a bare auto-index:
    exist; no stale "🚧 заглушка" language once real content ships. **Every publish PR** (not only at
    layer-close) updates the intro with the overview: when a Part's last lesson ships, drop its 🚧 from the
    course map in every locale and drop the 🚧 legend from that Part's overview. `scripts/course-status-check.py`
-   (CI) enforces it from each overview's `Published: N of M` line; `--fix` applies the mechanical edits.
+   (CI) enforces it from each overview's `Published: N of M` line, and fails a link to `overview.md#whats-inside` standing in
+   for a lesson once that Part is complete; `--fix` applies the mechanical edits.
 3. **Curriculum ↔ milestones** — the part TOC reflects the GitHub milestone/issue plan; seed each part's TOC
    from its milestone up front, and move it when issues are added or the plan shifts.
 4. **Uniformity** — a new page matches the established skeleton (frontmatter, «Что забрать из урока», «Новые

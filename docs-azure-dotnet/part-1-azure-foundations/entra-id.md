@@ -105,7 +105,7 @@ A user-assigned identity exposes three identifiers. Keep their jobs distinct:
 | `id` | Refer to the Azure resource when attaching it to supported compute |
 
 These values are identifiers, not secrets or authentication proof. Sending a client ID alone proves
-nothing. The next identity lesson develops grants and credential selection.
+nothing. [Identity II — RBAC and keyless access](./rbac-and-keyless-access.md) develops grants and credential selection.
 
 When calls fail, separate authentication from authorisation. For bearer-protected APIs,
 [a 401 indicates a missing or invalid token, including a wrong audience; a 403 typically indicates a valid token without the required permission](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/configure-jwt-bearer-authentication?view=aspnetcore-10.0).

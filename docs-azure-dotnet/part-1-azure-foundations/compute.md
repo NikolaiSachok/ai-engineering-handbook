@@ -171,8 +171,8 @@ az group create --name "$RESOURCE_GROUP" --location "$LOCATION"
 
 Create an environment and select Consumption explicitly for the app. The
 [environment reference](https://learn.microsoft.com/en-us/cli/azure/containerapp/env?view=azure-cli-latest#az-containerapp-env-create)
-documents `none` as a logging destination. This short lab omits a Log Analytics workspace; later lessons
-will add telemetry deliberately. The image and port come from Microsoft's
+documents `none` as a logging destination. This short lab omits a Log Analytics workspace; [Observability](./observability.md) and
+[Evaluation and tracing](../part-3-llms-on-azure/evaluation-and-tracing.md) add telemetry deliberately. The image and port come from Microsoft's
 [quickstart](https://learn.microsoft.com/en-us/azure/container-apps/get-started?tabs=bash); allocation and
 scaling flags follow the
 [create reference](https://learn.microsoft.com/en-us/cli/azure/containerapp?view=azure-cli-latest#az-containerapp-create).

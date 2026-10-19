@@ -19,7 +19,7 @@ last_verified: 2026-10-17
 
 - **[RAG-сервис](./rag-service.md)** — цель: собрать ASP.NET Core minimal API, который отвечает на вопросы по небольшому набору открытых документов и приводит ссылки на источники. В проекте соединятся .NET 10, `Microsoft.Extensions.AI`, развёртывание модели в Foundry, гибридный поиск Azure AI Search, Blob Storage, Key Vault через управляемое удостоверение, Container Apps, Application Insights с OpenTelemetry, Bicep, `azd` и GitHub Actions с OIDC.
 - **[Агент за AI-шлюзом](./agent-behind-gateway.md)** — цель: собрать агента с вызовом инструментов и одобрением действий человеком. В проекте соединятся Microsoft Agent Framework для .NET, политики AI-шлюза в API Management, Service Bus для долгих задач, EF Core с PostgreSQL и проверки качества в Foundry.
-- **[Конвейер приёма документов](./ingestion-pipeline.md)** — необязательный проект: обработать поступление документа и обновить поисковый индекс. Запланирована цепочка Event Grid → Functions → Content Understanding → обновление индекса, с метаданными в Cosmos DB или PostgreSQL.
+- **[Конвейер приёма документов](./ingestion-pipeline.md)** — необязательный проект: обработать поступление документа и обновить поисковый индекс. Используется цепочка Event Grid → Functions → Content Understanding → обновление индекса, с метаданными в Cosmos DB или PostgreSQL.
 
 ## Что нужно знать заранее \{#prerequisites}
 

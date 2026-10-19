@@ -231,7 +231,7 @@ Expect `rbac: true`, a vault URI and identity identifiers. The role-assignment r
 vault's resource ID as its scope and the API identity as its principal. These checks inspect management
 state. They do not test secret retrieval. The vault is empty, and the identity still needs attaching to
 a Container App. This lab is disposable; P1's lasting vault and identity are declared in lesson 9,
-Infrastructure as code.
+[Infrastructure as code](./infrastructure-as-code.md).
 
 **Cost:** [Key Vault bills per operation, with no setup fee](https://azure.microsoft.com/en-us/pricing/details/key-vault/).
 This lab creates an empty Standard vault and performs no secret operations. It creates no compute or

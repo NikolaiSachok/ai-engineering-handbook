@@ -130,8 +130,8 @@ a mistaken shared policy reach every caller.
 
 ## In an AI workload \{#in-an-ai-workload}
 
-For P1, the planned RAG service, the minimal API will embed a question, query Azure AI Search, select
-source passages and send those passages to chat generation. Blob Storage holds the public documents;
+For [P1, the RAG service](../part-5-projects/rag-service.md), the minimal API embeds a question, queries Azure AI Search, selects
+source passages and sends those passages to chat generation. Blob Storage holds the public documents;
 the answer must preserve citations back to them. The client registrations in this lesson prepare the
 model-access boundary of that service against its Microsoft Foundry resource. Search, ingestion and citation assembly remain application work.
 
