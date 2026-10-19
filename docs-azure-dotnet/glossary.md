@@ -731,3 +731,7 @@ Verified as of 2026-10-17. Each group's sources are in its lesson's Sources sect
 **Artefact signature** — a cryptographic binding between an artefact's content and a signer, checked against a trust policy to establish integrity and an accepted signing identity.
 
 **Dependency scanning** — checking software dependencies against known vulnerability information, with coverage and release-blocking rules defined explicitly.
+
+## Document ingestion pipeline \{#ingestion-pipeline}
+
+**ETag** — a server-generated version token for an item or resource. In Cosmos DB, an update with `If-Match` succeeds only if its token matches the current item's `_etag`; a stale token produces HTTP 412. This supports [optimistic concurrency](#data-access).
