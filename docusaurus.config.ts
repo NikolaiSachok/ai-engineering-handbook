@@ -249,7 +249,8 @@ const COURSES: Course[] = [
   // platform, so the charter's "no commodity tools" and "vendor-neutral only" rules are
   // scoped out for it (see CLAUDE.md, "Scope & prerequisites"). EN + RU only, 'by-design':
   // SK/DE are not planned, and hiding it there forever would hide it from those readers.
-  // `live`/`inNavbar` flip once its first layer ships in both locales.
+  // `live: true` since 2026-10-19: all five Parts, the recap sheet, exam map and glossary are
+  // published in both locales; `inNavbar` flipped in the same change.
   {
     id: 'azure-dotnet',
     basePath: '/azure-dotnet',
@@ -260,8 +261,8 @@ const COURSES: Course[] = [
       'building, securing and running an LLM service on Azure in .NET.',
     locales: ['en', 'ru'],
     untranslatedPolicy: 'by-design',
-    live: false,
-    inNavbar: false,
+    live: true,
+    inNavbar: true,
     footerLinks: [
       {label: 'Introduction', path: ''},
       {label: 'Part I — Azure foundations', path: 'part-1-azure-foundations/overview'},
@@ -269,6 +270,7 @@ const COURSES: Course[] = [
       {label: 'Part III — Running LLMs on Azure', path: 'part-3-llms-on-azure/overview'},
       {label: 'Part IV — AI-assisted delivery on the Microsoft stack', path: 'part-4-ai-delivery/overview'},
       {label: 'Part V — Projects', path: 'part-5-projects/overview'},
+      {label: 'Exam map', path: 'exam-map'},
       {label: 'Glossary', path: 'glossary'},
     ],
   },
