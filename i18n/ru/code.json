@@ -337,10 +337,6 @@
     "message": "Трудные вопросы проектирования, взятые из требований в опубликованных вакансиях AI-инженеров: у каждого три ответа — привычный, сильный и избыточный — и разбор компромиссов, которыми они различаются.",
     "description": "Landing card blurb for the Design Scenarios course"
   },
-  "fallback.englishOnly": {
-    "message": "Эта страница доступна только на английском языке.",
-    "description": "Shown above the content when a page is served in English because the reader’s locale has no translation of it. The surrounding interface stays in the reader’s language."
-  },
   "landing.course.azure-dotnet.blurb": {
     "message": "Платформа Azure и современный .NET для опытных инженеров — на одной сквозной задаче: построить, защитить и эксплуатировать LLM-сервис в Azure на .NET.",
     "description": "Landing card blurb for the Azure & .NET course"

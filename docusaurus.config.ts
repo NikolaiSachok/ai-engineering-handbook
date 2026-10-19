@@ -133,8 +133,8 @@ type Course = {
   //
   // Hiding is a NAVIGATION decision, never a routing one. The route still builds and still
   // resolves — shared links, search-engine results and cross-course links must keep working
-  // — it simply is not advertised. See the English-fallback notice for what a reader who
-  // arrives that way is told.
+  // — it simply is not advertised. A reader who arrives that way is moved to the English
+  // page (see `localeDetectionScript`).
   untranslatedPolicy: 'pending' | 'by-design';
   live: boolean;       // true = content shipped; false = placeholder / in progress
   inNavbar: boolean;   // add a docSidebar item to the navbar yet?
@@ -322,7 +322,7 @@ const CURRENT_LOCALE = process.env.DOCUSAURUS_CURRENT_LOCALE ?? DEFAULT_LOCALE;
 // Navigation only — this never removes a route. `/de/ai-sdlc/…` still builds and still
 // resolves; it is simply not linked from the German navbar or footer, because linking it
 // would promise German content that does not exist. A reader who arrives by shared link or
-// search engine gets the page plus the English-fallback notice.
+// search engine is moved to the English page (see `localeDetectionScript`).
 const advertisedInThisLocale = (c: Course): boolean =>
   c.locales.includes(CURRENT_LOCALE) || c.untranslatedPolicy === 'by-design';
 
@@ -348,21 +348,48 @@ const LUNR_SUPPORTED_LANGUAGES = new Set([
 ]);
 const SEARCH_LANGUAGES = LOCALES.filter((l) => LUNR_SUPPORTED_LANGUAGES.has(l));
 
-// Blocking <head> script: on a first visit with no preference cookie, match the
-// visitor's `navigator.languages` against LOCALES (English fallback) and redirect
-// to the best locale, preserving path + hash. An existing cookie OR an explicit
-// non-default locale already in the URL always wins, so we never fight a user's
-// choice and never loop. It runs before paint (no flash) and is a no-op for
-// non-JS crawlers, which get the requested URL as-is (hreflang still exposes every
-// locale). Locale-list-driven: LOCALES/DEFAULT_LOCALE/BASE_URL are injected below.
-// The cookie name is mirrored in src/lib/localePreference.ts — keep them in sync.
+// Which shipped locales each section of the site exists in. A course lists the locales it
+// claims; the blog is English-only by declaration; any route not listed here (landing page,
+// search) is in every shipped locale. The parity gate guarantees a claimed locale has every
+// page of its course, so a course-level list is also exact per page. Read by the language
+// pickers (src/lib/availableLocales.ts) and by the locale routing in the head script below.
+const LOCALE_SCOPES = [
+  ...COURSES.map((c) => ({
+    path: c.basePath,
+    locales: c.locales.filter((loc) => LOCALES.includes(loc)),
+  })),
+  {path: '/blog', locales: [DEFAULT_LOCALE]},
+];
+
+// Blocking <head> script: locale routing that runs before paint (no flash) and is a no-op for
+// non-JS crawlers, which get the requested URL as-is (hreflang still exposes every locale).
+// Locale-list-driven: LOCALES/DEFAULT_LOCALE/BASE_URL/LOCALE_SCOPES are injected below.
+//
+// 1. Out-of-scope fallback. A page whose section does not exist in the URL's locale (a German
+//    reader opening the English+Russian Azure course, the English-only blog) is moved to the
+//    same page in English, and the locale it came from is remembered for this tab. When the
+//    reader then reaches a page that exists in that locale again, they are moved back, so
+//    German → Azure (English) → RAG course lands in German. The preference cookie is never
+//    touched by this: it is a side effect of navigation, not a choice.
+// 2. First-visit detection. With no preference cookie, match `navigator.languages` against
+//    LOCALES (English fallback) and redirect to the best locale the page exists in, preserving
+//    path + hash. An existing cookie OR an explicit non-default locale already in the URL
+//    always wins, so we never fight a user's choice and never loop.
+//
+// Rule 1 must also run on client-side navigation, which never reloads this script: it is
+// exposed as `window.__handbookLocaleRedirect` and called on every route update by
+// src/clientModules/localeRouting.ts. One implementation, two triggers.
+// The cookie name and the session key are mirrored in src/lib/localePreference.ts — keep them
+// in sync.
 const localeDetectionScript = `
 (function () {
   try {
     var LOCALES = ${JSON.stringify(LOCALES)};
     var DEFAULT = ${JSON.stringify(DEFAULT_LOCALE)};
     var BASE = ${JSON.stringify(BASE_URL)};
+    var SCOPES = ${JSON.stringify(LOCALE_SCOPES)};
     var COOKIE = 'preferred_locale';
+    var FALLBACK_FROM = 'locale_fallback_from';
 
     function readCookie(name) {
       var m = document.cookie.match('(?:^|; )' + name + '=([^;]*)');
@@ -373,24 +400,72 @@ const localeDetectionScript = `
         name + '=' + encodeURIComponent(val) +
         '; path=' + BASE + '; max-age=' + (60 * 60 * 24 * 365) + '; samesite=lax';
     }
+    function session(op, val) {
+      try {
+        if (op === 'get') return window.sessionStorage.getItem(FALLBACK_FROM);
+        if (op === 'set') window.sessionStorage.setItem(FALLBACK_FROM, val);
+        if (op === 'remove') window.sessionStorage.removeItem(FALLBACK_FROM);
+      } catch (e) {}
+      return null;
+    }
 
-    var path = window.location.pathname;
-    if (path.indexOf(BASE) !== 0) return;            // only act within our baseUrl
-    var rest = path.slice(BASE.length);              // '' | 'ru/...' | 'llmops/...'
-    var firstSeg = rest.split('/')[0];
+    // '/ai-engineering-handbook/de/azure-dotnet/x/' -> {locale: 'de', route: '/azure-dotnet/x/'}
+    function parse(pathname) {
+      if (pathname.indexOf(BASE) !== 0) return null;  // only act within our baseUrl
+      var rest = pathname.slice(BASE.length);
+      var firstSeg = rest.split('/')[0];
+      if (firstSeg !== DEFAULT && LOCALES.indexOf(firstSeg) !== -1) {
+        return {locale: firstSeg, route: '/' + rest.slice(firstSeg.length + 1)};
+      }
+      return {locale: DEFAULT, route: '/' + rest};
+    }
+    function existsIn(route, locale) {
+      for (var i = 0; i < SCOPES.length; i++) {
+        var p = SCOPES[i].path;
+        if (route === p || route.indexOf(p + '/') === 0) {
+          return SCOPES[i].locales.indexOf(locale) !== -1;
+        }
+      }
+      return true;                                    // unscoped routes exist everywhere
+    }
+    function url(locale, route) {
+      return BASE + (locale === DEFAULT ? '' : locale + '/') + route.slice(1);
+    }
 
-    var nonDefault = LOCALES.filter(function (l) { return l !== DEFAULT; });
-    var urlLocale = nonDefault.indexOf(firstSeg) !== -1 ? firstSeg : DEFAULT;
+    // Rule 1. Returns the URL to move to, or null to stay.
+    function fallbackTarget(pathname) {
+      var at = parse(pathname);
+      if (!at) return null;
+      if (!existsIn(at.route, at.locale)) {
+        session('set', at.locale);
+        return url(DEFAULT, at.route);
+      }
+      var from = session('get');
+      if (at.locale === DEFAULT && from && LOCALES.indexOf(from) !== -1 && existsIn(at.route, from)) {
+        session('remove');
+        return url(from, at.route);
+      }
+      return null;
+    }
+    window.__handbookLocaleRedirect = function (loc) {
+      var target = fallbackTarget(loc.pathname);
+      if (!target) return false;
+      window.location.replace(target + loc.search + loc.hash);
+      return true;
+    };
 
-    // Any established preference (cookie) suppresses detection entirely — we never
-    // auto-redirect against a choice the user has already made.
+    if (window.__handbookLocaleRedirect(window.location)) return;
+
+    // Rule 2. Any established preference (cookie) suppresses detection entirely.
+    var at = parse(window.location.pathname);
+    if (!at) return;
     var cookie = readCookie(COOKIE);
     if (cookie && LOCALES.indexOf(cookie) !== -1) return;
 
     // No cookie = genuine first visit.
-    if (urlLocale !== DEFAULT) {
+    if (at.locale !== DEFAULT) {
       // Arrived directly at a locale-prefixed URL → honor it, remember it.
-      writeCookie(COOKIE, urlLocale);
+      writeCookie(COOKIE, at.locale);
       return;
     }
 
@@ -409,13 +484,16 @@ const localeDetectionScript = `
     }
 
     writeCookie(COOKIE, match);
-    if (match !== DEFAULT) {
-      window.location.replace(
-        BASE + match + '/' + rest + window.location.search + window.location.hash,
-      );
+    if (match === DEFAULT) return;
+    if (existsIn(at.route, match)) {
+      window.location.replace(url(match, at.route) + window.location.search + window.location.hash);
+    } else {
+      // The page is not in their language: stay in English, and return them to it at the
+      // first page that is (rule 1).
+      session('set', match);
     }
   } catch (e) {
-    // Fail open: detection must never block or break the page.
+    // Fail open: locale routing must never block or break the page.
   }
 })();
 `;
@@ -476,28 +554,9 @@ const config: Config = {
     // and wrong inside an English sentence, where "…ship in English, Русский, Slovenčina and
     // Deutsch" reads as a bug. Two audiences, two lists.
     releasedLanguages: RELEASED_LOCALES.map((loc) => LOCALE_ENGLISH_NAMES[loc]),
-    // Empty for `en`, where nothing is a fallback.
-    englishOnlyPaths:
-      CURRENT_LOCALE === DEFAULT_LOCALE
-        ? []
-        : [
-            ...COURSES.filter((c) => !c.locales.includes(CURRENT_LOCALE)).map(
-              (c) => c.basePath,
-            ),
-            '/blog',
-          ],
-    // Which shipped locales each section of the site exists in, for the language pickers
-    // (src/lib/availableLocales.ts). A course lists the locales it claims; the blog is
-    // English-only by declaration; any route not listed here (landing page, search) is in
-    // every shipped locale. The parity gate guarantees a claimed locale has every page of
-    // its course, so a course-level list is also exact per page.
-    localeScopes: [
-      ...COURSES.map((c) => ({
-        path: c.basePath,
-        locales: c.locales.filter((loc) => LOCALES.includes(loc)),
-      })),
-      {path: '/blog', locales: [DEFAULT_LOCALE]},
-    ],
+    // Which shipped locales each section exists in, for the language pickers
+    // (src/lib/availableLocales.ts). See LOCALE_SCOPES.
+    localeScopes: LOCALE_SCOPES,
   },
 
   // Released (deployed) builds throw on any dead internal link — the hard gate for
@@ -529,8 +588,11 @@ const config: Config = {
   // locales stay hard-gated in CI too.
   onBrokenAnchors: INCLUDE_UNRELEASED ? 'warn' : 'throw',
 
-  // Browser-language auto-detect + cookie, injected as a blocking <head> script so
-  // it runs before paint (no flash-of-wrong-language). See `localeDetectionScript`.
+  // Locale routing (out-of-scope fallback, first-visit detection), injected as a blocking
+  // <head> script so it runs before paint (no flash-of-wrong-language). See
+  // `localeDetectionScript`; client-side navigation reaches it via clientModules.
+  clientModules: ['./src/clientModules/localeRouting.ts'],
+
   headTags: [
     {
       tagName: 'script',

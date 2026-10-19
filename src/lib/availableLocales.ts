@@ -7,18 +7,16 @@ type LocaleScope = {path: string; locales: string[]};
  * The locales the current page actually exists in, for the language pickers.
  *
  * Docusaurus builds every route in every locale, so a page a locale does not translate
- * (an English-only course, the blog) is still served there — in English. Offering that
- * locale in the picker promises a translation that is not there. The scopes come from
+ * (an English-only course, the blog) is still served there — in English — and a reader who
+ * picked that locale would be moved straight back to English by the locale routing in the
+ * head script. Offering it in the picker promises a translation that is not there. The scopes come from
  * `customFields.localeScopes` (docusaurus.config.ts), derived from each course's declared
  * `locales`; a route outside every scope (landing page, search) is in every locale.
- *
- * The current locale is always kept, so the picker still names where the reader is
- * (the page itself tells them it is shown in English).
  */
 export function useAvailableLocales(): string[] {
   const {
     siteConfig: {baseUrl, customFields},
-    i18n: {currentLocale, locales},
+    i18n: {locales},
   } = useDocusaurusContext();
   const {pathname} = useLocation();
   const scopes = (customFields?.localeScopes ?? []) as LocaleScope[];
@@ -30,5 +28,5 @@ export function useAvailableLocales(): string[] {
   if (!scope) {
     return locales;
   }
-  return locales.filter((locale) => locale === currentLocale || scope.locales.includes(locale));
+  return locales.filter((locale) => scope.locales.includes(locale));
 }

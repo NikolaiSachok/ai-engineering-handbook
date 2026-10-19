@@ -7,6 +7,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {useAlternatePageUtils} from '@docusaurus/theme-common/internal';
 import IconLanguage from '@theme/Icon/Language';
 import {useAvailableLocales} from '@site/src/lib/availableLocales';
+import {setPreferredLocale} from '@site/src/lib/localePreference';
 
 type Props = WrapperProps<typeof HeaderType>;
 
@@ -31,7 +32,7 @@ type Props = WrapperProps<typeof HeaderType>;
  */
 function MobileLanguageSwitch(): ReactNode {
   const {
-    siteConfig: {url: siteUrl},
+    siteConfig: {url: siteUrl, baseUrl},
     i18n: {currentLocale, localeConfigs},
   } = useDocusaurusContext();
   const alternatePageUtils = useAlternatePageUtils();
@@ -70,6 +71,7 @@ function MobileLanguageSwitch(): ReactNode {
             to={to}
             target="_self"
             autoAddBaseUrl={false}
+            onClick={() => setPreferredLocale(locale, baseUrl)}
             className={
               isActive
                 ? 'mobileLangSwitch__link mobileLangSwitch__link--active'
