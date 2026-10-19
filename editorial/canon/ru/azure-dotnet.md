@@ -1297,3 +1297,23 @@ English list items in order, with Russian joining words and the original link la
 The packet records that neither the English lesson's New terms line nor the English glossary's
 `#rag-service` group exists. All 32 existing glossary groups already have Russian counterparts
 in the same order. No definitions are inferred from the disambiguation-only concept register.
+
+## Agent behind an AI gateway — terminology evidence (2026-10-19)
+
+This lesson reuses the existing approval-request, Agent Framework session, idempotency,
+duplicate-detection, managed-identity and concurrency senses. Existing rows and their statuses are
+unchanged under the binding course ledger rule. The locked lesson has no New terms line or glossary
+group, so this section adds no term rows.
+
+For this lesson, JWT authority uses «издатель токенов», reusing the existing issuer sense; callback
+in prose uses «функция обратного вызова». Code identifiers remain unchanged. The pending-dispatch
+record, publication task and queue message are named according to their separate roles. Approval
+means approval of a tool call. These are wording decisions, not additional glossary headwords.
+
+All 45 distinct Microsoft Learn URLs in the semantic packet returned HTTP 200 at their same-path
+`ru-ru` counterparts when checked live on 2026-10-19. Query strings are preserved. The additional
+locks-and-settlement evidence URL also returned HTTP 200. Internal paths and other vendors' URLs
+are unchanged. Sources retain English link labels and the source's ten groups in the same order.
+The existing RU glossary already contains all 32 EN groups and 328 definitions in matching order;
+the locked source introduces no glossary group or New terms line for this project. The EN intro
+has no changes against origin/main, so the RU intro is unchanged.
