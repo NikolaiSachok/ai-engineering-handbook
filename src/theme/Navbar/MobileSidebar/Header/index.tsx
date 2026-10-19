@@ -7,7 +7,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {useAlternatePageUtils} from '@docusaurus/theme-common/internal';
 import IconLanguage from '@theme/Icon/Language';
 import {useAvailableLocales} from '@site/src/lib/availableLocales';
-import {setPreferredLocale} from '@site/src/lib/localePreference';
+import {useSetPreferredLocale} from '@site/src/lib/localePreference';
 
 type Props = WrapperProps<typeof HeaderType>;
 
@@ -32,12 +32,13 @@ type Props = WrapperProps<typeof HeaderType>;
  */
 function MobileLanguageSwitch(): ReactNode {
   const {
-    siteConfig: {url: siteUrl, baseUrl},
+    siteConfig: {url: siteUrl},
     i18n: {currentLocale, localeConfigs},
   } = useDocusaurusContext();
   const alternatePageUtils = useAlternatePageUtils();
   // Only the locales this page exists in (same rule as the desktop dropdown).
   const locales = useAvailableLocales();
+  const setPreferredLocale = useSetPreferredLocale();
 
   // Nothing to switch between: a single-locale build, or a page in one locale only.
   if (locales.length <= 1) {
@@ -71,7 +72,7 @@ function MobileLanguageSwitch(): ReactNode {
             to={to}
             target="_self"
             autoAddBaseUrl={false}
-            onClick={() => setPreferredLocale(locale, baseUrl)}
+            onClick={() => setPreferredLocale(locale)}
             className={
               isActive
                 ? 'mobileLangSwitch__link mobileLangSwitch__link--active'

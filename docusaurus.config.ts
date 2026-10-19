@@ -441,7 +441,12 @@ const localeDetectionScript = `
         return url(DEFAULT, at.route);
       }
       var from = session('get');
-      if (at.locale === DEFAULT && from && LOCALES.indexOf(from) !== -1 && existsIn(at.route, from)) {
+      if (!from) return null;
+      if (at.locale === from) {
+        session('remove');                            // already back (e.g. via Back)
+        return null;
+      }
+      if (at.locale === DEFAULT && LOCALES.indexOf(from) !== -1 && existsIn(at.route, from)) {
         session('remove');
         return url(from, at.route);
       }
@@ -454,20 +459,23 @@ const localeDetectionScript = `
       return true;
     };
 
-    if (window.__handbookLocaleRedirect(window.location)) return;
-
-    // Rule 2. Any established preference (cookie) suppresses detection entirely.
     var at = parse(window.location.pathname);
     if (!at) return;
     var cookie = readCookie(COOKIE);
-    if (cookie && LOCALES.indexOf(cookie) !== -1) return;
+    var hasPreference = !!cookie && LOCALES.indexOf(cookie) !== -1;
 
-    // No cookie = genuine first visit.
-    if (at.locale !== DEFAULT) {
-      // Arrived directly at a locale-prefixed URL → honor it, remember it.
+    // A first visit straight to a locale-prefixed URL → honor it, remember it. Done before
+    // rule 1, so a fallback from that URL lands on an English page that already has a
+    // preference and is not re-detected from the browser languages.
+    if (!hasPreference && at.locale !== DEFAULT) {
       writeCookie(COOKIE, at.locale);
-      return;
+      hasPreference = true;
     }
+
+    if (window.__handbookLocaleRedirect(window.location)) return;
+
+    // Rule 2. Any established preference (cookie) suppresses detection entirely.
+    if (hasPreference) return;
 
     // Bare default-locale path, no cookie → detect from the browser languages.
     var langs = (navigator.languages && navigator.languages.length)
@@ -557,6 +565,9 @@ const config: Config = {
     // Which shipped locales each section exists in, for the language pickers
     // (src/lib/availableLocales.ts). See LOCALE_SCOPES.
     localeScopes: LOCALE_SCOPES,
+    // The site root, shared by every locale. `siteConfig.baseUrl` is the CURRENT locale's base
+    // (`/ai-engineering-handbook/de/`), so a cookie scoped to it would be invisible elsewhere.
+    siteBaseUrl: BASE_URL,
   },
 
   // Released (deployed) builds throw on any dead internal link — the hard gate for

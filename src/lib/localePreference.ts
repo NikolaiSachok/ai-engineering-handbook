@@ -1,3 +1,5 @@
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+
 /**
  * Persist the reader's explicit locale choice.
  *
@@ -20,18 +22,23 @@
 export const PREFERRED_LOCALE_COOKIE = 'preferred_locale';
 const FALLBACK_FROM_KEY = 'locale_fallback_from';
 
-/** Remember `locale` as the reader's chosen language. Scoped to the site's
- *  baseUrl so it doesn't leak to other apps on the same host. No-op during SSR. */
-export function setPreferredLocale(locale: string, baseUrl: string): void {
-  if (typeof document === 'undefined') return;
-  const oneYear = 60 * 60 * 24 * 365;
-  const path = baseUrl || '/';
-  document.cookie =
-    `${PREFERRED_LOCALE_COOKIE}=${encodeURIComponent(locale)}` +
-    `; path=${path}; max-age=${oneYear}; samesite=lax`;
-  try {
-    window.sessionStorage.removeItem(FALLBACK_FROM_KEY);
-  } catch {
-    // Storage blocked: there is no fallback state to clear either.
-  }
+/** Returns a function that remembers `locale` as the reader's chosen language. The cookie is
+ *  scoped to the site root (`customFields.siteBaseUrl`), shared by every locale, so it does not
+ *  leak to other apps on the same host and is visible on every locale's pages. `siteConfig.baseUrl`
+ *  is the current locale's base and would hide the choice from the others. No-op during SSR. */
+export function useSetPreferredLocale(): (locale: string) => void {
+  const {siteConfig} = useDocusaurusContext();
+  const path = siteConfig.customFields?.siteBaseUrl as string;
+  return (locale) => {
+    if (typeof document === 'undefined') return;
+    const oneYear = 60 * 60 * 24 * 365;
+    document.cookie =
+      `${PREFERRED_LOCALE_COOKIE}=${encodeURIComponent(locale)}` +
+      `; path=${path}; max-age=${oneYear}; samesite=lax`;
+    try {
+      window.sessionStorage.removeItem(FALLBACK_FROM_KEY);
+    } catch {
+      // Storage blocked: there is no fallback state to clear either.
+    }
+  };
 }

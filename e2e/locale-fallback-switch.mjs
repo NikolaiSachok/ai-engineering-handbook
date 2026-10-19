@@ -27,7 +27,11 @@ const check = (label, ok, detail) => {
 };
 const route = (page) => new URL(page.url()).pathname.replace('/ai-engineering-handbook', '') + new URL(page.url()).hash;
 const lang = (page) => page.evaluate(() => document.documentElement.lang);
-const cookie = async (ctx) => (await ctx.cookies()).find((c) => c.name === 'preferred_locale')?.value;
+// The site-wide preference only: a cookie scoped to a locale's path (`/ai-engineering-handbook/de/`)
+// is invisible on every other locale's pages, so it must not count.
+const cookie = async (ctx) =>
+  (await ctx.cookies()).find((c) => c.name === 'preferred_locale' && c.path === '/ai-engineering-handbook/')?.value;
+const fallbackFrom = (page) => page.evaluate(() => sessionStorage.getItem('locale_fallback_from'));
 
 async function settle(page) {
   await page.waitForLoadState('load');
@@ -40,7 +44,7 @@ async function clickNavbar(page, hrefPart) {
 async function newContext(preferred, browserLocale = 'en-US') {
   const ctx = await browser.newContext({locale: browserLocale, viewport: {width: 1440, height: 900}});
   if (preferred) {
-    await ctx.addCookies([{name: 'preferred_locale', value: preferred, url: `${SITE}/`}]);
+    await ctx.addCookies([{name: 'preferred_locale', value: preferred, path: '/ai-engineering-handbook/', domain: new URL(BASE).hostname}]);
   }
   return ctx;
 }
@@ -102,7 +106,7 @@ async function newContext(preferred, browserLocale = 'en-US') {
 // 4b. The mobile drawer switcher records the choice the same way.
 {
   const ctx = await browser.newContext({viewport: {width: 390, height: 844}});
-  await ctx.addCookies([{name: 'preferred_locale', value: 'de', url: `${SITE}/`}]);
+  await ctx.addCookies([{name: 'preferred_locale', value: 'de', path: '/ai-engineering-handbook/', domain: new URL(BASE).hostname}]);
   const page = await ctx.newPage();
   await page.goto(`${SITE}/de/rag-agents/`);
   await settle(page);
@@ -110,6 +114,32 @@ async function newContext(preferred, browserLocale = 'en-US') {
   await page.locator('.mobileLangSwitch a', {hasText: 'RU'}).click();
   await settle(page);
   check('mobile switcher records the choice', route(page) === '/ru/rag-agents/' && (await cookie(ctx)) === 'ru', `${route(page)} preferred_locale=${await cookie(ctx)}`);
+  await ctx.close();
+}
+
+// 4c. Back to German through history ends the fallback.
+{
+  const ctx = await newContext('de');
+  const page = await ctx.newPage();
+  await page.goto(`${SITE}/de/rag-agents/`);
+  await settle(page);
+  await clickNavbar(page, '/azure-dotnet/');
+  await page.goBack();
+  await settle(page);
+  check('Back to German clears the fallback', route(page) === '/de/rag-agents/' && (await fallbackFrom(page)) === null, `${route(page)} fallback_from=${await fallbackFrom(page)}`);
+  await ctx.close();
+}
+
+// 4d. A first visit straight to a German page without German, from a browser in another
+//     shipped language: English, remembering German — not re-detected to the browser's language.
+{
+  const ctx = await newContext(null, 'ru-RU');
+  const page = await ctx.newPage();
+  await page.goto(`${SITE}/de/azure-dotnet/`);
+  await settle(page);
+  check('first visit /de/azure-dotnet/ from a Russian browser → English', route(page) === '/azure-dotnet/' && (await cookie(ctx)) === 'de', `${route(page)} preferred_locale=${await cookie(ctx)}`);
+  await clickNavbar(page, '/rag-agents/');
+  check('then RAG opens in German', route(page) === '/de/rag-agents/', route(page));
   await ctx.close();
 }
 
