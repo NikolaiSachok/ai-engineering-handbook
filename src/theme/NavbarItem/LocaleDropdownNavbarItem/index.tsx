@@ -18,6 +18,10 @@
  *     points at an anchor that doesn't exist (and is what caused the reader to
  *     be dumped at the top). Structural restore replaces it.
  *
+ *  3. Only the locales the current page exists in are listed
+ *     (src/lib/availableLocales.ts): an English-only course or the blog does not
+ *     offer a "translation" that would be the same English page.
+ *
  * Everything else — labels, active-class logic, query-string merging, the
  * dropdown itself — is verbatim upstream, so normal dropdown behavior, in-page
  * anchor links, and the TOC are unaffected.
@@ -36,6 +40,7 @@ import type {Props} from '@theme/NavbarItem/LocaleDropdownNavbarItem';
 
 import {capturePosition} from '@site/src/lib/localeScrollPosition';
 import {setPreferredLocale} from '@site/src/lib/localePreference';
+import {useAvailableLocales} from '@site/src/lib/availableLocales';
 
 import styles from './styles.module.css';
 
@@ -121,8 +126,9 @@ export default function LocaleDropdownNavbarItem({
 
   const {
     siteConfig: {baseUrl},
-    i18n: {currentLocale, locales},
+    i18n: {currentLocale},
   } = useDocusaurusContext();
+  const locales = useAvailableLocales();
   const localeItems = locales.map((locale): LinkLikeNavbarItemProps => {
     const isCurrent = locale === currentLocale;
     // Keep the hash only when staying in the current locale; drop it when

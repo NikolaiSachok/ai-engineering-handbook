@@ -486,6 +486,18 @@ const config: Config = {
             ),
             '/blog',
           ],
+    // Which shipped locales each section of the site exists in, for the language pickers
+    // (src/lib/availableLocales.ts). A course lists the locales it claims; the blog is
+    // English-only by declaration; any route not listed here (landing page, search) is in
+    // every shipped locale. The parity gate guarantees a claimed locale has every page of
+    // its course, so a course-level list is also exact per page.
+    localeScopes: [
+      ...COURSES.map((c) => ({
+        path: c.basePath,
+        locales: c.locales.filter((loc) => LOCALES.includes(loc)),
+      })),
+      {path: '/blog', locales: [DEFAULT_LOCALE]},
+    ],
   },
 
   // Released (deployed) builds throw on any dead internal link — the hard gate for
