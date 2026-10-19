@@ -66,7 +66,7 @@ flowchart TB
 
 ## Milestones \{#milestones}
 
-### 1. Bind P3 to P1 without replacing P1's resources
+### 1. Bind P3 to P1 without replacing P1's resources \{#1-bind-p3-to-p1-without-replacing-p1s-resources}
 
 Continue the **Try it** steps in [data](../part-1-azure-foundations/data.md#try-it),
 [compute](../part-1-azure-foundations/compute.md#try-it) and
@@ -120,7 +120,7 @@ your infrastructure definition rather than copying P1's deployment.
 **Check:** Inspect the resource IDs and group contents. P1's existing query still returns its previous
 answer; P3 has not uploaded documents or changed the index.
 
-### 2. Make one durable job survive another delivery
+### 2. Make one durable job survive another delivery \{#2-make-one-durable-job-survive-another-delivery}
 
 Continue [messaging's Try it](../part-1-azure-foundations/messaging.md#try-it). Create the same Basic
 queue boundary in P3's group, retaining the lesson's `ingest` name and `PT5M` lock:
@@ -211,7 +211,7 @@ so neither Message ID nor arrival order protects the index. Initially accept onl
 **Check:** Deliver the same manual command twice. Both deliveries resolve to one operation record;
 the completed first stage is reused. Invalid commands reach the queue's dead-letter subqueue with a reason.
 
-### 3. Extract a private source and retain its structure
+### 3. Extract a private source and retain its structure \{#3-extract-a-private-source-and-retain-its-structure}
 
 Continue [document ingestion's Try it](../part-3-llms-on-azure/document-ingestion.md#try-it).
 Keep its Document Intelligence result as a splitter fixture. For this pipeline, provision a Content
@@ -270,7 +270,7 @@ on P1's model resource and record this shared-scope assignment ID too.
 **Check:** Compare a section and a table with the PDF. Each chunk maps back to the source, and its vector
 length matches P1's actual index field. A second delivery resumes from saved analysis or chunk artifacts.
 
-### 4. Publish chunks into the existing retrieval path
+### 4. Publish chunks into the existing retrieval path \{#4-publish-chunks-into-the-existing-retrieval-path}
 
 Continue [RAG on AI Search's Try it](../part-3-llms-on-azure/rag-on-ai-search.md#try-it).
 Grant the worker **Search Index Data Contributor** on P1's existing Search service; use the same role
@@ -303,7 +303,7 @@ The Cosmos update and Search writes are separate operations.
 **Check:** After Search makes the updates visible, query the new subject through P1. Retrieve a new chunk
 and check the answer's citation against the source page. An HTTP success alone does not establish this.
 
-### 5. Connect uploads, then exercise replacement and recovery
+### 5. Connect uploads, then exercise replacement and recovery \{#5-connect-uploads-then-exercise-replacement-and-recovery}
 
 Return to [messaging](../part-1-azure-foundations/messaging.md#try-it). Only now enable automatic intake.
 Event Grid allows [one system topic per source](https://learn.microsoft.com/en-us/azure/event-grid/system-topics):
@@ -357,7 +357,7 @@ chunk keys and updates metadata; a BlobCreated-only subscription does not implem
 write, and submit an invalid PDF. Verify resumed progress, bounded failure and an inspectable dead-letter
 reason. After replacement, a stale command must not restore retired chunks.
 
-### 6. Leave evidence that distinguishes acceptance from completion
+### 6. Leave evidence that distinguishes acceptance from completion \{#6-leave-evidence-that-distinguishes-acceptance-from-completion}
 
 Continue [observability](../part-1-azure-foundations/observability.md#try-it) and
 [testing](../part-2-modern-dotnet/testing.md#try-it). Correlate event ID, operation ID, document ID and

@@ -74,7 +74,7 @@ capacity. Neither establishes approval for a particular note.
 
 ## Milestones \{#milestones}
 
-### 1. Preserve a working P1 baseline
+### 1. Preserve a working P1 baseline \{#1-preserve-a-working-p1-baseline}
 
 Continue [Infrastructure as code](../part-1-azure-foundations/infrastructure-as-code.md#try-it),
 [Compute](../part-1-azure-foundations/compute.md#try-it) and
@@ -97,7 +97,7 @@ and append it to that file. It is the teardown inventory, including retrieval an
 **Check:** P1's saved question still produces a cited answer. The resource inventory distinguishes
 shared P1 dependencies from P2-owned hosts, identities, database and queue. No P1 dependency is recreated.
 
-### 2. Turn the local store into a durable approval boundary
+### 2. Turn the local store into a durable approval boundary \{#2-turn-the-local-store-into-a-durable-approval-boundary}
 
 Continue [Data access](../part-2-modern-dotnet/data-access.md#try-it) from `P2.Store` and its
 `InitialAgentStore` migration. Provision PostgreSQL in the P2 group using the
@@ -176,7 +176,7 @@ token lifetime. Use the authenticated requests in milestone 5 against the local 
 proposal handler replacing the model. Restart before deciding; the pending record must survive.
 Denial writes no published note; another tenant has no access. Competing decisions accept one transition.
 
-### 3. Publish approved work through a queue
+### 3. Publish approved work through a queue \{#3-publish-approved-work-through-a-queue}
 
 Adapt [Messaging](../part-1-azure-foundations/messaging.md#try-it): its `ingest` exercise prepares P3;
 here the queue is `publish`. Keep its Basic tier and five-minute lock. In Bash, after selecting your
@@ -221,7 +221,7 @@ the worker after commit but before message completion. On
 expect the same outcome and no second version increment. Complete only after commit. Also commit approval,
 stop HTTP traffic, fail/restart the dispatcher before send, and expect recovery from the pending row. Repeat denial, expiry and stale-version cases; malformed work goes to the dead-letter queue.
 
-### 4. Let one agent request approval
+### 4. Let one agent request approval \{#4-let-one-agent-request-approval}
 
 Continue [Agents on Azure](../part-3-llms-on-azure/agents-on-azure.md#try-it) and
 [AI in .NET](../part-2-modern-dotnet/ai-in-dotnet.md#try-it). Keep the .NET 10 target and existing P1
@@ -270,7 +270,7 @@ must survive restart. Bound iterations and propagate cancellation without discar
 and performs no write. Restart the API, reject the proposal and verify no publication. Approve a new
 proposal, then retrieve the worker's outcome. Altering its arguments after approval must fail closed.
 
-### 5. Enforce both gateway paths
+### 5. Enforce both gateway paths \{#5-enforce-both-gateway-paths}
 
 Continue [The AI gateway](../part-3-llms-on-azure/ai-gateway.md#try-it) and
 [Microsoft Entra ID](../part-1-azure-foundations/entra-id.md#try-it). Deploy its `gateway.bicep` as
@@ -363,7 +363,7 @@ tokens fail before the handler. The direct Container App URL is denied from your
 `Retry-After`, without guaranteeing a fixed number of successful requests. Run a cited question after
 switching both chat and embedding clients; this catches an accidentally broken retrieval path.
 
-### 6. Capture evidence and evaluate saved answers
+### 6. Capture evidence and evaluate saved answers \{#6-capture-evidence-and-evaluate-saved-answers}
 
 Continue [Evaluation and tracing](../part-3-llms-on-azure/evaluation-and-tracing.md#try-it) and
 [Releasing safely](../part-4-ai-delivery/releasing-safely.md#try-it). Reuse the telemetry destination
