@@ -21,7 +21,7 @@ lessons’ **Try it** steps, a cost table, a teardown script and what you should
 {/* slugs: rag-service, agent-behind-gateway, ingestion-pipeline */}
 
 - **[RAG service](./rag-service.md)** — an ASP.NET Core minimal API over a small public document set, using .NET 10, `Microsoft.Extensions.AI`, a Foundry model deployment, Azure AI Search hybrid retrieval, Blob Storage, Key Vault via managed identity, Container Apps, Application Insights with OpenTelemetry, Bicep, `azd` and GitHub Actions with OIDC. The service answers questions with citations.
-- **Agent behind an AI gateway** 🚧 — Microsoft Agent Framework for .NET, API Management AI-gateway policies, Service Bus for long-running work, EF Core with PostgreSQL and Foundry evaluations. The agent calls tools with approvals.
+- **[Agent behind an AI gateway](./agent-behind-gateway.md)** — Microsoft Agent Framework for .NET, API Management AI-gateway policies, Service Bus for long-running work, EF Core with PostgreSQL and Foundry evaluations. The agent calls tools with approvals.
 - **Document ingestion pipeline** 🚧 — an optional Event Grid → Functions → Content Understanding → index-update pipeline, with metadata in Cosmos DB or PostgreSQL. Incoming documents trigger processing and retrieval-index updates.
 
 ## Prerequisites \{#prerequisites}
@@ -39,7 +39,7 @@ You can demonstrate the result and remove the resources when the exercise is ove
 
 :::note[Status]
 
-Published: 1 of 3 project guides. Pages marked 🚧 are planned.
+Published: 2 of 3 project guides. Pages marked 🚧 are planned.
 
 :::
 
