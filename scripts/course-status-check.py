@@ -4,6 +4,7 @@
 A Part overview states `Published: N of M ...`. When N == M the Part is complete, so:
   - the course intro's map row linking that overview carries no 🚧 (every locale's intro);
   - the overview itself carries no 🚧 (every locale).
+  - no page links that Part's overview lesson list (`overview.md#whats-inside`) in place of a lesson.
 When N < M the intro row must still carry 🚧.
 
 Usage: course-status-check.py [--fix] [--self-test]
@@ -48,6 +49,21 @@ def check_text(intro, overviews, status, fix):
     return problems, intro, overviews
 
 
+PLACEHOLDER = re.compile(r'\]\(((?:\.\./)?(part-[a-z0-9-]+)/)?overview\.md#whats-inside\)')
+
+
+def placeholder_links(path, text, status):
+    """A link to a Part overview's lesson list stands in for an unpublished page; once the Part is complete it is stale."""
+    here = os.path.basename(os.path.dirname(path))
+    found = []
+    for n, line in enumerate(text.split('\n'), 1):
+        for m in PLACEHOLDER.finditer(line):
+            part = m.group(2) or here
+            if status.get(part):
+                found.append(f'{os.path.basename(path)}:{n}: link to {part} overview stands in for a published page')
+    return found
+
+
 def course_dirs(course):
     """The EN docs dir followed by each locale's copy of the course."""
     name = os.path.basename(course)
@@ -80,6 +96,9 @@ def main(fix):
                     if t != ovs[p]:
                         open(ov_paths[p], 'w', encoding='utf-8').write(t)
                 problems, _, _ = check_text(new_intro, new_ovs, status, False)
+            for page in sorted(glob.glob(os.path.join(d, 'part-*', '*.md'))):
+                if os.path.basename(page) != 'overview.md':
+                    problems += placeholder_links(page, open(page, encoding='utf-8').read(), status)
             for p in problems:
                 print(f'{os.path.relpath(d, ROOT)}: {p}')
             failures += len(problems)
@@ -97,6 +116,8 @@ def self_test():
     assert '(./part-1/overview.md) |' in fixed and '(./part-2/overview.md) 🚧 |' in fixed, fixed
     assert '🚧' not in fixed_ovs['part-1'], fixed_ovs
     assert check_text(fixed, fixed_ovs, status, False)[0] == []
+    stale = placeholder_links('x/part-2/a.md', 'see [B](../part-1/overview.md#whats-inside) and [C](./overview.md#whats-inside)', status)
+    assert len(stale) == 1 and 'part-1' in stale[0], stale
     print('course-status self-test: PASS')
     return 0
 

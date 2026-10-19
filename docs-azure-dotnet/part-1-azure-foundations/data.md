@@ -112,7 +112,7 @@ invalidate answers derived from the previous version.
 
 ## In an AI workload, keep originals and derived data traceable \{#in-an-ai-workload}
 
-P1 is an ASP.NET Core minimal API on Azure Container Apps. Its planned retrieval path uses Azure AI Search,
+[P1](../part-5-projects/rag-service.md) is an ASP.NET Core minimal API on Azure Container Apps. Its retrieval path uses Azure AI Search,
 a Foundry model deployment and citations over a small public document set. Blob Storage holds the originals.
 That division lets you rebuild the search index when parsing, chunking or embedding choices change. The
 [Ingestion lesson](/rag-agents/part-1-rag/ingestion/) owns those transformations; this storage decision keeps
@@ -188,7 +188,7 @@ az storage container-rm create \
 [Create the identity](https://learn.microsoft.com/en-us/cli/azure/identity?view=azure-cli-latest#az-identity-create)
 and [assign its role](https://learn.microsoft.com/en-us/cli/azure/role/assignment?view=azure-cli-latest#az-role-assignment-create)
 at container scope. The principal object ID identifies who receives the grant.
-Lessons 2–3, Identity I and Identity II (forthcoming), explain managed identities, roles and scopes.
+Lessons 2–3, [Identity I — Microsoft Entra ID](./entra-id.md) and [Identity II — RBAC and keyless access](./rbac-and-keyless-access.md), explain managed identities, roles and scopes.
 
 ```bash
 api_principal=$(az identity create \

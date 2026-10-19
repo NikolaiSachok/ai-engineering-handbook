@@ -110,7 +110,7 @@ you will check it.
 
 ## In an AI workload \{#in-an-ai-workload}
 
-P1 is the planned ASP.NET Core minimal API on Container Apps, answering questions over public documents
+[P1](../part-5-projects/rag-service.md) is the ASP.NET Core minimal API on Container Apps, answering questions over public documents
 with citations. Its dependencies include a
 [Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/what-is-foundry)
 model deployment, Azure AI Search, Blob Storage, Key Vault through managed identity and Application
@@ -125,7 +125,7 @@ that permits its Foundry resource's region, yet use a **Global Standard** deploy
 responses [may be processed across Azure
 regions](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/deployment-types#data-processing-locations).
 Record both the allowed resource location and the chosen processing boundary in P1's design.
-Part III's *Model deployments, quotas and cost* lesson (planned) covers deployment selection.
+Part III's [Model deployments, quotas and cost](../part-3-llms-on-azure/deployments-quotas-cost.md) lesson covers deployment selection.
 
 For **Cost Optimization**, measure the cost of a useful answer and bound retries and output. **Operational
 Excellence** asks whether you can trace a failed answer

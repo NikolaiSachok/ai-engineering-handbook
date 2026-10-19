@@ -96,7 +96,7 @@ APP="p1-compute-sample"
 az group create --name "$RESOURCE_GROUP" --location "$LOCATION"
 ```
 
-Создай среду с профилями рабочей нагрузки и явно выбери для приложения Consumption. [Справочник команды создания среды](https://learn.microsoft.com/ru-ru/cli/azure/containerapp/env?view=azure-cli-latest#az-containerapp-env-create) допускает `--logs-destination none`: в этом коротком упражнении рабочая область Log Analytics (Log Analytics workspace) не используется. Настройка телеметрии предусмотрена в следующих уроках. Образ и порт взяты из [краткого руководства Microsoft](https://learn.microsoft.com/ru-ru/azure/container-apps/get-started?tabs=bash), параметры ресурсов и масштабирования — из [справочника команды создания приложения](https://learn.microsoft.com/ru-ru/cli/azure/containerapp?view=azure-cli-latest#az-containerapp-create).
+Создай среду с профилями рабочей нагрузки и явно выбери для приложения Consumption. [Справочник команды создания среды](https://learn.microsoft.com/ru-ru/cli/azure/containerapp/env?view=azure-cli-latest#az-containerapp-env-create) допускает `--logs-destination none`: в этом коротком упражнении рабочая область Log Analytics (Log Analytics workspace) не используется. Настройка телеметрии разобрана в уроках [«Наблюдаемость»](./observability.md) и [«Оценка качества и трассировка»](../part-3-llms-on-azure/evaluation-and-tracing.md). Образ и порт взяты из [краткого руководства Microsoft](https://learn.microsoft.com/ru-ru/azure/container-apps/get-started?tabs=bash), параметры ресурсов и масштабирования — из [справочника команды создания приложения](https://learn.microsoft.com/ru-ru/cli/azure/containerapp?view=azure-cli-latest#az-containerapp-create).
 
 ```bash
 az containerapp env create \

@@ -148,7 +148,7 @@ The Foundry roles were renamed with their IDs unchanged. The lab uses the
 [Foundry User role ID](https://learn.microsoft.com/en-us/azure/foundry/concepts/authentication-authorization-foundry#set-up-microsoft-entra-id),
 `53ca6127-db72-4b80-b1b0-d745d6d5456d`, to avoid name-resolution problems during the rollout.
 
-Later infrastructure lessons will express these identities and resource-level grants in Bicep and
+[Infrastructure as code](./infrastructure-as-code.md) and [P1](../part-5-projects/rag-service.md) express these identities and resource-level grants in Bicep and
 deploy them through `azd`. The exercise below creates the access configuration first, without deploying
 the data services.
 
@@ -233,9 +233,9 @@ federation record's issuer, subject and audience. The last three commands return
 ID, tenant ID and subscription ID. The deployment identity's `principalId` was used for RBAC; its
 `clientId` identifies the identity to Azure Login. A wrong `GH_SUBJECT` can
 [be saved successfully](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity#important-considerations-and-restrictions);
-readback cannot establish that it matches the job. Only the future workflow's login tests that exchange.
+readback cannot establish that it matches the job. Only the [workflow's login](../part-4-ai-delivery/pipelines-to-azure.md#try-it) tests that exchange.
 
-A future GitHub workflow must request `id-token: write` and pass those three IDs to Azure Login as
+That GitHub workflow must request `id-token: write` and pass those three IDs to Azure Login as
 `client-id`, `tenant-id` and `subscription-id`. They identify the target and are not secret
 authenticators; follow the
 [Azure Login storage and wiring guidance](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect).

@@ -124,7 +124,7 @@ the model. A retry may proceed only while that deadline still allows it. When th
 the deadline, return a clear temporary failure to the caller. Check the selected SDK's retry policy
 before adding another retry layer; nested policies can multiply attempts. Coordinate the allowance
 across API replicas, because a per-process semaphore alone cannot control their combined traffic.
-Part III.8, The AI gateway (planned), will cover controls shared across callers.
+[Part III.8, The AI gateway](./ai-gateway.md) covers controls shared across callers.
 
 The [serving lesson](/rag-agents/part-3-production/serving/)
 explains the application boundary: retries, concurrency limits, timeouts and partially streamed answers.
@@ -141,7 +141,7 @@ because repeated attempts can make an answer expensive and slow even when each c
 ## Try it \{#try-it}
 
 Create the two model deployments P1 will later consume. You need a subscription and the P1 Foundry
-resource from Part III.1, Microsoft Foundry (planned), plus permission to manage deployments; the
+resource from [Part III.1, Microsoft Foundry](./microsoft-foundry.md), plus permission to manage deployments; the
 [deployment guide](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/create-model-deployments)
 specifies Cognitive Services Contributor or equivalent permissions. Quota viewing needs
 [Cognitive Services Usages Reader at subscription scope](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota#prerequisites)

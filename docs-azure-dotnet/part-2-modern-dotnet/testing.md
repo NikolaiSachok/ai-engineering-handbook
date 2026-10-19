@@ -89,7 +89,7 @@ P1 will combine retrieval from public documents with a Foundry model deployment 
 Place the model call behind an application-owned interface so tests can supply fixed completions,
 record the context sent to the model and simulate failures. Keep retrieval replaceable separately:
 otherwise replacing the model could still leave ordinary API tests dependent on a live search index.
-The exercise's `IModelClient` is a deliberately minimal application-owned port; II.8, AI in .NET,
+The exercise's `IModelClient` is a deliberately minimal application-owned port; [II.8, AI in .NET](./ai-in-dotnet.md)
 introduces `Microsoft.Extensions.AI`'s
 [`IChatClient`](https://learn.microsoft.com/en-us/dotnet/ai/ichatclient), to which the same substitution
 technique applies.
@@ -117,7 +117,7 @@ validation rule.
 ## Try it \{#try-it}
 
 Build a local slice of P1: `/ask` with a fixed document and an integration test that replaces the model
-client. Retrieval is a fixture here; Azure AI Search and the Foundry adapter come later. This slice
+client. Retrieval is a fixture here; Azure AI Search and the Foundry adapter are integrated in [P1](../part-5-projects/rag-service.md). This slice
 establishes the test boundary that the eventual service can retain.
 
 **Verification status:** the commands and code below were run as written on 2026-10-17 with .NET SDK

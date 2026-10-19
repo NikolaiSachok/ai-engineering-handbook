@@ -60,7 +60,7 @@ Package guidance needs a date. Microsoft's
 [current setup instructions](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore)
 recommend Microsoft OpenTelemetry Distro for new .NET applications and say existing Azure Monitor OpenTelemetry
 Distro users need no change. They also say not to initialize both distributions in one application. Choose
-the distribution in the later P1 instrumentation step; this exercise provisions their shared destination.
+the distribution in [P1's instrumentation step](../part-5-projects/rag-service.md#milestones); this exercise provisions their shared destination.
 
 ## Choose what you need to investigate \{#choosing-and-tradeoffs}
 

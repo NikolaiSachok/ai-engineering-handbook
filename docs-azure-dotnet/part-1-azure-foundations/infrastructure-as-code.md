@@ -75,8 +75,8 @@ supports projects containing Bicep or Terraform. Its
 [workflow](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/azd-commands) uses
 `azure.yaml` to describe application services and an `infra` directory for infrastructure definitions.
 `azd provision` provisions infrastructure; `azd deploy` deploys the application; `azd up` combines
-packaging, provisioning and deployment. For P1, Bicep owns the resource definitions and `azd` will
-coordinate the application workflow. Once P1 has its `azd` project configuration,
+packaging, provisioning and deployment. For [P1](../part-5-projects/rag-service.md), Bicep owns the resource definitions and `azd`
+coordinates the application workflow. With P1's `azd` project configuration,
 [`azd provision --preview`](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/reference#azd-provision)
 provides the Bicep what-if preview through that workflow.
 
@@ -138,7 +138,7 @@ through deployment tooling when the application should receive an identity and t
 ## Try it \{#try-it}
 
 Write P1's first module for resource-group contents: the storage account that will hold public source
-documents. This exercise previews that account; later steps add containers, data access and the rest of
+documents. This exercise previews that account; [P1](../part-5-projects/rag-service.md) adds containers, data access and the rest of
 the service. Work in your P1 project directory with Bash or zsh and Azure CLI installed.
 
 Both Bicep files below were compiled locally with

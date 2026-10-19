@@ -16,9 +16,9 @@ CLI references, **not run against a live subscription**. The illustrative C# fra
 in a local harness with .NET SDK 10.0.402 and .NET runtime 10.0.13 on 2026-10-19; it needs no NuGet packages.
 Checks below describe expected results, not a completed deployment.
 
-:::caution[Blocked pending P1]
+:::caution[Prerequisite: P1]
 
-P1's integrated RAG-service guide is not yet available. The separate labs do not produce that service.
+Complete the [P1 RAG-service guide](./rag-service.md) first. The separate labs do not produce that service.
 Do not deploy P3 until P1 supplies the contract below; this guide extends P1 rather than building it.
 
 :::
@@ -27,7 +27,7 @@ Do not deploy P3 until P1 supplies the contract below; this guide extends P1 rat
 
 The first version accepts immutable uploads. Give each document version a new blob path; do not
 overwrite a file while a worker is reading it. Start with one small public PDF whose extraction you can
-inspect. Require these outputs from [P1](./overview.md) before milestone 1:
+inspect. Require these outputs from [P1](./rag-service.md) before milestone 1:
 
 | P1 output | Required contract |
 |---|---|

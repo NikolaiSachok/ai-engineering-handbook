@@ -14,7 +14,7 @@ between a price and its product.
 Document ingestion therefore needs an intermediate result you can inspect: readable text, enough structure
 to split it sensibly, and references back to the original pages. For the optional **P3 ingestion pipeline**,
 that result sits between uploaded documents and the chunks indexed for P1. This lesson prepares that
-boundary with one PDF; the upload worker and index updates come later.
+boundary with one PDF; the upload worker and index updates are covered in [P3](../part-5-projects/ingestion-pipeline.md).
 
 ## How Azure extracts content and structure \{#how-azure-extracts-content}
 

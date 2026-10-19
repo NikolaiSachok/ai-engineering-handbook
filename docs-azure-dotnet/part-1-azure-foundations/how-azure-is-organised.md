@@ -138,11 +138,11 @@ requires planning and teardown.
 
 ## In an AI workload \{#in-an-ai-workload}
 
-P1 will join an ASP.NET Core minimal API on Azure Container Apps to a model deployment in
+[P1](../part-5-projects/rag-service.md) joins an ASP.NET Core minimal API on Azure Container Apps to a model deployment in
 [Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/what-is-foundry), Azure AI Search and
 documents in Blob Storage. Key Vault access through managed identity and Application Insights complete
-the planned runtime setup. Bicep and `azd` will describe and provision it; GitHub Actions with OIDC will
-deliver changes. Today you prepare its subscription, spending alerts and resource-group boundary.
+the runtime setup. Bicep and `azd` describe and provision it; GitHub Actions with OIDC
+delivers changes. Today you prepare its subscription, spending alerts and resource-group boundary.
 
 The [ingestion lesson](/rag-agents/part-1-rag/ingestion/) explains preparing documents and building the index.
 Here the question is which data and indexes should survive application teardown.

@@ -111,9 +111,8 @@ results, rather than turn a green compiler result into a claim about answer qual
 
 ## Try it \{#try-it}
 
-For now, draft `.github/workflows/p1-deploy.yml` locally for the future **P1 application repository**. The
-[P1 build guide is still planned](../part-5-projects/overview.md#whats-inside), so this exercise stops at
-workflow authoring. Defer the Azure setup, workflow execution and deployment checks below until you have
+Draft `.github/workflows/p1-deploy.yml` locally for the **P1 application repository**. This exercise stops at
+workflow authoring. Follow the [P1 build guide](../part-5-projects/rag-service.md) before the Azure setup, workflow execution and deployment checks below; you need
 `RagService.slnx`, VSTest-compatible tests, a pinned `global.json`, committed NuGet lock files,
 `azure.yaml` with Bicep, and a provisioned `azd` environment named `p1-ci` with its original
 subscription-level deployment record. The earlier storage preview alone is insufficient.

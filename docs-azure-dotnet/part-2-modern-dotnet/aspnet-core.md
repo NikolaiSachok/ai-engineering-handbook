@@ -33,7 +33,7 @@ together configuration, logging, dependency injection, the HTTP server and appli
 The server and the host have different jobs. Kestrel, the default web server, accepts HTTP traffic and
 exposes each request to the application through an `HttpContext`. Your endpoint handler should not need to
 know how the process was launched. This lets you develop P1 locally before packaging the same application
-for its planned deployment to Azure Container Apps.
+for its [deployment to Azure Container Apps](../part-5-projects/rag-service.md#milestones).
 
 [Middleware](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-10.0)
 forms the ordered pipeline around an endpoint. Each component can work on the request, invoke the next
@@ -218,7 +218,7 @@ ASPNETCORE_ENVIRONMENT=Production ASPNETCORE_URLS=http://127.0.0.1:5080 \
 skips generated launch settings. The environment variables select
 [Production](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-10.0)
 and a [local HTTP listener](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/endpoints?view=aspnetcore-10.0).
-This uses loopback HTTP for the local exercise; deployment transport configuration comes later.
+This uses loopback HTTP for the local exercise; deployment transport configuration is part of [P1](../part-5-projects/rag-service.md#milestones).
 
 In another terminal, send these requests:
 
