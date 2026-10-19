@@ -6,6 +6,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {useAlternatePageUtils} from '@docusaurus/theme-common/internal';
 import IconLanguage from '@theme/Icon/Language';
+import {useAvailableLocales} from '@site/src/lib/availableLocales';
 
 type Props = WrapperProps<typeof HeaderType>;
 
@@ -24,18 +25,20 @@ type Props = WrapperProps<typeof HeaderType>;
  * from `LocaleDropdownNavbarItem`: `useAlternatePageUtils().createUrl`), so
  * switching preserves the CURRENT page's translation (same page, target locale)
  * rather than jumping to a locale root. It is locale-list-driven off
- * `i18n.locales`, so a new locale added to the config appears automatically.
+ * `useAvailableLocales()`, so a new locale appears automatically where its pages exist.
  *
  * Desktop (>=997px) never renders the mobile drawer, so desktop is untouched.
  */
 function MobileLanguageSwitch(): ReactNode {
   const {
     siteConfig: {url: siteUrl},
-    i18n: {currentLocale, locales, localeConfigs},
+    i18n: {currentLocale, localeConfigs},
   } = useDocusaurusContext();
   const alternatePageUtils = useAlternatePageUtils();
+  // Only the locales this page exists in (same rule as the desktop dropdown).
+  const locales = useAvailableLocales();
 
-  // Nothing to switch between on a single-locale build.
+  // Nothing to switch between: a single-locale build, or a page in one locale only.
   if (locales.length <= 1) {
     return null;
   }
