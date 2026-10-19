@@ -200,3 +200,51 @@
 .docusaurus-mermaid-container > div > svg {
   flex-shrink: 0;
 }
+
+/* Footer links never outgrow their column. On phones each footer column is full width, and a long
+   label (the Azure & .NET course's "Part IV — AI-assisted delivery on the Microsoft stack", longer
+   still in Russian) rendered wider than the viewport and scrolled the whole page sideways. */
+.footer__link-item {
+  max-width: 100%;
+}
+
+/* Navbar fit on desktop widths. With five navbar items (four courses + Field notes) the
+   links wrapped onto two or three lines from 997px (where the hamburger gives way to the full
+   navbar) up to ~1400px, and the site title was truncated ("AI E…") in every locale.
+   Links never wrap; below 1440px the logo stands alone (the title text is the first thing
+   to go) and link padding tightens. Guarded by e2e/navbar-fit.mjs. */
+@media (min-width: 997px) {
+  .navbar__item {
+    white-space: nowrap;
+  }
+
+  .navbar__brand {
+    flex-shrink: 0;
+  }
+}
+
+/* Below 1280px the full search box no longer fits beside the links: search collapses to its
+   icon until focused, exactly as the "P2 — mobile search hint" rule above does below 997px. */
+@media (min-width: 997px) and (max-width: 1279.98px) {
+  [class*="searchHintContainer"] { display: none !important; }
+  .navbar__search-input:not(:focus) { width: 2rem !important; }
+}
+
+/* Below 1100px even that is not enough for the longer locales (Russian, Slovak): the navbar's
+   GitHub link gives way. It stays one tap away in the footer's Project column. */
+@media (min-width: 997px) and (max-width: 1099.98px) {
+  .navbar__items--right a.navbar__link[href*="github.com"] {
+    display: none;
+  }
+}
+
+@media (min-width: 997px) and (max-width: 1439.98px) {
+  .navbar__title {
+    display: none;
+  }
+
+  .navbar__items:not(.navbar__items--right) .navbar__link {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
