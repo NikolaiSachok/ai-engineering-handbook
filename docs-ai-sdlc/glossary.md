@@ -447,7 +447,7 @@ its section here. The list grows as the course does.
 
 **Vendor-portable memory** — project rules, decisions, architecture and briefs kept in repository files or a knowledge store outside an assistant's chat history, so a replacement can read them without the old account.
 
-**Data terms (training use, retention, zero data retention, residency, DPA)** — the dated terms governing training use, storage duration, processing residency and personal-data processing for a specific provider and tier. A data processing addendum defines processing on the customer's behalf; zero data retention is a separate arrangement with its own eligibility and exceptions.
+**Data terms** — the dated terms governing training use, storage duration, processing residency and personal-data processing for a specific provider and tier. A data processing addendum (DPA) defines processing on the customer's behalf; zero data retention (ZDR) is a separate arrangement with its own eligibility and exceptions.
 
 **Routing by break-even** — assigning a task class using representative first-try success rates and the inequality `p_cheap / p_expensive > price_cheap / price_expensive`, with human review of failed attempts added to the cost decision. Data requirements can independently justify a route.
 

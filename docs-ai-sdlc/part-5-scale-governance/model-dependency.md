@@ -228,4 +228,4 @@ The invariant: **pin the version you run, qualify every change to it, and prove 
 - Data commitments depend on the account's service tier, so record its terms and their date.
 - Include the human review that failed attempts consume in routing costs, because cheaper tokens can consume more human capacity.
 
-**[New terms](../glossary.md#the-model-is-a-dependency-pinning-upgrades-exit-and-data-terms)**: model snapshot vs moving alias; model pinning; re-qualification (of a model upgrade); item-level regression; deprecation notice period; auto-upgrade; tested exit (fallback provider); vendor-portable memory; data terms (training use, retention, zero data retention, residency, DPA); routing by break-even.
+**[New terms](../glossary.md#the-model-is-a-dependency-pinning-upgrades-exit-and-data-terms)**: model snapshot vs moving alias, model pinning, re-qualification (of a model upgrade), item-level regression, deprecation notice period, auto-upgrade, tested exit (fallback provider), vendor-portable memory, data terms, routing by break-even.

@@ -494,7 +494,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Pamäť nezávislá od dodávateľa (vendor-portable memory)** — pravidlá projektu, rozhodnutia, poznámky k architektúre a zadania uložené v súboroch repozitára alebo v úložisku znalostí mimo histórie chatov asistenta. Náhradný asistent ich tak prečíta aj bez pôvodného účtu.
 
-**Podmienky nakladania s dátami (použitie na tréning · uchovávanie · zero data retention · rezidencia dát · DPA)** — datované podmienky konkrétneho poskytovateľa a konkrétneho plánu predplatného, ktoré upravujú použitie na tréning, dobu uchovávania, miesto spracovania a spracúvanie osobných údajov. Dodatok o spracúvaní osobných údajov určuje spracúvanie v mene zákazníka; nulové uchovávanie dát je samostatná dohoda s vlastnými podmienkami oprávnenosti a výnimkami.
+**Podmienky nakladania s dátami** — datované podmienky konkrétneho poskytovateľa a konkrétneho plánu predplatného, ktoré upravujú použitie na tréning, dobu uchovávania, miesto spracovania a spracúvanie osobných údajov. Dodatok o spracúvaní osobných údajov (data processing addendum, DPA) určuje spracúvanie v mene zákazníka; nulové uchovávanie dát (zero data retention, ZDR) je samostatná dohoda s vlastnými podmienkami oprávnenosti a výnimkami.
 
 **Smerovanie podľa hranice rentability (routing by break-even)** — priradenie triedy úloh modelu podľa úspešnosti prvého pokusu na reprezentatívnej práci a podmienky `p_cheap / p_expensive > price_cheap / price_expensive`. Nákladové rozhodnutie zahŕňa ľudskú revíziu neúspešných pokusov; požiadavky na dáta môžu výber cesty odôvodniť samostatne.
 
