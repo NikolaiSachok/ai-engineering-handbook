@@ -47,14 +47,16 @@ with them. Every ceiling here is that one constraint, priced differently.
 
 Part I's **verification bottleneck**, read as a claim about *capacity* rather than about quality — the first
 lesson here caps fleet size with it directly. Then Part I's *Project memory* and *Rules that hold*, because
-the second lesson is entirely about what becomes of both once the code moves out from under them. The cost
+the second lesson is entirely about what becomes of both once the code moves out from under them. The third
+assumes Part II's critic loop, because it hands the critic the decision log as well as the diff. The cost
 lesson prices Part III's semantic gates and borrows Part IV's per-task credentials to make spend
 attributable, and the closing lesson assumes Part III's separation-of-duties argument.
 
 ## What changes after this part
 
 You can size a fleet to what the chain absorbs rather than to the budget, and say which fraction of the work
-is irreducibly serial. You can put a bill on a rules corpus instead of only a quality complaint. And you can
+is irreducibly serial. You can put a bill on a rules corpus instead of only a quality complaint. You can
+make a load-bearing boundary fail the build instead of trusting every fix to respect it. And you can
 tell an enterprise control that exists for **capability** from one that exists for **proof** — which is the
 distinction that lets you argue for the first and stop dismissing the second as ceremony.
 

@@ -15,15 +15,15 @@ Prepoj rozhodnutia s kódom troma spôsobmi: pri každej oprave vychádzaj z den
 
 ## Erózia sa začína drobnou opravou
 
-Andrej Beloborodov [píše o tom, ako pri vývoji vlastných projektov stavia od začiatku na AI](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/). Podľa jeho skúsenosti sa v projekte postupne menili pravidlá bez toho, aby niekto rozhodol o zmene architektúry. Objavovali sa duplicity, rovnaké situácie sa riešili rôzne a oprava pokazila susednú funkciu. Je to skúsenosť jedného človeka s vlastnými projektmi, nie merané porovnanie vývojových metód.
+Andrej Beloborodov, praktik, ktorý [píše o tom, ako pri vlastných projektoch stavia vývoj od začiatku na AI](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/), opisuje, že sa v projekte postupne menili pravidlá bez toho, aby niekto rozhodol o zmene architektúry. Objavovali sa duplicity, rovnaké situácie sa riešili rôzne a oprava pokazila susednú funkciu. Je to skúsenosť jedného človeka s vlastnými projektmi, nie merané porovnanie vývojových metód.
 
-Beloborodov za najľahšiu cestu k takému výsledku označuje malé opravy. Každá môže pôsobiť taká neškodná, že pri nej agent vynechá kontrolu architektúry; po čase však podľa Beloborodova vznikne iný návrh. V Beloborodovovom príklade jeden agent zmení kontrakt, druhý vytvorí paralelnú implementáciu a tretí výsledné provizórne riešenie zdokumentuje. Každý krok pritom môže sám osebe pôsobiť ako výsledok starostlivej práce.
+Beloborodov za najľahšiu cestu k takému výsledku označuje malé opravy. Každá môže pôsobiť taká neškodná, že pri nej agent vynechá kontrolu architektúry; po čase však podľa Beloborodova vznikne iný návrh. V jeho príklade jeden agent zmení kontrakt, druhý vytvorí paralelnú implementáciu a tretí výsledné provizórne riešenie zdokumentuje. Každý krok pritom môže sám osebe pôsobiť ako výsledok starostlivej práce.
 
 Predstav si vymyslený príklad: modul fakturácie rozhoduje, či sú splnené podmienky na vystavenie faktúry, a modul notifikácií používa jeho výsledok. Agent rieši chybu, pre ktorú neodišiel e-mail. Skopíruje kontrolu podmienok do notifikácií a konkrétny prípad začne fungovať. Pri neskoršej zmene fakturácie sa upraví iba pôvodná kontrola, preto ďalší agent pridá výnimku do kópie v notifikáciách. Opravy tak presunuli zodpovednosť za rozhodnutie inam, hoci to nikto nenavrhol.
 
 Samotná potreba ďalšej opravy ešte neznamená problém s architektúrou a netýka sa iba agentov. Park, Kim, Ray a Bae v roku 2012 [skúmali dodatočné opravy chýb](https://web.cs.ucla.edu/~miryung/Publications/msr2012-supplementarypatch.pdf) v projektoch Eclipse JDT core, Eclipse SWT a Mozilla. Zistili, že 22–33% vyriešených chýb si vyžiadalo viac než jeden pokus o opravu. Len malá časť dodatočných opráv sa podobala pôvodnej oprave. V oboch projektoch Eclipse sa 14–15% súborov z dodatočných opráv ani neprekrývalo so súbormi pôvodnej opravy, ani od nich priamo nezáviselo.
 
-Jedna nadväzujúca oprava je teda bežná aj pri vývoji ľuďmi. Varovným signálom je až séria opráv v tej istej oblasti. Vtedy zmapuj aj súvislosti, ktoré v prvom diffe nevidíš.
+Jedna nadväzujúca oprava je teda bežná aj bez agentov. Varovným signálom je až séria opráv v tej istej oblasti. Vtedy zmapuj aj súvislosti, ktoré v prvom diffe nevidíš.
 
 :::tip[▶ Video]
 
@@ -51,7 +51,7 @@ V každom zadaní opravy vyžaduj čísla príslušných ADR a výslovné posúd
 
 Kritikovi daj okrem diffu aj denník prijatých rozhodnutí. V príklade s fakturáciou nestačí overiť, že e-mail opäť odchádza. Kritik musí skontrolovať aj to, či notifikácie neprevzali zodpovednosť fakturácie. Takto sa slučka [Plán, kontrola, implementácia, kritik](../part-2-loop/plan-review-implement-critic.md) uplatní aj na súlad štruktúry s rozhodnutiami.
 
-Denník dopĺňaj postupne: v jednom čase doň smie zapisovať iba jeden agent. Rovnako postupuj aj pri ostatných postupne dopĺňaných artefaktoch podľa lekcie [Flotily agentov: izolácia a paralelizmus](./agent-fleets.md). Dvaja paralelne pracujúci agenti nesmú každý zapísať vlastnú verziu toho istého rozhodnutia.
+Do denníka smie v jednom čase zapisovať iba jeden agent. To isté odporúča lekcia [Flotily agentov: izolácia a paralelizmus](./agent-fleets.md) pre ostatné priebežne rastúce artefakty. Dvaja paralelne pracujúci agenti nesmú každý zapísať vlastnú verziu toho istého rozhodnutia.
 
 ## Architektúra ako vykonateľné obmedzenia
 
@@ -71,7 +71,7 @@ Hranice vyberaj zámerne. Perry a Wolf prirovnávajú architektúru k budove: no
 - [Import Linter](https://import-linter.readthedocs.io/en/stable/) kontroluje kontrakty importov v Pythone: zakázané závislosti, chránené moduly, vrstvy aj nezávislosť. Kontrakty sú v konfigurácii a overuje ich príkaz `lint-imports`.
 - [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) podľa dokumentácie overuje závislosti JavaScriptu a TypeScriptu voči zadaným pravidlám a hlási porušenia pri zostavení. Pri nastavení cez `--init` pridáva aj pravidlá pre kruhové závislosti.
 
-Bránu môžeš zaviesť aj bez toho, aby si najprv upratal celý narušený systém. ArchUnit dokumentuje `FreezingArchRule`: pri prvom spustení uloží existujúce porušenia ako východiskový stav a potom hlási nové. Opravené porušenia z uloženého stavu vypadnú, takže sa nemôžu nepozorovane vrátiť. Tieto **zmrazené porušenia (frozen violations)** použi na jednosmerné sprísňovanie: zaznamenaj súčasný stav, zabráň ďalšej erózii a staré porušenia odstraňuj pri zámerných úpravách. Agentovi, ktorý opravuje kód, nedovoľ meniť uložený východiskový stav.
+Bránu môžeš zaviesť aj bez toho, aby si najprv upratal celý narušený systém. ArchUnit dokumentuje `FreezingArchRule`: pri prvom spustení uloží existujúce porušenia ako východiskový stav a potom hlási nové. Porušenia uložené pri prvom spustení sa nazývajú **zmrazené porušenia (frozen violations)**. Opravené porušenia z uloženého stavu vypadnú, takže sa nemôžu nepozorovane vrátiť. Uložený stav použi na jednosmerné sprísňovanie: zaznamenaj súčasný stav, zabráň ďalšej erózii a staré porušenia odstraňuj pri zámerných úpravách. Agentovi, ktorý opravuje kód, nedovoľ meniť uložený východiskový stav.
 
 Na doslovne opakovaný kód slúži **kontrola duplicít (duplication gate)**, napríklad [jscpd](https://github.com/kucherenko/jscpd). Jeho parameter `--threshold` určuje povolenú mieru duplicity v celom strome. Dokumentácia jscpd uvádza, že Super-Linter a MegaLinter ho predvolene spúšťajú s prahom `0`: zostavenie tak neprejde pri akejkoľvek duplicite. Nulová tolerancia sa dá obhájiť, ale zaveď ju vedome. Pravidlá hraníc nenahradí.
 
@@ -102,11 +102,11 @@ Výpočtovú časť zaraď do brány, posúdenie významu ponechaj kritikovi. N�
 
 Beloborodov používa tri po sebe nasledujúce úpravy ako varovanie: keď sa opravy vrstvia na opravy, je podľa neho čas vrátiť sa k architektúre. Nikto nezmeral, či sú tri správny prah. Použi ich ako východiskovú hodnotu pre dohodnutý **spúšťač prepracovania návrhu (redesign trigger)** v určenej oblasti s dostupnou históriou. Nie je to všeobecný zákon o kvalite opráv.
 
-Sleduj **podiel opakovaných opráv (fix-on-fix rate)** po moduloch a jeho vývoj v čase. Môžeš počítať opravy, ktoré zasiahli oblasť upravenú inou opravou v zvolenom nedávnom období. Alebo priraďuj postupné opravy k tej istej chybe, ako to robili Park a kolegovia pri dodatočných opravách. Časové okno aj definíciu zvoľ skôr, než začneš vyhodnocovať trend. Spúšťač dohodni ešte pred dosiahnutím prahu, inak sa ďalšia naliehavá chyba stane dôvodom zmeniť význam signálu.
+Sleduj **podiel opakovaných opráv (fix-on-fix rate)** po moduloch a jeho vývoj v čase. Môžeš počítať opravy, ktoré zasiahli oblasť upravenú inou opravou v zvolenom nedávnom období. Alebo priraďuj postupné opravy k tej istej chybe, ako to robili Park a kolegovia pri dodatočných opravách. Časové okno aj definíciu zvoľ skôr, než začneš vyhodnocovať trend. Spúšťač dohodni ešte pred dosiahnutím prahu, inak sa ďalšia naliehavá chyba môže stať dôvodom zmeniť význam signálu.
 
 Zistenia Parka a kolegov vysvetľujú, prečo záleží na oblasti aj poradí. Dodatočná oprava je bežná a často zasahuje aj mimo okolia pôvodnej opravy. Celkový počet za celý projekt by zmiešal obyčajné nedokončené opravy s lokálnym zlyhaním návrhu. Hľadaj preto sériu opakovaných opráv okolo tej istej zodpovednosti. Posúď ju podľa mapy systému a denníka rozhodnutí.
 
-Po dosiahnutí prahu nechaj oblasť preskúmať a podľa potreby prepracuj návrh. Tento signál agentovi nedáva oprávnenie vymeniť celý modul. Beloborodov pri náprave varuje pred otvoreným zadaním „prepíš všetko poriadne“. Podľa neho z neho vznikne ďalší projekt s ďalšou sadou problémov.
+Po dosiahnutí prahu nechaj oblasť preskúmať a podľa potreby prepracuj návrh. Tento signál agentovi nedáva oprávnenie vymeniť celý modul. Beloborodov pri náprave varuje pred otvoreným zadaním „prepíš všetko poriadne“. Tvrdí, že z takého zadania vznikne ďalší projekt s ďalšou sadou problémov.
 
 **Prepracovanie návrhu verzus prepis (redesign vs rewrite)** rozlíš konkrétnym postupom. Začni auditom: kde technický dlh skutočne brzdí vývoj, ktoré rozhodnutia môžu zostať a ktoré oblasti potrebujú pred zmenou samostatnú prípravu. Potom urči cieľovú architektúru a postupnosť etáp, z ktorých každá skončí funkčným výsledkom. Dlh tak riadiš vedome; časť z neho zostane.
 
@@ -134,11 +134,11 @@ Takéto kontroly dávajú etape prepracovania návrhu jasné hranice aj možnos�
 
 ## Tri úrovne zrelosti: soloista · malý tím · enterprise
 
-**Zaznamenaj rozhodnutie pred zmenou štruktúry, vynucuj jeho overiteľné hranice a dohodni, kedy opakované opravy vyžadujú prepracovanie návrhu.** S rozsahom sa menia zodpovednosti aj dôkazy, ktoré treba predložiť.
+Invariant platí na každej úrovni: **zaznamenaj rozhodnutie pred zmenou štruktúry, vynucuj jeho overiteľné hranice a dohodni, kedy opakované opravy vyžadujú prepracovanie návrhu.** S rozsahom sa menia zodpovednosti aj dôkazy, ktoré treba predložiť.
 
 - **Soloista.** Udržuj súbor s denníkom rozhodnutí, ktorý agent prečíta pred každou opravou. Pridaj jedno či dve pravidlá importov alebo závislostí pre nosné hranice. Opakované opravy v jednotlivých oblastiach počítaj ručne. *Akému zlyhaniu to predchádza:* agent dôsledne zdokumentuje provizórne riešenie, akoby išlo o platnú architektúru.
 - **Malý tím.** Každej oblasti ADR prideľ vlastníka. Rozhodnutia nahrádzaj novými a pôvodné uchovaj. Kritik nech kontroluje súlad s denníkom. Fitness funkcie spúšťaj v CI, ktorej kontroly agenti nemôžu upravovať. Zmraz existujúce porušenia a postupne ich odstraňuj tak, aby sa opravené už nevrátili. Sleduj trend opakovaných opráv po moduloch a porovnávaj ho s prahom dohodnutým vopred. *Akému zlyhaniu to predchádza:* agenti vytvárajú paralelné implementácie toho istého kontraktu.
-- **Enterprise.** Spravuj ADR ako riadené záznamy a prepoj ich so záznamami zmien. Knižnicu ADR a komisiu pre riadenie zmien opisuje lekcia [Príprava je dôležitejšia než model](../part-1-foundation/preparation-over-model.md), audit a pôvod lekcia [Enterprise úroveň: audit, pôvod a čo je povinné](./enterprise-tier/index.md). Fitness funkcie zaraď do pipeline ako povinné kontroly. Pred porušením prijatého rozhodnutia vyžaduj nahrádzajúce ADR schválené vlastníkom. Tak dokážeš zablokovať neschválenú štrukturálnu zmenu a pri každej zmene doložiť, ktoré rozhodnutie ju riadi. *Akému zlyhaniu to predchádza:* architektúra zostane len v prezentáciách a dokumentoch, hoci systém sa od nej už dávno odchýlil.
+- **Enterprise.** Spravuj ADR ako riadené záznamy a prepoj ich so záznamami zmien. Knižnicu ADR a komisiu pre riadenie zmien opisuje lekcia [Príprava je dôležitejšia než model](../part-1-foundation/preparation-over-model.md), audit a pôvod lekcia [Enterprise úroveň: audit, pôvod a čo je povinné](./enterprise-tier/index.md). Fitness funkcie zaraď do pipeline ako povinné kontroly. Pred porušením prijatého rozhodnutia vyžaduj nahrádzajúce ADR schválené vlastníkom. Tak dokážeš zablokovať neschválenú štrukturálnu zmenu a pri každej zmene doložiť, ktoré rozhodnutie ju riadi. *Akému zlyhaniu to predchádza:* architektúra zostane len v prezentáciách, hoci systém sa od nej už dávno odchýlil.
 
 ## Čo si odniesť
 

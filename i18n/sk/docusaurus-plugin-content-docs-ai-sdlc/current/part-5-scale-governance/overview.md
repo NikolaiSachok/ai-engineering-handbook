@@ -17,8 +17,9 @@ prozaickú príčinu. V jednom pracovnom strome môže byť aktívna vždy iba j
 dvoch agentov na dvoch vetvách nie je z princípu možná. Riešením je spoločný stav odstrániť, nie riadiť
 prístup k nemu. Druhým stropom je **zastarávanie**. Pravidlá a pamäť projektu zachytávajú podobu kódovej
 základne, ktorá sa stále mení. Zastarané pravidlo je horšie než nijaké, pretože človek nad neaktuálnou
-konvenciou mávne rukou, no agent ju poslušne dodrží. Aj samotnú štruktúru kódu postupne narúšajú rozumné opravy, ak každá z nich
-nevychádza z rozhodnutí, ktoré túto štruktúru určujú, a ak nosné hranice neoverujú automatické kontroly. Tretím stropom sú **náklady**. Ešte pred výškou
+konvenciou mávne rukou, no agent ju poslušne dodrží. Rovnako sa, jedna rozumná oprava za druhou, rozpadá aj
+samotná štruktúra kódu. Zabrániš tomu iba vtedy, ak každá oprava vychádza z rozhodnutí, ktoré túto štruktúru
+určujú, a zároveň automatické kontroly overujú nosné hranice. Tretím stropom sú **náklady**. Ešte pred výškou
 výdavkov treba vyriešiť menovateľ. Jednotkou sú náklady na *prijatú* zmenu a do čitateľa patria opakované
 pokusy, volania overovacích mechanizmov aj čas ľudí venovaný kontrole. Štvrtým stropom je **dôkaz**.
 Úroveň enterprise, ktorou sa uzatvárala každá lekcia kurzu, sa konečne stáva hlavnou témou. Jej mechanizmy
@@ -51,8 +52,9 @@ rovnaké obmedzenie, len zakaždým vytvára iný druh nákladov.
 
 Najprv potrebuješ úzke miesto overovania z I. časti, tentoraz ako tvrdenie o *kapacite*, nie o kvalite. Prvá
 lekcia podľa neho priamo určuje hornú hranicu veľkosti flotily. Potrebuješ aj pamäť projektu a pravidlá, ktoré
-platia, z I. časti. Celá druhá lekcia skúma, čo sa s nimi stane, keď sa kódová základňa ďalej mení. Lekcia o
-nákladoch vyčísli, čo stoja sémantické brány z III. časti, a zo IV. časti si preberá prihlasovacie údaje
+platia, z I. časti. Celá druhá lekcia skúma, čo sa s nimi stane, keď sa kódová základňa ďalej mení. Tretia
+lekcia nadväzuje na cyklus s kritikom z II. časti, pretože kritikovi dáva okrem diffu aj denník rozhodnutí.
+Lekcia o nákladoch vyčísli, čo stoja sémantické brány z III. časti, a zo IV. časti si preberá prihlasovacie údaje
 vydávané na úlohu, aby sa výdavky dali priradiť. Záverečná lekcia vychádza z argumentácie III. časti o
 oddelení právomocí.
 
@@ -60,9 +62,10 @@ oddelení právomocí.
 
 Veľkosť flotily dokážeš určiť podľa kapacity reťaze brán, nie podľa rozpočtu. Vieš tiež určiť, aký podiel
 práce sa nedá paralelizovať. Dokážeš vyčísliť náklady na súbor pravidiel namiesto toho, aby si sa iba
-sťažoval na jeho kvalitu. Napokon rozlíšiš kontrolu na úrovni enterprise, ktorá naozaj niečomu **zabráni**, od
-kontroly, ktorá to má **dokázať**. Vďaka tomuto rozdielu vieš obhájiť prvý typ a druhý už neodmietať ako
-iba formalitu.
+sťažoval na jeho kvalitu. Dokážeš zariadiť, aby porušenie nosnej hranice zastavilo zostavenie, a nemusíš
+sa spoliehať, že ju dodrží každá oprava. Napokon rozlíšiš kontrolu na úrovni enterprise, ktorá naozaj
+niečomu **zabráni**, od kontroly, ktorá to má **dokázať**. Vďaka tomuto rozdielu vieš obhájiť prvý typ
+a druhý už neodmietať ako iba formalitu.
 
 :::note[Stav]
 

@@ -406,7 +406,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Denník architektonických rozhodnutí (ADR log)** — denník záznamov ADR v Nygardovej podobe s poľami `Title`, `Context`, `Decision`, `Status` a `Consequences`. Záznamy sú číslované a nikdy sa neprečíslovávajú. Denník je uložený v repozitári a musí z neho vychádzať každé zadanie úlohy aj každá oprava chyby, pretože práve cez opravy sa do systému dostávajú protichodné zásahy.
 
-**Nahradený záznam ADR (superseded ADR)** — záznam rozhodnutia, ktoré neskôr nahradilo iné rozhodnutie; pôvodné rozhodnutie už neplatí. Pôvodný záznam zostáva v denníku so stavom `superseded` a odkazom na náhradu, aby ďalší agent rozlíšil históriu od platného rozhodnutia.
+**Nahradený záznam ADR (superseded ADR)** — záznam rozhodnutia, ktoré už neplatí, pretože ho nahradilo nové. Záznam zostáva v denníku so stavom `superseded` a odkazom na náhradu, aby ďalší agent rozlíšil históriu od platného rozhodnutia.
 
 **Fitness funkcia (fitness function)** — podľa Neala Forda, Rebeccy Parsons a Patricka Kuu v knihe *Building Evolutionary Architectures* akýkoľvek mechanizmus, ktorý objektívne hodnotí architektonickú vlastnosť. Môže ísť o test, metriku alebo monitor; vybraná vlastnosť sa kontroluje priebežne počas zmien systému.
 
