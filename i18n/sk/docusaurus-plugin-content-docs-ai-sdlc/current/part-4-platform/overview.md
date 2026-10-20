@@ -39,8 +39,9 @@ sem, je únikom. Patrí do registra z III. časti spolu s názvom brány, ktorá
   skutočnými dátami. Schému meň v poradí expand → migrate → contract. Záloha, ktorej obnovenie si nikdy
   nevyskúšal, nie je záloha.
 - **[Pozorovateľnosť, nasadzovanie a núdzový vypínač](./observability-rollout.md)** — niekoľko signálov
-  sleduj dôkladne. Postupné nasadenie spoj s automatickým vrátením zmeny. Núdzový vypínač má meniť stav,
-  nie spúšťať nový build.
+  sleduj dôkladne. Zlyhania, pri ktorých nepríde žiadny signál, zachytávaj sondami zvonku a hláseniami od
+  používateľov. Postupné nasadzovanie môže začať tieňovým behom a musí byť naviazané na automatické
+  vrátenie zmeny. Núdzový vypínač má meniť stav, nie spúšťať nový build.
 
 ## Predpoklady
 

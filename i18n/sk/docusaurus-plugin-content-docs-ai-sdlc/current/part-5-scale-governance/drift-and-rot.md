@@ -72,6 +72,20 @@ mazať sa zdá riskantnejšie než nechať tak, takže korpusy vedia iba rásť.
 Hranicu pre mazanie treba povedať priamo: **odstrániť pravidlo, ktoré už nezodpovedá realite, je údržba, nie
 strata.** Iba korpus, ktorý si ochotný zmenšovať, si agent ešte prečíta celý.
 
+Flagy zastarávajú rovnako ako pravidlá: feature flag (prepínač funkcie) je
+[pravidlo o tom, ktorý kód sa spustí](../part-4-platform/observability-rollout.md).
+[Andrey Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/) chce pri každom
+flagu opis a dátum odstránenia. Varuje, že bez nich o rok nebudeš vedieť, ktoré flagy môžeš bezpečne
+prepnúť ani čo nimi zmeníš. [Pete Hodgson](https://martinfowler.com/articles/feature-toggles.html)
+chápe prepínače ako zásobu, ktorej udržiavanie niečo stojí. Opisuje tímy, ktoré pri vytvorení flagu na
+sprístupnenie (release flag) hneď založia úlohu na jeho odstránenie alebo pridajú test s časovou poistkou
+(„time bomb“ test), ktorý zlyhá po prekročení dátumu platnosti flagu. Kurz k opisu a dátumu pridáva
+vlastníka a rozlišuje krátkodobé sprístupnenie od dlhodobého prevádzkového použitia. Každý flag na
+sprístupnenie musí mať vlastníka, opis a dátum odstránenia. Dlhodobý flag núdzového vypínača musí mať
+vlastníka a pravidelnú revíziu spolu s korpusom pravidiel, nie dátum skončenia platnosti ani dátum
+odstránenia. Obe vetvy zastaraného flagu totiž v kóde stále vyzerajú ako používané. Agent tak môže ďalej
+udržiavať, testovať a rozširovať aj vetvu, ktorá už neslúži ničomu.
+
 ## Pamäť sa rozchádza s realitou rovnako
 
 Pamäť projektu chátra tými istými troma spôsobmi, no jej drift je zákernejší než pri pravidlách: pamäť sa
@@ -93,8 +107,8 @@ jeho chátranie musí niečo zviditeľniť.** Mení sa to, kto zaň zodpovedá a
   (všade tam, kde sa pravidlo viaže na kód, je to lepší spúšťač než dátum), a rozpory vyriešené pri revízii
   namiesto toho, aby ich rozhodoval agent. *Akému zlyhaniu to predchádza:* dve protirečivé pravidlá vyrobia
   nedeterministické správanie agenta, ktoré nikto nedokáže zopakovať ani vysvetliť.
-- **Enterprise.** Korpus je spravovaný artefakt: verzovaný, s vlastníkmi, s platnosťou a s auditným záznamom,
-  z ktorého vidno, kedy sa každé pravidlo naposledy potvrdilo voči kódu. *Akému zlyhaniu to predchádza:*
+- **Enterprise.** Korpus je spravovaný artefakt: verzovaný, s vlastníkmi, s platnosťou pravidiel aj flagov na
+  sprístupnenie a s auditným záznamom, z ktorého vidno, kedy sa každé pravidlo naposledy potvrdilo voči kódu. *Akému zlyhaniu to predchádza:*
   kontrola existuje na papieri, dva roky nezodpovedá systému a odhalí sa počas auditu, ktorý predpokladal, že
   funguje.
 
@@ -106,8 +120,8 @@ jeho chátranie musí niečo zviditeľniť.** Mení sa to, kto zaň zodpovedá a
 - **Vykonateľné pravidlá zastarávajú nahlas, textové potichu.** Kde sa dá, urob z pravidla kontrolu; kde sa
   nedá, priznaj si, že si zvolil tiché zastarávanie, a nasaď naň človeka.
 - **Prideľ vlastníka a spúšťač revízie, zvyšok označ dátumom.** Korpusy bez vlastníka iba rastú, lebo mazať sa
-  vždy zdá riskantnejšie než nechať tak.
+  vždy zdá riskantnejšie než nechať tak. Dlh z flagov (flag debt) preveruj spolu s korpusom pravidiel.
 - Pravidlo, ktoré sa nikdy neaktivovalo, nedokazuje čistú kódovú základňu — je to neoverené pravidlo. Zámerne
   vlož porušenie a zisti, ktorý z tých dvoch prípadov to je.
 
-**[Nové pojmy](../glossary.md#drift-control-and-rule-rot)**: zastarávanie pravidiel, zastaranosť / rozpor / nafúknutosť, vykonateľné verzus textové pravidlo, tiché zastarávanie, vlastník pravidla, platnosť pravidla, nikdy neaktivované pravidlo, drift pamäti, nahradené rozhodnutie.
+**[Nové pojmy](../glossary.md#drift-control-and-rule-rot)**: zastarávanie pravidiel, zastaranosť / rozpor / nafúknutosť, vykonateľné verzus textové pravidlo, tiché zastarávanie, vlastník pravidla, platnosť pravidla, nikdy neaktivované pravidlo, drift pamäti, nahradené rozhodnutie, Dlh z flagov (flag debt).
