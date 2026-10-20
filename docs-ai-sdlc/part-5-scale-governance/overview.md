@@ -15,7 +15,9 @@ what breaks when you run many at once — and the answer is four ceilings, none 
 banal: one working tree has one checked-out branch, so two agents building two branches in it fail by
 construction. The fix is to remove the sharing, not to coordinate access to it. **Decay** is the second: rules
 and project memory encode a codebase that keeps moving, and a stale rule is worse than no rule, because where
-a human shrugs at an obsolete convention an agent complies with it. **Cost** is third, and it is a denominator
+a human shrugs at an obsolete convention an agent complies with it. The code's own structure decays the same
+way, one reasonable fix at a time, unless every fix consults the decisions behind it and the load-bearing
+boundaries are checked by machine. **Cost** is third, and it is a denominator
 problem before it is a spending one — the unit is cost per *accepted* change, with retries, verification
 calls, and human review time in the numerator. And **proof** is the fourth: the enterprise tier that has
 closed every lesson in this course finally becomes the subject, and the finding is that its mechanisms are
@@ -32,6 +34,9 @@ with them. Every ceiling here is that one constraint, priced differently.
   verification chain can absorb.
 - **[Drift control and rule rot](./drift-and-rot.md)** — staleness, contradiction, bloat. Executable rules
   rot loudly; prose rules rot in silence and keep being obeyed.
+- **[Architecture erosion](./architecture-erosion.md)** — the code's structure decays one reasonable fix at a
+  time. Record the decision before the change, turn load-bearing boundaries into fitness functions, and treat
+  a run of fixes on fixes as the trigger to redesign, not to rewrite.
 - **[Cost and the economics of agent work](./cost-economics/index.md)** — cost per accepted change, not per
   token. Context is the line item people forget, and human review is the input that does not scale with spend.
 - **[The enterprise tier: audit, provenance, and what's required](./enterprise-tier/index.md)** — the closing
@@ -55,8 +60,8 @@ distinction that lets you argue for the first and stop dismissing the second as 
 
 :::note[Status]
 
-Part V is complete — all four lessons are published, and it closes the course. Two of them, **Cost and the
+Part V is complete — all five lessons are published, and it closes the course. Two of them, **Cost and the
 economics of agent work** and **The enterprise tier**, carry a deep-dive second pass; follow the "Next — part
-2 of the lesson" pointer at the bottom of either lesson to reach it. The other two stand as single pages.
+2 of the lesson" pointer at the bottom of either lesson to reach it. The other three stand as single pages.
 
 :::

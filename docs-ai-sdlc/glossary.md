@@ -357,6 +357,30 @@ its section here. The list grows as the course does.
 
 **Flag debt** — the maintenance cost of a flag and the branches it keeps alive. Release flags get an owner, a description and a removal date; a long-lived kill switch gets an owner and a periodic review instead of an expiry.
 
+## Architecture erosion \{#architecture-erosion}
+
+**Architecture erosion / architectural drift** — Perry and Wolf's two words (1992) for the decay of a codebase's structure. Erosion is a violation of the architecture; drift is insensitivity to it, which leaves the architecture less coherent and easier to violate. An agent solving the local task with the context it has is drifting by default. Not the same as rule rot, which is the decay of the rule corpus.
+
+**Decision before change** — the rule that an architectural decision is recorded first and the system changed second. A fix that needs to break an accepted decision stops and becomes a proposal for a new one.
+
+**ADR log** — a log of architecture decision records (Nygard's form: title, context, decision, status, consequences), numbered and never renumbered, kept in the repository, and consulted by every task brief and every bug fix — the path where contradictory patches enter.
+
+**Superseded ADR** — a reversed decision kept in the log, marked superseded and pointing to its replacement, so a later agent can tell history from the decision in force.
+
+**Fitness function** — any mechanism that gives an objective assessment of an architectural characteristic — a test, a metric, a monitor — run continually as the system changes (Ford, Parsons and Kua, *Building Evolutionary Architectures*).
+
+**Dependency rule / import contract** — an executable statement of which modules may depend on which, checked in the build (ArchUnit for Java, Import Linter for Python, dependency-cruiser for JavaScript and TypeScript). It turns a module boundary from a request into a check.
+
+**Frozen violations** — the existing breaches of a new architecture rule recorded as a baseline on its first run, so only new violations fail and fixed ones cannot return. A ratchet for adopting a rule on an already-eroded codebase.
+
+**Duplication gate** — a build check that fails when literal copy-paste exceeds a threshold. It catches clones, not semantic duplicates, and is one maintainability signal among several, beside complexity and static-analysis warnings.
+
+**Fix-on-fix rate** — how often a fix lands in an area another recent fix touched, tracked per module as a trend. One re-fix is ordinary even in human projects; a run of consecutive re-fixes in one area is the erosion signal.
+
+**Redesign trigger** — the threshold, agreed before it fires, at which patching an area stops and redesign starts; one practitioner uses three consecutive fixes on fixes, a heuristic nobody has measured.
+
+**Redesign vs rewrite** — a redesign audits the debt, fixes the target architecture, and moves there in stages that each end in a working result; "rewrite it all properly" hands an agent an open goal and yields a new project with new problems.
+
 ## Cost and the economics of agent work \{#cost-and-the-economics-of-agent-work}
 
 **Cost per accepted change** — the honest unit of agent economics: everything spent reaching a change that survived the gate chain, including retries, abandoned runs, verification calls, and review time. Cost per token is a price list, not a measurement.
