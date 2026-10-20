@@ -474,6 +474,30 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Amdahlovo obmedzenie úspor na tokenoch** — horná hranica celkovej úspory určovaná podielom nákladov, ktoré cena tokenov neovplyvňuje, najmä ľudskou revíziou. *(deep dive)*
 
+<a id="the-model-is-a-dependency-pinning-upgrades-exit-and-data-terms"></a>
+
+## Model ako závislosť: pripnutie, upgrady, odchod a podmienky pre dáta \{#the-model-is-a-dependency-pinning-upgrades-exit-and-data-terms}
+
+**Snapshot modelu verzus pohyblivý alias** — snapshot označuje pevnú verziu modelu, kým alias odkazuje na verziu, ktorú môže poskytovateľ nahradiť. Zo samotného tvaru identifikátora sa nedá určiť, o ktorý druh ide.
+
+**Pripnutie modelu (model pinning)** — výber konkrétneho snapshotu v konfigurácii a zaznamenanie jeho identifikátora pri každej zmene vytvorenej agentom. Obmedzuje zmeny verzie cez alias, no nezabráni vyradeniu, presmerovaniu identifikátora určeného na vyradenie na nástupcu, automatickým upgradom platformy ani zmenám infraštruktúry.
+
+**Opätovné preverenie (re-qualification)** — postup pred prechodom na novšiu verziu: kandidát sa preverí opakovanými regresnými prípadmi pri nezmenenom hodnotiteľovi a úspešnosť prvého pokusu sa zmeria na reprezentatívnej vzorke úloh. Nasleduje postupné nasadzovanie. Nový hodnotiteľ sa preveruje samostatne na verdiktoch, ktoré potvrdil človek; po zmene modelu sa znova posúdia provizórne riešenia v harnesse, ktoré už nemusia byť potrebné.
+
+**Regresia v jednotlivých prípadoch (item-level regression)** — stav, keď po zmene modelu predtým úspešný prípad sústavne zlyháva nad rámec kolísania pozorovaného pri opakovaných behoch. Zlepšenie celkového skóre môže takýto pokles zakryť.
+
+**Lehota pred vyradením (deprecation notice period)** — čas od oznámenia poskytovateľa po vyradenie modelu, do ktorého sa musí zmestiť preverenie nástupcu aj migrácia. Niektoré zverejnené pravidlá minimálnu lehotu neuvádzajú.
+
+**Automatický upgrade (auto-upgrade)** — automatická výmena nasadenej verzie modelu platformou pri vyradení alebo po sprístupnení novej predvolenej verzie. Riadi sa nastaveniami nasadenia a pravidlami životného cyklu.
+
+**Vyskúšaná možnosť odchodu / záložný poskytovateľ** — náhradný poskytovateľ alebo model vo vlastnej infraštruktúre dostupný cez toho istého klienta pre volania modelu, na ktorom sa pravidelne spúšťa regresná sada. Jeho úspešnosť prvého pokusu sa meria samostatne na reprezentatívnej práci ešte predtým, než bude prechod potrebný.
+
+**Pamäť nezávislá od dodávateľa (vendor-portable memory)** — pravidlá projektu, rozhodnutia, poznámky k architektúre a zadania uložené v súboroch repozitára alebo v úložisku znalostí mimo histórie chatov asistenta. Náhradný asistent ich tak prečíta aj bez pôvodného účtu.
+
+**Podmienky nakladania s dátami** — datované podmienky konkrétneho poskytovateľa a konkrétneho plánu predplatného, ktoré upravujú použitie na tréning, dobu uchovávania, miesto spracovania a spracúvanie osobných údajov. Dodatok o spracúvaní osobných údajov (data processing addendum, DPA) určuje spracúvanie v mene zákazníka; nulové uchovávanie dát (zero data retention, ZDR) je samostatná dohoda s vlastnými podmienkami oprávnenosti a výnimkami.
+
+**Smerovanie podľa hranice rentability (routing by break-even)** — priradenie triedy úloh modelu podľa úspešnosti prvého pokusu na reprezentatívnej práci a podmienky `p_cheap / p_expensive > price_cheap / price_expensive`. Nákladové rozhodnutie zahŕňa ľudskú revíziu neúspešných pokusov; požiadavky na dáta môžu výber cesty odôvodniť samostatne.
+
 <a id="the-enterprise-tier-audit-provenance-and-whats-required"></a>
 
 ## Enterprise úroveň: audit, pôvod a čo je povinné \{#the-enterprise-tier-audit-provenance-and-whats-required}
