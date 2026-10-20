@@ -17,9 +17,8 @@ loop is accountable to.
 Across the loop there are working roles: something plans, something implements, something critiques. Agents can
 hold all three, and increasingly do. The human holds a different kind of role — not a step in the sequence but
 the router over it: the one who framed the goal into [checkable stages](./vision-to-stages.md), set what "done"
-means, owns the critic gate, and makes the final call to land. Kief Morris's framing is "on the loop," not in
-it: [the human supervises the loop rather than taking a turn inside it](https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html)
-(`REPORTED`). In the loop, you become a bottleneck the moment the agents outpace you. On the loop, you are the
+means, owns the critic gate, and makes the final call to land. Kief Morris puts the human "on the loop," not in
+it: [the human supervises the loop rather than taking a turn inside it](https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html). In the loop, you become a bottleneck the moment the agents outpace you. On the loop, you are the
 control the whole thing answers to — and that role does not get slower as generation gets faster.
 
 ## Where the human must stay
@@ -37,9 +36,9 @@ specific points where a human's judgment *is* the control and nothing else can b
 
 Part II's recurring failure returns one last time. When artifacts pile up faster than anyone can read them, the
 human in the loop is the first casualty — not because someone decided to remove them, but because the volume
-made their review impossible. Gojko Adzic names it from the spec-driven world:
+made their review impossible. Gojko Adzic reports the same failure from the spec-driven world:
 [artifact volume broke the human-in-the-loop](https://www.linkedin.com/pulse/spec-driven-development-revenge-waterfall-bdd-taken-gojko-adzic-imquf)
-— the ceremony meant to *enable* oversight is exactly what destroyed it (`REPORTED`). This is the deepest reason
+— the ceremony meant to *enable* oversight is exactly what destroyed it. This is the deepest reason
 the human has to be *on* the loop rather than in it: a router above the work stays effective as throughput
 rises; a stage inside it drowns. So design the loop to keep the irreducible checkpoints cheap to perform —
 scoped artifacts, clear done-conditions, a critic that pre-filters — precisely so overload can never quietly

@@ -28,7 +28,7 @@ Preparation is never one-time — that is the part of "preparation over model" p
 
 - **[The verification bottleneck](./verification-bottleneck.md)** — the thesis, argued from the primaries:
   output rises and replicates, quality and comprehension fall, and you cannot feel either effect on yourself.
-- **[Reading the evidence](./reading-the-evidence.md)** — the `MEASURED` / `REPORTED` / `ASSERTED` ladder,
+- **[Reading the evidence](./reading-the-evidence.md)** — the measured / reported / asserted ladder,
   the four checks a number has to survive, and why the most-repeated figure in a genre is usually the one
   nobody can check.
 - **[Preparation over model](./preparation-over-model.md)** — setup and scope move agent success further than

@@ -30,7 +30,7 @@ zásade „príprava je dôležitejšia než model“ vynechávajú.
 - **[Úzke miesto overovania](./verification-bottleneck.md)** — téza podložená prvotnými zdrojmi: objem výstupu
   rastie a tento výsledok sa opakuje, kvalita aj porozumenie klesajú a sám na sebe nedokážeš spoľahlivo
   rozpoznať ani jeden z týchto účinkov.
-- **[Ako posudzovať dôkazy](./reading-the-evidence.md)** — rebrík `MEASURED` / `REPORTED` / `ASSERTED`, štyri
+- **[Ako posudzovať dôkazy](./reading-the-evidence.md)** — rebrík dôkazov (namerané / uvádzané / tvrdené), štyri
   kontroly, ktorými musí číslo prejsť, a vysvetlenie, prečo najčastejšie opakovaný údaj v určitej oblasti
   zvyčajne nedokáže nikto overiť.
 - **[Príprava je dôležitejšia než model](./preparation-over-model.md)** — dôkazy ukazujú, že príprava

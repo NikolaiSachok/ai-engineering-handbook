@@ -141,3 +141,11 @@ jobs:
         run: python3 scripts/course-status-check.py --self-test
       - name: Course status gate
         run: python3 scripts/course-status-check.py
+      # Evidence grades left the reading layer in #800: 325 inline `MEASURED`-style tokens
+      # across three locales read as audit metadata. The grade is now carried by the wording
+      # and recorded in editorial/evidence/; this keeps the tokens from returning and the
+      # ledger's sources from silently leaving their pages.
+      - name: Evidence ledger self-test
+        run: python3 scripts/evidence-ledger-check.py --self-test
+      - name: Evidence ledger gate
+        run: python3 scripts/evidence-ledger-check.py

@@ -29,7 +29,7 @@ two ledgers and not an inconsistency.
 
 | Class | This course's members |
 |---|---|
-| **1 — identifiers / branded** | `MEASURED` / `REPORTED` / `ASSERTED` (code-styled, invariant), tool names, `LOD_0/1/2` as a named product's own labels |
+| **1 — identifiers / branded** | `MEASURED` / `REPORTED` / `ASSERTED` (code-styled, invariant; only in `reading-the-evidence.md` and the glossary since #800 — elsewhere the wording carries the grade), tool names, `LOD_0/1/2` as a named product's own labels |
 | **2 — English-led (default)** | Harness, Hook, Skill, Reward Hacking, Blast Radius, Policy-as-Code, Quality Gate, Least Privilege, Context Rot, Hot Set / Cold Set, Commit, Branch, Pull Request, Repository, Sandbox, Rollback, Feature Flag, Trunk-based Development, Code Review, Linting, Coverage |
 | **3 — German-led (larger here than in RAG)** | see §3 below |
 
@@ -69,7 +69,7 @@ Postmortem.*
 | die Schleife schließt sich in der Produktion | "the loop closes on production" | Satz, kein Einwortterminus |
 | die Projekterinnerung / das Projektgedächtnis | project memory | **OPEN — zwei Kandidaten, kein Beleg.** Bis zur Entscheidung: „das dauerhafte Projektwissen" |
 | ausführbare Regeln; Regeln als Code | executable rules; rules-as-code | — |
-| der Nachweisgrad; die Nachweisleiter | evidence grade / the ladder | Tokens `MEASURED` / `REPORTED` / `ASSERTED` bleiben kept-EN, code-styled, mit einmaliger Glosse „(gemessen / berichtet / behauptet)" |
+| der Nachweisgrad; die Nachweisleiter | evidence grade / the ladder | Tokens `MEASURED` / `REPORTED` / `ASSERTED` bleiben kept-EN, code-styled, mit einmaliger Glosse „(gemessen / berichtet / behauptet)" — **nur** in der Lektion zum Lesen der Belege und im Glossar (#800); sonst trägt die Formulierung den Grad |
 | die Wahl des Nenners | denominator choice | „% des von KI geschriebenen Codes" hängt vollständig vom Nenner ab |
 | technische Schulden **auf Kredit** | tech debt on credit | „technische Schulden" ist der etablierte deutsche Terminus (auch „technische Schuld" Singular) |
 | die Selbsteinschätzungslücke | self-assessment gap | **Auf Probe** — alternativ schlicht: „Entwickler können ihre eigene Beschleunigung nicht beurteilen" |

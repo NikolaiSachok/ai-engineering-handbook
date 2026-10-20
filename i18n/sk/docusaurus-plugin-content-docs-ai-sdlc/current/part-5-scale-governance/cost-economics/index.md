@@ -73,7 +73,7 @@ všetkým lacnejším.
 
 A poctivo drž aj druhú stranu, teda prínos. [Metóda](../../intro.md) z úvodu kurzu tu platí naplno: objem výstupu
 merateľne stúpa, no či stúpa aj *hodnota*, doložené nie je — aj výskumníci Microsoftu, ktorí majú v rukách
-jedny z najväčších nameraných nárastov priepustnosti v odbore, píšu (`REPORTED`), že zlúčený pull request nie
+jedny z najväčších nameraných nárastov priepustnosti v odbore, vo svojej štúdii píšu, že zlúčený pull request nie
 je to isté ako hodnota, ktorú prinesie. Metrika nákladov na zlúčenú zmenu, ktorá sa zlepšuje, kým sa ďalej po
 prúde nezlepšuje nič, optimalizovala menovateľ, nie firmu. K nákladovej metrike preto pridaj jednu metriku
 výsledku, pri ktorej by ti bolo trápne vidieť rovnú čiaru.

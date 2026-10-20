@@ -31,17 +31,17 @@ what you write down rather than what you build.
 
 There is a failure mode in how state gets carried across a long task: **compaction** — summarizing the
 conversation in place as the window fills. It is lossy, and it drifts, because each summary is a translation of
-the last. The pattern that holds up is the opposite:
+the last. The pattern that holds up is the opposite. Anthropic, which sells the model, recommends
 [reset over compaction](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) —
-hand the next step a durable artifact and start clean, rather than dragging a summarized transcript forward
-(`REPORTED`, vendor). The artifact is what survives the reset; the transcript was never meant to. That is the
+hand the next step a durable artifact and start clean, rather than dragging a summarized transcript forward.
+The artifact is what survives the reset; the transcript was never meant to. That is the
 deeper reason the interface has to be written down: it is the only thing that outlives the context window.
 
 ## But artifacts are the overload, too
 
 Here is the tension this Part keeps returning to. The same artifacts that make handoffs checkable are the ones
 that, unmanaged, become **artifact overload** — the measured failure where more generated context per task
-actually [lowers success and raises cost](https://arxiv.org/abs/2602.11988) (`MEASURED`). So the interface can't
+actually [lowers success and raises cost](https://arxiv.org/abs/2602.11988). So the interface can't
 simply accumulate. It has to be **scoped to the task and evicted when done**: what crosses the boundary is only
 what the next stage needs, and what's finished gets dropped, not carried forward out of habit. Scoping and
 eviction are the discipline; the tiering that makes them systematic is
@@ -51,8 +51,8 @@ eviction are the discipline; the tiering that makes them systematic is
 
 What a fully realized artifact interface looks like in the wild: Kenton Varda's
 [`cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) ships with the
-prompts that produced it *in the git history*, and the code was reviewed line by line against the RFCs by
-security engineers (`REPORTED`). The prompt is an artifact; the review is against a spec — the RFC — not a
+prompts that produced it *in the git history*, and by his account the code was reviewed line by line against the RFCs by
+security engineers. The prompt is an artifact; the review is against a spec — the RFC — not a
 feeling; and the whole chain is auditable after the fact. Every boundary was crossed as something someone could
 inspect. That is the bar, and it is rare precisely because it is work.
 

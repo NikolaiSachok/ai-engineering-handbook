@@ -18,8 +18,7 @@ gets oversold.
 ## SLSA: provenance as a ladder, not a checkbox
 
 Provenance is not on-or-off; it comes in strengths, and [SLSA](https://slsa.dev/spec/v1.0/levels)'s build
-track puts numbers on them. Read the levels as answers to "how hard is this provenance to forge"
-(`ASSERTED`, per the specification):
+track puts numbers on them. The specification presents the levels as answers to "how hard is this provenance to forge":
 
 - **Build L1** — the artifact carries provenance describing how it was built. It may be unsigned. It catches
   honest mistakes and is trivial to forge, which is exactly its stated purpose: a floor, not a defence.
@@ -38,8 +37,8 @@ to it**, the same separation-of-duties argument from
 ## SBOM: the inventory, in one of two dialects
 
 A **software bill of materials** is the list of what went into an artifact — every dependency, version, and
-license — so that a newly-disclosed vulnerability becomes a lookup instead of an investigation. Two standards
-dominate, and they come from different worlds (`ASSERTED`):
+license — so that a newly-disclosed vulnerability becomes a lookup instead of an investigation. By this course's
+reading, two standards dominate, and they come from different worlds:
 
 - **[SPDX](https://spdx.dev/)** — a Linux Foundation standard (and ISO/IEC 5962), a package-and-relationship
   model, historically compliance- and license-focused.

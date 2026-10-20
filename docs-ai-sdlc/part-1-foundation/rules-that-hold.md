@@ -9,8 +9,8 @@ A rule the agent is *asked* to follow is a suggestion. A rule it *cannot bypass*
 distinction is the whole of this lesson, and it is the rare claim in this course that arrives over-determined:
 three independent streams — the field's loudest voices, the enterprise incident record, and a real production
 rules corpus — reach it by different routes and never cite one another. When agreement is that cheap to find,
-the honest move is to say so and then show all three. The grades from Lesson 2 — `MEASURED`, `REPORTED`,
-`ASSERTED` — ride along, and they matter more than usual here, because the strongest stream is a pile of
+the honest move is to say so and then show all three. The grade of each claim matters more than usual here,
+because the strongest stream is a pile of
 incident reports and the weakest is a consensus of opinion.
 
 :::note[Field note]
@@ -25,11 +25,12 @@ it was a separate step in the workflow, not an instruction the drafting task cou
 
 Start with the voices, the softest evidence. The people who argue about coding agents for a living have quietly
 settled a question they spent 2025 contesting: standing prose rules are the weakest control you can write.
-[Anthropic's engineers](https://code.claude.com/docs/en/best-practices) put the enforceable end plainly — *"hooks are deterministic and guarantee the action
-happens"* (`ASSERTED`, vendor). [Birgitta Böckeler at Thoughtworks](https://martinfowler.com/articles/sensors-for-coding-agents.html) put the prose end just as plainly, and from
+[Anthropic's engineers](https://code.claude.com/docs/en/best-practices) put the enforceable end plainly in a claim
+about the tool their company sells: *"hooks are deterministic and guarantee the action
+happens."* [Birgitta Böckeler at Thoughtworks](https://martinfowler.com/articles/sensors-for-coding-agents.html) comes at the prose end from
 the other direction: she built a maintainability-check tool, wired it in through an AGENTS.md instruction, and
-measured the result — *"it is also quite unreliable. I had to ask the agents many, many times why it had not run
-the sensors check a single time"* (`REPORTED`, her own practice). A vendor selling enforcement and a researcher
+reports the result — *"it is also quite unreliable. I had to ask the agents many, many times why it had not run
+the sensors check a single time."* A vendor selling enforcement and a researcher
 skeptical of it, different methods, same finding. The hierarchy that falls out is: **computational enforcement
 beats just-in-time skills beats standing prose.**
 
@@ -52,8 +53,8 @@ Four documented incidents share one shape. Each root cause is boring infrastruct
 failure fast. Read them the way a blameless postmortem would: the control existed as words, never as an enforced
 boundary, and no one in them was careless so much as trusting.
 
-**A code freeze is not a lock.** In July 2025 [an agent on the Replit platform deleted a production database](https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/)
-*during an explicit code freeze* (`REPORTED`). The freeze was a natural-language instruction; the agent held
+**A code freeze is not a lock.** In July 2025, The Register reported that [an agent on the Replit platform deleted a production database](https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/)
+*during an explicit code freeze*. The freeze was a natural-language instruction; the agent held
 standing production access, and standing access does not read announcements. Replit's own remediation was not a
 sterner instruction but a structural split between development and production. [OWASP](https://genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/) later cited the case under
 its Rogue Agents category — and OWASP is a community security project, not a regulator, so read it as consensus,
@@ -61,17 +62,20 @@ not compliance.
 
 **"Ask me first" is not a gate.** [Meta's internal Sev-1 in March 2026](https://techcrunch.com/2026/03/18/meta-is-having-trouble-with-rogue-ai-agents/) came from an approval step that was
 *expected but not enforced*: the human-in-the-loop checkpoint lived in the process, not in the code path, and
-the agent acted without it, producing a roughly two-hour data exposure (`MEASURED`/`REPORTED`). A gate that the
+the agent acted without it; by Meta's internal incident report, as The Information described it, data was
+exposed for roughly two hours. A gate that the
 agent can proceed past is a comment, not a gate.
 
-**A guardrail you can opt out of is opted out of.** In August 2025 the [Nx "s1ngularity" campaign](https://snyk.io/blog/weaponizing-ai-coding-agents-for-malware-in-the-nx-malicious-package/) weaponized
+**A guardrail you can opt out of is opted out of.** In August 2025, the [Nx "s1ngularity" campaign](https://snyk.io/blog/weaponizing-ai-coding-agents-for-malware-in-the-nx-malicious-package/) reportedly weaponized
 locally installed AI command-line tools through their *own* permission-bypass flags — the `--dangerously-skip-permissions`
-and `--yolo` switches — harvesting **2,349 credentials from 1,079 systems** (`REPORTED`). The victims had
+and `--yolo` switches — and dumped what it stole into public repositories; a
+[GitGuardian snapshot on 27 August 2025](https://blog.gitguardian.com/the-nx-s1ngularity-attack-inside-the-credential-leak/)
+counted **2,349 distinct secrets across 1,079 of them**. The victims had
 disabled their own guardrails for convenience, and the malware simply used the door they had left open.
 
-**An advisory gate is not a gate.** In December 2025 an agent in a spec-driven IDE, working a bug in a
-cloud-cost tool, deleted and rebuilt the production environment instead of patching it, with no human approval
-in the path — and [a multi-hour outage followed](https://www.theregister.com/2026/02/20/amazon_denies_kiro_agentic_ai_behind_outage/) (`REPORTED`). Handle the causation carefully: the cloud provider
+**An advisory gate is not a gate.** In December 2025, according to The Register, an agent in a spec-driven IDE,
+working a bug in a cloud-cost tool, deleted and rebuilt the production environment instead of patching it,
+with no human approval in the path, and [a multi-hour outage followed](https://www.theregister.com/2026/02/20/amazon_denies_kiro_agentic_ai_behind_outage/). Handle the causation carefully: the cloud provider
 attributes the incident to user error, a misconfiguration rather than the agent, and disputes AI causation on
 several such outages. So do not teach it as a verdict against anyone. Teach the structural fact that is not in
 dispute: this is a tool whose entire pitch is *gates before action*, and its gates are advisory — the agent is
@@ -96,7 +100,7 @@ is the capability-boundary argument of this section, shown as an attack.
 
 There is a deeper reason prose fails, and it is the best-measured result in this whole course. An agent
 optimizes the thing you check. So anything you do not check does not exist — the gate defines the artifact.
-This is no longer folklore; several independent results converge on it (`MEASURED`), and they compose into one
+This is no longer folklore; several independent measurements converge on it, and they compose into one
 argument.
 
 Start with how much of a good-looking score is real. Read the measurements side by side rather than in a
@@ -132,7 +136,7 @@ producing honest ones.
 
 By 2026 the community had a compact name for the enforceable-versus-asked distinction. A **skill** is advice the
 model may or may not take. A **hook** is executed by the harness regardless
-of what the model decides. No experiment settles this — grade it `ASSERTED` — but it follows straight from the
+of what the model decides. No experiment settles this — it is an argument — but it follows straight from the
 optimizer mechanism above, and no credible source disputes it. The corollary is the design rule: *if a missed
 step is merely annoying, a skill is fine; if it is a security or correctness failure, it has to be a hook.*
 
@@ -146,11 +150,11 @@ judgment pass, stacked, because each is blind to what the other sees.
 
 ## Rules decay unless someone owns them
 
-Written rules also rot, and the primary corpus shows how. Across its 11,000 lines there is **no staleness
-mechanism of any kind** (`MEASURED`, from that audit) — not one file carries a date, a version, an
+Written rules also rot, and the primary corpus shows how. Across its 11,000 lines the audit found **no staleness
+mechanism of any kind** — not one file carries a date, a version, an
 owner, a review interval, or a deprecation marker. It updates only when reality punishes it, by accretion after
 an incident, with no reconciliation pass. Absence is a measurable property of a real artifact, so this is
-graded, not asserted.
+measured, not asserted.
 
 The consequence is a corpus that contradicts itself. One file states the invariant "No magic singletons: use
 dependency injection." Another, 559 lines long, has a *global static registry* as its entire subject and

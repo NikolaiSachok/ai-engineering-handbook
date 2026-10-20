@@ -11,19 +11,19 @@ on disk. Durable project memory is what makes a fleet of forgetful agents usable
 price: a rule file isn't written once and consulted when needed — it is re-sent to the model on every turn, and
 the field's one rigorous measurement of that cost puts it above 20% per turn. So the obvious fix, write more of it
 down, is also the failure mode. This lesson is the escape: tier the knowledge by how often the task actually needs
-it, rather than producing more of it. The grades from Lesson 2 — `MEASURED`, `REPORTED`, `ASSERTED` — ride along,
-and the lesson turns them on its own central claim, which is ours, single-sourced, and would be a lie to hide.
+it, rather than producing more of it. The lesson grades its own central claim as strictly as any other: it is ours
+and single-sourced, and hiding that would be a lie.
 
 ## The smart friend with amnesia
 
 One practitioner writing a public series on AI-first development,
-[Andrey Beloborodov](https://www.threads.com/@andreybwhite), passes on the model's own account of itself: a "very
-smart friend with amnesia" (`ASSERTED` — his framing). Once the dialogue ends nothing survives but the code; when
+[Andrey Beloborodov](https://www.threads.com/@andreybwhite), frames the model's self-description as a "very
+smart friend with amnesia." Once the dialogue ends nothing survives but the code; when
 a conversation runs past the context window and auto-compaction summarises it, that helps, he says, "but not by
 much."
 
 The intuition now has a measurement under it, sharper than the metaphor. A ["governance decay" study](https://arxiv.org/abs/2606.22528)
-(June 2026; `MEASURED`) ran 1,323 episodes with a policy the agent was told to obey. With the
+(June 2026) ran 1,323 episodes with a policy the agent was told to obey. With the
 full policy visible, the violation rate was **0%**. After compaction summarised the history, it rose to **30%
 overall, and up to 59% for some models**. The decomposition is the teachable part: when the constraint survived
 summarisation, violations stayed at **0%**; when the summariser dropped it, they jumped to **38%**. The model was
@@ -33,8 +33,8 @@ survive has to be pinned or re-injected, never stated once and trusted to persis
 ## Write more down, and you drown
 
 Beloborodov's next admission reads better as corroboration than as a stumble. Having told you to build project
-memory, he grants that you "drown in generated documents within a couple of days" — the AI writes specs "in tens
-of kilobytes," the store "turns into a dump" — then promises a fix that never lands in the series (`REPORTED`). He
+memory, he reports that you "drown in generated documents within a couple of days" — the AI writes specs "in tens
+of kilobytes," the store "turns into a dump" — then promises a fix that never lands in the series. He
 kept using the method anyway, which is the tell: overload is a tax to engineer against, not a disqualifier.
 
 It is the best-attested finding in the field. Eight parties reached it independently, none citing another: Adzic,
@@ -46,7 +46,7 @@ corpus above. Eight walls hit from eight directions, one of them with instrument
 
 The cost is where the metaphor turns into a number. A standing context file isn't a document you consult; it's a
 subscription you pay every turn, because every line is re-sent to the model each time it acts. ETH Zurich measured
-the bill ([Gloaguen et al.](https://arxiv.org/abs/2602.11988); `MEASURED`): context files raised inference cost **over 20% per turn
+the bill ([Gloaguen et al.](https://arxiv.org/abs/2602.11988)): context files raised inference cost **over 20% per turn
 on average** — **+20% on SWE-bench Lite, +23% on AGENTbench** for LLM-generated files, up to **+19%** for
 human-written ones. And the mechanism isn't the one you'd guess: agents "followed instructions thoroughly but
 unnecessarily" — over-compliance — burning the extra budget obeying the file too well, with no gain. More memory
@@ -61,7 +61,7 @@ success on SWE-bench Lite, **−2%** on AGENTbench. Human-written files came out
 can't infer from the repo, while an agent writing its own rules mostly restates what it could already read.
 
 Don't over-read that into "AGENTS.md doesn't work." A second paper points the other way, and both are honest.
-[Lulla et al.](https://arxiv.org/abs/2601.20404) (`MEASURED`) found an AGENTS.md file *associated with* **28.64% lower median
+[Lulla et al.](https://arxiv.org/abs/2601.20404) found an AGENTS.md file *associated with* **28.64% lower median
 runtime** and **16.58% fewer output tokens**. They don't collide — they weigh different ledgers on different
 populations. Gloaguen measures task success and input cost, where the file is re-sent every turn; Lulla measures
 runtime and output tokens, where a file that stops the agent flailing shortens the whole trajectory, and its
@@ -74,7 +74,7 @@ section is usually exactly this), and keep only commands, constraints, and genui
 
 If most of a rule file should be cut, what earns its place? In my own production practice the highest-value part
 of any project memory is what I'd call the scar archive: the reasoning behind each locked decision, appended every
-time a batch-wide pass finds and fixes a class of bug (`REPORTED`). The industry has a name for the same
+time a batch-wide pass finds and fixes a class of bug. The industry has a name for the same
 instinct — the blameless postmortem — but the soloist version lives where the enterprise one usually doesn't: in
 the file the agent is required to read, not a wiki nobody opens. That's why it costs less and lands more often than
 an ADR library.
@@ -107,8 +107,7 @@ memory" (Yegge), or too many markdown files (Böckeler), or just a line count (E
 unclaimed territory.
 
 The answer isn't more memory; it's memory organised by how close the knowledge sits to the task in hand. That
-discipline has a name — **context engineering** — and [Anthropic's engineers](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) have written it up (`REPORTED`,
-vendor): give the model exactly the context it needs and no more, because attention degrades as the window fills.
+discipline has a name — **context engineering** — and [Anthropic's engineers](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), whose company sells the model, describe the approach: give the model exactly the context it needs and no more, because attention degrades as the window fills.
 The machinery ships already — load an artifact's name and description up front, page in its full body only when
 triggered: progressive disclosure, or plainly, detail on demand. The field's single hard measurement points the
 same way: ETH's prescription from those cost numbers is parsimony — omit LLM-generated context files, keep only
@@ -119,7 +118,7 @@ finding, and it deserves the label: ETH measured that trimming the corpus helps;
 The ladder got built many times over, by parties who didn't know about each other. In my own orchestration corpus,
 project knowledge splits into tiers by rate of change — a reusable type spec, a batch roster, the item — because
 "keeping the DNA [in the type] and the roster in the batch is what lets this scale to hundreds without forking a
-thousand-line spec" (`REPORTED`). A short prefix of about a dozen non-negotiables — the hot set — is the part you
+thousand-line spec." A short prefix of about a dozen non-negotiables — the hot set — is the part you
 can always afford in context; the rest is a cold set pulled on demand. Anthropic's Agent Skills tier the same way
 for capabilities: activation, reference, deep dive. And an unimplemented manifesto, DefinitiveSpec, describes a
 level-of-detail ladder — map (name and ID only), contract (signatures), blueprint (full logic) — with a token
@@ -141,7 +140,7 @@ them.
 
 ## Why we might be wrong
 
-The honest move is to admit how thin the ground under "tiering saved it" is. It is `REPORTED`, single-source, and
+The honest move is to admit how thin the ground under "tiering saved it" is. It is a single-source self-report, and
 mine. The convergence of several parties on the same lever raises confidence that the *lever* is right, not that
 the *mechanism* is validated — nobody, us included, has better than a self-report that it works. And that
 self-report comes from exactly the population [METR](https://arxiv.org/abs/2507.09089) caught misjudging its own AI-era productivity by around forty

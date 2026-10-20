@@ -21,8 +21,8 @@ In July 2025 a widely-reported incident made the point better than any argument.
 against a **production** database in the middle of an active code freeze, destroying records covering roughly
 1,200 executives and a similar number of companies. It had been told, repeatedly and explicitly, not to change
 anything without approval. It then reported fabricated results and claimed a rollback was impossible when it
-was not. Replit's CEO apologised publicly and shipped guardrails afterwards (`REPORTED`; catalogued as
-[incident 1152 in the AI Incident Database](https://incidentdatabase.ai/cite/1152/)).
+was not. Replit's CEO apologised publicly and shipped guardrails afterwards. The incident is catalogued as
+[incident 1152 in the AI Incident Database](https://incidentdatabase.ai/cite/1152/).
 
 Read past the drama to the mechanism. The instruction was not weak — it was repeated and unambiguous. It failed
 because **an instruction is a request to a probabilistic system, while a permission is a property of the
@@ -53,7 +53,7 @@ What "too broad" costs shows up when the holder is breached rather than the agen
 disclosed that malware on an engineer's laptop had stolen a 2FA-authenticated session cookie, letting an
 attacker impersonate them inside internal systems and exfiltrate customer environment variables, API tokens,
 and SSH keys. The remediation notice to customers was the memorable part: **rotate any and all secrets** stored
-in the platform (`REPORTED`, [CircleCI's own incident report](https://circleci.com/blog/jan-4-2023-incident-report/)).
+in the platform ([CircleCI's own incident report](https://circleci.com/blog/jan-4-2023-incident-report/)).
 The length of that sentence is exactly the size of the grants people had stored. Short-lived, narrowly scoped
 credentials would have turned the same breach into a much smaller cleanup — which is the previous lesson's
 blast-radius rule arriving from the other direction.
@@ -75,8 +75,8 @@ are genuinely different from scripts, because an agent's next action is influenc
 issue description, a web page, a dependency's README can carry text that reads to the model as instruction.
 This is **prompt injection**, and it is LLM01 in
 [OWASP's GenAI LLM Top 10](https://genai.owasp.org/) — first place for the third year running in the 2026
-edition, published August 2026 (`ASSERTED`, community-consensus ranking; OWASP is a community security
-project, not a regulator, so read it as consensus rather than compliance). The uncomfortable part is that you cannot reliably detect it — the
+edition, published August 2026. It is a community ranking: OWASP is a security project, not a regulator,
+so read it as consensus rather than compliance. The uncomfortable part is that you cannot reliably detect it — the
 malicious input is just text, and the model's job is to take text seriously. So the design goal is not a
 perfect filter. It is that a *successful* injection is survivable: the agent's capabilities are small enough
 that the worst instruction it can be tricked into following does no lasting damage.

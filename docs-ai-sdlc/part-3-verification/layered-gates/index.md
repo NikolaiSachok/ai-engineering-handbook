@@ -24,10 +24,9 @@ pattern-matcher reads structure, so it will never see that a correct-looking scr
 live state. Turning up the strictness on a gate that is structurally blind to a class just produces more noise in
 the classes it *can* see, while the real gap stays exactly as open as before.
 
-Birgitta Böckeler names the same problem from the harness-engineering side. Reviewing coding-agent controls, she
+Birgitta Böckeler names the same problem from the harness-engineering side. Writing from her own work with coding-agent controls, she
 asks the question most teams never do: [*"If sensors never fire, is that a sign of high quality or inadequate
-detection mechanisms?"*](https://martinfowler.com/articles/harness-engineering.html) (`REPORTED`, her own
-practice) — and reaches for mutation testing to answer it, because the only way to know whether a gate can catch
+detection mechanisms?"*](https://martinfowler.com/articles/harness-engineering.html) — and reaches for mutation testing to answer it, because the only way to know whether a gate can catch
 anything is to inject a defect and see if it fires. In one case she found a file reporting *100% statement
 coverage* that had **no unit tests at all**; the coverage was real, but it measured that a line had *executed*,
 never that its behavior was *checked*. A green gate is evidence about the gate's mechanism before it is evidence

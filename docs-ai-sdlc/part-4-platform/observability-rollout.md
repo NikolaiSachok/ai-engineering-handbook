@@ -53,7 +53,7 @@ it.
 
 There is a measured hint that this edge deserves the attention.
 [DORA's 2025 report](https://dora.dev/dora-report-2025/) finds AI adoption carries a *negative* relationship with
-delivery stability — and, as the introduction insisted, that is `MEASURED` only in the weak sense of a large
+delivery stability — and, as the introduction insisted, that comes only from a large
 self-reported survey, perception rather than telemetry. It does not license "AI makes
 teams worse." It licenses precisely one thing: the instability it reports is instability in *delivery* — the
 release and recovery path — so build that part deliberately instead of assuming it will hold.

@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Go to the primary, then say the grade out loud
 
-Lesson 1 leaned on a grade attached to every number — `MEASURED`, `REPORTED`, `ASSERTED`. This lesson is
+Lesson 1 leaned on a grade carried by every number — `MEASURED`, `REPORTED`, `ASSERTED`. This lesson is
 where that grade comes from — the one instrument this course hands you and carries into every other lesson. You arrive
 holding claims that are wrong, not because anyone lied, but because the field's secondary layer distorts
 numbers in both directions as they travel. Boosters inflate one way, skeptics the other, and a figure passed
@@ -24,8 +24,9 @@ Three grades, and the whole discipline rides on keeping them apart.
 Two rules keep the ladder honest. First, a famous name does not raise a claim's grade. Fame is not evidence,
 and "Karpathy says" is `ASSERTED` until you find what he actually measured. Second, you may never upgrade a
 grade in the retelling — an assertion repeated by a large account is still an assertion. State the grade in the
-words you choose: "a randomised trial found," "practitioners report," "one influential post argues." Those
-three openings are not decoration. They are the grade, spoken.
+words you choose: "a randomised trial found," "practitioners report," "one influential post argues."
+Those three openings are not decoration. They are the grade, spoken.
+The rest of the course keeps to that: it phrases each claim so the wording carries the grade.
 
 ## Four things to read for
 

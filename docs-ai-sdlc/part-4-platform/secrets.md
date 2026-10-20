@@ -35,8 +35,8 @@ in practice means it must not sit in the code at all.
 One mechanism makes the invariant hold at every scale: secrets live *outside* the code as *references*, and are
 resolved into the running process only at runtime. Code reads a name — `DATABASE_URL`, `STRIPE_KEY` — never a
 literal value. The value is injected into the process environment by something the agent and the repo never see.
-This is the configuration principle the [twelve-factor app](https://12factor.net/config) states as strict
-separation of config from code (`ASSERTED`, and near-universal practice): the agent gets the config surface it
+Strict separation of config from code is the principle the [twelve-factor app](https://12factor.net/config)
+argues for, and it is near-universal practice. The agent gets the config surface it
 needs — the *names* of the things it wires together — without the secret surface it does not.
 
 What "injected by something else" is scales cleanly:
@@ -79,7 +79,7 @@ The scale of the problem is real and worth stating carefully. GitGuardian's
 [*State of Secrets Sprawl 2026*](https://blog.gitguardian.com/the-state-of-secrets-sprawl-2026/), published
 March 2026 on 2025 data, reports **28.65 million** new hardcoded secrets in public GitHub commits, up **34%**
 year over year — and, closer to this lesson's point, a **3.2%** secret-leak rate in commits assisted by a
-coding agent against a **1.5%** baseline across all public commits (`REPORTED`). Read it through the course's
+coding agent against a **1.5%** baseline across all public commits. Read it through the course's
 vendor rule: GitGuardian sells secret scanning, so these are claims about the *scale of the problem it
 addresses*, directionally credible but not an independent measurement. The rate is the part that matters —
 roughly double, rather than simply more commits — which is exactly why the block has to be automatic. The

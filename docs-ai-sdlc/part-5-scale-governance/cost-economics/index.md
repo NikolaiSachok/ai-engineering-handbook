@@ -76,7 +76,7 @@ cheaper.
 And keep the value side honest. The course's opening
 [method](../../intro.md) applies with full force here: output is measurably up, and whether *value* is up is not
 established — Microsoft's own researchers, holding some of the largest measured throughput gains in the field,
-still write (`REPORTED`) that a merged pull request is not the same as the value it delivers. A
+still report that a merged pull request is not the same as the value it delivers. A
 cost-per-merged-change metric that improves while nothing downstream improves has optimised the denominator,
 not the business. Pair the cost metric with one outcome metric you would be embarrassed to see flat.
 
