@@ -10,8 +10,8 @@ library, you choose when to upgrade, so tests can run before the change reaches 
 can stay identical while its outputs shift on the supplier's schedule. The interface you depend on is
 behaviour, which means the API can keep returning 200 while the workflow built on it has already broken.
 
-Access can disappear too. Andrey Beloborodov, counts blocked accounts
-among his reasons to use several assistants. In [his write-up](https://realaillusions.com/ru/materials/threads-sovety-ai-praktika/)
+Access can disappear too. Andrey Beloborodov, a practitioner who writes publicly about AI-first development,
+counts blocked accounts among his reasons to use several assistants. In [his write-up](https://realaillusions.com/ru/materials/threads-sovety-ai-praktika/)
 (in Russian), he calls the supplier an “unpredictable partner” (translated from Russian, as are his later
 quotes here). His assistants share one repository and knowledge base, so when one model misbehaves he moves
 to the next editor pane.
@@ -51,9 +51,10 @@ predictions regressed from correct to wrong across API updates in a controlled c
 `gpt-3.5-turbo` were unannounced, so developers using that alias could not test them beforehand.
 
 An August 2026 preprint by [Xu and Wu](https://arxiv.org/abs/2608.17719) measured 900 benchmark items
-50 times per model across three upgrade pairs. Aggregate gains reached 7.3 percentage points on one benchmark; another gained overall while 8.3% of its
-items regressed reliably in the same upgrade. These cases scored
-lower across repeated runs, beyond sampling noise under statistical control. Aggregate scores hid changes in both directions. A search in October 2026 turned up no published measurement of coding-agent regressions after a model
+50 times per model across three upgrade pairs. The GPT-5.4 to GPT-5.5 upgrade raised the overall score on the Omni-MATH hard mathematics benchmark by
+7.3 percentage points. The same upgrade improved the IFBench instruction-following score overall, but
+8.3% of its items reliably regressed: the newer model answered those items correctly less often across
+repeated runs, by more than sampling noise could explain under the study's statistical controls. Aggregate scores hid changes in both directions. A search in October 2026 turned up no published measurement of coding-agent regressions after a model
 upgrade; these studies concern classification and benchmark tasks.
 
 Before switching, run the candidate through your own harness: **re-qualification** uses past failures and
@@ -104,9 +105,10 @@ dated 2026-07-24.
 Foundry's `OnceNewDefaultVersionAvailable` setting upgrades Standard-family deployments when a new default
 is set. Provisioned deployments are not auto-upgraded; previews are force-upgraded with at least 30 days' notice.
 
-The shortest stated minimum here is 60 days, for Anthropic's publicly released models and Microsoft's GA
-models; Google states none for stable models. If qualification and migration take longer than your notice
-period, they cannot finish before retirement unless they start before the notice.
+For GA/stable models, the shortest stated minimum here is 60 days, for Anthropic's publicly released
+models and Microsoft's GA models; Google states none for stable models, and preview minimums are shorter. Started at the announcement, a qualification and migration that take longer
+than your notice period cannot finish before retirement. The only way to fit inside such a short notice period
+is to keep qualifying candidates continuously rather than waiting for the announcement.
 
 Suspension can remove that window altogether. Two published clauses show the grounds and notice conditions:
 
@@ -135,7 +137,7 @@ store: this **vendor-portable memory** lets a replacement assistant read them wi
 
 ## The account determines the data terms
 
-Paste company code into personal chat and that subscription's consumer terms govern it.
+Paste the company's code into a personal chat and that subscription's consumer terms govern it.
 Once prompts leave your machine, **data terms** determine training use, retention and processing location.
 A **data processing addendum (DPA)** defines how the supplier processes personal data on your behalf. Ask what the supplier
 trains on, how long it keeps data, where it processes it, and which DPA applies, for each service and tier.
@@ -149,7 +151,7 @@ Training and retention are separate questions:
 | Anthropic consumer | Permission required under the update. | Five years for new/resumed chats and coding sessions if you allow training; otherwise existing 30 days. Update excludes commercial services. |
 | Google Gemini API | Unpaid: inputs/outputs used for product development/improvement; human review possible. Paid: excluded from product improvement. | Both tiers: prompts, context and outputs retained 55 days for policy enforcement and legal disclosure duties. |
 | Google Vertex AI | Excluded without prior permission or instruction. | Cache deleted within 24 hours; can be disabled. Abuse-detection prompt logging possible; period not stated. |
-| Microsoft Foundry | Excluded without permission or instruction. | Period not stated. |
+| Microsoft Foundry | Excluded without permission or instruction. | Stateful-feature and uploaded data kept until the customer deletes it; abuse-monitoring store for human review (period not stated). |
 
 Sources (read October 2026): OpenAI [data controls](https://developers.openai.com/api/docs/guides/your-data),
 undated, training policy from 2023-03-01; Anthropic [training](https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training)
@@ -168,15 +170,16 @@ Zero data retention (ZDR) has eligibility and exceptions; check residency indepe
 | Anthropic commercial | Sales arrangement per organization; flagged content may remain up to two years; some models require 30-day retention unless authorized. Feature eligibility varies; stateful features excluded; legal retention possible. | Inference: US-only/global on 4.6+ models; US-only at 1.1x. Storage: US workspace geo. Commercial terms incorporate a DPA. |
 | Anthropic consumer | Not stated. | Residency/DPA not stated. |
 | Google Gemini API | Not stated. | Paid-tier logged data may be stored transiently/cached in any country with Google/agent facilities; no residency commitment stated. Paid services use processor terms. |
-| Google Vertex AI | Customer configuration plus abuse-logging exception; some advanced features may prevent ZDR. | At-rest data stays in selected location; jurisdictional/locational endpoints keep ML processing in that jurisdiction. Global endpoint may process anywhere; no residency guarantee. DPA not stated on cited pages. |
-| Microsoft Foundry | Abuse-monitoring modification available on application. | Customer-specified geography, except Global/DataZone deployments. DPA linked. |
+| Google Vertex AI | Customer configuration plus abuse-logging exception; Grounding with Google Search keeps logs up to three days, with no way to disable storage. | At-rest data stays in selected location; jurisdictional/locational endpoints keep ML processing in that jurisdiction. Global endpoint may process anywhere; no residency guarantee. Google's Cloud Data Processing Addendum (CDPA) referenced by the cited ZDR page. |
+| Microsoft Foundry | Abuse-monitoring modification available on application. | Processing in the customer-specified geography, except Global/DataZone deployments (processing only); data at rest stays in the customer geography. DPA linked. |
 
 Sources (read October 2026): OpenAI data controls, Anthropic consumer update, Gemini terms, Vertex ZDR and
 Foundry data privacy above; Anthropic [ZDR](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention)
 and [residency](https://platform.claude.com/docs/en/manage-claude/data-residency), undated; Vertex
 [residency](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/learn/data-residency), 2026-10-15.
 DPAs: [Anthropic](https://www.anthropic.com/legal/data-processing-addendum),
-[Google processor terms](https://business.safety.google/processorterms/), [Microsoft](https://aka.ms/DPA);
+[Google processor terms](https://business.safety.google/processorterms/),
+[Google Cloud CDPA](https://cloud.google.com/terms/data-processing-addendum), [Microsoft](https://aka.ms/DPA);
 document dates not stated on the cited parent pages.
 
 The [secrets](../part-4-platform/secrets.md) and [environments](../part-4-platform/environments-migrations-data.md)
@@ -207,8 +210,8 @@ The invariant: **pin the version you run, qualify every change to it, and prove 
 - **Soloist.** Pin the model in configuration, keep project memory in the repository, rerun past failures
   before upgrading, and check notice periods and account terms. *The failure it prevents:* a suspended
   account taking project context with it, or an alias moving to a model you never tested.
-- **Small-team.** Centralise calls, qualify upgrades with repeated runs, exercise the fallback regularly,
-  measure success per task class, and record each service's data commitments. *The failure it prevents:*
+- **Small-team.** Route every model call through one client, qualify upgrades with repeated runs, exercise the fallback regularly,
+  measure first-try success per task class, and record each service's data commitments. *The failure it prevents:*
   learning about retirement from production errors, or shipping an upgrade whose higher average hid broken cases.
 - **Enterprise.** Keep version, provider, region, terms, notice and owner in the model inventory; secure DPA,
   residency and retention commitments; retain qualification and exit evidence. *The failure it prevents:*
@@ -223,6 +226,6 @@ The invariant: **pin the version you run, qualify every change to it, and prove 
 - **Exercise the exit and keep repository memory.** Suspension can strand chat memory; retirement strands
   workflows without a qualified replacement.
 - Data commitments depend on the account's service tier, so record its terms and their date.
-- Include failed attempts' human review in routing costs, because cheaper tokens can consume more human capacity.
+- Include the human review that failed attempts consume in routing costs, because cheaper tokens can consume more human capacity.
 
 **[New terms](../glossary.md#the-model-is-a-dependency-pinning-upgrades-exit-and-data-terms)**: model snapshot vs moving alias; model pinning; re-qualification (of a model upgrade); item-level regression; deprecation notice period; auto-upgrade; tested exit (fallback provider); vendor-portable memory; data terms (training use, retention, zero data retention, residency, DPA); routing by break-even.
