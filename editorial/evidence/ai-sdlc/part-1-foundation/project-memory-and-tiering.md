@@ -12,4 +12,6 @@ Page: `docs-ai-sdlc/part-1-foundation/project-memory-and-tiering.md`
 | 6 | In the author’s production practice, project memory records reasoning behind locked decisions. | REPORTED | — | — |
 | 7 | Anthropic describes giving the model exactly the context it needs and no more. | REPORTED | vendor | https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents |
 | 8 | The author’s orchestration corpus splits knowledge into tiers by rate of change. | REPORTED | — | — |
-| 9 | Tiering saved the author’s corpus; this is a single-source self-report. | REPORTED | — | — |
+| 9 | Beloborodov separated a stalled client project's docs into history, target state and experiments. | REPORTED | his account of a client case | https://realaillusions.com/ru/materials/ai-project-stabilization-case/ |
+| 10 | Plans remain plans until the function is confirmed in the working system. | ASSERTED | his stated rule for his own project | https://realaillusions.com/ru/projects/cyprus-real-estate-project/ |
+| 11 | Tiering saved the author’s corpus; this is a single-source self-report. | REPORTED | — | — |
