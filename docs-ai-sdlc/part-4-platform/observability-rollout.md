@@ -169,8 +169,8 @@ path.
   signals, including a business signal, in the task's done-condition; have the critic check they are emitted.
 - **Silence needs an outside sensor.** Probe the key user journey and give users a tracked way to report
   failures. Internal telemetry can fall silent with the service; a heartbeat alone cannot prove users are served.
-- **Release through a controlled ramp.** Separate deploy from release, where outputs can be compared, run the
-  candidate in shadow before the canary, and widen gradually. Keep side effects out of the shadow and bind the ramp to automatic reversal.
+- **Release through a controlled ramp.** Separate deploy from release; where outputs can be compared, run the
+  candidate in shadow before the canary; then widen gradually. Keep side effects out of the shadow and bind the ramp to automatic reversal.
 - **The kill switch is a state change.** Build once and promote the same artefact through stage and production.
   Keep the previous artefact unchanged so rollback needs no rebuild; for fleets, pause the agents too.
 - **An escape teaches the gates.** Production signals and confirmed user reports feed the same ledger, naming
