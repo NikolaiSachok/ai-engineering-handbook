@@ -396,6 +396,32 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Dlh z flagov (flag debt)** — náklady na údržbu flagu a vetiev, ktoré kvôli nemu zostávajú v kóde. Každý flag na sprístupnenie (release flag) musí mať vlastníka, opis a dátum odstránenia. Dlhodobý flag núdzového vypínača musí mať vlastníka a treba ho pravidelne revidovať spolu so súborom pravidiel. Dátum skončenia platnosti ani dátum odstránenia sa mu neurčuje.
 
+<a id="architecture-erosion"></a>
+
+## Erózia architektúry \{#architecture-erosion}
+
+**Erózia architektúry / architektonický drift (architecture erosion / architectural drift)** — dva pojmy, ktorými Perry a Wolf v roku 1992 pomenovali narúšanie štruktúry kódovej základne. Pri erózii kód architektúru porušuje; pri architektonickom drifte na ňu neberie ohľad, čím oslabuje jej súdržnosť a uľahčuje ďalšie porušenia. Pri agentovi, ktorý rieši lokálnu úlohu s práve dostupným kontextom, je architektonický drift samozrejmosťou. Ide o iný jav než zastarávanie korpusu pravidiel.
+
+**Rozhodnutie pred zmenou (decision before change)** — pravidlo, podľa ktorého sa najprv zaznamená architektonické rozhodnutie a až potom zmení systém. Ak oprava vyžaduje porušenie prijatého rozhodnutia, implementácia sa zastaví a výnimka sa zmení na návrh nového rozhodnutia.
+
+**Denník architektonických rozhodnutí (ADR log)** — denník záznamov ADR v Nygardovej podobe s poľami `Title`, `Context`, `Decision`, `Status` a `Consequences`. Záznamy sú číslované a nikdy sa neprečíslovávajú. Denník je uložený v repozitári a musí z neho vychádzať každé zadanie úlohy aj každá oprava chyby, pretože práve cez opravy sa do systému dostávajú protichodné zásahy.
+
+**Nahradený záznam ADR (superseded ADR)** — záznam rozhodnutia, ktoré už neplatí, pretože ho nahradilo nové. Záznam zostáva v denníku so stavom `superseded` a odkazom na náhradu, aby ďalší agent rozlíšil históriu od platného rozhodnutia.
+
+**Fitness funkcia (fitness function)** — podľa Neala Forda, Rebeccy Parsons a Patricka Kuu v knihe *Building Evolutionary Architectures* akýkoľvek mechanizmus, ktorý objektívne hodnotí architektonickú vlastnosť. Môže ísť o test, metriku alebo monitor; vybraná vlastnosť sa kontroluje priebežne počas zmien systému.
+
+**Pravidlo závislostí / kontrakt importov (dependency rule / import contract)** — vykonateľné vyjadrenie toho, ktoré moduly smú závisieť od ktorých, overované pri zostavení. Nástroje ako ArchUnit pre Javu, Import Linter pre Python či dependency-cruiser pre JavaScript a TypeScript robia z požiadavky dodržiavať hranice modulov automatickú kontrolu.
+
+**Zmrazené porušenia (frozen violations)** — existujúce porušenia nového architektonického pravidla, ktoré sa pri prvom spustení zaznamenajú ako východiskový stav. Potom kontrola neprejde iba pri nových porušeniach; opravené sa už nemôžu vrátiť. Tak možno pravidlo zaviesť aj do narušenej kódovej základne a postupne ho sprísňovať bez zhoršovania existujúceho stavu.
+
+**Kontrola duplicít (duplication gate)** — kontrola pri zostavení, ktorá neprejde, keď doslovne skopírovaný kód prekročí zvolený prah. Zachytáva klony, nie sémantické duplicity. Je jedným zo signálov udržiavateľnosti popri zložitosti a upozorneniach statickej analýzy.
+
+**Podiel opakovaných opráv (fix-on-fix rate)** — údaj o tom, ako často oprava zasiahne oblasť, ktorú už nedávno menila iná oprava; sleduje sa jeho trend po moduloch. Jedna nadväzujúca oprava je bežná aj pri vývoji bez agentov, séria opakovaných opráv v jednej oblasti je však signálom erózie.
+
+**Spúšťač prepracovania návrhu (redesign trigger)** — prah dohodnutý ešte pred jeho dosiahnutím, pri ktorom sa prestáva s ďalšími opravami oblasti a začína sa prepracovanie návrhu. Jeden praktik používa tri opravy za sebou, z ktorých každá opravuje predchádzajúcu. Je to heuristika, ktorej vhodnosť nikto nezmeral.
+
+**Prepracovanie návrhu verzus prepis (redesign vs rewrite)** — pri prepracovaní návrhu sa preskúma technický dlh, určí cieľová architektúra a postupuje sa k nej v etapách, z ktorých každá skončí funkčným výsledkom. Pokyn „prepíš všetko poriadne“ dáva agentovi otvorený cieľ a vedie k ďalšiemu projektu s ďalšou sadou problémov.
+
 <a id="cost-and-the-economics-of-agent-work"></a>
 
 ## Náklady a ekonomika práce agentov \{#cost-and-the-economics-of-agent-work}
