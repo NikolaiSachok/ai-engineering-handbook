@@ -41,6 +41,25 @@ often more readily, because it is cheaper. So the design question is not "how do
 — an instruction is [not a control](../part-1-foundation/rules-that-hold.md) — but "how do I build the gate so
 the cheat isn't available."
 
+The plainest instance needs no cheat at all, only a gate that cannot see what it claims to check. In [one
+practitioner's account](https://realaillusions.com/ru/materials/ai-project-stabilization-case/) (in Russian) of
+stabilizing a working, revenue-earning platform of more than 100,000 lines of TypeScript, which its owner had built
+himself with AI coding assistants, the audit found that some of the critical checks were greps: they searched the
+code for a required string. As the practitioner puts it, if a test searches for `PAID`, it proves one thing: that
+the word `PAID` is in the code; it does not prove that payment works. The tests are green and nothing is
+guaranteed. Part of his fix was replacing the critical grep checks with behavioral tests.
+
+That is not a case against grep, which this course uses as a gate on purpose. In [rules that
+hold](../part-1-foundation/rules-that-hold.md) and [layered gates](./layered-gates/index.md) the grep hunts a
+forbidden pattern: there the text's presence *is* the defect, so a match needs no interpreting. In the payment test
+the word stands in for something that happens at runtime, and a grep cannot see behavior. **A grep is a valid gate
+for the presence of text, never for the presence of behavior.** A grep standing in for behavior is also the
+cheapest gate there is to game: anything containing the word passes, whether or not payment works. So ask of every
+green test what defect would turn it red. If the answer is "deleting a word", it is not testing the feature.
+[Mutation testing](./layered-gates/deep-dive.md) makes the question mechanical: plant a deliberate bug that breaks
+the payment logic and leaves `PAID` where it is, and the grep stays green. The bug survives, which shows the test
+cannot see payment at all.
+
 ## Hard-separate detection from mutation
 
 The structural move is the oldest control in the book, restated for agents: **the thing that finds a defect must
