@@ -138,7 +138,7 @@ retirement policy (when a spec stops being authoritative), and staleness detecti
 when a spec goes wrong). Naming those four is the shape of the contribution; the rest of Part I is about filling
 them.
 
-Document status is one concrete part of that retirement policy: tiering decides how much a document costs;
+Document status extends that retirement policy: tiering decides how much a document costs;
 status decides what it claims. A target-state document can read to an agent as a description of the current
 system. Unless you mark the difference, an agent given that document as implementation context can build
 against a world that does not exist. Beloborodov reports separating a stalled client project's documentation

@@ -7,9 +7,10 @@ sidebar_position: 4
 
 The course opened with [a loop, not a pipeline](../intro.md) — and the edge that makes it a loop is the one
 running from live operation back to planning. This lesson builds that edge. It takes three mechanisms, and they
-answer three different questions: **telemetry** decides whether you can *tell* a change went wrong, from the
-inside, from outside probes, and from your users; **staged rollout** decides *how many people* find out before you do, and the **kill switch** decides *how fast*
-it stops. Skip any one and the loop is a pipeline with optimistic wording.
+answer three different questions: **telemetry** decides whether you can *tell* a change went wrong,
+**staged rollout** decides *how many people* find out before you do, and the **kill switch** decides *how fast*
+it stops. Telemetry here includes the sensors outside the system, because the worst failures send nothing from
+inside it. Skip any one and the loop is a pipeline with optimistic wording.
 
 ## Some defect classes exist only in production
 
@@ -35,21 +36,23 @@ Telemetry is part of the [done-condition](../part-2-loop/vision-to-stages.md). A
 signals left out of it may never be built. Specify the signal set, including the business signal, and have the
 [critic](../part-2-loop/plan-review-implement-critic.md) check that those signals are emitted, not merely that
 the feature works. [Andrey Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/)
-estimates that almost no vibe-coded projects have working observability and reports that none of his clients
-had it properly solved. He argues that the difficult part is deciding what "good" means where engineering meets
-the business. The model needs you to supply that definition before it can build useful instrumentation.
+estimates that almost no vibe-coded projects have working observability and that none of his clients had it
+properly solved, and argues that the difficult part is deciding what "good" means where engineering meets the
+business. The agent cannot settle that for you: until the brief defines it, there is nothing useful to instrument.
 
 ## Detect failures through probes, alerts, and user reports
 
 The hardest signal is often the one that never fires: a user did not finish sign-up, could not enter a value,
-or met a service that was down for them. Beloborodov points out that a system that is down may emit no data at
-all. This course draws the consequence: on an internal dashboard, that silence looks like health. Instrument absence deliberately: record the
-last step reached when a journey is abandoned, so "did not finish" becomes a countable event.
+or met a service that was down for them. A system that is down emits no data at all, as Beloborodov points
+out, and this course draws the consequence: on an internal dashboard, that silence looks like health. Instrument
+absence deliberately: record the last step reached when a journey is abandoned, so "did not finish" becomes a
+countable event.
 
 Run a synthetic probe through the key user journey on a schedule from outside the service's network.
 [Google's SRE book](https://sre.google/sre-book/monitoring-distributed-systems/) describes black-box monitoring
 as symptom-oriented: it tells you the system is failing now. The book pairs that outside view with heavier
 white-box monitoring of internals, which can see imminent problems an outside probe cannot yet detect.
+
 A missing-heartbeat alert is a separate liveness check: an emitter inside the system pushes a regular signal,
 and its absence triggers an alert. It catches total silence, but a heartbeat proves only that the emitter is
 alive, not that users are being served.
@@ -59,13 +62,13 @@ judgment; route less urgent work to tickets. Keep debugging context on a dashboa
 recommends actionable pages and warns that frequent pages train people to skim or ignore even a real failure.
 If a page always gets a robotic response, automate that response or demote the alert.
 
-A user report is the sensor of last resort. Beloborodov recommends setting up support before the first
-release: a tracked system with a way to report a problem on every page and at every step of a flow,
-rather than an email inbox. Triage reports alongside production signals: a confirmed defect *is* an escape,
-whether a signal or a user found it, so it belongs in the
-[escape ledger](../part-3-verification/escape-ledger.md) with the gate that should have caught it named.
-That is the feedback edge in its most concrete form — operation teaching the gate chain what it is blind to.
-A report that arrived before any alert also names a missing signal.
+A user report is the sensor of last resort. The same practitioner recommends setting it up before the first
+release: a tracked system with a way to report a problem on every page and at every step of a flow, rather
+than an email inbox. Triage reports alongside production signals: a confirmed defect *is* an escape, whether a
+signal or a user found it, so it belongs in the [escape ledger](../part-3-verification/escape-ledger.md) with
+the gate that should have caught it named — and a report that arrived before any alert names a missing signal
+as well. That is the feedback edge in its most concrete form: operation teaching the gate chain what it is
+blind to.
 
 Agent-assisted triage puts customer data into a model's context: tickets carry names, account details and
 screenshots. Apply the same [real-data controls](./environments-migrations-data.md) to the triage agent:
@@ -82,11 +85,10 @@ When something is wrong, you change the audience without shipping anything. Rele
 a removal date; a long-lived kill-switch flag needs an owner and periodic review instead. Both belong in
 [flag maintenance](../part-5-scale-governance/drift-and-rot.md).
 
-With deploy and release separated, the rollout stages are shadow, then canary, then a percentage ramp, then full.
-
-**Run the new path in the shadow first.** Before a canary exposes users, run the candidate beside the old path
-on real input, compare outputs, and keep serving the old result until the comparison holds. This fits changes
-whose correctness can be compared: a rewritten query or a refactored permission check.
+**Run the new path in the shadow first, where outputs can be compared.** A rewritten query or a refactored
+permission check has a right answer: the old path's. Before a canary exposes users, run the candidate beside
+the old path on real input, compare outputs, and keep serving the old result until the comparison holds. For
+such a change the ramp gains a stage at its front: shadow, canary, percentage, full.
 [Scientist](https://github.com/github/scientist) always returns the control's result, runs the candidate
 beside it, compares outputs, and records timing and exceptions. On his own
 [project's page](https://realaillusions.com/ru/projects/cyprus-real-estate-project/), Beloborodov reports that
@@ -127,13 +129,12 @@ without producing a new artefact?
 
 **Build once, promote the same artefact.** Stage and production run the same built image, tagged to a commit
 and referenced by digest so a moved tag cannot change what runs. A rebuild per environment is a different
-artefact from the one tested. Beloborodov also recommends keeping deploy scripts in version control, making
-deployment safe to re-run, and recording who deployed which version where. Keep the previous artefact unchanged:
-rollback then means pointing at it, not rebuilding it. At enterprise scale,
+artefact from the one tested. Keep the previous artefact unchanged: rollback then means pointing at it, not
+rebuilding it. Beloborodov adds the habits around it: deploy scripts in version control, a deployment that is
+safe to re-run, and a record of who deployed which version where. Who may deploy to production is a grant, sized
+by [least privilege](./least-privilege-sandboxing/index.md): in Beloborodov's own process the AI deploys to the
+test environment and he deploys production himself, because an AI with access to secrets is a security hole. At enterprise scale,
 [provenance](../part-5-scale-governance/enterprise-tier/deep-dive.md) makes the promoted artefact verifiable.
-
-Size the production deploy grant by [least privilege](./least-privilege-sandboxing/index.md). In his own
-process, the AI deploys to the test environment and he deploys production himself.
 
 Fleets add a second position to the switch that single-developer workflows do not have. Stopping the *change*
 is a rollback; stopping the *source* means pausing the agents. A fleet that is still generating against a base
@@ -154,13 +155,13 @@ path.
   *The failure it prevents:* learning from a user, days later, that the release broke sign-up — and then
   needing an hour to undo it.
 - **Small-team.** Dashboards tied to a handful of agreed signals, canary or percentage rollout as the default,
-  automated revert on threshold breach, and a written runbook naming who flips what. List signals in each
-  task's done-condition for the critic to check. *The failure it prevents:* missing instrumentation, or everyone assuming someone else is watching the graph during a ramp.
+  automated revert on threshold breach, a written runbook naming who flips what, and the signals listed in
+  each task's done-condition for the critic to check. *The failure it prevents:* a feature shipped with no
+  signal at all, or everyone assuming someone else is watching the graph during a ramp.
 - **Enterprise.** SLOs with error budgets governing release pace, progressive delivery with automated analysis,
-  audited kill-switch procedures rehearsed like a fire drill, and incident review feeding the escape ledger.
-  Triage user reports into that ledger under data controls.
-  *The failure it prevents:* a rollback capability that has never been exercised outside a slide deck, being
-  discovered during the incident it was written for — or triage exposing customer data to an agent.
+  audited kill-switch procedures rehearsed like a fire drill, and incident review and user-report triage
+  feeding the escape ledger under data controls. *The failure it prevents:* a rollback capability that has
+  never been exercised outside a slide deck, being discovered during the incident it was written for.
 
 ## What to take away
 
@@ -168,8 +169,8 @@ path.
   signals, including a business signal, in the task's done-condition; have the critic check they are emitted.
 - **Silence needs an outside sensor.** Probe the key user journey and give users a tracked way to report
   failures. Internal telemetry can fall silent with the service; a heartbeat alone cannot prove users are served.
-- **Release through a controlled ramp.** Separate deploy from release, compare the candidate in shadow before
-  the canary, and widen gradually. Keep side effects out of the shadow and bind the ramp to automatic reversal.
+- **Release through a controlled ramp.** Separate deploy from release, where outputs can be compared, run the
+  candidate in shadow before the canary, and widen gradually. Keep side effects out of the shadow and bind the ramp to automatic reversal.
 - **The kill switch is a state change.** Build once and promote the same artefact through stage and production.
   Keep the previous artefact unchanged so rollback needs no rebuild; for fleets, pause the agents too.
 - **An escape teaches the gates.** Production signals and confirmed user reports feed the same ledger, naming

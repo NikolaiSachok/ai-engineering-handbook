@@ -73,12 +73,12 @@ The deletion bar deserves saying plainly: **removing a rule that no longer match
 loss.** A corpus you are willing to shrink is one an agent can still read in full.
 
 Flags rot exactly like rules: a feature flag is a [rule about which code runs](../part-4-platform/observability-rollout.md).
-Write an owner, a description and a removal date next to each release flag.
-[Andrey Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/) warns that without that
-record, a year later you will not know which flags are safe to flip or what they change.
-[Pete Hodgson](https://martinfowler.com/articles/feature-toggles.html) frames toggles as inventory with a
-carrying cost. He describes filing a removal task when a release flag is created and using a "time bomb" test
-that fails if the flag outlives its expiration date. A long-lived ops kill switch is different by design:
+[Andrey Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/) wants every flag to carry
+a description and a removal date, and warns that without them, a year later you will not know which flags are
+safe to flip or what they change. [Pete Hodgson](https://martinfowler.com/articles/feature-toggles.html) frames
+toggles as inventory with a carrying cost and describes teams that file a removal task when a release flag is
+created, or add a "time bomb" test that fails once a flag outlives its expiration date. This course adds the
+owner: each release flag carries an owner, a description and a removal date. A long-lived ops kill switch is different by design:
 it needs an owner and review with the rule corpus, rather than an expiry. Both branches of a stale flag still
 look live in the code, so an agent can keep maintaining, testing and extending the dead one.
 

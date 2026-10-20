@@ -34,8 +34,9 @@ Part III's ledger with the gate that missed it named.
   then assume prompt injection succeeds and make it survivable. An instruction is not a permission.
 - **[Environments, migrations, and real data](./environments-migrations-data.md)** — realistic, not real;
   expand → migrate → contract; and a backup you have never restored is not a backup.
-- **[Observability, rollout, and the kill switch](./observability-rollout.md)** — few signals watched well, a
-  ramp bound to automatic reversal, and a switch that is a state change rather than a build.
+- **[Observability, rollout, and the kill switch](./observability-rollout.md)** — few signals watched well, outside
+  probes and user reports for the failures that send no signal, a ramp that can start in shadow and is bound to
+  automatic reversal, and a switch that is a state change rather than a build.
 
 ## Prerequisites
 
