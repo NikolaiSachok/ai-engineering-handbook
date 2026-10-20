@@ -816,6 +816,18 @@ SELF_TEST_CASES = [
         "different ORDER",
     ),
     (
+        "ids: locale-only H2 with its own id → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\n## A \\{#a}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md":
+                "# T\n\n## А \\{#a}\n\n## Своё \\{#ru-own}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "H1/H2 id(s) only in ru: ['ru-own']",
+    ),
+    (
         "ids: applied by index past a locale-only H3 → FAILS on the level",
         [("default", "/a", ["en", "ru"])],
         {
