@@ -37,7 +37,7 @@ Beloborodov navrhuje aj **test nového chatu**: otvor nový chat a opýtaj sa ag
 
 ## Audit pred refaktoringom: každý model nech pracuje nezávisle
 
-V [nadväzujúcom texte o technickom dlhu](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/) Beloborodov odmieta postup, pri ktorom požiadaš AI, aby všetko prepísala a konečne to urobila poriadne. Výsledkom by podľa neho bol nový projekt s novými problémami. **Audit pred refaktoringom** má najprv rozlíšiť dlh, ktorý vývoj skutočne brzdí, rozhodnutia, ktoré zatiaľ môžu zostať, a časti, do ktorých sa bez osobitnej prípravy nemá zasahovať. Potom urči cieľovú architektúru a cestu k nej rozdeľ na etapy. Každá sa musí skončiť funkčným výsledkom.
+V [nadväzujúcom texte o technickom dlhu](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/) Beloborodov odmieta postup, pri ktorom požiadaš AI, aby všetko poriadne prepísala. Výsledkom by podľa neho bol nový projekt s novými problémami. **Audit pred refaktoringom** má najprv rozlíšiť dlh, ktorý vývoj skutočne brzdí, rozhodnutia, ktoré zatiaľ môžu zostať, a časti, do ktorých sa bez osobitnej prípravy nemá zasahovať. Potom urči cieľovú architektúru a cestu k nej rozdeľ na etapy. Každá sa musí skončiť funkčným výsledkom.
 
 Pri stabilizačnom audite preverilo niekoľko navzájom úplne nezávislých modelov **13 vopred určených oblastí**. Pri ďalšom audite ich zachovaj, aby si mohol porovnať výsledky:
 
