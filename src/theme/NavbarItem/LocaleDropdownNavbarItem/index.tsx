@@ -7,18 +7,15 @@
  * ---------------------------------------------------------------------------
  * Swizzled (ejected) from @docusaurus/theme-classic.
  *
- * The only change from the upstream component is in the per-locale item map:
+ * The only changes from the upstream component are in the per-locale item map:
  *
- *  1. On click of a *cross-locale* item we capture the reader's structural
- *     position (see src/lib/localeScrollPosition.ts) keyed by the destination
- *     pathname, so the position can be restored after the full-page navigation.
+ *  1. On click of a *cross-locale* item we capture the reader's position (see
+ *     src/lib/localeScrollPosition.ts) keyed by the destination pathname, so the
+ *     position can be restored after the full-page navigation. The `#hash` is kept,
+ *     as upstream does: heading ids are shared across locales (#813), so it names
+ *     the same section on the other side.
  *
- *  2. We strip the current `#hash` from the cross-locale target URL. Anchor ids
- *     are localized, so carrying the source-locale hash to the other locale
- *     points at an anchor that doesn't exist (and is what caused the reader to
- *     be dumped at the top). Structural restore replaces it.
- *
- *  3. Only the locales the current page exists in are listed
+ *  2. Only the locales the current page exists in are listed
  *     (src/lib/availableLocales.ts): an English-only course or the blog does not
  *     offer a "translation" that would be the same English page.
  *
@@ -90,11 +87,7 @@ function useLocaleDropdownUtils() {
   };
 
   return {
-    // `keepHash: false` drops the source-locale hash (anchor ids are localized).
-    getURL: (
-      locale: string,
-      options: {queryString: string | undefined; keepHash: boolean},
-    ) => {
+    getURL: (locale: string, options: {queryString: string | undefined}) => {
       // We have 2 query strings because
       // - there's the current one
       // - there's one user can provide through navbar config
@@ -103,8 +96,7 @@ function useLocaleDropdownUtils() {
         [search, options.queryString],
         'append',
       );
-      const finalHash = options.keepHash ? hash : '';
-      return `${getBaseURLForLocale(locale)}${finalSearch}${finalHash}`;
+      return `${getBaseURLForLocale(locale)}${finalSearch}${hash}`;
     },
     getLabel: (locale: string) => {
       return getLocaleConfig(locale).label;
@@ -131,9 +123,7 @@ export default function LocaleDropdownNavbarItem({
   const setPreferredLocale = useSetPreferredLocale();
   const localeItems = locales.map((locale): LinkLikeNavbarItemProps => {
     const isCurrent = locale === currentLocale;
-    // Keep the hash only when staying in the current locale; drop it when
-    // crossing locales (the localized anchor id won't exist on the other side).
-    const to = utils.getURL(locale, {queryString, keepHash: isCurrent});
+    const to = utils.getURL(locale, {queryString});
     return {
       label: utils.getLabel(locale),
       lang: utils.getLang(locale),
@@ -143,7 +133,7 @@ export default function LocaleDropdownNavbarItem({
       // Any pick is an explicit choice: remember it, so neither the first-visit detector
       // nor the out-of-scope fallback routing acts against it — picking English while
       // shown an English-only course in place of German keeps the reader in English. On a
-      // cross-locale switch, also capture the reader's structural position just before the
+      // cross-locale switch, also capture the reader's position just before the
       // full-page navigation.
       onClick: () => {
         setPreferredLocale(locale);
