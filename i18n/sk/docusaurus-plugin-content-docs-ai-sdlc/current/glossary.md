@@ -72,6 +72,8 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Zahltenie artefaktmi** — ústredný nevyriešený problém vývoja riadeného špecifikáciami — artefakty vznikajú rýchlejšie, než ich možno skontrolovať alebo pojať do kontextu, pričom neexistujú pravidlá ich životného cyklu.
 
+**Stav dokumentu (súčasný stav / cieľový stav / experiment / nahradené)** — údaj, ktorý na prvom riadku dokumentu určuje, či dokument opisuje fungujúci systém, zamýšľaný stav, experiment alebo históriu, ktorá už neurčuje implementáciu.
+
 <a id="rules-that-hold"></a>
 
 ## Pravidlá, ktoré platia \{#rules-that-hold}
@@ -342,6 +344,18 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Pozastavenie flotily** — zastavenie agentov, ktoré po vrátení artefaktu zabráni tomu, aby ďalej generovali nad nedôveryhodným základom alebo aby ten istý problém postavili znova.
 
+**Telemetria ako podmienka dokončenia** — výslovná požiadavka úlohy na signály, ktoré musí systém odosielať, vrátane obchodného signálu; pred prijatím funkcie ich overuje kritik.
+
+**Syntetická sonda zvonku (black-box probe)** — syntetická kontrola spustená mimo siete služby, ktorá prejde používateľský postup a overí, či služba obsluhuje používateľov. Alert na chýbajúci heartbeat (pravidelný signál života) vychádza zo signálu, ktorý odosiela komponent vnútri systému: overuje, či tento komponent žije, nie či funguje používateľský postup.
+
+**Alerting na príznaky (symptom-based alerting)** — privolanie človeka pri príznakoch, ktoré používateľom škodia práve teraz alebo im čoskoro začnú škodiť a vyžadujú ľudský úsudok; menej naliehavá práca smeruje do ticketov a podklady na ladenie zostávajú na dashboardoch alebo v logoch.
+
+**Tieňové overovanie (shadow run)** — spúšťanie novej cesty popri pôvodnej na skutočných vstupoch a porovnávanie výstupov, pričom používatelia naďalej dostávajú odpoveď pôvodnej cesty; vedľajšie účinky novej cesty sú vypnuté.
+
+**Posun artefaktu medzi prostrediami (build once)** — posun toho istého zostaveného artefaktu identifikovaného digestom cez predprodukčné prostredie do produkcie; predchádzajúci artefakt zostáva nezmenený, aby vrátenie zmeny nevyžadovalo nové zostavenie.
+
+**Hlásenie od používateľa (posledná poistka pri odhaľovaní zlyhaní)** — evidované hlásenie problému, na ktorý používateľ narazil; potvrdená chyba sa zapisuje do registra únikov a hlásenie, ktoré predbehlo všetky alerty, odhaľuje aj chýbajúci signál.
+
 <a id="running-agent-fleets-isolation-and-parallelism"></a>
 
 ## Flotily agentov: izolácia a paralelizmus \{#running-agent-fleets-isolation-and-parallelism}
@@ -379,6 +393,8 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 **Drift pamäti (memory drift)** — to isté chátranie v pamäti projektu: prekonané rozhodnutia zostávajú stáť vedľa tých, ktoré ich nahradili, a agent ich číta ako aktuálny fakt.
 
 **Nahradené rozhodnutie (superseded decision)** — rozhodnutie, ktoré nahradilo neskoršie a ktoré je označené ako už neplatné; zostáva len ako história toho, ako sa dospelo k tomu súčasnému.
+
+**Dlh z flagov (flag debt)** — náklady na údržbu flagu a vetiev, ktoré kvôli nemu zostávajú v kóde. Každý flag na sprístupnenie (release flag) musí mať vlastníka, opis a dátum odstránenia. Dlhodobý flag núdzového vypínača musí mať vlastníka a treba ho pravidelne revidovať spolu so súborom pravidiel. Dátum skončenia platnosti ani dátum odstránenia sa mu neurčuje.
 
 <a id="cost-and-the-economics-of-agent-work"></a>
 

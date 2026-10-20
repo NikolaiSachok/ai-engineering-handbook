@@ -41,6 +41,10 @@ That is the whole artifact. For a soloist it is one row in a table; for an enter
 with an owner. The cost is trivial and the payoff compounds: each escape permanently retires a way things can
 get through.
 
+Escapes arrive through production alerts, incident reviews, or user reports. A user report is the sensor of
+last resort; a defect found through any of these routes becomes the same row. A report that arrives before
+any alert also names a [missing signal](../part-4-platform/observability-rollout.md).
+
 ## What escapes actually look like
 
 Here is the shape from a verification chain I ran in production — a five-gate automated chain in front of a human

@@ -24,6 +24,8 @@ Analýza bez hľadania vinníka skúma, čo v systéme umožnilo zlyhaniu prejs�
 
 To je celý artefakt. Soloistovi stačí jeden riadok v tabuľke; v enterprise prostredí môže ísť o evidovanú chybu s určeným vlastníkom. Náklady sú zanedbateľné a prínos sa postupne násobí: každý únik natrvalo odstráni jeden spôsob, akým môžu chyby prejsť cez brány.
 
+Úniky sa odhaľujú produkčnými alertmi, pri vyhodnoteniach incidentov alebo z hlásení od používateľov. Hlásenie od používateľa je posledná poistka pri odhaľovaní zlyhaní. Bez ohľadu na to, ako sa chyba odhalila, dostane v registri záznam s rovnakou štruktúrou. Hlásenie, ktoré predbehlo všetky alerty, odhaľuje aj [chýbajúci signál](../part-4-platform/observability-rollout.md).
+
 ## Ako úniky vyzerajú v praxi
 
 Takto vyzerali úniky vo verifikačnom reťazci, ktorý som prevádzkoval v produkcii — išlo o automatizovaný reťazec piatich brán, po ktorom nasledovala ľudská vizuálna kontrola, teda ten istý reťazec, ktorý sme znázornili v [Lekcii 1](./layered-gates/index.md). Počas jeho životnosti sa približne **sedem rôznych tried chýb dostalo až k človeku alebo používateľovi, hoci prešli všetkými automatizovanými bránami.** Každý zaznamenaný únik odhalil skutočné slepé miesto:

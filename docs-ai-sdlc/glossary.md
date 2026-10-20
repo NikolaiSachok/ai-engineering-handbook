@@ -65,6 +65,8 @@ its section here. The list grows as the course does.
 
 **Artifact overload** — spec-driven work's central unsolved failure: artifacts generated faster than review or context can absorb them, with no lifecycle discipline.
 
+**Document status (as-is / target / experiment / superseded)** — a first-line declaration of whether a document describes the working system, an intended state, an experiment, or history that no longer governs implementation.
+
 ## Rules that hold \{#rules-that-hold}
 
 **Executable rule / rules-as-code** — a constraint enforced by the harness or CI (a hook, lint, grep, or gate) that the model cannot bypass.
@@ -307,6 +309,18 @@ its section here. The list grows as the course does.
 
 **Fleet pause** — the second position of the kill switch when agents are generating continuously: stopping the *source* as well as the *change*, so a fleet does not rebuild the problem on top of the revert.
 
+**Telemetry done-condition** — a task's explicit requirement for the signals it must emit, including a business signal, checked by the critic before the feature is accepted.
+
+**Black-box probe** — a synthetic check that walks a user journey from outside the service to test whether users are served; a missing-heartbeat alert instead checks liveness from a signal pushed by an internal emitter, not whether the journey works.
+
+**Symptom-based alerting** — paging on symptoms that hurt users now or are about to and need human judgment, with less urgent work routed to tickets and debugging context kept on dashboards or in logs.
+
+**Shadow verification (shadow run)** — running a candidate beside the old path on real input and comparing outputs while users keep receiving the control's response, with candidate side effects disabled.
+
+**Artefact promotion (build once)** — passing the same built artefact through stage and production, pinned by digest, and retaining the previous artefact unchanged so rollback needs no rebuild.
+
+**User report (sensor of last resort)** — a tracked report of a problem the user encountered; a confirmed defect feeds the escape ledger, and a report that beats every alert also identifies a missing signal.
+
 ## Running agent fleets: isolation and parallelism \{#running-agent-fleets-isolation-and-parallelism}
 
 **Agent fleet** — several agents working concurrently on one codebase. Its size is governed not by available compute but by how much the verification chain can absorb.
@@ -340,6 +354,8 @@ its section here. The list grows as the course does.
 **Memory drift** — the same decay in project memory: superseded decisions left standing beside the ones that replaced them, read by the agent as current fact.
 
 **Superseded decision** — a decision replaced by a later one and marked as no longer in force, kept only as the history of how the current one was reached.
+
+**Flag debt** — the maintenance cost of a flag and the branches it keeps alive. Release flags get an owner, a description and a removal date; a long-lived kill switch gets an owner and a periodic review instead of an expiry.
 
 ## Cost and the economics of agent work \{#cost-and-the-economics-of-agent-work}
 
