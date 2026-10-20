@@ -223,3 +223,26 @@ Heslá glosára začínajú veľkým písmenom; položky „Nové pojmy“ sú s
 | experience report | The genre of the Google report, not a research study. | **NEW DECISION, PROBATION — „správa o skúsenostiach (experience report), nie výskumná štúdia“**. |
 
 Opakujúce sa reťazce: označenie zlyhania je `*Akému zlyhaniu to predchádza:*` (39 výskytov v korpuse, väčšinový tvar) a záverečný nadpis `## Čo si odniesť` (21 : 7); tvary „Zlyhanie, ktorému to predchádza:“ a „Čo si z toho odniesť“ sú v tejto lekcii odmietnuté. Meno: „Andrej Beloborodov“ pri prvom výskyte, ďalej skloňované priezvisko. H1 bez koncovej bodky (markdownlint MD026): „Kód už máš, slučku ešte nie“.
+
+## Issue #799 — the model is a dependency (2026-10-20) — NEW DECISIONS, PROBATION
+
+| EN term | sense | SK decision + bridge + rejected variant |
+|---|---|---|
+| model snapshot vs moving alias | A snapshot is a fixed version; an alias points at a version the supplier may replace. The ID format does not tell which. | **NEW DECISION, PROBATION — „snapshot modelu verzus pohyblivý alias“**. |
+| model pinning | Choosing a snapshot in config and recording its ID on each agent change. | **NEW DECISION, PROBATION — „pripnutie modelu (model pinning)“**. |
+| re-qualification | Checking a candidate before a staged rollout: repeated regression cases, unchanged judge, first-pass success. | **NEW DECISION, PROBATION — „opätovné preverenie (re-qualification)“**. |
+| item-level regression | A previously passing case fails consistently beyond run-to-run variance; a higher average can hide it. | **NEW DECISION, PROBATION — „regresia v jednotlivých prípadoch (item-level regression)“**. |
+| deprecation notice period | Time from announcement to retirement for qualifying and migrating. | **NEW DECISION, PROBATION — „lehota pred vyradením (deprecation notice period)“**. retirement — „vyradenie“; deprecation pages — „vyradenia modelov“; deprecated ID — „identifikátora určeného na vyradenie“, „endpointy určené na vyradenie“. Odmietnuté „vyradzovať“: nie je slovenský tvar (bohemizmus podľa *vyřazovat*); nedokonavý vid je „vyraďovať“. |
+| auto-upgrade | The platform replaces the deployed version itself. | **NEW DECISION, PROBATION — „automatický upgrade (auto-upgrade)“**. |
+| tested exit / fallback provider | Another supplier or a self-hosted model behind the same client, run on a schedule against the regression set. | **NEW DECISION, PROBATION — „vyskúšaná možnosť odchodu / záložný poskytovateľ“**; v texte „Vyskúšaná možnosť odchodu (tested exit)“. Supplier je všade „poskytovateľ“; „dodávateľ“ len v hesle vendor-portable memory. |
+| vendor-portable memory | Rules, decisions and briefs in repository files, not in chat history. | **NEW DECISION, PROBATION — „pamäť nezávislá od dodávateľa (vendor-portable memory)“**. |
+| data terms | Dated terms of one supplier and tier: training, retention, residency, personal data. | **NEW DECISION, PROBATION — „podmienky nakladania s dátami (použitie na tréning · uchovávanie · zero data retention · rezidencia dát · DPA)“**; v texte most „(data terms)“. tier — „plán predplatného“; odmietnuté „verzia (predplatného / služby)“: na stránke o verziách modelov falošný priateľ. Paid — „platené služby“. |
+| routing by break-even | Assigning a model to a task class by first-pass success and the price inequality. | **NEW DECISION, PROBATION — „smerovanie podľa hranice rentability (routing by break-even)“**. Nadpis sekcie „…podľa nákladov na prijatú zmenu“ (jednotka lekcie o nákladoch). |
+| DPA / ZDR | Data processing addendum; zero retention by separate arrangement. | **NEW DECISION, PROBATION — „dodatok o spracúvaní osobných údajov (data processing addendum, DPA)“; „Zero data retention (ZDR), teda nulové uchovávanie dát“**, ďalej ZDR. „Dohodovať“ odmietnuté (bohemizmus) → „dojednáva“. |
+| Modified Retention amendment | The supplier's amendment name. | **NEW DECISION, PROBATION — „dodatok Modified Retention“**; holá anglická fráza v slovenskej syntaxi odmietnutá. |
+| data at rest | Stored data, as opposed to processing. | **NEW DECISION, PROBATION — „uložené dáta“**. |
+| GA / preview | Model classes in published notice policies. | **NEW DECISION, PROBATION — „modely vo všeobecnej dostupnosti (GA)“, „predbežné verzie (preview)“**, ďalej „GA“, „preview“. Dve glosy „teda … teda“ v jednej vete odmietnuté. |
+| suspension | The supplier suspends an account. | **NEW DECISION, PROBATION — „pozastavenie účtu“, „pozastavený účet“; „zablokované účty“** (v citácii praktika). |
+| consumer vs commercial terms | Personal subscription terms vs business terms. | **NEW DECISION, PROBATION — „spotrebiteľské podmienky“; „obchodné podmienky“, „komerčné služby“**. |
+
+Riadok zdrojov: „Zdroje (prečítané v októbri 2026): OpenAI [názov](url), bez dátumu; …“; dátumy v zdrojoch a tabuľkách ISO. Položky „Nové pojmy“ malým písmenom, oddelené „, “, bez čiarky vnútri, s bodkou na konci. Bez autorského „my“ (napr. „Pri rešerši pre tento kurz … sa nenašlo…“). From time to time = „občas“, nie „pravidelne“ (regularly).
