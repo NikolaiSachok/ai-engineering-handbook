@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Prvá časť lekcie](./index.md) premietla tri prierezové témy z Prvej časti príručky — evaluáciu, guardrails (bezpečnostné mantinely), observability (pozorovateľnosť) — na produktovú zostavu roku 2026 a odpovedala: čo si nainštaluješ a kedy? Uzavrela sa predvoleným poradím: najprv tracing, potom evaluácia v CI, napokon guardrails. Tento druhý prechod je *prevádzková* vrstva nad tou istou zostavou. Nie ktorý nástroj vybrať, ale ako si niektorý sám prevádzkovať, keď spravovaná verzia nestačí, ako napísať ten kúsok guardrailu, ktorý ti žiadna knižnica nedodá, a ako sa evaluačné, observability a guardrails nástroje prepoja do jedného stacku (zostava nástrojov) namiesto troch nesúvisiacich produktov. Všetko nižšie je momentka k polovici roka 2026 (júl 2026); ako v Prvej časti lekcie, mená produktov sú datované a trvalou vecou je kategória pod nimi — tentoraz jej prevádzkový tvar.
 
-## Kde žije teória
+## Kde žije teória \{#where-the-theory-lives}
 
 Táto stránka vlastní prepojenie, nie teóriu. Koncepty, ktoré jednotlivé nástroje realizujú, sa učia raz (v prehĺbeniach, ktoré ich vlastnia) a tu sú prelinkované, nie zopakované:
 
@@ -19,7 +19,7 @@ Táto stránka vlastní prepojenie, nie teóriu. Koncepty, ktoré jednotlivé n�
 
 To rozdelenie je zámerné. Definícia metriky a obrana proti injektáži sú trvácne — nauč sa ich raz a platia, nech nasadíš ktorýkoľvek produkt. Prepojenie je opak: mení sa s každým stackom, každou výmenou backendu, každým rozhodnutím o škálovaní, a je to práve tá časť, ktorú dokumentácia nástroja pochová alebo predpokladá. Na to je táto stránka.
 
-## Prevádzka Langfuse u seba: nie jeden kontajner
+## Prevádzka Langfuse u seba: nie jeden kontajner \{#self-hosting-langfuse-not-one-container}
 
 Začni rozhodnutím, lebo je to naozaj rozhodnutie, nie predvoľba. Po Langfuse siahaš namiesto nástroja, ktorého prvou voľbou je SaaS, a to z jediného dôvodu, ktorý pomenovala Prvá časť lekcie: jadro je pod licenciou MIT a smieš ho prevádzkovať vnútri vlastného perimetra, takže dáta tracov (prompty, získaný kontext, občas obsah od používateľa) nikdy neodídu. Keď tvoje dáta odísť smú, spravovaný Langfuse Cloud alebo LangSmith je jednoducho menej roboty — vezmi ho. Prevádzka u seba (self-hosting) je cena, ktorú zaplatíš za kontrolu a rezidenciu dát. To isté rázcestie „postaviť či kúpiť“ tu prichádza s rozpísaným účtom.
 
@@ -52,7 +52,7 @@ Odstúp a skutočnú cenu zrazu vidíš. Prevádzkuješ teraz Postgres aj ClickH
 
 Dve poznámky o poctivosti tejto momentky. Presný zoznam komponentov je z polovice roka 2026; Langfuse sa stále hýbe — beží iniciatíva „zjednodušiť pre škálovanie“ a firma sa toho roku pridala ku ClickHouse — takže túto konkrétnu topológiu ber ako aktuálnu, no pohyblivú. Trvalý je tvar: bezstavová aplikačná vrstva plus asynchrónny worker, OLTP úložisko na konfiguráciu, OLAP úložisko na vysokoobjemovú telemetriu, fronta na oddelenie ingestion a objektové úložisko na surové payloady. Každá platforma na tracing s prevádzkou u seba sa pri škále zbehne na tomto vzore, nech je značka akákoľvek.
 
-## Validátor, ktorý si napíšeš sám
+## Validátor, ktorý si napíšeš sám \{#the-validator-you-write-yourself}
 
 Prvá časť lekcie nakreslila deľbu guardrails — frameworky orchestrujú, safety classifiery (bezpečnostné klasifikátory) posudzujú — a všimla si, že Guardrails Hub dodáva hotové validátory z regála. **Validátor** (validator) je jednotka, na ktorej tu záleží: najmenší kúsok vlastného guardrailu, ktorý naozaj napíšeš. Tvoje doménové pravidlo (zakázaná formulácia v politike, obchodné obmedzenie, vlastná výstupná schéma) na Hube zvyčajne nie je; a práve tú medzeru vyplníš. Poradie: najprv sa pozri na Hub, vlastný napíš len na kontrolu špecifickú pre teba.
 
@@ -100,7 +100,7 @@ Dva fakty o skladaní sa viažu späť na úvod lekcie. Kontrola validátora mô
 
 Teraz zdržanlivosť, lebo validátor nie je zadarmo. Neprepisuj validátor z Hubu, ktorý už existuje. Každý validátor je réžia na latenciu a náklady na ceste požiadavky: najviac `reask`, ktorý minie celé ďalšie volanie modelu, a rovnako každý validátor, ktorého kontrola je sama LLM sudca. Rozpočtuj ho preto ako ktorúkoľvek inú synchrónnu závislosť. A validátory testuj ako kód, ktorým sú: práve v tomto bode sa evaluácia v CI z Prvej časti lekcie a guardrails prekrývajú, lebo validátor s nezmeranou mierou falošných pozitív nastavený na `exception` je produkčný incident, ktorý čaká na svojho prvého legitímneho používateľa.
 
-## Stack, prepojený
+## Stack, prepojený \{#the-stack-wired}
 
 Tri kategórie z Prvej časti lekcie sa čisto mapujú na dva pruhy každá: open-source pruh s prevádzkou u seba a spravovaný SaaS pruh. Rozložené:
 
@@ -132,7 +132,7 @@ To je produkčná slučka z Prvej časti lekcie, no pointa tu nie sú škatule �
 
 Jedna šípka na tom diagrame je sama osebe prevádzková prax, ktorú sa oplatí ukotviť. Red-teaming je tu kadencia a nástroje, nie teória — katalóg injektáží a mechanika útokov ostávajú v [guardrails](../../part-1-rag/cross-cutting/guardrails/deep-dive.md). Prevádzkovo: naplánuj red-team behy ako brány v CI či pred vydaním (red-teamingové funkcie v promptfoo, vlastné red-team nástroje platformy alebo **PyRIT** z prehĺbenia o guardrails) a sleduj attack success rate v čase ako regresnú metriku — tak, ako sleduješ hociktoré iné číslo, ktoré sa nesmie pohnúť nesprávnym smerom. Prepojenie a rozvrh; teória žije na odkaze.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Táto stránka je prevádzka, nie teória: vnútro metrík, konvencie OTel, obrany proti injektáži a evaluácie trajektórie sú prelinkované na prehĺbenia, ktoré ich vlastnia, a zámerne sa tu neopakujú.
 - Prevádzka Langfuse u seba (v3, od decembra 2024) je distribuovaný systém, nie kontajner — Web + Worker + Postgres (OLTP) + ClickHouse (OLAP, drží tracy, observations a scores) + Redis/Valkey (fronta a cache) + S3/blob (surové udalosti). Asynchrónne frontovaná ingestion pohltí nárazy a ty teraz prevádzkuješ štyri dátové úložiská; práve tá plocha, nie licencia, je cena za udržanie dát vnútri perimetra.

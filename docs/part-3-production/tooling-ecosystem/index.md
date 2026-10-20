@@ -23,7 +23,7 @@ eval features as well: datasets, judges, scoring runs. That is the **feedback lo
 lesson turned into product. A production trace becoming an eval case is one workflow, and the tools grew to
 cover both ends of it.
 
-## Eval tools
+## Eval tools \{#eval-tools}
 
 **[Ragas](https://ragas.io)** is an open-source library of RAG-specific metrics: faithfulness, response relevancy, context
 precision, context recall — most of them computed LLM-as-a-judge-style. A mapping note: response
@@ -45,7 +45,7 @@ provide, and dataset quality stays your job — Part I's "a small clean set beat
 stop being true because the metrics come from a library now. Ragas will synthesize candidate examples for
 you, but human review remains the quality gate.
 
-## Observability platforms
+## Observability platforms \{#observability-platforms}
 
 **[LangSmith](https://www.langchain.com/langsmith)** is the [LangChain](https://www.langchain.com) ecosystem's tracing-and-eval platform — SaaS first, with a self-hosted
 option reserved for enterprise plans. If you're already on LangChain or [LangGraph](https://www.langchain.com/langgraph), this is the tightest
@@ -85,7 +85,7 @@ categories in motion.
 
 :::
 
-## Guardrails tools
+## Guardrails tools \{#guardrails-tools}
 
 Guardrails products come in two shapes. The first is frameworks that wrap your input and output with
 programmable checks: **[Guardrails AI](https://www.guardrailsai.com)** — a Python validator library plus the Guardrails Hub, including
@@ -107,7 +107,7 @@ And guardrails quality is itself measured — Part I gave you the metric, attack
 **red-teaming** tooling lives in the eval products: promptfoo's red-teaming features, the platforms' own
 red-team offerings. That closes the loop: guardrails get configured, attacked, measured, and tuned.
 
-## When to adopt what
+## When to adopt what \{#when-to-adopt-what}
 
 The order below is a judgment call — a sensible default for a typical product team, not an industry
 standard — but the reasoning behind each step holds up.
@@ -142,7 +142,7 @@ eval. A tool pointed at a shallow, noisy dataset produces confident-looking dash
 Part I put it as "without a reference the whole eval falls apart," and it stays true with a product logo on
 top. Tools amplify discipline; they don't replace it.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - The concepts are durable, the tools are snapshots — judge a tool by which Part I concept it implements
   and where it sits in your loop.

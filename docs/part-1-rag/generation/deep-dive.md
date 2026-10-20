@@ -12,11 +12,11 @@ One boundary first, stated the way the retrieval deep dive states its own. Every
 
 The spine, in order: spend inference compute to catch the model's own errors (self-verification); force the answer into a shape a parser and a citation-checker can trust (structured output and forced citations); handle the context-versus-memory conflict head-on instead of hoping grounding wins; pack a long context past the lost-in-the-middle rule; and shape the answer's format, tone, and length without letting the shaping override the grounding.
 
-## Spend compute to catch the model's own mistakes
+## Spend compute to catch the model's own mistakes \{#spend-compute-to-catch-the-models-own-mistakes}
 
 The grounding instruction from Part 1 lowers the *rate* of hallucination. It verifies no single answer. Two published techniques spend extra inference compute to check the answer itself — both generation-side, neither re-retrieving, and both trading tokens and latency for faithfulness. They solve different shapes of problem, and the fastest way to keep them straight: one samples and votes, the other generates and checks.
 
-### Self-consistency: sample many paths, vote once
+### Self-consistency: sample many paths, vote once \{#self-consistency-sample-many-paths-vote-once}
 
 **Self-consistency** (Wang et al., "Self-Consistency Improves Chain of Thought Reasoning in Language Models", arXiv 2203.11171, submitted March 2022; ICLR 2023) replaces the single greedy decode of chain-of-thought with a small ensemble. You sample a *diverse set of reasoning paths* at a temperature above zero, then *marginalize over the reasoning paths* and take the *majority vote* on the final answer. The intuition is that a genuinely hard problem admits several valid routes that converge on the same correct answer, while wrong answers scatter — so agreement is evidence and a lone dissenter gets outvoted.
 
@@ -26,7 +26,7 @@ In a RAG system, self-consistency fits an answer with a *discrete, extractable* 
 
 Which tells you when *not* to reach for it. An open-ended, long-form answer has no single value to vote on — there is nothing to marginalize over, and self-consistency simply does not apply. It also multiplies cost by N: N full generations for every query. That makes it a deliberate latency-and-budget decision on a narrow class of question, never a default you switch on everywhere.
 
-### Chain-of-verification: draft, then interrogate the draft
+### Chain-of-verification: draft, then interrogate the draft \{#chain-of-verification-draft-then-interrogate-the-draft}
 
 **Chain-of-verification (CoVe)** (Dhuliawala et al., "Chain-of-Verification Reduces Hallucination in Large Language Models", arXiv 2309.11495, submitted September 2023) is an explicit self-questioning loop in four steps. Draft a **baseline response**. Plan a set of **verification questions** that fact-check that draft. Answer each verification question *independently*. Then generate the **final verified response**, revising the draft against what the checks turned up.
 
@@ -43,7 +43,7 @@ In RAG the verification questions get re-grounded against the retrieved context 
 
 Set the two side by side and the division of labour is clean. Self-consistency is *sample-and-vote*: no critique, needs a votable answer, works where there's one discrete value. CoVe is *generate-and-check*: explicit self-questioning, works on long-form prose where there is nothing to vote on. Both cost extra passes. Neither re-retrieves.
 
-## Stop asking for structure; enforce it
+## Stop asking for structure; enforce it \{#stop-asking-for-structure-enforce-it}
 
 Part 1 asked the model to cite its sources and to answer cleanly. At mastery level you stop *asking* and start *enforcing* — the shape of the output becomes a hard guarantee instead of a hope.
 
@@ -70,7 +70,7 @@ The second is **provider-native citations**. Anthropic's **Citations API** (Janu
 
 There is a tax on all of this, and knowing when *not* to pay it is the mastery move. Forcing the output distribution into a rigid schema can *degrade* the answer's reasoning: the model spends its budget satisfying the grammar instead of thinking. So keep the reasoning free and constrain only the final answer — let the model reason in an unconstrained scratchpad or thinking field, then emit the schema-locked answer at the end. Constrain the deliverable, not the deliberation.
 
-## When the context and the model's memory disagree
+## When the context and the model's memory disagree \{#when-the-context-and-the-models-memory-disagree}
 
 Part 1 gave the rule: answer from the context, suppress parametric memory. The rule is not absolute, and pretending it is gets you a class of silent wrong answers.
 
@@ -86,7 +86,7 @@ You have levers beyond the base grounding instruction, though none of them is a 
 
 One honest limit remains. No prompt makes grounding absolute — you *reduce and measure* parametric override, you do not eliminate it. That is exactly why faithfulness is a monitored number and not a solved problem.
 
-## Packing a long context past lost-in-the-middle
+## Packing a long context past lost-in-the-middle \{#packing-a-long-context-past-lost-in-the-middle}
 
 Reuse the canon term rather than reinventing it: **lost-in-the-middle** (Liu et al., arXiv 2307.03172, TACL 2023). Part 1 gave you the rule of thumb — few best chunks, most relevant at the edges. Here is the mechanism and the discipline behind it.
 
@@ -111,7 +111,7 @@ Two more moves recover budget before you ever hit the window limit. **Deduplicat
 
 The through-line: long-context packing is Part 1's "few best, at the edges" rule made rigorous — select (rerank), dedupe, order to the U-curve. The window got bigger. The discipline did not become optional.
 
-## Shaping the answer without overriding the grounding
+## Shaping the answer without overriding the grounding \{#shaping-the-answer-without-overriding-the-grounding}
 
 The generated answer is a product surface — the thing the user actually reads — and shaping controls how it lands. Hold one caveat from the start, because it is also the point: shaping must never override correctness.
 
@@ -123,7 +123,7 @@ Tone is set in the system prompt and held steady. Match the register to the audi
 
 Now the rule this all serves. Answer-shaping is subordinate to grounding and faithfulness. "Be concise" must never drop the citation, the caveat, or the honest "that isn't in the documents." When a shaping instruction and a grounding instruction collide, grounding wins, every time. The reason is sharper than tidiness: a beautifully formatted, confidently-toned *wrong* answer is the worst outcome the whole layer can produce, because shaping makes a wrong answer *more* persuasive. That is exactly why shaping comes last and yields to correctness — it is the polish you apply to something you have already made true.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Self-verification spends extra inference compute to check the model's own answer: self-consistency samples many reasoning paths and majority-votes a discrete value, while chain-of-verification drafts and then answers isolated verification questions so it can't rubber-stamp its own mistake — and neither one re-retrieves.
 - Constrained decoding makes output shape a guarantee rather than a request: the schema masks illegal tokens at every step, so malformed JSON becomes impossible, and OpenAI's Structured Outputs (`strict: true`) guarantees adherence to *your* schema, not merely valid JSON.

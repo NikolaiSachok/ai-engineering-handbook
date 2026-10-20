@@ -23,7 +23,7 @@ The same case from IBM: when a single agent stops being enough and you split the
 
 :::
 
-## Why split one agent into several
+## Why split one agent into several \{#why-split-one-agent-into-several}
 
 Four reasons, and they don't all pull equally hard.
 
@@ -43,7 +43,7 @@ monolith into services.
 
 **Parallelism.** Independent subtasks can run concurrently across agents instead of serially in one loop.
 
-## Topologies — how agents are wired together
+## Topologies — how agents are wired together \{#topologies--how-agents-are-wired-together}
 
 There are a few standard shapes. Most real systems are one of these, or a composite of them.
 
@@ -63,7 +63,7 @@ independently produce solutions and the best one is picked. Independent perspect
 the same reason blind reviewers do: an outside viewpoint catches what a single chain would happily
 rationalize its way past.
 
-## Communication — messages and handoff
+## Communication — messages and handoff \{#communication--messages-and-handoff}
 
 Agents talk to each other through messages. The move that actually transfers work is a **handoff**:
 passing control *plus* the relevant context from one agent to another.
@@ -74,7 +74,7 @@ that has lost the thread. This is the multi-agent version of tool-use's *a tool 
 here, *the handoff message is a prompt*. It has to carry exactly what the next agent needs to act on, and
 nothing more.
 
-## The orchestrator is itself an agent
+## The orchestrator is itself an agent \{#the-orchestrator-is-itself-an-agent}
 
 It's tempting to treat the orchestrator as some new kind of component. It isn't. An **orchestrator** is an
 agent doing three familiar jobs at once:
@@ -87,7 +87,7 @@ agent doing three familiar jobs at once:
 Its "tools" are the sub-agents. That's the whole trick: nothing conceptually new, just the earlier primitives
 re-aimed at agents instead of functions.
 
-## The cost, and when not to
+## The cost, and when not to \{#the-cost-and-when-not-to}
 
 Everything above is the case *for*. Here is the honest brake, because multi-agent is where teams overspend.
 
@@ -108,7 +108,7 @@ So the rule. A single well-designed agent usually wins. Reach for multi-agent on
 specialisation, for context that will not fit in one window, or for genuinely parallelisable subtasks — the
 same *take the simplest level that solves the task* discipline you met in agentic-rag.
 
-## A concrete example — you've likely already used one
+## A concrete example — you've likely already used one \{#a-concrete-example--youve-likely-already-used-one}
 
 The editorial and authoring teams that produce a handbook like this one *are* orchestrator–worker
 multi-agent systems. A lead — the chief editor or lead author — decomposes the work and routes it to
@@ -119,7 +119,7 @@ debate/critic reason above: independent perspectives catch more than a single re
 Deep-research systems have the same shape. A lead agent spawns several searchers that work in parallel, then a
 synthesizer combines what they each found into one answer. Same topology, different task.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Multi-agent is a higher-cost tier, not a reward — take the simplest level that solves the task, and be
   as ready to say *when not to* as *when to*.

@@ -26,7 +26,7 @@ wird. (Das Video ist auf Englisch.)
 
 :::
 
-## Wo statisches RAG versagt
+## Wo statisches RAG versagt \{#why--where-static-rag-breaks}
 
 Autonomie wird nicht eingebaut, weil sie gerade in Mode ist. Eine feste Pipeline aus
 `retrieve → generate` versagt bei ganzen Klassen von Fragen wirklich.
@@ -53,7 +53,7 @@ Autonomie wird nicht eingebaut, weil sie gerade in Mode ist. Eine feste Pipeline
 Der gemeinsame Nenner: Eine echte Frage braucht **unterschiedlich viele Schritte, und sie braucht die
 Wahl, welchen Weg sie nimmt** – die Pipeline bietet einen festen an.
 
-## Der Mechanismus dahinter: eine Schleife
+## Der Mechanismus dahinter: eine Schleife \{#the-mechanism-the-agent-loop}
 
 Im Kern steht eine einfache Schleife, der **Agent Loop**. Sie dreht sich, bis das Modell selbst
 entscheidet, dass es antworten kann:
@@ -87,7 +87,7 @@ Tool-Calls, Reasoning. (Das Video ist auf Englisch.)
 
 :::
 
-## Was die Autonomie konkret bringt
+## Was die Autonomie konkret bringt \{#what-agency-concretely-adds}
 
 Zerlegen wir „das Modell hat die Kontrolle“ in greifbare Fähigkeiten.
 
@@ -100,7 +100,7 @@ Zerlegen wir „das Modell hat die Kontrolle“ in greifbare Fähigkeiten.
 | Reaktion auf ein schlechtes Ergebnis | reicht es durch | merkt, dass es danebenliegt, und geht noch einmal |
 | Zahl der Schritte | fest | unterschiedlich, das Modell entscheidet |
 
-## Ein Spektrum, kein Schalter
+## Ein Spektrum, kein Schalter \{#a-spectrum-not-a-switch}
 
 Denken Sie nicht „statisch ODER agentisch“. Dazwischen liegt ein fließendes Spektrum, und es ordnet
 sich danach, **wie viel Freiheit Sie dem Modell lassen**.
@@ -118,7 +118,7 @@ Aufgabe löst. Die volle agentische Schleife ist kein Preis, den es zu gewinnen 
 die Sie bezahlen. Oft ist ein Router auf einem guten statischen RAG bei Kosten, Latenz und Stabilität
 besser als ein „voller Agent“.
 
-## Was die Autonomie kostet – und warum Teil I dadurch wichtiger wird
+## Was die Autonomie kostet – und warum Teil I dadurch wichtiger wird \{#the-price--and-the-bridge-back-to-part-i}
 
 Sie geben die Kontrolle an das Modell ab – und genau dafür zahlen Sie.
 
@@ -137,7 +137,7 @@ nur „gefunden / erzeugt“, sondern die Qualität des ganzen Pfades – war di
 hat sich der Agent im Kreis gedreht. Teil I ist damit nicht aufgehoben: Er wird zum Fundament, auf dem der
 Agent seine Entscheidungen trifft.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Statisches RAG = eine feste Pipeline `retrieve → generate`, die Kontrolle liegt beim Code. Agentic RAG =
   das Retrieval wird zur Aktion in einer Schleife, die Kontrolle liegt beim Modell.

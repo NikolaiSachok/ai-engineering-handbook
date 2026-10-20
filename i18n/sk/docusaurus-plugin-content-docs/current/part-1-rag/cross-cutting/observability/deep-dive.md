@@ -14,7 +14,7 @@ Observability (pozorovateľnosť) sa tu mení na produkčnú disciplínu: pri ve
 
 Nie je to opätovné rozvedenie tracu ako základného prvku (to má Časť 1), ani katalóg nástrojov (Časť III), ani návod, ako opraviť pipeline (to sú stránky vrstiev [Retrieval](../../retrieval/) a [Generation](../../generation/)). Predmetom skúmania je tu samotný systém observability.
 
-## Prečo si nenecháš každý trace
+## Prečo si nenecháš každý trace \{#you-cannot-keep-every-trace}
 
 Pri produkčnom objeme je uchovávať 100% tracov (trace — úplný záznam jednej požiadavky) neúnosne drahé — úložisko sa plní tak rýchlo, ako priteká premávka, a väčšina záznamov je nezaujímavá. Nechaj si teda reprezentatívnu a zaujímavú podmnožinu a zvyšok zahoď. To je vzorkovanie (sampling); celá otázka znie, ktoré tracy si necháš.
 
@@ -42,7 +42,7 @@ flowchart TB
   K --> S["Úložisko tracov"]
 ```
 
-## Čo najviac chceš logovať, to si najmenej smieš nechať
+## Čo najviac chceš logovať, to si najmenej smieš nechať \{#what-you-most-want-to-log-is-what-you-least-want-to-keep}
 
 Najužitočnejšia vec pri ladení LLM aplikácie, celý odoslaný prompt a celý vrátený výstup, je zároveň to najcitlivejšie, čo držíš. Tieto telá správ bežne nesú používateľské a osobné údaje; najlepšie odladiteľný trace je zo svojej podstaty ten najviac zaťažený súkromím. Práve v tomto napätí spočíva celý návrh.
 
@@ -61,7 +61,7 @@ Voľba maskovania preberá os, ktorú zaviedli guardrails: vratné verzus nevrat
 
 Vratné maskovanie — encrypt (šifrovanie) — necháva cestu späť pre oprávnené ladenie, ale obnoviteľná hodnota je väčšie riziko a robí z dát skôr pseudonymizované než anonymizované (pseudonymization vs anonymization), lebo kľúč je teraz uložené tajomstvo, ktoré sa oplatí napadnúť. Vyberáš podľa poľa a podľa úrovne uchovávania: telefónne číslo zahashované a preč, telo dopytu zašifrované na krátke okno a potom zahodené.
 
-## Čo sledovať a kedy niekoho zobudiť
+## Čo sledovať a kedy niekoho zobudiť \{#deciding-what-to-watch-and-when-to-page-someone}
 
 Dashboard LLM systému zobrazuje všetko, čo dashboard obyčajnej služby — golden signals (zlaté signály SRE) z tradície Google SRE: latenciu, záťaž, chyby a saturáciu — plus jeden pilier, s ktorým tá štvorica nikdy nepočítala.
 
@@ -83,7 +83,7 @@ Disciplína tu znamená zdržanlivosť — priveľa alertov je samo osebe spôso
 
 Alerting na burn rate je zámerne založený na príznakoch: spúšťa sa na dôsledku viditeľnom pre používateľa, nie na každom zášklbe každého čísla pod ním — a práve vďaka tomu pager ostáva dôveryhodný.
 
-## Ako regresiu kvality dovedieš k jej príčine
+## Ako regresiu kvality dovedieš k jej príčine \{#tracing-a-quality-drop-back-to-its-cause}
 
 Keď sa metrika kvality prepadne, nasledujú v poradí dve otázky: je ten prepad skutočný a čo ho spôsobilo.
 
@@ -119,7 +119,7 @@ flowchart TB
   F --> E["Späť do evaluácie"]
 ```
 
-## Zastropovať, koľko požiadavka minie
+## Zastropovať, koľko požiadavka minie \{#putting-a-cap-on-what-a-request-spends}
 
 Náklad sa začína jednou vecou — **token accounting** (účtovanie tokenov) na požiadavku: účet je vstupné tokeny plus výstupné tokeny, každý ocenený podľa modelu; nezvládneš riadiť to, čo si nespočítal.
 
@@ -139,7 +139,7 @@ Politika, ktorá rozpočet premení z grafu na skutočnú páku, je rozdiel medz
 
 Tvrdý strop je strážca za behu, nie dodatočné hlásenie: funguje rovnako ako rozpočty krokov a tokenov, ktoré agent v Časti II nesmie prekročiť — limit, ktorý si systém vynucuje sám počas práce, nie taký, o ktorom sa dočítaš až ráno.
 
-## Kde sa toto pokazí
+## Kde sa toto pokazí \{#where-this-goes-wrong}
 
 Spôsoby zlyhania sa oplatí povedať priamo, lebo na každom z nich sa už nejaký tím naozaj popálil.
 
@@ -149,7 +149,7 @@ Spôsoby zlyhania sa oplatí povedať priamo, lebo na každom z nich sa už neja
 - **Alerting na každú metriku končí v alert fatigue** a alert fatigue končí tým, že skutočná regresia prebehne neprečítaná. Viac alertov neznamená viac bezpečia za bodom, kde ich ešte niekto číta.
 - **SLO na kvalitu bez online evaluácie za chrbtom je divadlo dostupnosti:** stena zelených dashboardov nad službou, ktorá je sebavedomo a merateľne nesprávna. Cieľ má cenu presne takú, akú má meranie pod ním.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Vzorkovanie je pri veľkom rozsahu nevyhnutné a stratégia rozhoduje, čo si necháš: head-based je lacné a bezstavové, ale rozhoduje skôr, než je známy výsledok, takže nevie prednostne držať chyby; tail-based si odloží celý trace a rozhodne podľa výsledku, za cenu stavovej pamäte a load-balancingu (procesor `tail_sampling` v Collector Contrib); priority/hybrid si necháva 100% tracov, ktoré nesmieš stratiť, a zvyšok vzorkuje.
 - Pri LLM systéme „zaujímavé“ zahŕňa kvalitu, nie len chyby a latenciu — odpoveď so stavom 200 OK môže byť halucinácia — takže rozhodnutie o zachovaní je napojené na skóre evaluácie, palec dole, blok od guardrails alebo odmietnutie.

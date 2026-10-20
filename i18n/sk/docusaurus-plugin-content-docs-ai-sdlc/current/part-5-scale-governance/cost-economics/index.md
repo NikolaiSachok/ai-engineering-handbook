@@ -10,7 +10,7 @@ si nekupuješ. Kupuješ si **zmeny, ktoré prežili reťaz brán**. Zvoľ nespr�
 všetkom, čo z neho vyvodíš: lacný model, ktorý potrebuje tri pokusy a záchranu od človeka, lacný nie je, a
 drahý model, ktorému to vyjde na prvýkrát, môže byť tá výhodná kúpa.
 
-## Najprv oprav menovateľ
+## Najprv oprav menovateľ \{#fix-the-denominator-first}
 
 Tri menovatele, zoradené od najmenej po najviac poctivý:
 
@@ -37,7 +37,7 @@ z nich nesie, a čas ľudskej revízie.
 
 :::
 
-## Kam peniaze naozaj odchádzajú
+## Kam peniaze naozaj odchádzajú \{#where-the-money-actually-goes}
 
 Štyri položky.
 
@@ -58,7 +58,7 @@ dvakrát toľko aj za kontrolu.
 [Úzke miesto overovania](../../part-1-foundation/verification-bottleneck.md) z I. časti je ekonomické tvrdenie
 rovnako ako inžinierske: rozhodujúce obmedzenie je ocenené v mzdách, nie v tokenoch.
 
-## Ako dostať náklady pod kontrolu
+## Ako dostať náklady pod kontrolu \{#making-cost-accountable}
 
 Prvé je priradenie, lebo účet, ktorý nevieš nikomu pripísať, sa nedá riadiť — dá sa nad ním len znepokojovať.
 Mechanizmus už máš zo IV. časti: ak sa prihlasovacie údaje vydávajú
@@ -78,7 +78,7 @@ je to isté ako hodnota, ktorú prinesie. Metrika nákladov na zlúčenú zmenu,
 prúde nezlepšuje nič, optimalizovala menovateľ, nie firmu. K nákladovej metrike preto pridaj jednu metriku
 výsledku, pri ktorej by ti bolo trápne vidieť rovnú čiaru.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant: **náklady meraj voči prijatej práci, priraď ich úlohe, ktorá ich spôsobila, a ohranič ich skôr, než
 sa vymknú.**
@@ -93,7 +93,7 @@ sa vymknú.**
   vykazovaná vedľa metriky výsledku, nie osamote. *Akému zlyhaniu to predchádza:* program hlási klesajúce
   náklady na zmenu a rastúcu priepustnosť, pričom hodnotu toho, čo sa dodalo, nemeria vôbec nikto.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - **Náklady na prijatú zmenu sú jediná poctivá jednotka.** Do čitateľa patria opakované pokusy, opustené behy,
   volania na overovanie aj čas revízie.

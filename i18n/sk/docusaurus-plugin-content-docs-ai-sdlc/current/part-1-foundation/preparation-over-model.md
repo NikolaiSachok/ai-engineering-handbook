@@ -9,13 +9,13 @@ V debatách o programovacích agentoch dominujú dve otázky: ktorý model použ
 
 S tým súvisí ešte jedna dôležitá zručnosť: vedieť správne čítať údaje o úspešnosti, ktoré zverejnil priamo autor nástroja alebo jeho používateľ. Práve najpovzbudivejší údaj v celej oblasti sa totiž dá veľmi ľahko nesprávne preniesť do vlastného projektu.
 
-## Príprava prostredia takmer zdvojnásobila úspešnosť agenta
+## Príprava prostredia takmer zdvojnásobila úspešnosť agenta \{#setup-nearly-doubled-the-agents-success}
 
 Najpresvedčivejší praktický dôkaz zo všetkých použitých zdrojov nepochádza z laboratórnej štúdie. Je z blogového článku jediného vývojára. [Stephen Toub z Microsoftu](https://devblogs.microsoft.com/dotnet/ten-months-with-cca-in-dotnet-runtime/) opísal desať mesiacov používania agenta GitHub Copilot Coding Agent v `dotnet/runtime` — veľkom, reálnom a kriticky dôležitom open-source repozitári. Článok z marca 2026 prináša namerané údaje o **878 pull requestoch vytvorených agentom** vrátane podielu zlúčených a vrátených zmien, náročnosti kontroly aj neúspešných pokusov. Uprostred týchto údajov sa skrýva asi najprenosnejšie ponaučenie celého kurzu. Toub ho vyslovil priamo: *„Ak si z tejto skúsenosti máš odniesť jediné ponaučenie, je to toto: príprava je dôležitejšia než model.“*
 
 Čísla, o ktoré sa toto tvrdenie opiera, sú pozoruhodné. Kým Toub agentovi nepripravil pracovné prostredie, jeho úspešnosť bola **38,1%**. Po nakonfigurovaní firewallu, napísaní súboru s pokynmi a sprístupnení zostavenia projektu, testov aj sťahovania potrebných nástrojov vzrástla na **69%**. Sám situáciu výstižne prirovnal k tomu, že *„sme do tímu pridali nového vývojára, prikázali mu opravovať problémy, ale neumožnili sme mu zostaviť ani otestovať projekt či stiahnuť potrebné nástroje.“* Jediná zmena takmer zdvojnásobila úspešnosť. Rozdiel je väčší než zlepšenie po výmene modelu alebo účinok zistený v ktorejkoľvek randomizovanej štúdii, z ktorej tento kurz čerpá — vyžaduje iba čas a pozornosť. Aj dvojčlenný tím môže mať takto pripravené prostredie hneď od prvého dňa.
 
-## Číslo, ktoré nesmieš jednoducho prevziať
+## Číslo, ktoré nesmieš jednoducho prevziať \{#the-number-you-must-not-copy}
 
 Ten istý článok uvádza ešte lákavejší výsledok. Tentoraz však nejde o ponaučenie týkajúce sa prípravy prostredia, ale správneho čítania údajov. Zo zlúčených pull requestov od agenta bolo vrátených iba **0,6% — 3 z 535**. Pri ľudských pull requestoch to za rovnaké obdobie bolo **0,8%**. Je lákavé toto číslo prevziať a očakávať rovnaký výsledok od vlastných agentov. Práve tomu nebezpečnému omylu má táto lekcia zabrániť.
 
@@ -23,7 +23,7 @@ Hodnota `0,6%` nevypovedá o vlastnostiach agenta. Vypovedá o tom, ako dôsledn
 
 Toub zároveň odmieta porovnanie, ku ktorému by väčšina ľudí automaticky dospela. Pull requesty od agenta a od ľudí podľa neho predstavujú *„zásadne odlišné skupiny vystavené odlišným výberovým tlakom… ľudia si sami vyberajú zložité úlohy náročné na úsudok, zatiaľ čo [agent] dostáva presnejšie ohraničené úlohy.“* Hodnoty `67,9%` a `87,1%` preto neinterpretuj ako priame porovnanie výkonu. Úlohy pre agenta boli vybrané zámerne. Toub otvorene uvádza aj ďalšie obmedzenia: agent pracoval **iba v Linuxe**, článok sa okrem vrátených zmien *„nepokúša komplexne kvantifikovať všetky následné ukazovatele kvality“* a *„neanalyzuje výpočtové náklady“*. Prevezmi jeho dôslednosť pri príprave prostredia. Nepreberaj však podiel vrátených zmien ako očakávaný výsledok — prevzal by si číslo bez prísnej kontroly, ktorá ho umožnila dosiahnuť. Ide o zásadu z 2. lekcie — dôsledne čítať pôvodné zdroje — uplatnenú na údaj z prvej ruky.
 
-## Začni tam, kde sa dá rozsah úlohy presne určiť
+## Začni tam, kde sa dá rozsah úlohy presne určiť \{#start-where-the-scope-is-knowable}
 
 Ak je príprava najúčinnejšou pákou, začni rozsahom úlohy. Predtým, než agentovi niečo zverím, odmietnem mu dať otvorený cieľ. Začnem problémom, ktorý má jasné hranice a pri ktorom už viem, čo presne znamená „hotovo“. Táto myšlienka vznikla dávno pred agentmi. [Andrej Beloborodov](https://www.threads.com/@andreybwhite), ktorý verejne píše sériu o vývoji postavenom na AI, na základe skúseností tvrdí, že bez špecifikácie dostaneš nezmyselný výsledok; podľa neho ide o princíp *„s viac než dvadsaťročnou históriou“*. Jednorazovo môžeš agentovi bez prípravy zveriť napríklad jednoduchý tracker alebo finančný nástroj. Pri softvéri, ktorý sa má ďalej rozvíjať a udržiavať, to nestačí.
 
@@ -31,7 +31,7 @@ K rovnakému záveru vedú aj primárne dôkazy. Toub uvádza, že agent *„má
 
 Preto musíš úlohu pred zadaním jasne ohraničiť. Zvládnuteľný rozsah úlohy v praxi znamená, že sú určené vstupy a výstupy, presne pomenovaný výsledný artefakt aj kontrola, ktorá rozhodne, či úloha prešla. Predovšetkým však potrebuješ kontrolnú bránu, pri ktorej človek schváli *požiadavky* ešte predtým, než sa začne čokoľvek nákladné vytvárať. V odvetví sa používa označenie requirements sign-off alebo stage-gate. Túto bránu nikdy neprenášaj na agenta, pretože od schválených požiadaviek sa odvíjajú všetky ďalšie výstupy.
 
-## Najprv architektúra — a úprimný príbeh o potrebných iteráciách
+## Najprv architektúra — a úprimný príbeh o potrebných iteráciách \{#architecture-first--and-an-honest-story-about-the-loop}
 
 Druhou pákou je návrh. Ešte pred programovaním architektúru spíšem a potom ju nechám dôkladne spochybniť. Tento postup má dávno známe a dobre podložené pomenovanie: návrh pred kódom, zachytený ako **záznam architektonického rozhodnutia (ADR)**. Tento vzor (Michael Nygard, 2011) zaznamenáva každé rozhodnutie spolu s jeho kontextom a dôsledkami. Neskorší čitateľ — alebo agent — tak vidí, *prečo* dané obmedzenie existuje, a pri optimalizácii ho nenápadne neodstráni.
 
@@ -53,7 +53,7 @@ Krátke vysvetlenie od IBM ukazuje, ako rozdeliť systém na služby. Je to konk
 
 :::
 
-## Prečo „príprava“, a nie „model“
+## Prečo „príprava“, a nie „model“ \{#why-preparation-not-the-model}
 
 Výber modelu nie je najdôležitejšou pákou z hlbšieho dôvodu. Harness (lešenie/podporný rámec agenta) — teda pravidlá, nástroje a ochranné mechanizmy okolo agenta — je postavený na predpokladoch, ktoré časom prestávajú platiť. [Inžinieri z Anthropic](https://www.anthropic.com/engineering/harness-design-long-running-apps) to pomenovali priamo: *„harnessy obsahujú predpoklady, ktoré so zlepšovaním modelov zastarávajú“* a *„každá súčasť… obsahuje určitý predpoklad o tom, čo model nedokáže urobiť sám“*.
 
@@ -63,7 +63,7 @@ Nejde iba o skúsenosť jedného dodávateľa. Nezávislá štúdia ponechala mo
 
 Pre teba z toho vyplýva, že príprava nikdy nie je jednorazová. Každé pravidlo aj každá súčasť harnessu má obmedzenú životnosť. Pravidelne preto kontroluj, či ešte plnia svoj účel. Na túto tému nadväzuje 4. lekcia o pamäti projektu a 5. lekcia o pravidlách, ktoré sa skutočne dodržiavajú.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Na každej úrovni platí rovnaká zásada: **agent s neobmedzeným rozsahom práce prináša neobmedzené riziko a rozhodujúcou pákou je prostredie, ktoré mu pripravíš.** S veľkosťou organizácie sa mení iba to, kto za prípravu zodpovedá a ako sa overuje jej kvalita.
 
@@ -73,7 +73,7 @@ Na každej úrovni platí rovnaká zásada: **agent s neobmedzeným rozsahom pr�
 
 - **Enterprise.** Návrhy posudzuje výbor pre riadenie zmien a z dokumentov s rozhodnutiami vzniká knižnica ADR. Za rozhodnutia ovplyvňujúce viacero častí systému zodpovedá architektonický tím, kým jednotlivé tímy zodpovedajú za svoje presne vymedzené kontexty. *Čomu tým predídeš:* nekontrolovanému blast radius (rozsah škôd), ktorý môže spôsobiť nedostatočne vymedzená práca agentov na spoločných systémoch. Platí tu opakujúca sa zásada kurzu: knižnica ADR slúži čiastočne ako *dôkaz* — poskytuje kontrolovateľný záznam, ktorý možno overiť aj dlho po prijatí rozhodnutia. Soloistov návyk vymedzovať rozsah je naproti tomu čistá *schopnosť*: priamo mení, čo môže agent bezpečne urobiť už dnes.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Príprava prostredia a rozsah úlohy ovplyvňujú úspešnosť agenta viac než použitý model. Po Toubovej príprave prostredia vzrástla úspešnosť agenta z `38,1%` na `69%`. Ide o väčšie zlepšenie než pri ktorejkoľvek výmene modelu v dostupných dôkazoch a malý tím ho môže dosiahnuť zadarmo už v prvý deň.
 - Čísla z prvej ruky čítaj rovnako dôsledne ako čísla od dodávateľov. Podiel vrátených zmien `0,6%` v `dotnet/runtime` je zásluha prísnej kontroly, nie agenta. Cena tejto kontroly je uvedená hneď vedľa: o 33% viac pripomienok, ľudia priamo upravovali viac než polovicu pull requestov od agenta a tretinu z nich pred zlúčením zamietli.

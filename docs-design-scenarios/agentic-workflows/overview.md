@@ -17,7 +17,7 @@ and the decision is cheap to make and expensive to check. That asymmetry is the 
 routing decision, a tool call retried against a non-idempotent endpoint, a memory that quietly went stale:
 none of them raise an error. They return a plausible answer, and the system reports success.
 
-## In this track
+## In this track \{#in-this-track}
 
 - **[Routing queries across models](/design-scenarios/agentic-workflows/model-routing)** — when a router
   earns its own latency and cost, and how you would know afterwards whether it did.

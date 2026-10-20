@@ -14,7 +14,7 @@ semantic, then aesthetic. This page makes both concrete: the method that measure
 economics that fixes the order. Part 1 is assumed throughout; the blind-spot frame and mechanism diversity
 are not re-argued, only built on.
 
-## Coverage measures execution; mutation testing measures detection
+## Coverage measures execution; mutation testing measures detection \{#coverage-measures-execution-mutation-testing-measures-detection}
 
 The trap Part 1 named — a file at 100% statement coverage that had no unit tests at all — is not an anomaly. It is what
 coverage *is*. Coverage answers "did this line run while the tests ran," a question about the test's reach.
@@ -41,7 +41,7 @@ Run these against a suite and the survivors are a worklist with no guesswork in 
 your gate did not catch, and Part 1's discipline — name the blind spot, build the next gate for it — now has an
 input that is generated rather than remembered.
 
-## Why it is the escape ledger, run forwards
+## Why it is the escape ledger, run forwards \{#why-it-is-the-escape-ledger-run-forwards}
 
 The [escape ledger](../escape-ledger.md) of Lesson 2 learns from defects that reached production: it is reactive by
 construction, because you cannot record an escape that has not happened yet. Mutation testing is the same
@@ -59,7 +59,7 @@ reaches, which are exactly the ones a [broad-probe hunt](../escape-ledger.md) ex
 testing sharpens the gates you have against the defects you can imagine; it does not tell you what you failed
 to imagine.
 
-## Equivalent mutants, and the honest cost
+## Equivalent mutants, and the honest cost \{#equivalent-mutants-and-the-honest-cost}
 
 Two things keep mutation testing from being free, and pretending otherwise is how teams try it once and abandon
 it.
@@ -77,7 +77,7 @@ expensive check — not on every keystroke, but on the code that matters, run de
 [layering logic](./index.md) that keeps a semantic gate off the hot path keeps mutation testing off it too:
 it is a periodic audit of your gates' detection power, not a per-commit gate itself.
 
-## The order of the chain is an economic argument
+## The order of the chain is an economic argument \{#the-order-of-the-chain-is-an-economic-argument}
 
 Part 1 fixed the sequence — mechanical, then semantic, then aesthetic — and called ordering "part of the
 design." Here is why that specific order, argued from cost rather than taste.
@@ -103,7 +103,7 @@ expensive one earlier — you want the cheap proxy to run first and the expensiv
 survives. And a gate whose fixes never invalidate anything downstream — a final formatting pass, say — belongs
 last regardless of its run cost, because nothing waits on it.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **Coverage measures execution; mutation testing measures detection.** A suite can execute every line and
   assert nothing — 100% coverage, zero detection. Mutation score, killed over total, is the honest metric.

@@ -62,7 +62,7 @@ arrangement is described in [how these are made](/design-scenarios/how-these-are
 
 <Reveal>
 
-## Attempt A — the common answer
+## Attempt A — the common answer \{#attempt-a--the-common-answer}
 
 *Persona given to the agent: Thinks in components and named patterns, and can name the standard pieces of an agent-memory design — short-term against long-term, a vector store for semantic recall, summarisation to keep the window manageable. Sketches the architecture first and fills in the boxes. Numbers feel like an implementation detail to settle once the design is agreed. Has never had to defend a per-request cost to anyone angry about a bill, and has always had someone reviewing the output before it reached a user, so a stale stored fact surfaced on its own and was somebody else's catch.*
 
@@ -138,7 +138,7 @@ holding facts learned from a user's mail. The read cost is asserted, never compu
 
 </Verdict>
 
-## Attempt B — the strong answer
+## Attempt B — the strong answer \{#attempt-b--the-strong-answer}
 
 *Persona given to the agent: Has been woken at three in the morning by this class of system. Starts from what breaks and works backwards — before naming a store, asks what reads it, how often, and what happens when the read is wrong. Prices things out loud, having lost an argument about a bill. Has watched a generated summary become the only surviving record of something that mattered, and has not trusted model-written text as evidence since. Wary of anything that cannot be deleted, after answering a deletion request against a system that had copied the same records into four undocumented places.*
 
@@ -207,7 +207,7 @@ output, on a fact shared by every open workflow at that merchant.
 
 </Verdict>
 
-## Attempt C — the over-built answer
+## Attempt C — the over-built answer \{#attempt-c--the-over-built-answer}
 
 *Persona given to the agent: Likes to get the foundation right the first time, having watched teams pay for years for a shortcut taken in week two. Designs for the system this will be in three years. Enjoys the hard general case — versioning, schema evolution, a policy layer, lineage, a service other teams could adopt rather than reinvent. Finds it genuinely difficult to leave a visible problem unaddressed in a design being presented, because naming it and deferring it feels like handing someone a known defect. Has mostly worked somewhere with a platform team to hand things off to, so "who operates this" has rarely been the binding constraint.*
 
@@ -271,12 +271,12 @@ offered to three engineers who owe 1,700 more merchant flows.
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 Each disagreement below is a decision you will have to make yourself. The last entry is the exception: it is
 the one thing all three did the same way, and none of them checked.
 
-### The wake's read path: a model-written summary or typed facts only
+### The wake's read path: a model-written summary or typed facts only \{#the-wakes-read-path-a-model-written-summary-or-typed-facts-only}
 
 A says the summary belongs there. It is read every wake, and rewriting it each wake means rewriting it from its
 own predecessor. B says categorically no: "No rolling summary, no agent notes carried forward, no 'context'
@@ -286,7 +286,7 @@ A's own answer to the 1.2% is per-fact provenance, and a summary is one blob wit
 sources. So A's schema can attribute the 1.2% on replay, while the summary a wake reads alongside it cannot —
 and the summary is what carries the history once a case is older than three ledger entries.
 
-### Evidence a charge stopped: a confirmation or an absence over a window
+### Evidence a charge stopped: a confirmation or an absence over a window \{#evidence-a-charge-stopped-a-confirmation-or-an-absence-over-a-window}
 
 A: "only a bank-feed confirmation writes it". B: "no new charge past the next expected bill date, or an explicit
 merchant confirmation ID plus one clean cycle." C: "two independent attestations: a merchant-side confirmation
@@ -295,7 +295,7 @@ charges, not cancellations — the only feed evidence of a stopped subscription 
 absence-of-evidence needs a named window. A never names one, so its "bank-feed confirmation" is a state
 transition with no trigger.
 
-### Deletion mid-workflow: pseudonymise and keep running or terminate
+### Deletion mid-workflow: pseudonymise and keep running or terminate \{#deletion-mid-workflow-pseudonymise-and-keep-running-or-terminate}
 
 A pseudonymises and keeps running — "a tombstone that keeps the workflow runnable on pseudonymous state
 (merchant, amount, stage) with identity fields nulled." B: "degrades to its pseudonymised typed facts or
@@ -307,7 +307,7 @@ terminates" — but it is a bare disjunction, and B never says who picks or on w
 unanswered, which is the gap: this is a policy question wearing a schema question's clothes, and none of the
 three hands it to whoever should own it.
 
-### Shared merchant knowledge: pinned per workflow or read live
+### Shared merchant knowledge: pinned per workflow or read live \{#shared-merchant-knowledge-pinned-per-workflow-or-read-live}
 
 C comes closest to pinning: the merchant card is "version-pinned", and each StateTransition carries "the prompt +
 policy + fold version" — note that the playbook version is not itself in that list, so even C stamps the
@@ -319,7 +319,7 @@ reviewability, and reviewability at that scale implies the reach — a promoted 
 that merchant at once. So a workflow in week nine can switch playbook mid-flight, and no replay can say which
 version drove which decision. None of the three closes that, and C only narrows it.
 
-### A stricter close condition: absorbed by a cheap state or paid for in wakes
+### A stricter close condition: absorbed by a cheap state or paid for in wakes \{#a-stricter-close-condition-absorbed-by-a-cheap-state-or-paid-for-in-wakes}
 
 B says the mechanism that enforces it removes cost: "`pending_confirm` is cheap: it sleeps on feed diffs and
 costs no inference. That state also absorbs your eleven-week tail, which is otherwise the thing that eats the
@@ -336,7 +336,7 @@ even arrives. Neither attempt does that multiplication, and the page cannot do i
 costs depends on how many of the added wakes carry something a model has to read, which is a number this prompt
 does not supply. That is the estimate a design owes when it moves the quality bar.
 
-### What all three agreed on, and none of them priced
+### What all three agreed on, and none of them priced \{#what-all-three-agreed-on-and-none-of-them-priced}
 
 All three keep a durable record of things the mail thread and the bank feed already hold — what the merchant said,
 what the bank shows. Take those two as durable and as the records a disputed claim gets settled against, and that
@@ -353,7 +353,7 @@ the mail thread nor the bank feed holds the tool-call ledger of portal actions, 
 a design that re-derives everything would have to re-drive the portals, not merely re-read two feeds. The honest
 version is narrower than it first looks — and still unpriced by all three.
 
-## The principle
+## The principle \{#the-principle}
 
 > A summary carries one provenance for everything inside it, so nothing an agent may later have to defend should
 > be read from one.
@@ -382,7 +382,7 @@ version is narrower than it first looks — and still unpriced by all three.
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 

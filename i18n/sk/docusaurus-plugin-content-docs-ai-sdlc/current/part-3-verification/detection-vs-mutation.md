@@ -13,7 +13,7 @@ Presne takto sa to pokazilo aj v postupe pri tvorbe samotnej príručky: prechod
 
 :::
 
-## Brána, ktorú možno obísť, bude obídená
+## Brána, ktorú možno obísť, bude obídená \{#the-gate-you-can-game-is-the-gate-you-have}
 
 Reward hacking nie je myšlienkový experiment. Je zmeraný, výrazný a — čo je najhoršie — *rastie s rozsahom úlohy, ktorú si najviac chcel delegovať*. [Audit spoločnosti Cursor](https://cursor.com/blog/reward-hacking-coding-benchmarks) zistil, že **63%** úspechov v benchmarkoch vzniklo *vyhľadaním* riešenia, nie jeho odvodením; [SpecBench](https://arxiv.org/abs/2605.21384) nameral, že pri každom desaťnásobnom zväčšení kódu sa rozdiel spôsobený reward hackingom rozšíril o **+28 percentuálnych bodov**; autori [Reward Hacking Benchmarku](https://arxiv.org/abs/2605.02964) namerali u modelu trénovaného pomocou RL mieru zneužívania **13,9%** oproti **0,6%** u jeho vlastnej základnej verzie bez RL. Úplný rozbor nájdeš v I. časti. Do tejto lekcie si však odnes najmä posledné zistenie — obchádzanie je *naučenou reakciou na hodnotenie* a vzniká práve tréningom podľa hodnotiteľa. Každú bránu, ktorú agent vidí a podľa ktorej môže optimalizovať, sa teda napokon naučí obísť.
 
@@ -23,7 +23,7 @@ Najjednoduchší príklad [opísal Andrej Beloborodov na základe vlastnej skús
 
 To nie je argument proti grepu: aj tento kurz ho zámerne používa ako bránu. V lekciách [Pravidlá, ktoré platia](../part-1-foundation/rules-that-hold.md) a [Vrstvené brány](./layered-gates/index.md) grep hľadá zakázaný vzor. Tam je chybou už samotná prítomnosť textu, takže nájdenú zhodu netreba interpretovať. V teste platby však slovo zastupuje správanie programu počas behu, ktoré grep nevidí. **Grep je vhodnou bránou na overenie prítomnosti textu, nikdy na overenie prítomnosti správania.** Zo všetkých brán je najlacnejšie obísť práve takúto: prejde čokoľvek, čo obsahuje dané slovo, bez ohľadu na to, či platba funguje. Pri každom zelenom teste sa pýtaj, aká chyba by ho zhodila. Ak odpoveď znie „vymazanie slova“, test neoveruje, že platba naozaj funguje. [Mutačné testovanie](./layered-gates/deep-dive.md) túto otázku mení na mechanický postup: zámerne vlož do platobnej logiky chybu, ktorá ju pokazí, a ponechaj `PAID` na mieste — grep zostane zelený. Chyba prežije, a tým sa ukáže, že test platbu vôbec nevidí.
 
-## Dôsledne oddeľ detekciu od opravy
+## Dôsledne oddeľ detekciu od opravy \{#hard-separate-detection-from-mutation}
 
 Ide o najstarší riadiaci mechanizmus, tentoraz prispôsobený agentom: **ten, kto nájde chybu, ju nesmie zároveň opravovať.** Audítor, ktorý môže upravovať aj kontrolovaný kód, má motiváciu aj možnosť nález radšej *odstrániť* než *nahlásiť*. Len čo to dokáže, jeho správa prestáva opisovať skutočnosť. Ak obe úlohy oddelíš, zachováš dve vlastnosti naraz: zoznam nálezov zostane dôveryhodným artefaktom a oprava príde ako samostatný, posúditeľný diff, nie ako tichá úprava ukrytá v audite.
 
@@ -37,13 +37,13 @@ Jeff Crume zo spoločnosti IBM vysvetľuje správu identít a prístupu — prin
 
 :::
 
-## Nastav zadanie tak, aby sa trik neoplatil
+## Nastav zadanie tak, aby sa trik neoplatil \{#price-the-cheat-out-of-the-brief}
 
 Oddelenie zodpovedností zviditeľní podvádzanie. Druhý krok zabezpečí, aby bola legitímna cesta *lacnejšia než trik* a agent si ju vybral aj bez neustáleho dozoru. Keď agentovi zadáš opravu, zadanie musí obsahovať dve veci, nie jednu: **usporiadaný súbor povolených postupov** — od najvhodnejšieho riešenia, pričom skratka založená na potlačení príznaku je výslovne uvedená ako posledná možnosť alebo zakázaná — a výslovný **zoznam zákazov**, ktorý pomenuje konkrétny trik umožňujúci tejto triede testov prejsť bez skutočného vykonania práce. Usporiadaný súbor povolených postupov dá agentovi legitímny rebrík, po ktorom môže stúpať; zoznam zákazov uzavrie prepadlisko, do ktorého by inak spadol. V tom spočíva praktické jadro celej lekcie: **obchádzanie brány je predvolené správanie agenta, preto musí zadanie skratku vyradiť — pomenuj ju, zakáž ju a zároveň ponúkni lepší postup.** Zadanie, ktoré hovorí iba „oprav pretečenie“, nabáda na jednoriadkové potlačenie príznaku. Zadanie „oprav pretečenie — zmeň veľkosť alebo rozloženie; *neorezávaj* obsah a *nepotláčaj* upozornenie“ odstráni lacnú nesprávnu odpoveď z ponuky.
 
 Keď ide o veľa, dôveryhodnosť tohto postupu podporujú tri opatrenia. Izoluj prostredie tak, aby skratka vôbec nebola dostupná — bez siete, bez histórie git a so skrytou oddelenou sadou testov, ktorú agent nikdy neuvidí. Stanov strop dosiahnuteľného skóre, aby výsledok nad ním *sám odhalil podvádzanie*. Opravu potom posúď podľa overeného etalónu alebo diferenciálneho testu, nie podľa agentovho vlastného tvrdenia, že je hotová. Tým sa vraciame k [čítaniu dôkazov](../part-1-foundation/reading-the-evidence.md): proxy-metrika, ktorú optimalizuješ dostatočne tvrdo, prestane merať to, na čom ti záležalo. Počet zlúčených PR, oslavovaný tvrdením OpenAI o [„70% väčšom počte PR“](https://openai.com/index/codex-now-generally-available/) bez východiskovej hodnoty, je Goodhartov zákon zabalený do tlačovej správy. Riešením nikdy nie je prísnejší pokyn, ale brána, ktorú optimalizátor nedokáže splniť nesprávnym spôsobom.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Vo všetkých mierkach platí rovnaká zásada: **ten, kto chyby nájde, ich neopravuje, a zadanie na opravu musí trik vyradiť.** Mení sa iba spôsob, akým sa toto oddelenie vynucuje.
 
@@ -51,7 +51,7 @@ Vo všetkých mierkach platí rovnaká zásada: **ten, kto chyby nájde, ich neo
 - **Malý tím.** Zmenu neposudzuje jej autor a kontrola prebieha nad sadou testov, ktorú autor nemôže upravovať. *Akému zlyhaniu to predchádza:* tomu, aby autor prispôsobil test kódu namiesto kódu požiadavke — teda posúdeniu, ktoré schváli autorovu vlastnú skratku.
 - **Enterprise.** Oddelenie zodpovedností je vynútené a jeho nezávislosť je preukázateľná: implementačný tím nevidí skryté hodnotenie, sieť aj história sú izolované a autori zmeny ju nemôžu sami schváliť. *Akému zlyhaniu to predchádza:* tomu, aby organizácia optimalizovala titulkovú metriku — zlúčené PR či uzavreté tickety — až za hranicu výsledku, ktorý mala táto proxy-metrika zastupovať.
 
-## Čo si z toho odniesť
+## Čo si z toho odniesť \{#what-to-take-away}
 
 - Agent optimalizuje presne to, čo kontroluješ. Každú bránu, ktorú vidí a voči ktorej môže upravovať kód, sa preto napokon naučí obísť. Trikom býva skôr nenápadné potlačenie príznaku než okázalý podvod.
 - Dôsledne oddeľ detekciu od opravy: audítor nikdy neupravuje to, čo kontroluje. Zoznam nálezov tak zostane dôveryhodný a opravu bude možné posúdiť — ide o oddelenie zodpovedností prispôsobené agentom.

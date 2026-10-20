@@ -14,7 +14,7 @@ and it unfolds in order — this lesson wraps what you built as a service; the l
 [where the model itself should run](../cloud-platforms/index.md), [what tooling to put around the running
 system](../tooling-ecosystem/index.md), and [how to operate it once it's live](../llmops/index.md).
 
-## One word, two jobs
+## One word, two jobs \{#one-word-two-jobs}
 
 "Serving" hides two different jobs, and conflating them is the fastest way to get lost in this topic.
 Serving the *application* means wrapping your pipeline — retrieval, the agent loop, guardrails — as an API
@@ -32,7 +32,7 @@ AI delta: what changes when an LLM is in the loop.
 
 :::
 
-## The app layer — why FastAPI won
+## The app layer — why FastAPI won \{#the-app-layer--why-fastapi-won}
 
 Look at what an LLM app request actually does. It parses input, fires a retrieval query, then calls the
 model — and waits. For seconds, sometimes tens of seconds, your service does nothing but hold an open
@@ -54,7 +54,7 @@ freezes the event loop, and with it every concurrent request in the process. Not
 just stops answering while one call blocks. This is the classic production bug of async LLM services, and
 it deserves a code-review rule of its own: no synchronous I/O inside an async handler, ever.
 
-## Streaming — the latency you can actually fix
+## Streaming — the latency you can actually fix \{#streaming--the-latency-you-can-actually-fix}
 
 A full generation takes seconds to tens of seconds, and no API-layer cleverness changes that: the model
 computes as fast as it computes. What you can change is how the wait feels. Users don't experience total
@@ -97,7 +97,7 @@ streamed for. Or validate incrementally, chunk by chunk — which is weaker: a b
 before the check trips and you cancel the stream. Real systems choose per surface: strict, buffered checks
 for high-risk outputs, streaming for low-risk chat.
 
-## The production checklist for the API layer
+## The production checklist for the API layer \{#the-production-checklist-for-the-api-layer}
 
 Nothing on this list is exotic — timeouts, retries, rate limits, logging. What's AI-specific is how each
 one bends when a single request can run for half a minute and cost real money.
@@ -123,7 +123,7 @@ This is where the [observability](../../part-1-rag/cross-cutting/observability/i
 physically lives — the trace starts in your service — and the production tooling in
 [tooling-ecosystem](../tooling-ecosystem/index.md) will assume those hooks exist.
 
-## Docker — where the AI delta actually is
+## Docker — where the AI delta actually is \{#docker--where-the-ai-delta-actually-is}
 
 If your container wraps only the app — a pipeline that calls provider APIs — there is no AI delta to speak
 of. It's a normal slim Python image, and the rules are the ones you already know: small layers, no secrets
@@ -152,7 +152,7 @@ exactly what Kubernetes separates into readiness and liveness probes. Cold start
 scale-to-zero: shutting idle replicas down saves GPU money, and the next request pays for it by waiting
 out a cold start.
 
-## Serving the model — inference servers
+## Serving the model — inference servers \{#serving-the-model--inference-servers}
 
 Serving an LLM well is a specialised systems problem, not a web problem. The throughput wins live at the
 level of GPU scheduling: **continuous batching**, where new requests join the running batch at token
@@ -200,7 +200,7 @@ flowchart TB
     V --> G[GPU]
 ```
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - "Serving" is two jobs: serving the application (your pipeline behind an API) and serving the model
   (inference). Most teams do the first and rent the second from a provider.

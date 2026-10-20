@@ -16,7 +16,7 @@ dvoch druhov — **zlyhanie vyhľadávania** (potrebný kúsok sa vôbec nedosta
 generovania** (kúsok sa našiel, no model ho obišiel alebo prekrútil). Takmer každé rozhodnutie v pipeline
 rieši jednu z týchto dvoch porúch a prvým krokom je vždy zistiť, ktorá z nich stojí pred tebou.
 
-## Čo je vnútri
+## Čo je vnútri \{#whats-inside}
 
 - **[Ingestion](./ingestion/index.md)** — offline príprava dokumentov: chunking a embeddingy, metadáta. Práve
   tu sa určuje strop kvality celého vyhľadávania.
@@ -31,7 +31,7 @@ rieši jednu z týchto dvoch porúch a prvým krokom je vždy zistiť, ktorá z 
   (vedieť, že systém funguje), [guardrails](./cross-cutting/guardrails/index.md) (udržať ho v bezpečných
   medziach), [observability](./cross-cutting/observability/index.md) (vidieť, čo robí v produkcii).
 
-## Predpoklady
+## Predpoklady \{#prerequisites}
 
 Základné oboznámenie s LLM: čo je prompt, kontext a embedding na úrovni myšlienky. Hlbšiu matematiku netreba —
 vysvetľujeme od prvých princípov.

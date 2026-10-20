@@ -16,7 +16,7 @@ where real sandboxes quietly leak. The through-line is the one from
 each is designed assuming the one in front of it will sometimes fail —
 [defense in depth](../../glossary.md#layered-gates), applied to capability instead of detection.
 
-## The confinement stack, boundary by boundary
+## The confinement stack, boundary by boundary \{#the-confinement-stack-boundary-by-boundary}
 
 Four boundaries, outermost first — which is also weakest first, because the outer wall is the one to trust
 least. Read them as a stack: each one exists because the one in front of it can be defeated.
@@ -46,7 +46,7 @@ cannot POST your repository to an arbitrary host, whatever instruction it was tr
 is the **exfiltration boundary** — the last layer, and the one that turns "the agent read something it
 shouldn't" into a non-event, because the data has nowhere to go.
 
-## The threat model is one question per boundary
+## The threat model is one question per boundary \{#the-threat-model-is-one-question-per-boundary}
 
 A boundary is only meaningful against a stated attack, so make the threat model explicit and per-layer. For
 each one, ask: *if an injection fully succeeds at the layer in front of it, what does it buy the attacker, and
@@ -63,7 +63,7 @@ capability: each layer is blind to a different attack, and the coverage is a pro
 one wall. And it exposes the cheap mistake — a single strong-looking layer with nothing behind it. A hardened
 container with a wide-open egress allowlist stops a process escape and waves the exfiltration through.
 
-## Where sandboxes leak
+## Where sandboxes leak \{#where-sandboxes-leak}
 
 The failures are not exotic. Each is a boundary quietly removed, usually for convenience, usually by someone
 who did not picture the attack.
@@ -85,7 +85,7 @@ who did not picture the attack.
   influence the next — a slower, quieter channel than the network, and an easy one to forget when everything
   else is locked down.
 
-## The cost, and the two ways it becomes theatre
+## The cost, and the two ways it becomes theatre \{#the-cost-and-the-two-ways-it-becomes-theatre}
 
 The box is not free: it adds start-up latency, image and policy maintenance, and a debugging surface where "it
 works outside the sandbox" is a sentence you will say often. Part 1's argument still holds — a boundary the
@@ -102,7 +102,7 @@ not a control — it is a machine that happens to be configured safely today. Th
 as code, built the same way every time, so that "the agent runs confined" is a property of the system and not
 a fact about one laptop. That is the same standard the whole course applies to everything it calls a control.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - The sandbox is a **stack of boundaries**, each assuming the one in front of it fails: process isolation,
   syscall

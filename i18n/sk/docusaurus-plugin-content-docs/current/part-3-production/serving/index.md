@@ -9,7 +9,7 @@ Druhá časť príručky uzavrela celý systém: z RAG pipeline vyrástol agent,
 
 Produkcia z toho postupne odoberie všetko: systém beží ako služba, pre iných ľudí, mnohých naraz, pod záťažou a bez toho, aby sa niekto pozeral. Presne o tomto skoku je Tretia časť príručky a rozvíja ho v jasnom poradí: táto lekcia zabalí to, čo si postavil, do služby; neskoršie lekcie sa pýtajú, kde má model bežať ([cloudové platformy](../cloud-platforms/index.md)), čím bežiaci systém obaliť ([ekosystém nástrojov](../tooling-ecosystem/index.md)) a ako ho prevádzkovať, keď je nasadený ([LLMOps](../llmops/index.md)).
 
-## Jedno slovo, dve úlohy
+## Jedno slovo, dve úlohy \{#one-word-two-jobs}
 
 Pod slovom **serving** (prevádzka modelu alebo pipeline ako sieťovej služby) sa skrývajú dve odlišné úlohy; a zmiešať ich je najrýchlejší spôsob, ako sa stratiť.
 
@@ -23,7 +23,7 @@ Základy [FastAPI](https://fastapi.tiangolo.com) a [Dockeru](https://docs.docker
 
 :::
 
-## Aplikačná vrstva — prečo zvíťazil FastAPI
+## Aplikačná vrstva — prečo zvíťazil FastAPI \{#the-app-layer--why-fastapi-won}
 
 Pozri sa, čo taká požiadavka v LLM-aplikácii vlastne robí: rozparsuje vstup, vyšle vyhľadávací dopyt a potom zavolá model — a čaká. Sekundy, občas desiatky sekúnd, služba nerobí nič iné, len drží otvorené spojenie, kým sa tokeny počítajú inde.
 
@@ -33,7 +33,7 @@ Tri vlastnosti sa vyplácajú deň čo deň: (a) natívne `async`/`await` obslu�
 
 Jedna výhrada váži v produkcii viac než ostatné: async pomáha, len ak je asynchrónne všetko v obslužnej funkcii. Jediné blokujúce volanie — synchrónny HTTP-klient, pomalý ovládač databázy — zmrazí **slučku udalostí** (event loop) a s ňou každú súbežnú požiadavku v procese. Nič neohlási chybu; služba len prestane odpovedať, kým jedno volanie blokuje. Toto je klasická produkčná chyba asynchrónnych LLM-služieb a zaslúži si vlastné pravidlo do code review: v asynchrónnej obslužnej funkcii nikdy žiadne synchrónne I/O.
 
-## Streaming — latencia, ktorú naozaj vieš znížiť
+## Streaming — latencia, ktorú naozaj vieš znížiť \{#streaming--the-latency-you-can-actually-fix}
 
 Celé generovanie trvá sekundy až desiatky sekúnd a nijaký trik aplikačnej vrstvy to nezmení — model počíta svojím tempom a rýchlejšie nebude. Zmeniť vieš len jedno: ako to čakanie pôsobí na používateľa.
 
@@ -60,7 +60,7 @@ Streaming potichu rozbije chybový model, na ktorý si sa celú kariéru spolieh
 
 Streaming sa zráža aj s výstupnými [guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) z Prvej časti príručky: úplnú odpoveď, ktorú ešte nemáš, nemôžeš overiť. Máš dve možnosti a obe sú kompromis: (a) celú odpoveď zapíš do vyrovnávacej pamäte a over ju pred odoslaním — tým prídeš o zisk z TTFT; (b) over ju priebežne, útržok po útržku — slabšie: zlý prefix sa dostane k používateľovi skôr, než kontrola zareaguje a ty prúd zrušíš. Reálne systémy sa rozhodujú pre každý typ výstupu zvlášť: prísne bufrované kontroly pre rizikové výstupy, streaming pre nízkorizikový chat.
 
-## Produkčný kontrolný zoznam pre API-vrstvu
+## Produkčný kontrolný zoznam pre API-vrstvu \{#the-production-checklist-for-the-api-layer}
 
 Nič z toho nie je exotické — časové limity, opakovania, rate limity (strop na počet požiadaviek), logovanie. AI-špecifické je to, ako sa každé z nich ohne, keď jedna požiadavka môže bežať pol minúty a stáť skutočné peniaze.
 
@@ -72,7 +72,7 @@ Nič z toho nie je exotické — časové limity, opakovania, rate limity (strop
 
 **Účtovacie napojenia** (hooks). Na každej požiadavke loguj vstupné a výstupné tokeny, ktorý model a latenciu po fázach. Disciplína [observability](../../part-1-rag/cross-cutting/observability/index.md) (pozorovateľnosť) z Prvej časti príručky má tu svoje fyzické miesto — trace (stopa) sa začína v tvojej službe — a produkčné nástroje z [ekosystému nástrojov](../tooling-ecosystem/index.md) budú počítať s tým, že tie napojenia existujú.
 
-## Docker — v čom je to s AI naozaj iné
+## Docker — v čom je to s AI naozaj iné \{#docker--where-the-ai-delta-actually-is}
 
 Ak tvoj kontajner obaľuje len aplikáciu — pipeline, ktorá volá API poskytovateľov — AI tu prakticky nič nemení. Je to bežný štíhly Python image; pravidlá poznáš: malé vrstvy, žiadne zabudované tajomstvá (secrets), konfigurácia z prostredia. Zabaliť LLM-aplikáciu do kontajnera znamená jednoducho zabaliť do kontajnera Python službu.
 
@@ -84,7 +84,7 @@ Všetko sa zmení, keď v kontajneri býva samotný model.
 
 Tretí rozdiel je **cold start** (studený štart). Načítanie váh do pamäte GPU trvá desiatky sekúnd až minúty, takže LLM-kontajner nie je pripravený vo chvíli, keď sa jeho proces spustí. Health check, ktorý hlási „proces beží“, ti nepovie nič užitočné; pripravenosť musí znamenať „model je načítaný a zohriaty“ — a presne túto medzeru Kubernetes rozdeľuje na **sondy pripravenosti a životnosti** (readiness / liveness probes). Cold start je zároveň cena za **scale-to-zero** (škálovanie na nulu): vypnutie nečinných replík ušetrí peniaze za GPU a ďalšia požiadavka to zaplatí tým, že si počká na studený štart.
 
-## Serving modelu — inference servery
+## Serving modelu — inference servery \{#serving-the-model--inference-servers}
 
 Dobre obsluhovať LLM je špecializovaný systémový problém, nie webový. O **priepustnosti** (throughput) rozhoduje úroveň plánovania GPU: **continuous batching**, kde nové požiadavky vstupujú do bežiaceho batchu (dávky) na úrovni jednotlivých tokenov namiesto čakania na dokončenie celého batchu, a správa pamäte ako **PagedAttention** vo vLLM, ktorá stránkuje KV-cache (vyrovnávaciu pamäť kľúč–hodnota) tak, ako operačný systém stránkuje virtuálnu pamäť, a osekáva fragmentáciu, čo inak plytvá pamäťou GPU.
 
@@ -112,7 +112,7 @@ flowchart TB
     V --> G["GPU"]
 ```
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Serving sú dve úlohy: serving aplikácie (pipeline za API) a serving modelu (inferencia). Väčšina tímov robí to prvé a to druhé si prenajíma od poskytovateľa.
 - Požiadavka v LLM-aplikácii je viazaná na I/O — služba väčšinou len čaká na model — a práve preto sa async-first FastAPI stalo predvolenou aplikačnou vrstvou. Jediné blokujúce volanie v asynchrónnej obslužnej funkcii zastaví každú požiadavku v procese.

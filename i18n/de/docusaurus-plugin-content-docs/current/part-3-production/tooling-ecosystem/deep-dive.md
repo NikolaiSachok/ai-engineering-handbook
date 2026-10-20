@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Teil 1 der Lektion](./index.md) hat die drei Querschnittsthemen aus Teil I – Evaluierung, Guardrails, Observability – auf die Werkzeuglandschaft von 2026 abgebildet und die Frage beantwortet, die die früheren Lektionen offengelassen hatten: Was installieren Sie, und wann? Am Ende stand eine Standardreihenfolge – zuerst das Tracing, dann die Evaluierung in der CI, dann die Guardrails. Dieser zweite Durchgang nimmt sich dieselbe Werkzeuglandschaft noch einmal vor, diesmal aus der Sicht des Betriebs. Es geht nicht darum, welches Werkzeug Sie wählen, sondern darum, wie Sie eines selbst betreiben, wenn das verwaltete Angebot nicht taugt, wie Sie die Prüfung selbst schreiben, weil keine Bibliothek sie mitliefert, und wie aus den Werkzeugen für Evaluierung, Observability und Guardrails ein einziger Stack wird und nicht drei zusammenhanglose Produkte. Ein Stack heißt hier: Die Werkzeuge bauen aufeinander auf. Alles Folgende ist eine Momentaufnahme von Mitte 2026 (Juli 2026); wie schon in Teil 1 gelten die Produktnamen nur für heute, und Bestand hat die Kategorie, für die sie stehen – diesmal zusätzlich die Gestalt, die der Betrieb annimmt.
 
-## Wo die Theorie steht
+## Wo die Theorie steht \{#where-the-theory-lives}
 
 Auf dieser Seite geht es um die Verdrahtung, nicht um die Theorie, und es hilft, vorher genau zu sagen, was das ausschließt. Die Konzepte, die die einzelnen Werkzeuge umsetzen, werden einmal erklärt – in den Vertiefungen, zu denen sie gehören – und hier verlinkt statt wiederholt:
 
@@ -19,7 +19,7 @@ Auf dieser Seite geht es um die Verdrahtung, nicht um die Theorie, und es hilft,
 
 Die Aufteilung ist Absicht. Die Definition einer Metrik und die Abwehr einer Injection haben Bestand – einmal gelernt, gelten sie für jedes Produkt, das Sie ausrollen. Die Verdrahtung ist das Gegenteil: Sie ändert sich mit jedem Stack, mit jedem Wechsel des Backends, mit jeder Entscheidung über die Skalierung, und sie ist der Teil, den die Dokumentation eines Werkzeugs vergräbt oder stillschweigend voraussetzt. Dafür ist diese Seite da.
 
-## Langfuse selbst betreiben: kein einzelner Container
+## Langfuse selbst betreiben: kein einzelner Container \{#self-hosting-langfuse-not-one-container}
 
 Am Anfang steht die Entscheidung, denn es ist eine Entscheidung und keine Voreinstellung. Teil 1 hatte genau einen Grund, zu Langfuse statt zu einem Werkzeug zu greifen, das zuerst als SaaS gedacht ist: Der Kern steht unter MIT, und Sie können ihn innerhalb Ihres eigenen Perimeters betreiben, sodass die Trace-Daten – in denen Prompts, abgerufener Kontext und mitunter Nutzerinhalte stecken – den Perimeter nie verlassen. Wenn Ihre Daten das Haus *verlassen dürfen*, ist Langfuse Cloud als verwaltetes Angebot oder LangSmith schlicht weniger Arbeit, und dann greifen Sie zu. Den Eigenbetrieb nehmen Sie in Kauf, um die Kontrolle zu behalten und über den Speicherort der Daten zu bestimmen. Es ist dieselbe Make-or-Buy-Entscheidung wie in Teil 1; hier ist der Preis aufgeschlüsselt.
 
@@ -52,7 +52,7 @@ Treten Sie einen Schritt zurück, dann wird der wirkliche Preis sichtbar. Sie be
 
 Zwei ehrliche Anmerkungen zu dieser Momentaufnahme. Die genaue Liste der Komponenten gilt für Mitte 2026; Langfuse bleibt in Bewegung – 2026 arbeitet das Projekt an einer Vereinfachung, die es selbst „simplify for scale“ nennt, und Langfuse hat sich 2026 mit ClickHouse zusammengetan –, behandeln Sie diese konkrete Topologie also als richtig für heute, nicht als endgültig. Was Bestand hat, ist die *Gestalt*: eine zustandslose Anwendungsschicht plus ein asynchroner Worker, ein OLTP-Speicher für die Konfiguration, ein OLAP-Speicher für die Telemetrie mit dem großen Volumen, eine Queue, die die Ingestion entkoppelt, und ein Objektspeicher für die rohen Nutzlasten. In großem Maßstab sieht jede selbst betriebene Plattform für Traces am Ende so aus, ganz gleich, welche Namen die Produkte tragen.
 
-## Der Validator, den Sie selbst schreiben
+## Der Validator, den Sie selbst schreiben \{#the-validator-you-write-yourself}
 
 Teil 1 hat die Guardrails aufgeteilt – Frameworks orchestrieren, Klassifikatormodelle bewerten – und festgehalten, dass der Guardrails Hub fertige Validatoren von der Stange mitbringt. Hier zählt der **Validator**: Er ist die kleinste Einheit einer selbst gebauten Schutzregel, die Sie tatsächlich selbst schreiben. Ihre fachliche Regel – eine verbotene Formulierung aus der Richtlinie, eine geschäftliche Einschränkung, ein hauseigenes Schema für die Ausgabe – steht meist nicht im Hub, und genau diese Lücke füllen Sie selbst. Die Reihenfolge lautet: erst im Hub nachsehen und nur die Prüfung selbst schreiben, die es nur bei Ihnen gibt.
 
@@ -100,7 +100,7 @@ An zwei Stellen führt das zurück zu Teil 1. Die Prüfung eines Validators kann
 
 Halten Sie sich trotzdem zurück, denn ein Validator ist nicht umsonst. Bauen Sie keinen Validator nach, den es im Hub schon gibt. Jeder Validator kostet Latenz und Geld, solange die Anfrage darauf wartet; am teuersten sind `reask`, das einen ganzen zusätzlichen Modellaufruf kostet, und jeder Validator, der seine Prüfung selbst einem LLM-as-a-judge überlässt. Planen Sie ihn also ein wie jede andere synchrone Abhängigkeit. Und testen Sie Validatoren wie jeden anderen Code: Genau hier trifft die Evaluierung in der CI aus Teil 1 auf die Guardrails, denn ein Validator, dessen Rate falsch positiver Ergebnisse nie geprüft wurde und der auf `exception` steht, ist ein Vorfall im Produktivbetrieb, der auf seinen ersten berechtigten Nutzer wartet.
 
-## Der fertig verdrahtete Stack
+## Der fertig verdrahtete Stack \{#the-stack-wired}
 
 Jede der drei Kategorien aus Teil 1 gibt es zweimal: einmal quelloffen und im Eigenbetrieb, einmal verwaltet als SaaS. Ausgebreitet sieht die Werkzeuglandschaft so aus.
 
@@ -132,7 +132,7 @@ Das ist die Schleife des Produktivbetriebs aus Teil 1, aber worauf es hier ankom
 
 Ein Pfeil in diesem Diagramm ist selbst eine Betriebspraxis, die es festzuhalten lohnt. Red-Teaming ist hier eine Frage der Häufigkeit und der Werkzeuge, nicht der Theorie – der Katalog der Injections und die Mechanik der Angriffe bleiben bei den [Guardrails](../../part-1-rag/cross-cutting/guardrails/deep-dive.md). Im Betrieb heißt das: Planen Sie Red-Teaming-Durchläufe fest ein, in der CI oder vor einem Release. Dafür gibt es die Red-Teaming-Funktionen von promptfoo, die eigenen Red-Teaming-Werkzeuge einer Plattform oder PyRIT aus der Vertiefung zu den Guardrails. Und verfolgen Sie die Erfolgsrate der Angriffe von Release zu Release als Metrik für Regressionen, so wie Sie jede andere Zahl verfolgen, die nicht in die falsche Richtung driften darf. Verdrahtung und Zeitplan – die Theorie steht in der verlinkten Lektion.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Diese Seite ist Betrieb, nicht Theorie: Das Innenleben der Metriken, die Konventionen von OTel, die Abwehr von Injections und die Bewertung der Pfade stehen in den Vertiefungen, zu denen sie gehören; diese Seite verlinkt sie und wiederholt sie bewusst nicht.
 - Wer Langfuse selbst betreibt (v3, seit Dezember 2024), betreibt ein verteiltes System und keinen Container: Web + Worker + Postgres (OLTP) + ClickHouse (OLAP, mit den Traces, Observations und Scores) + Redis/Valkey (Queue und Cache) + S3/Blob (rohe Ereignisse). Die asynchrone Ingestion über die Queue fängt Lastspitzen ab, und Sie betreiben jetzt vier Datenspeicher; dieser Aufwand im Betrieb, nicht die Lizenz, ist der Preis dafür, die Daten innerhalb des Perimeters zu halten.

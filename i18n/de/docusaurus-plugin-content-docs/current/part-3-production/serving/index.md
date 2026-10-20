@@ -16,7 +16,7 @@ behandeln, [wo das Modell selbst laufen soll](../cloud-platforms/index.md), [wel
 laufende System legen](../tooling-ecosystem/index.md) und [wie Sie es betreiben, sobald es live
 ist](../llmops/index.md).
 
-## Ein Wort, zwei Aufgaben
+## Ein Wort, zwei Aufgaben \{#one-word-two-jobs}
 
 Das englische *serving* verbirgt zwei verschiedene Aufgaben, und beide in einen Topf zu werfen ist der
 schnellste Weg, sich in diesem Thema zu verlieren. Die **Anwendung** bereitzustellen heißt, Ihre Pipeline
@@ -37,7 +37,7 @@ Sprachmodell im Spiel ist.
 
 :::
 
-## Die Anwendungsschicht – warum FastAPI sich durchgesetzt hat
+## Die Anwendungsschicht – warum FastAPI sich durchgesetzt hat \{#the-app-layer--why-fastapi-won}
 
 Sehen Sie sich an, was eine Anfrage an eine LLM-Anwendung tatsächlich tut. Sie liest die Eingabe, setzt eine
 Abfrage an das Retrieval ab, ruft dann das Modell auf – und wartet. Sekunden, manchmal Dutzende Sekunden
@@ -63,7 +63,7 @@ gibt keinen Fehler; der Dienst hört einfach auf zu antworten, solange dieser ei
 der klassische Produktivfehler asynchroner LLM-Dienste, und er verdient eine eigene Regel fürs Code-Review:
 keine synchrone Ein- und Ausgabe in einem asynchronen Handler, niemals.
 
-## Streaming: die Latenz, an der Sie wirklich etwas ändern können
+## Streaming: die Latenz, an der Sie wirklich etwas ändern können \{#streaming--the-latency-you-can-actually-fix}
 
 Eine vollständige Generation dauert Sekunden bis Dutzende Sekunden, und daran ändert auch die
 Anwendungsschicht nichts, wie raffiniert sie gebaut ist: Das Modell rechnet so schnell, wie es eben rechnet.
@@ -113,7 +113,7 @@ Stück – das ist schwächer: Ein schlechter Anfang kann schon ausgeliefert sei
 und Sie den Strom abbrechen. Reale Systeme entscheiden das für jede Oberfläche einzeln: strenge, gepufferte
 Prüfungen für riskante Ausgaben, Streaming für den risikoarmen Chat.
 
-## Die Checkliste für die Anwendungsschicht im Produktivbetrieb
+## Die Checkliste für die Anwendungsschicht im Produktivbetrieb \{#the-production-checklist-for-the-api-layer}
 
 Nichts auf dieser Liste ist exotisch – Timeouts, Wiederholungen, Rate Limits, Protokollierung. KI-spezifisch
 ist, was aus jedem dieser Punkte wird, sobald eine einzelne Anfrage eine halbe Minute laufen und echtes Geld
@@ -144,7 +144,7 @@ Modell und die Latenz je Stufe – bei jeder Anfrage. Hier wird die
 beginnt in Ihrem Dienst –, und die Werkzeuge für den Produktivbetrieb aus dem
 [Tooling-Ökosystem](../tooling-ecosystem/index.md) setzen voraus, dass es diese Hooks gibt.
 
-## Docker – wo der Unterschied wirklich liegt
+## Docker – wo der Unterschied wirklich liegt \{#docker--where-the-ai-delta-actually-is}
 
 Verpackt Ihr Container nur die Anwendung – eine Pipeline, die die APIs von Anbietern aufruft –, gibt es
 keinen nennenswerten Unterschied zur gewöhnlichen Anwendung. Es ist ein normales schlankes Python-Image, und
@@ -177,7 +177,7 @@ warm“ heißen, und genau dafür kennt Kubernetes zwei getrennte Probes: Readin
 ist zugleich der Preis für **Scale-to-Zero** (Herunterskalieren auf null Instanzen): Ungenutzte Replikate
 abzuschalten spart Geld für GPUs, und die nächste Anfrage wartet dafür einen Cold-Start ab.
 
-## Das Modell bereitstellen – Inferenz-Engines
+## Das Modell bereitstellen – Inferenz-Engines \{#serving-the-model--inference-servers}
 
 Ein LLM gut bereitzustellen ist ein Problem der Systemtechnik, kein Problem der Webentwicklung. Der
 Durchsatz entscheidet sich auf der Ebene des GPU-Schedulings: beim **Continuous Batching**, bei dem neue
@@ -231,7 +231,7 @@ flowchart TB
     V --> G[GPU]
 ```
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Hinter *serving* stecken zwei Aufgaben: die Anwendung bereitstellen (Ihre Pipeline hinter einer API) und
   das Modell bereitstellen (die Inferenz). Die meisten Teams übernehmen nur die erste; für die zweite nutzen

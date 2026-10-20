@@ -12,11 +12,11 @@ Zuerst eine Abgrenzung – dieselbe, die auch die Retrieval-Vertiefung zu Beginn
 
 Der Aufbau, in dieser Reihenfolge: Rechenzeit bei der Inferenz einsetzen, um die Fehler des Modells zu finden (Selbstprüfung); die Antwort in eine Form zwingen, der ein Parser und eine Prüfung der Quellenangaben trauen können (strukturierte Ausgabe und erzwungene Quellenangaben); den Widerspruch zwischen Kontext und Modellwissen frontal angehen, statt darauf zu hoffen, dass das Grounding gewinnt; einen langen Kontext über die Lost-in-the-Middle-Regel hinaus zusammenstellen; und Format, Ton und Länge der Antwort gestalten, ohne dass die Gestaltung das Grounding außer Kraft setzt.
 
-## Mit zusätzlicher Rechenzeit gegen die eigenen Fehler des Modells
+## Mit zusätzlicher Rechenzeit gegen die eigenen Fehler des Modells \{#spend-compute-to-catch-the-models-own-mistakes}
 
 Die Grounding-Anweisung aus Teil 1 senkt die **Rate** der Halluzinationen. Geprüft wird damit keine einzige Antwort. Zwei publizierte Verfahren wenden zusätzliche Rechenzeit bei der Inferenz auf, um die Antwort selbst zu prüfen – beide auf der Seite der Generation, keines ruft neu ab, und beide tauschen Token und Latenz gegen Quellentreue. Sie lösen verschieden geformte Probleme, und am schnellsten lassen sie sich so auseinanderhalten: Das eine erzeugt viele Antworten und lässt abstimmen, das andere erzeugt eine und prüft sie nach.
 
-### Self-Consistency: viele Wege erzeugen, einmal abstimmen
+### Self-Consistency: viele Wege erzeugen, einmal abstimmen \{#self-consistency-sample-many-paths-vote-once}
 
 **Self-Consistency** (Wang et al., „Self-Consistency Improves Chain of Thought Reasoning in Language Models“, arXiv 2203.11171, eingereicht im März 2022; ICLR 2023) ersetzt das einmalige **Greedy Decoding** der Chain-of-Thought – in jedem Schritt wird schlicht das wahrscheinlichste Token ausgewählt, und es entsteht genau ein Lösungsweg – durch ein kleines Ensemble. Sie erzeugen bei einer Temperatur über null *mehrere verschiedene Lösungswege*, lassen die Wege danach außer Betracht und ermitteln die *Endantwort* durch einen *Mehrheitsentscheid*. Dahinter steht die Überlegung, dass ein wirklich schweres Problem mehrere gültige Wege zulässt, die auf dieselbe richtige Antwort zulaufen, während die falschen Antworten auseinanderstreben – Übereinstimmung ist damit ein Indiz, und eine einzelne abweichende Stimme wird überstimmt.
 
@@ -26,7 +26,7 @@ In einem RAG-System passt Self-Consistency zu einer Antwort, deren Kern ein einz
 
 Daraus folgt zugleich, wann Sie **nicht** danach greifen. Eine offene, ausführliche Antwort hat keinen einzelnen Wert, über den abgestimmt werden könnte – über die Lösungswege lässt sich nichts mitteln, und Self-Consistency greift schlicht nicht. Außerdem vervielfacht das Verfahren die Kosten um den Faktor N: N vollständige Antworten pro Frage. Damit ist es eine bewusste Entscheidung über Latenz und Budget für eine schmale Klasse von Fragen und nie eine Voreinstellung, die überall eingeschaltet bleibt.
 
-### Chain-of-Verification: erst entwerfen, dann den Entwurf mit Fragen prüfen
+### Chain-of-Verification: erst entwerfen, dann den Entwurf mit Fragen prüfen \{#chain-of-verification-draft-then-interrogate-the-draft}
 
 **Chain-of-Verification (CoVe)** (Dhuliawala et al., „Chain-of-Verification Reduces Hallucination in Large Language Models“, arXiv 2309.11495, eingereicht im September 2023) ist eine ausdrückliche Schleife der Selbstbefragung in vier Schritten. Zuerst entsteht eine **Erstantwort**. Dann wird ein Satz **Prüffragen** geplant, die diesen Entwurf auf seine Tatsachen abklopfen. Jede Prüffrage wird *unabhängig* beantwortet. Zuletzt entsteht die **endgültige, geprüfte Antwort**, indem der Entwurf gegen das überarbeitet wird, was die Prüfungen ergeben haben.
 
@@ -43,7 +43,7 @@ In RAG werden die Prüffragen erneut an den abgerufenen Kontext gebunden – jed
 
 Nebeneinandergestellt ist die Arbeitsteilung sauber. Beide kosten zusätzliche Durchgänge, und keines von beiden ruft neu ab. Self-Consistency erzeugt und stimmt ab: keine Kritik, braucht eine abstimmbare Antwort, wirkt dort, wo es einen einzelnen diskreten Wert gibt. CoVe erzeugt und prüft nach: ausdrückliche Selbstbefragung, wirkt auf ausführlicher Prosa, wo es nichts abzustimmen gibt.
 
-## Struktur nicht erbitten, sondern erzwingen
+## Struktur nicht erbitten, sondern erzwingen \{#stop-asking-for-structure-enforce-it}
 
 Teil 1 hat das Modell gebeten, seine Quellen anzugeben und sauber zu antworten. Auf dieser Stufe hören Sie auf zu *bitten* und fangen an zu *erzwingen*: Dass die Ausgabe die verlangte Form hat, ist dann keine Hoffnung mehr, sondern eine Garantie.
 
@@ -70,7 +70,7 @@ Die zweite sind **anbietereigene Quellenangaben**. Die **Citations API** von Ant
 
 All das hat seinen Preis, und das Können zeigt sich darin, zu wissen, wann Sie ihn **nicht** zahlen. Die Ausgabeverteilung – die Wahrscheinlichkeiten, aus denen das nächste Token gezogen wird – in ein starres Schema zu pressen, kann das Schlussfolgern der Antwort *verschlechtern*: Das Modell verbraucht sein Budget darauf, die Grammatik zu erfüllen, statt nachzudenken. Halten Sie deshalb das Schlussfolgern frei und binden Sie nur die endgültige Antwort: Das Modell überlegt in einem unbeschränkten **Scratchpad** – einem Notizbereich, für den kein Schema gilt – oder in einem eigenen Denkfeld und gibt erst am Ende die schemagebundene Antwort aus. Gebunden wird das Ergebnis, nicht die Überlegung.
 
-## Wenn der Kontext dem Wissen des Modells widerspricht
+## Wenn der Kontext dem Wissen des Modells widerspricht \{#when-the-context-and-the-models-memory-disagree}
 
 Teil 1 hat die Regel aufgestellt: aus dem Kontext antworten und das im Modell gespeicherte Wissen zurückdrängen. Diese Regel gilt nicht absolut, und wer so tut, als gälte sie absolut, handelt sich eine ganze Klasse stiller Falschantworten ein.
 
@@ -86,7 +86,7 @@ So entsteht **der Widerspruch zwischen abgerufenem Kontext und Modellwissen**: D
 
 Eine ehrliche Grenze bleibt. Kein Prompt macht das Grounding absolut: Wie oft sich das Modell über den gelieferten Kontext hinwegsetzt, lässt sich *senken und messen*, aber nicht auf null bringen. Genau deshalb ist Faithfulness eine überwachte Zahl und kein gelöstes Problem.
 
-## Einen langen Kontext zusammenstellen – über die Faustregel hinaus
+## Einen langen Kontext zusammenstellen – über die Faustregel hinaus \{#packing-a-long-context-past-lost-in-the-middle}
 
 Verwenden Sie den etablierten Terminus, statt einen neuen zu erfinden: **Lost-in-the-Middle** (Liu et al., arXiv 2307.03172, TACL 2023). Teil 1 hat Ihnen die Faustregel gegeben – wenige, dafür die besten Chunks, die wichtigsten an die Ränder. Hier folgen der Mechanismus und die Disziplin dahinter.
 
@@ -111,7 +111,7 @@ Zwei weitere Handgriffe holen Budget zurück, bevor Sie überhaupt an die Grenze
 
 Die Linie durch den ganzen Abschnitt: Einen langen Kontext zusammenzustellen, ist die Faustregel aus Teil 1 – wenige, die besten, an den Rändern – in strenger Form: auswählen (Reranking), Duplikate entfernen, nach der U-Kurve in die richtige Reihenfolge bringen. Das Fenster ist größer geworden. Die Disziplin ist deshalb nicht optional geworden.
 
-## Format, Ton und Länge – und warum das Grounding trotzdem gewinnt
+## Format, Ton und Länge – und warum das Grounding trotzdem gewinnt \{#shaping-the-answer-without-overriding-the-grounding}
 
 Die erzeugte Antwort ist das Produkt: das, was am Ende tatsächlich gelesen wird. Ihre Gestaltung entscheidet darüber, wie sie ankommt. Halten Sie dabei von Anfang an einen Vorbehalt fest, denn er ist zugleich der Punkt: Die Gestaltung darf die Richtigkeit nie außer Kraft setzen.
 
@@ -123,7 +123,7 @@ Der Ton wird im System-Prompt gesetzt und durchgehalten. Passen Sie das Register
 
 Und nun die Regel, der das alles dient. Die Gestaltung der Antwort ist dem Grounding und der Quellentreue nachgeordnet. „Fasse dich kurz“ darf niemals die Quellenangabe, den Vorbehalt oder das ehrliche „Das steht nicht in den Dokumenten“ fallen lassen. Stoßen eine Anweisung zur Gestaltung und eine Grounding-Anweisung zusammen, gewinnt jedes Mal das Grounding. Der Grund ist schärfer als bloße Ordnungsliebe: Eine schön formatierte, selbstsicher formulierte *falsche* Antwort ist das schlechteste Ergebnis, das diese ganze Schicht hervorbringen kann, weil die Gestaltung eine falsche Antwort *überzeugender* macht. Genau deshalb kommt die Gestaltung zuletzt und tritt hinter die Richtigkeit zurück – sie gibt der Antwort den letzten Schliff; richtig gemacht haben Sie sie vorher.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Die Selbstprüfung wendet zusätzliche Rechenzeit bei der Inferenz auf, um die eigene Antwort des Modells zu prüfen: Self-Consistency erzeugt viele Lösungswege und entscheidet über einen diskreten Wert per Mehrheitsentscheid, Chain-of-Verification entwirft zuerst und beantwortet dann abgeschottete Prüffragen, damit es den eigenen Fehler nicht durchwinken kann – und keines der beiden ruft neu ab.
 - Constrained Decoding macht aus der Form der Ausgabe eine Garantie statt einer Bitte: Das Schema maskiert in jedem Schritt die unzulässigen Token, missratenes JSON wird damit unmöglich, und Structured Outputs von OpenAI (`strict: true`) garantiert die Konformität mit *Ihrem* Schema, nicht bloß gültiges JSON.

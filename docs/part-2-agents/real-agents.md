@@ -30,7 +30,7 @@ complexity, so the engineering is choosing the *least* agency that does the job,
 
 :::
 
-## Tool use — the same round-trip, three wire shapes
+## Tool use — the same round-trip, three wire shapes \{#tool-use--the-same-round-trip-three-wire-shapes}
 
 Every agent grows hands the same way. You declare a tool as a name, a description in words, and a
 JSON Schema of its arguments; the model emits a **structured intent** — which tool, what arguments — but
@@ -77,7 +77,7 @@ arguments, a model confabulating on top of the result — those come from tool *
 that carries them. Strict schemas and a small, non-overlapping tool set are the fix on all three, and no
 vendor sells you out of doing that work ([tool-use](./tool-use/index.md)).
 
-## Getting data — retrieval is a tool with citations
+## Getting data — retrieval is a tool with citations \{#getting-data--retrieval-is-a-tool-with-citations}
 
 Retrieval is just a tool the agent chooses. It reaches for the web or a file the same way it reaches for
 any function, and the answer comes back with **citations** so a human can check the grounding. This is
@@ -106,7 +106,7 @@ and a model can cite a source it didn't actually use. Citations let a human veri
 guarantee it — the retrieval-failure-versus-generation-failure split from Part I is exactly the tool for
 telling those two apart ([agentic-rag](./agentic-rag/index.md)).
 
-## Planning and loops — spend compute to decide better, then cap it
+## Planning and loops — spend compute to decide better, then cap it \{#planning-and-loops--spend-compute-to-decide-better-then-cap-it}
 
 The agent loop is reason → decide → act → observe, repeated until a stop condition fires. Explicit
 reasoning before acting makes the decide step sharper; a turn or step cap is the guard against a loop that
@@ -136,7 +136,7 @@ More thinking is not a termination guarantee. The loop that never stops, or that
 failure planning-loops warned about, and the step budget is the backstop that catches it regardless of how
 much reasoning you bought ([planning-loops](./planning-loops/index.md)).
 
-## Self-recovery — feed the error back, and make the run resumable
+## Self-recovery — feed the error back, and make the run resumable \{#self-recovery--feed-the-error-back-and-make-the-run-resumable}
 
 A good agent recovers instead of dying. A tool error is fed back as *model-visible text* so the model
 corrects itself and retries, and longer work is made **resumable** by persisting state, so a run can pick up
@@ -164,7 +164,7 @@ and even when you did persist it, "resume" is only safe if you can tell *what ac
 second half is not an API feature; it's a discipline, and it leads straight into the war-story on judging
 progress by real state rather than a timestamp ([planning-loops](./planning-loops/index.md)).
 
-## Hooks and guardrails — interpose checks, don't trust the loop
+## Hooks and guardrails — interpose checks, don't trust the loop \{#hooks-and-guardrails--interpose-checks-dont-trust-the-loop}
 
 You don't trust the loop blindly. You interpose checks around tool calls and I/O: a pre-hook that can block
 or demand approval before a dangerous action, a post-hook that inspects output, a policy layer that gates
@@ -195,7 +195,7 @@ And the same durable failure: a guardrail you can bypass isn't one. The dangerou
 *writes or acts*, reached through prompt injection, so human-in-the-loop approval on sensitive actions is
 the real backstop. A hook that only logs stops nothing ([tool-use](./tool-use/index.md)).
 
-## Multi-agent — split into an orchestrator and isolated workers
+## Multi-agent — split into an orchestrator and isolated workers \{#multi-agent--split-into-an-orchestrator-and-isolated-workers}
 
 When one loop takes on too much, split it: an orchestrator plus isolated workers, each worker with its own
 context, doing one job and returning a result the orchestrator composes. Isolation is the whole point — a
@@ -232,7 +232,7 @@ and coordination bugs, and parallel workers sharing a mutable workspace collide.
 NOT to divide," and it leads to the war-story on giving each worker its own worktree
 ([multi-agent](./multi-agent/index.md)).
 
-## MCP — one protocol so any agent talks to any tool
+## MCP — one protocol so any agent talks to any tool \{#mcp--one-protocol-so-any-agent-talks-to-any-tool}
 
 The last technique is the standard that stops you re-gluing every tool to every agent. Wrap a tool once as
 an MCP server and implement the client once, and any agent talks to any tool: M × N pairwise connectors
@@ -262,7 +262,7 @@ The durable failure comes bundled with it. Every MCP server is a new attack surf
 instructions through tool poisoning, exfiltrate data, or over-reach its grant. The defence is unchanged from
 [mcp](./mcp/index.md): least privilege, only servers you trust, and human approval on sensitive actions.
 
-## The seven techniques, three agents
+## The seven techniques, three agents \{#the-seven-techniques-three-agents}
 
 | Technique | Claude | OpenAI | Gemini |
 |---|---|---|---|
@@ -274,7 +274,7 @@ instructions through tool poisoning, exfiltrate data, or over-reach its grant. T
 | Multi-agent | isolated subagents (final message returns) | handoff vs agent-as-tool | coordinator + deterministic workflow agents |
 | MCP | authored it; API connector remote-only | co-founder; widest transports + connectors | `McpToolset`; remote MCP "coming soon" |
 
-## War-stories — the techniques when you actually run agents
+## War-stories — the techniques when you actually run agents \{#war-stories--the-techniques-when-you-actually-run-agents}
 
 These techniques aren't abstract. Here is what they look like when you run agents to build real things —
 generic on purpose: public tools only, no secrets.
@@ -304,7 +304,7 @@ real agents these are the same moves wearing different names and wire shapes —
 OpenAI's typed items, Gemini's functionCalls. The APIs will shift, and shift again; the pattern is what you
 keep. Once you can see it, a new vendor's documentation is something you consult, not something you relearn.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Every agent grows hands the same way: declare tools (name, description, JSON Schema), the model emits a
   structured intent, your code runs it, the result goes back. Only the wire shape differs — Claude content

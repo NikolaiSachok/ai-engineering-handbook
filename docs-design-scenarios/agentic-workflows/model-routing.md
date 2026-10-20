@@ -45,7 +45,7 @@ answered: it put the peak at 40,000 an hour, below its own daily average. No att
 
 <Reveal>
 
-## Attempt A — the common answer
+## Attempt A — the common answer \{#attempt-a--the-common-answer}
 
 *Persona given to the agent: Has shipped LLM features that work, and reads widely. Thinks in components, patterns and seams. Has never had to prove that a change did not quietly degrade quality — the output always had a human reading it.*
 
@@ -114,7 +114,7 @@ tier" but scoped by A's own words to "every routed response", a wider population
 
 </Verdict>
 
-## Attempt B — the strong answer
+## Attempt B — the strong answer \{#attempt-b--the-strong-answer}
 
 *Persona given to the agent: Has run a system like this in production and been paged for it. Reasons from constraints and failure modes, and says what each choice costs as well as what it buys.*
 
@@ -185,7 +185,7 @@ opening prior about where the money sits.
 
 </Verdict>
 
-## Attempt C — the over-built answer
+## Attempt C — the over-built answer \{#attempt-c--the-over-built-answer}
 
 *Persona given to the agent: Designs for where the system will be, not where it is. Has watched teams ship the quick version and spend years unable to change it, and concluded that under-building is the expensive mistake.*
 
@@ -252,7 +252,7 @@ that. It asserts semantic-cache hit rates without the per-tenant isolation rule 
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 The gaps between the attempts are worth more than any of them alone, because each disagreement is a decision
 you will have to make yourself.
@@ -272,7 +272,7 @@ that it and the retrieval context are most of the bill. That single disagreement
 reachable from the 70% slice at all. Neither of them can settle it without the measurement B insists on
 taking first.
 
-## The principle
+## The principle \{#the-principle}
 
 > Downgrading a model is only safe where the answer carries a mechanically checkable artefact — a citation,
 > a schema, a tool result — because on traffic nobody reads, a bad route never pages anyone; it just returns
@@ -303,7 +303,7 @@ taking first.
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 These are the follow-ups an interviewer reaches for next, and what each one exposes.
 

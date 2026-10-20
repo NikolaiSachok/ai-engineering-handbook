@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Eine Abgrenzung noch, bevor es losgeht, denn für das Gebiet nebenan sind die Nachbarlektionen zuständig. Die *allgemeine* Schicht für Schleifensteuerung und Budget – Schrittbudgets, das Erkennen von Schleifen, die Reflexion, das Budget als Regel, die Grundlagen der Pfadbewertung – gehört zu [Planung und Schleifen](../planning-loops/index.md) und zur zugehörigen [Vertiefung](../planning-loops/deep-dive.md). Diese Seite ist für die Schicht unmittelbar über dem einzelnen Agenten zuständig: Agent an Agent. Wo die beiden Achsen auf das Transportprotokoll treffen, sind Sie bei [MCP und Agentenprotokollen](../mcp/index.md) – MCP standardisiert die Achse Agent an Tool, und die Achse Agent an Agent ist A2A, weiter unten; diese Topologien in eine Bibliothek zu packen, ist die Aufgabe der [Orchestrierungs-Frameworks](../orchestration-frameworks/index.md). Teil 1 wird durchgängig vorausgesetzt.
 
-## Der Nachricht eine Form geben
+## Der Nachricht eine Form geben \{#giving-the-message-a-shape}
 
 In Teil 1 haben Agenten „sich über Nachrichten verständigt“, und diese Wendung hat still eine Menge Arbeit erledigt. Hier bekommt die Nachricht eine konkrete Form – und es stellt sich heraus, dass es dreißig Jahre Vorarbeit gibt, die die heutigen Frameworks gerade wiederentdecken.
 
@@ -43,7 +43,7 @@ Der Vergleich mit MCP ist der nützliche Teil, und er beschreibt eine Achse, kei
 
 Welches Schema Sie am Ende auch nehmen: Die lebendige Entwurfsfrage ist die aus Teil 1 – *welcher Kontext mit jeder Nachricht mitreist.* Zu wenig, und der Empfänger kann nicht handeln; zu viel, und der Kontext wird wieder immer voller. Das Schema ist die einfache Hälfte; die Disziplin bei der Nutzlast ist das Können. Und ein Feld verdient eine eigene Erwähnung: Die ausdrückliche Kennung des Gesprächs oder der Aufgabe ist das, was Ihnen später erlaubt, einen verstreuten Pfad wieder zusammenzusetzen, wenn es an die Bewertung des Teams geht.
 
-## Der andere Baustein: ein gemeinsames Blackboard
+## Der andere Baustein: ein gemeinsames Blackboard \{#the-other-primitive-a-shared-board}
 
 Die Übergabe an den nächsten Agenten geht von Punkt zu Punkt. Ein Agent packt Kontext zusammen und reicht ihn an genau einen anderen weiter, und alles außerhalb dieses Pakets bleibt privat – das ist der Gewinn an Isolation der Kontexte aus Teil 1 und zugleich dessen Grenze. Manche Arbeit will das Gegenteil: eine gemeinsame Fläche, von der jeder Agent lesen und auf die jeder Agent schreiben kann. Der klassische Name dafür ist das **Blackboard**.
 
@@ -65,7 +65,7 @@ Der Nachrichtenaustausch zahlt die umgekehrte Rechnung. Die Übergabe hält den 
 
 Greifen Sie also zum gemeinsamen Blackboard, wenn die Agenten wirklich ein gemeinsames, wachsendes Artefakt brauchen: einen gemeinsamen Plan, ein laufendes Dokument, eine Lösung, die gemeinsam entsteht. Bevorzugen Sie die Übergabe, wenn es gerade auf die Isolation ankommt und sich die Arbeit in Stufen teilen lässt. Die meisten Systeme im Produktivbetrieb landen bei einer Mischung – der Orchestrator hält den gemeinsamen Zustand, und jeder Worker sieht nur die Übergabe, die für ihn bestimmt ist –, holen sich den Einblick also dort, wo er hilft, und die Isolation dort, wo sie zählt.
 
-## Die Rollenverteilung – fest oder ausgehandelt
+## Die Rollenverteilung – fest oder ausgehandelt \{#who-does-what-and-how-thats-decided}
 
 Rollen können feststehen, oder es wird um sie gestritten. Beides ist legitim; die eine Wahl kauft Vorhersagbarkeit, die andere Beweglichkeit.
 
@@ -77,7 +77,7 @@ Verhandelt wird nicht nur darüber, wer die Arbeit tut; Agenten können auch üb
 
 Der Haken ist eine Rechenaufgabe. Die Debatte multipliziert die Kosten mit der Zahl der Agenten mal der Zahl der Runden; sie verdient sich ihr Geld also nur bei schweren Schluss- oder Faktenaufgaben, für die es keine billige Gegenprüfung gibt – und sie ist reine Verschwendung bei allem, was ein einzelner Agent plus eine kurze Prüfung schon richtig hinbekommt. Die ehrliche Bremse dieses Abschnitts hat dieselbe Gestalt: Bewerbung, Verhandlung und Debatte fügen alle Runden von Modellaufrufen hinzu, und das sind Kosten und Latenz. Ein Orchestrator, der fest zuweist, ist billiger und meistens genug. Greifen Sie zur Verhandlung erst dann, wenn statisches Routing die Entscheidung wirklich nicht treffen kann – bei ungleichartigen Workern, bei schwankender Last oder dort, wo Sie ausdrücklich wollen, dass die Qualität unter Widerspruch geprüft wird.
 
-## Ein Team bewerten, dessen Pfad über die Agenten verstreut ist
+## Ein Team bewerten, dessen Pfad über die Agenten verstreut ist \{#grading-a-team-whose-trajectory-is-scattered}
 
 Teil 1 hat gewarnt, dass sich Multi-Agenten-Systeme schwerer evaluieren lassen, weil der Pfad, den ein Durchlauf genommen hat, über die Agenten verteilt liegt. So gehen Sie dabei tatsächlich vor. Die Grundlagen – Ergebnis gegen Ablauf, ein Modell als Judge über einem Trace, Observability als Voraussetzung – stehen für den einzelnen Agenten in den Vertiefungen zu [Agentic RAG](../agentic-rag/deep-dive.md) und zu [Planung und Schleifen](../planning-loops/deep-dive.md); das neue Problem hier ist, dass der Trace nicht mehr an einer Stelle liegt.
 
@@ -89,7 +89,7 @@ Teams versagen außerdem auf Arten, die es bei einem einzelnen Agenten nie gab, 
 
 Und die Zurückhaltung, wie überall. Eine Kette aus zwei Agenten hat kaum einen Pfad, den man zusammensetzen müsste, und ein Router mit einem Worker fast gar keinen. Der Aufwand für Korrelation und Zuordnung wächst mit der Größe des Teams – instrumentieren Sie, sobald das Team groß genug ist, um einen Pfad zu haben, dessen Bewertung sich lohnt.
 
-## Was ein Agententeam kosten darf
+## Was ein Agententeam kosten darf \{#keeping-the-bill-bounded}
 
 Teil 1 hat den Kostenfaktor bei etwa dem N-Fachen angesetzt. Inzwischen gibt es Zahlen dazu. In der Veröffentlichung von Anthropic vom 13. Juni 2025 über das eigene Multi-Agenten-System für Recherche [verbrauchen Agenten etwa das Vierfache an Tokens einer Chat-Interaktion und Multi-Agenten-Systeme etwa das Fünfzehnfache](https://www.anthropic.com/engineering/multi-agent-research-system) – und in der dortigen Evaluierung erklärte allein der Tokenverbrauch rund 80 % der Unterschiede in der Leistung, den Rest machten die Zahl der Tool-Calls und die Modellwahl aus. Was sie daraus ableiten, ist eine Bedingung und kein Freibrief: Die Rechnung eines Multi-Agenten-Systems geht nur auf, wenn die Aufgabe wertvoll genug ist, um die zusätzliche Leistung zu bezahlen – starke Parallelisierung, ein Kontext, der ein einzelnes Kontextfenster sprengt, viele komplexe Tools –, und sie passen schlecht, wenn jeder Agent denselben Kontext braucht oder die Agenten viele wechselseitige Abhängigkeiten haben. Das ist das „etwa N-Fache“ aus Teil 1, jetzt mit einer gemessenen Konstante.
 
@@ -116,7 +116,7 @@ flowchart TD
 
 Bleibt die Frage, um die diese Seite die ganze Zeit kreist: Wann lohnt sich das alles überhaupt? Die Antwort ist die aus Agentic RAG – die einfachste Stufe nehmen, die die Aufgabe löst. Greifen Sie erst dann zu einem Team, wenn es echte Spezialisierung zu nutzen gibt, wenn der Kontext in kein einziges Kontextfenster passt oder wenn Teilaufgaben sich wirklich parallel bearbeiten lassen. Bei den meisten Aufgaben schlägt ein einzelner, gut entworfener Agent – oder ein Orchestrator mit statischem Routing – ein verhandelndes Blackboard-Team klar und zu einem Bruchteil der Kosten. Protokolle, gemeinsames Gedächtnis, Verhandlung, die Evaluierung des Teams und die Budgetregeln kommen dazu, sobald das Team gerechtfertigt ist – sie sind nicht der Anfang.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Die Nachricht zwischen zwei Agenten ist ein Umschlag: ein Performativ, das sagt, was getan werden soll, gelegt um den Inhalt und um die Felder, die sie zustellen – wer, an wen und in welchem Gespräch. FIPA ACL hat diese Teile schon 2002 benannt, das Contract Net hat aus der Aufgabenvergabe Ausschreibung, Bewerbung und Auftragsvergabe gemacht, und A2A ist die heutige Fassung für die Achse Agent an Agent, mit Agent Cards zum Auffinden und Tasks, die einen Lebenszyklus tragen – das Gegenstück zu MCPs Achse Agent an Tool.
 - Zwei Bausteine für die Koordination, eine Abwägung. Ein gemeinsames Blackboard gibt jedem Agenten vollen Einblick und erspart Ihnen das Geflecht aus N×N-Verbindungen, lädt aber Ballast und konkurrierende Schreibzugriffe ein; die Übergabe von Punkt zu Punkt erhält die Isolation der Kontexte, kann einem Agenten aber vorenthalten, was er gebraucht hätte. Die meisten echten Systeme mischen – der Orchestrator hält den Zustand, die Worker bekommen isolierte Übergaben.

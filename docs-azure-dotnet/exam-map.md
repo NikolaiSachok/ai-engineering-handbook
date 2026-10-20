@@ -37,7 +37,7 @@ Credential: [Microsoft Certified: Azure AI Apps and Agents Developer Associate][
 The [study guide's outline is effective from 16 April 2026][guide103]: five functional groups,
 14 skill areas and 64 objective bullets. The tables keep that order.
 
-### Plan and manage an Azure AI solution (25–30%)
+### Plan and manage an Azure AI solution (25–30%) \{#plan-and-manage-an-azure-ai-solution-2530}
 
 | Skill | Covered by | Note |
 |---|---|---|
@@ -58,7 +58,7 @@ The [study guide's outline is effective from 16 April 2026][guide103]: five func
 | Audit with traces, provenance metadata and approval workflows. | [Evaluation and tracing][eval]; [Getting documents in][ingestion]; [P2 milestone 4][p24]; [P3 milestone 6][p36] | Covered. Trace IDs, source versions and durable decisions connect actions to their evidence. |
 | Govern agent behaviour with oversight modes, constraints and tool-access controls. | [Agents on Azure][agents]; [P2 milestone 2][p22]; [P2 milestone 4][p24]; [P2 milestone 5][p25] | Covered. The application validates caller, tool, frozen arguments and approval before execution. |
 
-### Implement generative AI and agentic solutions (30–35%)
+### Implement generative AI and agentic solutions (30–35%) \{#implement-generative-ai-and-agentic-solutions-3035}
 
 | Skill | Covered by | Note |
 |---|---|---|
@@ -79,7 +79,7 @@ The [study guide's outline is effective from 16 April 2026][guide103]: five func
 | Implement tracing, token analytics, safety signals and latency breakdowns. | [Observability][monitor]; [Evaluation and tracing][eval]; [P1 milestone 5][p15]; [P2 milestone 6][p26] | Partial. Request/model spans and usage are taught; a complete safety-signal and token-analytics setup is not implemented. [Microsoft Learn][learn103]. |
 | Orchestrate multiple models, flows or hybrid LLM/rules engines. | — | Not covered. Using chat and embedding clients in RAG does not teach model/flow orchestration. [Microsoft Learn][learn103]. |
 
-### Implement computer vision solutions (10–15%)
+### Implement computer vision solutions (10–15%) \{#implement-computer-vision-solutions-1015}
 
 | Skill | Covered by | Note |
 |---|---|---|
@@ -100,7 +100,7 @@ The [study guide's outline is effective from 16 April 2026][guide103]: five func
 | Detect and mitigate prompt injection embedded in image text. | — | Not covered. Text Prompt Shields discussion does not implement an image-input defence. [Microsoft Learn][vision]. |
 | Enforce watermarks, prohibited-symbol rules, brand requirements and inappropriate-content detection. | — | Not covered. No visual-policy enforcement workflow is built. [Microsoft Learn][vision]. |
 
-### Implement text analysis solutions (10–15%)
+### Implement text analysis solutions (10–15%) \{#implement-text-analysis-solutions-1015}
 
 | Skill | Covered by | Note |
 |---|---|---|
@@ -113,7 +113,7 @@ The [study guide's outline is effective from 16 April 2026][guide103]: five func
 | Enable multimodal reasoning from audio. | — | Not covered. The projects accept text or documents, without audio reasoning. [Microsoft Learn][language]. |
 | Translate speech with language models and Foundry Tools. | — | Not covered. No speech-translation workflow is built. [Microsoft Learn][language]. |
 
-### Implement information extraction solutions (10–15%)
+### Implement information extraction solutions (10–15%) \{#implement-information-extraction-solutions-1015}
 
 | Skill | Covered by | Note |
 |---|---|---|
@@ -136,7 +136,7 @@ The guide has an unresolved weighting discrepancy: its summary gives data manage
 the detailed section still says **25–30%**. Its change log says the weight increased. This map uses the
 summary's 30–35%; check the [current guide][guide200] before planning revision time.
 
-### Develop containerized solutions on Azure (20–25%)
+### Develop containerized solutions on Azure (20–25%) \{#develop-containerized-solutions-on-azure-2025}
 
 | Skill | Covered by | Note |
 |---|---|---|
@@ -148,7 +148,7 @@ summary's 30–35%; check the [current guide][guide200] before planning revision
 | Deploy and manage AKS applications through manifests. | — | Not covered. AKS is compared as a hosting choice; no cluster or workload manifests are built. [Microsoft Learn][learn200]. |
 | Monitor/troubleshoot AKS and Container Apps through logs, events and end-to-end connectivity. | [Networking for application engineers][network]; [Observability][monitor]; [P1 milestone 5][p15]; [Releasing safely][release] | Partial. Container Apps requests, logs and dependency paths are taught; AKS diagnostics and event inspection are missing. [Microsoft Learn][learn200]. |
 
-### Develop AI solutions by using Azure data management services (30–35%)
+### Develop AI solutions by using Azure data management services (30–35%) \{#develop-ai-solutions-by-using-azure-data-management-services-3035}
 
 | Skill | Covered by | Note |
 |---|---|---|
@@ -165,7 +165,7 @@ summary's 30–35%; check the [current guide][guide200] before planning revision
 | **Integrate Azure Managed Redis in AI solutions** — implement caching, expiration and invalidation operations. | — | Not covered. The data lesson explains cache choices; no Redis client operations are implemented. [Microsoft Learn][learn200]. |
 | Implement Redis vector indexing for similarity search. | — | Not covered. No Redis vector index or similarity query is built. [Microsoft Learn][learn200]. |
 
-### Connect to and consume Azure services (20–25%)
+### Connect to and consume Azure services (20–25%) \{#connect-to-and-consume-azure-services-2025}
 
 | Skill | Covered by | Note |
 |---|---|---|
@@ -174,7 +174,7 @@ summary's 30–35%; check the [current guide][guide200] before planning revision
 | **Develop and implement Azure Functions** — build serverless APIs with triggers and bindings. | [P3 milestone 1][p31]; [P3 milestone 2][p32]; [P3 milestone 5][p35] | Partial. Event Grid and Service Bus-triggered functions are specified; an HTTP/serverless API and its bindings are not built. [Microsoft Learn][learn200]. |
 | Configure and deploy function apps. | [P3 milestone 1][p31]; [P3 milestone 5][p35] | Covered. P3 specifies Flex Consumption, isolated .NET, identities, connection settings and deployment before subscription creation. |
 
-### Secure, monitor, and troubleshoot Azure solutions (20–25%)
+### Secure, monitor, and troubleshoot Azure solutions (20–25%) \{#secure-monitor-and-troubleshoot-azure-solutions-2025}
 
 | Skill | Covered by | Note |
 |---|---|---|

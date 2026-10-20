@@ -9,7 +9,7 @@ Vrstva Retrieval odovzdala dobrý a povolený kontext. Teraz je na rade to „G�
 
 Drž v hlave rámec z prehľadu časti: zlyhanie generovania nastane vtedy, keď chunk (kúsok dokumentu), ktorý si potreboval, v kontexte síce bol, no odpoveď aj tak vyšla zle — model ho prehliadol, pokrivil alebo doň primiešal vlastný odhad. Táto vrstva je o tom, ako tomu zabrániť. Je to súrodenec zlyhania vyhľadávania z vrstvy [Retrieval](../retrieval/): tam potrebný chunk vo výsledku chýbal, tu bol po ruke a odpoveď ho aj tak minula.
 
-## Jadro veci: odpovedať z kontextu, nie z pamäte
+## Jadro veci: odpovedať z kontextu, nie z pamäte \{#the-core-idea-answer-from-the-context-not-from-memory}
 
 Každý LLM v sebe nesie **parametrické znalosti** (parametric knowledge) — všetko, čo do seba nasal počas trénovania. Keď mu nedáš mantinely, ochotne odpovie z tejto vnútornej pamäte: možno zastaranej, možno nesprávnej a určite nie z tvojich dokumentov.
 
@@ -23,7 +23,7 @@ Prečo model vôbec začne vymýšľať. (Video je v angličtine.)
 
 :::
 
-## Zostavenie promptu a skladanie kontextu
+## Zostavenie promptu a skladanie kontextu \{#building-the-prompt-and-packing-the-context}
 
 Polovica úspechu je v tom, ako prompt zostavíš a ako doň poskladáš kontext — teda **context packing** (skladanie kontextu). Základná stavba je jednoduchá: systémová inštrukcia, potom nájdené chunky (zreteľne oddelené) a nakoniec otázka používateľa. Najčastejšie sa lámu tri veci:
 
@@ -39,29 +39,29 @@ Spôsoby, ako prompt poskladať. (Video je v angličtine.)
 
 :::
 
-## Grounding instructions — hlavná páka proti halucináciám
+## Grounding instructions — hlavná páka proti halucináciám \{#grounding-instructions--the-main-lever-against-hallucinations}
 
 Najsilnejší nástroj je zároveň ten najjednoduchší: daj modelu jasné mantinely. „Answer only from the provided context. If the answer isn't there, say so — don't make it up.“ (v preklade: „Odpovedaj iba z poskytnutého kontextu. Ak tam odpoveď nie je, povedz to — nevymýšľaj si.“) Sú to **grounding instructions** (inštrukcie na opretie o kontext).
 
 Jediný takýto pokyn citeľne zníži podiel halucinácií, lebo modelu vezme „licenciu“ čerpať odpoveď z pamäte.
 
-## Citácie
+## Citácie \{#citations}
 
 Nechaj model pri každom tvrdení uviesť, z ktorého chunku alebo zdroja pochádza. Zisk je dvojaký: používateľ si odpoveď vie overiť (to je dôvera) a samotný model si menej vymýšľa — ťažšie sfalšuješ fakt, keď k nemu musíš pripísať zdroj. Celé to beží z metadát, ktoré si pripojil ešte pri chunkingu.
 
-## Odmietnutie je funkcia, nie chyba
+## Odmietnutie je funkcia, nie chyba \{#refusal-is-a-feature-not-a-bug}
 
 Systém musí smieť povedať „neviem“ — a treba mu to výslovne prikázať. Sebavedomá nesprávna odpoveď (chyba, nie zlyhanie) je horšia než úprimné „toto v dokumentoch nie je“.
 
 Keď vyhľadávanie nič nevrátilo, odpoveďou má byť **odmietnutie** (refusal), nie odhad. V podnikovom prostredí je to zásadné: ľudia sa o sebavedomú odpoveď oprú ako o fakt a jediná chyba sa dostane ďalej — do reportu, do niečieho rozhodnutia.
 
-## Faithfulness: kde sa generovanie meria
+## Faithfulness: kde sa generovanie meria \{#faithfulness-where-generation-runs-into-measurement}
 
 Aj s inštrukciami model občas prebije kontext vlastnou znalosťou alebo zaváha, keď kontext protirečí tomu, čo „si myslí“.
 
 Nakoľko sa odpoveď naozaj opiera o zdroje, to **meriaš** — metrikou **faithfulness** (vernosť zdrojom), tiež groundedness. Sformalizuje ju vrstva [Evaluation](../cross-cutting/evaluation/); zatiaľ si drž myšlienku, že „model sa správa dobre“ nie je pocit, ale číslo (skóre).
 
-## Zlyhanie generovania po jednotlivých spôsoboch
+## Zlyhanie generovania po jednotlivých spôsoboch \{#fixing-generation-failure-class-by-class}
 
 Ľavý stĺpec vymenúva konkrétne spôsoby zlyhania v rámci tejto kategórie; každý má svoju nápravu.
 
@@ -72,7 +72,7 @@ Nakoľko sa odpoveď naozaj opiera o zdroje, to **meriaš** — metrikou **faith
 | Stratil to, čo bolo uprostred | poradie chunkov, menej chunkov |
 | Odpovedal zo zastaranej pamäte | tvrdé priviazanie na kontext, „iba zo zdrojov“ |
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Generovanie v RAG = odpoveď z kontextu, nie z parametrickej pamäte.
 - Zostavenie promptu: zdroje zreteľne oddeľ, počítaj s efektom lost-in-the-middle a podaj hŕstku najlepších chunkov.

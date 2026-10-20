@@ -163,7 +163,7 @@ az group delete --name "$P1_GROUP" --yes
 
 Проверено на 17.10.2026.
 
-### Объекты удостоверений
+### Объекты удостоверений \{#identity-objects}
 
 - [Основы безопасности удостоверений](https://learn.microsoft.com/ru-ru/entra/architecture/secure-fundamentals)
 - [Группы и управление доступом](https://learn.microsoft.com/ru-ru/entra/fundamentals/concept-learn-about-groups)
@@ -177,7 +177,7 @@ az group delete --name "$P1_GROUP" --yes
 - [Получение ресурса удостоверения, назначаемого пользователем: REST 2024-11-30](https://learn.microsoft.com/ru-ru/rest/api/managedidentity/user-assigned-identities/get?view=rest-managedidentity-2024-11-30)
 - [Выбор удостоверения, назначаемого пользователем, в .NET](https://learn.microsoft.com/ru-ru/dotnet/azure/sdk/authentication/user-assigned-managed-identity)
 
-### Токены
+### Токены \{#tokens}
 
 - [Токены доступа](https://learn.microsoft.com/ru-ru/entra/identity-platform/access-tokens)
 - [Справочник утверждений токена доступа](https://learn.microsoft.com/ru-ru/entra/identity-platform/access-token-claims-reference)
@@ -186,14 +186,14 @@ az group delete --name "$P1_GROUP" --yes
 - [Поток с учётными данными клиента](https://learn.microsoft.com/ru-ru/entra/identity-platform/v2-oauth2-client-creds-grant-flow)
 - [Bearer-аутентификация и ответы 401/403 в ASP.NET Core 10](https://learn.microsoft.com/ru-ru/aspnet/core/security/authentication/configure-jwt-bearer-authentication?view=aspnetcore-10.0)
 
-### Сервисы проекта
+### Сервисы проекта \{#project-services}
 
 - [Настройка Entra ID для Foundry Models](https://learn.microsoft.com/ru-ru/azure/foundry/foundry-models/how-to/configure-entra-id)
 - [Доступ на основе ролей в Azure AI Search](https://learn.microsoft.com/ru-ru/azure/search/search-security-rbac)
 - [Авторизация доступа к BLOB-объектам через Entra ID](https://learn.microsoft.com/ru-ru/azure/storage/blobs/authorize-access-azure-active-directory)
 - [Аутентификация в Key Vault](https://learn.microsoft.com/ru-ru/azure/key-vault/general/authentication)
 
-### Упражнение с CLI
+### Упражнение с CLI \{#cli-exercise}
 
 - [Azure CLI: создание и просмотр удостоверения](https://learn.microsoft.com/ru-ru/cli/azure/identity?view=azure-cli-latest)
 - [Azure CLI: вход](https://learn.microsoft.com/ru-ru/cli/azure/reference-index?view=azure-cli-latest#az-login)

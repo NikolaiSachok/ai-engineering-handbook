@@ -21,7 +21,7 @@ was caught by the verification step, not by me.
 
 :::
 
-## Throughput rises — this half of the story is real, and it replicates
+## Throughput rises — this half of the story is real, and it replicates \{#throughput-rises--this-half-of-the-story-is-real-and-it-replicates}
 
 Start with the part that is not in doubt. Adopters of command-line coding agents merge more pull requests, and
 the effect is large, durable, and reproduced across companies.
@@ -48,7 +48,7 @@ anything.
 The teaching move here is small and strict: state the lift plainly, and always name the proxy. "24% more merged
 PRs at Microsoft," never "24% more productive."
 
-## Quality falls — and the debt is on credit
+## Quality falls — and the debt is on credit \{#quality-falls--and-the-debt-is-on-credit}
 
 Now the other half. The same wave of agent-written code shows measurably worse internal quality, and the
 degradation persists after the speed stops.
@@ -73,7 +73,7 @@ independent replications would make it.
 
 The teaching move: you don't get the speed for free. You get it on credit.
 
-## Comprehension falls — without even buying speed
+## Comprehension falls — without even buying speed \{#comprehension-falls--without-even-buying-speed}
 
 [A randomised controlled trial from Anthropic and Stanford](https://www.anthropic.com/research/AI-assistance-coding-skills) put the cost somewhere more uncomfortable
 than code quality: understanding. Engineers learning an unfamiliar async library scored **50%** on comprehension
@@ -95,7 +95,7 @@ you know — a regime chosen to stress comprehension. And the result cuts agains
 Anthropic author published a limit of AI. That is exactly what makes it credible. Nobody has measured whether comprehension debt
 compounds over a whole career.
 
-## Self-assessment is broken — you can't feel the effect, you have to measure it
+## Self-assessment is broken — you can't feel the effect, you have to measure it \{#self-assessment-is-broken--you-cant-feel-the-effect-you-have-to-measure-it}
 
 If quality and comprehension were the only casualties, you could hope to notice the damage as you worked. You
 can't — and that is the finding that reorganizes everything.
@@ -117,7 +117,7 @@ And here is the critical freshness caveat, because this number is the most-misqu
 developers 19% slower" as a current fact. The lesson that survives is not the number; it is the mechanism. You
 cannot feel AI's effect on your own speed. You have to measure it.
 
-## Benchmarks don't predict production — the denominator trap
+## Benchmarks don't predict production — the denominator trap \{#benchmarks-dont-predict-production--the-denominator-trap}
 
 Move from how developers feel to how the tools score, and the same gap reopens between the number and the
 reality it is supposed to stand for.
@@ -134,7 +134,7 @@ denominator — and Google prints both figures side by side, from one dataset. T
 our code is AI-written" headline is a **denominator choice**, not a fact. Every one of these productivity
 headlines — merged PRs, commits, lines of code, characters, time-on-task — is a proxy. None of them is value.
 
-## The benchmark itself collapsed
+## The benchmark itself collapsed \{#the-benchmark-itself-collapsed}
 
 It gets worse for anyone hoping a benchmark will settle the question, because right now there is no trustworthy
 benchmark to appeal to.
@@ -163,7 +163,7 @@ stating flatly: **a merged PR was never a specification.** It records that somet
 required — and you cannot grade a solution against a spec you never had. (This thread returns in Lesson 3, on
 misreading what a merge proves, and in Lesson 5, on gates that can be gamed.)
 
-## The one honest headline
+## The one honest headline \{#the-one-honest-headline}
 
 Put the halves together and the honest synthesis writes itself — in the words of the people holding the
 strongest pro-AI number. Output is up; whether *value* is up is not established; and the field lacks
@@ -183,7 +183,7 @@ explains the split, sitting underneath both results. Teach the contrast, not eit
 
 :::
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **unchecked generation is a liability, not throughput.** The bottleneck is
 universal. What scales is the verification budget you can bring to it. And, following the course's recurring
@@ -215,7 +215,7 @@ lens, the further that check sits from the blast radius, the more it becomes abo
   That discipline — naming each gate's blind spot — is the course's own contribution, and it shows up in
   Lesson 5.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Generation is cheap; checking is not. The binding constraint on agent-built software is verification capacity,
   not model capability.

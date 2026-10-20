@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Najprv jedna hranica. Všetko tu je *statické* vyhľadávanie: jeden prechod, rozhodnutý vopred, bez cyklu. Vo chvíli, keď sa vyhľadávanie stane niečím, čo model spúšťa znova (preformuluj, vyhľadaj nanovo, posúď, či máš dosť, zastav), si už v iteratívnej podobe — a to územie (Self-RAG, corrective RAG, dostatočný kontext, naučená trasa pre každý dopyt) patrí do [prehĺbenia lekcie Agentic RAG](../../part-2-agents/agentic-rag/deep-dive). Táto stránka vyťaží z jediného prechodu maximum.
 
-## HyDE: čo posúva a kedy sa obráti proti tebe
+## HyDE: čo posúva a kedy sa obráti proti tebe \{#hyde-what-it-moves-and-when-it-backfires}
 
 Prvá časť predstavila HyDE ako „načrtni hypotetickú odpoveď, zaembedduj ju a vyhľadávaj ňou“. Mechanizmus je premyslenejší, než napovie tá jedna veta (Gao a kol., 2022). LLM, ktorý sa riadi inštrukciami, napíše k dopytu hypotetický dokument s odpoveďou, zero-shot (bez trénovacích príkladov). Enkodér trénovaný kontrastne bez učiteľa (contrastive learning) — v pôvodnej práci Contriever — zaembedduje *práve tento dokument* a v korpuse potom vyhľadávaš jeho vektorom, nie vektorom dopytu. Vymyslený dokument sa v konkrétnostiach často mýli; to nevadí. Dense enkodér je stratové úzke hrdlo: podrží si vzor relevantnosti, vymyslené detaily zahodí a hľadanie tým ukotví pri reálnych susedoch.
 
@@ -25,7 +25,7 @@ To isté rámcovanie ti povie, kedy HyDE nechať tak.
 
 Verdikt je teda úzky: po HyDE siahni, keď nemáš doménové označené dáta a dopyty sú krátke a nedopovedané. Vynechaj ho, keď ťa tlačí latencia, keď je retriever už vyladený, alebo pri vyhľadávaní na presnú zhodu.
 
-## Prečo sa skóre dvoch retrieverov nedá len tak sčítať
+## Prečo sa skóre dvoch retrieverov nedá len tak sčítať \{#why-two-retrievers-scores-cant-just-be-added}
 
 Hybrid search bol najväčší jediný krok vpred z prvej časti a vo vnútri slova „spojiť“ ukryl skutočný problém. Podobnosť pri dense vyhľadávaní je ohraničená — kosínus sa pohybuje zhruba v [-1, 1], často stiahnutý do [0, 1]. BM25 je neohraničený a jeho stupnica sa posúva s korpusom aj dopytom. Tie dve veličiny ležia na nezlučiteľných osiach, takže ich sčítať nemôžeš. Celá fúzia je spôsob, ako to obísť.
 
@@ -52,7 +52,7 @@ flowchart TB
 
 Kompromis je zrkadlovým obrazom toho pri score fusion. RRF je jednoduchý a robustný, ale slepý voči veľkosti — zhoda, ktorá zvyšok necháva ďaleko za sebou, je zaevidovaná ako „pozícia 1“ a nič viac. Score fusion tú veľkosť zachová, no aby sa mu dalo veriť, žiada si dôkladnú normalizáciu podľa rozdelenia, dopyt po dopyte. Predvolene teda nasaď RRF a ku score fusion sa pohni, až keď si naozaj odmeral, že veľkosť skóre nesie pre tvoje dáta signál, *a* zároveň ju vieš spoľahlivo normalizovať pre každý dopyt. Siahnuť po score fusion ako prvom je spôsob, ako zdediť jeho krehkosť bez jeho výnosu.
 
-## Ktorý reranker a kedy
+## Ktorý reranker a kedy \{#which-reranker-and-when}
 
 Druhá fáza preusporiada top-K a v prvej časti to robil cross-encoder, ktorý pár (dopyt, úryvok) zakóduje spoločne. Na majstrovskej úrovni je otázka, ktorý druh rerankera — a rozdiel je krivkou medzi latenciou a kvalitou.
 
@@ -68,7 +68,7 @@ Jeho silné stránky sú tie, ktoré natrénovaný cross-encoder ponúknuť nevi
 
 Tým je jasné, kedy si každý zaslúži svoje miesto. Cross-encoder je východisko tam, kde tlačí latencia a beží veľa dopytov za sekundu. LLM reranker je pre prípady, keď kvalita preváži latenciu, keď je objem nízky, alebo keď radenie naozaj potrebuje relevantnosť vedenú inštrukciou. Bežné usporiadanie si necháva oba: cross-encoder spraví prvý prechod preusporiadania nad celým top-K a LLM preusporiada len tú hŕstku najlepších, čo prežije — riadenie inštrukciou tak zaplatíš len pri zopár kandidátoch namiesto pri celej dávke.
 
-## Kde medzi dvoma enkodérmi sedí neskorá interakcia
+## Kde medzi dvoma enkodérmi sedí neskorá interakcia \{#where-late-interaction-sits-between-the-two-encoders}
 
 Tri paradigmy vyhľadávania ležia na jednej osi a pomenovať ich spolu spraví tú tretiu čitateľnou. **Bi-encoder** — dense retriever z prvej časti — zakóduje každý dokument do jediného vektora offline; v čase dopytu je interakciou jeden skalárny súčin (dot product). Lacné, predpočítateľné a hrubé, lebo celý úryvok je stlačený do jedného bodu. Cross-encoder sedí na opačnom konci: dopyt aj dokument kóduje spoločne, takže nič sa nepredpočíta, a je najpresnejší aj najdrahší, a preto len preusporiadava K kandidátov, v celom korpuse nikdy nevyhľadáva.
 
@@ -76,7 +76,7 @@ Tri paradigmy vyhľadávania ležia na jednej osi a pomenovať ich spolu spraví
 
 Čo z toho máš, je väčšina tokenovej presnosti cross-encodera (silná na presnú zhodu, na zhodu entít a na zovšeobecnenie mimo domény), pričom strana dokumentu ostane predpočítateľná, takže dokáže vyhľadávať v celom korpuse, nielen preusporiadať K. Čo za to platíš, je úložisko, a účet je vysoký: vektor *na každý token* namiesto na chunk znamená stovky vektorov na jeden úryvok. ColBERTv2 (2021) pridáva reziduálnu kompresiu, aby tú stopu zmenšil, a index nie je obyčajný ANN (približné hľadanie najbližších susedov) nad jedným vektorom na dokument — potrebuje špecializovaný engine. Práve táto cena za úložisko a infraštruktúru, nie akási slabina v kvalite, je dôvod, prečo je neskorá interakcia mocná stredná cesta, a nie predvolená voľba.
 
-## Problém chunku z dvoch strán
+## Problém chunku z dvoch strán \{#the-chunk-problem-attacked-from-both-ends}
 
 Ingestion nechala jedno napätie nevyriešené. Malý chunk sa zaembedduje tesne a vyhľadá sa presne, no generátoru dá primálo, s čím pracovať. Veľký chunk nesie kontext, ktorý generátor chce, ale jeho embedding je rozmazaný a nesústredený, takže sa vyhľadá horšie. Kus textu, ktorý sa dobre vyhľadáva, nie je ten istý kus, z ktorého sa dobre generuje — a tú medzeru vieš riešiť na oboch koncoch pipeline.
 
@@ -90,7 +90,7 @@ Ingestion nechala jedno napätie nevyriešené. Malý chunk sa zaembedduje tesne
 
 Ten posledný riadok si prečítaj správne: contextual retrieval nie je náhrada za hybrid search a reranking, je to násobiteľ, ktorý sa s nimi skladá. A postav si tie dve techniky vedľa seba, lebo sú to tie isté lieky na dvoch rôznych miestach — parent-document obohacuje to, čo *vraciaš*, rozhodnuté v čase dopytu; contextual retrieval obohacuje to, čo *indexuješ*, rozhodnuté v čase príjmu. Rovnaká choroba, dve miesta zásahu, a nič ti nebráni nasadiť obe.
 
-## Ako sa dostať do správnej množiny kandidátov
+## Ako sa dostať do správnej množiny kandidátov \{#getting-into-the-right-candidate-set}
 
 Každá technika vyššie predpokladá, že správny chunk je niekde v množine kandidátov. Smerovanie a filtrovanie rozhodnú, či sa tam vôbec dostane — a tým sú vrcholom lievika: chybu tu spravíš najľahšie a napravíš najťažšie.
 
@@ -113,7 +113,7 @@ flowchart TB
     AN --> Cand["Kandidáti (top-K)"]
 ```
 
-## Ktorá metrika stráži ktorú fázu
+## Ktorá metrika stráži ktorú fázu \{#which-metric-watches-which-stage}
 
 Prvá časť sľúbila, že sa metriky sformalizujú vo vrstve Evaluation, a plný výklad naozaj žije v [Evaluation](../cross-cutting/evaluation/). Čo má mať inžinier vyhľadávania poruke, je toto: ktorá metrika stráži ktorú fázu. Recall@K — dostal sa potrebný chunk do top-K — je metrikou prvej fázy, priamou mierou zlyhania vyhľadávania. Precision@K je podiel top-K, ktorý je relevantný. Ďalšie dve známkujú *poradie*, ktoré vytvorí reranker.
 
@@ -123,7 +123,7 @@ Prvá časť sľúbila, že sa metriky sformalizujú vo vrstve Evaluation, a pln
 
 Naprieč celou stránkou vedie jedna niť: meraj tú fázu, ktorú ladíš. Recall@K ti povie, či retriever prvej fázy vôbec dostal odpoveď do množiny kandidátov; nDCG alebo MRR ti povedia, či ju reranker potom zoradil správne. Daj metriku radenia na fázu úplnosti, alebo metriku úplnosti na reranker, a budeš slepý voči presne tomu zlyhaniu, ktoré sa snažíš opraviť.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - HyDE vyhľadáva zaembeddovanou hypotetickou odpoveďou, aby preklenul rozdiel medzi tvarom otázky a tvarom jej odpovede; vyhráva najviac bez doménových označených dát a pri krátkych dopytoch a obráti sa proti tebe pri rozpočte latencie, vyladenom retrieveri, vyhľadávaní na presný token a neznámej téme, kde si model vymyslí dokument mieriaci preč od tvojho korpusu.
 - Skóre z dense a z BM25 sú na nezlučiteľných stupniciach, takže ich nemôžeš sčítať: fúzia podľa poradia je robustné východisko, lebo nepotrebuje kalibráciu, a fúzia podľa skóre sa oplatí za svoju krehkosť až vtedy, keď si odmeral, že veľkosť skóre nesie signál, ktorý vieš pre každý dopyt normalizovať.

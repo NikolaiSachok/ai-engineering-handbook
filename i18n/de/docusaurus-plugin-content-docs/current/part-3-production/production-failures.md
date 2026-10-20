@@ -32,7 +32,7 @@ auftaucht.
 
 :::
 
-## 1 · Das Korpus ist das Produkt
+## 1 · Das Korpus ist das Produkt \{#1--the-corpus-is-the-product}
 
 <InfoCard
   title="Das Korpus ist das Produkt"
@@ -74,7 +74,7 @@ lesen kann. Ein ausgeschlossenes Dokument ist eine Entscheidung; ein ausgeschlos
 niemand benennen kann, ist ein Defekt. Die Mechanik – das Parsing, das Layout, die Verfahren für das
 Chunking, die Metadaten – steht in der Lektion zur [Ingestion](../part-1-rag/ingestion/index.md).
 
-## 2 · Das Retrieval braucht das Recht, Nein zu sagen
+## 2 · Das Retrieval braucht das Recht, Nein zu sagen \{#2--retrieval-has-to-be-allowed-to-say-no}
 
 <InfoCard
   title="Das Retrieval darf die Antwort verweigern"
@@ -122,7 +122,7 @@ die [Generation](../part-1-rag/generation/index.md) ausführlich, und das
 sinnvolle Untergrenze gar nicht möglich ist. Das Demo antwortet auf alles. Das Produktivsystem darf Nein
 sagen.
 
-## 3 · Ein Datensatz für die Evaluierung genügt nicht
+## 3 · Ein Datensatz für die Evaluierung genügt nicht \{#3--one-eval-set-is-not-enough}
 
 <InfoCard
   title="Zwei Datensätze, nicht einer"
@@ -159,7 +159,7 @@ mit dem Maßstab** selbst. Beide Datensätze brauchen Labels, und das ist der Te
 einplant; die [Evaluierung](../part-1-rag/cross-cutting/evaluation/index.md) sagt es unverblümt: kein
 Datensatz, keine Evaluierung.
 
-## 4 · Grün und korrekt sind nicht dasselbe
+## 4 · Grün und korrekt sind nicht dasselbe \{#4--green-is-not-the-same-as-correct}
 
 <InfoCard
   title="Grün heißt nicht korrekt"
@@ -201,7 +201,7 @@ im März gesagt hat – müssen Sie *Monate später* noch nachweisen können, wa
 wurde. Das ist eine Anforderung an Aufbewahrung und Integrität und keine Einstellung für die
 Ausführlichkeit. Entscheiden Sie, welches von beiden Sie bauen, bevor ein Prüfer es für Sie entscheidet.
 
-## 5 · Die Einheit sind die Kosten für eine angenommene Antwort
+## 5 · Die Einheit sind die Kosten für eine angenommene Antwort \{#5--the-unit-is-cost-per-accepted-answer}
 
 <Infographic
   src="/img/infographics/production-failures/05-cost.webp"
@@ -234,7 +234,7 @@ Route, bevor Sie einer Einsparung glauben. [LLMOps](./llmops/index.md) behandelt
 Caching, den Batch-Tarif, Budgets, die den Verbrauch wirklich stoppen –, und der Kurs zum AI-SDLC rechnet
 dieselbe Arithmetik für eine andere Einheit aus: für die Kosten einer angenommenen Änderung am Code.
 
-## 6 · Indexieren Sie neu, bevor Sie neu trainieren
+## 6 · Indexieren Sie neu, bevor Sie neu trainieren \{#6--re-index-before-you-retrain}
 
 <InfoCard
   title="Zuletzt neu trainieren"
@@ -269,7 +269,7 @@ Drei Arten von Drift und wie Sie jede beobachten, stehen in [LLMOps](./llmops/in
 Folgerung: **Das Korpus ist ein Release** – es braucht eine Version, einen Diff und einen Rollback, genau wie
 der Code.
 
-## 7 · Der Prompt und das Korpus sind Releases
+## 7 · Der Prompt und das Korpus sind Releases \{#7--the-prompt-and-the-corpus-are-releases}
 
 <InfoCard
   title="Prompt und Korpus sind Releases"
@@ -302,7 +302,7 @@ und halten Sie für jeden der drei einen eigenen Weg zurück bereit. Ein System,
 Index jederzeit unbemerkt ändern können, hat überhaupt keinen reproduzierbaren Zustand, und das
 behebt kein Test der Welt. Die Mechanik des Releases steht in [LLMOps](./llmops/index.md).
 
-## 8 · Eine Pipeline braucht Prüfungen zwischen den Schritten
+## 8 · Eine Pipeline braucht Prüfungen zwischen den Schritten \{#8--a-pipeline-needs-gates-between-the-steps}
 
 <InfoCard
   title="Die günstigste Prüfung zuerst"
@@ -337,7 +337,7 @@ im Kurs zum AI-SDLC in aller Ruhe; die Maschinerie auf der RAG-Seite – was Sie
 Ausgabe und bei der Ingestion absichern – steht in der Lektion zu den
 [Guardrails](../part-1-rag/cross-cutting/guardrails/index.md).
 
-## 9 · Vier, die selten auf der Liste stehen
+## 9 · Vier, die selten auf der Liste stehen \{#9--four-that-rarely-make-the-list}
 
 <InfoCard
   title="Vier, die in den Listen fehlen"
@@ -375,7 +375,7 @@ nicht für Langsamkeit. Liefern Sie absichtlich eine schlechtere Antwort, statt 
 den [Tool-Einsatz](../part-2-agents/tool-use/index.md) behandelt den ganzen Ablauf eines Aufrufs und den
 Umgang mit seinen Fehlern.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - **Fast nichts davon ist ein Fehler des Modells.** Das Modell ist das Bauteil, das Sie nicht geschrieben
   haben; die Fehler sitzen im System darum herum.

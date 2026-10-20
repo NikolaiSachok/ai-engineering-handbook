@@ -10,7 +10,7 @@ sidebar_position: 2
 
 One boundary before we start, since the sibling lessons hold the ground next door. The *general* loop-control and budget layer — step budgets, loop detection, reflection, budget-as-policy, the foundations of trajectory eval — belongs to [planning & loops](../planning-loops/index.md) and its [deep dive](../planning-loops/deep-dive.md). This page owns the layer directly above a single agent: agent↔agent. Where the two axes meet transport, that's [MCP](../mcp/index.md) — MCP standardises agent↔tool, and the agent↔agent axis is A2A, below; packaging any of these topologies into a library is the job of [orchestration frameworks](../orchestration-frameworks/index.md). Part 1 is assumed throughout.
 
-## Giving the message a shape
+## Giving the message a shape \{#giving-the-message-a-shape}
 
 In Part 1 agents "talked through messages," and the phrase did a lot of quiet work. Here the message gets a concrete shape — and it turns out there's thirty years of prior art that today's frameworks are busy re-discovering.
 
@@ -43,7 +43,7 @@ The contrast with MCP is the useful part, and it's an axis, not a rivalry. MCP s
 
 Whatever schema you land on, the live design question is the one Part 1 raised: *what context rides on each message.* Too little and the receiver can't act; too much and you're back in context bloat. The schema is plumbing; the payload discipline is the skill. And one field earns a special mention — the explicit conversation or task id is what later lets you stitch a scattered trajectory back together when it comes time to grade the team.
 
-## The other primitive: a shared board
+## The other primitive: a shared board \{#the-other-primitive-a-shared-board}
 
 Handoff is point-to-point. One agent packages context and passes it to exactly one other, and everything outside that envelope stays private — which is the context-isolation win from Part 1, and also its limit. Some work wants the opposite: a common surface every agent can read and write. The classic name for that surface is the **blackboard**.
 
@@ -65,7 +65,7 @@ Message-passing pays the opposite bill. Handoff keeps each agent's context isola
 
 So reach for a shared board when the agents genuinely need a common evolving artefact: a shared plan, a running document, a solution being co-built. Prefer handoff when isolation is the point and the work divides into stages. Most production systems end up hybrid — the orchestrator holds the shared state while workers receive isolated handoffs — taking the visibility where it helps and the isolation where it matters.
 
-## Who does what, and how that's decided
+## Who does what, and how that's decided \{#who-does-what-and-how-thats-decided}
 
 Roles can be fixed or fought over. Both are legitimate; they trade predictability for flexibility.
 
@@ -77,7 +77,7 @@ Negotiation isn't only about who does the work; agents can also negotiate over t
 
 The catch is arithmetic. Debate multiplies cost by agents times rounds, so it earns its keep only on hard reasoning or factuality tasks with no cheap verifier — and it's pure waste on anything a single agent plus a quick check already gets right. The section's honest brake is that same shape: bidding, negotiation, and debate all add rounds of model calls, which is cost and latency. A supervisor that hard-routes is cheaper and, most of the time, enough. Reach for negotiation only when static routing genuinely can't make the call — heterogeneous workers, shifting load, or a setting where you want adversarial pressure on quality.
 
-## Grading a team whose trajectory is scattered
+## Grading a team whose trajectory is scattered \{#grading-a-team-whose-trajectory-is-scattered}
 
 Part 1 warned that multi-agent systems are harder to eval because the trajectory is spread across agents. This is how you actually do it. The foundations — outcome versus process, LLM-as-a-judge over a trace, observability as the precondition — are laid out for a single agent in the [agentic RAG](../agentic-rag/deep-dive.md) and [planning & loops](../planning-loops/deep-dive.md) deep dives; the new problem here is that the trace no longer lives in one place.
 
@@ -89,7 +89,7 @@ Teams also fail in ways a single agent never could, and those failures have been
 
 And the restraint, as everywhere. A two-agent chain barely has a trajectory to stitch, and a router plus one worker has almost none. The cost of correlation and attribution scales with the size of the team — instrument it once the team is big enough to have a trajectory worth grading.
 
-## Keeping the bill bounded
+## Keeping the bill bounded \{#keeping-the-bill-bounded}
 
 Part 1 put the cost multiplier at roughly N×. There are numbers on it now. In Anthropic's June 13, 2025 write-up of its multi-agent research system, [agents use about 4× the tokens of a chat interaction and multi-agent systems about 15×](https://www.anthropic.com/engineering/multi-agent-research-system) — and on their eval, token usage alone explained about 80% of the performance variance, with tool-call count and model choice making up the rest. The lesson they draw is a gate, not a green light: multi-agent economics only work when the task is valuable enough to pay for the extra performance — heavy parallelisation, context that overflows a single window, many complex tools — and they're a poor fit when every agent needs the same context or the agents have many interdependencies. That's Part 1's "~N×" with a measured constant on it.
 
@@ -116,7 +116,7 @@ flowchart TD
 
 Which leaves the question the page has been circling: when is any of this worth it? The answer is the one from agentic RAG — take the simplest level that solves the task. Reach for a team only when you have real specialisation to exploit, context that won't fit one window, or genuinely parallel subtasks. On most work a single well-designed agent, or a supervisor with static routing, beats a negotiating blackboard team outright and at a fraction of the cost. Protocols, shared memory, negotiation, team eval, and budget policy are what you add once the team is justified — not where you start.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - The inter-agent message is an envelope: a performative that says what you want done, wrapped around the content and the fields that route it — who, whom, and which conversation. FIPA ACL named those pieces back in 2002, the contract net protocol turned task allocation into announce → bid → award, and A2A is the modern agent↔agent version, with Agent Cards for discovery and Tasks that carry a lifecycle — the counterpart to MCP's agent↔tool.
 - Two coordination primitives, one tradeoff. A shared blackboard gives every agent full visibility and spares you the N×N wiring, but it invites context bloat and write contention; point-to-point handoff preserves context isolation but can starve an agent of what it needed. Most real systems go hybrid — the orchestrator holds the state, the workers get isolated handoffs.

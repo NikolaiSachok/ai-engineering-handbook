@@ -64,7 +64,7 @@ page says so. That arrangement is described in
 
 <Reveal>
 
-## Attempt A — the common answer
+## Attempt A — the common answer \{#attempt-a--the-common-answer}
 
 *Persona given to the agent: reaches for what the write-ups have converged on — a judge model, an eval set, better prompts — thinks in layers to add on top of what is there, and checks cost once it works.*
 
@@ -116,7 +116,7 @@ audit.
 
 </Verdict>
 
-## Attempt B — the strong answer
+## Attempt B — the strong answer \{#attempt-b--the-strong-answer}
 
 *Persona given to the agent: has been paged for a system whose dashboard said it was fine; does the arithmetic before the architecture, and will not claim a number moved without saying what would have shown otherwise.*
 
@@ -165,7 +165,7 @@ minutes the same split costs 58.8 hours, over budget.
 
 </Verdict>
 
-## Attempt C — the over-built answer
+## Attempt C — the over-built answer \{#attempt-c--the-over-built-answer}
 
 *Persona given to the agent: builds the whole thing at once because bolting the missing half on afterwards costs more; brings the complete shape rather than a first slice, and is comfortable defending its size.*
 
@@ -217,12 +217,12 @@ claims.
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 Each disagreement below is a decision you will have to make yourself. The last entry is the exception: not a
 disagreement but what none of them stopped to check.
 
-### The number to put in writing about the next audit: one you can hit, or one that would be visible
+### The number to put in writing about the next audit: one you can hit, or one that would be visible \{#the-number-to-put-in-writing-about-the-next-audit-one-you-can-hit-or-one-that-would-be-visible}
 
 A would put it to the manager now that "if we land at 6.0 it's a real move". B computes that a visible
 improvement must be "about 3.6 points or more" and therefore targets under 4%. C sets 5.0 and warns that
@@ -243,7 +243,7 @@ that is the Wilson figure to a tenth and a lower bound that belongs to neither c
 asymmetrically against the ±2.6 C quotes two sentences later. Both reach the same conclusion, and only one of
 them can tell you how.
 
-### The classifier's two minutes: a measured fact of the desk, or a parameter you may re-cut
+### The classifier's two minutes: a measured fact of the desk, or a parameter you may re-cut \{#the-classifiers-two-minutes-a-measured-fact-of-the-desk-or-a-parameter-you-may-re-cut}
 
 A treats it as fixed and says so — the review layer is not something to lean on harder — and spends its effort
 on changing what those two minutes contain: the competing codes and the note that separates them, on screen. B
@@ -262,7 +262,7 @@ The verdicts price this unevenly: B makes the ninety seconds carry its capacity 
 lands there; the same unsupported figure sits under C's 55-of-58 sum, which is arithmetically sound on the
 assumption and no better supported there. It is priced here for both.
 
-### A golden set enriched with known failures: an instrument that reports a rate, or one that only signals regressions
+### A golden set enriched with known failures: an instrument that reports a rate, or one that only signals regressions \{#a-golden-set-enriched-with-known-failures-an-instrument-that-reports-a-rate-or-one-that-only-signals-regressions}
 
 C builds one deliberately over-weighted toward failures and licence lines — the private spreadsheets, the 26
 authority corrections, audit lines, historical lines — and attaches "roughly ±1 point" to it. That interval
@@ -279,7 +279,7 @@ check on new labels its own pipeline did not produce is "a 100-line read at week
 scratch is about 20 hours, against a lead classifier who has four hours a week, and the nine hours a day of
 slack B does identify is already committed to its own hard lane.
 
-### The client-suggested code: an incentive you act on, or a reliability you measure
+### The client-suggested code: an incentive you act on, or a reliability you measure \{#the-client-suggested-code-an-incentive-you-act-on-or-a-reliability-you-measure}
 
 C: "never feed the client-suggested code to the model. Their incentive runs toward lower duty." The prompt
 says only that some larger clients send a suggested code and that classifiers tend to file it; the motive is
@@ -292,7 +292,7 @@ which is a real argument in a ten-week plan. B pays for instrumentation instead,
 the judgement that can later be shown to be wrong — and it is the desk's larger clients being judged. A never
 raises the client codes at all.
 
-### What none of them checked
+### What none of them checked \{#what-none-of-them-checked}
 
 Four things, and none of them is a disagreement.
 
@@ -320,7 +320,7 @@ by week three, which makes it a development set whatever the label says. And non
 two auditing classifiers differ *before* they confer — the adjudicated answer is taken as gold, and nobody
 measures the noise floor under the labels all three plan to build on.
 
-## The principle
+## The principle \{#the-principle}
 
 > An error-reduction plan is worth exactly the two numbers the brief leaves you to compute yourself — what the
 > instrument that will judge you can actually resolve, and whose minutes absorb every check you add — because
@@ -355,7 +355,7 @@ of human minutes — which is a gap in both courses rather than something this p
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 

@@ -13,7 +13,7 @@ Praktický príklad presne tohto rozdielu z tvorby príručky opisujem v článk
 
 :::
 
-## Tri zdroje vedú k rovnakému záveru
+## Tri zdroje vedú k rovnakému záveru \{#three-streams-reach-the-same-place}
 
 Začnime názormi, teda najmenej presvedčivým dôkazom. Ľudia, ktorí sa profesionálne zaoberajú programovacími agentmi, bez vzájomnej dohody dospeli k rovnakému stanovisku v otázke, o ktorej sa počas roka 2025 viedli spory: trvalé pravidlá zapísané prózou sú tou najslabšou zábranou, akú môžeš vytvoriť. [Inžinieri Anthropic](https://code.claude.com/docs/en/best-practices) priamo obhajujú výhodu vynútiteľných kontrol v nástroji, ktorý ich firma predáva: *„hooky sú deterministické a zaručujú, že sa daná akcia vykoná“*. [Birgitta Böckeler z Thoughtworks](https://martinfowler.com/articles/sensors-for-coding-agents.html) rovnako priamo opísala slabinu nevynútených pokynov. Vytvorila nástroj na kontrolu udržiavateľnosti, agentom pomocou pokynu v AGENTS.md zadala, aby ho spúšťali, a sledovala výsledok: *„Je to zároveň dosť nespoľahlivé. Musela som sa agentov veľakrát pýtať, prečo ani raz nespustili kontrolu pomocou snímačov“*. Na jednej strane dodávateľ, ktorý predáva vynucovanie pravidiel, na druhej výskumníčka, ktorá k nemu pristupuje skepticky. Odlišné metódy, rovnaké zistenie. Výsledná hierarchia znie: **výpočtové vynútenie je účinnejšie než skilly sprístupnené práve vtedy, keď ich agent potrebuje, a tie sú účinnejšie než trvalé pravidlá zapísané prózou.**
 
@@ -21,7 +21,7 @@ Böckeler zároveň ponúkla odboru [najpraktickejšiu mapu toho, *prečo* to ta
 
 Druhým zdrojom sú záznamy podnikových incidentov. Tie už dokumentujú skutočné škody a venuje sa im nasledujúca časť. Tretím je samotný artefakt: súbor pravidiel pre programovacích agentov s 11 000 riadkami. Jeho autor pri audite zistil, že *všetky zákazy, ktoré by sa dali automatizovať, zostali iba v próze — žiadny nekontroluje linter*, a označil to za „najväčšiu medzeru zo všetkých“. Tri zdroje, jeden záver. Zvyšok lekcie vysvetľuje mechanizmus.
 
-## Pokyn nie je kontrola
+## Pokyn nie je kontrola \{#an-instruction-is-not-a-control-1}
 
 Štyri zdokumentované incidenty majú rovnaký priebeh. Za každým z nich stála prozaická chyba v infraštruktúre — agent iba urýchlil zlyhanie. Čítaj ich v duchu blameless postmortem, teda rozboru incidentu bez hľadania vinníka: zábrana mala iba podobu slovného pokynu, nebola vynútenou hranicou. Ľudia v týchto prípadoch neboli ani tak nedbanliví, ako skôr príliš dôverčiví.
 
@@ -43,7 +43,7 @@ IBM ukazuje, ako agentovi s príliš širokými oprávneniami prompt injection u
 
 :::
 
-## Prečo próza prehráva s optimalizátorom
+## Prečo próza prehráva s optimalizátorom \{#why-prose-loses-to-an-optimizer}
 
 Próza zlyháva aj z hlbšieho dôvodu, ktorý podporuje výsledok najlepšie doložený meraniami v celom kurze. Agent optimalizuje to, čo kontroluješ. Čokoľvek nekontroluješ, teda preňho neexistuje — brána určuje výsledok. Už nejde o tradovanú múdrosť. Potvrdzuje to niekoľko nezávislých nameraných výsledkov, ktoré spolu tvoria jeden ucelený argument.
 
@@ -62,13 +62,13 @@ Lákavá náprava — doplniť cieľ o monitor a nechať prácu ohodnotiť kontr
 
 Potvrdzuje to aj pohľad z produkčnej praxe. V jednom reálnom postupe auditu dostane agent v zadaní opravy premyslene zostavenú súpravu nástrojov *aj* výslovný zoznam zákazov, pretože slovami autora: „každý príznak sa dá potlačiť spôsobom, ktorý umožní prejsť testom bez akejkoľvek opravy, a agent, ktorého cieľom je dosiahnuť zelenú bránu, tento spôsob nájde“. Súprava nástrojov dáva agentovi legitímny postup a konkrétny zákaz uzatvára konkrétnu cestu k podvodu. Zisťovanie problémov je navyše striktne oddelené od vykonávania zmien: audítor nikdy neupravuje kód, ktorý kontroluje. Ide o oddelenie právomocí (separation of duties) prispôsobené agentom. Kontrolór, ktorý dokáže odstrániť vlastné nálezy, prestáva poskytovať pravdivé výsledky.
 
-## Hook verzus skill
+## Hook verzus skill \{#hook-versus-skill}
 
 V roku 2026 už komunita používala stručné pomenovanie rozdielu medzi tým, čo sa vynúti, a tým, o čo agenta iba požiadaš. **Skill** je rada, ktorou sa model môže, ale nemusí riadiť. **Hook** vykoná harness bez ohľadu na rozhodnutie modelu. Nepotvrdzuje to žiadny rozhodujúci experiment — ide o argument bez merania — no priamo to vyplýva z vyššie opísaného optimalizačného mechanizmu a žiadny dôveryhodný zdroj tomu neprotirečí. Z toho vyplýva návrhové pravidlo: *ak je vynechaný krok iba nepríjemnosťou, skill postačí; ak jeho vynechanie ohrozí bezpečnosť alebo správnosť, musí ho vynucovať hook.*
 
 Zrelé pravidlo teda nie je iba veta. Obsahuje **kontrolu, ktorá problém odhalí, a jeden záväzný spôsob nápravy**, nielen zákaz. Pravidlo bez takejto kontroly sa časom zmení na tradovanú poučku. Bez jedného schváleného spôsobu nápravy zase každý agent vytvorí inú opravu. Ešte lepšie je doplniť sémantické pravidlo o **deterministické vyhľadávanie** — doslova grep — a obe kontroly skombinovať, nie jednu vydávať za náhradu druhej. Výsledky grepu sú reprodukovateľné a agent ho nepresvedčí, aby nález ignoroval. Sémantická kontrola zasa zachytí to, čo sa nedá vyjadriť žiadnym grepom. Rovnakú viacvrstvovú bránu používa tento kurz na ochranu pred únikmi: lacná deterministická kontrola je spojená s drahým posúdením, pretože každá zachytí to, čo druhej uniká.
 
-## Pravidlá zastarávajú, ak za ne nikto nezodpovedá
+## Pravidlá zastarávajú, ak za ne nikto nezodpovedá \{#rules-decay-unless-someone-owns-them}
 
 Písané pravidlá tiež zastarávajú, čo ukazuje pôvodný súbor pravidiel. Pri audite vlastného súboru pravidiel s 11 000 riadkami autor zistil, že v ňom **neexistuje vôbec žiadny mechanizmus na odhaľovanie zastaraných pravidiel**. Ani jeden súbor neuvádza dátum, verziu, vlastníka, interval revízie či označenie, že sa pravidlo prestáva používať. Aktualizuje sa až vtedy, keď si zmenu vynúti realita: po incidente sa pridá ďalšie pravidlo, no bez následného zosúladenia s existujúcimi. Neprítomnosť takéhoto mechanizmu je merateľnou vlastnosťou skutočného artefaktu, preto ide o namerané, nie iba tvrdené zistenie.
 
@@ -76,7 +76,7 @@ Výsledkom je súbor pravidiel, ktorý si protirečí. Jeden súbor stanovuje in
 
 Ďalšie zistenie je ešte závažnejšie. Štyri z dvanástich hlavných invariantov sa dajú jednoducho automatizovať. „Žiadne farby napevno“ je pravidlo pre linter, „herný kód neimportuje používateľské rozhranie“ je test vrstiev importov a „žiadne alokácie v často vykonávaných častiach kódu“ je kontrola profilerom. *Ani jeden zo štyroch však nie je pripojený k nijakej kontrole.* Zostávajú iba prózou, ktorú si agent môže, ale nemusí prečítať. Pre obmedzenia, ktoré dokáže stroj dokonale vynútiť, je to najslabšia dostupná forma presadzovania. Z toho vyplýva pointa: **pravidlo, ktoré dokáže kontrolovať linter, nestačí iba zapísať.** Do trvalej pamäte — rozdelenej do úrovní, ako ju opisuje 4. lekcia — patrí to, čo nástroje skutočne nedokážu overiť. Všetko ostatné by sa malo zo súboru pravidiel presunúť do CI.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Základné pravidlo platí pri každej veľkosti: **ak sa dá pravidlo vykonať, jeho vykonanie je účinnejšie než jeho zapísanie.** Mení sa iba to, kde je vynucovanie umiestnené vzhľadom na blast radius (rozsah škôd).
 
@@ -86,7 +86,7 @@ Základné pravidlo platí pri každej veľkosti: **ak sa dá pravidlo vykonať,
 
 - **Enterprise.** Policy-as-code (politiky ako kód), ktoré sa vynucujú v pipeline a podliehajú auditu; organizačná politika používania nástrojov, ktorá predvolene všetko zakazuje a jednotlivý projekt ju nemôže prepísať; vynútené schvaľovacie brány pred závažnými akciami. *Zlyhanie, ktorému to predchádza:* štyri incidenty uvedené vyššie — trvalý prístup do produkcie napriek zmrazeniu vyjadrenému iba v próze, nevynútená brána, prepínače na vypnutie ochrany a „brána“ založená iba na odporúčaní. Pozor na bežný chybný výklad: ochranné mechanizmy najbližšie k blast radius — trezory, sandboxy, zoznamy cieľov, s ktorými je povolená odchádzajúca komunikácia, a vynútené brány — obmedzujú *schopnosti* agenta. Podniky ich iba lepšie dokumentujú; nejde o administratívu. Existujú preto, lebo ich lacné náhrady skutočne zlyhali: agenti naozaj vymazali databázy a odcudzili prihlasovacie údaje. Auditné záznamy a formálne schválenia, ktoré sú od blast radius vzdialenejšie, slúžia ako kontroly poskytujúce dôkazy o priebehu udalostí. Ak by si ochranné mechanizmy obmedzujúce schopnosti agenta označil za „podnikovú ceremóniu“, mohol by si čitateľa vystaviť skutočnému nebezpečenstvu.
 
-## Čo si z toho odniesť
+## Čo si z toho odniesť \{#what-to-take-away}
 
 - Uprednostňuj vykonateľné pravidlá pred písanými. Hook sa spustí bez ohľadu na rozhodnutie modelu; skill je rada, ktorú môže ignorovať. Všetko, čo pri vynechaní spôsobí problém s bezpečnosťou alebo správnosťou, preto musí byť hook.
 

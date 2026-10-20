@@ -12,7 +12,7 @@ arithmetic that makes those claims precise. None of it is exotic; it is a few mu
 they matter is that the intuitions from a price list invert once you carry the numbers through. The rates below
 are illustrative — plug in your provider's — but the *shape* of the sums is what decides your bill.
 
-## One attempt, decomposed
+## One attempt, decomposed \{#one-attempt-decomposed}
 
 An attempt bills two streams at two rates, summed over every turn it takes: **input** (everything you
 send — system prompt, rules, brief, prior turns, tool results) and **output** (what it generates).
@@ -27,7 +27,7 @@ attempt_cost = input_tokens × input_rate + output_tokens × output_rate
 The output side of an agent turn is a diff, a tool call, a paragraph — hundreds of tokens. The input side is
 the entire working context — thousands to tens of thousands. The multiplier on the small rate wins.
 
-## Why context dominates: the re-send is quadratic
+## Why context dominates: the re-send is quadratic \{#why-context-dominates-the-re-send-is-quadratic}
 
 Here is the part a per-call price hides. A multi-turn agent re-sends the whole conversation each turn, because
 the model is stateless — turn 5 pays to read turns 1 through 4 again. If a task runs `N` turns and the context
@@ -41,7 +41,7 @@ once, and why the [rules-corpus bloat](../drift-and-rot.md) from the drift lesso
 attached, not only a quality cost. Trimming what rides in context is the highest-leverage cost
 move in agent work, and it is invisible on a price list that quotes one call.
 
-## Prompt caching bends the curve back
+## Prompt caching bends the curve back \{#prompt-caching-bends-the-curve-back}
 
 The `O(N²)` re-send has a direct remedy: providers let you **cache a stable prefix** so that re-sending it
 costs a fraction of the fresh input rate — commonly on the order of a tenth. The exact discount is
@@ -55,7 +55,7 @@ rules corpus edited mid-task, or one bloated enough to be truncated differently 
 prefix and forfeits the discount — the same corpus hygiene the drift lesson argued for on correctness grounds
 turns out to be a cost control too. Stable-prefix discipline is where the quadratic stops hurting.
 
-## Batching trades latency for a discount
+## Batching trades latency for a discount \{#batching-trades-latency-for-a-discount}
 
 A second lever applies to work that is not waiting on a human. Providers commonly list Batch APIs — submit
 many requests, collect results minutes to hours later — at a substantial discount, often around half price,
@@ -64,7 +64,7 @@ your workload cleanly: an **interactive** agent turn, where someone is waiting, 
 — bulk evaluation, a corpus-wide transform, regenerating fixtures — should. The verification passes from
 Part III that run after the fact are often batchable even when the generation that produced them was not.
 
-## The retry tax, and the break-even that inverts the price list
+## The retry tax, and the break-even that inverts the price list \{#the-retry-tax-and-the-break-even-that-inverts-the-price-list}
 
 Now Part 1's headline claim, made exact. If a change lands on the first try with probability `p`, the expected
 number of attempts is `1/p`, so:
@@ -88,7 +88,7 @@ rate must stay above half the expensive model's, which is 0.40. Half the price b
 half the reliability, and costs you more below it. This is the whole of "retry
 rate outweighs sticker price," reduced to one inequality you can actually measure.
 
-## The line a token discount cannot touch
+## The line a token discount cannot touch \{#the-line-a-token-discount-cannot-touch}
 
 One closing sum keeps the others honest. Of the four cost buckets from Part 1, only **human review** is
 beyond the reach of token price — it is paid in salary, and its throughput is not for sale.
@@ -99,7 +99,7 @@ reduce the total by more than the remaining 60%. When review dominates, shaving 
 the smallest lever — which is exactly why Part 1 insisted the binding constraint is priced in salary, not
 tokens.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **Decompose the attempt:** `input_tokens × input_rate + output_tokens × output_rate`. Output costs more
   per token, but input *volume* is far larger, so input is the bill.

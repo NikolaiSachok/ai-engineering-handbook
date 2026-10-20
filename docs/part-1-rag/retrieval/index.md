@@ -21,7 +21,7 @@ The big picture: how search feeds context into generation.
 
 :::
 
-## Why plain vector top-K isn't enough
+## Why plain vector top-K isn't enough \{#why-plain-vector-top-k-isnt-enough}
 
 On live queries the naive "K nearest vectors" scheme sags for several reasons at once.
 
@@ -33,7 +33,7 @@ of any notion of access rights. The naive search needs a few layers built on top
 There are four of them: fix the query (query transformation), close the blind spots (hybrid search), fix
 the ordering (reranking), constrain scope and permissions (filters + ACL).
 
-## Query transformation — fix the query before searching
+## Query transformation — fix the query before searching \{#query-transformation--fix-the-query-before-searching}
 
 The query a user types is rarely the best query to search with. A few cheap LLM calls *before* retrieval
 lift the hit rate noticeably.
@@ -45,7 +45,7 @@ lift the hit rate noticeably.
 - **HyDE.** Ask the model to sketch a hypothetical answer, embed that, and search with it. A rough draft
   answer often sits closer to the chunk you need in embedding space than a short question does.
 
-## Hybrid search — dense plus keyword
+## Hybrid search — dense plus keyword \{#hybrid-search--dense-plus-keyword}
 
 The single biggest improvement over naive search. Two mechanisms with opposite strengths are at work:
 
@@ -61,7 +61,7 @@ Take the query "how to reset a password." Dense search finds the document "recov
 meaning; BM25 finds the one titled, word for word, "password reset." Together they return what each one
 missed alone.
 
-## Reranking — fix the ordering
+## Reranking — fix the ordering \{#reranking--fix-the-ordering}
 
 The first stage — dense or hybrid search — is tuned for **recall**: drag the chunk you need somewhere into
 the top-K, where K is 50–100. But the ordering inside that hundred is crude, and only a few chunks fit
@@ -73,7 +73,7 @@ This is the canonical two-stage scheme: cheap and wide (a bi-encoder or hybrid �
 and precise (a cross-encoder — precision). Here the bi- and cross-encoder from the ingestion lesson click
 into a single picture.
 
-## Filters and access control — relevance and permissions
+## Filters and access control — relevance and permissions \{#filters-and-access-control--relevance-and-permissions}
 
 In an enterprise setting, retrieval answers more than "is this similar in meaning." It also answers "what
 is this person even allowed to see."
@@ -91,7 +91,7 @@ be different for every requester; a model's weights are the same for everyone. T
 an organisation's knowledge is allowed to live — see
 [when to change the weights](../../part-3-production/llmops/deep-dive.md).
 
-## The full pipeline
+## The full pipeline \{#the-full-pipeline}
 
 ```text
 query → [transform] → [hybrid: dense + BM25, metadata filter + ACL]
@@ -101,7 +101,7 @@ query → [transform] → [hybrid: dense + BM25, metadata filter + ACL]
 Every stage drives retrieval failure down. By exactly how much is something you **measure**: Recall@K,
 Precision@K, MRR, nDCG. We formalize the metrics in the [Evaluation](../cross-cutting/evaluation/index.md) layer.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Naive vector top-K is a start, not a finish.
 - Query transformation fixes the query itself: rewriting, multi-query, HyDE.

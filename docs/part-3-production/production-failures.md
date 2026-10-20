@@ -28,7 +28,7 @@ cheaper model. Each disagreement is flagged where it comes up.
 
 :::
 
-## 1 · The corpus is the product
+## 1 · The corpus is the product \{#1--the-corpus-is-the-product}
 
 <InfoCard
   title="The corpus is the product"
@@ -66,7 +66,7 @@ are, as a build artefact you can read. An excluded document is a decision; an ex
 enumerate is a defect. The mechanics — parsing, layout, chunking strategies, metadata — are
 [ingestion](../part-1-rag/ingestion/index.md).
 
-## 2 · Retrieval has to be allowed to say no
+## 2 · Retrieval has to be allowed to say no \{#2--retrieval-has-to-be-allowed-to-say-no}
 
 <InfoCard
   title="Retrieval must be allowed to refuse"
@@ -109,7 +109,7 @@ That last step only works if the generator was built to refuse — which
 [retrieval](../part-1-rag/retrieval/index.md) supplies the hybrid search and reranking that make a meaningful
 floor possible. The demo answers everything. The production system is allowed to say no.
 
-## 3 · One eval set is not enough
+## 3 · One eval set is not enough \{#3--one-eval-set-is-not-enough}
 
 <InfoCard
   title="Two eval sets, not one"
@@ -142,7 +142,7 @@ the team optimises against for months stops measuring quality and starts measuri
 benchmark. Both sets need labels, which is the part nobody budgets for —
 [evaluation](../part-1-rag/cross-cutting/evaluation/index.md) is blunt about that: no dataset, no evaluation.
 
-## 4 · Green is not the same as correct
+## 4 · Green is not the same as correct \{#4--green-is-not-the-same-as-correct}
 
 <InfoCard
   title="Green is not correct"
@@ -179,7 +179,7 @@ industry, a disputed answer, a customer asking what your system told them in Mar
 was retrieved and returned *months later*, which is a retention and integrity requirement, not a verbosity
 setting. Decide which one you are building before an auditor decides for you.
 
-## 5 · The unit is cost per accepted answer
+## 5 · The unit is cost per accepted answer \{#5--the-unit-is-cost-per-accepted-answer}
 
 <Infographic
   src="/img/infographics/production-failures/05-cost.webp"
@@ -210,7 +210,7 @@ saving. [LLMOps](./llmops/index.md) covers the levers — routing, caching, the 
 actually close the loop — and the AI-SDLC course works the same arithmetic out for a different unit, cost per
 accepted code change.
 
-## 6 · Re-index before you retrain
+## 6 · Re-index before you retrain \{#6--re-index-before-you-retrain}
 
 <InfoCard
   title="Retrain last"
@@ -242,7 +242,7 @@ weights — which for most teams means a vendor's next release rather than a tra
 drift and how to watch each are in [LLMOps](./llmops/index.md). The useful corollary is that **the corpus is a
 release**: it deserves a version, a diff, and a rollback, exactly like code.
 
-## 7 · The prompt and the corpus are releases
+## 7 · The prompt and the corpus are releases \{#7--the-prompt-and-the-corpus-are-releases}
 
 <InfoCard
   title="Prompt and corpus are releases"
@@ -274,7 +274,7 @@ independently. A system where the prompt, the model and the index can all shift 
 reproducible state at all, and no amount of testing fixes that. The release mechanics are in
 [LLMOps](./llmops/index.md).
 
-## 8 · A pipeline needs gates between the steps
+## 8 · A pipeline needs gates between the steps \{#8--a-pipeline-needs-gates-between-the-steps}
 
 <InfoCard
   title="Cheapest check first"
@@ -305,7 +305,7 @@ them cheapest-first, so the failures a regex could have caught are never paid fo
 ordering argument is developed properly in the AI-SDLC course's layered-gates lesson; the RAG-side machinery —
 what to guard on input, output and at ingestion — is [guardrails](../part-1-rag/cross-cutting/guardrails/index.md).
 
-## 9 · Four that rarely make the list
+## 9 · Four that rarely make the list \{#9--four-that-rarely-make-the-list}
 
 <InfoCard
   title="Four the lists miss"
@@ -337,7 +337,7 @@ rejects a connection — and an agent with no timeout, no retry and no fallback 
 read as broken rather than slow. Degrade to a worse answer on purpose; the [tool-use](../part-2-agents/tool-use/index.md)
 lesson covers the round-trip and its failure handling.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **Almost none of these are model failures.** The model is the component you didn't write; the failures live
   in the system around it.

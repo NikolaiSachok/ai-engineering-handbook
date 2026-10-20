@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Three of this page's topics overlap deep-dives that already own their theory, so this page cross-links them rather than re-deriving them. The SRE reliability mechanics — how you pick SLIs, set an SLO over a window, compute the error budget as the distance to 100%, alert on burn rate, insist that at least one SLI measures quality, and enforce per-request soft and hard caps at runtime — live in the [observability deep dive](../../part-1-rag/cross-cutting/observability/deep-dive.md). So does the other half of a regression: *detecting* a statistically real quality drop and *attributing* it across trace spans to the stage that caused it, then graduating the failing traces into the golden set. And the per-platform pricing mechanics — committed-use tiers, prompt-cache multipliers, the shape of the batch discount, cross-region egress — live in the [cloud-platforms deep dive](../cloud-platforms/deep-dive.md). What this page owns end to end is the rest: fine-tuning ops, org-level spend governance, the release-gate and rollback view of a caught regression, error budgets as a written organisational process, and the queue infrastructure that carries batch workloads.
 
-## When to change the weights
+## When to change the weights \{#when-to-change-the-weights}
 
 :::tip[▶ Video]
 
@@ -54,7 +54,7 @@ Corpus size against the context window is the branch the tree above doesn't draw
 
 Neither criterion replaces the freshness argument above; both run before it. Freshness tells you whether facts *can* live in weights. These two tell you whether they are *allowed* to, and whether you need the machinery at all.
 
-## Governing the spend
+## Governing the spend \{#governing-the-spend}
 
 The platform-pricing levers — committed-use discounts, prompt-cache multipliers, the roughly-half-price batch tier, cross-region egress — are the cloud-platforms deep-dive's subject, and pulling each one is an engineering choice. Governance is the layer above them. Its job is to make spend visible, owned, and bounded across teams, so the levers actually get pulled and no single team can quietly exhaust the budget. Part 1 put budgets at the gateway; this is the organisation built around them.
 
@@ -68,7 +68,7 @@ Three org-level controls do the bounding, and all three live where every request
 
 Each control fails in a predictable way when it is skipped. Chargeback billed before attribution is trustworthy turns into disputes and gaming. A budget with only soft caps produces alerts no one actions while the bill lands anyway. And with no default cheap-model route, every request pays flagship price out of pure inertia.
 
-## The release gate and the rollback path
+## The release gate and the rollback path \{#the-release-gate-and-the-rollback-path}
 
 Detecting a regression — telling a statistically real quality drop from a bad afternoon — and attributing it across trace spans to a stage, then graduating the failing traces into new golden-set cases, is the observability deep-dive's subject. This section owns the other half: what the release process *does* with a regression once it has been caught. It either blocks it, or it rolls it back.
 
@@ -90,7 +90,7 @@ flowchart TB
     W -->|no| RB["Auto-rollback:<br/>repin prompt / model / index / adapter"]
 ```
 
-## Error budgets as an organisational contract
+## Error budgets as an organisational contract \{#error-budgets-as-an-organisational-contract}
 
 The mechanics — choosing SLIs, setting an SLO over a window, computing the error budget as the distance to 100%, alerting on burn rate, and the rule that at least one SLI must be a quality SLI computed by online eval — all belong to the observability deep-dive. This section owns what turns those numbers into a decision an organisation is bound by: the **error budget policy**.
 
@@ -100,7 +100,7 @@ Two things change when the system under the policy is an LLM application. First,
 
 That agreement is a contract between two parties, because the budget is co-owned. The product side spends it — every feature and change draws it down — and the reliability side guards it, holding the authority to call the freeze. The policy is what those two sides negotiate ahead of time, so the freeze isn't re-litigated in the middle of an incident when neither side is in a mood to concede. Skip the signature and the freeze simply never happens; the budget becomes theatre. Run it with only an uptime SLI and you get green dashboards over a hallucinating service — the observability deep-dive's uptime theatre, arrived at from the governance side.
 
-## Queues for the work that can wait
+## Queues for the work that can wait \{#queues-for-the-work-that-can-wait}
 
 Not all LLM work is interactive. Nightly corpus enrichment, backfills, synthetic-eval-data generation, bulk classification — this work is resource-bound and slow, and you don't want it contending with live traffic for the same capacity. A **job queue** separates the rate at which work arrives from the rate at which it is processed. A producer enqueues a job and gets back a job id immediately, with nothing blocked; a pool of workers drains the queue at whatever rate the hardware and the provider's rate limits permit; and results land in a store the client either polls or receives by webhook.
 
@@ -131,7 +131,7 @@ flowchart TB
     Q -.->|oldest-job age high| SHED["Shed load: 429 / slow producers / scale"]
 ```
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Fine-tune last, after prompt and RAG have hit a ceiling, and only for a behaviour, format, tone, or skill gap — never for fresh knowledge, which is the retriever's job. A tuned model is a pinned artefact on the same eval gate as any deploy, rolled back by re-pinning the predecessor or detaching the LoRA adapter.
 - Two criteria run before the knowledge-versus-behaviour question: per-user permissions are expressible as a retrieval filter and not as a weight, so tiered access decides the architecture on its own; and if the corpus fits and stays small there may be nothing to retrieve or tune at all — though fitting is not the same as being attended to.

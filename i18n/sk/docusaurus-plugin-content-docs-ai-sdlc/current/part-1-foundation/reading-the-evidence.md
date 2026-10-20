@@ -7,7 +7,7 @@ sidebar_position: 3
 
 V 1. lekcii niesol každý údaj stupeň dôkazu — `MEASURED` / `REPORTED` / `ASSERTED` (namerané / hlásené / tvrdené). V tejto lekcii sa dozvieš, ako tento stupeň určiť. Je to jediný nástroj, ktorý dostaneš v tomto kurze a budeš ho používať vo všetkých ďalších lekciách. Do kurzu si možno prinášaš aj tvrdenia, ktoré nie sú pravdivé — nie preto, že by niekto klamal, ale preto, že druhotné zdroje skresľujú údaje oboma smermi, keď ich preberajú jeden od druhého. Nadšenci ich zveličujú jedným smerom, skeptici druhým. A keď si ľudia údaj posúvajú z ruky do ruky, stratí sa práve kontext, ktorý mu dával výpovednú hodnotu. Postup je preto jednoduchý a nijako zvlášť pôsobivý: nájdi prvotný zdroj, urči stupeň toho, čo si našiel, a otvorene ho uveď.
 
-## Každé tvrdenie dostane stupeň
+## Každé tvrdenie dostane stupeň \{#every-claim-gets-a-grade}
 
 Máme tri stupne. Celý poctivý prístup stojí na tom, že ich nebudeš zamieňať.
 
@@ -17,7 +17,7 @@ Máme tri stupne. Celý poctivý prístup stojí na tom, že ich nebudeš zamie�
 
 Aby tento rebrík dôkazov zostal poctivý, treba dodržať dve pravidlá. Po prvé, známe meno nezvyšuje stupeň tvrdenia. Sláva nie je dôkaz. Aj formulácia „Karpathy hovorí“ zostáva na stupni `ASSERTED`, kým nezistíš, čo v skutočnosti nameral. Po druhé, pri ďalšom šírení nesmieš stupeň zvýšiť. Tvrdenie, ktoré zopakuje populárny účet, zostáva tvrdením. Stupeň vyjadri priamo slovami: „randomizovaný experiment zistil“, „odborníci uvádzajú“, „jeden vplyvný príspevok tvrdí“. Tieto tri úvody nie sú iba štylistická ozdoba. Výslovne pomenúvajú stupeň dôkazu. Zvyšok kurzu sa týmto pravidlom riadi: tvrdenia nenesú štítky, stupeň dôkazu nesie samotné znenie.
 
-## Štyri veci, ktoré si treba všímať
+## Štyri veci, ktoré si treba všímať \{#four-things-to-read-for}
 
 Keď tvrdeniu priradíš stupeň, štyri kontroly rozhodnú, či údaj obstojí.
 
@@ -29,11 +29,11 @@ Keď tvrdeniu priradíš stupeň, štyri kontroly rozhodnú, či údaj obstojí.
 
 **A predovšetkým choď k prvotnému zdroju.** Pri výskume pre tento kurz boli úryvky vo výsledkoch vyhľadávania opakovane nesprávne: vymýšľali desatinné miesta, menili percentá na počty a pripájali skutočné údaje k nesprávnym štúdiám. Riešením nikdy nebol lepší úryvok. Bolo ním otvorenie samotnej štúdie.
 
-## Percentuálne body nie sú percentá
+## Percentuálne body nie sú percentá \{#percentage-points-are-not-percent}
 
 Jedna kontrola rozhoduje, či má tento kurz vôbec právo učiť všetko ostatné — a práve v nej sa väčšina médií mýli. Ak [porozumenie klesne zo `67%` na `50%`](https://www.anthropic.com/research/AI-assistance-coding-skills) (`MEASURED`), ide o pokles o **17 percentuálnych bodov**, teda relatívny pokles o 25% — nie o „pokles o 17%“. Chyba v sebahodnotení v štúdii METR dosahuje **40 percentuálnych bodov**, nie 40%. Ani relatívny nárast nie je podiel: „bez kontroly sa zlúči o +31,3% viac PR“ neznamená, že bez kontroly zostáva 31% PR. Sú to rozdielne veličiny. Táto lekcia vznikla práve preto, aby napravila takéto nepresnosti. Stačí si ich raz pomýliť a strácaš právo túto tému vyučovať.
 
-## Najčastejšie opakovaný údaj v tejto oblasti — a prečo ho nemôžeš použiť
+## Najčastejšie opakovaný údaj v tejto oblasti — a prečo ho nemôžeš použiť \{#the-most-repeated-number-in-the-genre--and-why-you-cant-use-it}
 
 Vyskúšaj tieto kontroly na údaji, ktorý sa najčastejšie cituje na podporu tvrdenia, že „AI zhoršuje kvalitu kódu“: duplikácia blokov sa od roku 2023 údajne zvýšila o `81%` a podiel kopírovaného kódu vzrástol z `9,4%` na `15,7%`. Údaj pochádza od [GitClear](https://www.gitclear.com/the_ai_code_quality_maintainability_gap), dodávateľa analýzy kvality kódu. Keď ho preveríš všetkými štyrmi kontrolami, rozpadne sa ti v rukách. Nie je uvedený autor. Stránka nemá dátum. Zdrojové údaje sú súkromné, takže výsledok nemôže nikto zvonka reprodukovať. Chýbajú opis metódy aj kontrolné skupiny. A najvážnejší nedostatok: jednotlivé riadky kódu vôbec nie sú priradené k AI. Ide o časový rad z obdobia, keď sa používanie AI rozšírilo, nie o porovnanie kódu vytvoreného AI s kódom bez AI. Dokonca aj uvádzaný rozsah údajov sa medzi vydaniami mení: najprv 153 miliónov riadkov, potom 211 miliónov zmenených riadkov a napokon 623 miliónov analyzovaných zmien. Zakaždým ide o inú jednotku. Nespájaj tieto údaje do jedného trendu.
 
@@ -41,7 +41,7 @@ A teraz jemný, no zásadný rozdiel, na ktorom stojí celá lekcia. Slabinou Gi
 
 Poctivejšia verzia tvrdenia však obstojí. Jediným nezávislým testom príčinnej súvislosti je [párovaná štúdia Carnegie Mellon](https://arxiv.org/abs/2601.13597). Použila metódu difference-in-differences, teda porovnanie vývoja rozdielov, na 401 repozitároch so zavedeným nástrojom a 606 kontrolných repozitároch. V repozitároch, v ktorých sa ako hlavný nástroj používal agent, zistila nárast duplikácie o `7,92%`. Výsledok nebol štatisticky významný. V repozitároch, v ktorých sa AI používala najmä v IDE, išlo o `−0,94%`, opäť bez štatistickej významnosti. Štatisticky významný bol naopak nárast zložitosti (`+34,85%`) a upozornení zo statickej analýzy (`+17,73%`). Tvrdenie „AI zhoršuje udržiavateľnosť“ teda platí — príčinou je však zložitosť, nie duplikáty. Najčastejšie opakovaný údaj z tejto oblasti sa nedá reprodukovať; skutočné zistenie stojí nenápadne vedľa neho. A všimni si stupeň dôkazu: napriek všetkým desatinným miestam patrí údaj GitClear na stupeň `REPORTED`, nie `MEASURED`. Časový rad z obdobia zavádzania AI nie je meraním účinku AI.
 
-## Druhotné zdroje skresľujú oboma smermi
+## Druhotné zdroje skresľujú oboma smermi \{#the-secondary-layer-distorts-in-both-directions}
 
 GitClear nie je výnimka, ale typický príklad. Počas výskumu pre tento kurz sa rovnakým spôsobom rozpadlo šesť tvrdení. Neznamená to, že ľudia klamú. Prežíva to, čo sa dobre šíri, nie to, čo je vedecky poctivé. Preto tento kurz siaha po prvotných zdrojoch.
 
@@ -62,7 +62,7 @@ IBM stručne predstavuje päť tvrdení, ktoré o AI „každý pozná“, no pr
 
 :::
 
-## Niekoľko údajov, ktoré už možno poznáš
+## Niekoľko údajov, ktoré už možno poznáš \{#a-few-numbers-you-may-already-be-carrying}
 
 Niektoré skreslené tvrdenia sa opakujú tak často, že ich treba pomenovať a odložiť bokom.
 
@@ -71,13 +71,13 @@ Niektoré skreslené tvrdenia sa opakujú tak často, že ich treba pomenovať a
 - **„[Copilot zrýchľuje vývojárov o 55%](https://arxiv.org/abs/2302.06590)“** pochádza od výskumníkov z GitHubu, ktorí skúmali produkt GitHubu. V roku 2023 merali čas potrebný na jednu umelo vytvorenú úlohu — vytvorenie jednoduchého HTTP servera. Je to marketingový materiál, nie zistenie o tvojej práci.
 - **„Schopnosti AI sa zdvojnásobujú každých 7 mesiacov“** je zaokrúhlený [výsledok modelu METR](https://arxiv.org/abs/2503.14499) — 207 dní. [Revízia METR z roku 2026](https://metr.org/blog/2026-1-29-time-horizon-1-1/) odhaduje novšie tempo na 131 dní. Ide o regresiu založenú na dvanástich modeloch a úlohách, ktoré samotný METR označuje za „nenáročné“ a „statické“. Cituj tento odhad, nie údajnú zákonitosť.
 
-## Ako poctivo uviesť zistenie
+## Ako poctivo uviesť zistenie \{#how-to-state-a-finding-honestly}
 
 Nadšenci aj skeptici robia rovnakú chybu: preberú skutočný údaj, ale stratia vzorku, na ktorej vznikol, aj proxy metriku, ktorá mala zastupovať skutočnú hodnotu. Náprava má podobu jednej vety. Uveď údaj a pridaj to, čo sa pri ďalšom šírení najčastejšie vytratí: na kom sa meralo, aká proxy metrika zastupovala skutočnú hodnotu, kto výskum financoval a či výsledok ešte platí. „Pri časovom porovnaní desiatok tisíc inžinierov Microsoftu s ich vlastnými predchádzajúcimi výsledkami súviselo zavedenie agenta v príkazovom riadku s [približne 24% vyšším počtom zlúčených pull requestov](https://arxiv.org/abs/2607.01418) za štyri mesiace — zlúčený PR však nevyjadruje hodnotu, ktorú priniesol.“ Jediná veta obsahuje údaj, vzorku, proxy metriku aj konflikt záujmov. Napriek tomu sa číta dobre.
 
 Z tejto podoby vyplýva päť pravidiel. Nikdy neuvádzaj údaj o produktivite bez proxy metriky a vzorky. Nezamieňaj percentuálne body s percentami. Uveď konflikt záujmov priamo v texte. Ak zdroj prestane uznávať vlastný výsledok, povedz to ako prvé. A uprednostni výsledok, ktorý je v rozpore s obchodným záujmom samotného zdroja — napríklad keď Anthropic zverejní náklady svojho nástroja alebo OpenAI vyradí vlastný benchmark. Práve preto si takéto meranie zaslúži väčšiu dôveru. V odbore plnom konfliktov záujmov je to najsilnejší dostupný dôkaz.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Hodnotenie dôkazov potrebuje každý; mení sa iba závažnosť následkov.
 
@@ -85,7 +85,7 @@ Hodnotenie dôkazov potrebuje každý; mení sa iba závažnosť následkov.
 - **Malý tím.** Pri každom posudzovaní návrhu sa pýtajte: „Ako to vieme?“ V dokumente so zdôvodnením rozhodnutia citujte prvotné zdroje, nie blogy dodávateľov. *Zlyhanie, ktorému tým predídeš:* tímová norma, výber frameworku alebo pravidlá testovania sa oprú o údaj, ktorého pôvod nikto neoveril.
 - **Enterprise.** Stanov minimálnu požadovanú úroveň dôkazov pre rozhodovanie o nástrojoch. Aj nákupné oddelenie nech číta prvotné zdroje, nie prezentácie dodávateľov. *Zlyhanie, ktorému tým predídeš:* pravidlá pre tisíce ľudí budú vychádzať z nesprávne pochopenej štúdie. Práve tu sa naplno prejaví myšlienka, ktorá sa vinie celým kurzom: čím ďalej od samotnej práce sa rozhoduje, tým ľahšie sa nesprávne prečítaný výsledok zmení na *dôkaz*, o ktorý sa opierajú ďalší. Keď sa veta „štúdia hovorí X“ dostane do normy, všetci ďalší preberú chybu bez toho, aby niekedy videli zdroj.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Každému tvrdeniu priraď stupeň — `MEASURED`, `REPORTED` alebo `ASSERTED` — a pri ďalšom šírení ho nikdy nezvyšuj. Sláva nie je dôkaz.
 - Kontroluj menovateľ, konflikt záujmov a aktuálnosť údaja. Ak máš pochybnosti, otvor prvotný zdroj. Úryvky vo vyhľadávaní boli opakovane nesprávne; samotné štúdie nie.

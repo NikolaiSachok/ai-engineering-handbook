@@ -23,7 +23,7 @@ that happened: `DocumentUploaded`. An **event stream** records successive observ
 analyse over time. These [messaging contracts](https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/messaging)
 describe intent; a JSON payload alone cannot tell you which contract it carries.
 
-### Service Bus holds work until a receiver settles it
+### Service Bus holds work until a receiver settles it \{#service-bus-holds-work-until-a-receiver-settles-it}
 
 A Service Bus **namespace** [provides the endpoint and contains messaging entities](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview).
 A **queue** holds work for competing consumers: adding workers shares the backlog rather than broadcasting every message to
@@ -55,7 +55,7 @@ It does not repair or replay it. Service Bus has
 [no automatic DLQ cleanup](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues),
 so assign someone to inspect failures, fix their cause and decide whether to resubmit or remove them.
 
-### Event Grid routes notifications; Event Hubs retains streams
+### Event Grid routes notifications; Event Hubs retains streams \{#event-grid-routes-notifications-event-hubs-retains-streams}
 
 Event Grid connects event sources to interested handlers. For example,
 [Blob Storage can publish a blob-created event through a system topic](https://learn.microsoft.com/en-us/azure/event-grid/system-topics).

@@ -12,7 +12,7 @@ answer three different questions: **telemetry** decides whether you can *tell* a
 it stops. Telemetry here includes the sensors outside the system, because the worst failures send nothing from
 inside it. Skip any one and the loop is a pipeline with optimistic wording.
 
-## Some defect classes exist only in production
+## Some defect classes exist only in production \{#some-defect-classes-exist-only-in-production}
 
 Part III built a [chain of gates](../part-3-verification/layered-gates/index.md) that runs before anything lands. It
 cannot be complete, and not because it was built carelessly: a class of defects only exists under real traffic,
@@ -40,7 +40,7 @@ estimates that almost no vibe-coded projects have working observability and that
 properly solved, and argues that the difficult part is deciding what "good" means where engineering meets the
 business. The agent cannot settle that for you: until the brief defines it, there is nothing useful to instrument.
 
-## Detect failures through probes, alerts, and user reports
+## Detect failures through probes, alerts, and user reports \{#detect-failures-through-probes-alerts-and-user-reports}
 
 The hardest signal is often the one that never fires: a user did not finish sign-up, could not enter a value,
 or met a service that was down for them. A system that is down emits no data at all, as Beloborodov points
@@ -74,7 +74,7 @@ Agent-assisted triage puts customer data into a model's context: tickets carry n
 screenshots. Apply the same [real-data controls](./environments-migrations-data.md) to the triage agent:
 redact before the model sees the report and scope what the agent may read.
 
-## Staged rollout bounds the blast radius in audience and time
+## Staged rollout bounds the blast radius in audience and time \{#staged-rollout-bounds-the-blast-radius-in-audience-and-time}
 
 If a bad change is going to happen, the useful question is how many users meet it first. Three design points
 turn release into a controlled progression.
@@ -119,7 +119,7 @@ threshold a rollout ramp can be bound to, which is what turns "someone will noti
 
 :::
 
-## The kill switch must not need the pipeline that broke
+## The kill switch must not need the pipeline that broke \{#the-kill-switch-must-not-need-the-pipeline-that-broke}
 
 A rollback that requires a green CI run, a fresh build, and a deploy is not a kill switch. It is a hope with a
 lead time — and it fails in exactly the situation it exists for, when the pipeline itself is part of what went
@@ -143,7 +143,7 @@ trust. So the runbook needs both: revert the artefact, and halt the loop that pr
 [human router](../part-2-loop/roles-and-the-human.md) exercising an intervention that, by construction, cannot
 be delegated to the thing being stopped.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant does not move: **a change is observable in production, reaches its audience gradually, and can be
 stopped by one person in seconds without a rebuild.** What scales is how much of it runs without a human in the
@@ -163,7 +163,7 @@ path.
   feeding the escape ledger under data controls. *The failure it prevents:* a rollback capability that has
   never been exercised outside a slide deck, being discovered during the incident it was written for.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **Production is the terminal gate.** Some defects exist only under real traffic and real devices. Put a few
   signals, including a business signal, in the task's done-condition; have the critic check they are emitted.

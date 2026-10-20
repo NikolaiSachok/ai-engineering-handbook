@@ -16,7 +16,7 @@ decision to a full loop with planning and several agents — and at every step w
 latency, cost, and debugging difficulty. The engineering job isn't to "make it more agentic," it's to take the
 **minimum degree of agency the task needs**.
 
-## What's inside
+## What's inside \{#whats-inside}
 
 - **[Agentic RAG](./agentic-rag/index.md)** — retrieval turns from a step into an action inside a loop; the
   spectrum from router to full loop.
@@ -34,7 +34,7 @@ latency, cost, and debugging difficulty. The engineering job isn't to "make it m
 - **[Real agents — Claude, OpenAI, Gemini](./real-agents.md)** — the capstone: every Part II technique run
   across all three vendors, showing the same durable move under a dozen incompatible APIs.
 
-## Prerequisites
+## Prerequisites \{#prerequisites}
 
 All of Part I, especially the **Retrieval** layer (the agent calls it as a tool) and the **cross-cutting
 concerns** — here eval and observability move from nice-to-have to mandatory.

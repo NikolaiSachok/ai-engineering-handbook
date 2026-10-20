@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Prvá časť lekcie](./index.md) položila základ: tri spôsoby, ako používať model, perimeter, ktorý platforma predáva, a veľkú trojku poskytovateľov. Prešla katalógy modelov, triádu súladu okolo súkromia a rezidencie, spravovaný RAG a platformové guardrails (bezpečnostné mantinely), tri cenové modely (on-demand, rezervovaná priepustnosť, dávka) a to, ako rozhodnutie naozaj vzniká — a ukázala, že názvy sú len momentky. Toto je hlboký druhý prechod, pokročilá nadstavba nad tými istými platformami. Odpovedá na päť otázok, ktoré Prvá časť lekcie nechala otvorené: čo prispôsobuješ, keď prompt a RAG už nestačia, čo prevádzkuje agenta, keď ho raz postavíš, koľko to celé stojí a ako to modelovať, ako ostať prenositeľný naprieč cloudmi a kto sa toho vôbec smie právne dotknúť. Prvú časť lekcie predpokladáme po celý čas, neučíme ju nanovo. Všetko nižšie je momentka k polovici roka 2026 (júl 2026); názvy produktov datované, trvalou vecou je kategória.
 
-## Koľko stojí obsluhovať vlastný model
+## Koľko stojí obsluhovať vlastný model \{#what-a-custom-model-costs-to-serve}
 
 Každý hyperscaler ponúka rovnaký **rebrík prispôsobenia** a stúpa sa po ňom jedným smerom — od lacnejšieho a voľnejšieho k drahšiemu a tesnejšiemu. Naspodku je prompt engineering a RAG; nad nimi parametricky efektívne doladenie (LoRA a ďalšie metódy PEFT); potom plné supervised fine-tuning (SFT); ďalej preferenčné a reinforcement metódy — DPO (Direct Preference Optimization) a reinforcement fine-tuning (RFT); potom destilácia modelu (model distillation); a na vrchole pokračujúce predtrénovanie (continued pre-training). Názvy priečok aj zoznamy oprávnených základných modelov sa menia každý štvrťrok — konkrétnosti ber ako momentku, drž sa rebríka.
 
@@ -36,7 +36,7 @@ flowchart TD
 
 To všetko rozhoduje o tom, *kedy* sa oplatí na rebrík stúpať. Poradie: najprv prompt, potom RAG a fine-tuning až vtedy, keď ani jedno nestačí — a keď už poň siahneš, dolaďuj na formu, nie na fakty. Dobré dôvody: štýl a tón, pevná schéma výstupu, správanie pri odmietaní a formátovaní, menší špecializovaný model, ktorý je vo veľkom lacnejší a rýchlejší. Zlý dôvod: vpichnúť znalosť, ktorá sa mení — to je úloha RAG a zapiecť pohyblivý fakt do váh len zaručí, že časom zostarne. Vracia sa to isté rázcestie medzi prevádzkou u seba a API, aké nakreslila lekcia o [ingestione](../../part-1-rag/ingestion/index.md) pri embeddingových modeloch, a to isté rozhodnutie spravované-či-vlastné, aké pri RAG urobila Prvá časť lekcie — teraz na úrovni samotného modelu.
 
-## Prostredia, ktoré hostia agentovú slučku
+## Prostredia, ktoré hostia agentovú slučku \{#the-runtimes-that-host-the-agent-loop}
 
 Platformy z prvej časti lekcie obsluhujú modely. **Spravované agentové prostredie** (managed agent runtime) obsluhuje čosi o vrstvu vyššie: hostuje ti samotnú agentovú slučku a obaľuje ju perzistenciou relácií a pamäte, vrstvou pre nástroje, identitu a bránu, observability a scale-to-zero (škálovanie na nulu). To sú presne tie rozdiely oproti tomu, keď si agenta prevádzkuješ vo vlastnom kontajneri tak, ako to opísala lekcia o [servingu](../serving/index.md). Ako pri platformách, aj tu sú názvy produktov momentka; učiť sa treba kategóriu.
 
@@ -48,7 +48,7 @@ Tri prostredia:
 
 Postav ich vedľa seba — trvalé ponaučenie je ten rozdiel, nie zoznam funkcií. Oproti tomu, keď si slučku ušiješ v kontajneri sám, dostaneš šesť vecí rovno hotových: hostovanú slučku s dlho bežiacimi vykonávacími oknami; relácie plus krátkodobú aj dlhodobú pamäť; bránu pre nástroje, ktorá premení MCP server alebo API na volateľný nástroj, popri vrstve identity na konanie v cudzom mene a trezoroch tokenov; zabudovanú OpenTelemetry; izoláciu relácií pre bezpečnosť pri viacerých nájomcoch; a ekonomiku scale-to-zero. Čím za to platíš: uviaznutím u platformy a menšou kontrolou nad slučkou — presne to isté napätie „postaviť či kúpiť“, aké v Prvej časti lekcie nastolili rozhodnutia o guardrails a spravovanom RAG, a ktoré priamo rieši lekcia o [ekosystéme nástrojov](../tooling-ecosystem/index.md).
 
-## Ako namodelovať účet
+## Ako namodelovať účet \{#modelling-the-bill}
 
 Výdavky na LLM majú na každom cloude tie isté páky a **FinOps** je disciplína, ktorá ich ženie k číslu, aké vieš obhájiť — k **jednotkovej ekonomike** (unit economics) danej funkcie, teda k nákladu na požiadavku, na aktívneho používateľa, na dodanú funkciu. Modelovanie nákladov (cost modelling) je odhad tých výdavkov z tokenového tvaru záťaže ešte pred záväzkom; presné zľavy a dolárové čísla nižšie sú momentka a pre akékoľvek tvrdé číslo si znovu over živú cenníkovú stránku, no páky pod tým sú stabilné.
 
@@ -66,7 +66,7 @@ Tieto páky premení na zvládnuté číslo až disciplína. Tokenové výdavky 
 
 Keď prekročenie rozpočtu príde, býva to zvyčajne jeden z troch spôsobov zlyhania. Rozbehnutá agentová slučka posiela s každým kolom rastúci kontext, takže tokenové výdavky sa nabaľujú — to je problém nezastavenia cyklu a rozpočtu krokov z Druhej časti príručky, teraz vyčíslený v dolároch. Plazivé napučiavanie RAG kontextu ticho nafukuje každý vstup — pridá doň viac získaných úryvkov, než odpoveď potrebuje. A najčastejší zo všetkých je zároveň najlacnejší na nápravu: nechať vypnuté páky zadarmo, dávku a cachovanie.
 
-## Ostať prenositeľný — multi-cloud brána
+## Ostať prenositeľný — multi-cloud brána \{#staying-portable--the-multi-cloud-gateway}
 
 Prvá časť lekcie sa zavŕšila poistkou: aplikačnú vrstvu drž nezávislú od poskytovateľa. Jej konkrétnou podobou je **multi-cloud brána** (multi-cloud gateway) — jednotný router pred mnohými poskytovateľmi a cloudmi, ktorý hovorí jediným protokolom, tým OpenAI-kompatibilným API, ktoré lekcia o servingu už pomenovala, takže tvoja aplikácia sa rozpráva s jedným rozhraním a brána sa za ním vetví k ostatným. Vyhneš sa uviaznutiu, dostaneš failover naprieč cloudmi, smerovanie podľa ceny a centrálne miesto pre rate limity, kvóty, rozpočty a observability. Ktorá konkrétna brána vedie, je momentka; vzor nie.
 
@@ -85,7 +85,7 @@ flowchart LR
 
 Brána nie je zadarmo a existuje reálny dôvod nestavať ju. Pripne ťa na najmenší spoločný menovateľ funkcií, takže natívne cachovanie promptu daného poskytovateľa alebo jeho osobitný formát volania nástrojov môže za jednotným rozhraním vypadnúť. Pridá jeden latenčný skok. Stane sa jediným bodom zlyhania, ktorý si teraz sám žiada vysokú dostupnosť. A zakrýva fakt, že ten istý prompt sa u rôznych poskytovateľov môže správať odlišne — jednotné API to prekryje presne tam, kde to najviac chceš vidieť. Keď ti jeden cloud a tenký klient nezávislý od poskytovateľa už stačia, plná brána je zbytočné prekombinovanie. Tam, kde sa brána naozaj oplatí, si všimni bonus: ten istý router, čo vyberá najlacnejší endpoint, vie presadiť aj rezidenciu — udržať premávku v regióne alebo ju politikou pripnúť na suverénny endpoint. A to je most k poslednej sekcii.
 
-## Kto sa toho smie dotknúť
+## Kto sa toho smie dotknúť \{#who-is-allowed-to-touch-it}
 
 **Digitálna suverenita** (digital sovereignty) kladie tvrdšiu otázku než rezidencia. Kým rezidencia (z Prvej časti lekcie) hovorí, *kde* tvoje dáta ležia, suverenita je o tom, *kto* ich ovláda — kto k tvojim dátam a záťažiam môže pristupovať, prevádzkovať ich a právne si ich vynútiť, a pod čou jurisdikciou. Práve v tom rozdiele je celá pointa: rezidencia je miesto, suverenita je reťaz ovládania, a tie dve sa rozídu pod jedným konkrétnym modelom hrozby — extrateritoriálnym donútením. US CLOUD Act napríklad dosiahne na dáta v držbe poskytovateľa vlastneného v USA aj vtedy, keď fyzicky ležia v regióne EÚ. Túto medzeru zatvára práve suverenita — a dodáva sa cez regióny prevádzkované EÚ alebo jednotlivými štátmi, partnerské „dôveryhodné cloudy“ a úplne **air-gapped** (izolované od siete) nasadenia. Subjekty a dátumy sú tu pohyblivejšie než čokoľvek iné na tejto stránke.
 
@@ -107,7 +107,7 @@ Prehľadné pojmové uchopenie toho, čo suverénny cloud vlastne znamená — p
 
 :::
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Na rebrík prispôsobenia stúpaj po poradí — prompt, potom RAG, až potom fine-tuning — a dolaďuj štýl a schému, nie fakty, ktoré sa menia. Skrytým nákladom je obsluha: vlastný model zvyčajne potrebuje vyhradenú kapacitu, ktorá sa účtuje po hodinách, a pri malom objeme poplatok za hosting prevýši samotné tokeny, ako ukazuje Microsoftov vlastný príklad na $1 422 (z toho $1 224 čistý hosting).
 - Spravované agentové prostredie hostuje slučku a dá ti perzistenciu relácií a pamäte, bránu pre nástroje a identitu, observability, izoláciu relácií a scale-to-zero rovno v základe — Bedrock AgentCore, Foundry Agent Service, Vertex Agent Engine — výmenou za uviaznutie a menšiu kontrolu nad slučkou.

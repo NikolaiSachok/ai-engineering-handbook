@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Jedna hranica skôr, než sa vydáme na prechádzku (susedné lekcie pokrývajú, čo je vedľa). Všeobecná taxonómia pamäte, rozpočty krokov a tokenov a mašinéria riadenia slučky patria [plánovaniu a slučkám](../planning-loops/index.md) a [ich prehĺbeniu](../planning-loops/deep-dive.md); multiagentové topológie, ich protokoly a to, ako oznámkuješ tím, žijú v [multiagentových systémoch](../multi-agent/index.md) a [ich prehĺbení](../multi-agent/deep-dive.md); prenos pod tým (os agent↔nástroj je [MCP](../mcp/index.md), os agent↔agent je A2A) je samostatná lekcia; a prevádzka obsluhy modelov, pozorovateľnosti a hodnotenia je [tretia časť](../../part-3-production/overview/). Táto stránka vlastní frameworkovú vrstvu a zvyšok odkazuje, namiesto toho, aby ho odvodzovala nanovo. Prvú časť predpokladáme po celý čas.
 
-## Prejdime jeden graf
+## Prejdime jeden graf \{#walking-one-graph}
 
 Vezmi „agenta ako graf“ z prvej časti a sprav ho konkrétnym. [LangGraph](https://www.langchain.com/langgraph) modeluje agenta ako **StateGraph** (graf stavu): typovaný zdieľaný objekt stavu, z ktorého každý uzol číta a do ktorého zapisuje, plus uzly a hrany, ktoré cez neho posúvajú vykonávanie. Ten zdieľaný stav je celý trik, práve ním sa práca jedného kroku dostane k ďalšiemu bez toho, aby si ju prevliekal ručne.
 
@@ -40,7 +40,7 @@ Väčšinu času nič z toho ručne nezapájaš. LangGraph prináša predpriprav
 
 Keď je slučka raz grafom, všetko ostatné nižšie — checkpointy, odolnosť, human-in-the-loop (HITL — schválenie človekom), trasovanie — je niečo, čo k tomu grafu PRIPOJÍŠ, nie nová mašinéria, ktorú staviaš. Celé je to prepájanie, ktoré visí na uzloch a hranách, čo už máš.
 
-## Prežiť pád: odolné vykonávanie
+## Prežiť pád: odolné vykonávanie \{#surviving-a-crash-durable-execution}
 
 Perzistencia sa začína **checkpointerom**, komponentom, ktorý na každom **super-stepe** (super-step), teda pri každom prechode uzla, uloží snímku stavu grafu viazanú na thread (vlákno — rozhovor/beh). Toto ukladanie checkpointov (checkpointing) je krátkodobá pamäť LangGraphu viazaná na thread: stav jedného rozhovoru, ukladaný za pochodu. Obnoviť beh potom znamená len načítať posledný checkpoint a pokračovať od neho.
 
@@ -69,7 +69,7 @@ Prečo na tom pri agentoch záleží? Opäť pre ten rozdiel, ktorý vnáša AI.
 
 A tá zdržanlivosť, ktorá sprevádza každú schopnosť na tejto stránke: bezstavový jednorazový agent nepotrebuje nič z toho. Žiadny checkpointer, žiadny backend, žiadny režim odolnosti. Odolnosť sa vyplatí na dlhých, obnoviteľných alebo človekom strážených behoch — nestavaj Postgres kvôli jednokrokovému klasifikátoru.
 
-## Dva druhy pamäte — a prečo to nie je tím
+## Dva druhy pamäte — a prečo to nie je tím \{#two-kinds-of-memory-and-why-they-arent-the-team}
 
 Pamäť frameworku sa delí na jednej osi na dva rozsahy. Krátkodobá pamäť viazaná na thread je stav checkpointera — žije v rámci jedného threadu (rozhovoru, ktorý práve beží) a zaniká, keď thread skončí. Dlhodobá pamäť je samostatný **store** (dlhodobá pamäť frameworku), ktorý prežíva naprieč threadmi; jeho kľúčom sú menné priestory — povedzme jeden na používateľa — takže si agent zapamätá človeka aj medzi sedeniami, ktoré nezdieľajú žiadny thread. Tej dlhodobej strane hovorí LangGraph Store.
 
@@ -81,7 +81,7 @@ Multiagentové konštrukcie sedia na úplne INEJ osi a ľahko sa zlejú s pamä�
 
 Drž teda tie dve od seba — to je nosné rozlíšenie celej sekcie. Pamäť je **perzistencia stavu** (state persistence): čo prežije cez kroky a cez sedenia. Multiagentové konštrukcie sú **rozdelenie práce** (work distribution): ako sú subagenti navzájom pozapájaní. Sú kolmé na seba — môžeš mať jediného agenta s bohatou dlhodobou pamäťou, bezstavový multiagentový tím, alebo oboje naraz. Siahnuť po supervízorovi, aby si „získal pamäť“, je skutočná chyba návrhu. Framework každú schopnosť zabalí; KONCEPTY žijú v plánovaní a slučkách (pamäť) a multiagentových systémoch (topológie) a táto lekcia iba ukazuje, ako ich framework sprístupňuje. Dôsledok: po store naprieč threadmi siahni len vtedy, keď ťa checkpoint viazaný na thread naozaj nepokryje. Prispôsob konštrukciu potrebe.
 
-## Dva spôsoby, ako definovať toho istého agenta
+## Dva spôsoby, ako definovať toho istého agenta \{#two-ways-to-define-the-same-agent}
 
 Dva štýly definovania agenta a to rozdelenie prechádza každým frameworkom. **Imperatívne** (imperative) znamená, že agenta POSTAVÍŠ v kóde, krok po kroku: vytvoríš graf, `add_node`, `add_edge`, pridáš podmienenú hranu, skompiluješ. Tok riadenia píšeš sám. Graph API v LangGraphe je imperatívne presne takto. (LangGraph ponúka aj ľahšiu imperatívnu možnosť, **Functional API** — dekorátory `@entrypoint` a `@task`, ktoré ti dajú agenta ako funkciu so stavom vymedzeným na tú funkciu, na chvíle, keď chceš imperatívne riadenie bez kreslenia výslovného grafu.)
 
@@ -91,7 +91,7 @@ Kompromis má dve strany. Imperatívne ti kúpi riadenie a vyjadrovaciu silu (ľ
 
 Nič z toho nie je nové. Je to tá istá deliaca čiara deklaratívne verzus imperatívne, ktorú softvér narysoval už všade inde — SQL oproti procedurálnemu kódu, infraštruktúra ako konfigurácia oproti skriptom. Deklaratívne pre bežné tvary; imperatívne, keď narazíš na stenu. A väčšina reálnych frameworkov ti dá oboje a nechá ťa ich miešať — deklaratívnu „crew“ s imperatívnym únikovým východom pre ten jeden tok riadenia, ktorý konfigurácia nevie povedať. A tým sa kruh uzatvára: ručne stavaný graf z prvej sekcie je imperatívna podoba a konfiguráciou deklarovaná „crew“ je deklaratívna podoba TEJ ISTEJ multiagentovej topológie z [multiagentových systémov](../multi-agent/index.md). Jeden koncept, dva spôsoby, ako ho zapísať.
 
-## Jeden artefakt, každá produkčná starosť
+## Jeden artefakt, každá produkčná starosť \{#one-artefact-every-production-concern}
 
 Keďže agent je graf POMENOVANÝCH uzlov, framework vie trace (záznam trasovania) vytvoriť sám. Každé vykonanie uzla, volanie modelu i volanie nástroja sa stane **spanom** — úsekom trasovania — v strome rodič–dieťa, s malou inštrumentáciou od teba alebo úplne bez nej. To je ten obslužný kód „napojení na trasovanie“ z prvej časti, splatený samotnou štruktúrou grafu.
 
@@ -105,7 +105,7 @@ Všetko sa to zbieha do jedného objektu. Graf, ktorý si definoval v prvej sekc
 
 Záverečná zdržanlivosť zrkadlí „najprv primitíva“ z prvej časti. Toto všetko sú schopnosti, ktoré si zapneš, len keď ich chceš. Jednoduchý agent nepotrebuje nič z toho — žiadny checkpointer, žiadny store, žiadnu deklaratívnu konfiguráciu, žiadny backend na trace. Po každom kúsku siahni len vtedy, keď je beh dosť dlhý, aby potreboval odolnosť, dosť stavový, aby potreboval pamäť, alebo dosť zložitý, aby potreboval trasovanie. Pridať ktorúkoľvek z nich je vďaka frameworku lacné, ale zadarmo nie je ani jedna. A pridať niektorú, ktorú nepotrebuješ, je tá istá cena abstrakcie, pred ktorou varovala prvá časť — zaplatená dvakrát.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - LangGraph modeluje agenta ako StateGraph — zdieľaný objekt stavu, uzly, ktoré volajú model / volajú nástroj / rozhodujú, obyčajné hrany a podmienené hrany, ktoré smerujú podľa stavu. ReAct agent je uzol `agent` plus uzol `tools`, s podmienenou hranou z `agent` a spätnou hranou z `tools` do `agent`; `create_react_agent` ti ten graf podá poskladaný vopred.
 - Checkpointer ukladá stav na každom kroku s väzbou na `thread_id`, takže sa beh obnoví od posledného úspešného kroku namiesto reštartu — a tá istá perzistencia dovolí prerušeniu human-in-the-loop trvať hodiny. Keď sa čakanie skončí, celý prerušený uzol sa vykoná nanovo od prvého riadka. Režimy `durability` (`exit`, `async`, `sync`) menia rýchlosť za bezpečnosť; backendy sa voľne vymieňajú (in-memory na vývoj, Postgres alebo Redis na produkciu); bezstavový jednorazový agent nepotrebuje nič z toho.

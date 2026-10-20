@@ -7,13 +7,13 @@ slug: /part-3-verification/layered-gates/
 
 Prvá časť ukázala, že úzkym miestom nie je generovanie, ale overovanie. V druhej časti sme vytvorili cyklus, ktorý využíva lacné generovanie a nič nepustí ďalej bez brány kritika. Táto lekcia sa venuje samotnej bráne — a nepríjemnej skutočnosti, že každá jednotlivá brána predstavuje jediný bod zlyhania. Nie preto, že by bola nedbalo vytvorená, ale preto, že jej slepé miesto vyplýva z jej **mechanizmu**, nie z dôkladnosti. Statický analyzátor nemožno vyladiť tak, aby odhalil stav, v ktorom aplikácia uviazne počas behu. Vizuálne porovnanie zasa nedokáže zachytiť animáciu. Pokrytie sa nezlepší sprísňovaním jednej brány. Dosiahne sa vrstvením brán, ktorých mechanizmy sú slepé voči *rôznym* veciam. Aby to fungovalo aj v praxi, treba pri každej bráne presne zapísať, čo zo svojej podstaty nedokáže odhaliť, a podľa tohto slepého miesta zvoliť ďalšiu bránu.
 
-## Dôkladnosť nie je pokrytie
+## Dôkladnosť nie je pokrytie \{#thoroughness-is-not-coverage}
 
 Keď niečo prekĺzne, prvým impulzom býva sprísniť bránu, ktorá to nezachytila. Zvyčajne je to nesprávne riešenie. Brána prehliadne určitú triedu chýb z jedného z dvoch dôvodov: buď nebola dostatočne dôkladná, alebo jej mechanizmus *túto triedu vôbec nedokáže vnímať*. Prvý problém sa oplatí opraviť priamo v danej bráne. Druhý sa v nej nedá odstrániť bez ohľadu na vynaložené úsilie. Linter číta zdrojový kód, takže nikdy neuvidí ovládací prvok, ktorý nefunguje iba počas behu. Nástroj na vyhľadávanie vzorov zasa skúma štruktúru, takže nikdy nezistí, že obrazovka, ktorá vyzerá správne, zobrazuje nesprávnu hodnotu z aktuálneho stavu aplikácie. Ak sa sprísni brána, ktorá je voči určitej triede chýb zo svojej podstaty slepá, pribudne iba šum pri triedach chýb, ktoré dokáže zachytiť. Skutočná medzera v pokrytí zostane rovnako veľká.
 
 Birgitta Böckeler pomenúva rovnaký problém z pohľadu tvorby testovacieho prostredia. Keď vo svojej práci hodnotí kontroly pre programovacích agentov, kladie otázku, ktorú si väčšina tímov nikdy nepoloží: *„Ak senzory nikdy nezareagujú, svedčí to o vysokej kvalite alebo o nedostatočných detekčných mechanizmoch?“* Odpoveď hľadá pomocou mutačného testovania, pretože jediný spôsob, ako zistiť, či brána dokáže niečo zachytiť, je zámerne vložiť chybu a sledovať, či zareaguje. V jednom prípade našla súbor, ktorý vykazoval *100% pokrytie príkazov*, hoci preň **neexistovali žiadne jednotkové testy**. Údaj o pokrytí bol pravdivý, meral však iba to, či sa daný riadok *vykonal*, nie či niekto *overil jeho správanie*. Zelená brána vypovedá v prvom rade o mechanizme samotnej brány, až potom o kóde. Ak si nikdy nevidel, ako brána zlyhá pri chybe, ktorú si do systému zámerne vložil, nevieš, voči čomu je slepá — vieš iba to, že mlčí.
 
-## Pomenuj, čo jednotlivé brány nedokážu odhaliť
+## Pomenuj, čo jednotlivé brány nedokážu odhaliť \{#name-what-each-gate-cannot-see}
 
 Z toho vyplýva jednoduchý postup, ktorý takmer nikto nedodržiava: **pri každej bráne jednou vetou opíš triedu chýb, ktorú zo svojej podstaty nedokáže zachytiť, a ďalšiu bránu vyber tak, aby pokrývala práve túto triedu.** Slepé miesto nie je ospravedlnením nedostatkov brány, ale zadaním pre nasledujúcu bránu.
 
@@ -42,7 +42,7 @@ Jeff Crume zo spoločnosti IBM vysvetľuje aplikačnú bezpečnosť ako sústavu
 
 :::
 
-## Spoj deterministickú bránu so sémantickou
+## Spoj deterministickú bránu so sémantickou \{#compose-the-deterministic-gate-with-the-semantic-one}
 
 Najdôležitejší rozdiel medzi mechanizmami možno vyjadriť jednoducho. **Deterministická** brána (test, typová kontrola, doslovný grep) poskytuje opakovateľné výsledky a jej nález nemožno spochybniť argumentáciou. **Sémantická** brána (LLM, ktorý posudzuje, či kód znamená to, čo má) zachytí triedy chýb, ktoré nemožno vyjadriť žiadnym grepom, je však drahá a funguje iba s určitou pravdepodobnosťou. Obe sú slepé voči opačným veciam, preto ich spoj — a nikdy nedovoľ, aby jedna nahrádzala druhú. grep zakázanej konštrukcie zachytí každý jej doslovný výskyt, ale prehliadne parafrázu. Sémantický posudzovateľ parafrázu zachytí, no keďže funguje pravdepodobnostne, občas prepustí aj doslovný výskyt, ktorý mal nájsť. Vyspelý systém používa obe brány a každý nález *ktorejkoľvek* z nich považuje za skutočný problém. V uvedenom reťazci sa porušenie pravidla konkrétneho projektu hodnotí ako závažné *aj vtedy, keď všeobecný posudzovateľ mlčí*. Jeho mlčanie totiž nie je dôkazom, pretože danú triedu nepozná. Ak brána, ktorá je voči určitej triede slepá, nič neoznačí, neznamená to vôbec nič.
 
@@ -50,7 +50,7 @@ Druhý LLM v úlohe kontrolóra rozširuje pokrytie iba o chyby, ktoré prvému 
 
 Rovnaké vrstvenie používa tento kurz aj na vlastnú ochranu pred únikom informácií: lacná deterministická kontrola (grep podľa zoznamu slov spúšťaný pri každom commite) sa kombinuje s drahým posúdením (sémantickým auditom podľa neverejných pravidiel pre danú doménu). Vrstvia sa práve preto, že každá brána je slepá voči tomu, čo vidí druhá. grep nedokáže zachytiť únik doménových informácií vyjadrený neutrálnymi slovami a sémantický audit je príliš nákladný na to, aby sa spúšťal po každom stlačení klávesu. Ani jedna z nich sama osebe neposkytuje dostatočné pokrytie. Úplnú ochranu dáva až ich kombinácia.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Základné pravidlo platí pri každej veľkosti: **jedna brána je jediným bodom zlyhania; pokrytie vzniká rozmanitosťou mechanizmov a slepé miesto každej brány musí byť pomenované.** Mení sa iba to, kto ho pomenuje a ako sa dodržiavanie pravidiel vynucuje.
 
@@ -58,7 +58,7 @@ Základné pravidlo platí pri každej veľkosti: **jedna brána je jediným bod
 - **Malý tím.** Brány sú pomenované kontroly v CI a mapa slepých miest je spoločný dokument, ktorý tím posudzuje rovnako ako každý iný návrh a ktorý zahŕňa aj kontraktové brány na styčných miestach medzi tímami. *Akému zlyhaniu to predchádza:* dvaja ľudia predpokladajú, že obľúbená brána toho druhého pokrýva triedu chýb, ktorú v skutočnosti nedokáže svojím mechanizmom vidieť ani jedna.
 - **Enterprise.** Jednotlivé vrstvy sa povinne uplatňujú, ich nezávislosť sa dá preukázať a posudzovanie slepých miest je zámerná návrhová činnosť s určeným vlastníkom. Vo svete bezpečnosti sa tento prístup nazýva hĺbková ochrana: žiadna jednotlivá kontrola sa nepovažuje za neomylnú a každá počíta s tým, že kontrola pred ňou niekedy zlyhá. Na sade zámerne vložených chýb over, ktoré chyby zachytí každý kontrolór založený na LLM a ktoré nájde až druhý kontrolór; výsledok zaznamenaj ako charakteristiku brány. *Akému zlyhaniu to predchádza:* vznikne dlhý reťazec s jednotvárnymi mechanizmami, určený iba na splnenie formálnych požiadaviek — šesť brán rovnakého druhu, ktoré sú slepé voči rovnakej triede chýb, a preto proti nej neposkytujú lepšiu ochranu než jediná brána. Počet sa zhoduje s reťazcom v tabuľke vyššie, samotné brány nie.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Jedna brána je jediným bodom zlyhania. Jej slepé miesto vyplýva z jej **mechanizmu**, nie z dôkladnosti — statický analyzátor nemožno vyladiť tak, aby videl stav aplikácie počas behu.
 - Pokrytie vzniká **rozmanitosťou mechanizmov**, nie sprísňovaním jednej brány. Vrstvi brány, ktoré sú slepé voči *rôznym* veciam.

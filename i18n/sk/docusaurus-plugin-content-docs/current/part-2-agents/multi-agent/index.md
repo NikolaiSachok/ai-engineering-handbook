@@ -19,7 +19,7 @@ Ten istý prípad vo výklade IBM: kedy jeden agent prestane stačiť a prácu r
 
 :::
 
-## Prečo jedného agenta rozdeliť na viacerých
+## Prečo jedného agenta rozdeliť na viacerých \{#why-split-one-agent-into-several}
 
 Dôvody sú štyri a neťahajú rovnako silno.
 
@@ -28,7 +28,7 @@ Dôvody sú štyri a neťahajú rovnako silno.
 - **Modularita (modularity).** Nezávislých agentov postavíš, otestuješ a znovu použiješ oddelene — z rovnakého dôvodu, z akého monolit rozdelíš na služby.
 - **Paralelizmus (parallelism).** Nezávislé čiastkové úlohy bežia súbežne naprieč agentmi namiesto toho, aby sa radili za sebou v jednej slučke.
 
-## Topológie — ako sú agenti prepojení
+## Topológie — ako sú agenti prepojení \{#topologies--how-agents-are-wired-together}
 
 Ustálených tvarov je niekoľko a väčšina reálnych systémov je jeden z nich — alebo ich zloženina. Tomu, ako sú agenti prepojení, sa hovorí topológia (topology).
 
@@ -37,7 +37,7 @@ Ustálených tvarov je niekoľko a väčšina reálnych systémov je jeden z nic
 - **Hierarchická topológia (hierarchical).** Orchestrátori orchestrátorov — supervízor, ktorého vykonávatelia sú sami supervízormi vlastných tímov. Je to vzor orchestrátor–vykonávatelia dovedený do hĺbky, pre úlohy priveľké na jeden plochý tím.
 - **Debata / kritik (debate / critic).** Generujúci agent navrhne riešenie, agent-kritik ho spochybní — alebo niekoľko agentov nezávisle vytvorí vlastné riešenia a vyberie sa najlepšie. Nezávislé pohľady tu dvíhajú kvalitu z rovnakého dôvodu ako slepí recenzenti: pohľad zvonka zachytí to, čo by si jedna reťaz cestou zdôvodnila a nechala prejsť.
 
-## Komunikácia — správy a odovzdanie riadenia
+## Komunikácia — správy a odovzdanie riadenia \{#communication--messages-and-handoff}
 
 Agenti sa medzi sebou dorozumievajú odovzdávaním správ (message passing). Krok, ktorý prácu naozaj presunie, je **odovzdanie riadenia (handoff)**: agent podá druhému riadenie spolu s kontextom, ktorý k tomu patrí.
 
@@ -45,7 +45,7 @@ Kľúčové rozhodnutie pri návrhu je, aký kontext na každom odovzdaní putuj
 
 Je to multiagentová obdoba zásady z používania nástrojov, že *definícia nástroja je prompt* — tu platí, že *odovzdávacia správa je prompt*. Musí niesť presne to, čo má ďalší agent urobiť, a nič navyše.
 
-## Orchestrátor je sám iba agent
+## Orchestrátor je sám iba agent \{#the-orchestrator-is-itself-an-agent}
 
 Je lákavé brať orchestrátora ako akúsi novú súčiastku. Nie je. Orchestrátor je agent, ktorý naraz robí tri známe veci:
 
@@ -55,7 +55,7 @@ Je lákavé brať orchestrátora ako akúsi novú súčiastku. Nie je. Orchestr�
 
 Jeho „nástrojmi“ sú práve subagenti. To je celý trik: koncepčne nič nové, iba skoršie primitíva prevrátené na agentov namiesto funkcií.
 
-## Cena — a kedy to nerobiť
+## Cena — a kedy to nerobiť \{#the-cost-and-when-not-to}
 
 Doteraz šla reč o dôvodoch za. Teraz úprimná brzda, lebo multiagentové systémy sú presne to miesto, kde tímy prestrelia rozpočet.
 
@@ -66,13 +66,13 @@ Doteraz šla reč o dôvodoch za. Teraz úprimná brzda, lebo multiagentové sys
 
 Z toho plynie pravidlo. Jeden dobre navrhnutý agent zvyčajne vyhrá. Po multiagentovom systéme siahni len pre skutočnú špecializáciu, pre kontext, ktorý sa do jedného okna nezmestí, alebo pre naozaj paralelizovateľné čiastkové úlohy — tá istá disciplína *vezmi najjednoduchšiu úroveň, ktorá úlohu vyrieši* z [agentického RAG](../agentic-rag/index.md).
 
-## Konkrétny príklad — jeden si už asi použil
+## Konkrétny príklad — jeden si už asi použil \{#a-concrete-example--youve-likely-already-used-one}
 
 Redakčné a autorské tímy, ktoré tvoria príručku, ako je táto, *sú* multiagentové systémy typu orchestrátor–vykonávatelia. Vedúci — šéfredaktor alebo vedúci autor — rozloží prácu a nasmeruje ju na nezávislých špecialistov: literárneho redaktora, naivného čitateľa, overovateľa faktov, prekladateľa. Potom ich správy spojí do hotovej stránky. Špecialisti sú zámerne držaní navzájom slepí, presne z toho dôvodu ako pri debate a kritikovi: nezávislé pohľady zachytia viac než jeden recenzent v poradí za sebou.
 
 Deep-research systémy majú rovnaký tvar. Vedúci agent rozvetví prácu na niekoľko vyhľadávačov, ktorí bežia súbežne, a syntetizátor potom spojí, čo našli, do jednej odpovede. Tá istá topológia, iná úloha.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Multiagentový systém je drahšia úroveň, nie odmena — vezmi najjednoduchšiu úroveň, ktorá úlohu vyrieši, a buď pripravený povedať *kedy nie* rovnako pohotovo ako *kedy áno*.
 - Štyri dôvody rozdeliť: špecializácia (zúžená rola plus malá, neprekrývajúca sa sada nástrojov), izolácia kontextu (každý agent vlastné okno, orchestrátor vidí iba výsledky — dôvod, ktorý škáluje), modularita, paralelizmus.

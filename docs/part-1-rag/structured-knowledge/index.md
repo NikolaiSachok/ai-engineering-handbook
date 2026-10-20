@@ -58,7 +58,7 @@ unrelated predicates. The model was not wrong in any single document — it was 
 them. Hand it a closed list of permitted relation types and the problem disappears — for the cost of writing
 the list.
 
-### Where a schema actually bites
+### Where a schema actually bites \{#where-a-schema-actually-bites}
 
 Schema discipline pays in three separable places. Know which one you are buying:
 
@@ -75,7 +75,7 @@ A schema is what makes such a gate *possible* at all, because a gate needs somet
 concepts. That is the [semantic layer](#the-semantic-layer-names-two-different-things) in its second sense,
 and the domain model is the artefact it resolves against.
 
-### Domain schema is not response schema
+### Domain schema is not response schema \{#domain-schema-is-not-response-schema}
 
 You have already met a JSON Schema in this handbook, constraining the *shape of a model's reply* —
 required fields, permitted enum values, a parse that either succeeds or fails. An ontology constrains the
@@ -87,7 +87,7 @@ to the organisation, changes when the business changes, and outlives every promp
 one as the other and you end up with your domain model versioned alongside a prompt template, which is how
 a company discovers that its definition of "customer" was altered by a copy edit.
 
-### The honest default, and the test for leaving it
+### The honest default, and the test for leaving it \{#the-honest-default-and-the-test-for-leaving-it}
 
 For most LLM systems, a JSON Schema plus a validator delivers the working benefit at a fraction of the
 cost: a closed set of types and a rejection path. That is not a lesser option to apologise for; it is the
@@ -123,7 +123,7 @@ multi-hop, the proposal has not yet found its reason.
 
 The reason exists, and it is a different question class.
 
-### Three question classes, and only one of them is decisive
+### Three question classes, and only one of them is decisive \{#three-question-classes-and-only-one-of-them-is-decisive}
 
 **Local — the entity neighbourhood.** *"What do we know about this supplier and what is it connected to?"*
 A graph helps here. So does decomposition, and so does a well-filtered vector search over documents tagged
@@ -142,7 +142,7 @@ global questions directed at an entire text corpus"
 quietly turns into [entity-resolution work](./deep-dive.md#entity-resolution), a different discipline with a
 different budget.
 
-### The costs are decision criteria, not caveats
+### The costs are decision criteria, not caveats \{#the-costs-are-decision-criteria-not-caveats}
 
 **Extraction is an LLM pass over your entire corpus**, so it is priced like one. The clearest available
 figure comes from Microsoft Research's own follow-up work:
@@ -168,7 +168,7 @@ extracted relations are *true*. You need extraction precision against a labelled
 answer evaluation on the question types only the graph can serve. The [evaluation
 lesson](../cross-cutting/evaluation/index.md) has the machinery; the deep dive has the specifics.
 
-### When not to build a graph
+### When not to build a graph \{#when-not-to-build-a-graph}
 
 Small corpus. Lookup-shaped questions. Data that changes faster than you can re-extract. And the one that
 decides it in practice: nobody has committed to keeping the extraction schema correct. Without that owner,
@@ -199,7 +199,7 @@ They are related, in that both replace ad-hoc interpretation with a shared model
 layer, do not share tooling, and are usually owned by different teams. Say which one you mean in the first
 sentence and the rest of the conversation gets easier.
 
-### Text-to-SQL: selection instead of derivation
+### Text-to-SQL: selection instead of derivation \{#text-to-sql-selection-instead-of-derivation}
 
 The practical payload belongs to the metrics layer, and it is the clearest case in this lesson of structure
 changing how hard a problem is.
@@ -227,7 +227,7 @@ access policies applied deterministically before reaching the warehouse". That i
 retrieval deep dive insists on — [cut before the search, never
 post-filter](../retrieval/deep-dive.md) — arriving from the structured side.
 
-### Why enterprises want answers resolved to concepts
+### Why enterprises want answers resolved to concepts \{#why-enterprises-want-answers-resolved-to-concepts}
 
 Resolving to a concept buys two things a passage citation does not. **Consistency**: the same question
 phrased two ways reaches the same concept, and therefore the same answer. **Auditability**: you can show
@@ -238,7 +238,7 @@ This is where two of this lesson's three sections meet: the domain model being r
 [the ontology](#three-kinds-of-structure) — which is why "we need an ontology" and "we need a
 semantic layer" are so often the same request arriving from two departments.
 
-### What a semantic layer costs, and when to skip it
+### What a semantic layer costs, and when to skip it \{#what-a-semantic-layer-costs-and-when-to-skip-it}
 
 A semantic layer is a definition negotiation before it is a technical artefact, and the negotiation is the
 expensive part. Two departments that define "active customer" differently must stop, and someone with
@@ -268,7 +268,7 @@ Ontology, graph and semantic layer share one failure mode: each fails silently a
 ontology validates. A stale graph returns confident relations. A drifted metric renders in a dashboard.
 None of them throws. Every one of them needs a named owner and a check that would catch it.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Part I's pipeline assumes the answer exists in some passage; three question classes break that assumption,
   and each has a different structural answer.

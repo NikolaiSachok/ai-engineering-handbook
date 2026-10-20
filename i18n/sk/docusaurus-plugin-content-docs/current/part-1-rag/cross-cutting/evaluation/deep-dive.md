@@ -14,7 +14,7 @@ Najprv si vymedzme jednu hranicu. Táto stránka je o meraní, nie o oprave pipe
 
 A myšlienka, na ktorej celá stránka stojí a ktorú Časť 1 iba naznačila: väčšina moderných RAG metrík je vo vnútri sama LLM-sudcom. Metrika teda dedí sudcovu omylnosť — a práve preto sú kalibrácia a ľudské značky základom každého čísla tu.
 
-## Otvárame čierne skrinky metrík
+## Otvárame čierne skrinky metrík \{#opening-the-metric-black-boxes}
 
 V Časti 1 boli názvy metrík čierne skrinky — „faithfulness“, „answer relevance“ a pár ďalších, menovky, ktorým si veril bez toho, aby si videl dovnútra. Na pokročilej úrovni potrebuješ vedieť, čo každá z nich počíta, lebo výpočet ti povie, čo dané číslo dokáže a čo nedokáže zachytiť. A každá z týchto metrík má zdokumentované slepé miesto, ktoré jej názov zakrýva.
 
@@ -29,7 +29,7 @@ Pozeraj sa na tú štvoricu cez dve osi. **Os 1** (Časť 1 ju už načrtla): kt
 
 Ten rozdiel poriadne zaváži. Faithfulness a answer relevance bežia na živej produkčnej prevádzke bez jedinej označkovanej odpovede; context recall bez referencie nevypočítaš vôbec. Práve táto os rozhoduje, čo kde vieš odmerať — a preto golden set dostáva na konci vlastnú sekciu.
 
-### Faithfulness — grounding ako podiel podložených tvrdení
+### Faithfulness — grounding ako podiel podložených tvrdení \{#faithfulness--grounding-as-a-claim-level-ratio}
 
 **Faithfulness** je práve to číslo, ktoré Časť 1 aj vrstva Generation stále sľubovali sformalizovať: opiera sa odpoveď o nájdený kontext, alebo sa model zatúlal späť do vlastnej pamäte? Ragas ho počíta v troch krokoch:
 
@@ -52,7 +52,7 @@ A tu je to slepé miesto: faithfulness meria opretie o kontext, nie správnosť.
 
 Faithfulness teda zachytí halucináciu aj prebitie kontextu parametrickou pamäťou — zlyhanie, pred ktorým varovala vrstva Generation. Nesprávnu, ale poctivo podloženú odpoveď však prepustí rovno cez sito. Zaceliť túto medzeru je úloha pre referenciu — o tom nižšie.
 
-### Ako answer relevance ide od odpovede späť k otázke
+### Ako answer relevance ide od odpovede späť k otázke \{#how-answer-relevance-runs-the-question-backwards}
 
 **Answer relevance** meria to, čoho sa faithfulness vôbec nedotkne: či odpoveď naozaj rieši položenú otázku — je k veci a je úplná? Správnosť (correctness) je pritom samostatná os, ktorú zámerne necháva na pokoji.
 
@@ -66,7 +66,7 @@ Intuícia: z naozaj relevantnej odpovede vieš pôvodnú otázku zrekonštruova�
 
 Aj tu ostáva slepé miesto, čestná hranica hodnotenia bez etalónu: answer relevance výslovne neposudzuje faktickú správnosť; je to zhoda v zámere, nič viac. Postav ju vedľa faithfulness a máš celý dosah reference-free hodnotenia: faithfulness potvrdí, že odpoveď je podložená, answer relevance potvrdí, že je k veci. Správnosť je tretia vec a nedosiahne na ňu ani jedna z nich — na tú treba referenciu, známu správnu odpoveď alebo človeka. Žiadna vychytralosť bez etalónu tú medzeru nezacelí; je štrukturálna.
 
-### Prečo context precision záleží na poradí
+### Prečo context precision záleží na poradí \{#why-context-precision-cares-about-rank-order}
 
 **Context precision** sa presúva na stranu vyhľadávania a kladie ostrejšiu otázku než „koľko z vrátených chunkov bolo relevantných?“. Pýta sa, či sú tie relevantné zoradené navrchu. Je citlivá na poradie, čo obyčajný podiel relevantných nie je.
 
@@ -80,7 +80,7 @@ kde v_k je 1, keď je chunk na pozícii k relevantný, a 0 inak. Vzorcom získa�
 
 Toto je práve tá metrika, ktorá odmeňuje prácu rerankera z vrstvy Retrieval: dostať správne chunky do množiny je nevyhnutné, ale context precision skóruje až ich poradie — teda či naozaj skončia navrchu.
 
-### Context recall — tá jediná, čo potrebuje etalón
+### Context recall — tá jediná, čo potrebuje etalón \{#context-recall-is-the-one-that-needs-a-reference}
 
 **Context recall** kladie otázku, na ktorej pri vyhľadávaní záleží najviac: priniesli sme späť všetko, čo správna odpoveď potrebuje? Je to najpriamejšia miera zlyhania vyhľadávania, ktoré Časť 1 pomenovala — potrebný chunk, čo sa nikdy nedostal do výsledkov.
 
@@ -92,13 +92,13 @@ Lenže odpovedať na otázku „vyhľadali sme všetko potrebné?“ si žiada v
 
 Odstúp o krok a všimni si vzor v tej štvorici — v ňom je celá pointa. Tri z nich — faithfulness, answer relevance, context recall — sú samy malé LLM-pipeline, ktoré rozkladajú, overujú alebo generujú. *Metrika je sudca.* Číslo (skóre), ktoré ti Ragas vráti, je teda dôveryhodné presne natoľko, nakoľko je dôveryhodný LLM, čo ho počíta — a tým sa „ver metrike“ mení na „ver sudcovi“. Lenže sudcovi, ako Časť 1 povedala bez okolkov, sa na slovo veriť nedá. Ďalšia otázka je preto nevyhnutná: ako kalibruješ sudcu, ktorému ti kázali neveriť?
 
-## Kalibrácia sudcu, ktorému nemáš veriť
+## Kalibrácia sudcu, ktorému nemáš veriť \{#calibrating-the-judge-you-were-told-to-distrust}
 
 Časť 1 dala pokyn — sudca má zaujatosti, over ho voči ľuďom — ale nechala ho ako číre „čo“. Táto sekcia je „ako“: zaujatosti majú mená aj mechanizmy, existujú dva protokoly skórovania s odlišnými profilmi zlyhania a „over ho voči ľuďom“ je konkrétny postup podložený číslom.
 
 Vychádzame tu z práce, ktorá LLM-as-a-judge ustanovila ako metódu a spísala jej spôsoby zlyhania (Zheng a kol., „Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena“, arXiv 2306.05685, jún 2023).
 
-### Zaujatosti majú mená a každá má svoju nápravu
+### Zaujatosti majú mená a každá má svoju nápravu \{#the-biases-have-names-and-each-has-a-mitigation}
 
 **Zaujatosť podľa poradia** (position bias) — sudca uprednostní odpoveď, ktorú vidí ako prvú alebo na pevnom mieste, bez ohľadu na to, ktorá je naozaj lepšia. Náprava je mechanická: každé párové porovnanie spusti v oboch poradiach a víťazstvo počítaj len vtedy, keď verdikt prežije prehodenie. Ak sa s obráteným poradím obráti aj víťaz, rozhodlo poradie, nie kvalita, a výsledok je šum.
 
@@ -110,7 +110,7 @@ Ešte jedna hranica, bez preháňania: článok upozorňuje, že LLM-sudcovia s�
 
 Tie tri zaujatosti majú jednu vlastnosť, ktorú je ľahké pochopiť naopak: sú systematické. Náhodná chyba sa s počtom príkladov vyrovná; systematický posun nie — spusti desaťtisíc porovnaní a position bias nakloní všetkých desaťtisíc na tú istú stranu. Náprava je návrh protokolu a kalibrácia; viac dát s tým nespraví nič.
 
-### Druhý model ešte neznamená druhý mechanizmus
+### Druhý model ešte neznamená druhý mechanizmus \{#a-second-model-is-not-automatically-a-second-mechanism}
 
 Doteraz sme problémy sudcu opisovali ako *zaujatosti* — pomenované systematické posuny, proti ktorým existuje konkrétne opatrenie. Pod nimi leží predpoklad, ktorého sa ani jedna z tých náprav nedotkne a na ktorom stojí celý vzorec: *druhý model znižuje chybovosť len do tej miery, do akej jeho chyby nekorelujú s chybami prvého.*
 
@@ -122,7 +122,7 @@ Slovo „nezávislosť“ používa táto príručka pre dve rôzne veci. Pri ch
 
 Nič z toho nerobí sudcu nepoužiteľným — na hodnotenie voľného textu vo veľkom je sudca stále jedinou cestou. Mení to, čo z neho smieš tvrdiť. Keď sa sudca s tvojím generátorom zhodne, je to slabý dôkaz; keď sa nezhodne, je to silný dôkaz. Nezhodu používaj ako spúšťač eskalácie a v reťazci drž aspoň jednu bránu, ktorá nie je postavená na jazykovom modeli.
 
-### Dva spôsoby skórovania: jedna odpoveď, alebo dve proti sebe
+### Dva spôsoby skórovania: jedna odpoveď, alebo dve proti sebe \{#two-ways-to-score-one-answer-at-a-time-or-two-head-to-head}
 
 **Pointwise** (hodnotenie jednej odpovede) podá sudcovi jednu odpoveď a pýta absolútne skóre podľa hodnotiacich kritérií, prípadne s referenciou (referenčná odpoveď sa vezie v sudcovom prompte). Je lacné, škáluje a dáva ti absolútne číslo, na ktoré vieš postaviť prah. Háčik: absolútne skóre pláva — čo dnes sudca nazve sedmičkou, o týždeň môže byť šestka, a zosúladiť tie čísla naprieč behmi je vážne ťažké.
 
@@ -130,7 +130,7 @@ Nič z toho nerobí sudcu nepoužiteľným — na hodnotenie voľného textu vo 
 
 Voľba teda vyplýva z otázky. Po pairwise siahni, keď sa pýtaš „prekonala verzia B verziu A?“ — výber modelu, A/B test. Po pointwise vtedy, keď potrebuješ absolútny prah „je táto odpoveď dosť dobrá?“ v CI, kde niet druhej odpovede na porovnanie. Reference-guided pointwise je stredná cesta, keď máš etalónové odpovede, ktoré sudcovi predložíš: absolútne skórovanie ukotvené v známej správnej odpovedi.
 
-### Čo naozaj znamená „kalibrovať voči ľuďom“
+### Čo naozaj znamená „kalibrovať voči ľuďom“ \{#what-calibrate-against-humans-actually-means}
 
 Kalibrácia je krok, ktorý sudcovej škále dodá platnosť. Skôr než jeho číslam uveríš na tisícoch príkladov, zmeriaš jeho zhodu s ľudskými značkami na vzorke — ako často sa sudca a človek zhodnú na tom istom verdikte.
 
@@ -144,13 +144,13 @@ Tri výhrady na záver:
 2. sudca z tej istej modelovej rodiny ako hodnotený systém sa môže prevážiť na self-preference — pri každom tesnom porovnaní drž tie dva v rôznych rodinách;
 3. párové zoraďovanie mnohých systémov ťahá so sebou aj nárast O(n²), aj position bias — počítaj s oboma, skôr než po ňom siahneš.
 
-## Ľudské značky, na ktorých všetko stojí
+## Ľudské značky, na ktorých všetko stojí \{#the-human-labels-everything-rests-on}
 
 Vráť sa po oboch niťach naspäť a obidve ťa dovedú na to isté miesto. Reference-based metrika (context recall) potrebuje etalónovú odpoveď; sudca, nech beží akýmkoľvek protokolom, potrebuje na kalibráciu zhodu s človekom. Oboje sa opiera o ten istý základ — ľuďmi označkovaný etalón, teda golden set.
 
 Časť 1 povedala, že ho postavíš ručne alebo synteticky a že čistý poráža veľký. Tu je, ako sa naozaj stavia do podoby, voči ktorej sa dá kalibrovať.
 
-### Ako sa stavia golden set
+### Ako sa stavia golden set \{#building-the-golden-set}
 
 Príklad v golden sete je otázka spárovaná s referenciou: relevantné chunky, správna odpoveď, alebo oboje. Vedú k nemu dve cesty.
 
@@ -160,7 +160,7 @@ Príklad v golden sete je otázka spárovaná s referenciou: relevantné chunky,
 
 Tu prestáva byť „kvalita nad objemom“ heslom a dostáva svoj dôvod. Golden set je meradlo, o ktoré sa opiera každé ostatné číslo. Chyba v meradle neostane sedieť na mieste — pokazí každú metriku počítanú voči nemu aj každého sudcu kalibrovaného voči nemu, a spraví to neviditeľne, lebo pokazené čísla stále vyzerajú ako čísla. Malá, čistá sada reprezentatívna pre doménu poráža veľkú a zašumenú preto, že šum v prístroji sa bez obmedzenia prenesie na všetko, čoho sa prístroj dotkne.
 
-### Ako vieš, že značkám sa dá veriť: inter-annotator agreement
+### Ako vieš, že značkám sa dá veriť: inter-annotator agreement \{#knowing-the-labels-are-trustworthy-inter-annotator-agreement}
 
 Vnútri slova „ľuďmi označkovaný“ sa skrýva problém: ak dvaja experti prečítajú tú istú odpoveď a nezhodnú sa, či je správna, tá značka si názov etalón ešte nezaslúžila — je to mienka jedného experta.
 
@@ -175,7 +175,7 @@ Prečo si oprava o náhodu zaslúži miesto: na binárnej značke správne/nespr
 
 Nízka kappa ukazuje na hodnotiace kritériá: pokyny na značkovanie sú natoľko nejednoznačné, že ich dvaja pozorní ľudia čítajú rôzne. Náprava je pokyny zostriť a označkovať znova — brať nesúlad ako signál, ktorým je, nie prehlasovať toho, kto sa odchýlil. Je to tá istá disciplína hodnotiacich kritérií, akú si žiadal sudca v predošlej sekcii, a symetria je presná: nejednoznačné kritériá otrávia ľudské značky aj LLM-sudcu jedným a tým istým spôsobom.
 
-### Kam míňať ľudský rozpočet, aby sa to vrátilo
+### Kam míňať ľudský rozpočet, aby sa to vrátilo \{#spending-the-human-budget-where-it-pays}
 
 Ľudské značkovanie je v celej tej stavbe vzácny a drahý zdroj, takže značkovať naslepo je plytvanie. **Active sampling** (aktívne vzorkovanie) vyberá tie príklady, ktorých značky ťa naučia najviac, namiesto rovnomerného naberania. V praxi značkuješ tam, kde je sudca najmenej istý, kde sa ansámbel (súbor) sudcov rozchádza, alebo kde produkcia odhalila zlyhanie, aké golden set nikdy predtým neobsahoval — je to tá slučka z produkcie späť do offline z Časti 1, ktorá vracia skutočné chyby do označkovanej sady.
 
@@ -187,7 +187,7 @@ Jedna výhrada na záver: človeka nikdy celkom neautomatizuješ — jeho prácu
 
 Povedané raz a priamo, celý ten reťazec je toto: ľudia vymedzia pravdu na malej čistej sade; tá sada nakalibruje sudcu a podloží reference-based metriky; nakalibrovaný sudca zoškáluje meranie na objem, aký by žiadny ľudský tím nedosiahol; a ty to celé pravidelne zasievaš nanovo čerstvými ľudskými značkami. Vytiahni z tej reťaze ľudí a každé číslo po prúde meria voči ničomu.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Štyri metriky Ragas prestanú byť čiernymi skrinkami, len čo uvidíš ich aritmetiku: faithfulness je podiel podložených tvrdení zo všetkých; answer relevance je priemerný kosínus medzi pôvodnou otázkou a otázkami, ktoré z odpovede zregeneruje LLM; context precision je presnosť vážená poradím; context recall je podiel podložených referenčných tvrdení zo všetkých.
 - Organizujú ich dve osi — etapa (vyhľadávanie verzus generovanie) a bez etalónu verzus s etalónom. Faithfulness a answer relevance nepotrebujú etalónovú odpoveď a bežia na živej prevádzke; context recall bez referencie nevypočítaš.

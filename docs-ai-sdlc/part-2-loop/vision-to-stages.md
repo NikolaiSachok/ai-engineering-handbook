@@ -12,7 +12,7 @@ the loop begins, and it begins before a line of code: with how you cut a vision 
 decides everything downstream is quiet and easy to skip — **give every stage a done-condition you can check
 without trusting the agent that it's done.** A stage without one isn't a small stage. It isn't a stage at all.
 
-## A stage is a done-condition, not a step
+## A stage is a done-condition, not a step \{#a-stage-is-a-done-condition-not-a-step}
 
 The instinct is to break a goal into *things to do*: scaffold the API, add auth, wire the client. That is a list
 of steps, and a list of steps is not yet a plan you can run an agent against — because nothing in it tells you
@@ -26,7 +26,7 @@ can *confirm* or something you have to *believe*. In a loop where generation is 
 thing, the done-condition is the unit of trust — and stages are just the intervals between two checks you can
 actually run.
 
-## Checkable beats inferential
+## Checkable beats inferential \{#checkable-beats-inferential}
 
 Not all done-conditions are worth the same. Lesson 5 of Part I drew the line this course keeps returning to:
 [a control is either **computational** — deterministic, fast, and trustworthy (a test, a linter, a type check, a
@@ -41,7 +41,7 @@ you haven't cut small or concrete enough. The best planning question is not "wha
 but "what is the next thing whose completion I could verify in a few minutes with something that can't lie to
 me?" Size the stage to *that*.
 
-## The anti-pattern: stages sized to the model's confidence
+## The anti-pattern: stages sized to the model's confidence \{#the-anti-pattern-stages-sized-to-the-models-confidence}
 
 The common failure is to decompose by what the model seems able to do in one confident pass — a whole feature, a
 whole module — because it *offers* to, and the offer is persuasive. That inverts control. You end up with stages
@@ -55,7 +55,7 @@ The discipline is the reverse: let the size of the check set the size of the sta
 that cutting a feature into six verifiable stages costs you almost nothing in output and buys you six places to
 catch a problem while it's still small.
 
-## Why this is the verification bottleneck, at planning time
+## Why this is the verification bottleneck, at planning time \{#why-this-is-the-verification-bottleneck-at-planning-time}
 
 None of this is new to Part II; it is Part I's thesis moved one step earlier. "Verification is the bottleneck"
 sounds like a claim about *review* — something you do after code exists. But the leverage is upstream: **a plan
@@ -64,7 +64,7 @@ whether it can succeed.** Skip the done-conditions and you have deferred the bot
 meet it later, all at once, as a pile of generated code nobody scoped a way to check. The cheapest place to spend
 verification is in the shape of the plan.
 
-## The evidence, honestly graded
+## The evidence, honestly graded \{#the-evidence-honestly-graded}
 
 The field is early here, and most of the evidence comes from practitioners who agree, not a controlled trial.
 But the convergence is worth stating, because it points one way. Every
@@ -88,7 +88,7 @@ distinction that matters here: a sequence the model proposes is not yet a sequen
 
 :::
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **a stage is defined by a done-condition you can check, not by a step you can
 describe.** What changes is how independent and how enforced that check has to be.
@@ -103,7 +103,7 @@ describe.** What changes is how independent and how enforced that check has to b
   the implementer can wave past. *The failure it prevents:* stages that self-certify at scale, where "done"
   quietly means "the person who built it says so."
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - A step is a thing to do; a stage is a thing you can confirm is done. Plan in stages, and give each one a
   **done-condition** — an inspectable condition that holds every time you check it, once the stage is

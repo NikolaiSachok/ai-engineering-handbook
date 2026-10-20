@@ -11,7 +11,7 @@ V Častiach I a II sme poskladali samotný systém: statickú RAG pipeline a age
 aplikačná vrstva, ktorú trh práce pomenúva podľa nástrojov — presne tá, čo oddeľuje „u mňa na notebooku to
 funguje“ od „funguje pod záťažou, s observability a v rámci rozpočtu“.
 
-## Čo je vnútri
+## Čo je vnútri \{#whats-inside}
 
 - **[Serving — FastAPI + Docker](./serving/index.md)** — ako zabaliť model alebo agenta do služby: API,
   streaming, kontajner, inferenčné servery.
@@ -22,7 +22,7 @@ funguje“ od „funguje pod záťažou, s observability a v rámci rozpočtu“
   merať, čo strážiť, čo vidieť.
 - **[LLMOps — nasadenie, monitoring, náklady](./llmops/index.md)** — život LLM-systému po vydaní.
 
-## Predpoklady
+## Predpoklady \{#prerequisites}
 
 Potrebuješ celé Časti I a II: serving a prevádzka predpokladajú, že samotného RAG-agenta už máš zostaveného
 a rozumieš, ako je postavený.

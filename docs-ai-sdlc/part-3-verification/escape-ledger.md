@@ -22,7 +22,7 @@ do-not-flag list written by that same pass.
 
 :::
 
-## The ledger entry
+## The ledger entry \{#the-ledger-entry}
 
 A blameless postmortem asks what in the system let a failure through, not who erred. The escape ledger is that
 discipline pointed at your *gates* instead of your incident response, and its unit is one row:
@@ -45,7 +45,7 @@ Escapes arrive through production alerts, incident reviews, or user reports. A u
 last resort; a defect found through any of these routes becomes the same row. A report that arrives before
 any alert also names a [missing signal](../part-4-platform/observability-rollout.md).
 
-## What escapes actually look like
+## What escapes actually look like \{#what-escapes-actually-look-like}
 
 Here is the shape from a verification chain I ran in production — a five-gate automated chain in front of a human
 eyeball, the same one [Lesson 1](./layered-gates/index.md) drew. Over its life, roughly **seven distinct defect
@@ -75,7 +75,7 @@ new detection — the same promotion loop the escape ledger runs on your gates.
 
 :::
 
-## Hunt the class that is off every list
+## Hunt the class that is off every list \{#hunt-the-class-that-is-off-every-list}
 
 The escape ledger is reactive by construction — it learns from what already got out. The complement is a
 deliberate, proactive move against exactly the blind spot the ledger keeps exposing: periodically stop and ask,
@@ -94,7 +94,7 @@ note in a doc but a new gate or rule in the chain, ideally an executable one. Th
 agent may or may not read; an escape promoted into a lint rule, a test, or a hook is a boundary the next run
 *cannot* cross. The ledger is where verification gets better over time instead of merely staying constant.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **every escape names a gate's blind spot; record it, and promote it into
 the chain.** What changes is the ledger's weight and who owns the promotion.
@@ -110,7 +110,7 @@ the chain.** What changes is the ledger's weight and who owns the promotion.
   verification chain that never learns — impressive on paper, blind to the same classes it was blind to a year
   ago.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - An escape is data about the gate, not just about the bug. The defect you fix is worth one fix; the escape you
   *record* tells you where the chain is blind.

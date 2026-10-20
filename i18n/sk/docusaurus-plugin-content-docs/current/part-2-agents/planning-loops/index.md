@@ -19,7 +19,7 @@ Odvrátená strana celej lekcie: konkrétne spôsoby, ako sa slučka pokazí (ne
 
 :::
 
-## Dekompozícia úlohy: z cieľa postupnosť krokov
+## Dekompozícia úlohy: z cieľa postupnosť krokov \{#task-decomposition--turning-a-goal-into-steps}
 
 **Dekompozícia úlohy (task decomposition)** je rozklad cieľa na čiastkové úlohy, ktoré agent rieši po jednej.
 
@@ -29,7 +29,7 @@ Deje sa to dvoma spôsobmi. **Explicitne**: agent si plán vopred zapíše — z
 
 Keď plán spravíš výslovným, získaš dve konkrétne veci. Po prvé, dáš modelu oporu, o ktorú sa pri uvažovaní opiera — zapísaný plán ho drží na trati oveľa lepšie než snaha udržať celú úlohu v hlave. Po druhé, dáš sebe niečo, oproti čomu meriaš postup: pozrieš na zoznam a vidíš, ktoré čiastkové úlohy sú uzavreté a ktoré ešte nie. Ten druhý bod znie menej, než koľko váži — podrž si ho, ešte sa vráti ako sledovanie postupu a pracovná pamäť.
 
-## Dve stratégie, ako kroky zoradiť
+## Dve stratégie, ako kroky zoradiť \{#two-strategies-for-sequencing-the-steps}
 
 Keď už úlohu rozkladáš, ostáva otázka, ako z nej vypadnuté kroky usporiadať. Odpovede sú dve a ťahajú opačným smerom.
 
@@ -43,7 +43,7 @@ Kompromis v jednej vete: ReAct ti dáva pružnosť, plan-and-execute ti dáva š
 
 V praxi si čistú jednu z nich zvolíš málokedy. Skombinuješ ich: vysokoúrovňové kroky naplánuj vopred, každý z nich vykonaj lokálnou slučkou v štýle ReAct a keď krok zlyhá, preplánuj. Plán dáva globálnu niť, vnútorná slučka dáva lokálnu pružnosť a preplánovanie je kĺb medzi nimi.
 
-## Základná chyba: slučka, ktorá sa nezastaví správne
+## Základná chyba: slučka, ktorá sa nezastaví správne \{#the-core-failure--a-loop-that-wont-terminate-correctly}
 
 Príznačná chyba celej tejto vrstvy znie jednoducho: slučka sa nezastaví správne. Keď agentovi dáš voľnosť nad poradím krokov, dokáže sa nezastaviť tam, kde statická pipeline nikdy nemala problém — pevná cesta „vyhľadaj → vygeneruj“ vždy dobehne do konca, lebo nemá kam inam ísť. Slučka sa musí rozhodnúť, že skončí. A práve toto rozhodnutie je tá nová vec, ktorá sa môže pokaziť.
 
@@ -55,7 +55,7 @@ Pokazí sa v troch podobách:
 
 Tieto tri podoby dohromady sú **nezastavenie cyklu (non-termination)**. Nič z toho nie je exotické. Všetky tri sú cenou za voľnosť, ktorú zaviedol agentický RAG — tá istá voľnosť, vďaka ktorej slučka zvládne viackrokové otázky, ju dokáže aj roztočiť naprázdno.
 
-## Obrana vo vrstvách
+## Obrana vo vrstvách \{#defences--layered}
 
 Na nezastavenie cyklu neexistuje jediný vypínač, ktorý by ho vyriešil. Obranu skladáš do vrstiev — dole tie najhlúpejšie, ale najtvrdšie, hore tie najmúdrejšie.
 
@@ -69,7 +69,7 @@ Na nezastavenie cyklu neexistuje jediný vypínač, ktorý by ho vyriešil. Obra
 
 **Reflexia.** Najmúdrejšia vrstva — a zaslúži si vlastnú sekciu.
 
-## Reflexia: hlavná páka proti odklonu a tichému zacykleniu
+## Reflexia: hlavná páka proti odklonu a tichému zacykleniu \{#reflection--the-main-lever-against-drift-and-silent-looping}
 
 **Reflexia (reflection)** je vyhradený krok, na ktorom agent posúdi vlastnú trajektóriu. Napredujem? Funguje to naozaj? Nemám zmeniť smer? — a podľa odpovede sa rozhodne zastaviť, preplánovať alebo pokračovať.
 
@@ -77,7 +77,7 @@ Je to príbuzná sebaopravy (self-correction) z agentického RAG, len mierená o
 
 Prečo reflexia váži viac, než sa na prvý pohľad zdá. Rozpočet zlú slučku iba zastaví — vzniknúť jej nezabráni. Odklon a tiché zacyklenie sú pritom presne tie dve chyby, ktoré čistý rozpočet ochotne nechá bežať až po strop a až tam ich ukončí. Reflexia je vrstva, ktorá dokáže spozorovať, že sa slučka pokazila, a napraviť to ešte pred stropom — nasmerovať ju späť, nie ju len tvrdo useknúť. Rozpočet je tvoja záruka, že sa agent zastaví; reflexia je tvoja najlepšia šanca, že sa zastaví zo správneho dôvodu.
 
-## Kódovací agent: táto vrstva zblízka
+## Kódovací agent: táto vrstva zblízka \{#the-coding-agent--this-layer-made-visible}
 
 Ak chceš celú túto riadiacu vrstvu vidieť na vlastné oči, sadni si ku kódovaciemu agentovi. Zadaj mu programátorskú úlohu a sleduj, ako sa mu v priebežnom výstupe odvíjajú jeho reťaz v štýle ReAct „úvaha → akcia → pozorovanie“ aj sebaoprava — slučka, ktorá bola v agentickom RAG abstraktná, je zrazu priamo na obrazovke, krok za krokom.
 
@@ -85,13 +85,13 @@ Slabšie alebo staršie modely spravia spôsoby zlyhania názornými. Pri ťažk
 
 Práve tento každodenný reflex je pointa. Ručné prerušenie je **human-in-the-loop (schválenie človekom)** ako rozpočet poslednej záchrany — ty sám si tým stropom, ktorý agent sám od seba nedosiahol. Je to najkonkrétnejší argument, aký existuje, prečo majú zmysel rozpočty, reflexia aj možnosť, aby človek prevzal riadenie: tú chybu si už videl na vlastné oči a siahol si po tlačidle stop.
 
-## Dlhé trajektórie stoja kontext
+## Dlhé trajektórie stoja kontext \{#long-trajectories-cost-context}
 
 Ešte jeden náklad, tichší než nezastavenie cyklu, no vždy prítomný. Slučka si krok za krokom plní kontext volaniami nástrojov a ich výsledkami. Na dlhej trajektórii to znamená, že kontext napuchne, cena za každé volanie rastie a udrie **lost-in-the-middle (strata uprostred)** — model si zo stredu dlhého kontextu všíma najmenej, takže prvé kroky trajektórie mu môžu fakticky vypadnúť z dohľadu presne vtedy, keď ich agent potrebuje.
 
 Ako to zmierniť, patrí do druhej časti lekcie, ale pomenujme to už teraz: zhŕňaj históriu, ako rastie, drž v **pracovnej pamäti (scratchpad)** len to, čo je ešte relevantné, a udržiavaj štruktúrovaný zoznam toho, čo je už hotové. To posledné je opäť tvoj výslovný plán, ktorý sa vypláca.
 
-## Kam to patrí a čo to stojí ďalej
+## Kam to patrí a čo to stojí ďalej \{#where-this-sits--and-what-it-costs-downstream}
 
 Najprv umiestnenie. Toto je riadiaca vrstva nad slučkou z agentického RAG a nad nástrojmi z lekcie o ich používaní: dekompozícia a zastavenie sedia na vrchu slučky „úvaha → rozhodnutie → akcia → pozorovanie“, ktorá volá nástroje. Nič z tejto lekcie tie predchádzajúce nenahrádza — iba riadi to, čo postavili.
 
@@ -99,7 +99,7 @@ Dva dôsledky ďalej v reťazci zaostrujú body, na ktoré si už narazil. **Obs
 
 A evaluácia teraz meria kvalitu trajektórie, nie len „odpovedal správne?“. Došiel k cieľu, a za koľko krokov? Efektívnosť a zastavenie sú teraz súčasťou kvality — agent, ktorý dá správnu odpoveď za štyridsať krokov tam, kde by stačilo šesť, nie je dobrý agent.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Táto lekcia je riadiaca vrstva nad slučkou a nad nástrojmi — dekompozícia a zastavenie sediace na vrchu slučky „úvaha → rozhodnutie → akcia → pozorovanie“. Riadi voľnosť, ktorú model dostal v predchádzajúcich lekciách.
 - Dekompozícia úlohy mení cieľ na postupnosť čiastkových úloh, buď výslovne (zapísaný plán, ktorý vieš sledovať), alebo implicitne (plán, ktorý jednoducho vznikne v slučke). Zapísať ho pomáha modelu aj tebe.

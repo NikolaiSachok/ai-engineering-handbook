@@ -25,7 +25,7 @@ artefakty umožňujú slučku kontrolovať, no ak ich neriadiš, ju zahltia. Zah
 zmeral. Čím jemnejšie rozkladáš prácu, tým viac narastá. Prvý, koho z procesu vytlačí, je človek, ktorému mali
 artefakty slúžiť. Preto túto časť čítaj ako úvahu o tom, koľko informácií zaznamenať, nielen ktoré.
 
-## Čo je vnútri
+## Čo je vnútri \{#whats-inside}
 
 - **[Od vízie k overiteľným etapám](./vision-to-stages.md)** — každej etape priraď podmienku dokončenia,
   ktorú vieš potvrdiť bez toho, aby si musel veriť agentovi. Uprednostni kontrolu, ktorej výsledok nemožno
@@ -43,7 +43,7 @@ artefakty slúžiť. Preto túto časť čítaj ako úvahu o tom, koľko inform�
   nad ňou a smeruješ prácu. Spoznáš tri nevyhnutné kontrolné body aj dôvod, prečo kontrola všetkého vedie
   k mechanickému schvaľovaniu namiesto skutočného dohľadu.
 
-## Predpoklady
+## Predpoklady \{#prerequisites}
 
 Z I. časti nepotrebuješ všetko. Rozhodujú dve myšlienky: samotné **úzke miesto overovania** a rozlíšenie
 **výpočtová kontrola verzus kontrola založená na úsudku** z lekcie *Pravidlá, ktoré platia*. Prvá lekcia
@@ -51,7 +51,7 @@ tejto časti sa na toto rozlíšenie priamo odvoláva a znova ho neodvodzuje. Vr
 projektu a vrstvenie znalostí* poskytuje užitočné pozadie k zahlteniu artefaktmi, no nie je nevyhnutným
 predpokladom.
 
-## Čo sa mení po tejto časti
+## Čo sa mení po tejto časti \{#what-changes-after-this-part}
 
 Dokážeš z plánu vyčítať, či podľa neho môžeš spustiť agentov. Vieš posúdiť, či každá etapa pomenúva to, čo po
 nej bude platiť, či veľkosť jednotiek zodpovedá kontrole, ktorú naozaj dokážeš vykonať, a či cez niektorú

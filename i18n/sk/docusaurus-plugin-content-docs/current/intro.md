@@ -11,7 +11,7 @@ Praktický sprievodca produkčnými systémami RAG (retrieval-augmented generati
 prvých princípoch: nie „aké nástroje existujú“, ale **prečo** je systém postavený tak, ako je, a kde sa láme.
 Materiál je živý — rastie vrstvu po vrstve, ako kurz postupuje.
 
-## Pre koho je táto príručka
+## Pre koho je táto príručka \{#who-this-handbook-is-for}
 
 Spája naraz tri roly:
 
@@ -24,7 +24,7 @@ Predpokladáme skúseného čitateľa: bežné hotové nástroje (vektorové dat
 základov — namiesto toho ukazujeme **AI-deltu**, teda čo sa v skutočnosti zmení, keď ich nasadíš na systém
 s LLM.
 
-## Štruktúra
+## Štruktúra \{#structure}
 
 - **Časť I — RAG:** ingestion, retrieval, generation, štruktúrované znalosti a prierezové aspekty (eval,
   guardrails, observability) statickej pipeline.

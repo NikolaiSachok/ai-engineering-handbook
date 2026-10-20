@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Prvá časť lekcie](./index.md) postavila službu a pomenovala jej časti: rozdelenie na aplikáciu a model, to, ako asynchrónne FastAPI sadne na záťaž viazanú na I/O (vstup/výstup), streaming (priebežné odosielanie výstupu) cez SSE, produkčný kontrolný zoznam, dockerové rozdiely pri váhach, GPU a studenom štarte, a inferenčné servery s continuous batching a PagedAttention načrtnuté zhruba. Toto je hlboký druhý prechod — tá istá služba pod reálnou záťažou, kde sa z tých názvov stanú vnútorné mechanizmy, spôsoby zlyhania a sada rozhodnutí „kedy to nerobiť“. Prvú časť predpokladáme po celý čas a nič z nej neučíme nanovo.
 
-## Workery, slučka udalostí a odkiaľ sa naozaj berie súbežnosť
+## Workery, slučka udalostí a odkiaľ sa naozaj berie súbežnosť \{#workers-the-event-loop-and-where-concurrency-really-comes-from}
 
 Server uvicorn štandardne beží ako jediný proces: jedna slučka udalostí (event loop) pripnutá na jedno jadro CPU. Aby si využil viac než jedno jadro, spustíš viacero procesov typu ASGI worker (pracovný proces) — samostatné kópie ASGI-servera (uvicorn), na ktorých beží tvoja aplikácia. K roku 2026 sú v hre dva spôsoby, ako ich spustiť: klasický gunicorn ako správca procesov, ktorý poháňa `uvicorn.workers.UvicornWorker`, a vlastný zabudovaný prepínač `--workers` priamo v uvicorne; príkaz `fastapi run` ho obaľuje. Dokumentácia FastAPI k nasadeniu predstavuje oba; ber presné odporúčanie ako datovaný detail a podrž si to, čím worker *je*.
 
@@ -24,7 +24,7 @@ Opačný omyl je horší. Blokujúce volanie vnútri obslužnej funkcie `async d
 
 Rovnakú starostlivosť si žiada aj vypínanie, len čo sa odpovede začnú streamovať. Na `SIGTERM` má server prestať prijímať nové spojenia a rozbehnuté dokončiť v rámci času na doznenie (graceful timeout) — a LLM-stream môže bežať desiatky sekúnd, dlhšie než predvolené okno na doznenie. Nastav graceful timeout na svoj najdlhší očakávaný stream, inak ti priebežné nasadenie (rolling deploy) odreže odpovede v polovici generovania. (Jedna súvisiaca vec okolo streamingu sa pod záťažou nemení a neodvádzame ju nanovo: voľba medzi validáciou celej odpovede z vyrovnávacej pamäte a validáciou po častiach, ktorú na streamovanú odpoveď kladú výstupné [guardrails (bezpečnostné mantinely)](../../part-1-rag/cross-cutting/guardrails/index.md) — pokrýva ju prvá časť.)
 
-## Ohraničiť prácu skôr, než sa služba utopí
+## Ohraničiť prácu skôr, než sa služba utopí \{#bounding-the-work-before-the-service-drowns}
 
 Vďaka asynchrónnosti je držať otvorené spojenie lacné — a práve tá lacnosť je pasca: zvádza službu prijať oveľa viac práce, než dokáže dokončiť.
 
@@ -51,7 +51,7 @@ flowchart TB
     end
 ```
 
-## Vnútri inferenčného servera
+## Vnútri inferenčného servera \{#inside-the-inference-server}
 
 Priepustnosť inferenčného servera nie je kúzlo; pochádza z hŕstky konkrétnych mechanizmov a vLLM je referenčnou implementáciou väčšiny z nich. Začni plánovačom. Continuous batching je v skutočnosti iteration-level scheduling (plánovanie na úrovni iterácie): plánovač priberá nové požiadavky a vyraďuje dokončené v každom kroku dekódovania, namiesto statického batchingu, pri ktorom celý batch (dávka) čaká na svojho najpomalšieho člena, kým sa smie rozbehnúť ďalší. Myšlienka pochádza z článku Orca (Yu a kol., OSDI 2022), ktorý plánovanie na úrovni iterácie zaviedol; vLLM, TGI aj TensorRT-LLM naň nadväzujú.
 
@@ -77,7 +77,7 @@ Kvantizáciu si ľudia pravidelne zamieňajú s dvoma ďalšími operáciami: v�
 
 Rozhodnutím v servingu je len prvá z nich, a preto stojí na tejto stránke; zvyšné dve patria na [rebrík prispôsobenia](../cloud-platforms/deep-dive.md). Treba odlíšiť ešte jeden význam slova *destilovať*, ktorý s tými tromi nesúvisí: **vydestilovaný nález**, ktorý sa medzi krokmi prenáša v [prehĺbení vrstvy Agentic RAG](../../part-2-agents/agentic-rag/deep-dive.md), je zhutnený vyhľadaný text vnútri jedinej požiadavky. Žiadny tréning, žiadne nové váhy — rovnaké sloveso, celkom iná operácia.
 
-## Keď sa model už nezmestí na jedno GPU
+## Keď sa model už nezmestí na jedno GPU \{#when-a-model-no-longer-fits-on-one-gpu}
 
 Niektoré modely sa na jedno GPU jednoducho nezmestia, a vtedy ich rozdelíš — lenže spôsob rozdelenia rozhoduje o tom, aký hardvér budeš potrebovať.
 
@@ -101,7 +101,7 @@ flowchart LR
     end
 ```
 
-## Plánovanie a autoškálovanie GPU na Kubernetes
+## Plánovanie a autoškálovanie GPU na Kubernetes \{#scheduling-and-autoscaling-gpus-on-kubernetes}
 
 Na Kubernetes je GPU plánovateľný zdroj a jeho tvar má následky. Device plugin od NVIDIA ho ohlasuje ako `nvidia.com/gpu`, celé číslo — takže pod (nasadzovacia jednotka Kubernetes) štandardne žiada celé GPU a o zlomok GPU požiadať nemožno. Tie drahé stroje si pre záťaže, ktoré ich naozaj potrebujú, udržíš cez node taints a tolerations alebo cez node affinity na vyhradené GPU node pooly, aby obyčajné pody na GPU-uzle nikdy nepristáli.
 
@@ -111,7 +111,7 @@ Keď je prideliť celé GPU jednému podu zbytočne hrubé, jedno GPU vedia zdie
 
 Cold start (studený štart) z prvej časti spôsobí, že každý reaktívny autoscaler mešká. Nová replika musí stiahnuť viacgigabajtový image a načítať váhy — desiatky sekúnd až minúty — skôr, než obslúži jedinú požiadavku, takže škálovanie na špičku dorazí z princípu neskoro. Odpoveďou je držať teplú rezervu alebo škálovať predikatívne, nie čisto na požiadanie; a Cluster Autoscaler vie pridať GPU-uzly, keď sa pool minie, no to trvá ďalšie minúty: príprava uzla navrch k sťahovaniu image. Nad holým plánovačom sedia vrstvy modelového servingu, ktoré to sprístupňujú: KServe a Knative dávajú autoškálovanie riadené požiadavkami — vrátane scale-to-zero (škálovania na nulu) a škálovania podľa súbežnosti — a Ray Serve je ďalšia. Tie názvy produktov sa vymenia; autoškálovanie riadené požiadavkami ako schopnosť nie.
 
-## Prenajať si GPU po sekundách
+## Prenajať si GPU po sekundách \{#renting-the-gpu-by-the-second}
 
 Na opačnom konci spektra stojí **serverless GPU** — prenajímaš si po sekundách: kapacita GPU účtovaná za sekundu, so škálovaním na nulu, keď je nečinná, a bez klastra na prevádzku. K roku 2026 sem patria Modal, serverless úroveň RunPodu, Replicate, Baseten a Beam — popri nich Fal a Cerebrium — plus Google Cloud Run s pripojeným GPU; ponuka skutočne serverless GPU je u AWS pomerne slabá. Ako v prvej časti, zoznam mien je momentka, ktorá zostarne; trvá kategória.
 
@@ -119,7 +119,7 @@ Tá istá vlastnosť, ktorá kategóriu definuje, je zároveň jej ústredným p
 
 To rozhoduje, kedy po ňom siahnuť. Špičková, nárazová, vývojová alebo dávková záťaž serverless sadne, lebo za nečinnú kapacitu medzi špičkami neplatíš. Ustálená vysoká záťaž — a rovnako čokoľvek, čo studený štart neznesie — chce namiesto toho vyhradené, stále teplé GPU: pri vysokom vyťažení lacnejšie na token a bez dane za studený štart. Celé rozhodnutie prenajať-či-vlastniť, a kde má model vôbec bežať, je témou lekcie o [cloudových platformách](../cloud-platforms/index.md); toto je len jej pohľad zo strany servingu.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Worker je proces — dá ti jadrá, nie súbežnosť; slučka udalostí už strieda stovky čakajúcich požiadaviek, takže počet workerov sa riadi jadrami a prácou viazanou na CPU. Blokujúce volanie v asynchrónnej obslužnej funkcii zmrazí každú požiadavku v procese, tak ho presuň na vlákno — a pri vypínaní daj dlhým streamom čas dobehnúť.
 - Neohraničená súbežnosť LLM-službu rozloží a Littleov zákon urobí aj z nízkej miery požiadaviek vysokú súbežnosť. Ohranič ju semaforom a ohraničenou frontou, prebytok zhoď cez `429` a `Retry-After` a strop polož na vzácny GPU- alebo poskytovateľský slot, nie na lacné spojenie.

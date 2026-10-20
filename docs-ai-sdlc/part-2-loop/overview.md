@@ -24,7 +24,7 @@ artifacts that make the loop checkable are the same ones that, unmanaged, drown 
 measured, it gets *worse* when you decompose more finely, and the first thing it evicts is the human it was
 supposed to serve. So read this part as an argument about how much to write down, not only about what.
 
-## What's inside
+## What's inside \{#whats-inside}
 
 - **[From vision to verifiable stages](./vision-to-stages.md)** — give every stage a done-condition you can
   confirm without trusting the agent that it's done. Prefer the check that can't be argued with, and size the
@@ -38,14 +38,14 @@ supposed to serve. So read this part as an argument about how much to write down
 - **[Roles, and where the human stays](./roles-and-the-human.md)** — on the loop, not in it. Three
   irreducible checkpoints, and why "review everything" is a rubber stamp rather than oversight.
 
-## Prerequisites
+## Prerequisites \{#prerequisites}
 
 Not all of Part I. Two ideas carry the weight: the **verification bottleneck** itself, and the split between
 **computational and inferential** controls from *Rules that hold* — the first lesson here builds on that split
 by name and does not re-derive it. The tiering discipline from *Project memory* is useful background for the
 overload thread but is not load-bearing.
 
-## What changes after this part
+## What changes after this part \{#what-changes-after-this-part}
 
 You can read a plan and say whether agents can be run against it: whether each stage names a condition that holds
 every time you check it, whether the units are sized to a check you could actually perform, and whether anything crosses a

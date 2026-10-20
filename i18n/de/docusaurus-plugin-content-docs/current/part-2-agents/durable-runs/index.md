@@ -34,7 +34,7 @@ Korrektur eingeht. Der Datensatz muss **fünfzehn Monate** lang vorgelegt werden
 Entwickler, der den derzeit laufenden Scheduler jemals debuggt hat, verlässt das Team in **sechs Wochen**.
 Jeder Abschnitt unten ist eine Entscheidung, die dieses Szenario erzwingt.
 
-## Run-State im Checkpointer – Voraussetzung für die Fortsetzung
+## Run-State im Checkpointer – Voraussetzung für die Fortsetzung \{#a-checkpointer-is-an-ownership-claim}
 
 Lesen Sie die Dokumentation zur Persistenz eines Frameworks als Anspruch auf Zuständigkeit und nicht als
 Funktionsliste. Der Checkpointer bietet nicht an, sich einige Angaben für Sie zu merken. Er beansprucht,
@@ -80,7 +80,7 @@ Der Satz, den Sie aus diesem Abschnitt mitnehmen, ist kurz. Der Checkpointer hä
 ist da, damit ein Durchlauf fortgesetzt werden kann. Er ist kein Nachweis für ein Audit und kein führendes System.
 Ihn dennoch dafür zu verwenden, ist eine Entwurfsentscheidung – ob Sie sie bemerken oder nicht.
 
-## Zwei Speicher, nur eine Autorität
+## Zwei Speicher, nur eine Autorität \{#two-writers-one-truth}
 
 Die Lösung besteht nicht darin, dem Framework zu misstrauen. Legen Sie einmalig und ausdrücklich fest,
 welcher Speicher **maßgeblich** und welcher **abgeleitet** ist. Halten Sie diese Trennung anschließend im
@@ -138,7 +138,7 @@ die Anordnung, die Ihnen die Fortsetzungssemantik des Frameworks *und* eine Prot
 das Framework überdauert, und sie steht Ihnen offen, wie auch immer die Übernahmefrage ausgeht. Genau darum
 sollten Sie sie getrennt entscheiden.
 
-## Fortsetzung eines offenen Runs versus neuer Anlass nach Abschluss
+## Fortsetzung eines offenen Runs versus neuer Anlass nach Abschluss \{#suspending-an-open-run-is-not-reopening-a-closed-one}
 
 Hinter der ersten Verwechslung steckt eine zweite, und sie gehört auseinandergenommen, bevor Sie sich nach
 Technik umsehen: Die beiden Probleme, die sie vermengt, haben verschiedene Antworten.
@@ -174,7 +174,7 @@ Ausführung vor, und die Dauerhaftigkeit ist der Mechanismus dafür. Falls nein,
 und einen neuen Anlass zu handeln, und was Sie brauchen, ist ein neuer Durchlauf mit einem Verweis zurück –
 der übrigens gar keinen Checkpointer benötigt.
 
-## Durable Execution – der etablierte Maßstab außerhalb von AI
+## Durable Execution – der etablierte Maßstab außerhalb von AI \{#the-category-outside-ai}
 
 Alles bisher Gesagte lässt sich leichter begründen, sobald Sie wissen, dass nichts davon neu ist und dass
 das Fach außerhalb von AI die Frage längst entschieden hat.
@@ -203,7 +203,7 @@ erneut auszuführen? Ein LLM-Framework darf diese Fragen anders beantworten als 
 lassen darf es sie nicht – und solange Sie nicht wissen, dass die Problemklasse etablierte Antworten hat,
 kommen Sie gar nicht darauf, sie zu stellen.
 
-## Preisen Sie Wartung, Onboarding und Bus-Faktor ein
+## Preisen Sie Wartung, Onboarding und Bus-Faktor ein \{#pricing-the-thing-you-build-instead}
 
 Die [Lektion über Orchestrierungs-Frameworks](../orchestration-frameworks/index.md) beziffert die
 Übernahme ehrlich: Preis der Abstraktion, Veränderungstempo im Ökosystem, Portabilität gegen Lock-in. Was sie nie
@@ -251,7 +251,7 @@ Ausscheiden in sechs Wochen den Ausschlag, und das zu Recht. Ändern Sie eine Ta
 beherrschen die Schleife bereits, niemand im Team hat Erfahrung mit dem Framework –, und die Abwägung
 kippt mit derselben Begründung in die andere Richtung.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Ein **Checkpointer ist ein Anspruch auf die Hoheit über den Run-State**, keine neutrale Funktion: Die
   Zusage „ab dem letzten erfolgreichen Step fortsetzen“ gilt nur, wenn das Framework die Instanz ist, die

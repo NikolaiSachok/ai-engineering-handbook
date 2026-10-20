@@ -26,7 +26,7 @@ Neu ist auf dieser Seite die Verbindung zwischen beidem: Die Tool-Lektion sagt I
 Zugriff einen Key braucht, und diese Seite sagt Ihnen, **woher der Wert dieses Keys kommt, wenn der Aufrufer
 ein Graph ist, der erneut ausgeführt wird**.
 
-## Machen Sie jeden Step sicher wiederholbar
+## Machen Sie jeden Step sicher wiederholbar \{#the-step-is-the-unit-of-safety}
 
 Gehen Sie von einer technischen Tatsache aus, aus der sich alles Weitere ergibt: Bei **Durable Execution**
 (dauerhafte Ausführung – ein **Durchlauf** wird nach einem Absturz an der letzten gesicherten Stelle
@@ -79,7 +79,7 @@ Engine reproduzieren kann, und kein Wert, den der Step sich ausdenkt. Wenn Sie d
 statt eine Engine zu übernehmen, verantworten Sie diese Ableitung selbst – und sie ist das Wichtigste, was
 Ihr eigener Orchestrator richtig hinbekommen muss. Wägen Sie das gegen die Kostenrechnung aus Teil 1 ab.
 
-## Wenn neue Branch-Nummern den Idempotency-Key entwerten
+## Wenn neue Branch-Nummern den Idempotency-Key entwerten \{#when-step-identity-moves}
 
 In dieser Regel steckt eine unausgesprochene Voraussetzung: Ein Key, der aus der Step-Identität abgeleitet
 ist, ist nur so stabil wie diese Identität selbst. Genau daran scheitern auch sorgfältige Teams. **Ein Step,
@@ -116,7 +116,7 @@ reicht über beide Produkte hinaus: **Leiten Sie eine Identität nie aus einem W
 bedeutet.** Ein Datum ist ein Datum. Es ist keine Kennung, so eindeutig es in Ihren Testdaten auch aussieht.
 (Stand August 2026 – dieses Detail hat sich bereits einmal verschoben.)
 
-## Wenn parallele Branches denselben State lesen und schreiben
+## Wenn parallele Branches denselben State lesen und schreiben \{#fan-out-inside-one-graph}
 
 Nun der zweite Mechanismus, und er liegt eine Ebene unter allem, was die Lektionen über
 Multi-Agenten-Systeme behandeln. Es geht weder um mehrere Agenten in einem Team noch um mehrere Tools, die
@@ -169,7 +169,7 @@ beisteuert. `add_messages` verarbeitet Gesprächsverläufe mit einer eigenen, ID
 andere ist eine Funktion, die Sie selbst schreiben, und eine zu schreiben ist der Normalfall und kein
 fortgeschrittener Kunstgriff.
 
-## Wer den Merge festlegt, verantwortet auch stilles Verwerfen
+## Wer den Merge festlegt, verantwortet auch stilles Verwerfen \{#the-merge-you-have-to-specify}
 
 Mit der Deklaration eines Reducers geht die Entscheidung vom Framework auf Sie über, und genau dort entsteht
 der *stille* Fehler.
@@ -212,7 +212,7 @@ oder innerhalb einer Schleife unterbricht, einen Resume-Wert beim falschen Inter
 gehört zur selben Gefahrenklasse wie der Merge: ein Standard, der für den häufigen Fall richtig ist und für
 den Fall, in dem Sie gerade stecken, falsch.
 
-## Was Engines für Zustellung, Determinismus, IDs und Versionierung festlegen
+## Was Engines für Zustellung, Determinismus, IDs und Versionierung festlegen \{#what-the-engines-settled}
 
 Teil 1 hat begründet, dass die Durable-Execution-Engines einen Checkpointer beurteilbar machen. Hier sind
 die vier Fragen, die sich an jede von ihnen zu stellen lohnen, samt den Antworten der Engines.
@@ -271,7 +271,7 @@ zeichnen **in Step Functions überhaupt keine Ausführungshistorie** auf – wen
 schicken Sie sie selbst an CloudWatch Logs. Damit sagt der Anbieter dasselbe, wofür diese Lektion
 argumentiert: Die Historie der Engine dient dem Ausführen, und Ihr Nachweis ist Ihre Sache.
 
-## Garantien durch Fehlerinjektion prüfen
+## Garantien durch Fehlerinjektion prüfen \{#proving-it-rather-than-claiming-it}
 
 Alles auf dieser Seite ist eine Behauptung über das Verhalten im Fehlerfall, und keine noch so sorgfältige
 Entwurfsdisziplin macht eine Behauptung wahr. Der Test, der die Frage entscheidet, führt den Absturz gezielt
@@ -283,7 +283,7 @@ einmal** eingetreten ist. Das ist eine Technik der Prüfung und keine des Entwur
 (die Seite liegt nur auf Englisch vor), und sie ist das Naheliegende, sobald der Entwurf von diesen beiden
 Seiten steht.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - **Ein Replay setzt an einer Step-Grenze an, also ist der Step die Einheit der Sicherheit.** Leiten Sie den
   Idempotency-Key aus **Run-Identität plus Step-Identität** ab – Temporals dokumentiertes Muster kombiniert

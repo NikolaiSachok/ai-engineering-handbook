@@ -23,7 +23,7 @@ planning errors — and why freedom over the sequence is what makes them possibl
 
 :::
 
-## Task decomposition — turning a goal into steps
+## Task decomposition — turning a goal into steps \{#task-decomposition--turning-a-goal-into-steps}
 
 **Task decomposition** means breaking the goal into subtasks the agent can take one at a time. A real
 request — "reconcile these two reports and flag the discrepancies" — isn't one tool call. It's a sequence:
@@ -39,7 +39,7 @@ written plan keeps it on track far better than holding the whole thing in its he
 something to track progress against: you can look at the list and see which subtasks are closed and which
 aren't. That second point matters more than it sounds; hold onto it.
 
-## Two strategies for sequencing the steps
+## Two strategies for sequencing the steps \{#two-strategies-for-sequencing-the-steps}
 
 Once you're decomposing, there are two ways to sequence what comes out. They pull in opposite directions.
 
@@ -62,7 +62,7 @@ In practice you rarely pick one purely. You combine them: plan the high-level st
 step with a local ReAct loop, and re-plan when a step fails. The plan gives you the global thread; the inner
 loop gives you local adaptivity; re-planning is the joint between them.
 
-## The core failure — a loop that won't terminate correctly
+## The core failure — a loop that won't terminate correctly \{#the-core-failure--a-loop-that-wont-terminate-correctly}
 
 Here's the signature failure of this whole layer: **the loop doesn't terminate correctly.** Hand the agent
 freedom over the sequence and it can fail to stop where a static pipeline never could — a
@@ -80,7 +80,7 @@ It breaks in three shapes:
 None of these are exotic. All three are the price of the freedom agentic-rag introduced — the same freedom
 that made the loop able to handle multi-hop questions is what lets it spin.
 
-## Defences — layered
+## Defences — layered \{#defences--layered}
 
 There is no single switch that fixes non-termination. You layer defences, weakest-but-hardest at the bottom,
 smartest at the top.
@@ -103,7 +103,7 @@ defence against drift: an agent that can see the goal is less likely to wander o
 
 **Reflection.** The smartest layer — and worth its own section.
 
-## Reflection — the main lever against drift and silent looping
+## Reflection — the main lever against drift and silent looping \{#reflection--the-main-lever-against-drift-and-silent-looping}
 
 **Reflection (self-critique)** is a dedicated step where the agent judges its own trajectory. Am I making
 progress? Is this actually working? Should I change course? — and on the answer, it decides to stop, re-plan,
@@ -119,7 +119,7 @@ up to the cap and then guillotine. Reflection is the layer that can notice the l
 before the cap — steer instead of chop. The budget is your guarantee that the agent stops; reflection is your
 best shot at it stopping *for the right reason*.
 
-## The coding agent — this layer made visible
+## The coding agent — this layer made visible \{#the-coding-agent--this-layer-made-visible}
 
 If you want to watch this whole control layer with your own eyes, use a coding agent. Hand one a programming
 task and watch its ReAct chain `reason → act → observe` and its self-correction stream past in the intermediate output —
@@ -134,7 +134,7 @@ you, being the cap the agent didn't hit on its own. It's the most concrete argum
 reflection, and a human override all matter: you've already watched the failure happen and reached for the
 stop button.
 
-## Long trajectories cost context
+## Long trajectories cost context \{#long-trajectories-cost-context}
 
 One more cost, quieter than non-termination but always present. The loop fills the context with tool calls
 and their results, step by step. Over a long trajectory that means context bloat, rising cost per call, and
@@ -145,7 +145,7 @@ The mitigations belong to the second pass, but name them now: summarise the hist
 what's still relevant in a **scratchpad / working memory**, and hold a structured list of what's already
 done. That last one, again, is your explicit plan earning its keep.
 
-## Where this sits — and what it costs downstream
+## Where this sits — and what it costs downstream \{#where-this-sits--and-what-it-costs-downstream}
 
 Placement first. This is the control layer *over* the loop from agentic-rag and *over* the tools from
 tool-use: decomposition and termination sit on top of the `reason → decide → act → observe` loop that calls tools.
@@ -158,7 +158,7 @@ re-plan. Without the full trace you're guessing. And eval now measures trajector
 it answer." Did it reach the goal, and in how many steps? Efficiency and termination are part of quality now —
 an agent that gets the right answer in forty steps when six would do is not a good agent.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - This lesson is the **control layer over the loop and the tools** — decomposition and termination sitting on
   top of `reason → decide → act → observe`. It steers the freedom the earlier lessons handed the model.

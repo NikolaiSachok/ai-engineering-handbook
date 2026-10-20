@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Part 1](./index.md) built the service and named its parts: the app-versus-model split, FastAPI's async fit for an I/O-bound workload, streaming over SSE, the production checklist, Docker's weight, GPU and cold-start deltas, and inference servers with continuous batching and PagedAttention sketched at a high level. This is the deep second pass — the same service under real load, where those names turn into internals, failure modes, and a set of "when not to" calls. Part 1 is assumed throughout and none of it is re-taught here.
 
-## Workers, the event loop, and where concurrency really comes from
+## Workers, the event loop, and where concurrency really comes from \{#workers-the-event-loop-and-where-concurrency-really-comes-from}
 
 By default, uvicorn runs a single process: one event loop pinned to one CPU core. To use more than one core you run several **ASGI worker** processes — separate copies of the ASGI server (uvicorn) running your app — and as of 2026 there are two current ways to spawn them: the classic pattern of gunicorn as a process manager driving `uvicorn.workers.UvicornWorker`, and uvicorn's own first-class `--workers` flag, which `fastapi run` wraps. FastAPI's deployment docs present both; treat the exact recommendation as a dated detail and hold onto what a worker *is*.
 
@@ -20,7 +20,7 @@ Part 1's threadpool rule deserves its mechanism. A plain `def` path operation or
 
 Shutdown needs the same care once answers stream. On SIGTERM the server should stop accepting new connections and drain the in-flight ones within a graceful-timeout — and an LLM stream can run for tens of seconds, longer than the default drain window. Set the graceful timeout to your longest expected stream, or a rolling deploy will cut answers off mid-generation. (A separate streaming concern does not change under load and is not re-derived here: the buffered-versus-incremental validation that output [guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) force on a streamed answer, which Part 1 covers.)
 
-## Bounding the work before the service drowns
+## Bounding the work before the service drowns \{#bounding-the-work-before-the-service-drowns}
 
 Async makes holding a connection cheap, and that cheapness is a trap: it lets a service accept far more work than it can finish. Unbounded concurrency then kills an LLM service three ways at once — it exhausts memory (every in-flight request holds KV-cache blocks and connection state), it triggers provider-429 storms (you blow past the shared provider quota and every caller is throttled together), and it ends in tail-latency collapse (past capacity, queueing delay explodes and p99 falls off a cliff). What counts as "past capacity" is set against your latency SLOs — the targets the [observability deep dive](../../part-1-rag/cross-cutting/observability/deep-dive.md) defines and this whole page answers to.
 
@@ -45,7 +45,7 @@ flowchart TB
     end
 ```
 
-## Inside the inference server
+## Inside the inference server \{#inside-the-inference-server}
 
 An inference server's throughput is not magic; it comes from a handful of specific mechanisms, and [vLLM](https://docs.vllm.ai) is the reference implementation of most of them. Start with the scheduler. Continuous batching is really **iteration-level scheduling**: the scheduler admits new requests and evicts finished ones at every decode step, instead of the static batching that makes a whole batch wait for its slowest member before the next can start. The idea comes from the Orca paper (Yu et al., OSDI 2022), which introduced iteration-level scheduling; vLLM, TGI and TensorRT-LLM all build on it.
 
@@ -71,7 +71,7 @@ Quantisation gets confused with two other operations, because all three file und
 
 Only the first is a serving decision, which is why it lives on this page; the other two sit on the [customisation ladder](../cloud-platforms/deep-dive.md). Worth flagging one more thing this handbook calls *distilled*, because it is none of the three: the **distilled finding** carried between hops in the [agentic RAG deep dive](../../part-2-agents/agentic-rag/deep-dive.md) is a compaction of retrieved text inside a single request. No training, no new weights — the same verb doing an unrelated job.
 
-## When a model no longer fits on one GPU
+## When a model no longer fits on one GPU \{#when-a-model-no-longer-fits-on-one-gpu}
 
 Some models simply do not fit on a single GPU, and then you split them — but how you split decides what hardware you need. **Tensor parallelism** shards each layer's weight matrices across several GPUs. Every layer then needs an all-reduce to recombine the partial results, which makes it communication-heavy and demands a fast interconnect — NVLink — so it belongs inside a single node. In vLLM it is the `tensor_parallel_size` knob. **Pipeline parallelism** cuts the other way: it splits the layers into stages, puts each stage on a different GPU or node, and streams micro-batches from stage to stage. That needs far less communication, so it tolerates a slower interconnect and works across nodes — at the cost of a pipeline "bubble," the idle time while the pipe fills and drains. Its knob is `pipeline_parallel_size`.
 
@@ -91,7 +91,7 @@ flowchart LR
     end
 ```
 
-## Scheduling and autoscaling GPUs on Kubernetes
+## Scheduling and autoscaling GPUs on Kubernetes \{#scheduling-and-autoscaling-gpus-on-kubernetes}
 
 On Kubernetes a GPU is a schedulable resource, and its shape has consequences. The NVIDIA device plugin advertises it as `nvidia.com/gpu`, an integer — so out of the box a pod requests whole GPUs, and there is no fractional-GPU request. You keep those expensive machines for the workloads that need them with node taints and tolerations, or node affinity onto dedicated GPU node pools, so ordinary pods never land on a GPU node.
 
@@ -101,7 +101,7 @@ The hard part of GPU autoscaling is choosing the signal. The default Horizontal 
 
 Cold start, from Part 1, makes any reactive autoscaler lag. A new replica must pull a multi-gigabyte image and load the weights — tens of seconds to minutes — before it serves a single request, so scaling on a spike arrives late by construction. The answers are to keep warm headroom or to scale predictively rather than purely on demand; and the Cluster Autoscaler can add GPU nodes when the pool runs out, but that takes minutes more, node provisioning on top of the image pull. Above the raw scheduler sit model-serving layers that make this less manual: [KServe](https://kserve.github.io/website/) and Knative give request-driven autoscaling — including scale-to-zero and concurrency-based scaling — and Ray Serve is another. Those product names will rotate; request-driven autoscaling as a capability will not.
 
-## Renting the GPU by the second
+## Renting the GPU by the second \{#renting-the-gpu-by-the-second}
 
 **Serverless GPU** is the rent-by-the-second end of the spectrum: GPU capacity billed per second, scaling to zero when idle, with no cluster to operate. As of 2026 the field includes [Modal](https://modal.com), [RunPod](https://www.runpod.io)'s serverless tier, [Replicate](https://replicate.com), [Baseten](https://www.baseten.co) and Beam — with Fal and Cerebrium alongside — plus Google's Cloud Run with a GPU attached; AWS's true-serverless-GPU story is comparatively weak. As in Part 1, the roster is a snapshot that will age; the category is what lasts.
 
@@ -109,7 +109,7 @@ What defines the category is also its central problem: the cold-start tax. Every
 
 That decides when to reach for it. Spiky, bursty, dev or batch traffic suits serverless, because you do not pay for idle capacity between bursts. Steady high traffic, or any workload with no tolerance for a cold start, wants a dedicated always-warm GPU instead — cheaper per token at high utilisation, and free of the cold-start tax. The full rent-versus-own decision, and where the model should run at all, is the subject of the [cloud-platforms](../cloud-platforms/index.md) lesson; this is only its serving-side view.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - A worker is a process — it buys you cores, not concurrency; the event loop already interleaves hundreds of waiting requests, so worker count tracks cores and CPU-bound work. A blocking call in an async handler freezes every request in the process, so offload it to a thread, and on shutdown give long streams time to finish.
 - Unbounded concurrency wrecks an LLM service, and Little's Law makes even a low request rate a high concurrency. Bound it with a semaphore and a bounded queue, shed excess with 429 and Retry-After, and put the cap at the scarce GPU or provider slot rather than the cheap connection.

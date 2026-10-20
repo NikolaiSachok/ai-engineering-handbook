@@ -74,7 +74,7 @@ arrangement is described in [how these are made](/design-scenarios/how-these-are
 
 <Reveal>
 
-## Attempt A — the purchased-instrument answer
+## Attempt A — the purchased-instrument answer \{#attempt-a--the-purchased-instrument-answer}
 
 *Persona given to the agent: Two years of building evaluation harnesses, and reaches for a judge because it is the thing that produces a chart. Thinks in metrics and dashboards — a system is understood when a number describes it. Under one pressure: in four months, stand in front of the people holding the money and show a number that moved. Cost has rarely been the binding constraint before.*
 
@@ -115,7 +115,7 @@ calls "Labels are already in the building, free."
 
 </Verdict>
 
-## Attempt B — the borrowed-label answer
+## Attempt B — the borrowed-label answer \{#attempt-b--the-borrowed-label-answer}
 
 *Persona given to the agent: Counts people and hours before anything else. The scarce thing has always been a small number of humans whose attention everything depended on, so their week is a measurement budget to be justified line by line. Does power arithmetic out loud. "More reviewers" has never been available and stopped being proposed years ago.*
 
@@ -166,7 +166,7 @@ the full 300 — on the 150 that B calls the only defensible rate estimate, it i
 
 </Verdict>
 
-## Attempt C — the outside-in answer
+## Attempt C — the outside-in answer \{#attempt-c--the-outside-in-answer}
 
 *Persona given to the agent: Looks at the organisation around a system before the system. The useful signal is almost always already being produced by somebody not thinking about you. Applies a standing constraint to their own proposals — whatever gets built must not require anybody in the building to do new work, because designs that depend on new human effort quietly stop being done by the third month.*
 
@@ -218,12 +218,12 @@ receiving corrections to cards typed in the 1970s.
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 Each disagreement below is a decision you will have to make yourself. The last entry is the exception: not a
 disagreement but the place all three arrived together, and what went unexamined once they had.
 
-### Labels for the defect rate: bought from a judge, or borrowed from cataloguer corrections
+### Labels for the defect rate: bought from a judge, or borrowed from cataloguer corrections \{#labels-for-the-defect-rate-bought-from-a-judge-or-borrowed-from-cataloguer-corrections}
 
 A spends model budget on a standing sampled judge — 400 records a day across all streams, independent of human
 throughput — and treats the cataloguers as pure stratified detectors. B and C spend nothing on judging and
@@ -231,7 +231,7 @@ take every label from cataloguer revisions, accepting 300 a week concentrated wh
 Twelve thousand machine-judged records a month with unknown judge error, against three hundred human-verified
 records a week with none.
 
-### Outside-in usage signals: wire them or decline them
+### Outside-in usage signals: wire them or decline them \{#outside-in-usage-signals-wire-them-or-decline-them}
 
 C joins reading-room retrievals and per-stream click-through and gets a free detector out of them. B declines
 both explicitly — "Too weak to spend three people on." — because the traffic is thin and skews to entries
@@ -239,7 +239,7 @@ catalogued by hand in 1974. A never raises them. Worth noting that B's stated re
 those signals rather than against joining a log that already exists. The reader has to decide whether a biased
 signal that costs nothing to join is worth having.
 
-### How long the recorded decisions live: forever, tiered, or twenty-four months
+### How long the recorded decisions live: forever, tiered, or twenty-four months \{#how-long-the-recorded-decisions-live-forever-tiered-or-twenty-four-months}
 
 What is being kept is the per-call and per-record trail all three would write where nothing is written today —
 model and prompt version, tool arguments, the extracted values, the link margins — instead of a single log
@@ -249,7 +249,7 @@ months, "because the median researcher report arrives at eleven". C's is the pos
 the same prompt says cards typed in the 1970s are still being corrected, so a median is the wrong statistic
 for choosing a horizon.
 
-### Whether any of the sample stays uniform: a ring-fenced random slice, or every record allocated
+### Whether any of the sample stays uniform: a ring-fenced random slice, or every record allocated \{#whether-any-of-the-sample-stays-uniform-a-ring-fenced-random-slice-or-every-record-allocated}
 
 B ring-fences 150 a week as random and calls it "the only defensible rate estimate", spending the rest on
 thin-margin links and on what it calls the seam — the point where the pipeline moves onto a new provenance
@@ -257,7 +257,7 @@ stream, which is where the 190,000 wrong dates entered. A and C allocate by stra
 population rate from its paid judge, C reporting per-stream rates and no pooled figure. Underneath: does a
 monitoring programme need an unbiased population number at all, or only per-stratum movement?
 
-### What all three agreed on, and none of them tested
+### What all three agreed on, and none of them tested \{#what-all-three-agreed-on-and-none-of-them-tested}
 
 All three rejected the framing that 300 a week is too small — B and C prospectively, A after the fact. Two of
 them derive it the same prospective way — the bad stratum was a sixth of that window's output, so a weekly
@@ -295,7 +295,7 @@ being reported. None of the three says which use yields when an alarm fires, and
 that a single incident consumed 1,800 of those records on forensics. Nor does anyone mention that the entries
 are already public, that a confirmed fault means correcting published records, or who would do that.
 
-## The principle
+## The principle \{#the-principle}
 
 > Before asking for a bigger sample, check whether the sample you already take is being written down —
 > capacity that produces fixes instead of records detects nothing, however large it is.
@@ -324,7 +324,7 @@ are already public, that a confirmed fault means correcting published records, o
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 

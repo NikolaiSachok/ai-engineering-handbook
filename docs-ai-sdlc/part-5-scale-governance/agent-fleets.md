@@ -10,7 +10,7 @@ what changes when many agents run at once — and it starts with the question th
 launch more of them. *What can actually run in parallel?* The answer has almost nothing to do with how many
 agents you can afford. It is decided by what they share.
 
-## Sharing is what serialises
+## Sharing is what serialises \{#sharing-is-what-serialises}
 
 Two agents are independent exactly when their work touches disjoint sets — different files, different branches,
 different resources. The moment they share something mutable, that shared thing stops being a detail and
@@ -27,7 +27,7 @@ And the quiet one: **a shared corpus that each task appends to** — a rules fil
 Two parallel appends do not merge; the second write wins and the first disappears, with nothing failing to
 announce it.
 
-## Isolation is cheaper than coordination
+## Isolation is cheaper than coordination \{#isolation-is-cheaper-than-coordination}
 
 The instinct is to coordinate: locks, a queue, "just tell the agents to take turns." The cheaper answer is to
 remove the sharing. Give each agent its own checkout — `git worktree add` creates a separate working directory
@@ -40,7 +40,7 @@ with [the sandbox](../part-4-platform/least-privilege-sandboxing/index.md) — a
 cooperation you have to trust — and the same reason the fix belongs in the mechanism rather than in an
 instruction telling agents to be careful.
 
-## What must stay serial, and why
+## What must stay serial, and why \{#what-must-stay-serial-and-why}
 
 Isolation does not make everything parallel. Three things stay serial, and pretending otherwise is how fleets
 produce work that has to be redone.
@@ -66,7 +66,7 @@ share a mutable resource. Orchestrate the assignment; isolate the workspace.
 
 :::
 
-## The fleet is bounded by review, not by compute
+## The fleet is bounded by review, not by compute \{#the-fleet-is-bounded-by-review-not-by-compute}
 
 Part I's thesis returns here in its most practical form: [verification is the bottleneck](../part-1-foundation/verification-bottleneck.md).
 Doubling the agents doubles the output *and* doubles the review queue. Since the gate chain and the human
@@ -79,7 +79,7 @@ Beyond it, more agents buy contention, rework, and a longer queue rather than mo
 question is never "how many agents can I run" but "how much can this chain absorb," and the honest answer is
 usually smaller than the number of agents you could afford.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds everywhere: **parallelise only across disjoint state, isolate the workspace rather than
 coordinating access to it, and size the fleet to what the verification chain can absorb.**
@@ -95,7 +95,7 @@ coordinating access to it, and size the fleet to what the verification chain can
   the fleet to the budget instead of to the bottleneck, and discovering the ceiling as a growing backlog of
   unreviewed changes.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **What can run in parallel is decided by what is shared,** not by how many agents you can launch. Shared
   mutable state is the scheduler.

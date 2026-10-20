@@ -14,7 +14,7 @@ visual diff notice an animation. Coverage does not come from making one gate str
 gates whose mechanisms are blind to *different* things — and the design move that makes that real is to write
 down, for each gate, exactly what it structurally cannot see, then let that blind spot define the next gate.
 
-## Thoroughness is not coverage
+## Thoroughness is not coverage \{#thoroughness-is-not-coverage}
 
 The instinct, when something slips through, is to make the gate that missed it stricter. Usually that is the
 wrong fix. A gate misses a defect class for one of two reasons: it was not thorough enough, or its mechanism
@@ -33,7 +33,7 @@ never that its behavior was *checked*. A green gate is evidence about the gate's
 about the code. If you have never watched a gate fail on a defect you planted, you do not know what it is blind
 to — you only know it is quiet.
 
-## Name what each gate cannot see
+## Name what each gate cannot see \{#name-what-each-gate-cannot-see}
 
 The discipline that follows is cheap and almost nobody does it: **for every gate, write the one sentence
 describing the defect class it structurally cannot catch — and choose the next gate to cover exactly that.** The
@@ -84,7 +84,7 @@ differently, so what one is blind to, another catches.
 
 :::
 
-## Compose the deterministic gate with the semantic one
+## Compose the deterministic gate with the semantic one \{#compose-the-deterministic-gate-with-the-semantic-one}
 
 The most important mechanism split is the cheapest to state: a **deterministic** gate (a test, a type check, a
 literal grep) is reproducible and cannot be argued out of a hit; a **semantic** gate (an LLM judging whether the
@@ -108,7 +108,7 @@ stacked precisely because each is blind to what the other sees — the grep cann
 neutral words, and the semantic audit is too costly to run on every keystroke. Neither is the gate. The
 composition is.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **one gate is a single point of failure; coverage comes from mechanism
 diversity, and every gate's blind spot must be named.** What changes is who names it and how it is enforced.
@@ -128,7 +128,7 @@ diversity, and every gate's blind spot must be named.** What changes is who name
   that are all the same kind of gate, blind to the same class, and therefore, against that class, no better than one. The number matches
   the chain above; the gates do not.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - One gate is a single point of failure. Its blind spot is a property of its **mechanism**, not its
   thoroughness — you cannot tune a static analyzer into seeing a runtime state.

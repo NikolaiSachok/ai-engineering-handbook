@@ -7,13 +7,13 @@ slug: /part-4-platform/least-privilege-sandboxing/
 
 [Predchádzajúca lekcia](../secrets.md) držala *hodnotu* secretu mimo dosahu agenta. Táto je o prístupe, ktorý agent dostal celkom oprávnene — a rozdeľuje dve kontroly, ktoré sa bežne hádžu do jedného vreca. **Princíp najnižších oprávnení (least privilege)** je *veľkosť udeleného oprávnenia*: čoho sa agent vôbec smie dotknúť. **Sandboxing (izolované spúšťanie)** je *hranica, vnútri ktorej beží*: čoho sa dotknúť dokáže, aj keď skúsi niečo, s čím nikto nerátal. Zlyhávajú rozdielne — správne vymedzené oprávnenie nezmôže nič proti akcii, ktorá ti nikdy nenapadla, a pevný sandbox nezmôže nič proti prihlasovacím údajom, ktoré si odovzdal zámerne. Je to argument III. časti o [rozmanitosti mechanizmov](../../part-3-verification/layered-gates/index.md) prenesený na oprávnenia: skladaj ich, lebo každá je slepá voči tomu, čo zachytí tá druhá.
 
-## Pokyn nie je oprávnenie
+## Pokyn nie je oprávnenie \{#an-instruction-is-not-a-permission}
 
 V júli 2025 to jeden medializovaný incident ukázal lepšie než akýkoľvek argument. Počas dvanásťdňového experimentu s „vibe codingom“, ktorý viedol Jason Lemkin zo SaaStr, spustil programovací agent Replitu deštruktívne príkazy nad **produkčnou** databázou uprostred platného zmrazenia kódu a zničil záznamy zhruba 1 200 riadiacich pracovníkov a podobného počtu spoločností. Pritom opakovane a výslovne dostal pokyn, že bez schválenia nesmie zmeniť nič. Potom ohlásil vymyslené výsledky a tvrdil, že návrat späť nie je možný, hoci možný bol. Riaditeľ Replitu sa verejne ospravedlnil a firma následne dodala ochranné mechanizmy. Udalosť je vedená ako [incident 1152 v AI Incident Database](https://incidentdatabase.ai/cite/1152/).
 
 Prečítaj to za drámou, na úrovni mechanizmu. Pokyn nebol slabý — bol opakovaný a jednoznačný. Zlyhal preto, že **pokyn je požiadavka voči pravdepodobnostnému systému, kým oprávnenie je vlastnosť systému.** I. časť tvrdila to isté o konvenciách vôbec: pravidlo platí len vtedy, keď ho [niečo mechanicky vynúti](../../part-1-foundation/rules-that-hold.md). Oprávnenia sú to isté pravidlo na vrstve platformy. Nápravou nikdy nie je dôraznejší prompt; nápravou je, že prihlasovacie údaje, ktorými sa dá zahodiť produkčná tabuľka, v prostredí agenta vôbec nie sú. Agent, ktorý sa do produkcie nedostane, ju počas zmrazenia nezničí — nech si o druhej v noci rozhodne čokoľvek.
 
-## Oprávnenie vymeraj úlohe, nie agentovi
+## Oprávnenie vymeraj úlohe, nie agentovi \{#size-the-grant-to-the-task-not-to-the-agent}
 
 Predvolene zlyháva pohodlie: jeden dlhoveký token so širokým rozsahom, zdieľaný každým agentom a každou úlohou, lebo vymerať ho zvlášť je práca, na ktorú nikto nemá čas. Oprávnenie je potom vymerané *agentovi* — všetkému, čo by kedy mohol potrebovať — namiesto *úlohe, ktorú má práve pred sebou*.
 
@@ -34,7 +34,7 @@ Zhrnutie prístupu zero trust od IBM — nikdy nedôveruj, vždy overuj, udeľ m
 
 :::
 
-## Sandbox zachytí to, s čím si nerátal
+## Sandbox zachytí to, s čím si nerátal \{#the-box-catches-what-you-did-not-anticipate}
 
 Princíp najnižších oprávnení pokrýva riziká, ktoré si vymenoval. Sandboxing pokrýva zvyšok — a práve v tom zvyšku sú agenti naozaj iní než skripty, lebo ďalšiu akciu agenta ovplyvňuje obsah, ktorý číta. Popis issue, webová stránka či README závislosti môžu niesť text, ktorý model prečíta ako pokyn. Toto je **prompt injection (podstrčený pokyn)**. Vo vydaní [OWASP GenAI LLM Top 10 2026](https://genai.owasp.org/), zverejnenom v auguste 2026, ho komunita zaradila na prvé miesto tretí rok po sebe pod označením LLM01. OWASP je komunitný bezpečnostný projekt, nie regulačný orgán, preto rebríček čítaj ako odborný konsenzus, nie ako požiadavku na súlad s predpismi. Nepríjemné je, že spoľahlivo ho nerozpoznáš — škodlivý vstup je iba text a úlohou modelu je brať text vážne. Cieľom návrhu preto nie je dokonalý filter. Cieľom je, aby sa dal prežiť aj *úspešný* pokus: schopnosti agenta majú byť také malé, že ani najhorší podstrčený pokyn nespôsobí trvalú škodu.
 
@@ -46,7 +46,7 @@ Sandbox vymedzujú tri parametre a všetky tri vynucuje platforma, nie ochota ag
 
 Klasický názov toho, čomu sa tým predchádza, je **confused deputy (zneužitý sprostredkovateľ)**: komponent s legitímnymi právomocami, ktorý nedôveryhodná strana oklame, aby ich použil za ňu. Agent so širokými oprávneniami, ktorý číta nedôveryhodný text, je zneužitý sprostredkovateľ čakajúci na príležitosť. Zmenšiť právomoc je oprava, ktorá nezávisí od toho, či vyhráš preteky v zbrojení so vstupom.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant je na každej úrovni rovnaký: **agent drží najmenšie oprávnenie, aké jeho aktuálna úloha potrebuje, vnútri hranice, ktorú vynucuje platforma.** Mení sa to, ako sa oprávnenie vydáva a ako sa izolácia preukazuje.
 
@@ -54,7 +54,7 @@ Invariant je na každej úrovni rovnaký: **agent drží najmenšie oprávnenie,
 - **Malý tím.** Prihlasovacie údaje na jednotlivé úlohy vydáva platforma, odchádzajúca komunikácia má allowlist a predvoleným cieľom je neprodukčné prostredie; oprávnenie žije v konfigurácii, ktorá prešla revíziou, nie v niečom shellovom profile. *Akému zlyhaniu to predchádza:* zdieľaný všemocný token, ktorý už nikto nedokáže osekať, lebo dovtedy od neho začne závisieť všetko.
 - **Enterprise.** Workload identity vydáva krátkodobé prihlasovacie údaje na jednotlivé úlohy, k tomu policy-as-code, preukázateľná izolácia a audit — a naozaj deštruktívne akcie idú cez samostatné schválenie namiesto trvale udeleného oprávnenia. *Akému zlyhaniu to predchádza:* eskalácia cez zneužitého sprostredkovateľa, pri ktorej jediný podstrčený pokyn odvezie príliš širokú identitu do systémov, na ktoré úloha nikdy nemala siahať.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - **Pokyn nie je oprávnenie.** Opakované a výslovné pokyny agentovi nezabránili zahodiť produkčnú databázu; zabránila by tomu jedine neprítomnosť príslušných prihlasovacích údajov. Vynucovanie býva v platforme, nikdy nie v prompte.
 - **Princíp najnižších oprávnení a sandboxing sú dve odlišné kontroly a potrebuješ obe.** Oprávnenie obmedzuje, čoho sa agent smie dotknúť; sandbox obmedzuje, čoho sa dotknúť *dokáže*, keď príde niečo, s čím si nerátal.

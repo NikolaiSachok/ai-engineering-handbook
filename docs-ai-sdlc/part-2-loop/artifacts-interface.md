@@ -11,7 +11,7 @@ conversation** — and the artifact at each boundary is the only thing a reviewe
 inspect. A decision, a spec, or a result that lived only in a chat and never became an artifact didn't really
 cross the boundary: there is nothing to review, nothing to diff, nothing the next stage can be held to.
 
-## Conversation is not a handoff
+## Conversation is not a handoff \{#conversation-is-not-a-handoff}
 
 A conversation is unreviewable. You can't diff it, can't check it against a done-condition, can't hand it to a
 fresh agent without it being re-summarized — and summarizing is lossy. The moment a stage's output actually
@@ -19,7 +19,7 @@ matters, it has to leave the conversation and become a thing on disk: a plan, a 
 Only a thing can be checked. "It's in the thread" is the handoff version of "looks done" — a claim you can't
 verify, dressed up as a status.
 
-## The artifact is the contract
+## The artifact is the contract \{#the-artifact-is-the-contract}
 
 What crosses the boundary is the contract between stages. It fixes what the next stage is entitled to assume and
 what it will be checked against. This is Lesson 1's done-condition made concrete and portable — the artifact
@@ -27,7 +27,7 @@ what it will be checked against. This is Lesson 1's done-condition made concrete
 to read and specific enough to verify against: the same floor and ceiling Lesson 2 put on work units, applied to
 what you write down rather than what you build.
 
-## Reset the context; don't summarize it
+## Reset the context; don't summarize it \{#reset-the-context-dont-summarize-it}
 
 There is a failure mode in how state gets carried across a long task: **compaction** — summarizing the
 conversation in place as the window fills. It is lossy, and it drifts, because each summary is a translation of
@@ -37,7 +37,7 @@ hand the next step a durable artifact and start clean, rather than dragging a su
 The artifact is what survives the reset; the transcript was never meant to. That is the
 deeper reason the interface has to be written down: it is the only thing that outlives the context window.
 
-## But artifacts are the overload, too
+## But artifacts are the overload, too \{#but-artifacts-are-the-overload-too}
 
 Here is the tension this Part keeps returning to. The same artifacts that make handoffs checkable are the ones
 that, unmanaged, become **artifact overload** — the measured failure where more generated context per task
@@ -47,7 +47,7 @@ what the next stage needs, and what's finished gets dropped, not carried forward
 eviction are the discipline; the tiering that makes them systematic is
 [Part I's lesson on project memory](../part-1-foundation/project-memory-and-tiering.md).
 
-## The strongest version of this
+## The strongest version of this \{#the-strongest-version-of-this}
 
 What a fully realized artifact interface looks like in the wild: Kenton Varda's
 [`cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) ships with the
@@ -65,7 +65,7 @@ the same caution: pass the artifact the next step needs, not the whole conversat
 
 :::
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **what crosses a boundary has to be an artifact someone can inspect.** What
 changes is who inspects it and how long it has to last.
@@ -80,7 +80,7 @@ changes is who inspects it and how long it has to last.
   scoped and retained on purpose. *The failure it prevents:* an interface that is either unauditable (nothing
   written) or drowning (everything written, nothing evicted).
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Stages hand off through written artifacts, not conversation. If it didn't cross as an artifact, it didn't
   cross — there is nothing to review or diff.

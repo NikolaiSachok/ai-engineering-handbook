@@ -12,7 +12,7 @@ Diese Seite behandelt vier Fragen, die erst im Betrieb auftauchen. Was geschieht
 
 Der Stoff der ersten Seite wird dabei vorausgesetzt und nicht noch einmal erklärt: der Tool-Call in vier Schritten, die Sicherheitsgrenze, der Satz, dass eine Tool-Definition ein Prompt ist, und die fünf Merkmale eines guten Tools; diese Seite baut darauf auf, statt sie zu wiederholen.
 
-## Parallele Tool-Calls: Unabhängigkeit ist die Bedingung
+## Parallele Tool-Calls: Unabhängigkeit ist die Bedingung \{#when-the-model-fires-several-calls-at-once}
 
 Das Modell muss seine Aufrufe nicht einzeln nacheinander abliefern. Es kann in einer einzigen Antwort mehrere voneinander unabhängige Tool-Calls absetzen – drei Lesezugriffe auf die Datenbank und zwei Abfragen an fremde APIs zum Beispiel –, statt sie über fünf Antworten zu verteilen.
 
@@ -48,7 +48,7 @@ flowchart TB
   C --> M2["Modell arbeitet weiter"]
 ```
 
-## Das Schema wird zur Grammatik
+## Das Schema wird zur Grammatik \{#how-a-schema-is-actually-enforced}
 
 Die Argumente eines Tools beschreibt ein **Schema** – in aller Regel JSON Schema; Gemini verwendet ein Schema aus einer OpenAPI-Teilmenge. Auf der ersten Seite war es der typisierte Teil dessen, was dem Modell zur Verfügung steht: streng typisierte, eingeschränkte Parameter, die einengen, was das Modell überhaupt erzeugen kann. Es ist aber mehr als Dokumentation: Im **Strict Mode** wird das Schema erzwungen, und das Modell kann keine Argumente erzeugen, die es verletzen. Warum dieses „kann nicht“ wörtlich zu nehmen ist, zeigt der Mechanismus dahinter.
 
@@ -82,7 +82,7 @@ flowchart TB
   Sample --> Step
 ```
 
-## Wenn ein Tool-Call fehlschlägt – und wie die Schleife weiterläuft
+## Wenn ein Tool-Call fehlschlägt – und wie die Schleife weiterläuft \{#when-a-call-fails--and-how-the-loop-recovers}
 
 Ein Tool-Call schlägt auf mehrere Arten fehl, und sie in einen Topf zu werfen ist der erste Fehler – denn die Abhilfe, die die eine behebt, verschlimmert die andere. Fünf Fälle sind zu unterscheiden:
 
@@ -104,7 +104,7 @@ Damit ist der eigentliche Unterschied benannt. Eine Wiederholung lohnt sich nur,
 
 Zwei Dinge werden also nicht wiederholt. Ein deterministischer Fehler nicht, an dem sich nichts geändert hat: Wenn die Eingabe dieselbe bleibt, bleibt auch das Ergebnis dasselbe. Und ein schreibender Zugriff mit Seiteneffekt nicht, der teilweise erfolgreich gewesen sein könnte, solange keine Idempotenzgarantie dahintersteht – sonst führt die Wiederholung ein zweites Mal aus, was der erste Versuch bereits getan hat. Wiederholungen sind für transiente Fehler und für selbst korrigierte Argumente da; sie ersetzen es nicht, den Aufruf in Ordnung zu bringen – und für schreibende Zugriffe wird der übernächste Abschnitt konkret.
 
-## Was Dutzende Tools an Kontext kosten
+## Was Dutzende Tools an Kontext kosten \{#the-context-cost-of-dozens-of-tools}
 
 Jede Tool-Definition kostet in jeder Anfrage Token: Name, Beschreibung und das vollständige Parameterschema jedes Tools werden bei jedem Aufruf in den Prompt serialisiert – ob das Tool gebraucht wird oder nicht. Ein Dutzend Tools verursacht damit laufende Kosten an Token, Latenz und Geld, die anfallen, ob das Modell eines davon anfasst oder nicht. Das ist der konkrete Preis hinter der Forderung der ersten Seite: „wenige Tools, und keine, die sich überschneiden“. Die Rechnung in Token ist dabei nur die eine Hälfte; die andere zahlen Sie an der Trefferquote, und dagegen hilft nicht, den Katalog zu kürzen, sondern ihn anders zuzuschneiden.
 
@@ -116,7 +116,7 @@ Ab einem gewissen Punkt ist die Antwort ohnehin keine längere Liste mehr. Schle
 
 Die Zurückhaltung gilt auch in die andere Richtung, und es ist dieselbe Regel wie überall in Teil II: die einfachste Stufe nehmen, die die Aufgabe löst. Greifen Sie also nicht zu früh zu Tool-RAG. Bei einer Handvoll Tools ist es überflüssige Mechanik mit einer eigenen Fehlerfläche – ein Retrieval-Schritt, der danebengreifen und ausgerechnet das Tool verstecken kann, das das Modell gebraucht hätte. Das Einfachste, was funktioniert, ist der vollständige, statische Katalog; die dynamische Auswahl verdient ihre Komplexität erst, wenn der Katalog wirklich groß ist.
 
-## Idempotenz: Welche Aufrufe sich gefahrlos wiederholen lassen
+## Idempotenz: Welche Aufrufe sich gefahrlos wiederholen lassen \{#idempotency-and-the-writes-that-leave-a-mark}
 
 Ob eine Wiederholung sicher ist, entscheidet nicht Ihre Wiederholungsstrategie. Das entscheidet das Tool. Lesende und schreibende Tools verhalten sich dabei verschieden: Einen Lesezugriff noch einmal auszuführen kostet nichts außer Latenz; einen Schreibzugriff noch einmal auszuführen – die Bestellung anlegen, die E-Mail verschicken, die Karte belasten – kann den Seiteneffekt verdoppeln.
 
@@ -130,7 +130,7 @@ An dieser Stelle trifft die Parallelität von weiter oben auf die Idempotenz. In
 
 Und damit steht die Regel, die die Wiederholungen an die Schreibzugriffe zurückbindet: Verlassen Sie sich nicht auf Wiederholungen bei einem schreibenden Tool, das nicht idempotent ist und keinen Schlüssel führt. Eine Wiederholung nach einer Zeitüberschreitung, die in Wahrheit erfolgreich war, führt ein zweites Mal aus, was der erste Versuch bereits getan hat – eine zweite Belastung der Karte, eine zweite E-Mail. Erst die Idempotenz herstellen, dann Wiederholungen erlauben. Diese Reihenfolge lässt sich nicht umkehren.
 
-## Zwei Ebenen der Validierung: technisch und fachlich
+## Zwei Ebenen der Validierung: technisch und fachlich \{#validating-arguments-before-you-act}
 
 Das Constrained-Decoding-Verfahren liefert Ihnen wohlgeformte Argumente. Fachlich richtige liefert es Ihnen nicht. Die Stelle, an der sich das eine vom anderen trennt, liegt zwischen „das Modell hat Argumente erzeugt“ und „Sie führen das Tool aus“. Validieren Sie deshalb, bevor Sie ausführen: Schalten Sie eine Prüfung vor, die die Argumente ansieht, bevor irgendein Seiteneffekt eintreten kann. Diese Prüfung hat zwei Ebenen, und sie fangen Verschiedenes ab:
 
@@ -141,7 +141,7 @@ Weist die Validierung ein Argument zurück, dann geht die Rückmeldung denselben
 
 Damit steht auch die Linie zwischen den beiden Ebenen fest. Schieben Sie fachliche Prüfungen nicht ins Schema, wo sich die meisten von ihnen gar nicht darstellen lassen. Und lassen Sie die Validierung nicht weg, nur weil im Strict Mode dekodiert wird – der Strict Mode garantiert wohlgeformt, nie fachlich richtig. Die beiden Ebenen ergänzen einander, und keine ersetzt die andere.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - In einer einzigen Antwort kann das Modell mehrere unabhängige Aufrufe absetzen; Ihre Anwendung verteilt sie, führt sie nebenläufig aus und führt die Ergebnisse gemeinsam wieder zusammen. Zulässig ist das nur, wenn die Aufrufe wirklich nicht voneinander abhängen und einander nicht stören – und niemand außer Ihnen stellt das sicher.
 - Der Strict Mode erzwingt ein Schema über Constrained Decoding: Das Schema wird in eine Grammatik überführt, und in jedem Decoding-Schritt werden alle Token maskiert, die sie verletzen würden. Das bringt wohlgeformte Argumente, keine fachlich richtigen – und der erste Aufruf mit einem neuen Schema wartet, bis die Grammatik gebaut ist, alle weiteren treffen den Cache.

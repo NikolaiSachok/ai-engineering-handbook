@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Najprv jedna hranica, lebo o toto územie sa delí susedná lekcia. Vyhľadávací variant tých istých myšlienok — ohraničenie slučky vyhľadávania, destilovanie nálezov medzi krokmi, hodnotenie trajektórie vyhľadávania — žije v [prehĺbení Agentic RAG](../agentic-rag/deep-dive.md). Táto stránka vlastní všeobecný tvar: riadenie slučky a plánovanie pre ľubovoľného agenta, či už vyhľadáva, alebo nie. Kde sa tie dve témy prepoja, odkáže tam a neodvodzuje nanovo. Prvú časť predpokladáme — dekompozíciu, kompromis medzi ReActom a plan-and-execute, tri podoby nezastavenia cyklu, vrstvenú obranu aj reflexiu ako pojem už nevysvetľujeme, iba na ne nadväzujeme.
 
-## Plánovanie ako prehľadávanie, nie jediná čiara
+## Plánovanie ako prehľadávanie, nie jediná čiara \{#planning-as-search-not-a-single-line}
 
 V prvej časti agent naplánoval jednu postupnosť a preplánoval ju, keď sa rozbila. Pre väčšinu agentov to úplne stačí. Pri úlohách, ktoré si to môžu dovoliť, však existuje silnejšia možnosť: prestaň sa vôbec upínať na jeden plán a k plánovaniu pristúp ako k **prehľadávaniu priestoru kandidátnych plánov (plan search)**.
 
@@ -42,7 +42,7 @@ Cenu povedzme priamo, lebo rozhoduje o tom, kam čokoľvek z tohto patrí. Preh�
 
 Preto väčšina produkčných agentov plány neprehľadáva. Bežia jeden plán a po zlyhaní preplánujú, presne ako v prvej časti, lebo je to oveľa lacnejšie a zvyčajne to stačí. Prehľadávanie plánov si nechaj na úlohy s vysokou hodnotou, overiteľnými medzikrokmi a spoľahlivým hodnotiteľom (matematika, kód, hlavolamy, obmedzená optimalizácia), kde je zlá vetva lacno odhaliteľná a návrat sa oplatí. Pri otvorenej práci bez čistého signálu úspechu na každom kroku je hodnotiteľ slabým článkom a volania navyše sa málokedy vrátia. Disciplína je tá istá ako v prvej časti: vezmi najjednoduchšiu úroveň, ktorá úlohu vyrieši.
 
-## Reflexia, ktorá dostala tvar
+## Reflexia, ktorá dostala tvar \{#reflection-given-a-shape}
 
 **Reflexiu (reflection)** zaviedla prvá časť ako pojem — agent posudzuje vlastnú trajektóriu. Výskum dal tomu pojmu pomenované podoby a existuje jeden princíp, ktorý rozhoduje, či niektorá z nich vôbec pomôže.
 
@@ -70,7 +70,7 @@ Pod oboma leží princíp, ktorý riadi každú reflexiu: je len taká dobrá ak
 
 Ten princíp má aj svoju odvrátenú stranu a je to dôvod, prečo sa nereflektuje všade. Reflexia stojí volania navyše a latenciu a pri ľahkých vstupoch dokáže aj uškodiť — model, ktorého požiadaš, aby prehodnotil správnu odpoveď, ju občas rozmýšľaním pokazí. Reflexiu preto podmieň skutočným signálom zlyhania, padnutou kontrolou alebo zaseknutou slučkou, namiesto toho, aby si ju spúšťal na každom kroku. To isté pravidlo najjednoduchšej úrovne, uplatnené na sebakritiku.
 
-## Rozpočet ako politika, nie iba číslo
+## Rozpočet ako politika, nie iba číslo \{#budgets-as-a-policy-not-a-number}
 
 V prvej časti bol rozpočet nespochybniteľnou poistkou: tvrdý strop, ktorý zaručí, že sa slučka zastaví. Spresnenie znie, že rozpočet je politika a že to, čo pri strope urobíš, váži rovnako ako samotný strop.
 
@@ -89,7 +89,7 @@ Napokon míňaj rozpočet tam, kde sa vypláca. Drahé techniky vyššie — pre
 
 Ešte jedna páka si zaslúži vlastné meno: **thinking budget (rozpočet uvažovania)** — koľko rozšíreného uvažovania (extended thinking, reasoning effort) úloha dostane — je oddelený od rozpočtu krokov a tokenov a ladí sa podľa náročnosti úlohy, nie podľa dĺžky slučky.
 
-## Pamäť pre dlhé trajektórie
+## Pamäť pre dlhé trajektórie \{#memory-for-long-trajectories}
 
 Scratchpad z prvej časti bol jednou z ochrán proti napúchaniu kontextu. Za tým pracovným priestorom stojí celá pamäťová architektúra s typmi, ktoré sa líšia podľa toho, ako dlho žijú a kde fyzicky sedia.
 
@@ -127,7 +127,7 @@ Praktická mechanika dlhej trajektórie je trojaká a oplatí sa ju pomenovať �
 
 Nič z toho nie je zadarmo a väčšina úloh to nepotrebuje. Epizodická pamäť pridáva celý vyhľadávací podsystém s vlastnými spôsobmi zlyhania — zastaraná alebo zle vybraná spomienka otrávi kontext a môže byť horšia než žiadna pamäť. Jednorazové úlohy si vystačia s pracovnou pamäťou. Dlhodobú pamäť pridaj vtedy, keď sa agent naozaj musí učiť naprieč sedeniami — osobný asistent, dlho bežiaci projekt — a ani o chvíľu skôr.
 
-## Hodnotenie celej cesty
+## Hodnotenie celej cesty \{#grading-the-whole-path}
 
 Prvá časť povedala, že evaluácia teraz meria trajektóriu. V konkrétnostiach je to hŕstka metrík — a nástraha spoľahlivosti, ktorá chytá tímy, čo zastanú pri jedinom úspešnom behu.
 
@@ -141,7 +141,7 @@ Cestu naozaj oznámkuješ cez **LLM-as-a-judge (LLM ako sudca)** nad trajektóri
 
 A ešte raz zdržanlivosť. Jednoduchý, krátky agent nepotrebuje plné známkovanie trajektórie — hodnotenie výsledku plus počet krokov býva bohato. Aparát na hodnotenie trajektórie je náklad, ktorý na seba berieš vtedy, keď existuje skutočná viackroková cesta, ktorej správnosť môže zlyhať nezávisle od konečnej odpovede. Keď existuje, [záverečná stránka časti](../real-agents.md) ukazuje celú slučku — plánovanie, rozpočty, pamäť a evaluáciu — v behu naprieč Claude, OpenAI a Gemini.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Plánovanie sa môže stať prehľadávaním mnohých kandidátnych plánov — Tree of Thoughts prechádza strom krokov uvažovania, Graph of Thoughts graf, ktorý vetvy spája, LATS prehľadávanie akcií so spätnou väzbou z prostredia. Na úlohách s overiteľnými krokmi je to úplne iná úroveň schopností (ToT dosiahol na hre Game of 24 74% oproti 4% pri chain-of-thought), ale násobí volania a stojí či padá s dôveryhodným hodnotiteľom. Väčšina agentov len preplánuje — a má na to dobrý dôvod.
 - Reflexia má pomenované podoby na dvoch časových škálach: Self-Refine dolaďuje v rámci jedného behu, Reflexion prenáša poučenie naprieč behmi cez epizodický zásobník. Nech je podoba akákoľvek, reflexia je len taká dobrá ako signál pod ňou — uprednostni vonkajší a podmieň ju skutočným zlyhaním, inak správnu odpoveď prehovorí na nesprávnu.

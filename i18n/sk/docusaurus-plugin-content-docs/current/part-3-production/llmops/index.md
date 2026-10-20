@@ -17,7 +17,7 @@ Disciplína jedným pohľadom — čo LLMOps dedí z MLOps a čo mení. (Video j
 
 :::
 
-## Rozdiel, ktorý vnáša AI — artefakt a test
+## Rozdiel, ktorý vnáša AI — artefakt a test \{#the-ai-delta--artefact-and-test}
 
 V klasickom DevOpse je nasaditeľný artefakt kód: nasadíš tú istú zostavu (build) a dostaneš to isté správanie. V LLM-aplikácii určuje správanie päť artefaktov naraz:
 
@@ -31,7 +31,7 @@ Zmena ktoréhokoľvek z nich je **nasadenie** (deployment). A ktorýkoľvek z ni
 
 Spolu s artefaktom sa zmenilo aj testovanie. Výstupy sú nedeterministické a kvalita má odtiene, kým jednotkový test chce čistý verdikt prešiel/neprešiel — nástrojom na zachytenie regresie je preto [evaluácia](../../part-1-rag/cross-cutting/evaluation/index.md), nie iba jednotkové testy. Zvyšok lekcie túto jedinú vetu rozpisuje do konkrétnej prevádzky.
 
-## Nasadenie — CI/CD, keď artefakt nie je len kód
+## Nasadenie — CI/CD, keď artefakt nie je len kód \{#deploy--cicd-when-the-artefact-isnt-just-code}
 
 Celá disciplína sa stláča do jedinej slučky. Je chrbticou tejto lekcie — a napokon aj uzatvárajúcim obrazom celej príručky.
 
@@ -47,31 +47,31 @@ flowchart TB
 
 Bránou na začiatku je eval v CI. Každá zmena promptu, modelu, indexu či konfigurácie spustí golden set (etalónová sada); ak metriky klesnú pod prah, zlúčenie (merge) sa zablokuje. Je to regresné hodnotenie z Prvej časti príručky povýšené na fázu pipeline: tá istá zostava promptfoo, DeepEval a Ragas z [ekosystému nástrojov](../tooling-ecosystem/index.md), teraz zapojená do CI s verdiktom červená/zelená. Úprava promptu, ktorá potichu zníži faithfulness (vernosť zdrojom) o desať bodov, sa zachytí rovnako ako pokazený build.
 
-### Prompty sú kód — aj konfigurácia
+### Prompty sú kód — aj konfigurácia \{#prompts-are-code--and-config}
 
 Prompty žijú dvojaký život. Sú kód: držíš ich vo verziovaní, zmena promptu prichádza ako recenzovateľný diff a vráti sa späť ako ktorýkoľvek commit. A sú konfigurácia: keď produktové tímy dolaďujú znenie deň čo deň, **prompt registry** (register promptov) — správa promptov v nástrojoch ako LangSmith alebo Langfuse — im dovolí vydávať verzie promptov bez nasadenia kódu. Oboje je v poriadku. Nemenné ostáva priradenie: každá produkčná odpoveď sa musí dať dohľadať k presnej verzii promptu, a práve preto si ju trace zaznamená.
 
-### Pripni model
+### Pripni model \{#pin-the-model}
 
 Poskytovatelia svoje modely verziujú a vyraďujú. OpenAI odlišuje ukončenie podpory (deprecation) od úplného vypnutia, zverejňuje mapovania na náhrady a vydáva časovo označené snímky, v ktorých dátum býva priamo v identifikátore, ako `gpt-4o-2024-05-13`, hoci tvar identifikátora sa medzi poskytovateľmi líši. Anthropic vedie explicitný životný cyklus — Active, Legacy, Deprecated, Retired — s najmenej 60 dňami predstihu pred vyradením.
 
 Produkcia preto pripína presné verzie. Nepripnutý alias je nasadenie, ktoré si neplánoval: poskytovateľ presunie to, na čo alias ukazuje, a správanie tvojho systému sa pohne bez jediného diffu na tvojej strane. **Model pinning** (pripnutie modelu) mení toto prekvapenie späť na rozhodnutie — keď prechádzaš na novú verziu, ber to ako skutočné nasadenie: znova spusti eval a potom vydávaj postupne.
 
-### Vydávaj postupne
+### Vydávaj postupne \{#roll-out-gradually}
 
 Vzory postupného vydávania pochádzajú z release engineeringu, s jedným zvratom. **Canary release** (kanárikové nasadenie) pošle malý podiel živej premávky na nový prompt alebo model a sleduje metriky. **Shadow deployment** (tieňové nasadenie) púšťa nový variant na zrkadlenej premávke bez toho, aby sa jeho odpovede dostali k používateľom — bezpečné porovnanie kvality na reálnych otázkach. A/B test je online evaluácia z Prvej časti príručky: dva varianty, ktoré dostanú reálni používatelia, porovnané podľa výsledkov.
 
 Novinkou je predmet sledovania: nielen chyby a latencia, ale aj proxy kvality a náklady. Kanárik, ktorý odpovedá rýchlo, lacno a mierne nesprávne, je zlý kanárik — a povedia to jedine metriky kvality.
 
-### Korpus je tiež vydanie
+### Korpus je tiež vydanie \{#the-corpus-is-a-release-too}
 
 Index je správanie. Opätovné načítanie do indexu (re-ingest) s novou konfiguráciou chunkingu posunie vyhľadávanie naprieč celým korpusom; výmena embedding modelu si vyžiada úplné preindexovanie — pravidlo o [ingestione](../../part-1-rag/ingestion/index.md) z Prvej časti príručky. Aktualizácie korpusu preto veď ich tou istou bránou ako všetko ostatné: ako verziované vydanie, ktoré prejde evaluáciou, nie ako úloha na pozadí, čo prebehne cez noc a potichu prekreslí, čo systém vie.
 
-## Monitorovanie v produkcii
+## Monitorovanie v produkcii \{#monitoring-in-production}
 
 Monitorovanie je observability bežiaca nepretržite plus alerting na pohyb. Klasický panel sa prenáša: percentily latencie (p50 / p95), miery chýb a časových limitov, náklad na tokeny na požiadavku. LLM-špecifický panel drží proxy kvality — nepriame signály, že sa kvalita pohla: miera odmietnutí, miera spustenia guardrails, miera spätnej väzby od používateľov a — dnes už bežná prax — online LLM-as-a-judge, ktorý oskóruje vzorku požiadaviek z produkcie. Vzorku, pretože aj sudca páli tokeny; jeho náklad ohraničíš ako každý iný výdavok.
 
-### Drift — tri podoby
+### Drift — tri podoby \{#drift--three-flavours}
 
 Zamrznutá konfigurácia neznamená zamrznuté správanie, pretože svet pod ňou sa hýbe. Tomuto posunu hovoríme **drift** (posun) a má tri podoby:
 
@@ -81,11 +81,11 @@ Zamrznutá konfigurácia neznamená zamrznuté správanie, pretože svet pod ňo
 
 Detekcia je pre všetky tri spoločná: sleduj rozloženie tém a zámerov prichádzajúcej prevádzky a znova spúšťaj eval na čerstvých vzorkách, nie iba na starnúcom golden sete.
 
-### Incidentová slučka, teraz ako runbook
+### Incidentová slučka, teraz ako runbook \{#the-incident-loop-now-a-runbook}
 
 Niť, ktorú príručka ťahá od Prvej časti, sa tu uzatvára — v produkčnom rozsahu. Príde zlý produkčný trace, rozložíš ho na zlyhanie vyhľadávania alebo zlyhanie generovania (dekompozícia z Prvej časti príručky), z otázky sa stane nový prípad do golden setu, opravíš, eval to potvrdí a nasadíš. „Observability živí eval“ bol princíp v Prvej časti; v produkcii je z neho **runbook** — pevný sled krokov, ktorý v utorok popoludní vykoná ktokoľvek z tímu. Platformy z ekosystému nástrojov skrátia prostredný krok na jedno kliknutie: povýš trace na evaluačný prípad.
 
-## Náklady a latencia — páky
+## Náklady a latencia — páky \{#cost-and-latency--the-levers}
 
 :::tip[▶ Video]
 
@@ -97,29 +97,29 @@ Kam v skutočnosti idú peniaze — anatómia nákladov na tokeny a výpočet za
 
 V klasickej službe sú náklady väčšinou infraštruktúra — starosť prevádzky, no zriedka tá hlavná. Tu každá požiadavka páli merané tokeny a výdavky rastú pozdĺž dvoch osí naraz: s používaním a s dĺžkou promptu. Druhá os je zradná, lebo sa hýbe potichu: dlhší systémový prompt, dva fragmenty navyše z vyhľadávania, agentová slučka, ktorá pribrala kroky navyše — každé z toho znásobí účet na požiadavku bez jediného spusteného alertu, ak si z **nákladu na požiadavku** (cost per request) neurobil plnohodnotnú metriku. Zaobchádzaj s ním na úrovni evalu: číslo, ktoré naozaj optimalizuješ, je **kvalita za dolár** (quality per dollar).
 
-### Smerovanie medzi modelmi
+### Smerovanie medzi modelmi \{#route-between-models}
 
 Nie každá požiadavka si zaslúži vlajkový model. Klasifikáciu, jednoduché vyhľadania, krátke faktické otázky zvládne lacný rýchly model; drahý si svoju cenu zaslúži na ťažkom generovaní. **Model routing** (smerovanie medzi modelmi) pošle každú požiadavku najlacnejšiemu modelu, ktorý ju zvládne; smerovač môže byť pravidlo, natrénovaný klasifikátor alebo sám model. Pozor na terminológiu: toto je smerovanie medzi modelmi — tretí význam smerovania v tejto knihe. Smerovač dopytov (query router) z Prvej časti príručky vyberal index, agent z Druhej vyberal nástroj; tento vyberá, kto odpovie.
 
-### Fallbacky a brána
+### Fallbacky a brána \{#fallbacks-and-the-gateway}
 
 Výpadky poskytovateľa a chyby 429 nie sú incidenty, sú to počasie. Produkcia drží reťaz **fallbackov** (záložných ciest): ten istý model v inom regióne, iný poskytovateľ alebo lacnejší model v núdzovom režime — skúšajú sa v poradí, keď primárny model chybuje alebo naráža na limity. Toto všetko prirodzene zastreší **LLM gateway** (LLM-brána): jedno OpenAI-kompatibilné rozhranie pred každým modelom, ktorý používaš; centralizuje smerovanie, fallbacky, API kľúče, rozpočty aj limity požiadaviek na tím. LiteLLM je open-source príklad, OpenRouter ten hostovaný.
 
-### Cache — dvakrát
+### Cache — dvakrát \{#caching--twice}
 
 Prvá cache je poskytovateľova. **Prompt caching** (cachovanie promptu) uloží opakovaný prefix tvojho promptu — systémový prompt, few-shot príklady, statický kontext — aby sa nespracúval znova pri každom volaní. Obaja veľkí poskytovatelia dnes účtujú cachované vstupné tokeny paušálne, približne za desatinu základnej ceny vstupu (presné násobky sú na ich cenníkoch). Poctivá výhrada: zápis do cache stojí viac než základný vstup — Anthropic účtuje 1,25× alebo 2× podľa životnosti cache, OpenAI 1,25× na svojich najnovších modeloch — takže cachovať prefix, ktorý sa nikdy znova neprečíta, je čistá strata. Dôsledok pre návrh: stavaj prompty tak, aby cache zabrala, teda najprv statický prefix a potom premenlivý koniec, lebo čokoľvek dynamické ukončí použiteľný prefix presne tam, kde sa objaví.
 
 Druhá cache je tvoja. Cachovanie odpovedí vráti uloženú odpoveď na zopakovanú otázku, buď presnou zhodou, alebo cez **semantic caching** (sémantické cachovanie), ktoré páruje takmer duplicitné otázky podľa podobnosti embeddingov. Sémantické cachovanie vymieňa riziko správnosti za náklad: falošný zásah pri jemne odlišnej otázke podá používateľovi cudziu odpoveď.
 
-### Tokenová diéta
+### Tokenová diéta \{#the-token-diet}
 
 Najlacnejší token je ten, ktorý vôbec neodošleš. Súhrnu úsporných techník hovoríme **tokenová diéta** — systematické orezávanie počtu tokenov na vstupe aj na výstupe. Vyhľadaj menej fragmentov, teda výber a zostavenie kontextu z Prvej časti príručky: tie najlepšie namiesto všetkých. Skráť systémový prompt. Ohranič dĺžku výstupu. Zhŕňaj pracovné poznámky agenta (scratchpad), namiesto toho, aby narastali s každým krokom ([plánovanie a slučky](../../part-2-agents/planning-loops/index.md)). Diéta má latenčných súrodencov: streaming pre vnímanú latenciu ([lekcia o servingu](../serving/index.md)), menšie a rýchlejšie modely tam, kde to smerovanie dovolí, a paralelizáciu fáz pipeline, ktoré na sebe nezávisia.
 
-### Dávkový režim
+### Dávkový režim \{#the-batch-tier}
 
 Práca, ktorá počká, nemá platiť interaktívnu cenu. Nočné obohacovanie korpusu, spätné doplnenia, generovanie syntetických dát pre eval — **dávkový režim** (batch tier) z [lekcie o cloudových platformách](../cloud-platforms/index.md) ich spracuje približne za polovičnú cenu výmenou za SLA v ráde hodín. Ako páka je najjednoduchšia tu: označ záťaž za offline a zober si zľavu.
 
-### Rozpočty uzatvárajú slučku
+### Rozpočty uzatvárajú slučku \{#budgets-close-the-loop}
 
 Zrelá prax — bežná, hoci nie štandard — sú tokenové rozpočty na tím a na funkciu s alertmi, vynucované tam, kadiaľ už aj tak tečie všetka premávka: na bráne. A do kontrolného zoznamu pred nasadením pribudne prehľad nákladov, lebo úvodný rozdiel tejto lekcie platí aj pre náklady: zmena promptu je zmena nákladov. Slučka z hlavičky tejto stránky beží na kvalite aj na dolároch.
 
@@ -137,7 +137,7 @@ flowchart TB
 
 Týmto sa uzatvára Tretia časť príručky — a s ňou aj základný kurz celej knihy. Vlastný oblúk Tretej časti bol krátky a praktický: zabalili sme pipeline do [služby](../serving/index.md), zvolili, [kde model beží](../cloud-platforms/index.md), poskladali [nástroje](../tooling-ecosystem/index.md) okolo slučky a — v tejto lekcii — naučili sa prevádzkovať to, čo sme postavili. Dlhší oblúk je oblúkom knihy. Prvá časť príručky postavila pipeline: chunky, embeddingy, vyhľadávanie, generovanie a prierezové disciplíny, ktoré ju robia merateľnou a bezpečnou. Druhá časť príručky jej dala schopnosť konať: slučku, nástroje, plány, spolupracovníkov, protokoly. Tretia časť príručky ju dostala do produkcie. To, čo začalo ako „rozdeľ dokumenty a hľadaj v nich“, odchádza ako bežiaca služba s evaluačnou bránou pred každou zmenou a so slučkou, ktorá vlastné chyby premieňa na testovacie prípady. Tá slučka sa nikdy neskončí — a práve o to ide. Produkčný LLM-systém nie je hotový, je prevádzkovaný.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Nasaditeľný artefakt je prompt, verzia modelu, index, konfigurácia a politiky guardrails, nie iba kód. Zmena ktoréhokoľvek z nich je nasadenie a ktorékoľvek vie zhoršiť kvalitu bez jediného riadka zmeneného kódu.
 - Eval v CI je regresná brána: každá zmena spustí golden set a metriky pod prahom zablokujú zlúčenie.

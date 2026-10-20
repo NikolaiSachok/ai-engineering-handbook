@@ -17,7 +17,7 @@ failure* (the piece was retrieved, but the model ignored or garbled it). Almost 
 pipeline addresses one of these two breakages, and the first move is always to tell which one you're
 looking at.
 
-## What's inside
+## What's inside \{#whats-inside}
 
 - **[Ingestion](./ingestion/index.md)** — the offline preparation of documents: chunking and embeddings,
   metadata. This is where the ceiling on all of search quality gets set.
@@ -32,7 +32,7 @@ looking at.
   (knowing the system works), [guardrails](./cross-cutting/guardrails/index.md) (keeping it safe),
   [observability](./cross-cutting/observability/index.md) (seeing what it does in production).
 
-## Prerequisites
+## Prerequisites \{#prerequisites}
 
 General familiarity with LLMs: what a prompt, a context, and an embedding are at the level of the idea. No
 deep math required — we explain from first principles.

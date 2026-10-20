@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Eine Grenze noch vor dem Rundgang, denn was unmittelbar daneben liegt, gehört den Nachbarlektionen. Die *allgemeine* Taxonomie des Gedächtnisses, die Schritt- und Token-Budgets und die Schleifensteuerung gehören zu [Planung und Schleifen](../planning-loops/index.md) und deren [Vertiefung](../planning-loops/deep-dive.md); die Topologien für mehrere Agenten, ihre Protokolle und die Frage, wie sich ein Team evaluieren lässt, stehen in der Lektion über [Multi-Agenten-Systeme](../multi-agent/index.md) und deren [Vertiefung](../multi-agent/deep-dive.md); das Transportprotokoll darunter – zwischen Agent und Tool [MCP](../mcp/index.md), zwischen Agent und Agent A2A – ist eine eigene Lektion; und der *Betrieb* selbst – Bereitstellung, Observability, Evaluierung – ist [Teil III](../../part-3-production/overview.md). Für die Framework-Schicht ist diese Seite zuständig; auf den Rest verweist sie, statt ihn noch einmal herzuleiten. Teil 1 wird durchgehend vorausgesetzt.
 
-## Ein Graph, Knoten für Knoten
+## Ein Graph, Knoten für Knoten \{#walking-one-graph}
 
 Nehmen Sie das Bild vom Agenten als Graph aus Teil 1 und machen Sie es konkret. [LangGraph](https://www.langchain.com/langgraph) modelliert einen Agenten als `StateGraph`: ein getyptes, gemeinsames Zustandsobjekt, aus dem jeder Knoten liest und in das jeder Knoten schreibt, dazu die Knoten und Kanten, an denen entlang die Ausführung durch dieses Objekt läuft. Dieser **gemeinsame Zustand** ist der ganze Kniff – über ihn gelangt das Ergebnis eines Schritts zum nächsten, ohne dass Sie es von Hand durchreichen.
 
@@ -38,7 +38,7 @@ Meistens verdrahten Sie davon gar nichts von Hand. LangGraph liefert einen **vor
 
 Sobald die Schleife ein Graph ist, ist alles Weitere darunter – Checkpoints, Durable Execution, Human-in-the-Loop, Tracing – etwas, das Sie an diesen Graphen *anhängen*, keine neue Mechanik, die Sie bauen. Das alles ist Verdrahtung, die an Knoten und Kanten hängt, die Sie ohnehin schon haben.
 
-## Einen Absturz überstehen: Durable Execution
+## Einen Absturz überstehen: Durable Execution \{#surviving-a-crash-durable-execution}
 
 Die Persistenz beginnt beim **Checkpointer** – er speichert den Zustand des Graphen nach jedem **Knotenübergang** (im LangGraph-Vokabular: *Super-Step*), und zwar getrennt nach Thread. Einen Durchlauf wieder aufzunehmen heißt dann nur noch, den letzten Checkpoint zu laden und von dort weiterzumachen. Das ist LangGraphs kurzfristiges, thread-gebundenes Gedächtnis: der Zustand eines einzelnen Gesprächs, laufend gesichert.
 
@@ -54,7 +54,7 @@ Warum das für Agenten zählt, ist wieder derselbe entscheidende Unterschied. Ag
 
 Und dieselbe Zurückhaltung wie bei jeder anderen Fähigkeit auf dieser Seite: Ein zustandsloser Agent, der eine einzige Antwort liefert, braucht nichts davon. Keinen Checkpointer, kein Backend, keinen Modus für Dauerhaftigkeit. Dauerhaftigkeit macht sich bei langen, wieder aufnehmbaren oder von Menschen freigegebenen Durchläufen bezahlt – stellen Sie kein Postgres hin, nur um einen Klassifikator zu betreiben, der mit einer einzigen Antwort fertig ist.
 
-## Zwei Arten von Gedächtnis – und warum sie nicht das Team sind
+## Zwei Arten von Gedächtnis – und warum sie nicht das Team sind \{#two-kinds-of-memory-and-why-they-arent-the-team}
 
 Das Gedächtnis eines Frameworks teilt sich in zwei Reichweiten, und zwar entlang einer einzigen Achse. Das kurzfristige, thread-gebundene Gedächtnis ist der Zustand des Checkpointers – lebendig innerhalb eines einzelnen Threads, also des gerade laufenden Gesprächs, und fort, sobald dieser Thread endet. Das langfristige, thread-übergreifende Gedächtnis ist ein eigener **Store** (Langzeitspeicher des Frameworks), der *über* Threads hinweg überdauert, mit Namensräumen als Schlüssel – etwa einem je Nutzerkonto –, sodass ein Agent sich zwischen Sitzungen, die keinen Thread teilen, an eine Person erinnern kann. Diese langfristige Seite nennt LangGraph den Store.
 
@@ -66,7 +66,7 @@ Die Konstrukte für mehrere Agenten gehören auf eine ganz andere Achse, und wer
 
 Halten Sie die beiden also auseinander, denn das ist die tragende Unterscheidung dieses Abschnitts. Gedächtnis ist **Persistenz von Zuständen**: was über Schritte und über Sitzungen hinweg überdauert. Die Konstrukte für mehrere Agenten sind **Arbeitsverteilung**: wie Subagenten miteinander verdrahtet sind. Die beiden stehen orthogonal zueinander – Sie können einen einzelnen Agenten mit reichem Langzeitgedächtnis haben, ein zustandsloses Team aus Agenten, oder beides zugleich. Zu einem Supervisor zu greifen, um an ein Gedächtnis zu kommen, ist ein echter Entwurfsfehler. Das Framework verpackt jede Fähigkeit für sich; die *Begriffe* selbst leben in [Planung und Schleifen](../planning-loops/index.md) (Gedächtnis) und in der Lektion über Multi-Agenten-Systeme (Topologien), und diese Lektion zeigt nur, wie ein Framework sie an die Oberfläche bringt. Daraus folgt: Greifen Sie erst dann zu einem thread-übergreifenden Store, wenn ein thread-gebundener Checkpoint wirklich nicht ausreicht. Passen Sie das Konstrukt an den Bedarf an.
 
-## Zwei Wege, denselben Agenten zu definieren
+## Zwei Wege, denselben Agenten zu definieren \{#two-ways-to-define-the-same-agent}
 
 Es gibt zwei Stile, einen Agenten zu definieren, und die Trennlinie läuft durch jedes Framework. **Imperativ** heißt, dass Sie den Agenten im Code *bauen*, Schritt für Schritt: den Graphen instanziieren, `add_node`, `add_edge`, eine bedingte Kante ergänzen, kompilieren. Den Kontrollfluss schreiben Sie selbst. LangGraphs Graph API ist genau in diesem Sinn imperativ. (LangGraph bietet daneben eine leichtere imperative Möglichkeit an, die Functional API – die Dekoratoren `@entrypoint` und `@task` geben Ihnen einen Agenten als Funktion, mit einem Zustand im Geltungsbereich eben dieser Funktion, für den Fall, dass Sie imperative Kontrolle wollen, ohne einen ausdrücklichen Graphen zu zeichnen.)
 
@@ -76,7 +76,7 @@ Der Kompromiss schneidet in beide Richtungen. Imperativ kauft Ihnen Kontrolle un
 
 Nichts davon ist neu. Es ist dieselbe Linie zwischen deklarativ und imperativ, die die Software überall sonst schon gezogen hat – SQL gegen prozeduralen Code, Infrastruktur als Konfiguration gegen Skripte. Deklarativ für die üblichen Gestalten; imperativ, sobald Sie an die Wand stoßen. Und die meisten Frameworks in der Praxis geben Ihnen beides und lassen Sie mischen – eine deklarative Crew mit einer imperativen Notluke für den einen Ablauf, den die Konfiguration nicht sagen kann. Das bindet sauber zurück: Der selbst gebaute Graph aus dem ersten Abschnitt ist die imperative Form, und eine in der Konfiguration erklärte Crew ist die deklarative Form *derselben* Topologie aus der Lektion über [Multi-Agenten-Systeme](../multi-agent/index.md). Ein Begriff, zwei Arten, ihn aufzuschreiben.
 
-## Der eine Graph, an dem jede Betriebsfrage hängt
+## Der eine Graph, an dem jede Betriebsfrage hängt \{#one-artefact-every-production-concern}
 
 Weil der Agent ein Graph aus *benannten* Knoten ist, kann das Framework von sich aus einen Trace erzeugen. Jede Ausführung eines Knotens, jeder Modellaufruf und jeder Tool-Call wird zu einem **Span** in einem Eltern-Kind-Baum, mit wenig oder gar keiner Instrumentierung von Ihrer Seite. Das sind die Tracing-Hooks, die Teil 1 unter dem Boilerplate-Code geführt hat, abgegolten durch die Struktur des Graphen selbst.
 
@@ -90,7 +90,7 @@ Alles läuft auf einen einzigen Gegenstand zu. Der Graph, den Sie im ersten Absc
 
 Die abschließende Zurückhaltung spiegelt das „zuerst die Grundbausteine“ aus Teil 1. All das ist Meisterschaft auf Abruf. Ein einfacher Agent braucht nichts davon – keinen Checkpointer, keinen Store, keine deklarative Konfiguration, kein Backend für Traces. Greifen Sie zu jedem Stück erst dann, wenn der Durchlauf lang genug ist, um Dauerhaftigkeit zu brauchen, zustandsbehaftet genug für ein Gedächtnis oder komplex genug für Tracing. Das Framework macht jedes davon billig zu ergänzen; umsonst macht es keines, und eines zu ergänzen, das Sie nicht brauchen, ist genau der Preis der Abstraktion, vor dem Teil 1 gewarnt hat – ein zweites Mal bezahlt.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - LangGraph modelliert einen Agenten als `StateGraph` – ein gemeinsames Zustandsobjekt, Knoten, die das Modell aufrufen, ein Tool aufrufen oder entscheiden, einfache Kanten und bedingte Kanten, die anhand des Zustands weiterleiten. Der ReAct-Agent besteht aus einem Knoten `agent` und einem Knoten `tools`, mit einer bedingten Kante aus `agent` heraus und einer Kante von `tools` zurück auf `agent`; `create_react_agent` reicht Ihnen diesen Graphen fertig zusammengesetzt.
 - Ein Checkpointer sichert den Zustand nach jedem Schritt, getrennt nach `thread_id`, sodass ein Durchlauf beim letzten erfolgreichen Schritt ansetzt, statt von vorn zu beginnen – und dank derselben Persistenz kann eine Human-in-the-Loop-Unterbrechung stundenlang andauern; danach wird der unterbrochene Knoten von seiner ersten Zeile an erneut ausgeführt. Die Modi von `durability` (`exit`, `async`, `sync`) tauschen Geschwindigkeit gegen Sicherheit; die Backends lassen sich frei tauschen (im Arbeitsspeicher für die Entwicklung, Postgres oder Redis für den Produktivbetrieb); ein zustandsloser Agent mit einer einzigen Antwort braucht nichts davon.

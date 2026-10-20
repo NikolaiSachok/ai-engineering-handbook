@@ -12,7 +12,7 @@ Po prvé, prvá časť mlčky predpokladala, že čistý text na delenie už má
 
 Najprv parsovanie dokumentov; potom pokročilé delenie — late chunking a contextual retrieval; nakoniec embeddingy do hĺbky: fine-tuning, skracovanie vektorov cez Matryoshka Representation Learning a viacjazyčné modely. Znalosť prvej časti všade predpokladáme: kompromis veľkosti chunku ani rozdiel medzi bi- a cross-encoderom už nevysvetľujeme, iba na ne nadväzujeme.
 
-## Parsovanie dokumentov: strop kvality pre všetko, čo nasleduje
+## Parsovanie dokumentov: strop kvality pre všetko, čo nasleduje \{#parsing-the-stage-that-caps-everything-downstream}
 
 Pipeline prvej časti sa začínala krokom „rozdeľ dokument na chunky“. Niečo však musí dokument na text najprv premeniť — a práve v tomto kroku enterprise RAG najčastejšie zlyháva a nikto si to nevšimne. **Parsovanie dokumentov** (document parsing) sa riadi neúprosným pravidlom: zo smetí na vstupe nevznikne nič iné než smeti na výstupe (garbage in, garbage out). Kvalita vytiahnutého textu zhora ohraničuje každú stratégiu delenia aj každý neskorší trik s vektormi. Ak parser vstup skomolil, nižšie v pipeline to už nič nenapraví — delíš nezmysel a ten istý nezmysel potom verne embedduješ.
 
@@ -54,7 +54,7 @@ Na výstup parsovania nadväzuje delenie s ohľadom na štruktúru dokumentu aj 
 
 :::
 
-## Pokročilý chunking: ako chunku vrátiť stratený kontext
+## Pokročilý chunking: ako chunku vrátiť stratený kontext \{#advanced-chunking-give-a-chunk-back-its-context}
 
 Základný problém chunkingu z prvej časti: chunk zaembeddovaný izolovane stráca kontext okolo seba. Veta „V treťom kvartáli vzrástla o 20%.“ je nanič, len čo odsek, ktorý hovorí, čo vzrástlo a za ktorý rok, skončí v inom chunku. S touto stratou sa vyrovnávajú dve techniky z roku 2024, každá v inom kroku pipeline — a oplatí sa položiť si ich vedľa seba, lebo tú istú stratu riešia na dvoch rôznych miestach.
 
@@ -85,17 +85,17 @@ Jedna technika druhú nevylučuje — obe pracujú v čase indexácie a pokojne 
 
 A tretieho príbuzného už poznáš: parent-document / small-to-big retrieval z prvej časti. Vyhľadávaš v malých chunkoch, ktoré dávajú ostrý embedding, a modelu podávaš väčší rodičovský fragment — tá istá strata kontextu sa tu rieši až v čase dopytu, vnútri vrstvy Retrieval, nie pri indexácii. Jeden a ten istý problém sa teda rieši na troch miestach: dvakrát pri indexácii, raz v čase dopytu; detail z času dopytu žije v [prehĺbení vrstvy Retrieval](../retrieval/deep-dive.md).
 
-## Embeddingy do hĺbky: doladenie, Matryoshka a viac jazykov
+## Embeddingy do hĺbky: doladenie, Matryoshka a viac jazykov \{#embedding-depth-fine-tuning-matryoshka-multilingual}
 
 Prvá časť povedala, že kvalitu vyhľadávania zhora ohraničuje kvalita embeddingov, a naučila ťa vyberať model podľa osí. Keď však hotový model — taký, aký ponúka výrobca — už nestačí, ostávajú ti tri páky priamo na samotnom embeddingu.
 
-### Doladenie embeddingového modelu na vlastnú doménu
+### Doladenie embeddingového modelu na vlastnú doménu \{#fine-tuning-the-model-to-your-domain}
 
 Všeobecný embeddingový model bol trénovaný na všeobecnom webovom texte. Tvoja doména — právo, medicína, interný žargón, kódy produktov — môže obsahovať vzťahy medzi dopytom a úryvkom (passage), ktoré základný model jednoducho chápe naopak: blízko kladie to, čo má byť ďaleko, a ďaleko to, čo má byť blízko. **Fine-tuning** (doladenie modelu) prispôsobí vektorový priestor tvojim dátam. Základným mechanizmom je **contrastive learning** (kontrastné učenie) na trojiciach z tvojej domény — dopyt, úryvok, ktorý naň naozaj odpovedá, a úryvok, ktorý neodpovedá: učenie priťahuje správne dvojice dopyt–úryvok k sebe a nesprávne odtláča od seba. O tom, či naozaj zaberie, rozhodujú **hard negatives** (tvrdé negatívy) — úryvky, ktoré vyzerajú správne, no správne nie sú; ľahké negatívy model nenaučia nič, čo by už nevedel. Trénovacie dvojice vyťažíš z logov kliknutí a spätnej väzby — a keď žiadne nemáš, siahneš po syntetickom generovaní: LLM napíše ku každému chunku pravdepodobné dopyty. Syntetické dopyty (synthetic queries) sú bežný spôsob, ako začať bez jediného označeného príkladu.
 
 Tu naplno udrie dôsledok, ktorý prvá časť len pomenovala: fine-tuning mení model — a zmena modelu znamená nanovo zaembeddovať celý korpus, teda úplnú preindexáciu. Dopyt aj dokument musí vždy kódovať tá istá verzia modelu; inak ich vektory žijú v rôznych priestoroch a vyhľadávanie vracia nepoužiteľné výsledky. Fine-tuning je preto záväzné offline rozhodnutie, nie parameter, ktorý si len tak prepneš. Z toho vyplýva aj „kedy nie“: model dolaďuj až vtedy, keď evaluácia naozaj ukáže, že úzkym hrdlom je aj silný hotový model — všeobecný či trénovaný priamo na pároch dopyt ↔ úryvok (retrieval-optimised). Je to prácne a potrebuješ dosť doménových dát, aby sa to oplatilo. Najprv skús lepší hotový model na vyhľadávanie a **hybrid search** (hybridné vyhľadávanie) — prekvapivo často stačia — a záväzok je neporovnateľne menší.
 
-### Matryoshka Representation Learning: dimenzia, ktorú nastavíš aj dodatočne
+### Matryoshka Representation Learning: dimenzia, ktorú nastavíš aj dodatočne \{#matryoshka-representation-learning-and-truncation}
 
 Prvá časť podala dimenziu (dimensionality) ako pevný kompromis: viac rozmerov zachytí viac odtieňov významu, ale znamená aj viac pamäte, pomalšie vyhľadávanie a vyššiu cenu — väčší nie je automaticky lepší. **Matryoshka Representation Learning (MRL)** (Kusupati a kol., arXiv 2205.13147, máj 2022; NeurIPS 2022) robí z tohto pevného kompromisu parameter, ktorý nastavíš aj dodatočne. Meno technika dostala po matrioške — ruskej bábike, v ktorej sú menšie vložené do väčších: model sa trénuje tak, aby informáciu ukladal od hrubej k jemnej do vnorených prefixov, takže už prvých N rozmerov vektora tvorí použiteľný samostatný embedding. Vektor preto smieš skrátiť na prvých 256, 512 či 1024 rozmerov a väčšina sémantického signálu ostane — bez opätovného embeddovania, bez ďalšieho prechodu modelom; vektor jednoducho odrežeš a znormalizuješ.
 
@@ -103,7 +103,7 @@ Výsledkom je jeden embedding s viacerými pracovnými bodmi — rôznymi pomerm
 
 Skrátenie však nie je zadarmo: oproti plnému vektoru časť presnosti naozaj stratíš. Je to kontrolovaný kompromis, ktorý meriaš na vlastných metrikách — a funguje len na modeli, ktorý bol pre MRL trénovaný. Bežný embedding jednoducho odrezať nejde — prefix bez tréningu pre MRL neobstojí.
 
-### Viacjazyčné embeddingy: spoločný priestor nie je samozrejmosť
+### Viacjazyčné embeddingy: spoločný priestor nie je samozrejmosť \{#multilingual-specifics}
 
 Prvá časť označila jazyk a doménu za jednu z osí výberu a viacjazyčnosť nazvala kritickou pre podnikové prostredie. Podstata je v tom, čo ti **viacjazyčné embeddingy** (multilingual embeddings) musia naozaj zaručiť: **spoločný medzijazykový vektorový priestor** (shared cross-lingual space), v ktorom rovnaký význam v rôznych jazykoch skončí na blízkych vektoroch — takže dopyt v jednom jazyku nájde úryvky v inom. Presne také medzijazykové vyhľadávanie potrebuje podnikový korpus, v ktorom sa jazyky miešajú. A zároveň je to vlastnosť, ktorú každý predpokladá a málokto overí.
 
@@ -117,7 +117,7 @@ Zopár rozumných východísk — zoznam, nie rebríček: multilingual-E5 (Micro
 
 A mostík späť k prvej páke: pri konkrétnej kombinácii jazyka a domény fine-tuning — alebo model výslovne trénovaný na medzijazykové vyhľadávanie — poráža generický viacjazyčný model. Pre celú sekciu platí jedna podniková zásada: meraj na vlastných jazykoch a vlastnej doméne vo vrstve [Evaluation](../cross-cutting/evaluation/) — zverejnený viacjazyčný rebríček totiž priemeruje skóre aj naprieč jazykmi, ktoré ty možno vôbec nemáš.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Parsovanie je strop kvality celej vrstvy Ingestion: vytiahnutý text ohraničuje každú techniku delenia aj embeddovania nižšie v pipeline a sploštenú tabuľku už neskôr nikto neobnoví — práve tu enterprise RAG najčastejšie zlyháva bez ohlásenej chyby.
 - Parsovanie layout-aware najprv rozpozná štruktúru a až potom vyťahuje text — oblasti strany a poradie čítania pred samotnými znakmi. Zachováva tabuľky a hierarchiu, o ktoré sa opiera delenie s ohľadom na štruktúru dokumentu a metadáta z prvej časti; siahni po ňom (a pri skenoch po OCR) presne vtedy, keď sú dokumenty tabuľkové, viacstĺpcové alebo skenované — na čistú prózu stačí lacný plochý extraktor.

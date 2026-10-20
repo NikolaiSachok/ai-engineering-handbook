@@ -17,7 +17,7 @@ Týchto osem spôsobov zlyhania koluje v diskusiách o AI v produkcii; ich uspor
 
 :::
 
-## 1 · Korpus je produkt
+## 1 · Korpus je produkt \{#1--the-corpus-is-the-product}
 
 <InfoCard
   title="Korpus je produkt"
@@ -43,7 +43,7 @@ Korpus dema je priečinok, ktorý niekto ručne zostavil. V produkcii sú dvojst
 
 Prísny validátor je nebezpečný práve preto, že svoje zásahy nikde neohlási. Dokumenty, ktoré nezodpovedajú schéme, jednoducho zahodí, index sa postaví a vyzerá zdravo, model odpovedá z neúplného korpusu — sebavedomo, pretože mu nikto nepovedal, že tretina zdrojov nikdy nedorazila. Produkčným riešením preto nie je prísnejšia brána, ale **manifest ingestionu**: ingestion hlási, čo *zahrnul*, čo *vylúčil a prečo* a kde má *slepé miesta*, a hlási to ako artefakt zostavenia, ktorý sa dá prečítať. Ak dokument vylúčiš vedome a vieš to pomenovať, je to rozhodnutie; ak to nevie pomenovať nikto, je to chyba. Mechaniku — parsovanie, rozloženie, stratégie chunkingu, metadáta — rozoberá lekcia o [ingestione](../part-1-rag/ingestion/index.md).
 
-## 2 · Vyhľadávanie musí mať možnosť povedať nie
+## 2 · Vyhľadávanie musí mať možnosť povedať nie \{#2--retrieval-has-to-be-allowed-to-say-no}
 
 <InfoCard
   title="Vyhľadávanie smie povedať nie"
@@ -73,7 +73,7 @@ Preto vlož **prah skóre** za tú etapu, ktorej skóre má význam. Zlúčené 
 
 Ten posledný krok funguje iba vtedy, keď je generátor postavený tak, že smie odmietnuť — a to do detailu rozvádza [generovanie](../part-1-rag/generation/index.md). Hybrid search aj reranking, bez ktorých zmysluplný prah ani nepostavíš, dodáva [vyhľadávanie](../part-1-rag/retrieval/index.md). Demo odpovie na všetko. Produkčný systém smie povedať nie.
 
-## 3 · Jedna evaluačná sada nestačí
+## 3 · Jedna evaluačná sada nestačí \{#3--one-eval-set-is-not-enough}
 
 <InfoCard
   title="Dve evaluačné sady, nie jedna"
@@ -97,7 +97,7 @@ Testovacie prípady napísané v prvom týždni opisujú, ako si tím predstavov
 
 Ponechaj si obe. **Zmrazená regresná sada** odpovedá na otázku „pokazil som niečo, čo fungovalo?“ — a aby odpovedala, musí zostať nemenná. **Rotujúca sada vzorkovaná z produkcie** odpovedá na otázku „zodpovedá moja evaluácia ešte realite?“ — a aby odpovedala, musí sa hýbať. Na rotáciu je aj druhý dôvod a prichádza z opačnej strany: pevný benchmark, podľa ktorého tím mesiace optimalizuje, prestane merať kvalitu a začne merať, ako dobre ten benchmark pozná. Obe sady potrebujú značky, a práve s tým nikto v rozpočte nepočíta — [evaluácia](../part-1-rag/cross-cutting/evaluation/index.md) to hovorí bez okolkov: bez dátovej sady niet evaluácie.
 
-## 4 · Zelená ešte neznamená správne
+## 4 · Zelená ešte neznamená správne \{#4--green-is-not-the-same-as-correct}
 
 <InfoCard
   title="Zelená ešte neznamená správne"
@@ -122,7 +122,7 @@ Medzeru zaplnia dve veci. Prvá je **trace** — záznam behu, ktorý zachytí c
 
 Jednu vec rozhodni vedome a nepreberaj ju z predvolených nastavení: iný návrh si žiada logovanie na ladenie, iný logovanie, ktoré má neskôr niečo dokázať. Ladenie chce posledných niekoľko dní v takej podrobnosti, akú si vieš dovoliť. Audit — regulované odvetvie, sporná odpoveď, zákazník, ktorý sa pýta, čo mu systém povedal v marci — potrebuje po *mesiacoch* zrekonštruovať, čo sa vyhľadalo a čo sa vrátilo, a to je požiadavka na uchovávanie a integritu, nie nastavenie podrobnosti. Rozhodni sa vopred, ktoré z nich staviaš — logovanie na ladenie alebo **logovanie na úrovni auditu** — skôr než sa za teba rozhodne audítor.
 
-## 5 · Rozhoduje náklad na prijatú odpoveď
+## 5 · Rozhoduje náklad na prijatú odpoveď \{#5--the-unit-is-cost-per-accepted-answer}
 
 <Infographic
   src="/img/infographics/production-failures/05-cost.webp"
@@ -143,7 +143,7 @@ the cheaper model wins only when:
 
 Čítaj to takto: `p` je podiel odpovedí prijatých na prvý pokus a lacnejší model vyhráva iba vtedy, keď je pomer jeho úspešnosti k úspešnosti drahého väčší než pomer ich cien. Polovičná cena teda nič neprinesie, ak spoľahlivosť nedosahuje ani polovicu. Než uveríš úspore, zmeraj `p` pre každú trasu. [LLMOps](./llmops/index.md) preberá páky — smerovanie, cachovanie, dávkový režim, rozpočty, ktoré sa naozaj vynucujú — a kurz AI-SDLC prepočítava tú istú aritmetiku pre inú jednotku: náklad na prijatú zmenu kódu.
 
-## 6 · Pred pretrénovaním preindexuj
+## 6 · Pred pretrénovaním preindexuj \{#6--re-index-before-you-retrain}
 
 <InfoCard
   title="Pretrénuj až nakoniec"
@@ -168,7 +168,7 @@ Kvalita sa kazí aj bez nasadenia. Používatelia prinesú novú slovnú zásobu
 
 Vo vyhľadávacom systéme drift zvyčajne pochádza z korpusu alebo z dopytov, takže **rebrík odpovedí na drift** začína hlboko pod modelom: preindexuj a zmeň chunking, uprav zloženie vyhľadávania, prepracuj prompt — a až potom uvažuj o zásahu do váh, čo pre väčšinu tímov znamená ďalšiu verziu od dodávateľa, nie vlastný tréning. Tri podoby driftu a spôsob, ako každú sledovať, preberá [LLMOps](./llmops/index.md). Užitočný dôsledok znie, že **korpus je vydanie**: patrí mu verzia, diff aj rollback (návrat na predchádzajúcu verziu), presne ako kódu.
 
-## 7 · Prompt a korpus sú vydania
+## 7 · Prompt a korpus sú vydania \{#7--the-prompt-and-the-corpus-are-releases}
 
 <InfoCard
   title="Prompt a korpus sú vydania"
@@ -193,7 +193,7 @@ Ak je prompt súčasťou aplikačného kódu, aj úprava jedinej vety znamená n
 
 Potom uplatni ten istý štandard na všetko ostatné, čo mení správanie bez zmeny kódu: pripni verziu modelu, urob snímku korpusu, vydávaj cez canary release (kanárikové nasadenie) a pre každú z tých troch vecí drž samostatnú cestu rollbacku. Systém, pod ktorým sa môže nezávisle pohnúť prompt, model aj index, nemá reprodukovateľný stav vôbec, a nijaké testovanie to nenapraví. Mechanika vydávania je téma [LLMOps](./llmops/index.md).
 
-## 8 · Každá etapa pipeline odmieta chybný vstup
+## 8 · Každá etapa pipeline odmieta chybný vstup \{#8--a-pipeline-needs-gates-between-the-steps}
 
 <InfoCard
   title="Najlacnejšia kontrola prvá"
@@ -216,7 +216,7 @@ Vo viackrokovej pipeline sa prvý chybný výstup stane dôveryhodným vstupom �
 
 Doplniť sa oplatí ešte jedno: poradie. Brány nie sú rovnako drahé. Kontrola schémy stojí mikrosekundy, kontrola citácií a ich groundingu (opretia odpovede o kontext) stojí jedno vyhľadávanie a posúdenie modelom stojí volanie modelu. Púšťaj ich tak, že najlacnejšia kontrola ide prvá — za chyby, ktoré by zachytil regulárny výraz, tak nikdy nezaplatíš cenu sudcu. Toto poradie rozvádza kurz AI-SDLC v lekcii o vrstvených bránach; mechaniku na strane RAG — čo strážiť na vstupe, na výstupe a pri ingestione — vysvetľujú [guardrails](../part-1-rag/cross-cutting/guardrails/index.md).
 
-## 9 · Štyri zlyhania, ktoré v zoznamoch zvyčajne chýbajú
+## 9 · Štyri zlyhania, ktoré v zoznamoch zvyčajne chýbajú \{#9--four-that-rarely-make-the-list}
 
 <InfoCard
   title="Štyri prehliadané zlyhania"
@@ -239,7 +239,7 @@ Ešte štyri, a každé z nich už raz vyradilo produkčný systém, kým sa vš
 
 **Nespoľahlivé nástroje.** Nástroje zlyhajú skôr než model. Volaniu API vyprší časový limit, MCP server sa reštartuje, vektorové úložisko odmietne spojenie — a agent bez časového limitu, bez opakovania a bez fallbacku (záložnej cesty) jednoducho zostane visieť, a používatelia to vnímajú ako pokazený systém, nie ako pomalý. Radšej zámerne vráť horšiu odpoveď než nechať používateľa čakať v tichu — to je **riadené zhoršenie**. Celý cyklus volania aj spracovanie jeho chýb rozvádza lekcia o [používaní nástrojov](../part-2-agents/tool-use/index.md).
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Takmer nič z toho nie je zlyhanie modelu. Model je komponent, ktorý si nenapísal; zlyhania sídlia v systéme okolo neho.
 - Ingestion nemá iba validovať, má hlásiť — čo zahrnul, čo vylúčil a prečo, a kde má slepé miesta. Zahodenie bez ohlásenia dá sebavedomú odpoveď z neúplného korpusu.

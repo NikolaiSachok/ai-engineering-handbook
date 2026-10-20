@@ -15,7 +15,7 @@ CycloneDX), podpisovú vrstvu, ktorá záznamom dáva nepopierateľnosť (in-tot
 ktorou žiadny z týchto rámcov pôvodne nepočítal. Na konci príde poctivé vymedzenie ich možností, pretože práve
 tie sa zvyknú zveličovať.
 
-## SLSA: pôvod ako rebrík, nie políčko na odškrtnutie
+## SLSA: pôvod ako rebrík, nie políčko na odškrtnutie \{#slsa-provenance-as-a-ladder-not-a-checkbox}
 
 Pôvod nie je binárna vlastnosť; môže mať rôznu silu a buildová vetva
 [SLSA](https://slsa.dev/spec/v1.0/levels) ju vyjadruje číslami. Samotná špecifikácia podáva jednotlivé úrovne ako odpovede na otázku
@@ -36,7 +36,7 @@ oddelenie na L3 jednoznačný dôsledok — **agent, ktorý vygeneroval kód, ne
 pôvod**. Je to ten istý argument pre oddelenie právomocí ako v
 [prvej časti](./index.md), no namiesto vyhlásenia v politike ho teraz vynucuje platforma.
 
-## SBOM: súpis v jednom z dvoch formátov
+## SBOM: súpis v jednom z dvoch formátov \{#sbom-the-inventory-in-one-of-two-dialects}
 
 **Súpis softvérových súčastí (software bill of materials, SBOM)** uvádza všetko, čo vstúpilo do artefaktu —
 každú závislosť, verziu a licenciu. Keď sa zverejní nová zraniteľnosť, namiesto vyšetrovania stačí vyhľadanie
@@ -52,7 +52,7 @@ ručného zapisovania a zostával aktuálny. Kód generovaný agentmi túto potr
 závislosti strojovým tempom, takže súpis, ktorý by si človek možno neformálne udržal v hlave, musí vznikať
 automaticky. Inak jednoducho nebude správny.
 
-## in-toto a Sigstore: odkiaľ prichádza nepopierateľnosť
+## in-toto a Sigstore: odkiaľ prichádza nepopierateľnosť \{#in-toto-and-sigstore-what-makes-it-non-repudiable}
 
 SBOM aj záznam o pôvode sú iba dokumenty, kým ich niečo nespojí s buildom a neznemožní ich dodatočnú úpravu.
 Tak dostáva konkrétnu podobu požiadavka **nepopierateľnosti (non-repudiation)** z prvej časti. Zabezpečujú ju
@@ -73,7 +73,7 @@ Spolu odpovedajú na tri otázky, ktoré sa ľahko zamieňajú: SBOM hovorí, *�
 čím artefakt vznikol*, a podpis dokazuje, že *záznam nemožno poprieť ani zmeniť*. Záznam, ktorý môže operátor
 dodatočne upraviť, je iba rozprávanie; podpis, ktorý nedokázal vytvoriť jeho vlastný buildový krok, je dôkaz.
 
-## Oddelenie právomocí, keď sú obe strany agentmi
+## Oddelenie právomocí, keď sú obe strany agentmi \{#separation-of-duties-when-both-parties-are-agents}
 
 Prvá časť zdôvodnila oddelenie právomocí inžiniersky a následne aj požiadavkami na súlad. Konkrétne mechanizmy
 obe odôvodnenia spájajú. Podmienka SLSA L3, podľa ktorej kroky buildu definované používateľom nemajú prístup k
@@ -88,7 +88,7 @@ zlyhanie [kontroly pri veľkom objeme](../../part-3-verification/review-at-volum
 súladu. Mechanizmus vie preukázať, že schválenie nastalo; nevie zaručiť, že bolo poctivé. O to sa musia
 postarať nižšie vrstvy.
 
-## Poctivé vymedzenie: pôvod nie je správnosť
+## Poctivé vymedzenie: pôvod nie je správnosť \{#the-honest-limit-provenance-is-not-correctness}
 
 Tieto mechanizmy dokazujú presne vymedzenú skutočnosť a bežnou chybou je pripisovať im viac. Artefakt s úplnými
 potvrdeniami, úrovňou SLSA L3, súpisom SBOM a podpisom Sigstore môže byť stále **chybný** — nezabezpečený,
@@ -104,7 +104,7 @@ službu, transparency log a pipeline na tvorbu súpisu. Po rebríku vystúp iba 
 dôsledky prípadného zlyhania. Silu dôkazu o pôvode si nikdy nezamieňaj s kvalitou artefaktu, ktorému tento
 pôvod patrí.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - **SLSA je rebrík, nie políčko na odškrtnutie:** na L1 údaje o pôvode existujú, ale dajú sa sfalšovať; na L2
   ich podpisuje hostovaná platforma, takže sfalšovanie vyžaduje útok; na L3 je podpisový kľúč **neprístupný

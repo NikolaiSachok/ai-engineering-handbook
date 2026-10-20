@@ -11,7 +11,7 @@ loop those pieces run in, and it is the keystone of Part II. The loop has exactl
 **review before any code is written**, and a **critic before anything lands**. Cheap generation sits between
 them. Take out either gate and the loop collapses back into the unchecked generation Part I warned about.
 
-## Plan-first: the cheapest place to be wrong
+## Plan-first: the cheapest place to be wrong \{#plan-first-the-cheapest-place-to-be-wrong}
 
 Reviewing a plan is the highest-leverage check you have, because a mistake in a plan costs a sentence to fix and
 the same mistake in the code costs a rewrite. The plan is an artifact, made of verifiable stages — so it is
@@ -19,7 +19,7 @@ reviewable in a way a half-built feature is not. Read it before a line of code e
 right, are the done-conditions actually checkable, is anything load-bearing missing? Every problem you catch
 here is one you don't pay for, far more expensively, downstream.
 
-## Implement against the reviewed plan
+## Implement against the reviewed plan \{#implement-against-the-reviewed-plan}
 
 Then generation runs — cheaply, freely — but against the plan you already reviewed, not against a fresh
 interpretation invented on the way. The plan is the contract; the implementation's job is to satisfy it, stage
@@ -27,7 +27,7 @@ by stage, each stage carrying the done-condition that says when it's finished. T
 genuinely good at, and it is the part that got cheap. It is also the part that means the least on its own: an
 implementation nobody planned and nobody checked is just confident output.
 
-## The critic is a gate, not a suggestion
+## The critic is a gate, not a suggestion \{#the-critic-is-a-gate-not-a-suggestion}
 
 Before anything lands, a critic checks the work — and here the whole course converges. A critic that only
 advises is a skill, not a hook: the model may take it or leave it. What the loop needs is a gate the work cannot
@@ -39,7 +39,7 @@ human version as a flat rule —
 [don't file pull requests with code you haven't reviewed yourself](https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/). The critic gate is where Part I's "review is the control point" stops being a slogan and becomes a
 step you can't skip.
 
-## A second critic has to fail differently
+## A second critic has to fail differently \{#a-second-critic-has-to-fail-differently}
 
 A second critic is worth running only if it catches failures the first misses. Practitioner
 [Andrey Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part3/) reports checking each step
@@ -71,7 +71,7 @@ it, whether about code, operation, business logic or security. Use the lens to d
 reviewer reads the code, the other the operating evidence. Changing model families does not guarantee that
 disagreement. Which catches more is settled on seeded defects.
 
-## When the loop is too much
+## When the loop is too much \{#when-the-loop-is-too-much}
 
 The loop is priced for change-risk, and not every task carries it. Run the full plan-review-implement-critic
 ceremony on a one-line fix and you get the sledgehammer [Böckeler ran into](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) —
@@ -90,7 +90,7 @@ work against the judge.
 
 :::
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **the loop has a review before the work and a gate before the landing, and
 the gate is not run by the thing it checks.** What changes is who runs the gate.
@@ -107,7 +107,7 @@ the gate is not run by the thing it checks.** What changes is who runs the gate.
   seeded defect set and what the second catches that the first misses as a property of the gate. *The failure
   it prevents:* a gate the implementing team controls, which is a gate in name only.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - The loop has two gates: review the plan before the work, critique the work before it lands. Generation is the
   cheap part between them, and it means little on its own.

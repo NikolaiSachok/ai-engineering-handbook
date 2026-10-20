@@ -16,7 +16,8 @@
 #   1. file set          — identical set of relative .md paths
 #  1b. frontmatter      — block present in both; `id` and `sidebar_position` equal
 #   2. heading shape     — identical H1/H2 count and level sequence per file
-#   3. heading anchors   — identical ORDERED sequence of explicit `\{#id}` heading ids
+#   3. heading anchors   — English's explicit `\{#id}` heading ids in the same ORDER and at the same
+#                          level; a locale may add ids of its own only on an H3/H4
 #   4. component counts  — identical counts of `<InfoCard`, `<Node`, `<YouTube`
 #  4b. admonitions      — identical ordered kinds, titled-or-not, and blank-line padding
 #   5. fenced blocks     — identical count per fence language (```text excepted)
@@ -139,6 +140,14 @@
 # swap alike. The escaped `\{` is the on-disk form (`future.v4: true` removes the MDX1 heading-id
 # escape, so a bare `{` parses as JSX and fails the build); the escape is markup, not id, and is
 # stripped before comparing.
+#
+# It was relaxed ONCE, by #813, when every course heading got an id. At H2-H4 four Russian pages
+# carry subsections English does not have (the `###` pacing that check 2 already leaves to the
+# locale), and those subsections now carry ids too. Strict equality would have demanded deleting
+# them. So English's ids must appear in the locale in the same order and at the same LEVEL, and a
+# locale-only id is allowed on an H3/H4, never an H1/H2. The level clause is what keeps the
+# by-index failure caught: ids applied by position past an extra subsection put an English H2's
+# id on the locale's H3, and the order alone would still look right.
 #
 # PER-COURSE SCOPE. A course declares the locales it claims (`locales` in docusaurus.config.ts).
 # This gate checks a course/locale pair only when the course claims it, and prints the pairs it

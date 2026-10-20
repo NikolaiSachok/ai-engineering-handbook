@@ -10,7 +10,7 @@ sidebar_position: 2
 
 One boundary before the build, because the sibling lessons hold the ground next door. Agent↔agent coordination — topologies, how a team is graded — is [multi-agent](../multi-agent/index.md) and its [deep dive](../multi-agent/deep-dive.md); packaging these connections into a library is [orchestration frameworks](../orchestration-frameworks/index.md) and its [deep dive](../orchestration-frameworks/deep-dive.md); the operations angle — gateways, allowlists, centralised policy — lives in [Part III tooling](../../part-3-production/tooling-ecosystem/index.md) and the [guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) lesson; and MCP running on live agents is the [capstone](../real-agents.md). This page owns the protocol and transport layer, the agent-protocol landscape, and hardened deployment for untrusted servers. Part 1 is assumed throughout.
 
-## Building a server
+## Building a server \{#building-a-server}
 
 Part 1 named two roles, client and server. The working detail adds a third, and it changes how you read the other two. The **host** is the LLM application that initiates connections — an IDE, a chat app, an agent runtime. Inside the host live one or more **clients**, and each client holds a 1:1 connection to exactly one server. So an "MCP client" isn't the whole application; it's a connector *within* the host, one per server it talks to. Host, clients, servers — three roles, not two.
 
@@ -50,7 +50,7 @@ flowchart TB
 
 *One host holds several clients, each with a 1:1 connection to one server over its own transport — stdio to a local subprocess, streamable HTTP to a remote server across the network. "Trusted by locality" is a default, not a guarantee: as the transport section argues, a local stdio server is still third-party code with your machine's privileges.*
 
-## The capabilities that invert the connection
+## The capabilities that invert the connection \{#the-capabilities-that-invert-the-connection}
 
 So far the flow runs one way: the client calls, the server answers. The current spec defines the opposite direction too. Alongside the features a server offers, the *client* offers features to the *server* — and this inversion is the deepest thing about MCP's session model. Three client capabilities carry it: sampling, elicitation, and roots.
 
@@ -64,7 +64,7 @@ Both inverted capabilities are still moving, so date what you learn. The 2025-11
 
 The reason the inversion matters beyond mechanics: a static API only ever answers the calls made to it. MCP's stateful session lets the server *initiate* — request a generation, request user input, push an update. And every server-initiated capability is a **consent surface**, a place where a party you don't fully trust can reach back toward you. Name it that way and the security section stops being a separate topic and becomes the direct consequence of this one.
 
-## Two transports, two trust profiles
+## Two transports, two trust profiles \{#two-transports-two-trust-profiles}
 
 The same primitives ride either transport, and where the server runs is a deployment detail — Part 1's point stands. What Part 1 left for here is that the two transports carry sharply different trust and operations profiles.
 
@@ -74,7 +74,7 @@ The same primitives ride either transport, and where the server runs is a deploy
 
 So choosing a transport is choosing a trust posture. Reach for stdio when the server is local, single-user, and trusted by locality — a dev tool, a wrapper around a local file or database. Reach for streamable HTTP when the server is shared, remote, multi-tenant, or has to scale — and accept that authentication, token scoping, and network exposure become first-class concerns the moment you do. The transport choice is a trust decision wearing a deployment costume.
 
-## Finding a server is not trusting it
+## Finding a server is not trusting it \{#finding-a-server-is-not-trusting-it}
 
 **Server discovery** is how a client finds servers to connect to, and it happens on two levels. At connect time, a client discovers a *given* server's capabilities through the handshake above — that's discovery in the small. At the ecosystem level, a client finds *which servers exist at all* through a registry — discovery in the large.
 
@@ -82,7 +82,7 @@ The official **MCP registry** ([registry.modelcontextprotocol.io](https://regist
 
 Here is the load-bearing point: being listed on a registry is not vetting. A registry publishes metadata a publisher supplied about their own server; it does not audit what the server actually does, and a server can change its behaviour after it's listed (see rug pull, below). Discovery answers "does this server exist, and how do I reach it" — never "is this server safe to trust." That second question stays yours.
 
-## Placing MCP on the protocol map
+## Placing MCP on the protocol map \{#placing-mcp-on-the-protocol-map}
 
 MCP owns one axis: agent↔tools and data. There is a second axis it says nothing about — agent↔agent, one agent handing work to a peer — and that's a different problem with its own protocols. Don't re-derive it here; the coordination itself is [multi-agent](../multi-agent/index.md). But the protocol on that axis is worth placing.
 
@@ -92,7 +92,7 @@ The durable line is one sentence: MCP is agent↔tools and context; A2A is agent
 
 One dated caveat, held lightly: even the two axes are beginning to touch. MCP's own 2025-11-25 revision added experimental **tasks** — durable, pollable requests — which echo A2A's task lifecycle. Don't over-read it. As of late 2025 the axes remain distinct, and this is a convergence to watch, not a merger to predict.
 
-## Hardened deployment for untrusted servers
+## Hardened deployment for untrusted servers \{#hardened-deployment-for-untrusted-servers}
 
 Connecting an agent to a server you don't control connects it to input and behaviour you don't control — it puts a trust boundary between your host and everything that server sends. That's Part 1's "new attack surface," and this section works it out as a catalogue of failure modes and a defence-in-depth answer. One discipline sits under everything that follows: every byte a server sends is untrusted *data*, never trusted *instructions*.
 
@@ -142,7 +142,7 @@ flowchart TB
 
 Which leaves the mastery move, the one every capability on this page has been building toward: sometimes you don't connect the server at all. If a server is unvetted, over-privileged for the task, from a publisher you don't know, or the task is high-stakes and the server can't be sandboxed — don't add it. Not every capability is worth its attack surface, and the safest server is the one you never connected. The operations side of enforcing this at scale — gateways, allowlists, centralised logging, org-wide policy — is [Part III tooling](../../part-3-production/tooling-ecosystem/index.md) and [guardrails](../../part-1-rag/cross-cutting/guardrails/index.md); cross-link it rather than re-derive it. The judgment call itself is the point here.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - MCP has three roles, not two: a host (the LLM application) holds one or more clients, each with a 1:1 connection to a server. A session opens with an initialize handshake that negotiates version and capabilities over JSON-RPC 2.0; an SDK handles the wire and the handshake, and you write the tool, resource, and prompt handlers. Building for a model means the description is a prompt, the toolset is curated, and ambiguity becomes a wrong call at runtime — and if one app uses one tool, skip the server entirely.
 - Two client capabilities invert the connection: sampling lets a server borrow the client's model to generate text, elicitation lets it ask the client's user for missing data. Both are consent surfaces — sampling requires mandatory user approval by spec — and both were still growing as of 2025-11-25. Roots is the quieter third: the client fences the server's filesystem and URI reach, least privilege at the protocol level.

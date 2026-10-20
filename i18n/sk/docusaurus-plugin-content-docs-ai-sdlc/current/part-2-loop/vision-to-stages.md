@@ -7,29 +7,29 @@ sidebar_position: 1
 
 Prvá časť sa skončila pri jedinom obmedzení: [úzkym miestom pri softvéri vytváranom agentmi je kapacita overovania, nie generovanie](../part-1-foundation/verification-bottleneck.md). Druhá časť je odpoveďou na toto obmedzenie — predstavuje **cyklus**, ktorý naplno využíva lacné generovanie a vzácny zdroj, ľudskú kontrolu, sústreďuje presne tam, kde môže zmeniť výsledok. V tejto prvej lekcii sa cyklus začína, a to ešte pred prvým riadkom kódu: pri delení vízie na etapy. Nenápadný krok, ktorý rozhoduje o všetkom ďalšom, sa dá ľahko preskočiť: **každej etape daj podmienku dokončenia, ktorú vieš overiť bez toho, aby si agentovi musel veriť, že je hotová.** Etapa bez takejto podmienky nie je malou etapou. Nie je etapou vôbec.
 
-## Etapu určuje podmienka dokončenia, nie krok
+## Etapu určuje podmienka dokončenia, nie krok \{#a-stage-is-a-done-condition-not-a-step}
 
 Prirodzeným impulzom je rozdeliť cieľ na *veci, ktoré treba urobiť*: vytvoriť kostru API, pridať autentifikáciu, pripojiť klienta. To je zoznam krokov, nie však plán, podľa ktorého už môžeš nechať pracovať agenta. Nič v ňom totiž nehovorí, kedy je krok naozaj *dokončený* a kedy agent iba oznámil, že ho dokončil. Agent ti povie, že pridal autentifikáciu. Plán musí vopred odpovedať na otázku: **ako to zistím bez toho, aby som sa ho pýtal?**
 
 Jednotkou plánu preto nie je krok, ale **podmienka dokončenia** — niečo konkrétne, čo vieš skontrolovať a čo platí pri každom overení, keď je etapa naozaj dokončená. „Autentifikácia je hotová“ je nádej. „Požiadavka bez platného tokenu dostane `401` a tu je test, ktorý to overuje“ je podmienka dokončenia. Rozdiel je v tom, či vieš dokončenie *potvrdiť*, alebo mu musíš *uveriť*. V cykle, kde je generovanie lacné a dôvera drahá, je podmienka dokončenia jednotkou dôvery — a etapy sú iba úseky medzi dvoma kontrolami, ktoré môžeš skutočne vykonať.
 
-## Overiteľné má prednosť pred úsudkom
+## Overiteľné má prednosť pred úsudkom \{#checkable-beats-inferential}
 
 Nie všetky podmienky dokončenia majú rovnakú hodnotu. Piata lekcia prvej časti vymedzila rozdiel, ku ktorému sa tento kurz neustále vracia: [kontrolný mechanizmus je buď **výpočtový** — deterministický, rýchly a dôveryhodný (test, linter, kontrola typov, diff) — alebo **založený na úsudku**](../part-1-foundation/rules-that-hold.md), keď LLM posudzuje význam „nákladne a pravdepodobnostne“. Rovnaké rozdelenie platí aj pre podmienky dokončenia. „Všetky testy prejdú“ je výpočtová podmienka: neúspešný výsledok nemožno zmeniť presviedčaním. „Kontrolný model tvrdí, že kód vyzerá správne“ je podmienka založená na úsudku: model sa presvedčiť dá a pod správnym tlakom k tomu aj dôjde.
 
 Uprednostni to, čo sa dá overiť. Ak má etapa k dispozícii iba podmienku dokončenia založenú na úsudku, považuj to za signál o samotnej *etape*, nielen o kontrole. Ak môžeš dokončenie etapy potvrdiť len tak, že požiadaš model, aby sa zaň zaručil, ešte si ju nerozdelil na dosť malú alebo konkrétnu časť. Najlepšia plánovacia otázka nie je „čo má agent vytvoriť ďalej?“, ale „čo je ďalšia vec, ktorej dokončenie dokážem za pár minút overiť niečím, čo mi nemôže klamať?“. Veľkosť etapy prispôsob *tomuto*.
 
-## Antivzor: veľkosť etáp podľa sebaistoty modelu
+## Antivzor: veľkosť etáp podľa sebaistoty modelu \{#the-anti-pattern-stages-sized-to-the-models-confidence}
 
 Bežnou chybou je deliť prácu podľa toho, čo model zdanlivo zvládne na jeden sebaistý pokus — celú funkcionalitu, celý modul. Model sa na to sám *ponúkne* a jeho ponuka znie presvedčivo. Tým sa kontrola obracia naruby. Veľkosť etáp začne zodpovedať dosahu generátora namiesto tvojej schopnosti ich overiť a rozdiel medzi „vyzerá to hotové“ a „je to hotové“ rastie práve so závažnosťou dôsledkov. Birgitta Böckeler opisuje tú istú pascu bez okolkov, z vlastnej praxe: ak agent dostane veľký, voľne ohraničený kus práce, premení [malú chybu na „4 používateľské príbehy s celkovo 16 akceptačnými kritériami“](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html). Vzniknú formality, ktoré vyzerajú dôsledne, no jediná dôležitá vec — kontrola, ktorú môžeš skutočne vykonať — sa nikdy neobjaví.
 
 Potrebná disciplína je presne opačná: veľkosť kontroly nech určuje veľkosť etapy. Generovanie je také lacné, že rozdelenie funkcionality na šesť overiteľných etáp ťa na výstupe nestojí takmer nič a dá ti šesť príležitostí zachytiť problém, kým je ešte malý.
 
-## Úzke miesto overovania vzniká už pri plánovaní
+## Úzke miesto overovania vzniká už pri plánovaní \{#why-this-is-the-verification-bottleneck-at-planning-time}
 
 Pre druhú časť to nie je nič nové; ide o tézu prvej časti posunutú o krok skôr. „Overovanie je úzke miesto“ znie ako tvrdenie o *kontrole* — o niečom, čo robíš až po vzniku kódu. Najväčší vplyv však máš ešte predtým: **plán, ktorého etapy majú overiteľné podmienky dokončenia, vopred určuje, kde sa bude overovať a či môže overovanie uspieť.** Ak podmienky dokončenia vynecháš, úzke miesto neodstrániš, iba ho odložíš. Neskôr sa s ním stretneš celé a naraz v podobe hromady vygenerovaného kódu, pri ktorom nikto vopred neurčil spôsob kontroly. Najlacnejšie je vložiť overovanie priamo do štruktúry plánu.
 
-## Dôkazy, poctivo ohodnotené
+## Dôkazy, poctivo ohodnotené \{#the-evidence-honestly-graded}
 
 Táto oblasť je ešte len na začiatku a väčšinu dôkazov tvoria zhodné opisy skúseností z praxe, nie kontrolovaná štúdia. Každá zverejnená skúsenosť s vývojom podľa špecifikácií a etáp, ktorá *uspela*, je **príbehom tvorby** — novej aplikácie alebo novej funkcionality. Takmer každá skúsenosť, ktorá *zlyhala*, je **príbehom údržby**, v ktorom sa plán stretol s existujúcou kódovou základňou, ktorá sa už od neho odchýlila. Pri vlastnom praktickom pokuse sa Colin Eberhardt pozrel na tento postup zvnútra a dospel k rovnakému nepríjemnému záveru: všetky tieto formality pomáhajú najviac práve pri novej a ohraničenej práci, no v opačnom prípade [pôsobia ako „znovuobjavený vodopádový model“](https://blog.scottlogic.com/2025/11/26/putting-spec-kit-through-its-paces-radical-idea-or-reinvented-waterfall.html).
 
@@ -43,7 +43,7 @@ IBM ukazuje, ako agent rozloží cieľ na pracovný postup — teda plánovací 
 
 :::
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Na každej úrovni platí rovnaký princíp: **etapu určuje podmienka dokončenia, ktorú vieš overiť, nie krok, ktorý vieš opísať.** Mení sa iba požadovaná nezávislosť kontroly a dôslednosť jej vynucovania.
 
@@ -51,7 +51,7 @@ Na každej úrovni platí rovnaký princíp: **etapu určuje podmienka dokončen
 - **Malý tím.** Podmienky dokončenia sú zapísané v pláne a zdieľané, takže sa dvaja ľudia vopred zhodnú, čo pri každej etape znamená „hotovo“. *Čomu to zabraňuje:* etapa je podľa autora hotová, podľa kontrolóra nie — a zistí sa to až pri zlúčení, nie pri plánovaní.
 - **Enterprise.** Podmienka dokončenia je vynucovaná brána, ktorú vyhodnocuje preukázateľne nezávislá kontrola, nie riadok v dokumente, nad ktorým môže implementátor mávnuť rukou. *Čomu to zabraňuje:* etapám, ktoré sa vo veľkom samy osvedčujú, takže „hotovo“ potichu začne znamenať „človek, ktorý to vytvoril, tvrdí, že je to hotové“.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Krok je niečo, čo treba urobiť; etapa je niečo, pri čom vieš potvrdiť dokončenie. Plánuj v etapách a každej daj **podmienku dokončenia** — podmienku, ktorú vieš skontrolovať a ktorá platí pri každom overení, keď je etapa naozaj hotová.
 - Uprednostni **overiteľné** (výpočtové) podmienky dokončenia pred podmienkami **založenými na úsudku**. Ak môže dokončenie etapy potvrdiť iba model, ktorý sa zaň zaručí, zmenši alebo spresni etapu.

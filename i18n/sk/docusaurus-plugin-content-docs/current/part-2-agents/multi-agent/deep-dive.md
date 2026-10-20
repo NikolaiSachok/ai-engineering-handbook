@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Jedna hranica. Všeobecná vrstva riadenia slučky a rozpočtu — rozpočty krokov, detekcia zacyklenia, reflexia, rozpočet ako politika, základy hodnotenia trajektórie — patrí [plánovaniu a slučkám](../planning-loops/index.md) a [ich prehĺbeniu](../planning-loops/deep-dive.md). Táto stránka vlastní vrstvu priamo nad jedným agentom: agent↔agent. Na úrovni prenosu stoja dva štandardy: MCP pre os agent↔nástroj a A2A pre os agent↔agent (nižšie); zabaliť ktorúkoľvek z týchto topológií do knižnice je úlohou [orchestračných frameworkov](../orchestration-frameworks/index.md). Znalosť prvej časti predpokladáme po celý čas.
 
-## Ako dať správe tvar
+## Ako dať správe tvar \{#giving-the-message-a-shape}
 
 V prvej časti agenti „hovorili cez správy“ a tá formulka spravila kus tichej roboty. Tu správa dostane konkrétny tvar — a jestvuje tridsať rokov stará práca, ktorú dnešné frameworky nanovo objavujú.
 
@@ -45,7 +45,7 @@ Užitočný je kontrast s MCP, a je to os, nie súperenie. MCP štandardizuje os
 
 Nech skončíš pri akejkoľvek schéme, živá návrhová otázka je tá z prvej časti: aký kontext na každej správe cestuje. Málo, a príjemca nekoná; priveľa, a kontext napuchne. Schéma je iba potrubie; disciplína pri náklade je zručnosť. Jedno pole si zaslúži osobitnú zmienku: výslovné ID rozhovoru alebo úlohy. Práve vďaka nemu neskôr zošiješ roztrúsenú trajektóriu dokopy, keď príde čas oznámkovať tím.
 
-## Druhé primitívum: spoločná tabuľa
+## Druhé primitívum: spoločná tabuľa \{#the-other-primitive-a-shared-board}
 
 Odovzdanie riadenia je z bodu do bodu. Jeden agent zabalí kontext a podá ho presne jednému inému; všetko mimo tej obálky ostáva súkromné — výhra izolácie kontextu z prvej časti, a zároveň jej medza. Niektorá práca chce opak: spoločnú plochu, z ktorej každý agent číta a na ktorú zapisuje. Klasicky sa volá **blackboard (spoločná tabuľa)**.
 
@@ -69,7 +69,7 @@ Odovzdávanie správ platí opačný účet. Odovzdanie riadenia drží kontext 
 
 Teda: po spoločnej tabuli siahni vtedy, keď agenti naozaj potrebujú spoločný vyvíjajúci sa artefakt — spoločný plán, priebežný dokument, riešenie budované spoločne. Odovzdanie riadenia uprednostni tam, kde je izolácia zmyslom veci a práca sa delí na etapy. Väčšina produkčných systémov skončí ako hybrid — orchestrátor drží spoločný stav, kým vykonávatelia dostávajú izolované odovzdania — a berie tak výhľad tam, kde pomáha, a izoláciu tam, kde na nej záleží.
 
-## Kto čo robí a ako sa to rozhodne
+## Kto čo robí a ako sa to rozhodne \{#who-does-what-and-how-thats-decided}
 
 Roly môžu byť pevne dané alebo vybojované. Oboje je legitímne; menia predvídateľnosť za pružnosť.
 
@@ -81,7 +81,7 @@ Vyjednávanie nie je len o tom, kto prácu urobí; agenti môžu vyjednávať aj
 
 Háčikom je aritmetika. Debata násobí cenu počtom agentov × počtom kôl, takže sa vyplatí len na ťažkých úlohách uvažovania alebo faktickej správnosti bez lacného overovateľa — na čomkoľvek, čo jeden agent plus rýchla kontrola už zvládnu správne, je čistým plytvaním. Úprimná brzda: dražba, vyjednávanie aj debata pridávajú kolá volaní modelu, teda cenu a latenciu. Supervízor, ktorý smeruje napevno, je lacnejší a väčšinou stačí. Po vyjednávaní siahni len vtedy, keď statické smerovanie naozaj nevie rozhodnúť — rôznorodí vykonávatelia, meniaca sa záťaž alebo prostredie, kde chceš na kvalitu vyvinúť súperivý tlak.
 
-## Známkovanie tímu, ktorého trajektória je roztrúsená
+## Známkovanie tímu, ktorého trajektória je roztrúsená \{#grading-a-team-whose-trajectory-is-scattered}
 
 Prvá časť varovala, že multiagentové systémy sa hodnotia ťažšie, lebo trajektória je rozprestretá cez agentov. Takto to naozaj spravíš. Základy — výsledok verzus proces, LLM-as-a-judge (LLM ako sudca) nad trace (záznam behu), observability (pozorovateľnosť) ako predpoklad — sú rozobraté pre jedného agenta v prehĺbeniach [agentického RAG](../agentic-rag/deep-dive.md) a [plánovania a slučiek](../planning-loops/deep-dive.md); nový problém je tu ten, že trace už nesídli na jednom mieste.
 
@@ -95,7 +95,7 @@ Kategórie sa premietajú priamo na incidenty, na ktoré naozaj narazíš. Vykon
 
 A ako vždy, aj tu platí zdržanlivosť. Dvojagentová reťaz sotva má trajektóriu na zošívanie; router plus jeden vykonávateľ nemá takmer žiadnu. Cena korelácie a pripisovania rastie s veľkosťou tímu — vybav ho nástrojmi, až keď je tím dosť veľký na to, aby mal trajektóriu, ktorú sa oplatí známkovať.
 
-## Ako udržať účet na uzde
+## Ako udržať účet na uzde \{#keeping-the-bill-bounded}
 
 Prvá časť odhadla násobič ceny zhruba na N×. Teraz sú na to čísla. V [zázname Anthropicu](https://www.anthropic.com/engineering/multi-agent-research-system) z 13. júna 2025 o ich multiagentovom výskumnom systéme agenti míňajú približne 4× toľko tokenov ako chatová interakcia a multiagentové systémy približne 15×. V ich hodnotení samotný počet tokenov vysvetlil približne 80% rozptylu výkonu, pričom zvyšok dopĺňal počet volaní nástrojov a voľba modelu.
 
@@ -124,7 +124,7 @@ flowchart TD
 
 Ostáva otázka, okolo ktorej stránka krúžila: kedy sa čokoľvek z toho oplatí? Odpoveď je tá z agentického RAG — vezmi najjednoduchšiu úroveň, ktorá úlohu vyrieši. Po tíme siahni len vtedy, keď máš skutočnú špecializáciu na využitie, kontext, ktorý sa do jedného okna nezmestí, alebo naozaj paralelné čiastkové úlohy. Na väčšine práce jeden dobre navrhnutý agent alebo supervízor so statickým smerovaním porazí vyjednávajúci blackboardový tím úplne a za zlomok ceny. Protokoly, zdieľanú pamäť, vyjednávanie, hodnotenie tímu a rozpočtovú politiku pridávaš až vtedy, keď je tím opodstatnený — nezačínaš nimi.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Medziagentová správa je obálka: performatív, ktorý hovorí, čo chceš urobiť, obalený okolo obsahu a polí, ktoré ho smerujú — kto, komu, ktorý rozhovor. FIPA ACL tieto kúsky pomenovala už v roku 2002, contract net protocol premenil prideľovanie úloh na oznám → ponuka → prideľ a A2A je moderná verzia osi agent↔agent, s Agent Cards na objavovanie a úlohami so životným cyklom — náprotivok osi agent↔nástroj z MCP.
 - Dve koordinačné primitíva, jeden kompromis. Spoločný blackboard dá každému agentovi plný výhľad a ušetrí ti prepojenie každého s každým, ale priťahuje napúchanie kontextu a súbežný zápis; odovzdanie riadenia z bodu do bodu drží izoláciu kontextu, ale môže agenta pripraviť o to, čo potreboval. Väčšina reálnych systémov ide hybridom — orchestrátor drží stav, vykonávatelia dostávajú izolované odovzdania.

@@ -15,7 +15,7 @@ plnú slučku s plánovaním a viacerými agentmi — a každý krok k väčšej
 vyššie náklady a náročnejšie ladenie. Inžinierska úloha nie je „spraviť systém čo najsamostatnejším“, ale zvoliť
 **minimálne potrebnú mieru samostatnosti** — presne toľko voľnosti, koľko si úloha naozaj vyžaduje.
 
-## Čo je vnútri
+## Čo je vnútri \{#whats-inside}
 
 - **[Agentic RAG](./agentic-rag/index.md)** — z vyhľadávania sa stáva akcia vnútri slučky; spektrum od routera
   (smerovača) po plnú slučku.
@@ -35,7 +35,7 @@ vyššie náklady a náročnejšie ladenie. Inžinierska úloha nie je „spravi
 - **[Reálni agenti — Claude, OpenAI, Gemini](./real-agents.md)** — záver časti: každá technika Časti II
   prehnaná cez všetkých troch poskytovateľov; ten istý trvácny postup pod desiatkou nekompatibilných API.
 
-## Predpoklady
+## Predpoklady \{#prerequisites}
 
 Celá Časť I, najmä vrstva **Retrieval** (agent ju volá ako nástroj) a **prierezové aspekty** — tu sa eval
 a observability menia zo želateľných na povinné.

@@ -10,7 +10,7 @@ attempt, and attempts are not what you are buying — you are buying **changes t
 the denominator wrong and every conclusion downstream is wrong too: the cheap model that needs three attempts
 and a human rescue is not cheap, and the expensive one that lands first time may be the bargain.
 
-## Fix the denominator first
+## Fix the denominator first \{#fix-the-denominator-first}
 
 Three denominators, in increasing order of honesty:
 
@@ -38,7 +38,7 @@ context each one carries, and the human review time are.
 
 :::
 
-## Where the money actually goes
+## Where the money actually goes \{#where-the-money-actually-goes}
 
 Four buckets.
 
@@ -59,7 +59,7 @@ as much to check it.
 spend. Part I's [verification bottleneck](../../part-1-foundation/verification-bottleneck.md) is an economic claim
 as much as an engineering one: the binding constraint is priced in salary, not in tokens.
 
-## Making cost accountable
+## Making cost accountable \{#making-cost-accountable}
 
 Attribution comes first, because an unattributable bill cannot be managed — only worried about. The mechanism
 is already in place from Part IV: if credentials are issued
@@ -80,7 +80,7 @@ still report that a merged pull request is not the same as the value it delivers
 cost-per-merged-change metric that improves while nothing downstream improves has optimised the denominator,
 not the business. Pair the cost metric with one outcome metric you would be embarrassed to see flat.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant: **measure cost against accepted work, attribute it to the task that caused it, and bound it
 before it runs away.**
@@ -95,7 +95,7 @@ before it runs away.**
   reported next to an outcome metric rather than alone. *The failure it prevents:* a program that reports
   falling cost per change and rising throughput while the value of what ships is never measured at all.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **Cost per accepted change is the only honest unit.** Retries, abandoned runs, verification calls, and review
   time all belong in the numerator.

@@ -61,7 +61,7 @@ described in [how these are made](/design-scenarios/how-these-are-made).
 
 <Reveal>
 
-## Attempt A — the common answer
+## Attempt A — the common answer \{#attempt-a--the-common-answer}
 
 *Persona given to the agent: Reaches for the pattern the write-ups have converged on and is good at assembling it — thinks in components, treats numbers as an implementation detail to settle once the design is agreed.*
 
@@ -108,7 +108,7 @@ mode without ever naming it.
 
 </Verdict>
 
-## Attempt B — the strong answer
+## Attempt B — the strong answer \{#attempt-b--the-strong-answer}
 
 *Persona given to the agent: Has operated a knowledge system that the people who depended on it stopped trusting; prices a thing before proposing it, and will not put up a figure not divided out personally.*
 
@@ -161,7 +161,7 @@ what fine-tuning *does* change — "how a model writes, not what it knows" — t
 
 </Verdict>
 
-## Attempt C — the over-built answer
+## Attempt C — the over-built answer \{#attempt-c--the-over-built-answer}
 
 *Persona given to the agent: Designs for the system as it will have to be in three years; brings the complete shape rather than a first slice, and is comfortable defending its size.*
 
@@ -236,13 +236,13 @@ does.
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 Each disagreement below is a decision you will have to make yourself. The last entry is the exception: not a
 disagreement but a set of assumptions all three made and none of them named. It also asks what would still be
 standing if one of those assumptions turned out to be wrong.
 
-### Where a customer's commissioning numbers come from: masked through the vendor, a model you host, or no model at all
+### Where a customer's commissioning numbers come from: masked through the vendor, a model you host, or no model at all \{#where-a-customers-commissioning-numbers-come-from-masked-through-the-vendor-a-model-you-host-or-no-model-at-all}
 
 One collision, three incompatible answers. C sends the question through the vendor with the values replaced
 and rehydrates them on return — the vendor sees a placeholder, the entitled engineer sees the number. A keeps
@@ -260,7 +260,7 @@ identifiers as well as settings, and the request it exists to serve names the cu
 same safety rule to whichever path is chosen: for the 1,700 lines commissioned before the practice began, the
 system has to say out loud that no dossier exists, rather than answer from a similar line.
 
-### Whether the 90,000 field reports may leave the building: safe to send, or the largest unclassified collection on the list
+### Whether the 90,000 field reports may leave the building: safe to send, or the largest unclassified collection on the list \{#whether-the-90000-field-reports-may-leave-the-building-safe-to-send-or-the-largest-unclassified-collection-on-the-list}
 
 C states flatly that manuals, bulletins and reports can go to the vendor. B says the opposite about the same
 collection — treat it as contaminated until proven otherwise, sample a few hundred in week one, and either
@@ -273,7 +273,7 @@ looking at that customer's machine. Nothing in the prompt classifies it, which i
 three treats an unclassified collection as a thing to find out about before deciding. A confidentiality
 criterion applied first only counts if it reaches every collection, not just the one already labelled.
 
-### The counterpart's weekend story: a defective method, or a method for a different situation
+### The counterpart's weekend story: a defective method, or a method for a different situation \{#the-counterparts-weekend-story-a-defective-method-or-a-method-for-a-different-situation}
 
 A refutes it on the merits: the corpus changes forty times a month, it says, and training bakes knowledge in. C
 concedes it and denies its relevance: probably true, and that manufacturer was not holding customers' process
@@ -286,7 +286,7 @@ that his counterpart was differently situated. A refutes on volatility, which is
 nothing about the counterpart's; C takes the second option openly. B never has to take a position at all,
 because a method that cannot cite the revision it read is inadmissible here whatever it did elsewhere.
 
-### The dossier path: the cheap win, or the expensive deferral
+### The dossier path: the cheap win, or the expensive deferral \{#the-dossier-path-the-cheap-win-or-the-expensive-deferral}
 
 C schedules dossiers second, because that path is mostly compliance work. A puts the general tier first and
 the dossier tier behind it. B calls it the cheapest thing on the list and the one that answers the question
@@ -297,7 +297,7 @@ commissioning numbers come from, because whether the dossier path is cheap depen
 is a model in it. Decide that question and this one is already decided; decide this one first and you have
 priced a path whose shape you have not chosen.
 
-### What all three assumed, and none of them named
+### What all three assumed, and none of them named \{#what-all-three-assumed-and-none-of-them-named}
 
 All three apply a confidentiality criterion first, and all three are right to. A and C both fold an in-house
 component into the €260,000 — A's "hosted tier", C's "in-house path for dossiers" — while B's in-network store
@@ -324,7 +324,7 @@ reason. No attempt uses it as a baseline, a fallback, or a comparison; the one a
 is B, describing the speed of its own dossier lookup. It is the only piece of software in the prompt that is
 already fast, already deployed, and already in use for the questions it can answer.
 
-## The principle
+## The principle \{#the-principle}
 
 > Apply first the criteria that no later engineering can undo — who may read what, what may leave the
 > building, what makes an answer admissible — then make each elimination binding by computing it from the
@@ -353,7 +353,7 @@ already fast, already deployed, and already in use for the questions it can answ
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 

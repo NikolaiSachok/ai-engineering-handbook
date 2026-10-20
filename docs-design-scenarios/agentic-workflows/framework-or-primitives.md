@@ -50,7 +50,7 @@ because all three answers to it agreed — a failure recorded in
 
 <Reveal>
 
-## Attempt A — the common answer
+## Attempt A — the common answer \{#attempt-a--the-common-answer}
 
 *Persona given to the agent: Follows the agent-tooling ecosystem closely and can name the frameworks' features accurately. Thinks in components, adapters and seams, and is decisive about architecture. Has never owned a record somebody outside the team reads back to them, so persistence has always been the framework's job — a thing you configure rather than a thing you are accountable for the shape of.*
 
@@ -145,7 +145,7 @@ de-risking move.
 
 </Verdict>
 
-## Attempt B — the strong answer
+## Attempt B — the strong answer \{#attempt-b--the-strong-answer}
 
 *Persona given to the agent: Has owned a system whose records an outside party read back to them, and has been in the meeting where two runs of the same thing disagreed and couldn't be explained. Reads a requirements list looking for the two items that sound alike and are not. Unsentimental in both directions — own code is not an achievement to defend, a popular dependency is not a decision. Treats a colleague's departure as work to be scheduled rather than a risk to be mentioned.*
 
@@ -228,7 +228,7 @@ coordination it would then own — fan-out, join, and reopen.
 
 </Verdict>
 
-## Attempt C — the over-built answer
+## Attempt C — the over-built answer \{#attempt-c--the-over-built-answer}
 
 *Persona given to the agent: Designs for where the system will be in two years and for the teams that will touch it. Turns the ad-hoc thing principled — a declared graph instead of imperative code, an event log instead of a table someone updates, a platform instead of one team's script. Does not naturally ask whether this team, at this size, in this window, can absorb what has been drawn, and reads existing bespoke code as a liability by default.*
 
@@ -317,13 +317,13 @@ reverse the decision, no dated path to January.
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 None of the four disagreements below is the adopt-or-decline verdict, and that is not an omission. Two of the
 three attempts adopt the framework and reach opposite conclusions about everything that matters; the
 disagreements that decide the design sit underneath the choice of package.
 
-### Reproducibility: replay it or retain it
+### Reproducibility: replay it or retain it \{#reproducibility-replay-it-or-retain-it}
 
 Three positions. A: reproducibility is the checkpointer's stored state, walked or replayed —
 "`get_state_history(thread_id)`, walk the supersteps", and "replay from the checkpoint with the pinned versions
@@ -339,7 +339,7 @@ only reaches the deterministic layer, the fold from events to case state. For th
 the response rather than the response, so its byte-compare has nothing to compare against without calling the
 model again, which is the thing that will not return identical bytes.
 
-### Durable state: the framework's or yours
+### Durable state: the framework's or yours \{#durable-state-the-frameworks-or-yours}
 
 A: "The checkpointer is the record." B and C both: the record is theirs and the orchestration sits on top of
 it — B puts "state and audit log … in Postgres, framework-independent"; C builds the ledger "first, before any
@@ -350,7 +350,7 @@ and a named reader. B and C are right. The split runs
 independently of the adopt-or-decline call — C adopts LangGraph and still keeps the record, and B's condition
 to adopt is precisely that the framework "holds run orchestration only, no durable state".
 
-### The 900 lines of existing Python: wrap or replace
+### The 900 lines of existing Python: wrap or replace \{#the-900-lines-of-existing-python-wrap-or-replace}
 
 A wraps them: node functions, "near-verbatim, so the port is structural and reviewable rather than a rewrite
 with new bugs", verified by parity against current output. C replaces them: scoring lifted as pure functions,
@@ -364,7 +364,7 @@ hundred submissions is the cheapest correctness evidence available. C's "nothing
 state and false as an inference about behaviour. B reaches A's conclusion — leave the grader where it is — and
 names no check that would tell it whether the behaviour survived.
 
-### The departing engineer's six weeks: document or demonstrate
+### The departing engineer's six weeks: document or demonstrate \{#the-departing-engineers-six-weeks-document-or-demonstrate}
 
 A wants ingestion and retry semantics, the failure modes written down, and pairing on the port. B refuses a
 document and names a demonstration — "the other two shipping a change to the queue with him watching" — with a
@@ -376,7 +376,7 @@ consequence attached. A names the right content (retry and failure modes) and th
 targeting the wrong knowledge: rubric semantics are grading policy that must be versioned regardless of who
 leaves, while what walks out is operational.
 
-## The principle
+## The principle \{#the-principle}
 
 > Suspending an open run and reopening a closed one are different problems, and only the first is one an
 > execution engine can solve for you.
@@ -404,7 +404,7 @@ leaves, while what walks out is operational.
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 Three follow-ups an interviewer reaches for next, and what each exposes.
 

@@ -18,7 +18,7 @@ IBM rámcuje presne to napätie, na ktorom stojí celý tento záverečný diel:
 
 :::
 
-## Používanie nástrojov: tá istá spiatočná cesta v troch tvaroch prenosu
+## Používanie nástrojov: tá istá spiatočná cesta v troch tvaroch prenosu \{#tool-use--the-same-round-trip-three-wire-shapes}
 
 Každý agent dostáva ruky rovnako. Nástroj deklaruješ ako názov, slovný opis a JSON Schema jeho argumentov; model vyjadrí štruktúrovaný zámer (structured intent) — ktorý nástroj a s akými argumentmi — no sám nespustí nič; tvoj kód volanie vykoná a výsledok podá späť; slučka pokračuje. To je spiatočná cesta, ktorej sa hovorí tool use (používanie nástrojov), niekde aj function calling (volanie funkcií), a je rovnaká u všetkých troch dodávateľov. Mení sa iba tvar prenosu.
 
@@ -42,7 +42,7 @@ Líši sa tvar spiatočnej cesty, nie myšlienka: bloky obsahu prevlečené cez 
 
 Spôsoby zlyhania sú nezávislé od dodávateľa. Nesprávny nástroj alebo žiadne volanie, neplatné argumenty, model, ktorý si nad výsledkom domýšľa — tie pramenia z návrhu nástrojov, nie z API, ktoré ich prenáša. Prísne schémy a malá, neprekrývajúca sa sada nástrojov sú liekom u všetkých troch; nijaký dodávateľ ťa tejto roboty nezbaví (→ [používanie nástrojov](./tool-use/index.md)).
 
-## Ako získať dáta: vyhľadávanie je nástroj s citáciami
+## Ako získať dáta: vyhľadávanie je nástroj s citáciami \{#getting-data--retrieval-is-a-tool-with-citations}
 
 Vyhľadávanie je len nástroj, ktorý si agent zvolí. Po webe alebo súbore siahne rovnako ako po ktorejkoľvek funkcii a odpoveď sa vráti s citáciami, aby si ju človek vedel overiť voči groundingu (opretie odpovede o kontext). To je „vyhľadávanie sa stalo akciou“ z agentického RAG, teraz dodané ako vstavaná funkcia (→ [agentický RAG](./agentic-rag/index.md)).
 
@@ -56,7 +56,7 @@ Všetci traja majú natívne webové vyhľadávanie s citáciami — to je tá t
 
 Grounding je vždy len taký dobrý ako to, čo sa vrátilo. Zastarané alebo nesúvisiace zásahy odpoveď aj tak otrávia a model dokáže citovať zdroj, ktorý v skutočnosti nepoužil. Citácie umožnia človeku overiť faithfulness (vernosť zdrojom); nezaručia ju. Práve rozdelenie na zlyhanie vyhľadávania verzus zlyhanie generovania z Časti I je ten nástroj, ktorým tie dve od seba odlíšiš (→ [agentický RAG](./agentic-rag/index.md)).
 
-## Plánovanie a slučky: minúť výpočet na lepšie rozhodnutie a potom ho ohraničiť
+## Plánovanie a slučky: minúť výpočet na lepšie rozhodnutie a potom ho ohraničiť \{#planning-and-loops--spend-compute-to-decide-better-then-cap-it}
 
 Slučka agenta je úvaha → rozhodnutie → akcia → pozorovanie, opakovaná dovtedy, kým sa nespustí podmienka zastavenia. Výslovné uvažovanie pred konaním zaostrí krok rozhodovania; strop na počet krokov je poistka proti slučke, ktorá sa nikdy neskončí. Oboje je nezávislé od dodávateľa (→ [plánovanie a slučky](./planning-loops/index.md)).
 
@@ -70,7 +70,7 @@ Tá istá trvácna myšlienka — minúť viac výpočtu na lepšie rozhodnutie 
 
 Viac uvažovania nie je zárukou zastavenia. Slučka, ktorá sa nikdy neskončí alebo sa odkloní od cieľa, je presne tá chyba, pred ktorou varovalo plánovanie a slučky, a rozpočet krokov je poistka, ktorá ju zachytí bez ohľadu na to, koľko uvažovania si si kúpil (→ [plánovanie a slučky](./planning-loops/index.md)).
 
-## Sebazotavenie: podaj chybu späť a nechaj beh obnoviteľný
+## Sebazotavenie: podaj chybu späť a nechaj beh obnoviteľný \{#self-recovery--feed-the-error-back-and-make-the-run-resumable}
 
 Dobrý agent sa zotaví, namiesto toho, aby spadol. Chyba nástroja sa podá späť ako text viditeľný pre model, takže model sa opraví a skúsi znova, a dlhšia práca sa spraví obnoviteľnou tým, že sa priebežne ukladá stav — beh potom nadviaže z checkpointu namiesto reštartu od nuly. To je „zrozumiteľné chyby → slučka sa zotaví“ z používania nástrojov, len rozšírené z jedného volania na celý beh (→ [používanie nástrojov](./tool-use/index.md)).
 
@@ -84,7 +84,7 @@ Zaujímavý rozdiel je v tom, kde stav žije. Claude ho drží v lokálnych súb
 
 Háčik sa štiepi na dvoje. Stav, ktorý si nikdy neuložil, sa nedá obnoviť — a aj keď si ho uložil, „obnova“ je bezpečná len vtedy, keď vieš povedať, čo sa naozaj dokončilo. Tá druhá polovica nie je fičúra API; je to disciplína, a vedie rovno k historke z praxe o tom, ako posudzovať postup podľa reálneho stavu, nie podľa časovej pečiatky (→ [plánovanie a slučky](./planning-loops/index.md)).
 
-## Hooky a guardrails: vlož kontroly, never slučke naslepo
+## Hooky a guardrails: vlož kontroly, never slučke naslepo \{#hooks-and-guardrails--interpose-checks-dont-trust-the-loop}
 
 Slučke neveríš naslepo. Okolo volaní nástrojov a I/O vkladáš kontroly: pre-hook, ktorý vie zablokovať alebo vyžiadať schválenie pred nebezpečnou akciou, post-hook, ktorý preverí výstup, vrstvu politík, ktorá určuje, čo je vôbec dovolené. Je to princíp najnižších oprávnení (least privilege) z používania nástrojov prevedený do konkrétnych mechanizmov (→ [používanie nástrojov](./tool-use/index.md)).
 
@@ -98,7 +98,7 @@ Kontrola žije u každého dodávateľa v inej vrstve. Claude dáva hooky na úr
 
 Ten istý trvácny spôsob zlyhania: mantinel, ktorý vieš obísť, nie je mantinel. Nebezpečnou plochou je nástroj, ktorý zapisuje alebo koná, zasiahnuteľný cez prompt injection, takže skutočnou poslednou poistkou pri citlivých akciách je human-in-the-loop (schválenie človekom). Hook, ktorý len loguje, nezastaví nič (→ [používanie nástrojov](./tool-use/index.md)).
 
-## Multiagentové systémy: rozdeľ na orchestrátora a izolovaných vykonávateľov
+## Multiagentové systémy: rozdeľ na orchestrátora a izolovaných vykonávateľov \{#multi-agent--split-into-an-orchestrator-and-isolated-workers}
 
 Keď jedna slučka pojme priveľa, rozdeľ ju: orchestrátor plus izolovaní vykonávatelia (workers), každý vykonávateľ s vlastným kontextom, robí jednu prácu a vracia výsledok, ktorý orchestrátor poskladá. Izolácia je celá pointa — priebežný neporiadok jedného vykonávateľa nikdy neznečistí ostatných (→ [multiagentové systémy](./multi-agent/index.md)).
 
@@ -120,7 +120,7 @@ Rozdiel je v tom, kto riadi topológiu. Claude dáva izolovaných subagentov, pr
 
 Zlyhaním je prehorlivé delenie. Nerozdeľuj, keď by stačil jeden agent — každý vykonávateľ pridáva latenciu, náklady a koordinačné chyby, a paralelní vykonávatelia v spoločnom meniteľnom priestore sa zrazia. To je „kedy nedeliť“ z multiagentových systémov, a vedie to k historke z praxe o tom, ako dať každému vykonávateľovi vlastný worktree (→ [multiagentové systémy](./multi-agent/index.md)).
 
-## MCP: jeden protokol, aby ktorýkoľvek agent hovoril s ktorýmkoľvek nástrojom
+## MCP: jeden protokol, aby ktorýkoľvek agent hovoril s ktorýmkoľvek nástrojom \{#mcp--one-protocol-so-any-agent-talks-to-any-tool}
 
 Posledná technika je štandard, ktorý ti zabráni znova a znova lepiť každý nástroj ku každému agentovi. Nástroj obalíš raz ako MCP server a klienta implementuješ raz — a potom ktorýkoľvek agent hovorí s ktorýmkoľvek nástrojom: M × N párových konektorov sa scvrkne na N + M. Vlastné znenie štandardu je „postav raz a integruj všade“ a jeho obrazom je USB-C port pre AI aplikácie (→ [MCP](./mcp/index.md)).
 
@@ -138,7 +138,7 @@ Rozdiely sú v role. Anthropic MCP napísal a spoluspravuje ho; jeho API konekto
 
 Trvácne zlyhanie k nemu neodmysliteľne patrí. Každý MCP server je nová plocha útoku (attack surface) — nepriateľský server dokáže cez tool poisoning (otrávený opis nástroja) podstrčiť inštrukcie, vyniesť dáta alebo prekročiť udelené oprávnenia. Obrana sa oproti lekcii o MCP nemení: princíp najnižších oprávnení, iba servery, ktorým dôveruješ, a schválenie človekom pri citlivých akciách.
 
-## Sedem techník, tri agenti
+## Sedem techník, tri agenti \{#the-seven-techniques-three-agents}
 
 | Technika | Claude | OpenAI | Gemini |
 |---|---|---|---|
@@ -150,7 +150,7 @@ Trvácne zlyhanie k nemu neodmysliteľne patrí. Každý MCP server je nová plo
 | Multiagentové systémy | izolované subagenty (vráti sa záverečná správa) | handoff verzus agent ako nástroj | koordinátor + deterministickí workflow-agenti |
 | MCP | napísal ho; API konektor iba vzdialený | spoluzakladateľ; najširšie prenosy + konektory | `McpToolset`; vzdialené MCP „čoskoro“ |
 
-## Techniky, keď naozaj spúšťaš agentov
+## Techniky, keď naozaj spúšťaš agentov \{#war-stories--the-techniques-when-you-actually-run-agents}
 
 Tieto techniky nie sú abstraktné. Takto vyzerajú, keď spúšťaš agentov na stavbu skutočných vecí — zámerne generické: iba verejné nástroje, žiadne tajomstvá.
 
@@ -163,7 +163,7 @@ Tieto techniky nie sú abstraktné. Takto vyzerajú, keď spúšťaš agentov na
 
 Časť II ti podala slučku, nástroje, plán, zotavenie, guardrails, tímy a zásuvku pre nástroje. Na reálnych agentoch sú to tie isté techniky v iných menách a tvaroch prenosu — bloky obsahu u Claude, typizované prvky u OpenAI, prvky `functionCall` u Gemini. API sa budú meniť a znova meniť; vzor ostáva. Keď ho raz vidíš, dokumentácia nového dodávateľa sa zmení z opätovného štúdia na obyčajné nahliadnutie. Zároveň je to tvoja ochrana pred viazanosťou na dodávateľa (vendor lock-in).
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Každý agent dostáva ruky rovnako: deklaruj nástroje (názov, opis, JSON Schema), model vyjadrí štruktúrovaný zámer, tvoj kód ho vykoná, výsledok ide späť. Líši sa iba tvar prenosu — bloky obsahu u Claude, typizované prvky u OpenAI, `functionCall`/`functionResponse` u Gemini.
 - Vyhľadávanie je nástroj s citáciami. Všetci traja majú natívne webové vyhľadávanie; Claude pridáva web fetch a sandbox na kód, OpenAI sa spolieha na file search nad vektorovými úložiskami, Gemini opiera model o Google Search so spravovaným RAG Engine.

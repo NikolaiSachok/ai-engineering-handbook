@@ -10,7 +10,7 @@ sidebar_position: 2
 
 One boundary before we start, because a sibling lesson shares this ground. The retrieval-specific version of these same ideas — bounding a *retrieval* loop, distilling findings between hops, grading a *retrieval* trajectory — lives in the [Agentic RAG deep dive](../agentic-rag/deep-dive.md). This page owns the general form: loop control and planning for any agent, retrieval or not. Where the two meet, it points there instead of re-deriving. Part 1 is assumed throughout — decomposition, the ReAct-versus-plan-and-execute tradeoff, the three non-termination shapes, the layered defences, and reflection as a concept are built on, not re-taught.
 
-## Planning as search, not a single line
+## Planning as search, not a single line \{#planning-as-search-not-a-single-line}
 
 Part 1 planned one sequence and re-planned when it broke. That is already enough for most agents. But there is a stronger move for the tasks that can afford it: stop committing to one plan at all, and treat planning as search over a space of candidate plans.
 
@@ -38,7 +38,7 @@ State the cost plainly, because it decides where any of this belongs. Search mul
 
 Which is why most production agents do not search over plans. They run one plan and re-plan on failure, exactly as in Part 1, because it is far cheaper and usually enough. Reserve plan search for high-value tasks with verifiable intermediate steps and a reliable evaluator — math, code, puzzles, constrained optimisation — where a wrong branch is cheaply detectable and backtracking earns back its cost. On open-ended work with no clean success signal per step, the evaluator is the weak link and the extra calls rarely pay. The discipline is the one from Part 1: take the simplest level that solves the task.
 
-## Reflection, given a shape
+## Reflection, given a shape \{#reflection-given-a-shape}
 
 Part 1 introduced reflection as a concept — the agent judging its own trajectory. The research has given that concept named shapes, and there is one principle that decides whether any of them helps.
 
@@ -66,7 +66,7 @@ Underneath both sits the principle that governs all reflection: it is only as go
 
 That principle has a sharp edge, and it is the reason not to reflect everywhere. Reflection costs extra calls and latency, and on easy inputs it can actively hurt — a model asked to reconsider a correct answer will sometimes talk itself out of it. So gate reflection behind a real failure signal, a failed check or a stalled loop, rather than firing it every step. Same simplest-level rule, applied to self-critique.
 
-## Budgets as a policy, not a number
+## Budgets as a policy, not a number \{#budgets-as-a-policy-not-a-number}
 
 Part 1 made budgets the non-negotiable backstop: a hard cap that guarantees the loop stops. The refinement is that a budget is a *policy*, and that what you do at the cap matters as much as the cap itself.
 
@@ -83,7 +83,7 @@ And what you do *at* the cap is a design decision, not an afterthought. The wors
 
 Finally, spend the budget where it pays. The expensive techniques above — plan search and reflection from the earlier sections — multiply calls, so applying them uniformly is waste. Route cheap, easy tasks to a single pass and reserve search and reflection for the hard ones. This is the general form of the query-complexity routing the [Agentic RAG deep dive](../agentic-rag/deep-dive.md) calls adaptive RAG; there it routes retrieval, here it governs the whole agent loop. One more knob deserves its own name: the *thinking budget* — how much extended-thinking or reasoning-effort spend a task gets — is separate from the step and token budgets, and it is tuned by task difficulty, not by loop length.
 
-## Memory for long trajectories
+## Memory for long trajectories \{#memory-for-long-trajectories}
 
 The scratchpad from Part 1 — working memory — was one mitigation for context bloat. Behind it sits a whole memory architecture, with types that differ by how long they live and by where they physically sit.
 
@@ -121,7 +121,7 @@ The practical mechanics for a long trajectory are three, and worth naming even b
 
 None of this is free, and most tasks do not need it. Episodic memory adds a whole retrieval subsystem with its own failure modes — a stale or mis-retrieved memory poisons the context and can be worse than having no memory at all. Single-shot tasks need only working memory. Add long-term memory when the agent genuinely has to learn across sessions — a personal assistant, a long-running project — and not a moment before.
 
-## Grading the whole path
+## Grading the whole path \{#grading-the-whole-path}
 
 Eval now measures the trajectory, Part 1 said. What that comes to concretely is a handful of metrics — and a reliability trap that catches teams who stop at a single successful run.
 
@@ -135,7 +135,7 @@ How you actually grade a path is an LLM-as-a-judge over the trajectory: a capabl
 
 And the restraint, once more. A simple, short agent does not need full trajectory grading — outcome eval plus a step count can be plenty. The trajectory machinery is a cost you take on when there is a real multi-step path whose soundness can fail independently of its final answer. When there is, the [capstone](../real-agents.md) shows the whole loop — planning, budgets, memory, and eval — running across Claude, OpenAI, and Gemini.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Planning can become *search* over many candidate plans — Tree of Thoughts explores a tree of reasoning steps, Graph of Thoughts a graph that merges branches, LATS a search over actions with environment feedback. It is a different order of capability on verifiable-step tasks (ToT hit 74% on Game of 24 against 4% for chain-of-thought), but it multiplies calls and lives or dies by a trustworthy evaluator. Most agents just re-plan, and should.
 - Reflection has named shapes at two time scales: Self-Refine refines within a single run, Reflexion carries a lesson across runs through an episodic buffer. Whatever the shape, reflection is only as good as the signal beneath it — prefer an external one, and gate it behind a real failure, or it will talk a right answer wrong.

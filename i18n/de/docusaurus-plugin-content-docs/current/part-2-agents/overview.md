@@ -17,7 +17,7 @@ diese Freiheit zahlen wir auf jeder Stufe mit Latenz, mit Kosten und mit mühsam
 Ingenieursaufgabe lautet nicht „noch agentischer“, sondern: **dem Modell nur so viel Autonomie geben, wie die
 Aufgabe wirklich braucht**.
 
-## Was Sie hier finden
+## Was Sie hier finden \{#whats-inside}
 
 - **[Agentic RAG](./agentic-rag/index.md)** – aus dem Schritt Retrieval wird eine Aktion innerhalb einer
   Schleife; dazu das Spektrum vom Router bis zur vollen Schleife.
@@ -41,7 +41,7 @@ Aufgabe wirklich braucht**.
   aus Teil II, bei allen drei Anbietern durchgespielt – hinter einem Dutzend inkompatibler APIs steckt
   jedes Mal dasselbe tragfähige Verfahren.
 
-## Voraussetzungen
+## Voraussetzungen \{#prerequisites}
 
 Der gesamte Teil I, vor allem die Schicht **Retrieval** – der Agent ruft sie als Tool auf – und die
 **Querschnittsthemen**: Evaluierung und Observability werden hier von einer guten Idee zur Pflicht.

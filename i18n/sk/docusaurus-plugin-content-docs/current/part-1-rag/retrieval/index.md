@@ -17,7 +17,7 @@ Celkový obraz: ako vyhľadávanie dodáva kontext do generovania. (Video je v a
 
 :::
 
-## Prečo naivné vektorové top-K nestačí
+## Prečo naivné vektorové top-K nestačí \{#why-plain-vector-top-k-isnt-enough}
 
 Pri reálnych dopytoch naivná schéma „K najbližších vektorov“ naráža na niekoľko problémov súčasne.
 
@@ -25,7 +25,7 @@ Dense retrieval (husté vyhľadávanie) zachytí význam, ale prehliadne presné
 
 Sú štyri: opraviť dopyt pomocou query transformation, vykryť slepé miesta cez hybrid search, opraviť poradie pomocou rerankingu a obmedziť rozsah aj oprávnenia filtrami a ACL.
 
-## Transformácia dopytu — dopyt oprav ešte pred vyhľadávaním
+## Transformácia dopytu — dopyt oprav ešte pred vyhľadávaním \{#query-transformation--fix-the-query-before-searching}
 
 Dopyt, ktorý používateľ napíše, je málokedy ten najlepší dopyt na vyhľadávanie. Zopár lacných volaní LLM *pred* vyhľadávaním citeľne zdvihne úspešnosť. Tejto úprave sa hovorí query transformation (transformácia dopytu).
 
@@ -33,7 +33,7 @@ Dopyt, ktorý používateľ napíše, je málokedy ten najlepší dopyt na vyhľ
 - **Multi-query (viac dopytov).** Vygeneruj niekoľko parafráz dopytu, vyhľadaj podľa každej a výsledky spoj.
 - **HyDE.** Nechaj model načrtnúť hypotetickú odpoveď, tú zaembedduj a vyhľadávaj ňou. Hrubý koncept odpovede často sedí v priestore embeddingov bližšie k potrebnému chunku než krátka otázka.
 
-## Hybrid search — husté aj lexikálne vyhľadávanie
+## Hybrid search — husté aj lexikálne vyhľadávanie \{#hybrid-search--dense-plus-keyword}
 
 Najväčší jediný krok vpred oproti naivnému vyhľadávaniu. Pracujú tu dva mechanizmy s opačnými silnými stránkami:
 
@@ -46,13 +46,13 @@ Hybrid search (hybridné vyhľadávanie) spustí oba naraz a ich skóre spojí �
 
 Vezmi dopyt „ako obnoviť heslo“. Husté vyhľadávanie nájde podľa významu dokument „obnovenie prístupu k účtu“; BM25 nájde ten, čo sa slovo za slovom volá „reset hesla“. Spolu vrátia to, čo by každý z nich sám minul.
 
-## Reranking — oprav poradie
+## Reranking — oprav poradie \{#reranking--fix-the-ordering}
 
 Prvá fáza — dense retrieval alebo hybrid search — je vyladená na úplnosť (recall): dostať potrebný chunk niekam do top-K, kde K býva 50–100. Lenže poradie vnútri tej stovky je hrubé a do kontextu modelu sa zmestí len zopár chunkov. Druhá fáza preto pracuje na presnosti (precision): cross-encoder z [predošlej lekcie](../ingestion/) preskóruje každého kandidáta voči dopytu, zoznam preusporiada a najlepšie vytiahne navrch. Do generovania sa dostane len pár najlepších.
 
 Toto je kanonická schéma dvoch fáz, v literatúre two-stage retrieval (dvojfázové vyhľadávanie): lacno a široko (bi-encoder alebo hybrid — úplnosť), potom draho a presne (cross-encoder — presnosť). Práve tu bi-encoder a cross-encoder z lekcie o ingestion zapadnú do jedného obrazu.
 
-## Filtre a riadenie prístupu — relevantnosť aj oprávnenia
+## Filtre a riadenie prístupu — relevantnosť aj oprávnenia \{#filters-and-access-control--relevance-and-permissions}
 
 V podnikovom prostredí vyhľadávanie odpovedá na viac než „je toto významovo podobné“. Odpovedá aj na „čo tento človek vôbec smie vidieť“.
 
@@ -61,7 +61,7 @@ V podnikovom prostredí vyhľadávanie odpovedá na viac než „je toto význam
 
 Riadenie prístupu tu vyzerá ako mechanika vyhľadávania, rozhoduje však o čomsi oveľa väčšom. Filter môže byť pre každého používateľa iný, model však pracuje pre všetkých s rovnakými váhami. Práve táto asymetria určuje, kde vôbec smú znalosti organizácie žiť — pozri [kedy meniť váhy](../../part-3-production/llmops/deep-dive.md).
 
-## Celá pipeline
+## Celá pipeline \{#the-full-pipeline}
 
 ```text
 dopyt → [transformácia] → [hybrid: dense + BM25, filter metadát + ACL]
@@ -70,7 +70,7 @@ dopyt → [transformácia] → [hybrid: dense + BM25, filter metadát + ACL]
 
 Každá fáza tlačí zlyhanie vyhľadávania nadol. O koľko presne, to už **meriaš**: Recall@K, Precision@K, MRR, nDCG. Metriky sformalizuje vrstva [Evaluation](../cross-cutting/evaluation/).
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Naivné vektorové top-K je začiatok, nie cieľ.
 - Transformácia dopytu opravuje samotný dopyt: prepísanie, multi-query, HyDE.

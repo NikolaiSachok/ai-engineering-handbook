@@ -23,9 +23,9 @@ Implementierungsdetails vermischt.
 
 ---
 
-## Chunking
+## Chunking \{#chunking}
 
-### Warum ein Dokument überhaupt zerlegt werden muss
+### Warum ein Dokument überhaupt zerlegt werden muss \{#why-split-documents-at-all}
 
 Das naive Rezept lautet: „Zerlegen Sie das Dokument in Chunks.“ Aber *warum* zerlegen – und warum ist das die Stelle,
 an der zuerst alles schiefgeht?
@@ -41,7 +41,7 @@ Zwei voneinander unabhängige Zwänge erzwingen die Zerlegung:
    Sie das für den ganzen Abschnitt im Kopf: Ein Chunk spielt zwei Rollen gleichzeitig, und die beiden
    stellen entgegengesetzte Anforderungen an seine Größe.
 
-### Die zentrale Abwägung: großer Chunk oder kleiner Chunk
+### Die zentrale Abwägung: großer Chunk oder kleiner Chunk \{#the-key-tradeoff-large-chunk-vs-small-chunk}
 
 Alles in diesem Abschnitt läuft auf eine einzige Tabelle hinaus:
 
@@ -63,7 +63,7 @@ es nicht in diesen Chunk geschafft.
 Deshalb scheitert der Ansatz „einfach alle N Zeichen schneiden“ – und deshalb sind klügere Strategien
 entstanden.
 
-### Chunking-Strategien (von einfach bis ausgefeilt)
+### Chunking-Strategien (von einfach bis ausgefeilt) \{#chunking-strategies-from-simple-to-sophisticated}
 
 1. **Feste Größe.** Alle N Token oder Zeichen schneiden – die Grundlage, auf der alles Weitere aufbaut.
    Einfach, schnell, reproduzierbar. Der Nachteil: Es wird blind geschnitten, mitten im Satz, mitten in der
@@ -99,7 +99,7 @@ Metriken immer wieder anpassen.
 
 :::
 
-### Chunk-Metadaten – was ein Chunk außer seinem Text noch mitträgt
+### Chunk-Metadaten – was ein Chunk außer seinem Text noch mitträgt \{#chunk-metadata--where-enterprise-specifics-turn-into-search-quality}
 
 Ein Chunk ist nicht nur Text. Sie hängen ihm **Metadaten** an: die Quelle (Datei oder URL), den Titel, den
 Überschriftenpfad, das Datum, die Version und – im Unternehmen entscheidend – die **Zugriffssteuerung**, also
@@ -116,7 +116,7 @@ wer ihn sehen darf. Drei Gründe, das genau hier festzulegen:
 **Das Entscheidende:** Metadaten werden beim Chunking festgelegt. Was Sie dort nicht angehängt haben, steht
 später nirgends mehr zur Verfügung.
 
-### Ein Ausblick: Ein Chunk hat zwei Rollen, und sie lassen sich trennen
+### Ein Ausblick: Ein Chunk hat zwei Rollen, und sie lassen sich trennen \{#looking-ahead-a-chunk-has-two-roles--you-can-split-them-apart}
 
 Ein Chunk ist die Sucheinheit, und derselbe Chunk wird dem Modell vorgelegt – dabei muss es sich gar nicht
 um dasselbe Textstück handeln. Die [Vertiefung zum Retrieval](../retrieval/deep-dive.md) führt die Idee aus: Sie können über kleine,
@@ -125,7 +125,7 @@ den Treffer *vorlegen* (der volle Kontext). Diese Verfahrensfamilie
 heißt *Parent-Document*- bzw. *Small-to-Big-Retrieval*. Für den Moment genügt es zu wissen, dass sich die
 zwei Rollen eines Chunks trennen lassen.
 
-### Das Wichtigste
+### Das Wichtigste \{#what-to-take-away}
 
 - Ein Chunk ist zugleich **Sucheinheit und Lesestoff für das Modell** – zwei Rollen, deren Anforderungen an
   die Größe einander widersprechen.
@@ -141,12 +141,12 @@ chunking, semantic chunking, chunk metadata, parent-document (small-to-big) retr
 
 ---
 
-## Embedding-Modelle
+## Embedding-Modelle \{#embedding-models}
 
 Die grobe Mechanik kennen Sie: Chunk → Vektor → Vektordatenbank. Hier folgen die Feinheiten, die den Unterschied
 zwischen „ich habe ein Video gesehen“ und „ich verstehe, warum es so gebaut ist“ ausmachen.
 
-### Was ein Embedding ist
+### Was ein Embedding ist \{#what-an-embedding-actually-is}
 
 Ein Embedding ist ein Vektor in einem Raum, in dem geometrische Nähe **Nähe in der Bedeutung** heißt. Das
 Modell ist eine trainierte Funktion „Text → Vektor“: Texte über dieselbe Sache landen nahe beieinander,
@@ -167,7 +167,7 @@ ein – dasselbe Prinzip, vom Wort auf ein ganzes Textstück hochskaliert. (Das 
 
 :::
 
-### Bi-Encoder vs. Cross-Encoder
+### Bi-Encoder vs. Cross-Encoder \{#bi-encoder-vs-cross-encoder}
 
 Aus dieser einen Unterscheidung gehen sowohl die Vektorsuche als auch das Reranking hervor.
 
@@ -184,7 +184,7 @@ heraus (**Recall** – wie viel von dem Gebrauchten überhaupt in die Liste komm
 die wirklich passenden nach vorn (**Precision** – wie viel von dem, was in der Liste steht, wirklich passt). Genau diese Neubewertung ist das
 **Reranking**. Mehr dazu in der Schicht [Retrieval](../retrieval/index.md).
 
-### Wie Sie ein Embedding-Modell auswählen
+### Wie Sie ein Embedding-Modell auswählen \{#how-you-pick-an-embedding-model}
 
 - **Für das Retrieval trainiert (retrieval-optimiert).** Nicht jedes Modell ist für die Suche trainiert. Sie
   brauchen eines, das auf Paaren aus Frage und Passage trainiert wurde, nicht auf allgemeiner
@@ -200,7 +200,7 @@ die wirklich passenden nach vorn (**Precision** – wie viel von dem, was in der
   dafür verlassen Ihre Daten Ihre eigene Infrastruktur, und pro Aufruf fallen Kosten an. Offene, selbst
   betriebene Modelle (E5, BGE, gte) halten Ihre Daten im Haus – im Unternehmen oft ausschlaggebend – und kosten pro Aufruf nichts; dafür betreiben Sie die Infrastruktur selbst.
 
-### Das Ähnlichkeitsmaß in Kürze
+### Das Ähnlichkeitsmaß in Kürze \{#the-similarity-metric--in-brief}
 
 Die **Kosinus-Ähnlichkeit** (der Winkel zwischen zwei Vektoren; sie berücksichtigt die Richtung und
 ignoriert die Länge) ist die Standardwahl. Viele Modelle liefern **normierte** Vektoren; bei ihnen fällt die
@@ -208,7 +208,7 @@ Kosinus-Ähnlichkeit praktisch mit dem Skalarprodukt zusammen. Die Regel lautet:
 das Modell trainiert wurde – es steht in dessen Modellbeschreibung (*model card*). Passen Maß und Modell nicht
 zusammen, sinkt die Qualität.
 
-### Zwei Fehler, die immer wieder passieren
+### Zwei Fehler, die immer wieder passieren \{#two-common-pitfalls}
 
 - **Verschiedene Modelle für Fragen und für Dokumente.** Sie haben die Dokumente mit dem einen Modell
   eingebettet und die Fragen mit einem anderen → die Vektoren liegen in verschiedenen Räumen, und die Ergebnisse sind Unsinn.
@@ -216,7 +216,7 @@ zusammen, sinkt die Qualität.
 - **Frage und Passage brauchen verschiedene Präfixe.** Retrieval-Modelle erwarten eine Kennzeichnung
   (`query:` / `passage:`); verwechseln Sie die beiden, sinkt die Qualität still und leise.
 
-### Das Wichtigste
+### Das Wichtigste \{#what-to-take-away-1}
 
 - **Bi-Encoder** (schnell, vorberechnet, also die Vektorsuche) vs. **Cross-Encoder** (genau, pro Paar,
   also das Reranking).

@@ -27,7 +27,7 @@ Die Disziplin im Überblick – was LLMOps von MLOps erbt und was es daran ände
 
 :::
 
-## Was sich mit der KI ändert: Artefakt und Test
+## Was sich mit der KI ändert: Artefakt und Test \{#the-ai-delta--artefact-and-test}
 
 Hinter dieser Perspektive steckt der Unterschied, von dem die ganze Lektion ausgeht. Im klassischen DevOps ist
 das auslieferbare Artefakt der Code: Denselben Build ausliefern heißt, dasselbe Verhalten bekommen. In einer
@@ -47,7 +47,7 @@ nur in Abstufungen, während ein Unit-Test ein klares Bestehen oder Scheitern wi
 gegen Regressionen die [Evaluierung](../../part-1-rag/cross-cutting/evaluation/index.md) und nicht der
 Unit-Test allein. Alles Weitere zeigt, was dieser eine Satz im laufenden Betrieb bedeutet.
 
-## Ausrollen – CI/CD, wenn das Artefakt nicht nur Code ist
+## Ausrollen – CI/CD, wenn das Artefakt nicht nur Code ist \{#deploy--cicd-when-the-artefact-isnt-just-code}
 
 Die ganze Disziplin verdichtet sich zu einer einzigen Schleife. Sie ist das Rückgrat dieser Lektion – und, wie
 Sie am Ende sehen werden, das Schlussbild des Handbuchs:
@@ -70,7 +70,7 @@ Evaluierung aus Teil I, die Regressionen abfängt, jetzt als Stufe in der Pipeli
 in Rot oder Grün. Eine Änderung am Prompt, die die Faithfulness stillschweigend um zehn Punkte drückt, fällt
 genauso auf wie ein kaputter Build.
 
-### Prompts sind Code – und Konfiguration
+### Prompts sind Code – und Konfiguration \{#prompts-are-code--and-config}
 
 Prompts führen ein Doppelleben. Sie sind Code: Halten Sie sie in der Versionsverwaltung, wo eine Änderung am
 Prompt als überprüfbarer Diff ankommt und sich wie jeder andere Commit zurücknehmen lässt. Und sie sind
@@ -81,7 +81,7 @@ Beide Orte sind in Ordnung. Was in jedem Fall gelten muss, ist die Zuordnung: Je
 Produktivbetrieb muss auf eine genaue Prompt-Version zurückführbar sein, und genau deshalb hält der Trace sie
 fest.
 
-### Die Modellversion festlegen
+### Die Modellversion festlegen \{#pin-the-model}
 
 Anbieter versionieren ihre Modelle und nehmen sie außer Betrieb. OpenAI unterscheidet die angekündigte
 Abkündigung vom tatsächlichen Abschalten, nennt zu jedem abgekündigten Modell den Nachfolger und gibt
@@ -97,7 +97,7 @@ Ihr System verhält sich von da an anders, ohne dass auf Ihrer Seite irgendwo ei
 dann behandeln Sie das als das Deployment, das es ist: die Evaluierung erneut laufen lassen und dann
 schrittweise ausrollen.
 
-### Schrittweise ausrollen
+### Schrittweise ausrollen \{#roll-out-gradually}
 
 Die Muster für das Ausrollen kommen unmittelbar aus dem Release Engineering; nur eines ist hier anders. Ein
 **Canary Release** schickt einen kleinen Teil des laufenden Verkehrs auf den neuen Prompt oder das neue Modell
@@ -109,7 +109,7 @@ Latenz, sondern auch auf indirekte Signale für die Qualität und auf die Kosten
 schnell, günstig und ein wenig falsch antwortet, ist ein gescheitertes Canary Release – und bemerken werden
 Sie das nur, wenn Sie die Qualität messen.
 
-### Der Korpus ist auch ein Release
+### Der Korpus ist auch ein Release \{#the-corpus-is-a-release-too}
 
 Der Index ist Verhalten. Nehmen Sie mit einer neuen Konfiguration für das Chunking neu auf, verschiebt sich
 das Retrieval über den gesamten Korpus; wechseln Sie das Embedding-Modell, muss der Index vollständig neu
@@ -118,7 +118,7 @@ Aktualisierungen des Korpus also durch dieselbe Prüfung wie alles andere: als v
 Evaluierung besteht, und nicht als Hintergrundjob, der nachts läuft und stillschweigend umformt, was das
 System weiß.
 
-## Überwachen im Produktivbetrieb
+## Überwachen im Produktivbetrieb \{#monitoring-in-production}
 
 Überwachung ist [Observability](../../part-1-rag/cross-cutting/observability/index.md), die dauerhaft läuft
 und Alarm schlägt, sobald sich etwas bewegt. Das klassische Dashboard gilt weiter: die Perzentile der Latenz
@@ -129,7 +129,7 @@ die Rate der Ablehnungen, die Rate, mit der die Guardrails anschlagen, wie oft N
 Produktivbetrieb bewertet. Eine Stichprobe, weil auch der Judge Tokens verbrennt; für seine Kosten setzen Sie
 eine Obergrenze wie für jeden anderen Posten.
 
-### Drift – drei Ausprägungen
+### Drift – drei Ausprägungen \{#drift--three-flavours}
 
 Eine eingefrorene Konfiguration bedeutet kein eingefrorenes Verhalten, denn die Welt darunter bewegt sich.
 **Der Eingabedrift** ist der eingeführte Begriff: Nutzende fangen an, neue Arten von Fragen zu stellen, und
@@ -143,7 +143,7 @@ MLOps heißt „Modelldrift“, dass die Leistung Ihres *eigenen* Modells nachl�
 lassen sich alle drei auf demselben Weg: Beobachten Sie, wie sich Themen und Absichten im eingehenden Verkehr
 verteilen, und prüfen Sie mit frischen Stichproben nach, nicht nur mit dem alternden Goldstandard.
 
-### Die Schleife nach einem Vorfall, jetzt ein Betriebshandbuch
+### Die Schleife nach einem Vorfall, jetzt ein Betriebshandbuch \{#the-incident-loop-now-a-runbook}
 
 Der rote Faden, den dieses Handbuch seit Teil I zieht, endet hier, im Produktivbetrieb. Ein schlechter Trace
 aus dem Produktivbetrieb geht ein → Sie zerlegen ihn: Fehlerbild des Retrievals oder Fehlerbild der
@@ -153,7 +153,7 @@ im Produktivbetrieb ist es ein Betriebshandbuch – eine feste Reihenfolge, die 
 Dienstagnachmittag abarbeiten kann. Die Plattformen aus [dem Tooling-Ökosystem](../tooling-ecosystem/index.md)
 machen aus dem mittleren Schritt einen einzigen Klick: aus einem Trace einen Fall für die Evaluierung machen.
 
-## Kosten und Latenz – die Hebel
+## Kosten und Latenz – die Hebel \{#cost-and-latency--the-levers}
 
 :::tip[▶ Video]
 
@@ -172,7 +172,7 @@ ein längerer System-Prompt, zwei abgerufene Chunks mehr, eine Agentenschleife, 
 sei denn, Sie haben aus den Kosten pro Anfrage eine vollwertige Metrik gemacht. Nehmen Sie diese Zahl so ernst
 wie eine Metrik aus der Evaluierung: Was Sie am Ende wirklich optimieren, ist Qualität pro Dollar.
 
-### Zwischen Modellen routen
+### Zwischen Modellen routen \{#route-between-models}
 
 Nicht jede Anfrage braucht das Spitzenmodell. Klassifizieren, einfaches Nachschlagen, kurze Sachfragen – das
 erledigt ein günstiges, schnelles Modell; das teure ist seinen Preis erst dort wert, wo die Generation
@@ -182,7 +182,7 @@ Modell. Achten Sie auf die Begriffe: Hier geht das Routing *über Modelle hinweg
 in diesem Buch. Der Query-Router aus Teil I hat einen Index gewählt, der Agent aus Teil II ein Tool; dieser
 hier wählt, wer antwortet.
 
-### Fallbacks und das Gateway
+### Fallbacks und das Gateway \{#fallbacks-and-the-gateway}
 
 Ausfälle beim Anbieter und 429er sind keine Vorfälle, sondern Wetter. Der Produktivbetrieb hält eine
 **Fallback-Kette** bereit – dasselbe Modell in einer anderen Region, ein anderer Anbieter, ein günstigeres
@@ -193,7 +193,7 @@ Routing, Fallbacks, API-Schlüsseln, Budgets und Rate Limits je Team an einer St
 [LiteLLM](https://www.litellm.ai) ist das quelloffene Beispiel, [OpenRouter](https://openrouter.ai) das
 gehostete.
 
-### Caching – zweimal
+### Caching – zweimal \{#caching--twice}
 
 Der erste Cache ist der des Anbieters. Das **Prompt-Caching** legt das wiederkehrende *Präfix* Ihres Prompts
 ab – den System-Prompt, die Few-Shot-Beispiele, den statischen Kontext –, sodass er nicht bei jedem Aufruf neu
@@ -212,7 +212,7 @@ gleiche Fragen über die Ähnlichkeit der Embeddings zusammenführt. Beim semant
 und nehmen dafür ein Risiko für die Richtigkeit in Kauf: Liefert der Cache eine Antwort auf eine Frage, die
 sich nur in einer Feinheit unterscheidet, bekommt der Nutzer die Antwort auf die Frage eines anderen.
 
-### Token sparen
+### Token sparen \{#the-token-diet}
 
 Das günstigste Token ist das, das Sie nie schicken. Rufen Sie weniger Chunks ab – das Zusammenstellen des
 Kontexts aus Teil I: die besten statt aller. Straffen Sie den System-Prompt. Setzen Sie eine Obergrenze für
@@ -222,7 +222,7 @@ gilt, gilt ähnlich für die Latenz: Streaming für die gefühlte Latenz (die Le
 [Bereitstellung](../serving/index.md)), kleinere und schnellere Modelle, wo das Routing es zulässt, und das
 Parallelisieren von Stufen der Pipeline, die nicht voneinander abhängen.
 
-### Der Batch-Tarif
+### Der Batch-Tarif \{#the-batch-tier}
 
 Für Arbeit, die warten kann, müssen Sie nicht den interaktiven Preis zahlen. Das nächtliche Anreichern des
 Korpus, Nachberechnungen, das Erzeugen synthetischer Daten für die Evaluierung – im **Batch-Tarif** (*batch
@@ -230,7 +230,7 @@ tier*) aus der Lektion zu den [Cloud-KI-Plattformen](../cloud-platforms/index.md
 halben Preis; dafür gilt ein SLA im Bereich von Stunden. Unter den Hebeln ist dieser der einfachste: die
 Arbeitslast als nicht interaktiv einordnen und den Rabatt mitnehmen.
 
-### Budgets schließen die Schleife
+### Budgets schließen die Schleife \{#budgets-close-the-loop}
 
 Die ausgereifte Praxis – verbreitet, aber kein Standard – sind **Token-Budgets** je Team und je Funktion samt
 Alarmen, durchgesetzt dort, wo aller Verkehr ohnehin schon zusammenläuft: am Gateway. Und die Durchsicht der
@@ -264,7 +264,7 @@ Dienst da, mit einer Evaluierung vor jeder Änderung und mit einer Schleife, die
 Testfälle verwandelt. Diese Schleife wird niemals fertig – und das ist der Punkt. Ein LLM-System im
 Produktivbetrieb ist nicht fertig; es wird betrieben.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Das auslieferbare Artefakt ist **Prompt + Modellversion + Index + Konfiguration + Richtlinien der
   Guardrails**, nicht nur Code. Eine Änderung an einem davon ist ein Deployment, und jedes davon kann die

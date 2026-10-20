@@ -13,7 +13,7 @@ Celú lekciu drží jedno pravidlo. Každá prierezová téma si vypestovala vla
 
 Hranice medzi kategóriami sa navyše rozmazávajú. Observability platformy **LangSmith** (langchain.com/langsmith), **Langfuse** (langfuse.com) a **Phoenix** (arize.com/phoenix) dodávajú aj evaluačné funkcie: datasety, sudcov, behy so skórovaním. To je spätná väzba (feedback loop) z lekcie o observability, premenená na produkt. Produkčný trace, z ktorého sa stane evaluačný prípad, je jeden pracovný postup, a nástroje dorástli tak, aby pokryli oba konce.
 
-## Evaluačné nástroje
+## Evaluačné nástroje \{#eval-tools}
 
 **Ragas** (ragas.io) — open-source knižnica metrík šitých na RAG: faithfulness (vernosť zdrojom), response relevancy (relevancia odpovede), context precision (presnosť kontextu) a context recall (úplnosť kontextu), väčšinu z nich počíta štýlom LLM-as-a-judge. Poznámka k menám: response relevancy je metrika, ktorá sa kedysi volala answer relevancy — Ragasov názov pre relevanciu odpovede z lekcie o evaluácii. Mená sadnú rovno na slovník Prvej časti príručky vrátane deľby na vyhľadávanie a generovanie: context precision a context recall skórujú vyhľadávaciu stranu, faithfulness a response relevancy generačnú. Ragas ti navyše vie vygenerovať kandidátsku testovaciu sadu nad tvojím korpusom.
 
@@ -23,7 +23,7 @@ Konfiguračný prístup (config-driven) nesie **promptfoo** (promptfoo.dev) — 
 
 Čo nedodá ani jeden nástroj: **golden set**. Každý z nich počíta metriky nad príkladmi, ktoré poskytneš ty, a kvalita datasetu ostáva tvojou robotou — „malá čistá sada porazí veľkú zašumenú“ z Prvej časti platí aj teraz, keď metriky prichádzajú z knižnice. Ragas ti kandidátske príklady zosyntetizuje, no ľudská kontrola zostáva bránou kvality.
 
-## Observability platformy
+## Observability platformy \{#observability-platforms}
 
 **LangSmith** — platforma na tracing a evaluáciu z ekosystému **LangChain** (langchain.com): SaaS ako prvá voľba, prevádzka u seba (self-hosting) len na podnikových plánoch. Ak už bežíš na LangChain alebo **LangGraph** (langchain.com/langgraph), integrácia je najtesnejšia.
 
@@ -43,7 +43,7 @@ Ako v produkcii vyzerajú monitoring, governance a optimalizácia agentových sy
 
 :::
 
-## Nástroje guardrails
+## Nástroje guardrails \{#guardrails-tools}
 
 Produkty pre guardrails prichádzajú v dvoch podobách. **Prvá: frameworky**, ktoré vstup aj výstup obalia programovateľnými kontrolami. **Guardrails AI** (guardrailsai.com) — knižnica validátorov v Pythone plus Guardrails Hub, vrátane validácie štruktúrovaného výstupu (structured output) — a **NVIDIA NeMo Guardrails** (developer.nvidia.com/nemo-guardrails), kde sa dialógové „koľajnice“ definujú v konfiguračnom jazyku **Colang**.
 
@@ -53,7 +53,7 @@ Aj tu narazíš na **rázcestie „postaviť či kúpiť“** — to isté ako v
 
 Kvalita guardrails sa aj sama meria — Prvá časť príručky dala metriku, **attack success rate (ASR)** (miera úspešnosti útokov). Nástroje na **red-teaming** žijú v evaluačných produktoch: red-teamingové funkcie v promptfoo, vlastné red-team ponuky platforiem. Slučka sa uzatvára: guardrails sa nakonfigurujú, zaútočí sa na ne, zmerajú sa, doladia sa.
 
-## Kedy čo nasadiť
+## Kedy čo nasadiť \{#when-to-adopt-what}
 
 Poradie nižšie je vec úsudku — rozumná predvoľba pre typický produktový tím, nie odvetvový štandard — no zdôvodnenie za každým krokom obstojí.
 
@@ -79,7 +79,7 @@ Ako táto slučka žije po vydaní, je predmetom lekcie o [LLMOps](../llmops/ind
 
 Jeden protipríklad vie celý diagram premeniť na klamstvo: osvojiť si evaluačný nástroj nie je to isté ako mať evaluáciu. Nástroj namierený na plytký, zašumený dataset vyrobí sebavedomo vyzerajúce prehľady nad odpadom — Prvá časť to povedala takto: „bez referencie sa celá evaluácia rozpadne“, a platí to aj s logom produktu navrchu. Nástroje zosilňujú disciplínu, nenahrádzajú ju.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Pojmy sú trvácne, nástroje sú momentky — nástroj posudzuj podľa toho, ktorý pojem z Prvej časti realizuje a kde v tvojej slučke sedí.
 - Veľké observability platformy (LangSmith, Langfuse, Phoenix) si vypestovali evaluačné funkcie, lebo produkčný trace → evaluačný prípad je jeden pracovný postup a nástroje pokrývajú oba konce.

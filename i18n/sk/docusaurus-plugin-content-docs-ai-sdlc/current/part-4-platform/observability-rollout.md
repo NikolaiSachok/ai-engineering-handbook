@@ -7,7 +7,7 @@ sidebar_position: 4
 
 Kurz sa začal [slučkou, nie pipeline](../intro.md) — a slučku z nej robí práve tá hrana, ktorá vedie z ostrej prevádzky späť k plánovaniu. Táto lekcia stavia tú hranu. Berie tri mechanizmy a každý odpovedá na inú otázku: **telemetria** rozhoduje, či vôbec *spoznáš*, že zmena je zlá, **postupné nasadzovanie** rozhoduje, *koľko ľudí* sa to dozvie skôr než ty, a **núdzový vypínač** rozhoduje, *ako rýchlo* sa to zastaví. Telemetria v tejto lekcii zahŕňa aj snímače mimo systému, pretože pri najhorších zlyhaniach nepríde zvnútra nič. Vynechaj ktorýkoľvek z nich a zo slučky zostane pipeline s optimistickým názvom.
 
-## Niektoré triedy chýb existujú iba v produkcii
+## Niektoré triedy chýb existujú iba v produkcii \{#some-defect-classes-exist-only-in-production}
 
 III. časť postavila [reťaz brán](../part-3-verification/layered-gates/index.md), ktorou musí zmena prejsť skôr, než niekam dopadne. Úplná byť nemôže, a nie preto, že by vznikla nedbalo: celá trieda chýb existuje iba pod skutočnou prevádzkou, skutočným rozdelením dát, na skutočných zariadeniach a pri skutočnej súbežnosti. Žiadna brána pred zlúčením ich nevníma, presne z toho mechanizmového dôvodu, ktorý tamtá lekcia pomenovala. Produkcia teda nie je „to po overení“ — produkcia je **koncová brána reťaze** a telemetria je jej mechanizmus. Nasadenie, ktoré nevieš pozorovať, je brána bez snímača.
 
@@ -20,7 +20,7 @@ Minimálna užitočná sada snímačov je malá a oplatí sa ju vymenovať, lebo
 
 Telemetria patrí do [podmienky dokončenia](../part-2-loop/vision-to-stages.md) úlohy. Agent sa riadi zadaním; signály, ktoré v ňom chýbajú, možno vôbec nevzniknú. Urči preto sadu telemetrických signálov vrátane obchodného signálu a nechaj [kritika](../part-2-loop/plan-review-implement-critic.md) overiť, že ich systém naozaj odosiela, nielen že funkcia pracuje správne. [Andrej Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/) odhaduje, že funkčnú pozorovateľnosť nemá takmer žiadny projekt vytvorený „vibe codingom“; ani u žiadneho zo svojich klientov ju podľa vlastných slov nenašiel riadne vyriešenú. Za náročné považuje najmä rozhodnutie, čo znamená „dobré“ na hranici medzi technikou a biznisom. Túto definíciu za teba agent neurčí. Kým zadanie nevymedzí, čo znamená „dobré“, nemáš čo užitočné merať.
 
-## Zachytávaj zlyhania sondami zvonku, alertmi a hláseniami od používateľov
+## Zachytávaj zlyhania sondami zvonku, alertmi a hláseniami od používateľov \{#detect-failures-through-probes-alerts-and-user-reports}
 
 Najťažšie býva zachytiť signál, ktorý sa vôbec neozve: používateľ nedokončil registráciu, nemohol zadať hodnotu alebo narazil na službu, ktorá preňho nefungovala. Ako upozorňuje Beloborodov, nefunkčný systém neposiela vôbec žiadne dáta. Kurz z toho vyvodzuje, že na internom dashboarde takéto ticho vytvára dojem, že systém je zdravý. Zaznamenávaj preto zámerne aj to, čo sa nestalo: keď používateľ postup opustí, ulož posledný krok, ku ktorému sa dostal. Z „nedokončil“ tak vznikne udalosť, ktorú vieš spočítať.
 
@@ -34,7 +34,7 @@ Hlásenie od používateľa je posledná poistka pri odhaľovaní zlyhaní. Belo
 
 Pri triáži s pomocou agenta sa údaje zákazníkov dostávajú do kontextu modelu: tickety obsahujú mená, údaje o účtoch aj snímky obrazovky. Uplatni na agenta rovnakú [ochranu reálnych dát](./environments-migrations-data.md): citlivé údaje odstráň alebo zakry skôr, než model hlásenie uvidí, a vymedz, čo agent smie čítať.
 
-## Postupné nasadzovanie ohraničí blast radius v počte ľudí aj v čase
+## Postupné nasadzovanie ohraničí blast radius v počte ľudí aj v čase \{#staged-rollout-bounds-the-blast-radius-in-audience-and-time}
 
 Ak sa zlá zmena aj tak stane, užitočná otázka znie, koľko používateľov na ňu narazí ako prvých. Tri zásady menia sprístupnenie na riadený postup.
 
@@ -56,7 +56,7 @@ Existuje aj nameraný náznak, že si táto hrana pozornosť zaslúži. Správa 
 
 :::
 
-## Núdzový vypínač nesmie potrebovať pipeline, ktorá sa práve pokazila
+## Núdzový vypínač nesmie potrebovať pipeline, ktorá sa práve pokazila \{#the-kill-switch-must-not-need-the-pipeline-that-broke}
 
 Vrátenie zmeny, ktoré si žiada zelené CI, nové zostavenie a nasadenie, nie je núdzový vypínač. Je to nádej s dodacou lehotou — a zlyhá presne v situácii, pre ktorú existuje, teda keď je časťou problému sama pipeline. Vypnutie musí byť *zmena stavu*, nie *zostavenie*: prepni flag, presuň váhu premávky, vráť smerovanie. Nech je mechanizmus akýkoľvek, skúška je jediná otázka — dokáže ho jeden človek použiť za pár sekúnd bez toho, aby vznikol nový artefakt?
 
@@ -64,7 +64,7 @@ Vrátenie zmeny, ktoré si žiada zelené CI, nové zostavenie a nasadenie, nie 
 
 Flotily majú na tom vypínači ešte druhú polohu, ktorú samostatný vývojár nepozná. Zastaviť *zmenu* je vrátenie; zastaviť jej *zdroj* znamená pozastaviť agentov. Flotila, ktorá ďalej generuje nad základom, ktorý si práve vrátil, ti ten problém s chuťou postaví znova alebo naskladá ďalšiu prácu na základ, ktorému už neveríš. Runbook preto potrebuje oboje: vrátiť artefakt a zastaviť slučku, ktorá ho vyrobila — [človek-smerovač](../part-2-loop/roles-and-the-human.md) tu vykonáva zásah, ktorý sa zo svojej podstaty nedá delegovať na to, čo sa práve zastavuje.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant sa nehýbe: **zmena je v produkcii pozorovateľná, k svojmu publiku sa dostáva postupne a jeden človek ju vie za pár sekúnd zastaviť bez nového zostavenia.** Škáluje sa to, koľko z toho beží bez človeka v ceste.
 
@@ -72,7 +72,7 @@ Invariant sa nehýbe: **zmena je v produkcii pozorovateľná, k svojmu publiku s
 - **Malý tím.** Dashboardy naviazané na hŕstku dohodnutých signálov, canary alebo percentuálne nasadzovanie ako predvolený postup, automatické vrátenie zmeny pri prekročení hranice, spísaný runbook, ktorý menuje, kto čo prepína, a signály uvedené v podmienke dokončenia každej úlohy, aby ich kritik mohol overiť. *Akému zlyhaniu to predchádza:* funkcia sa sprístupní bez jediného signálu alebo počas zvyšovania podielu každý predpokladá, že ten graf sleduje niekto iný.
 - **Enterprise.** SLO s rozpočtami chýb, ktoré riadia tempo sprístupňovania, progresívne dodávanie s automatizovanou analýzou, auditované postupy núdzového vypnutia nacvičované podobne ako postupy pri požiarnom cvičení a vyhodnotenie incidentov aj triáž hlásení od používateľov, ktoré plnia register únikov pri dodržaní ochrany dát. *Akému zlyhaniu to predchádza:* postup vrátenia zmeny, ktorý sa mimo prezentácie nikdy neskúšal a ktorého nedostatky sa ukážu až počas incidentu, na ktorý bol určený.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - **Produkcia je koncová brána.** Niektoré chyby sa prejavia iba pod skutočnou prevádzkou a na skutočných zariadeniach. Do podmienky dokončenia úlohy zahrň niekoľko signálov vrátane obchodného a nechaj kritika overiť, že ich systém odosiela.
 - **Ticho potrebuje snímač zvonku.** Sondou preveruj kľúčový používateľský postup a daj používateľom možnosť nahlásiť zlyhanie do evidencie. Interná telemetria môže stíchnuť spolu so službou; samotný heartbeat nedokazuje, že služba obsluhuje používateľov.

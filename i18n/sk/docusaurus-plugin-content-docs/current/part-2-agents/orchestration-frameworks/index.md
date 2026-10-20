@@ -21,7 +21,7 @@ Tá istá krajina v podaní IBM: ako sa frameworky delia do troch okruhov — pr
 
 :::
 
-## Čo by si inak písal ručne
+## Čo by si inak písal ručne \{#what-youd-otherwise-hand-roll}
 
 Úprimná otázka: ak framework vynecháš, čo napíšeš sám? Keď si zopár agentov postavil od nuly, odpoveď je známa kopa obslužného kódu.
 
@@ -38,7 +38,7 @@ Nad tým sa vrství to, čo rastie spolu s agentom:
 
 Nič z toho nie je tá zaujímavá časť tvojho agenta — je to obslužný kód pod ňou. Jadro ponuky frameworku: túto kopu ti napíše raz a jednotne, takže v kóde riešiš správanie, nie prepájanie.
 
-## Hlavná abstrakcia — agent ako graf / konečný automat
+## Hlavná abstrakcia — agent ako graf / konečný automat \{#the-main-abstraction--an-agent-as-a-graph--state-machine}
 
 Keď odlúpneš značky, väčšina frameworkov sa zhodne na tej istej myšlienke — a LangGraph ju vyslovuje najjasnejšie: modeluj agenta ako **graf** (graph), ako konečný automat (state machine).
 
@@ -48,7 +48,7 @@ A práve v tom je celý zmysel: holá slučka je blok `while` — nepriehľadná
 
 V jednej vete: graf mení nepriehľadnú slučku na stroj, ktorý vieš riadiť, skúmať a obnoviť.
 
-## Hráči, po vrstvách
+## Hráči, po vrstvách \{#the-players-by-layer}
 
 Krajina pôsobí preplnene, kým si ju neroztriediš podľa toho, čím sa každý nástroj snaží byť. Zhruba tri vrstvy.
 
@@ -60,7 +60,7 @@ Krajina pôsobí preplnene, kým si ju neroztriediš podľa toho, čím sa každ
 
 Jedna výhrada váži viac než celé triedenie: tie hranice sa rozmazávajú. LangChain robí aj tok riadenia, frameworky si navzájom opíšu dobré nápady v priebehu vydania či dvoch a ekosystém sa mení prekotne — Microsoft Agent Framework 1.0 (GA — všeobecná dostupnosť — apríl 2026) vstrebal [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/) aj AutoGen, oba sú teraz v režime údržby. Ber tie tri vrstvy ako momentku filozofií, nie ako trvalý rebríček. Nauč sa kategórie; kým sa dostaneš k nasadeniu, čísla verzií sa aj tak pohnú.
 
-## Typické vzory, ktoré naozaj používaš
+## Typické vzory, ktoré naozaj používaš \{#typical-patterns-you-actually-use}
 
 V každodennej práci sa opakuje malá množina tvarov; poznať ich po mene je väčšina toho, čo od dokumentácie frameworku potrebuješ.
 
@@ -74,7 +74,7 @@ Pre tímy ti framework podá **supervízora alebo konštrukciu „crew“** (sup
 
 Všetkým tým preteká **napojenie na trasovanie** (tracing integration), učebnicovým príkladom je [LangSmith](https://www.langchain.com/langsmith): vrstva pozorovateľnosti, vďaka ktorej vidíš, čo graf naozaj urobil. To je [téma tretej časti](../../part-3-production/overview/) a zapája sa práve sem.
 
-## Kedy NIE — kompromisy
+## Kedy NIE — kompromisy \{#when-not-to--the-tradeoffs}
 
 Framework nie je zadarmo a jeho náklady sú zrkadlovým obrazom jeho výhod.
 
@@ -84,13 +84,13 @@ Vedľa nej stoja dve ďalšie. **Prekotný vývoj ekosystému** — API aj posv�
 
 Pravidlo je teda pravidlo poradia. Najprv pochop primitíva zo skorších lekcií; po frameworku siahni preto, aby si zmazal obslužný kód, nikdy nie preto, aby si sa vyhol pochopeniu toho, čo ten kód robí. Grafový framework vytiahni vtedy, keď naozaj potrebuješ ovládateľné zložité toky riadenia — checkpointy, HITL, vetvenie, multiagentovú koordináciu. Pre jednoduchého agenta použi SDK poskytovateľa priamo a vrstvu vynechaj.
 
-## Kam sa to napája
+## Kam sa to napája \{#where-it-connects}
 
 Nič v tejto lekcii nie je nový KONCEPT. Frameworky nemenia myšlienky zo skorších lekcií — slučku, nástroje, plánovanie, multiagentové topológie. Zabalia ich a podajú späť, len bez obslužného kódu.
 
 A práve preto, že balia tie isté primitíva, zapadajú rovno do vrstvy pozorovateľnosti a hodnotenia, ktorú preberá [tretia časť](../../part-3-production/overview/): presne ten graf, ktorý si tu postavil, budeš tam trasovať a merať.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Orchestračný framework zmaže obslužný kód, ktorý by si inak písal okolo holej slučky: obslužný kód slučky, kód na volanie nástrojov, stav a pamäť, tok riadenia, multiagentové odovzdania riadenia a produkčnú výbavu s trasovaním, streamingom a checkpointmi.
 - Hlavná abstrakcia, na ktorej sa väčšina frameworkov zíde, je agent ako graf / konečný automat: uzly (zavolaj model, zavolaj nástroj, rozhodni sa) a hrany (tok riadenia vrátane slučiek). Rozdiel, ktorý vnáša AI, je práve to, že holú slučku `while` mení na stroj, ktorý vieš riadiť, skúmať a obnoviť.

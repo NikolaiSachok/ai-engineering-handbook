@@ -16,7 +16,7 @@ success there went from 38.1% before the first setup changes to 69% after; [Prep
 model](./preparation-over-model.md) covers what those changes were. On a project already in motion, you have to
 rebuild shared understanding and restore verification you can trust before that kind of setup pays off.
 
-## A documentation request can hide a broken development process
+## A documentation request can hide a broken development process \{#a-documentation-request-can-hide-a-broken-development-process}
 
 In his [published account of a stabilisation he ran](https://realaillusions.com/ru/materials/ai-project-stabilization-case/),
 Andrey Beloborodov described an online platform the owner had built himself with two AI assistants: over
@@ -50,7 +50,7 @@ new chat and ask an agent what architecture decisions were made last week. In hi
 answer, or its answer disagrees with your picture, the agent is likely working from its own version of the
 project.
 
-## Audit before refactoring, with independent models
+## Audit before refactoring, with independent models \{#audit-before-refactoring-with-independent-models}
 
 In his [follow-up on technical debt](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/),
 Beloborodov argues against asking AI to rewrite everything properly: that creates a new project with new
@@ -93,7 +93,7 @@ Turn the audit into a route: what works → what blocks development → what is 
 to check the result. A verdict without that route leaves the next agent with the same open-ended invitation
 to refactor everything.
 
-## Pin behaviour before changing it
+## Pin behaviour before changing it \{#pin-behaviour-before-changing-it}
 
 Michael Feathers named the **characterization test** in *Working Effectively with Legacy Code*. His
 [explanation](https://michaelfeathers.silvrback.com/characterization-testing) gives it a precise purpose:
@@ -115,7 +115,7 @@ a basic automatic CI gate for new functionality. Establish what each check exerc
 result means before you rely on the pack. Keep the reviewer independent of the implementation through the
 boundary taught in [Detection vs mutation](../part-3-verification/detection-vs-mutation.md).
 
-## Rebuild the source of truth from the code
+## Rebuild the source of truth from the code \{#rebuild-the-source-of-truth-from-the-code}
 
 The documentation plan began with a description of the actual project and environment. It called for all
 project documentation to sit next to the code, with contradictions removed and history, target state and
@@ -151,7 +151,7 @@ chat history and ask about recent architecture decisions. Require an answer from
 distinguishes what exists from what is intended. If the answer still depends on finding the
 right old conversation, the shared memory has not been recovered.
 
-## Restore the loop, close the audited risks, then re-audit
+## Restore the loop, close the audited risks, then re-audit \{#restore-the-loop-close-the-audited-risks-then-re-audit}
 
 The first phase of the recovery plan made change controllable again through six items:
 
@@ -190,7 +190,7 @@ precondition: what to audit, and which behaviour to pin, before you change anyth
 
 :::
 
-## At enterprise scale, start small and separate the auditor
+## At enterprise scale, start small and separate the auditor \{#at-enterprise-scale-start-small-and-separate-the-auditor}
 
 In a mature repository, perceived speed is a poor adoption criterion. In
 [METR's 2025 randomised trial](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/), sixteen
@@ -225,7 +225,7 @@ agents they run. The auditors do not edit the code they audit. This separation c
 [enterprise tier](../part-5-scale-governance/enterprise-tier/index.md). Keep repeat audits on the same
 dimensions, and the record they produce is one a third party can check.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **know what exists and pin its current behaviour before agents change it.**
 
@@ -243,7 +243,7 @@ The invariant holds at every scale: **know what exists and pin its current behav
   repeat-audit records are *proof*, something a third party can inspect later — unlike the soloist's
   new-chat test, which is pure *capability*: it shows what a fresh agent can recover today.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - A documentation request may conceal unstable development. Audit what prevents safe change before asking an
   agent to reorganise or rewrite the project.

@@ -9,7 +9,7 @@ sidebar_position: 3.5
 
 Môžeš prísť aj o samotný prístup. Andrej Beloborodov, ktorý pri vývoji od začiatku využíva AI a verejne o tejto práci píše, uvádza zablokované účty medzi dôvodmi, prečo používa viacero asistentov. V [jeho príspevku](https://realaillusions.com/ru/materials/threads-sovety-ai-praktika/) (po rusky) označuje poskytovateľa za „nepredvídateľného partnera“ (preložené z ruštiny, rovnako ako jeho ďalšie citáty na tejto stránke). Jeho asistenti zdieľajú jeden repozitár aj znalostnú bázu, takže keď sa jeden model správa zle, Beloborodov sa v susednom paneli editora prepne k inému asistentovi.
 
-## Pripnutie obmedzuje, čo sa môže zmeniť
+## Pripnutie obmedzuje, čo sa môže zmeniť \{#a-pin-limits-what-can-move}
 
 Identifikátor modelu môže označovať **snapshot modelu**, teda pevne určenú verziu, alebo **pohyblivý alias**, ktorého cieľovú verziu poskytovateľ smie zmeniť. **Pripnutie modelu (model pinning)** znamená, že v konfigurácii zvolíš konkrétny snapshot. Obmedzíš tým zmeny spôsobené presunom aliasu. Identifikátor snapshotu zaznamenaj pri každej zmene kódu, ktorú vytvorí agent: patrí do [priradenia agenta a modelu](./enterprise-tier/index.md).
 
@@ -25,7 +25,7 @@ Zdroje (prečítané v októbri 2026): OpenAI [stránka modelu](https://develope
 
 Pripnutie nezabráni vyradeniu modelu, presmerovaniu identifikátora určeného na vyradenie na nástupcu ani zmenám infraštruktúry. Stránka spoločnosti Anthropic o identifikátoroch sama upozorňuje, že aktualizácie infraštruktúry občas spôsobia drobné rozdiely v správaní aj pri nezmenenom identifikátore a váhach. Anthropic vo vlastnej [správe o incidente](https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues) zo 17. septembra 2025 uvádza, že chyba v smerovaní požiadaviek podľa kontextového okna zasiahla 31. augusta v najviac postihnutej hodine 16% požiadaviek na Sonnet 4. Preto aj po pripnutí ďalej [sleduj kvalitu v produkcii](../part-4-platform/observability-rollout.md): infraštruktúra môže naďalej meniť výstupy.
 
-## Upgrade preveruj na nemenných prípadoch a s nemenným hodnotiteľom
+## Upgrade preveruj na nemenných prípadoch a s nemenným hodnotiteľom \{#qualify-an-upgrade-against-fixed-references}
 
 [Chen, Zaharia a Zou](https://arxiv.org/abs/2307.09009v3) v článku na arXiv opisujú kontrolovanú štúdiu, v ktorej presnosť GPT-4 pri rozlišovaní prvočísel a zložených čísel klesla z 84% v marci 2023 na 51% v júni 2023. Tretia revízia článku z októbra 2023 dospela k záveru, že tá istá služba sa môže za krátky čas podstatne zmeniť. [Ma, Yang a Kästner](https://arxiv.org/abs/2311.11123) v kontrolovanej prípadovej štúdii zistili, že pri aktualizáciách API sa 10,9% jednotlivých predikcií pri detekcii toxicity zmenilo zo správnych na nesprávne. Aktualizácie za aliasom `gpt-3.5-turbo` neboli oznámené, takže vývojári, ktorí ho volali, ich nemohli vopred otestovať.
 
@@ -51,7 +51,7 @@ Video IBM Technology opisuje validáciu výstupov, sledovanie driftu a filtre po
 
 :::
 
-## Odchod má termín
+## Odchod má termín \{#exit-has-a-deadline}
 
 Po ohlásení vyradenia máš **lehotu pred vyradením (deprecation notice period)** na preverenie nástupcu a migráciu. Niektoré platformy používajú aj **automatický upgrade (auto-upgrade)**, takže ti môžu vymeniť verziu skôr, než jej nástupcu preveríš. Zverejnené pravidlá rozlišujú modely vo všeobecnej dostupnosti (GA) a predbežné verzie (preview).
 
@@ -79,13 +79,13 @@ Zdroje (prečítané v októbri 2026): Anthropic [obchodné podmienky](https://w
 
 **Vyskúšaná možnosť odchodu (tested exit)** si vyžaduje jedného klienta pre všetky volania modelu a konfiguráciu, v ktorej je zapísaný poskytovateľ aj model. Cez toho istého klienta pravidelne spúšťaj regresné prípady so záložným poskytovateľom alebo modelom prevádzkovaným vo vlastnej infraštruktúre. Úspešnosť prvého pokusu záložného modelu meraj samostatne: iný model má vlastné náklady na prijatú zmenu. Podobne ako [obnovu zálohy](../part-4-platform/environments-migrations-data.md) musíš aj prechod nacvičiť, aby si odhalil jeho zlyhania.
 
-## Bez pamäti projektu sa odchádza ťažko
+## Bez pamäti projektu sa odchádza ťažko \{#memory-makes-the-exit-usable}
 
 V [ďalšom príspevku](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/) Beloborodov píše, že ľudia za ním najčastejšie prichádzajú so stratou kontextu. Potrebu uchovávať znalosti o projekte mimo chatov si podľa neho ľudia niekedy uvedomia „prudko a bolestivo“ — napríklad pri zablokovaní účtu.
 
 Znalosti, ktoré existujú iba v histórii chatu, sú závislé od prístupu k účtu. S účtom stratíš aj ich. Pravidlá, rozhodnutia, poznámky k architektúre a zadania preto uchovávaj ako [pamäť projektu](../part-1-foundation/project-memory-and-tiering.md) v súboroch repozitára alebo v úložisku znalostí. Tak vzniká **pamäť nezávislá od dodávateľa (vendor-portable memory)**: náhradný asistent ju prečíta aj bez pôvodného účtu.
 
-## Podmienky pre dáta určuje účet
+## Podmienky pre dáta určuje účet \{#the-account-determines-the-data-terms}
 
 Ak vložíš firemný kód do osobného chatu, vzťahujú sa naň spotrebiteľské podmienky tvojho osobného predplatného. Keď prompty opustia tvoj počítač, **podmienky nakladania s dátami (data terms)** určujú ich použitie na tréning, dobu uchovávania aj miesto spracovania. **Dodatok o spracúvaní osobných údajov (data processing addendum, DPA)** vymedzuje, ako poskytovateľ spracúva osobné údaje v tvojom mene.
 
@@ -117,7 +117,7 @@ Zdroje (prečítané v októbri 2026): OpenAI kontrola dát, Anthropic aktualiz�
 
 Lekcie o [secrets](../part-4-platform/secrets.md) a [prostrediach](../part-4-platform/environments-migrations-data.md) obmedzovali, čo smie vstúpiť do kontextu. Pri dátach, ktoré sa k poskytovateľovi dostanú, zaznamenaj príslušné podmienky a pri ich zmene si ich znova prečítaj.
 
-## Smeruj podľa nákladov na prijatú zmenu
+## Smeruj podľa nákladov na prijatú zmenu \{#route-by-the-cost-of-accepted-work}
 
 Lacnejší model sa oplatí len vtedy, keď mu úspešnosť prvého pokusu klesne pomerne menej, než mu klesne cena. Ak stojí polovicu, ale úspešnosť má nižšiu než polovičnú, prijatá zmena vyjde drahšie. **Smerovanie podľa hranice rentability (routing by break-even)** vychádza z podmienky `p_cheap / p_expensive > price_cheap / price_expensive`, rozobranej v [prehĺbení o nákladoch](./cost-economics/deep-dive.md).
 
@@ -131,7 +131,7 @@ Martin Keen vo videu IBM Technology predstavuje šesť krokov výberu modelu aj 
 
 :::
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant platí na každej úrovni: **pripni verziu, ktorú používaš, preveruj každú jej zmenu a dokáž, že vieš odísť.**
 
@@ -139,7 +139,7 @@ Invariant platí na každej úrovni: **pripni verziu, ktorú používaš, prever
 - **Malý tím.** Zaveď jedného klienta pre všetky volania modelu, upgrady preveruj opakovanými behmi a záložnú cestu pravidelne skúšaj. Pre každú triedu úloh meraj úspešnosť prvého pokusu a pri každej službe zaznamenaj záväzky týkajúce sa dát. *Akému zlyhaniu to predchádza:* o vyradení sa dozvieš z chýb v produkcii alebo nasadíš upgrade, ktorého lepší priemer zakryl poškodené prípady.
 - **Enterprise.** V evidencii modelov uchovávaj verziu, poskytovateľa, región, podmienky, lehotu oznámenia a vlastníka. Zabezpeč DPA aj záväzky k rezidencii dát a uchovávaniu; ponechaj dôkazy o preverení aj vyskúšanom odchode. *Akému zlyhaniu to predchádza:* zákazník sa opýta, kam išli dáta a ktorý model vytvoril zmenu, no nikto nevie odpovedať.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Pripnutie obmedzuje zmeny cez alias. Vyradenie, presmerovanie na nástupcu a infraštruktúru neovláda, preto zachovaj priradenie agenta a modelu aj sledovanie kvality.
 - **Hodnotiteľa nemeň.** Miernejšie posudzovanie sa potom nemôže vydávať za zlepšenie generujúceho modelu.

@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Jedna hranica. Susedné lekcie pokrývajú územie hneď vedľa. Koordináciu agent↔agent — topológie, ako sa tím hodnotí — rozoberajú [multiagentové systémy](../multi-agent/index.md) a [ich prehĺbenie](../multi-agent/deep-dive.md); zabaliť tieto napojenia do knižnice je úlohou [orchestračných frameworkov](../orchestration-frameworks/index.md) a [ich prehĺbenia](../orchestration-frameworks/deep-dive.md); prevádzkové hľadisko — brány, allowlisty (zoznamy povoleného), centrálna politika — nájdeš v [nástrojoch Časti III](../../part-3-production/tooling-ecosystem/) a v lekcii o [bezpečnostných mantineloch](../../part-1-rag/cross-cutting/guardrails/index.md); MCP naživo na agentoch je [záverečná stránka](../real-agents.md). Táto stránka vlastní protokolovú a prenosovú vrstvu, prostredie agentných protokolov a spevnené nasadenie pre nedôveryhodné servery. Prvú časť predpokladáme po celý čas.
 
-## Ako postaviť server
+## Ako postaviť server \{#building-a-server}
 
 Prvá časť pomenovala dve roly, klienta a server. V praxi však pribúda tretia rola a mení, ako čítaš zvyšné dve. **Hostiteľ (host)** je LLM aplikácia, ktorá spojenia iniciuje — IDE, chatová aplikácia, agentný runtime. Vnútri hostiteľa žije jeden alebo viac **klientov**, každý drží väzbu 1:1 na presne jeden server. „MCP klient“ teda nie je celá aplikácia; je to konektor vnútri hostiteľa, jeden na každý server, s ktorým sa rozpráva. Hostiteľ, klienti, servery — tri roly, nie dve.
 
@@ -54,7 +54,7 @@ flowchart TB
 
 Jeden hostiteľ drží viac klientov, každý s väzbou 1:1 na jeden server cez vlastný prenos — stdio k lokálnemu podprocesu, streamable HTTP k vzdialenému serveru cez sieť. „Dôveryhodný tým, že je lokálny“ je len východisko, nie záruka: lokálny stdio server je aj tak cudzí kód s právami tvojho stroja, ako pripomína sekcia o prenose.
 
-## Schopnosti, ktoré obracajú spojenie
+## Schopnosti, ktoré obracajú spojenie \{#the-capabilities-that-invert-the-connection}
 
 Zatiaľ ide komunikácia jedným smerom: klient volá, server odpovedá. Súčasná špecifikácia definuje aj opačný smer. Popri schopnostiach, ktoré ponúka server, ponúka *klient* schopnosti *serveru* — a toto obrátenie je najhlbšia vec na modeli relácie v MCP. Nesú ho tri klientske schopnosti: sampling, elicitation a roots.
 
@@ -68,7 +68,7 @@ Obe obrátené schopnosti sa stále hýbu, tak si datuj, čo sa naučíš. Reví
 
 Prečo na obrátení záleží aj nad rámec mechaniky: statické API vždy len odpovedá na volania, ktoré naň prídu. Stavová relácia MCP dovolí serveru *iniciovať* — vyžiadať si generovanie, vyžiadať si vstup od používateľa, poslať aktualizáciu. A každá schopnosť, ktorú iniciuje server, je **plocha súhlasu**: miesto, v ktorom k tebe siaha späť strana, ktorej celkom nedôveruješ, a pri ktorom ty udeľuješ alebo odopieraš súhlas. Pomenuj to takto a bezpečnostná sekcia prestane byť samostatnou témou — stane sa priamym dôsledkom tejto.
 
-## Dva prenosy, dva profily dôvery
+## Dva prenosy, dva profily dôvery \{#two-transports-two-trust-profiles}
 
 Tie isté primitíva idú po ktoromkoľvek prenose (transport) a kde server beží, je detail nasadenia — pointa z prvej časti drží. Čo si prvá časť nechala na túto stránku: dva prenosy nesú ostro odlišné profily dôvery a prevádzky.
 
@@ -78,7 +78,7 @@ Tie isté primitíva idú po ktoromkoľvek prenose (transport) a kde server bež
 
 Vybrať prenos teda znamená vybrať postoj dôvery. Po stdio siahni, keď je server lokálny, jednopoužívateľský, dôveryhodný tým, že je lokálny — vývojársky nástroj, obal okolo lokálneho súboru alebo databázy. Po streamable HTTP siahni, keď je server zdieľaný, vzdialený, viacnájomný alebo musí škálovať — a prijmi, že autentifikácia, rozsah tokenov a vystavenie sieti sa v tej chvíli stávajú prvoradými starosťami. Voľba prenosu nie je rozhodnutie o nasadení, ale o dôvere.
 
-## Nájsť server ešte neznamená dôverovať mu
+## Nájsť server ešte neznamená dôverovať mu \{#finding-a-server-is-not-trusting-it}
 
 Cez **objavovanie serverov (server discovery)** klient nájde servery, na ktoré sa pripojí. Deje sa to na dvoch úrovniach. Pri pripojení klient objaví schopnosti *daného* servera cez podanie rúk vyššie — objavovanie v malom. Na úrovni ekosystému klient nájde, *ktoré servery vôbec existujú*, cez register — objavovanie vo veľkom.
 
@@ -86,7 +86,7 @@ Oficiálny **register MCP (MCP registry)** ([registry.modelcontextprotocol.io](h
 
 Nosná myšlienka: byť uvedený v registri NIE je preverenie. Register zverejní metadáta, ktoré vydavateľ dodal o vlastnom serveri; neaudituje, čo server naozaj robí, a server smie zmeniť svoje správanie potom, ako bol uvedený (pozri rug pull nižšie). Objavovanie odpovie na „existuje tento server a ako sa naň dostanem“ — nikdy na „možno tomuto serveru dôverovať“. Tá druhá otázka ostáva tvoja.
 
-## MCP na mape protokolov
+## MCP na mape protokolov \{#placing-mcp-on-the-protocol-map}
 
 MCP vlastní jednu os: agent↔nástroj a dáta. O druhej osi mlčí — agent↔agent, jeden agent odovzdávajúci prácu rovnocennému partnerovi — a tá je iný problém s vlastnými protokolmi. Neodvodzuj ju tu nanovo; samotná koordinácia patrí [multiagentovým systémom](../multi-agent/index.md). Protokol na tej osi však stojí za umiestnenie.
 
@@ -96,7 +96,7 @@ Trvácna veta, jedným dychom: MCP je agent↔nástroj a kontext; A2A je agent�
 
 Jedna datovaná výhrada, drž ju voľne: aj tie dve osi sa začínajú dotýkať. Vlastná revízia MCP z 25. novembra 2025 pridala experimentálne **tasks** (trvácne, dopytovateľné požiadavky), ktoré sú ozvenou životného cyklu úloh z A2A. Neprikladaj tomu priveľkú váhu. Ku koncu roka 2025 ostávajú osi odlíšené; je to zbližovanie, ktoré treba sledovať, nie splynutie, ktoré treba predpovedať.
 
-## Spevnené nasadenie proti serverom, ktoré neriadiš
+## Spevnené nasadenie proti serverom, ktoré neriadiš \{#hardened-deployment-for-untrusted-servers}
 
 Napojiť agenta na server, ktorý neriadiš, ho napojí na vstup aj správanie, ktoré neriadiš — položí hranicu dôvery medzi tvojho hostiteľa a všetko, čo ten server pošle. To je „nová plocha útoku“ z prvej časti; táto sekcia ju rozpracúva ako katalóg spôsobov zlyhania a odpoveď vrstvenou obranou. Pod všetkým leží jedna disciplína: každý bajt, ktorý server pošle, je nedôveryhodné *dáta*, nikdy dôveryhodné *inštrukcie*.
 
@@ -146,7 +146,7 @@ Všetko, čo pošle cudzí server — zdroje, výsledky nástrojov aj opisy nás
 
 Majstrovský krok, ku ktorému každá schopnosť na tejto stránke smerovala: niekedy server nepripojíš vôbec. Ak je server nepreverený, má na danú úlohu priveľa oprávnení, pochádza od vydavateľa, ktorého nepoznáš, alebo je úloha vysoko riziková a server sa nedá izolovať v sandboxe — nepridávaj ho. Nie každá schopnosť stojí za svoju plochu útoku; najbezpečnejší server je ten, ktorý si nikdy nepripojil. Prevádzková stránka vynucovania tohto vo veľkom rozsahu — brány, allowlisty, centrálne logovanie, celoorganizačná politika — patrí [nástrojom Časti III](../../part-3-production/tooling-ecosystem/) a [mantinelom](../../part-1-rag/cross-cutting/guardrails/index.md); odkáž na ňu, neodvodzuj ju nanovo. Samotné rozhodnutie je tu tou pointou.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - MCP má tri roly, nie dve: hostiteľ (LLM aplikácia) drží jedného alebo viac klientov, každý s väzbou 1:1 na server. Relácia sa otvorí inicializačným podaním rúk, ktoré nad JSON-RPC 2.0 vyjedná verziu a schopnosti; SDK obslúži prenos aj podanie rúk a ty píšeš obslužné funkcie za nástrojmi, zdrojmi a promptmi. Stavba pre model znamená, že opis je prompt, sada nástrojov je vybraná a nejednoznačnosť sa za behu prejaví ako nesprávne volanie — a ak jedna aplikácia používa jeden nástroj, server rovno vynechaj.
 - Dve klientske schopnosti obracajú spojenie: sampling požičia serveru model klienta na generovanie textu, elicitation mu dovolí vyžiadať si od používateľa chýbajúci údaj. Obe sú plochy súhlasu (miesta, kde ti server siaha späť a ty udeľuješ alebo odopieraš súhlas) — sampling vyžaduje podľa špecifikácie povinné schválenie používateľom — a obe k 25. novembru 2025 stále rástli. Tichšia tretia je roots: klient serveru ohraničí dosah na súborový systém a URI, teda najnižšie oprávnenia na úrovni protokolu.

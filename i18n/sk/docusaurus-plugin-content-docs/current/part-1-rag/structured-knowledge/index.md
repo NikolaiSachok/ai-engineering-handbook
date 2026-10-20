@@ -51,7 +51,7 @@ akýkoľvek dopyt sú to tri nesúvisiace predikáty. V jednotlivom dokumente sa
 ho však nič neobmedzovalo. Podaj mu uzavretý zoznam povolených typov vzťahov a problém zmizne, za cenu
 napísania toho zoznamu.
 
-### Kde sa schéma naozaj vyplatí
+### Kde sa schéma naozaj vyplatí \{#where-a-schema-actually-bites}
 
 Schéma sa vypláca na troch oddelených miestach. Vedz, za ktoré z nich platíš:
 
@@ -66,7 +66,7 @@ bránu vôbec *umožňuje*, lebo brána potrebuje niečo, voči čomu bude kontr
 [sémantickej vrstvy](#the-semantic-layer-names-two-different-things): otázka sa cez ňu priradí k pojmu
 v doménovom modeli.
 
-### Doménová schéma nie je schéma odpovede
+### Doménová schéma nie je schéma odpovede \{#domain-schema-is-not-response-schema}
 
 S JSON Schema si sa v tejto príručke už stretol — obmedzuje *tvar odpovede modelu*: povinné polia, povolené
 hodnoty enumu, parsovanie, ktoré buď prejde, alebo neprejde. Ontológia obmedzuje *tvar sveta, o ktorom tá
@@ -77,7 +77,7 @@ s ním a vlastní ju ten, kto vlastní danú funkciu. Doménový model patrí or
 biznis, a prežije každý prompt, ktorý ho kedy čítal. Zameň jedno za druhé a doménový model ti skončí verziovaný
 vedľa promptovej šablóny — takto sa firma dozvie, že jej definíciu „zákazníka“ prepísala jazyková korektúra.
 
-### Rozumné východisko a test, kedy ho opustiť
+### Rozumné východisko a test, kedy ho opustiť \{#the-honest-default-and-the-test-for-leaving-it}
 
 Väčšine systémov s LLM dá JSON Schema a k nej validátor ten istý praktický úžitok za zlomok ceny: uzavretú
 množinu typov a cestu, ktorou sa neplatný výstup odmietne. Nie je to horšia možnosť, za ktorú by si sa mal ospravedlňovať — väčšinu času je to správna odpoveď. [Formálny stack](./deep-dive.md#the-formal-stack-by-purpose)
@@ -111,7 +111,7 @@ nenašiel svoj dôvod.
 
 Ten dôvod existuje a je ním iná trieda otázok.
 
-### Tri triedy otázok a rozhoduje len jedna
+### Tri triedy otázok a rozhoduje len jedna \{#three-question-classes-and-only-one-of-them-is-decisive}
 
 **Lokálna — okolie entity.** *„Čo vieme o tomto dodávateľovi a s čím je prepojený?“* Graf tu pomôže. Pomôže
 však aj rozklad otázky a aj dobre odfiltrované vektorové vyhľadávanie nad dokumentmi označkovanými tým
@@ -128,7 +128,7 @@ mierených na celý textový korpus“ ([Edge a kol., *From Local to Global*](ht
 a k tomu preklep. V grafe sa tento problém stane viditeľným — a práve tam sa práca na grafe potichu mení na
 [stotožňovanie entít](./deep-dive.md#entity-resolution), inú disciplínu s iným rozpočtom.
 
-### Náklady sú rozhodovacie kritériá, nie výhrady
+### Náklady sú rozhodovacie kritériá, nie výhrady \{#the-costs-are-decision-criteria-not-caveats}
 
 **Extrakcia je prechod LLM cez celý tvoj korpus** a podľa toho je aj drahá. Najjasnejšie dostupné číslo pochádza
 z nadväzujúcej práce samotného Microsoft Research:
@@ -153,7 +153,7 @@ extrahované vzťahy *pravdivé*. Potrebuješ presnosť extrakcie voči označko
 začiatku do konca na tých typoch otázok, ktoré vie obslúžiť jedine graf. Aparát na to má
 [lekcia o evaluácii](../cross-cutting/evaluation/index.md); podrobnosti sú v prehĺbení.
 
-### Kedy graf nestavať
+### Kedy graf nestavať \{#when-not-to-build-a-graph}
 
 Malý korpus. Otázky tvaru vyhľadaj a vráť. Dáta, ktoré sa menia rýchlejšie, než ich stihneš znova extrahovať.
 A to, čo o tom v praxi rozhodne: nikto sa nezaviazal držať extrakčnú schému správnu. Bez takého majiteľa sa
@@ -182,7 +182,7 @@ Súvisia spolu v tom, že obe nahrádzajú výklad podľa okamžitej potreby spo
 vrstvou, nemajú spoločné nástroje a zvyčajne ich vlastnia rôzne tímy. Povedz hneď v prvej vete, ktorú z nich
 myslíš, a zvyšok rozhovoru pôjde ľahšie.
 
-### Text-to-SQL: výber namiesto odvodzovania
+### Text-to-SQL: výber namiesto odvodzovania \{#text-to-sql-selection-instead-of-derivation}
 
 Pre text-to-SQL je dôležitý prvý z tých dvoch významov, teda vrstva metrík — a je to v celej lekcii
 najjasnejší prípad toho, ako štruktúra mení náročnosť úlohy.
@@ -210,7 +210,7 @@ skladu“. Je to ten istý princíp, na ktorom trvá prehĺbenie vrstvy Retrieva
 [preosej pred vyhľadávaním, nikdy nefiltruj až potom](../retrieval/deep-dive.md) —, len prichádza zo
 štruktúrovanej strany.
 
-### Prečo podniky chcú odpovede priradené k pojmom
+### Prečo podniky chcú odpovede priradené k pojmom \{#why-enterprises-want-answers-resolved-to-concepts}
 
 Priradenie k pojmu prináša dve veci, ktoré citácia úryvku nedá. **Konzistentnosť**: dve formulácie tej istej otázky systém priradí k tomu istému pojmu, a teda vráti rovnakú odpoveď. **Auditovateľnosť**: vieš ukázať,
 *ktorý* pojem bol priradený a prečo. Citácia ti povie, ktorý text model čítal; nepovie ti, ako tomu textu
@@ -220,7 +220,7 @@ Doménový model, ku ktorému sa otázka priraďuje, nie je nič iné než [onto
 z prvej sekcie — a preto sú „potrebujeme ontológiu“ a „potrebujeme sémantickú vrstvu“ tak často tá istá
 požiadavka, ktorá prichádza z dvoch oddelení.
 
-### Čo sémantická vrstva stojí a kedy ju vynechať
+### Čo sémantická vrstva stojí a kedy ju vynechať \{#what-a-semantic-layer-costs-and-when-to-skip-it}
 
 Sémantická vrstva je najprv vyjednávanie o definíciách a až potom technický artefakt — a drahé je práve to
 vyjednávanie. Dve oddelenia, ktoré „aktívneho zákazníka“ definujú inak, sa musia zastaviť a niekto
@@ -248,7 +248,7 @@ Ontológia, graf aj sémantická vrstva majú jeden spoločný režim zlyhania: 
 Zlá ontológia prejde validáciou. Zastaraný graf vráti neaktuálne vzťahy bez náznaku neistoty. Metrika s rozídenou definíciou sa bez varovania vykreslí v dashboarde. Ani jedna nevyhodí chybu. Každá z nich potrebuje menovaného majiteľa a kontrolu, ktorá by ju
 zachytila.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Pipeline Časti I predpokladá, že odpoveď v nejakom úryvku existuje; ten predpoklad rúcajú tri triedy otázok
   a každá má inú štruktúrovanú odpoveď.

@@ -12,7 +12,7 @@ outperforms a frontier one flailing without them. And there is a second skill
 folded inside the first: reading a first-party success number correctly is itself part of preparation, because
 the single most encouraging number in this field is also the easiest to copy the wrong way.
 
-## Setup nearly doubled the agent's success
+## Setup nearly doubled the agent's success \{#setup-nearly-doubled-the-agents-success}
 
 The best piece of first-party evidence in the whole corpus is not a lab study. It is a blog post by one
 engineer. In March 2026, [Stephen Toub of Microsoft](https://devblogs.microsoft.com/dotnet/ten-months-with-cca-in-dotnet-runtime/) published measurements from ten months of running an agent — GitHub's Copilot Coding Agent —
@@ -29,7 +29,7 @@ download any tools they needed."* That single change nearly doubled the success 
 model upgrade or any randomised-trial effect anywhere in the research behind this course — and it costs nothing
 but attention. A two-person team can have all of it on day one.
 
-## The number you must not copy
+## The number you must not copy \{#the-number-you-must-not-copy}
 
 The same post reports something even more inviting, and here it becomes a lesson in reading rather than a lesson
 in setup. Of the merged agent PRs, only **0.6% were reverted** — three out of 535 — against **0.8%** for human
@@ -53,7 +53,7 @@ beyond reverts, and it *"does not analyze the compute cost."* Copy his setup dis
 rate as an expectation — you would be importing the number without the gate that produced it. This is Lesson 2's
 primary-reading discipline turned on a first-party number.
 
-## Start where the scope is knowable
+## Start where the scope is knowable \{#start-where-the-scope-is-knowable}
 
 If setup is the biggest lever, the first place to pull it is scope. What I do before handing an agent anything
 is refuse to hand it an open-ended goal — I start where the problem is bounded and I already know what "done"
@@ -73,7 +73,7 @@ the *requirements* boundary, before anything expensive gets built. The industry 
 requirements sign-off or a stage-gate; it is the one gate you never delegate, because every later artifact
 derives from it.
 
-## Architecture first — and an honest story about the loop
+## Architecture first — and an honest story about the loop \{#architecture-first--and-an-honest-story-about-the-loop}
 
 The second lever is design. Before code, I write the architecture down and then have it torn apart. The named
 form of this is old and well-supported: design-before-code, captured in an **Architecture Decision Record** —
@@ -108,7 +108,7 @@ decisions this lesson says to make, and write down, before an agent starts build
 
 :::
 
-## Why "preparation," not "the model"
+## Why "preparation," not "the model" \{#why-preparation-not-the-model}
 
 There is a deeper reason the lever is preparation and not model choice. The scaffolding around an agent — its
 rules, its tools, its guardrails — encodes assumptions that go stale. [Anthropic's engineers](https://www.anthropic.com/engineering/harness-design-long-running-apps) describe it plainly:
@@ -125,7 +125,7 @@ never one-time. Every rule and every harness component carries an expiry date an
 whether it still earns its place — which is where Lesson 4 (project memory) and Lesson 5 (rules that hold) pick
 up.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **an agent given unbounded scope produces unbounded risk, and the setup you
 hand it is the lever.** What changes with scale is how the setup is owned and proven.
@@ -146,7 +146,7 @@ hand it is the lever.** What changes with scale is how the setup is owned and pr
   decision — while the soloist's scoping habit is pure *capability*, changing what the agent can safely do
   today.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Setup and scope move agent success more than the model does. Toub's environment work moved
   agent success from `38.1%` to `69%`, a bigger delta than any model upgrade in the evidence, and free to a

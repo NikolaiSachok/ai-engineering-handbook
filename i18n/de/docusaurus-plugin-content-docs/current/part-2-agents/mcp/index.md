@@ -17,7 +17,7 @@ Sehen Sie es sich vor dem Swagger-Abschnitt weiter unten an: Es stellt dieselbe 
 
 :::
 
-## Was MCP ist
+## Was MCP ist \{#what-mcp-is}
 
 **MCP** (Model Context Protocol) ist ein offener Standard. Anthropic hat ihn Ende 2024 vorgestellt und im Dezember 2025 an die Agentic AI Foundation unter dem Dach der Linux Foundation übergeben; seither liegt die Steuerung bei einem neutralen, von der Community getragenen Gremium. Aufgebaut ist er als Client-Server-Architektur, und zwei Rollen erledigen darin die Arbeit. **Der MCP-Server** kapselt ein einzelnes Tool oder eine einzelne Datenquelle – eine Datenbank, ein Dateisystem, eine SaaS-API, ein Code-Repository – und stellt dessen Fähigkeiten einheitlich bereit; er ist ein Dienst, der Funktionen oder Daten zur Verfügung stellt. **Der MCP-Client** ist der Agent oder die Anwendung am anderen Ende: Er verbindet sich mit Servern und nutzt, was sie anbieten. Ein Server ist für viele Clients erreichbar; ein Client kann Verbindungen zu vielen Servern halten.
 
@@ -29,13 +29,13 @@ Mehr als eine Konvention für Tool-Calls wird MCP dadurch, dass es nicht eine, s
 
 Beim Transportprotokoll bleibt es bewusst unspektakulär. Ein Server auf Ihrem eigenen Rechner spricht über `stdio`, ein entfernter Server über **Streamable HTTP**. Die drei Komponenten bleiben in beiden Fällen dieselben – wo der Server läuft, ist eine Frage der Bereitstellung und ändert nichts an dem, was der Client zu sehen bekommt.
 
-## Tools bauen und Agenten bauen – zwei getrennte Aufgaben
+## Tools bauen und Agenten bauen – zwei getrennte Aufgaben \{#the-ai-delta--decoupling-tools-from-agents}
 
 Es geht bei alledem nicht um Ordnungsliebe. MCP trennt zwei Aufgaben voneinander, die bis dahin aneinanderhingen: Tools zu bauen und Agenten zu bauen. Sie schreiben einen MCP-Server ein einziges Mal, und jeder MCP-Client kann ihn benutzen – über Anwendungen, Frameworks und Modelle hinweg, ohne Code für die einzelne Anbindung. Die Anbindung an Ihr Ticketsystem ist dann nicht mehr etwas, das jedes Agententeam für sich neu umsetzt, sondern etwas, das ein Team einmal ausliefert und an das sich alle anderen anschließen.
 
 Das ist kein Merkmal des Protokolls, sondern eine Wirkung im ganzen Ökosystem: der Gewinn aus N + M, in menschlichen Maßstäben ausgedrückt. Ein Tool, das für eine Anwendung gebaut wurde, lässt sich von jeder anderen weiterverwenden – so wie ein USB-C-Gerät an jedem Rechner funktioniert. Sichtbar wird der Wert nicht im ersten Projekt, sondern im zweiten, dritten und zehnten, das den Server wiederverwendet, statt ihn noch einmal zu bauen.
 
-## Worin sich MCP von Swagger/OpenAPI und von `--help` auf der Kommandozeile unterscheidet
+## Worin sich MCP von Swagger/OpenAPI und von `--help` auf der Kommandozeile unterscheidet \{#how-mcp-differs-from-swaggeropenapi-and-cli---help}
 
 Ein Einwand verdient es hier, ernst genommen zu werden, denn er kommt in jedem fachlichen Gespräch früher oder später: *„MCP ist doch nur Swagger für LLMs. Es klebt Beschreibungen an die Endpunkte, damit ein Modell sie lesen kann. OpenAPI haben wir seit zehn Jahren.“* Der Einwand ist berechtigt, und ihn ehrlich zu beantworten ist der schnellste Weg zu verstehen, was MCP ist – und was nicht.
 
@@ -53,13 +53,13 @@ Die wirklichen Unterschiede sind vier, und in keinem geht es darum, ob Beschreib
 
 Und nun die ehrliche Einschränkung, denn in einem Punkt trifft der Einwand zu. In der Praxis sind MCP-Server für ein Modell tatsächlich meist besser lesbar als eine rohe OpenAPI-Ausgabe – aber aus handwerklichen Gründen, nicht weil das Protokoll mehr könnte. MCP-Server werden von vornherein für Agenten geschrieben: Ihre Beschreibungen sind als Prompts formuliert (die Disziplin aus dem Tool-Einsatz, dass eine Beschreibung ein Prompt ist), und sie bieten einen bewusst zugeschnittenen, kleinen Tool-Katalog an statt jedes Endpunkts, den eine API zufällig besitzt (die Regel „wenige Tools, und keine, die sich überschneiden“). Ein von Hand geschriebener MCP-Server lässt sich von einem Modell meist besser bedienen als eine automatisch erzeugte Swagger-Datei mit 200 Endpunkten. Das ist aber ein Unterschied in der Entwurfspraxis und nichts, was OpenAPI nicht ausdrücken könnte. Swagger kann jede Bedeutung transportieren, die auch MCP transportiert; MCP-Server werden nur eben üblicherweise so geschrieben, dass ein Modell sie verarbeitet. Halten Sie beides auseinander: „auf einen Agenten zugeschnitten“ ist eine Gewohnheit beim Schreiben, keine Eigenschaft des Protokolls.
 
-## MCP vs. A2A – von Agent zu Tool, von Agent zu Agent
+## MCP vs. A2A – von Agent zu Tool, von Agent zu Agent \{#mcp-vs-a2a--agent-to-tools-versus-agent-to-agent}
 
 MCP standardisiert eine Achse: vom Agenten zum Tool, vom Agenten zu den Daten. Über eine zweite Achse sagt es nichts – die von Agent zu Agent, also genau die Verständigung, die Sie ab dem Moment brauchten, in dem Sie [Multi-Agenten-Systeme](../multi-agent/index.md) gebaut haben. Wenn ein Agent an einen anderen übergibt, welches Protokoll trägt diese Übergabe? MCP ist dafür nicht gemacht; es verbindet einen Agenten mit seinen Tools, nicht mit einem Gegenüber.
 
 **[A2A](https://a2a-protocol.org) (Agent-to-Agent)** ist die Antwort, die sich gerade herausbildet – ein Standard, den Google vorgeschlagen hat und der inzwischen unter dem Dach der Linux Foundation liegt –, und A2A ist nicht der einzige Anwärter. Die Unterscheidung, die sich zu merken lohnt, ist sauber: **MCP führt vom Agenten zu Tools und Kontext, A2A von Agent zu Agent.** Diese Ecke des Fachs bewegt sich schnell, und bis Sie das hier lesen, wird die Liste der Anwärter eine andere sein; lernen Sie deshalb die *Unterscheidung* und nicht die Namen. Die beiden Achsen gibt es wirklich, und sie bleiben; jedes einzelne Protokoll auf einer von ihnen ist eine Momentaufnahme.
 
-## Jeder angebundene Server vergrößert die Angriffsfläche
+## Jeder angebundene Server vergrößert die Angriffsfläche \{#security--a-new-attack-surface}
 
 Wer einen Agenten an einen Server anbindet, den er nicht kontrolliert, bindet ihn an Eingaben an, die er nicht kontrolliert. Ein MCP-Server ist **eine neue Angriffsfläche**. Ein bösartiger oder übernommener Server kann eine **indirekte Prompt-Injection** in die Ressourcen und Tool-Results einschleusen, die er zurückgibt – Text, den Ihr Modell als Anweisung liest; und selbst die Tool-Beschreibung ist ein Einfallstor (**Tool-Poisoning**), weil eine Beschreibung ein Prompt ist. Er kann versuchen, Daten abzuziehen, an die der Agent herankommt. Er kann die ihm erteilten Berechtigungen überschreiten und mehr tun als die eine Aufgabe, für die Sie ihn angebunden haben. Dasselbe einheitliche Protokoll, das Server so leicht anschließbar macht, macht auch einen feindlichen Server leicht anschließbar.
 
@@ -69,7 +69,7 @@ Die Abwehr ist die Disziplin, die Sie schon haben – nur eine Schicht weiter au
 
 Damit ist die Lektion abgeschlossen – und mit ihr die Grundausstattung von Teil II. Angefangen hat Teil II mit einer einzigen agentischen Schleife in [Agentic RAG](../agentic-rag/index.md): Retrieval als Aktion, für die sich das Modell entscheidet. Dann kamen Tools zum Handeln hinzu ([Tool-Einsatz](../tool-use/index.md)), ein Weg, über viele Schritte zu planen und auch wirklich anzuhalten ([Planung und Schleifen](../planning-loops/index.md)), weitere Agenten, die sich die Arbeit teilen ([Multi-Agenten-Systeme](../multi-agent/index.md)), und Frameworks, um all das zu bündeln ([Orchestrierungs-Frameworks](../orchestration-frameworks/index.md)). Diese Lektion hat das letzte Stück geliefert: die Standardprotokolle, die Agenten im Produktivbetrieb an Tools und aneinander anbinden. Aus einer Schleife ist ein System geworden, das über einen gemeinsamen Stecker mit der Welt verbunden ist. Wie das alles auf laufenden Modellen von Claude, OpenAI und Gemini aussieht, zeigt [der Abschluss dieses Teils](../real-agents.md).
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - **Das M×N-Integrationsproblem** – M Anwendungen × N Tools ergeben M × N einzeln gebaute Anbindungen – ist der Grund, warum es Standards gibt. MCP macht daraus **N + M**: jedes Tool einmal als Server kapseln, den Client einmal je Anwendung umsetzen. Das Bild dazu ist **ein USB-C-Anschluss für KI-Anwendungen**.
 - **MCP** (Model Context Protocol) ist ein offener Client-Server-Standard – 2024 bei Anthropic entstanden, seit Dezember 2025 ein Projekt der Agentic AI Foundation unter dem Dach der Linux Foundation. **Der MCP-Server** kapselt ein Tool oder eine Datenquelle, **der MCP-Client** ist der Agent, der sie nutzt. Standardisiert werden drei Komponenten – **Tools**, **Ressourcen** und **Prompts** – über `stdio` (lokal) oder Streamable HTTP (entfernt).

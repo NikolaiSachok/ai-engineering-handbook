@@ -22,7 +22,7 @@ a **tool** — what a key is, why a write needs one, dry-run and confirm — is 
 the join between them: the tool lesson tells you a write needs a key, and this one tells you **where the
 key's value comes from when the caller is a graph that replays**.
 
-## The step is the unit of safety
+## The step is the unit of safety \{#the-step-is-the-unit-of-safety}
 
 Start from a mechanical fact and let it do the work. **Durable execution replays at a step boundary.** The
 engine's unit of progress is the step: it records that a step finished, and on resume it starts the first step
@@ -67,7 +67,7 @@ not a value the step invents. If you are hand-rolling the loop rather than adopt
 derivation — and it is the single most important thing your bespoke orchestrator has to get right, which is
 worth weighing against the pricing in Part 1.
 
-## When step identity moves
+## When step identity moves \{#when-step-identity-moves}
 
 The rule has a precondition hiding inside it, and it is where careful teams still get caught: a key derived
 from step identity is only as stable as the step identity. **A step whose identity shifts between runs defeats
@@ -98,7 +98,7 @@ generalises past both products: **do not derive identity from a value that means
 date. It is not an identifier, however unique it looks in your test data. (Dated to August 2026 — this is a
 detail that has already moved once.)
 
-## Fan-out inside one graph
+## Fan-out inside one graph \{#fan-out-inside-one-graph}
 
 Now the second mechanism, and it lives one level down from anything the multi-agent lessons cover. This is not
 several agents in a team and not several tools called in a batch. This is **one graph**, fanning out into
@@ -144,7 +144,7 @@ a sample from a catalogue. `operator.add` concatenates, which is what you want w
 items to a list. `add_messages` handles conversation history with its own id-aware semantics. Anything else is
 a function you write, and writing one is the normal case rather than an advanced move.
 
-## The merge you have to specify
+## The merge you have to specify \{#the-merge-you-have-to-specify}
 
 Declaring a reducer moves the decision from the framework to you, and that is where the *silent* failure
 actually lives.
@@ -180,7 +180,7 @@ by position — so a graph that interrupts conditionally or inside a loop can ha
 interrupt. Both are the same category of hazard as the merge: a default that is right for the common case and
 wrong for the case you happen to be in.
 
-## What the engines settled
+## What the engines settled \{#what-the-engines-settled}
 
 Part 1 argued that the durable execution engines make a checkpointer judgeable. Here are the four questions
 worth putting to any of them, with what the engines answer.
@@ -232,7 +232,7 @@ history in Step Functions at all** — if you want the history, you send it to C
 is the vendor stating the same thing this lesson has been arguing: the engine's history is a mechanism for
 running, and your record is your responsibility.
 
-## Proving it, rather than claiming it
+## Proving it, rather than claiming it \{#proving-it-rather-than-claiming-it}
 
 Everything on this page is a claim about behaviour under failure, and no amount of design discipline makes a
 claim true. The test that settles it is to inject the crash rather than wait for it: kill the worker at a step
@@ -242,7 +242,7 @@ That is a verification technique rather than a design one, it belongs to the AI 
 other [layered gates](/ai-sdlc/part-3-verification/layered-gates), and it is the natural next thing to reach
 for once the design on these two pages is in place.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **Replay happens at a step boundary, so the step is the unit of safety.** Derive the idempotency key from
   **run identity plus step identity** — Temporal's documented pattern combines the Workflow Run ID with the

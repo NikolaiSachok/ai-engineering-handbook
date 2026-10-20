@@ -27,7 +27,7 @@ Produkt gegossen – der Kreis, der sich dort schließt. Aus einem Trace aus dem
 für die Evaluierung, und das ist ein einziger Workflow; die Werkzeuge sind so gewachsen, dass sie beide Enden
 abdecken.
 
-## Werkzeuge für die Evaluierung
+## Werkzeuge für die Evaluierung \{#eval-tools}
 
 **[Ragas](https://ragas.io)** ist eine quelloffene Bibliothek für RAG-spezifische Metriken: Faithfulness,
 Response Relevancy, Context Precision, Context Recall – die meisten davon im Stil von LLM-as-a-judge
@@ -56,7 +56,7 @@ aus Teil I, „ein kleiner, sauberer Datensatz schlägt einen großen, verrausch
 nur weil die Metriken jetzt aus einer Bibliothek kommen. Ragas macht Ihnen Vorschläge für Beispiele, aber
 über die Qualität entscheidet nach wie vor die Prüfung durch einen Menschen.
 
-## Observability-Plattformen
+## Observability-Plattformen \{#observability-platforms}
 
 **[LangSmith](https://www.langchain.com/langsmith)** ist die Plattform für Tracing und Evaluierung im
 Ökosystem von [LangChain](https://www.langchain.com) – zuerst SaaS; die Möglichkeit, es selbst zu betreiben,
@@ -103,7 +103,7 @@ Werkzeugkategorien dieser Lektion in Bewegung. (Das Video ist auf Englisch.)
 
 :::
 
-## Guardrails-Werkzeuge
+## Guardrails-Werkzeuge \{#guardrails-tools}
 
 Guardrails-Produkte gibt es in zwei Bauformen. Die erste besteht aus Frameworks, die Eingabe und Ausgabe mit
 programmierbaren Prüfungen umgeben: **[Guardrails AI](https://www.guardrailsai.com)** – eine
@@ -130,7 +130,7 @@ Evaluierung gleich mit: die Red-Teaming-Funktionen von promptfoo und die eigenen
 Plattformen. Damit schließt sich der Kreis: Guardrails werden eingerichtet,
 angegriffen, gemessen und nachgebessert.
 
-## Wann Sie was einführen
+## Wann Sie was einführen \{#when-to-adopt-what}
 
 Die Reihenfolge unten ist eine Ermessensfrage – eine vernünftige Voreinstellung für ein typisches Produktteam,
 kein Industriestandard –, aber die Begründung für jeden einzelnen Schritt hält stand.
@@ -170,7 +170,7 @@ schon in Teil I: „Ohne Referenz
 bricht die ganze Evaluierung in sich zusammen“, und daran ändert ein Produktlogo obendrauf nichts. Werkzeuge
 verstärken Disziplin, sie ersetzen sie nicht.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Die Konzepte haben Bestand, die Werkzeuge sind Momentaufnahmen – beurteilen Sie ein Werkzeug danach, welches
   Konzept aus Teil I es umsetzt und welchen Platz es in Ihrer Schleife einnimmt.

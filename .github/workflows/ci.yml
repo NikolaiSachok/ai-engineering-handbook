@@ -149,6 +149,14 @@ jobs:
       # across three locales read as audit metadata. The grade is now carried by the wording
       # and recorded in editorial/evidence/; this keeps the tokens from returning and the
       # ledger's sources from silently leaving their pages.
+      # A section link is written once and shared by every locale, so it can only point at an
+      # explicit id: an auto-slug is a different string in every language and moves when the
+      # heading is reworded (#813). Check 3 above keeps the ids equal across locales; this keeps
+      # every heading carrying one.
+      - name: Heading id self-test
+        run: python3 scripts/heading-id-check.py --self-test
+      - name: Heading id gate
+        run: python3 scripts/heading-id-check.py
       - name: Evidence ledger self-test
         run: python3 scripts/evidence-ledger-check.py --self-test
       - name: Evidence ledger gate

@@ -17,7 +17,7 @@ IBM zeigt denselben Fall: wann ein einzelner Agent nicht mehr genügt und wie si
 
 :::
 
-## Gründe, einen Agenten aufzuteilen
+## Gründe, einen Agenten aufzuteilen \{#why-split-one-agent-into-several}
 
 Vier Gründe, und sie ziehen nicht alle gleich stark.
 
@@ -29,7 +29,7 @@ Vier Gründe, und sie ziehen nicht alle gleich stark.
 
 **Parallelität.** Mehrere Agenten bearbeiten voneinander unabhängige Teilaufgaben nebenläufig, statt sie nacheinander in einer einzigen Schleife abzuarbeiten.
 
-## Topologien – wie die Agenten miteinander verbunden sind
+## Topologien – wie die Agenten miteinander verbunden sind \{#topologies--how-agents-are-wired-together}
 
 Für die **Topologie** – also dafür, wie die Agenten miteinander verbunden sind – gibt es einige wenige Standardformen. Die meisten echten Systeme sind eine davon oder eine Mischung daraus.
 
@@ -41,13 +41,13 @@ Für die **Topologie** – also dafür, wie die Agenten miteinander verbunden si
 
 **Die Debatte zwischen Agenten.** Ein erzeugender Agent schlägt etwas vor, ein **Kritiker-Agent** hält dagegen – oder mehrere Agenten erarbeiten unabhängig voneinander Lösungen, und die beste wird ausgewählt. Unabhängige Blickwinkel machen das Ergebnis besser, und zwar aus demselben Grund, aus dem Gutachten verblindet werden: Ein Blick von außen findet, was eine einzelne Kette sich bereitwillig schönredet.
 
-## Nachrichten und Übergaben zwischen den Agenten
+## Nachrichten und Übergaben zwischen den Agenten \{#communication--messages-and-handoff}
 
 Agenten verständigen sich über Nachrichten. Der Vorgang, der tatsächlich Arbeit weitergibt, ist die **Übergabe an den nächsten Agenten**: Sie gibt die Kontrolle weiter *und mit ihr* den Kontext, auf den es ankommt.
 
 Die Entwurfsentscheidung, an der alles hängt, ist die Frage, *welcher Kontext* bei jeder Übergabe mitreist. Bekommt der empfangende Agent zu wenig, kann er die Aufgabe nicht erledigen. Bekommt er zu viel, wächst der Kontext, bis er das Kontextfenster sprengt, und der Worker verliert den Faden. Das ist die Multi-Agenten-Fassung des Satzes aus dem Tool-Einsatz, dass eine Tool-Definition ein Prompt ist – hier lautet er: *die Nachricht einer Übergabe ist ein Prompt*. Sie muss genau das tragen, was der nächste Agent zum Handeln braucht, und nichts darüber hinaus.
 
-## Auch der Orchestrator ist nur ein Agent
+## Auch der Orchestrator ist nur ein Agent \{#the-orchestrator-is-itself-an-agent}
 
 Es liegt nahe, den Orchestrator für eine neue Art von Komponente zu halten. Das ist er nicht. Ein **Orchestrator** ist ein Agent, der drei längst bekannte Aufgaben zugleich erledigt:
 
@@ -57,7 +57,7 @@ Es liegt nahe, den Orchestrator für eine neue Art von Komponente zu halten. Das
 
 Seine ‚Tools‘ sind die Subagenten. Das ist der ganze Trick: begrifflich nichts Neues, nur die früheren Bausteine, jetzt auf Agenten angewandt statt auf Funktionen.
 
-## Was es kostet und wann es sich nicht lohnt
+## Was es kostet und wann es sich nicht lohnt \{#the-cost-and-when-not-to}
 
 Alles bisher war der Fall *dafür*. Jetzt die ehrliche Bremse, denn Multi-Agenten-Systeme sind die Stelle, an der Teams zu viel Geld ausgeben.
 
@@ -71,13 +71,13 @@ Alles bisher war der Fall *dafür*. Jetzt die ehrliche Bremse, denn Multi-Agente
 
 Daraus die Regel. Ein einzelner, gut entworfener Agent gewinnt meistens. Greifen Sie erst dann zu mehreren, wenn es echte Spezialisierung zu nutzen gibt, wenn der Kontext in kein einziges Kontextfenster passt oder wenn sich Teilaufgaben wirklich parallel bearbeiten lassen – dieselbe Disziplin wie in Agentic RAG: die einfachste Stufe nehmen, die die Aufgabe löst.
 
-## Ein Beispiel, das Sie vermutlich schon verwendet haben
+## Ein Beispiel, das Sie vermutlich schon verwendet haben \{#a-concrete-example--youve-likely-already-used-one}
 
 Die Redaktions- und Autorenteams, die ein Handbuch wie dieses hervorbringen, *sind* Multi-Agenten-Systeme nach dem Muster Orchestrator-Worker. Ein führender Agent – wer die Redaktion leitet oder den Text federführend schreibt – zerlegt die Arbeit und weist sie unabhängigen Spezialisten zu: dem Sprachlektorat, der naiven Erstlektüre, der Faktenprüfung, der Übersetzung. Danach fügt sie deren Berichte zu einer fertigen Seite zusammen. Dass diese Spezialisten einander nicht zu sehen bekommen, ist Absicht, und zwar aus genau dem Grund, der oben für die Debatte galt: Unabhängige Blickwinkel finden mehr als eine einzelne Prüfung, die alles nacheinander liest.
 
 Deep-Research-Systeme haben dieselbe Gestalt. Ein führender Agent startet mehrere suchende Agenten, die parallel arbeiten; die Synthese fügt danach zusammen, was jeder von ihnen gefunden hat. Dieselbe Topologie, eine andere Aufgabe.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Ein Multi-Agenten-System ist die teurere Stufe, keine Belohnung – nehmen Sie die einfachste Stufe, die die Aufgabe löst, und seien Sie ebenso bereit zu sagen, *wann nicht*, wie zu sagen, *wann doch*.
 - Sie teilen einen Agenten aus vier Gründen auf: Spezialisierung (schmale Rolle, kleiner überschneidungsfreier Tool-Katalog), Isolation der Kontexte (jeder Agent sein eigenes Kontextfenster, der Orchestrator sieht nur Ergebnisse – der Grund, der wirklich skaliert), Modularität und Parallelität.

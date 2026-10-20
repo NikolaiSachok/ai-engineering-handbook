@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Zuerst eine Abgrenzung. Hier geht es um Observability als Disziplin des Produktivbetriebs: Bei diesem Aufkommen können Sie nicht jeden Trace behalten, also behalten Sie nur einen Teil; Sie können nicht alles speichern, was Sie erfassen, also entscheiden Sie, was sich gefahrlos aufbewahren lässt; Sie können nicht jedes Diagramm im Blick behalten, also setzen Sie Ziele und lösen nur dort einen Alert aus – eine Meldung, die jemanden holt –, wo die Folge am anderen Ende ankommt; einen Qualitätseinbruch müssen Sie einer Ursache zuordnen; und was das alles verbraucht, müssen Sie deckeln. Der Trace als zentraler Baustein wird hier nicht noch einmal hergeleitet, das steht in Teil 1. Um den Werkzeugkatalog geht es hier ebenfalls nicht, der steht in [Teil III](../../../part-3-production/tooling-ecosystem/index.md), und wie sich die Pipeline reparieren lässt, steht auf den Schichtseiten zu [Retrieval](../../retrieval/index.md) und [Generation](../../generation/index.md). Untersuchungsgegenstand ist hier das Observability-System selbst.
 
-## Sie können nicht jeden Trace behalten
+## Sie können nicht jeden Trace behalten \{#you-cannot-keep-every-trace}
 
 Bei produktivem Aufkommen ist es untragbar teuer, 100 % der Traces zu speichern: Der Speicher füllt sich so schnell, wie die Anfragen eintreffen, und das meiste, was dort landet, ist unauffällig. Also behalten Sie eine Teilmenge, die repräsentativ und zugleich interessant ist – im Folgenden die **behaltenen Traces** –, und werfen den Rest weg. Das ist **das Sampling**, und die ganze Frage lautet, welche Traces in diese Teilmenge kommen.
 
@@ -32,7 +32,7 @@ flowchart TB
     K --> S["Trace-Speicher"]
 ```
 
-## Was Sie am dringendsten protokollieren wollen, wollen Sie am wenigsten aufbewahren
+## Was Sie am dringendsten protokollieren wollen, wollen Sie am wenigsten aufbewahren \{#what-you-most-want-to-log-is-what-you-least-want-to-keep}
 
 Das Nützlichste, was Sie zur Fehlersuche in einer LLM-Anwendung aufzeichnen können – der vollständige Prompt, der an das Modell ging, und die vollständige Ausgabe, die zurückkam –, ist zugleich das Heikelste, was Sie besitzen. In diesen Nutzdaten steckt regelmäßig alles, was ein Mensch eingetippt hat, samt personenbezogener Angaben; gerade der Trace, der bei der Fehlersuche am meisten hilft, trägt deshalb auch das größte Datenschutzrisiko. Sie können nicht alles speichern, was Sie erfassen könnten – und dieser Widerstreit ist kein Beiwerk des Entwurfs, sondern die Entwurfsentscheidung selbst.
 
@@ -42,7 +42,7 @@ Die Schutzmaßnahmen sind gestaffelt und greifen ineinander. Erstens: personenbe
 
 Bei der Maskierung greift dieselbe Trennlinie, die schon die Guardrails-Schicht gezogen hat, und sie ist eine echte Abwägung, keine Voreinstellung. Die irreversible Maskierung – entfernen, ersetzen, maskieren, einen Hashwert bilden – maximiert den Datenschutz und zerstört im selben Zug die Untersuchbarkeit: Was tatsächlich gefragt wurde, ist danach nicht mehr zu sehen. Die reversible Maskierung – verschlüsseln – hält einen Weg zurück offen, für die berechtigte Fehlersuche; ein wiederherstellbarer Wert ist aber das größere Risiko, und die Daten sind damit pseudonymisiert und nicht anonymisiert, denn der Schlüssel ist jetzt ein gespeichertes Geheimnis, das sich anzugreifen lohnt. Sie entscheiden pro Feld und pro Aufbewahrungsstufe: Für die Telefonnummer wird ein Hashwert gebildet, das Original ist weg; der Fragetext wird für ein kurzes Zeitfenster verschlüsselt und danach verworfen.
 
-## Was auf das Dashboard gehört – und wann Sie jemanden aus dem Bett holen
+## Was auf das Dashboard gehört – und wann Sie jemanden aus dem Bett holen \{#deciding-what-to-watch-and-when-to-page-someone}
 
 Auf dem Dashboard eines LLM-Systems steht alles, was auch ein gewöhnlicher Dienst zeigt – die **Golden Signals** der Google-SRE-Schule, also Latenz, Traffic, Fehler und Sättigung –, und dazu eine Achse, an die diese vier nie gedacht haben. Auf der gewöhnlichen Achse wollen Sie die Latenz als Verteilung sehen, p50, p95 und p99, dazu **TTFT**, die Zeit bis zum ersten Token, denn das ist es, was bei einer gestreamten Antwort tatsächlich ankommt; außerdem Kosten und Tokenverbrauch pro Anfrage, den Durchsatz und die Fehlerquote. Die LLM-eigene Achse ist die Qualität, und sie gehört von Anfang an als vollwertiges Signal dazu: Scores aus der Online-Evaluierung auf den behaltenen Traces (wie viele Antworten die Faithfulness-Prüfung bestehen – ob die Antwort also durch die abgerufenen Quellen belegt ist –, dazu der **Answer-Relevance**-Wert, wie gut die Antwort die gestellte Frage trifft), wie oft der Daumen nach unten geht, der Anteil verweigerter Antworten, wie oft die Guardrails eingreifen. Ein Dashboard, das Latenz und Kosten zeigt und die Qualität nicht, ist blind für genau das Fehlerbild, das nur diese Art von System hat.
 
@@ -50,7 +50,7 @@ Erst dieses Qualitätssignal erlaubt es, den Zuverlässigkeitsrahmen der SRE-Sch
 
 Was einen Alert auslöst, ergibt sich aus dem Fehlerbudget und nicht aus den rohen Metriken. Gemeldet wird nur, was am anderen Ende ankommt: die **Burn Rate** des Fehlerbudgets – wie schnell Sie es verbrauchen, sodass ein schnelles Abbrennen sofort jemanden aus dem Bett holt, während ein langsames Abdriften bloß warnt –, eine p95-Latenz über der Vorgabe, ein Kostenausschlag, ein Qualitätseinbruch, eine Häufung von Eingriffen der Guardrails. Die eigentliche Disziplin liegt hier in der Zurückhaltung, denn zu viele Alerts sind ein eigenes Fehlerbild. Hängen Sie an jede Metrik einen Alert, dann kommt die echte **Regression** (eine durch eine Änderung verursachte Verschlechterung), wenn sie denn kommt, in einem Strom von Alerts an, den längst niemand mehr liest: Wer zu viel alarmiert, wird nicht mehr gehört – und so bleibt ein wirklicher Vorfall eine Stunde lang unbemerkt. **Alerts auf die Burn Rate** melden bewusst die Wirkung und nicht die Ursache, und genau darin liegt hier ihre Stärke: Ausgelöst werden sie von der sichtbaren Folge und nicht von jedem Zucken jeder darunterliegenden Zahl, und das hält das Alerting glaubwürdig.
 
-## Einen Qualitätseinbruch auf seine Ursache zurückführen
+## Einen Qualitätseinbruch auf seine Ursache zurückführen \{#tracing-a-quality-drop-back-to-its-cause}
 
 Sackt eine Qualitätsmetrik ab, folgen zwei Fragen in dieser Reihenfolge: Ist der Einbruch echt, und wodurch ist er entstanden? Die erste ist eine Frage der Erkennung. Die Online-Evaluierung auf den behaltenen Traces liefert zusammen mit dem gesammelten Nutzerfeedback eine Zeitreihe der Qualitätsmetrik; ein statistisch belastbarer Einbruch in dieser Reihe – nicht ein einzelner schlechter Nachmittag – ist eine Regression, und für die Reihen zu Latenz und Kosten gilt dasselbe. Es geht darum, einen echten Trend vom Rauschen zu trennen, bevor jemand geweckt wird.
 
@@ -75,7 +75,7 @@ flowchart TB
     F --> E["Zurück in die Evaluierung"]
 ```
 
-## Eine Obergrenze dafür, was eine Anfrage verbrauchen darf
+## Eine Obergrenze dafür, was eine Anfrage verbrauchen darf \{#putting-a-cap-on-what-a-request-spends}
 
 Bei den Kosten fängt alles mit der Zählung der Token pro Anfrage an: Die Rechnung besteht aus Eingabe-Token plus Ausgabe-Token, jeweils nach Modell bepreist – und was Sie nicht gezählt haben, können Sie nicht steuern. Die GenAI-Konventionen von OpenTelemetry liefern genau die Instrumente dafür. Die Attribute heißen `gen_ai.usage.input_tokens` und `gen_ai.usage.output_tokens` für die Aufteilung der Token, `gen_ai.request.model` und `gen_ai.response.model` für das angeforderte und das tatsächlich verwendete Modell, dazu `gen_ai.operation.name` und `gen_ai.provider.name`; die Metriken heißen `gen_ai.client.token.usage`, in der Einheit `{token}`, und `gen_ai.client.operation.duration`, in Sekunden. Wie beim Nachrichteninhalt haben auch diese in Semantic Conventions v1.41.x (2026) den Status *Development*, und Sie schalten sie über `OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental` frei – stabil genug, um darauf zu bauen, und noch nicht eingefroren.
 
@@ -85,7 +85,7 @@ Auf der Zeitachse gilt dasselbe. Sie setzen Ziele für p50 und p95 und zerlegen 
 
 Aus einem Diagramm wird erst dann eine Steuerung, wenn die Vorgabe zwischen einer weichen und einer harten Obergrenze unterscheidet (**Soft- und Hard-Cap**). Die weiche Obergrenze warnt – sie löst einen Alert aus, sie färbt ein Dashboard rot – und lässt die Anfrage durch. Die harte Obergrenze stoppt tatsächlich: Sie weist die Anfrage ab, stuft auf ein günstigeres Modell herunter oder kürzt den Kontext, bis er passt. Damit ist sie eine Absicherung zur Laufzeit und kein Bericht im Nachhinein, und sie hat dieselbe Gestalt wie die Schritt- und Token-Budgets, die für einen Agenten in Teil II gelten: eine Grenze, die das System sich selbst auferlegt, während es arbeitet, und nicht eine, von der Sie am nächsten Morgen lesen.
 
-## Wo das schiefgeht
+## Wo das schiefgeht \{#where-this-goes-wrong}
 
 Fünf Fehlerbilder lohnen es, klar benannt zu werden.
 
@@ -95,7 +95,7 @@ Fünf Fehlerbilder lohnen es, klar benannt zu werden.
 - Für jede Metrik einen Alert einzurichten endet damit, dass niemand mehr hinsieht, und dann scrollt die echte Regression ungelesen vorbei. Mehr Alerts schaffen keine zusätzliche Sicherheit, sobald sie niemand mehr liest.
 - Ein Qualitäts-SLO ohne Online-Evaluierung dahinter ist Verfügbarkeitstheater: eine Wand grüner Dashboards über einem Dienst, der selbstbewusst und nachweislich falsch liegt. Ein Ziel ist nur so viel wert wie die Messung, auf der es beruht.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Im großen Maßstab führt am Sampling kein Weg vorbei, und die Strategie entscheidet, was Sie behalten. Head-based Sampling ist billig und zustandslos, entscheidet aber, bevor der Ausgang feststeht, und kann Fehlschläge deshalb nicht bevorzugt behalten. Tail-based Sampling puffert den vollständigen Trace und entscheidet nach dem Ausgang – um den Preis eines Zustands im Arbeitsspeicher und einer Lastverteilung nach Trace-ID (`tail_sampling` in der Collector-Contrib-Distribution). Priority-Sampling behält 100 % der unverzichtbaren Traces und nimmt vom Rest nur eine Stichprobe.
 - Für ein LLM-System gehört zu „interessant“ auch die Qualität und nicht nur Fehler und Latenz – hinter einer 200 kann eine Halluzination stecken –, also hängt die Entscheidung über das Behalten an einem Eval-Score, einem Daumen nach unten, einem Eingriff der Guardrails oder einer verweigerten Antwort.

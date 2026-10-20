@@ -17,7 +17,7 @@ vyhľadať, posúdiť dostatočnosť —, si v [agentic RAG](../../part-2-agents
 slučka vie graf zavolať ako ďalší nástroj. Rozhodnutia z prvej časti lekcie predpokladáme po celý čas
 a neopakujeme ich argumentáciu.
 
-## Ako sa graf naozaj stavia
+## Ako sa graf naozaj stavia \{#how-a-graph-actually-gets-built}
 
 Ako referenčná implementácia poslúži GraphRAG od Microsoftu — je to tá, o ktorej čitatelia počuli, a má
 dobre zdokumentované jednotlivé fázy. Jeho [indexovanie](https://microsoft.github.io/graphrag/index/default_dataflow/) prebieha v šiestich fázach:
@@ -65,7 +65,7 @@ vôbec vznikol: tieto dva prechody odkladá na čas dopytu a uvádza náklady na
 s vektorovým RAG a na úrovni 0,1% nákladov plného GraphRAG“. Ak globálnych otázok prichádza málo, je výhodnejšie
 presunúť tú prácu do času dopytu — a je to návrhová voľba, ktorú máš k dispozícii, nie pevná vlastnosť grafov.
 
-## Štyri metódy dopytovania v GraphRAG a ktorej otázke ktorá slúži
+## Štyri metódy dopytovania v GraphRAG a ktorej otázke ktorá slúži \{#graphrags-four-query-methods-and-which-question-each-serves}
 
 Graf nie je jeden režim vyhľadávania. GraphRAG ponúka nad tým istým indexom štyri odlišné
 [metódy dopytovania](https://microsoft.github.io/graphrag/query/overview/) a podstatnú časť inžinierskej práce
@@ -121,7 +121,7 @@ trojice. Halucinovaná hrana je vecne horšia než halucinovaná veta vo vygener
 uložená*: dostane sa do indexu, vo fáze 5 sa zhrnie do správy o komunite a odvtedy sa na ňu ako na štruktúru
 odvoláva každý dopyt, ktorý sa toho okolia dotkne.
 
-## Hodnotiť graf nie je to isté ako hodnotiť vyhľadávanie
+## Hodnotiť graf nie je to isté ako hodnotiť vyhľadávanie \{#evaluating-a-graph-is-not-evaluating-retrieval}
 
 Metriky vyhľadávania, ktoré už máš, sa sem neprenášajú — a predpoklad, že áno, je presne to, čím zlý graf
 prejde.
@@ -191,7 +191,7 @@ zobrazujú cez medzivrstvu“, a to porovnávaním vzorov nad orientovaným ozna
 na relačné dáta je reálna nasadzovacia podoba a znamená, že prevzatie dopytovacieho jazyka si nevyžaduje
 migráciu úložiska.
 
-### Schéma, ktorú by väčšina tímov mala postaviť namiesto toho
+### Schéma, ktorú by väčšina tímov mala postaviť namiesto toho \{#the-schema-most-teams-should-build-instead}
 
 Premietni tie štyri na to, čo pipeline s LLM naozaj potrebuje, a vynorí sa rozumné východisko: **JSON Schema**,
 ktorá pomenúva tvoje triedy a povolené typy vzťahov, a k nej **validátor**, ktorý odmietne, čo jej odporuje.
@@ -200,7 +200,7 @@ deterministickú bránu. Obe sa vyplatia okamžite a s nástrojmi, ktoré každ�
 
 Nedostaneš odvodzovanie, interoperabilitu so štandardmi ani formálne overiteľný význam. [Prvá časť lekcie](./index.md) ich uvádza ako podmienky prechodu k formálnemu stacku a každá z nich je *dôvod*, nie preferencia. Bez nich je formálny stack veľkým trvalým záväzkom kúpeným za úžitok, ktorý už dodá validátor.
 
-## Čo text-to-SQL kazí a čo sémantická vrstva odstraňuje
+## Čo text-to-SQL kazí a čo sémantická vrstva odstraňuje \{#what-text-to-sql-gets-wrong-and-what-a-semantic-layer-removes}
 
 Prvá časť lekcie povedala hlavnú vec o vrstve metrík: nad surovou schémou musí model dopyt **odvodiť**, nad
 sémantickou vrstvou **vyberá** zadefinovanú metriku. Ťažkosť toho odvodzovania neleží tam, kde ju ľudia čakajú.
@@ -244,7 +244,7 @@ nedokáže obísť, ním je.
 vystavuje **Meta API**, aby „AI agenti zistili, na čo sa dá dopytovať“. Je to štruktúrovaná obdoba definície
 nástroja a odstraňuje celú triedu chýb, pri ktorej si model vymyslí metriku, čo znie rozumne a neexistuje.
 
-## Smerovanie: ako štruktúrované cesty idú do produkcie
+## Smerovanie: ako štruktúrované cesty idú do produkcie \{#routing-how-the-structured-paths-ship-in-production}
 
 Nič na tejto stránke nenahrádza pipeline postavenú v lekciách Ingestion, Retrieval a Generation. V produkcii
 štruktúrované cesty stoja *vedľa* neho a niečo rozhoduje, ktorou z nich otázka pôjde:
@@ -260,7 +260,7 @@ sleduj ako samostatný režim zlyhania v
 [prehĺbení o observability](../cross-cutting/observability/deep-dive.md) — keď nastane, nebude vyzerať ani ako
 zlyhanie vyhľadávania, ani ako zlyhanie generovania.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Stavba GraphRAG má šesť fáz a dve z nich sú prechodmi LLM cez všetko — extrakcia cez každý chunk
   a sumarizácia cez každú komunitu —, čím je celý príbeh nákladov povedaný jednou vetou. Extrakcia tvrdení,

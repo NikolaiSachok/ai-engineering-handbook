@@ -24,7 +24,7 @@ Exactly the shift this lesson is about: how retrieval grows from simple search i
 
 :::
 
-## Why — where static RAG breaks
+## Why — where static RAG breaks \{#why--where-static-rag-breaks}
 
 Agency isn't added just to be fashionable. A fixed `retrieve → generate` genuinely fails on whole classes of queries.
 
@@ -48,7 +48,7 @@ Agency isn't added just to be fashionable. A fixed `retrieve → generate` genui
 The common denominator: a real query needs a **variable number of steps and a choice of path**, and the
 pipeline offers a fixed one.
 
-## The mechanism: the agent loop
+## The mechanism: the agent loop \{#the-mechanism-the-agent-loop}
 
 At the core is a simple loop. It spins until the model decides it's ready to answer:
 
@@ -78,7 +78,7 @@ The same loop from another angle, walking through the agent's roles: planning, t
 
 :::
 
-## What agency concretely adds
+## What agency concretely adds \{#what-agency-concretely-adds}
 
 Let's unpack "the model is in control" into tangible abilities.
 
@@ -91,7 +91,7 @@ Let's unpack "the model is in control" into tangible abilities.
 | Reaction to a bad result | Passes it through | Sees it's off and goes again |
 | Number of steps | Fixed | Variable, the model decides |
 
-## A spectrum, not a switch
+## A spectrum, not a switch \{#a-spectrum-not-a-switch}
 
 Don't think "static OR agentic." Between them is a smooth spectrum, graded by **how much freedom you hand
 the model**.
@@ -107,7 +107,7 @@ One practical rule to lock in now: take the simplest level that solves the task.
 agentic loop isn't a prize, it's a cost. Often a router on top of good static RAG beats a "full agent" on
 cost, latency, and stability.
 
-## The price — and the bridge back to Part I
+## The price — and the bridge back to Part I \{#the-price--and-the-bridge-back-to-part-i}
 
 Hand control to the model, and you pay for exactly that.
 
@@ -124,7 +124,7 @@ without a record of the whole chain of steps and calls, you simply can't debug t
 right, did the agent loop forever. Part I isn't repealed: it becomes the foundation on top of which the
 agent makes its decisions.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Static RAG = a fixed `retrieve → generate` pipeline, the code in control. Agentic RAG = retrieval
   becomes an action in a loop, the model in control.

@@ -18,7 +18,7 @@ second is that the pipeline is a worked example of the thing the [AI SDLC](/ai-s
 under the same constraints it describes. If you are reading this course to get better at production AI, the
 machinery below is as much a case study as any scenario.
 
-## Five roles, and what each one cannot see
+## Five roles, and what each one cannot see \{#five-roles-and-what-each-one-cannot-see}
 
 | Role | Writes | Deliberately cannot see |
 |---|---|---|
@@ -32,7 +32,7 @@ The blindness is the whole mechanism. A candidate that has seen the rubric write
 answer collapses into a strawman — which would make the comparison worthless, because the interesting thing
 about the common answer is that it is *genuinely* the answer most people give.
 
-## The rubric is written first, on purpose
+## The rubric is written first, on purpose \{#the-rubric-is-written-first-on-purpose}
 
 The interviewer commits to a standard before any answer exists. This is not ceremony. A rubric written after
 the answers is a rationalisation of them: whatever the strongest attempt happened to do becomes, in
@@ -40,7 +40,7 @@ retrospect, what a strong answer was always supposed to do. Pre-registering it m
 something the rubric never anticipated — and when that happens, the assessor is asked to say so, because a
 rubric that only ever tests what its author already knew to ask is a rubric that stops improving.
 
-## What the arrangement buys, and what it cannot
+## What the arrangement buys, and what it cannot \{#what-the-arrangement-buys-and-what-it-cannot}
 
 It buys **independence**. Three answers to one question, produced without sight of each other, differ in ways
 that are informative rather than decorative. Where they contradict each other, that contradiction is a
@@ -51,7 +51,7 @@ reconstruction of how an engineer at that level reasons — good enough for the 
 report from somebody who lived it. Where a scenario needs a real production failure, it links to a lesson that
 has one.
 
-## Where it has already been wrong
+## Where it has already been wrong \{#where-it-has-already-been-wrong}
 
 Three failures are worth recording, because each was invisible until something specific was checked.
 
@@ -97,7 +97,7 @@ seam, which is the honest outcome: the reasoning underneath was still independen
 phrasing was borrowed, and the brief now has to say so explicitly. Briefs had also been growing — 42 words, then
 80, then 87, then 110 — and a longer brief is more material to recite.
 
-## Two ways of casting three attempts
+## Two ways of casting three attempts \{#two-ways-of-casting-three-attempts}
 
 The three attempts are not always cast the same way, and which form a page uses is decided by the
 casting rather than by preference.
@@ -121,7 +121,7 @@ anyway. The prompt contained work that made refusing it require exactly the move
 forbids, so the position was defensible on paper and uninhabitable in practice. A pole now gets checked
 against the disqualifying list before anyone is cast on it.
 
-## The gates, and the one that had to be inverted
+## The gates, and the one that had to be inverted \{#the-gates-and-the-one-that-had-to-be-inverted}
 
 A scenario passes through the same layered checks as the rest of the handbook — an editorial team, a
 deterministic secret-and-path scan, an adversarial review for anything that should not be public, and a cold
@@ -138,7 +138,7 @@ The verdicts, by contrast, get the full pass. They are the page's own voice, and
 the three misstated the attempt they judged in ways a reader could falsify by scrolling up. Prose *about*
 someone else's text turns out to be where attention is thinnest.
 
-## What this exemplifies
+## What this exemplifies \{#what-this-exemplifies}
 
 - [The verification bottleneck](/ai-sdlc/part-1-foundation/verification-bottleneck) — why the machinery is
   weighted toward checking rather than producing. Generating three attempts is the cheap part.
@@ -150,7 +150,7 @@ someone else's text turns out to be where attention is thinnest.
 - [The escape ledger](/ai-sdlc/part-3-verification/escape-ledger) — the three failures above are recorded
   rather than quietly fixed, and each one changed how the next scenario is made.
 
-## Honest accounting
+## Honest accounting \{#honest-accounting}
 
 This is heavier than writing one good answer would be, by a wide margin, and most of the cost is in the
 checking rather than the writing. That is the trade the AI SDLC course argues for, and this course is where it

@@ -29,7 +29,7 @@ later, when a correction arrives. The record has to be produceable for **fifteen
 engineer who has ever debugged the scheduler currently running all of this leaves in **six weeks**. Every
 section below is a decision that scenario forces.
 
-## A checkpointer is an ownership claim
+## A checkpointer is an ownership claim \{#a-checkpointer-is-an-ownership-claim}
 
 Read a framework's persistence documentation as a claim rather than a feature list and it changes shape. The
 checkpointer does not offer to remember things for you. It offers to be **the** place run state lives — that
@@ -68,7 +68,7 @@ So the sentence to carry out of this section is short. The checkpointer is **ope
 a run can continue. It is not an audit record, it is not a system of record, and treating it as one is a
 design decision you are making whether or not you notice you made it.
 
-## Two writers, one truth
+## Two writers, one truth \{#two-writers-one-truth}
 
 The resolution is not to distrust the framework. It is to decide, once and explicitly, which store is
 **authoritative** and which is **derived** — and then to hold that line in the code rather than in a document
@@ -121,7 +121,7 @@ not a compromise position or a half-adoption. It is the arrangement that gets yo
 semantics *and* an audit trail that outlives the framework, and it is available whichever way the adoption
 question goes. Deciding it separately is the point.
 
-## Suspending an open run is not reopening a closed one
+## Suspending an open run is not reopening a closed one \{#suspending-an-open-run-is-not-reopening-a-closed-one}
 
 There is a second confusion sitting underneath the first, and it is worth pulling apart before you shop for
 machinery, because the two problems it merges have different answers.
@@ -150,7 +150,7 @@ The practical test is one question: **is something waiting?** If yes, you have a
 the mechanism. If no, you have a record and a new reason to act, and what you need is a new run with a link
 back — which, incidentally, needs no checkpointer at all.
 
-## The category outside AI
+## The category outside AI \{#the-category-outside-ai}
 
 Everything above is easier to argue once you know that none of it is new, and that the field outside AI
 settled it a long time ago.
@@ -174,7 +174,7 @@ happens on a retry that already succeeded? How long is history kept, and by whom
 of my code to replay it? An LLM framework is allowed to answer these differently from Temporal. It is not
 allowed to leave them unanswered — and until you know the category has settled answers, you do not know to ask.
 
-## Pricing the thing you build instead
+## Pricing the thing you build instead \{#pricing-the-thing-you-build-instead}
 
 The [orchestration frameworks lesson](../orchestration-frameworks/index.md) prices adoption honestly:
 abstraction cost, ecosystem churn, portability versus lock-in. What it never prices is the alternative it
@@ -214,7 +214,7 @@ curve — but a curve a new hire can climb without booking time with anyone. In 
 departure tips it, and it should. Change one fact — four engineers already fluent in the loop, no framework
 experience on the team — and it tips the other way, on exactly the same reasoning.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - A **checkpointer is an ownership claim on run state**, not a neutral feature — "resume from the last
   successful step" only works if the framework is the thing that knows what completed. Grant that claim in an

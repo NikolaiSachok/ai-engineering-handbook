@@ -37,7 +37,7 @@ serving it at scale is a discipline of its own.
 
 :::
 
-## The platform's product — the perimeter
+## The platform's product — the perimeter \{#the-platforms-product--the-perimeter}
 
 What does the platform add over calling the vendor directly? The model itself is often the same weights you
 would reach over the vendor's API. What you are buying is the model behind your existing cloud's perimeter:
@@ -55,7 +55,7 @@ would reach over the vendor's API. What you are buying is the model behind your 
 None of that changes what the model says. All of it changes whether your enterprise is allowed to say
 things to the model.
 
-## The three platforms — and a lesson about names
+## The three platforms — and a lesson about names \{#the-three-platforms--and-a-lesson-about-names}
 
 As of mid-2026 the big three look like this. **[Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)** is Microsoft's offering, historically the way
 to consume OpenAI models as a first-party Azure service; the platform around it was renamed from Azure AI
@@ -74,7 +74,7 @@ this lesson is organised by those categories, and that is deliberate: learn the 
 product name — including every name on this page — as a snapshot. The [MCP lesson](../../part-2-agents/mcp/index.md)
 made the same move for agent protocols, and it holds here just as well.
 
-## Model catalogues — who serves whose models
+## Model catalogues — who serves whose models \{#model-catalogues--who-serves-whose-models}
 
 The **model catalogue** is the first category: which models can this platform serve to you as managed
 endpoints?
@@ -101,7 +101,7 @@ three platforms. As the coupling between model and cloud weakens, the differenti
 residency guarantees, the managed RAG tier, capacity economics. That is exactly where the rest of this
 lesson goes.
 
-## Privacy and data residency
+## Privacy and data residency \{#privacy-and-data-residency}
 
 All three platforms make the same core commitment for their enterprise AI offerings: your prompts and
 outputs are not used to train foundation models, and they are processed within the service boundary. The
@@ -130,7 +130,7 @@ The third leg deserves one concrete sentence. All three platforms support privat
 never traverse the public internet: Azure Private Link, AWS PrivateLink with VPC endpoints, and Google
 Private Service Connect.
 
-## Managed RAG and platform guardrails
+## Managed RAG and platform guardrails \{#managed-rag-and-platform-guardrails}
 
 Each platform also sells a **managed RAG** tier — Part I's pipeline (ingestion → chunking → embedding →
 vector store → retrieval, sometimes reranking) packaged as a product. On AWS that is the classic Bedrock
@@ -157,7 +157,7 @@ Armor. All of these implement the concepts from the
 [guardrails lesson](../../part-1-rag/cross-cutting/guardrails/index.md) as managed services — which sets up the
 make-or-buy question that the [tooling ecosystem](../tooling-ecosystem/index.md) lesson takes on directly.
 
-## Throughput and pricing models
+## Throughput and pricing models \{#throughput-and-pricing-models}
 
 You will not find a single price in this section, because absolute prices rot faster than platform names.
 The pricing *models*, though, are stable, and every platform offers the same two consumption modes.
@@ -180,7 +180,7 @@ design must handle 429s no matter which platform serves it. That is the retry-an
 [serving](../serving/index.md), and it is the opening problem of [LLMOps](../llmops/index.md), where routing and fallbacks
 pick up what a single endpoint can't guarantee.
 
-## How to choose
+## How to choose \{#how-to-choose}
 
 Start with how the decision actually gets made. In practice, the platform is usually chosen by
 existing cloud commitment — where your data, IAM, and enterprise agreement already live — and not by model
@@ -196,7 +196,7 @@ OpenAI-compatible clients and a gateway or router layer — the pattern [LLMOps]
 endpoints are increasingly interchangeable, while the platform SDKs and managed tiers are the sticky parts.
 Lock-in lives in the batteries, not in the endpoint.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Three ways to consume a model: self-host on your GPUs, call the model vendor's API directly, or use your
   cloud's managed AI platform — a control-versus-convenience axis.

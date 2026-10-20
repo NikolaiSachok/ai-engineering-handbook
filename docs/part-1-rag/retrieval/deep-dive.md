@@ -10,7 +10,7 @@ sidebar_position: 2
 
 One boundary first. Everything here is *static* retrieval: one pass, decided up front, no loop. The moment retrieval becomes something the model runs again — reformulate, re-retrieve, judge whether it has enough, stop — you are in the iterative version, and that territory (Self-RAG, CRAG, sufficient-context, the learned per-query route) belongs to the [Agentic RAG deep dive](../../part-2-agents/agentic-rag/deep-dive.md). This page makes the single pass as good as it gets.
 
-## HyDE: what it moves, and when it backfires
+## HyDE: what it moves, and when it backfires \{#hyde-what-it-moves-and-when-it-backfires}
 
 Part 1 introduced **HyDE** as "sketch a hypothetical answer, embed that, search with it." The mechanism is more deliberate than the one-liner suggests (Gao et al., 2022). An instruction-following LLM writes a hypothetical answer document to the query, zero-shot. An unsupervised contrastive encoder — Contriever in the original work — embeds *that document*, and you search the corpus with its vector, not the query's. The fake document is often wrong on specifics; that's fine. The dense encoder is a lossy bottleneck that keeps the relevance pattern and discards the invented details, grounding the search back to real neighbours.
 
@@ -25,7 +25,7 @@ That same framing tells you when to leave it alone.
 
 So the verdict is narrow: reach for HyDE when you have no in-domain labels and queries are short and underspecified. Skip it when you're latency-bound, when the retriever is already tuned, or for exact-match lookups.
 
-## Why two retrievers' scores can't just be added
+## Why two retrievers' scores can't just be added \{#why-two-retrievers-scores-cant-just-be-added}
 
 Hybrid search was Part 1's single biggest step up, and it hid a real problem inside the word "merge." Dense similarity is bounded — cosine lives in roughly [-1, 1], often squeezed to [0, 1]. BM25 is unbounded and its scale shifts with the corpus and the query. The two live on incompatible axes, so you cannot add them. Everything about fusion is a way around that.
 
@@ -52,7 +52,7 @@ flowchart TB
 
 The tradeoff is the mirror image of score fusion's. RRF is simple and robust but blind to magnitude — a match that beats the field by a mile is filed as "rank 1" and nothing more. Score fusion keeps that magnitude but demands careful, per-query, distribution-aware normalisation to be trustworthy. So make RRF the default, and only move to score fusion once you've actually measured that magnitude carries signal for your data *and* you can normalise it reliably per query. Reaching for score fusion first is how you inherit its fragility without its payoff.
 
-## Which reranker, and when
+## Which reranker, and when \{#which-reranker-and-when}
 
 Stage two reranks the top-K, and Part 1's cross-encoder joint-encodes the (query, passage) pair to do it. At mastery level the choice is which kind of reranker, and the split is a latency-quality curve.
 
@@ -68,7 +68,7 @@ Its strengths are the ones a trained cross-encoder can't offer: zero-shot, no tr
 
 That fixes when each earns its place. The cross-encoder is the latency-bound, high-QPS default. The LLM reranker is for when quality outranks latency, volume is low, or the ranking genuinely needs instruction-driven relevance. A common arrangement keeps both: a cross-encoder does the first-pass rerank of the whole top-K, and the LLM reranks only the top handful that survives — you buy the instruction-following on a few candidates instead of paying for it across the batch.
 
-## Where late interaction sits between the two encoders
+## Where late interaction sits between the two encoders \{#where-late-interaction-sits-between-the-two-encoders}
 
 Three retrieval paradigms sit on one axis, and naming them together makes the third one legible. A **bi-encoder** — Part 1's dense retriever — encodes each document into a single vector offline; at query time the interaction is one dot product. Cheap, precomputable, and coarse, because a whole passage is squeezed into one point. A cross-encoder sits at the far end: it jointly encodes query and document, so nothing precomputes, and it's the most accurate and the most expensive — which is why it only ever reranks K candidates, never searches the corpus.
 
@@ -76,7 +76,7 @@ Three retrieval paradigms sit on one axis, and naming them together makes the th
 
 What you get is most of the cross-encoder's token-level precision — strong on exact and entity matching, and on out-of-domain generalisation — while keeping the document side precomputable, so it can search a full corpus rather than only rerank K. What you pay is storage, and the bill is steep: a vector *per token* instead of per chunk means hundreds of vectors per passage. ColBERTv2 (2021) adds residual compression to shrink that footprint, and the index isn't a plain ANN over one vector per document — it needs a specialised engine. That storage and infrastructure cost, not any weakness in quality, is why late interaction is a powerful middle ground rather than the default.
 
-## The chunk problem, attacked from both ends
+## The chunk problem, attacked from both ends \{#the-chunk-problem-attacked-from-both-ends}
 
 Ingestion left a tension unresolved. A small chunk embeds tightly and retrieves precisely, but hands the generator too little to work with. A big chunk carries the context the generator wants, but its embedding is blurry and unfocused, so it retrieves worse. The unit that searches well and the unit that generates well are not the same unit — and you can attack that gap at either end of the pipeline.
 
@@ -90,7 +90,7 @@ Ingestion left a tension unresolved. A small chunk embeds tightly and retrieves 
 
 Read that last row correctly: contextual retrieval is not a replacement for hybrid search and reranking, it's a multiplier that stacks with them. And set the two techniques side by side, because they're the same medicine at different sites — parent-document enriches what you *return*, decided at query time; contextual retrieval enriches what you *index*, decided at ingest time. Same disease, two treatment points, and nothing stops you from applying both.
 
-## Getting into the right candidate set
+## Getting into the right candidate set \{#getting-into-the-right-candidate-set}
 
 Every technique above assumes the right chunk is somewhere in the candidate set. Routing and filtering decide whether it ever gets there — and that makes them the top of the funnel, where the cheapest mistakes are also the most unrecoverable.
 
@@ -113,7 +113,7 @@ flowchart TB
     AN --> Cand["Candidates (top-K)"]
 ```
 
-## Which metric watches which stage
+## Which metric watches which stage \{#which-metric-watches-which-stage}
 
 Part 1 promised the metrics get formalized in the Evaluation layer, and the full treatment does live in [Evaluation](../cross-cutting/evaluation/index.md). What a retrieval engineer needs at hand is which metric watches which stage. Recall@K — did the needed chunk land in the top-K — is the first stage's metric, the direct measure of the retrieval failure. Precision@K is the fraction of the top-K that's relevant. Two more grade the *ordering* the reranker produces.
 
@@ -123,7 +123,7 @@ Part 1 promised the metrics get formalized in the Evaluation layer, and the full
 
 The through-line ties the whole page together: measure the stage you're tuning. Recall@K tells you whether the first-stage retriever put the answer in the candidate set at all; nDCG or MRR tell you whether the reranker then ordered it correctly. Put the ranking metric on the recall stage, or the recall metric on the reranker, and you'll be blind to the exact failure you're trying to fix.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - HyDE searches with an embedded hypothetical answer to bridge the gap between a question's shape and its answer's; it wins most with no in-domain labels and short queries, and backfires on latency budgets, tuned retrievers, exact-token lookups, and unfamiliar topics where the model invents a document pointing away from your corpus.
 - Dense and BM25 scores live on incompatible scales, so you can't add them: rank-based fusion is the robust default because it needs no calibration, and score-based fusion is worth its fragility only once you've measured that magnitude carries signal you can normalise per query.

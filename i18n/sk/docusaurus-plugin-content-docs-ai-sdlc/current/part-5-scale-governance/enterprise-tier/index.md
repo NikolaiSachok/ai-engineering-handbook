@@ -17,7 +17,7 @@ požiadavka pod ním hlúpa nie je: vo veľkom nie je človek, ktorý sa za zmen
 ktorý vznikol v čase práce. Kontrola, ktorú nikto nedokáže spätne predviesť, je z jeho miesta nerozoznateľná
 od kontroly, ktorá nikdy nebežala.
 
-## Audit: čo sa stalo a kto sa za to zodpovedá
+## Audit: čo sa stalo a kto sa za to zodpovedá \{#audit-what-happened-and-who-is-answerable}
 
 **Auditný záznam (audit trail)** odpovedá na otázku, *kto čo urobil, kedy a z čieho poverenia* — a agenti
 pridávajú ďalší stĺpec. Záznam už musí menovať nielen zodpovedného človeka, ale aj agenta, model a zadanie,
@@ -39,7 +39,7 @@ niekto na požiadanie predloží. Inak zostane vyhlásením o hodnotách.
 
 :::
 
-## Pôvod: odkiaľ artefakt pochádza
+## Pôvod: odkiaľ artefakt pochádza \{#provenance-where-the-artefact-came-from}
 
 Audit zaznamenáva úkon; **pôvod (provenance)** zaznamenáva rodokmeň vytvorenej veci — z ktorého zdroja, buildu,
 závislostí a agenta vznikla. V praxi ho nesú dva mechanizmy. **Súpis softvérových súčastí (software bill of
@@ -54,7 +54,7 @@ a ktorý model ho vytvorili a podľa akých pokynov?* Zapíš to už pri generov
 pri commitoch je hádanie a chvíľa, keď to budeš potrebovať — trieda chýb vystopovaná k zvyku jedného modelu,
 licenčná otázka nad generovaným obsahom — je presne tá chvíľa, keď hádanie nestačí.
 
-## Oddelenie právomocí, keď sú obe strany agentmi
+## Oddelenie právomocí, keď sú obe strany agentmi \{#separation-of-duties-when-both-parties-are-agents}
 
 III. časť z toho urobila inžiniersky argument: agent, ktorý zmenu napíše,
 [ju nemôže zároveň certifikovať](../../part-3-verification/detection-vs-mutation.md), pretože čokoľvek, čo
@@ -69,7 +69,7 @@ dokumente, ktorý ten človek nemal ako prečítať, je artefakt súladu, nie do
 varovanie ostrejšie, pretože podpis má právne dôsledky — schvaľovať tempom, ktoré by žiadny človek reálne
 neudržal, je presne to zlyhanie, ktorému má kontrola predchádzať, oblečené do jej vlastných šiat.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant, poslednýkrát: **kontrola sa počíta vtedy, keď niekto iný než ten, kto ju vykonal, dokáže spätne
 ukázať, že prebehla.**
@@ -85,7 +85,7 @@ ukázať, že prebehla.**
   predchádza:* kontroly, ktoré v praxi fungujú, no ich fungovanie sa nedá ukázať — a v tejto vzdialenosti od
   blast radius sa to počíta rovnako, ako keby ich nebolo.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Na tejto úrovni nie je mechanizmus silnejší, ale **preukázateľný**. Kontrola, ktorú nikto nevie spätne
   doložiť, je pre človeka, ktorý sa za ňu zodpovedá, nerozoznateľná od kontroly, ktorá nikdy nebežala.

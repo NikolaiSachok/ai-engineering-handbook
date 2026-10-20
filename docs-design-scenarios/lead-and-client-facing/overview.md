@@ -17,7 +17,7 @@ gets tested first, and what that test eliminates before the next one runs. The s
 problem: the same decision put to a commercial director, a regulator, or a client who has heard a simpler
 story from a competitor, without the argument turning into either a lecture or a promise.
 
-## In this track
+## In this track \{#in-this-track}
 
 - **[Where the knowledge lives](/design-scenarios/lead-and-client-facing/where-the-knowledge-lives)** — a
   400-million-token technical corpus, part of it under per-customer NDA, and five months to the conference;

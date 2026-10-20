@@ -10,7 +10,7 @@ sidebar_position: 2
 
 One boundary before the walk, because the sibling lessons hold the ground next door. The *general* memory taxonomy, the step and token budgets, and the loop-control machinery belong to [planning & loops](../planning-loops/index.md) and its [deep dive](../planning-loops/deep-dive.md); the multi-agent topologies, their protocols, and how you eval a team live in [multi-agent](../multi-agent/index.md) and its [deep dive](../multi-agent/deep-dive.md); the transport underneath — agent↔tool is [MCP](../mcp/index.md), agent↔agent is A2A — is its own lesson; and the serving, observability, and eval *operations* are [Part III](../../part-3-production/overview.md). This page owns the framework layer and cross-links the rest rather than re-deriving it. Part 1 is assumed throughout.
 
-## Walking one graph
+## Walking one graph \{#walking-one-graph}
 
 Take the "agent as a graph" from Part 1 and make it concrete. [LangGraph](https://www.langchain.com/langgraph) models an agent as a **StateGraph**: a typed shared state object that every node reads from and writes to, plus the nodes and edges that move execution through it. That shared state is the whole trick — it's how one step's work reaches the next without you threading it by hand.
 
@@ -38,7 +38,7 @@ Most of the time you don't wire any of that by hand. LangGraph ships a **prebuil
 
 Once the loop is a graph, everything else below — checkpoints, durability, human-in-the-loop, tracing — is something you *attach* to that graph, not new machinery you build. All of it is wiring that hangs off nodes and edges you already have.
 
-## Surviving a crash: durable execution
+## Surviving a crash: durable execution \{#surviving-a-crash-durable-execution}
 
 Persistence starts with the **checkpointer** — it saves a snapshot of the graph's state at every **super-step**, meaning each node transition, keyed by a thread. Resuming a run is then just loading the last checkpoint and continuing from it. This is LangGraph's short-term, thread-scoped memory: the state of one conversation, saved as it goes.
 
@@ -54,7 +54,7 @@ Why this matters for agents is the AI-delta again. Agent runs are long, non-dete
 
 And the restraint that comes with every capability on this page: a stateless single-shot agent needs none of this. No checkpointer, no backend, no durability mode. Durability earns its keep on long, resumable, or human-gated runs — don't stand up Postgres for a one-turn classifier.
 
-## Two kinds of memory, and why they aren't the team
+## Two kinds of memory, and why they aren't the team \{#two-kinds-of-memory-and-why-they-arent-the-team}
 
 Framework memory splits along one axis into two scopes. Short-term, thread-scoped memory is the checkpointer's state — alive within a single thread, the conversation currently running, and gone when that thread ends. Long-term, cross-thread memory is a separate **store** that survives *across* threads, keyed by namespaces — one per user, say — so an agent can remember a person between sessions that share no thread. LangGraph calls that long-term side the Store.
 
@@ -66,7 +66,7 @@ Multi-agent constructs sit on a different axis entirely, and it's easy to blur t
 
 So hold the two apart, because this is the load-bearing distinction of the section. Memory is **state persistence**: what survives across steps and across sessions. Multi-agent constructs are **work distribution**: how sub-agents are wired to each other. They're orthogonal — you can have a single agent with rich long-term memory, a stateless multi-agent team, or both at once. Reaching for a supervisor to "get memory" is a real design error. The framework packages each capability; the *concepts* live in planning-loops (memory) and multi-agent (topologies), and this lesson only shows how a framework surfaces them. The corollary: reach for a cross-thread store only when a thread-scoped checkpoint genuinely won't cover you. Match the construct to the need.
 
-## Two ways to define the same agent
+## Two ways to define the same agent \{#two-ways-to-define-the-same-agent}
 
 There are two styles for defining an agent, and the split runs through every framework. **Imperative** means you *build* the agent in code, step by step: instantiate the graph, `add_node`, `add_edge`, add a conditional edge, compile. You write the control flow yourself. LangGraph's Graph API is imperative in exactly this way. (LangGraph also offers a lighter imperative option, the Functional API — `@entrypoint` and `@task` decorators that give you an agent-as-a-function with state scoped to that function, for when you want imperative control without drawing an explicit graph.)
 
@@ -76,7 +76,7 @@ The tradeoff cuts both ways. Imperative buys control and expressiveness — arbi
 
 None of this is new. It's the same declarative-versus-imperative line software has drawn everywhere else — SQL against procedural code, infrastructure-as-config against scripts. Declarative for the common shapes; imperative when you hit the wall. And most real frameworks give you both and let you mix them — a declarative crew with an imperative escape hatch for the one flow the config can't say. Which ties back cleanly: the hand-built graph from the first section is the imperative form, and a config-declared crew is the declarative form of the *same* multi-agent topology from [multi-agent](../multi-agent/index.md). One concept, two ways to write it down.
 
-## One artefact, every production concern
+## One artefact, every production concern \{#one-artefact-every-production-concern}
 
 Because the agent is a graph of *named* nodes, the framework can emit a trace on its own. Every node execution, model call, and tool call becomes a **span** in a parent–child tree, with little or no instrumentation from you. That's Part 1's "tracing hooks" boilerplate, paid off by the graph structure itself.
 
@@ -90,7 +90,7 @@ It all converges on one object. The graph you defined in the first section is th
 
 The closing restraint mirrors Part 1's "primitives first." All of this is opt-in mastery. A simple agent needs none of it — no checkpointer, no store, no declarative config, no trace backend. Reach for each piece only when the run is long enough to need durability, stateful enough to need memory, or complex enough to need tracing. The framework makes each of them cheap to add; it doesn't make any of them free, and adding one you don't need is the same abstraction cost Part 1 warned about, paid twice.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - LangGraph models an agent as a StateGraph — a shared state object, nodes that call the model, call a tool, or decide, plain edges, and conditional edges that route on the state. The ReAct agent is an `agent` node plus a `tools` node, with a conditional edge out of `agent` and a loop-back edge from `tools` to `agent`; `create_react_agent` hands you that graph pre-assembled.
 - A checkpointer saves state at every step keyed by a `thread_id`, so a run resumes from the last successful step instead of restarting — and that same persistence is what lets a human-in-the-loop interrupt wait hours before re-running its node from the start. The `durability` modes (`exit`, `async`, `sync`) trade speed for safety; backends swap freely (in-memory for dev, Postgres or Redis for prod); a stateless single-shot agent needs none of it.

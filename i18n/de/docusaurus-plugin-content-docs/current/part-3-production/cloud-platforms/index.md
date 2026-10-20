@@ -38,7 +38,7 @@ ist und warum es eine eigene Disziplin ist, sie in großem Maßstab bereitzustel
 
 :::
 
-## Das Produkt der Plattform ist der Perimeter
+## Das Produkt der Plattform ist der Perimeter \{#the-platforms-product--the-perimeter}
 
 Was bringt die Plattform, das der direkte Aufruf beim Anbieter nicht bringt? Das Modell selbst besteht oft aus
 denselben Gewichten, die Sie über die API des Anbieters erreichen würden. **Was Sie kaufen, ist das Modell
@@ -57,7 +57,7 @@ hinter dem Perimeter Ihrer Cloud:**
 Nichts davon ändert, was das Modell sagt. Alles zusammen entscheidet, ob Ihr Unternehmen dem Modell überhaupt
 etwas sagen darf.
 
-## Die drei Plattformen – und eine Lehre über Namen
+## Die drei Plattformen – und eine Lehre über Namen \{#the-three-platforms--and-a-lesson-about-names}
 
 Mitte 2026 sehen die drei großen Plattformen so aus.
 **[Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)** ist das Angebot von
@@ -79,7 +79,7 @@ Plattform überhaupt haben kann, und behandeln Sie jeden Produktnamen – auch j
 Momentaufnahme. Die Lektion [MCP und Agentenprotokolle](../../part-2-agents/mcp/index.md) ist bei den
 Agentenprotokollen genauso vorgegangen, und das Argument gilt hier unverändert.
 
-## Modellkataloge: wer wessen Modelle bereitstellt
+## Modellkataloge: wer wessen Modelle bereitstellt \{#model-catalogues--who-serves-whose-models}
 
 Die erste Kategorie ist der **Modellkatalog** – welche Modelle Ihnen diese Plattform als verwaltete Endpunkte
 bereitstellen kann.
@@ -107,7 +107,7 @@ inzwischen auf allen drei Plattformen verfügbar. Je schwächer die Kopplung zwi
 stärker entscheidet der Wrapper – die Zusagen zum Speicherort, das verwaltete RAG-Angebot, die
 Wirtschaftlichkeit der Kapazität. Genau davon handelt der Rest dieser Lektion.
 
-## Datenschutz und Data Residency
+## Datenschutz und Data Residency \{#privacy-and-data-residency}
 
 Alle drei Plattformen geben für ihre KI-Angebote für Unternehmen dieselbe Kernzusage: Ihre Prompts und Ausgaben
 fließen nicht in das Training von Basismodellen (*foundation models*) ein und werden innerhalb der Dienstgrenze
@@ -139,7 +139,7 @@ Das dritte Glied der Triade lässt sich in einem Satz konkret machen: Alle drei 
 private Anbindung, sodass Prompts nie über das öffentliche Internet laufen – Azure Private Link, AWS PrivateLink
 mit VPC-Endpunkten und Google Private Service Connect.
 
-## Verwaltetes RAG und die Guardrails der Plattform
+## Verwaltetes RAG und die Guardrails der Plattform \{#managed-rag-and-platform-guardrails}
 
 Jede Plattform verkauft außerdem ein **verwaltetes RAG-Angebot** – die Pipeline aus Teil I (Ingestion → Chunking
 → Embedding → Vektordatenbank → Retrieval, manchmal Reranking) als fertiges Produkt verpackt. Bei AWS sind das
@@ -171,7 +171,7 @@ Model Armor. Alle drei bieten damit **als Managed Services** an, was die Lektion
 [Guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) beschreibt – und damit stellt sich die
 Make-or-Buy-Frage, der sich [das Tooling-Ökosystem](../tooling-ecosystem/index.md) unmittelbar widmet.
 
-## Durchsatz und Preismodelle
+## Durchsatz und Preismodelle \{#throughput-and-pricing-models}
 
 In diesem Abschnitt finden Sie keinen einzigen Preis, denn absolute Preise veralten schneller als die Namen der
 Plattformen. Die **Preismodelle** dagegen sind stabil – anders als die Preise selbst –, und jede Plattform
@@ -198,7 +198,7 @@ Wiederholungsversuchen und den Ratenobergrenzen aus [Bereitstellung und Betrieb]
 demselben Problem beginnt [LLMOps](../llmops/index.md), wo Routing und Fallbacks auffangen, was ein einzelner
 Endpunkt nicht zusichern kann.
 
-## So wählen Sie aus
+## So wählen Sie aus \{#how-to-choose}
 
 Sehen Sie sich zuerst an, wie die Entscheidung tatsächlich fällt. In der Praxis entscheidet meist die bestehende
 Bindung an eine Cloud – dort, wo Ihre Daten, Ihr IAM und Ihr Rahmenvertrag ohnehin schon liegen – und nicht der
@@ -216,7 +216,7 @@ tatsächlich sitzt: Die Endpunkte werden zunehmend austauschbar, während die SD
 verwalteten Angebote das sind, woran Sie hängen bleiben. Gebunden werden Sie nicht an den Endpunkt, sondern an
 alles, was rundherum mitgeliefert wird.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Drei Wege, ein Modell zu nutzen: selbst auf eigenen GPUs betreiben, die API des Modellanbieters direkt
   aufrufen oder die verwaltete KI-Plattform Ihrer Cloud nehmen – drei Punkte auf einer Achse zwischen Kontrolle

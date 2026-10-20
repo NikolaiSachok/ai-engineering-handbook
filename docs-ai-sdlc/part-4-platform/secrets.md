@@ -14,7 +14,7 @@ whatever it reads into a third-party model call, logs its own reasoning, and the
 new place a credential can escape from. The old advice "don't commit secrets" now has a second surface that is
 larger than the first: the agent's context window.
 
-## The invariant, and the two surfaces it protects
+## The invariant, and the two surfaces it protects \{#the-invariant-and-the-two-surfaces-it-protects}
 
 The invariant is one sentence and it does not change with scale: **the secret's value reaches neither the
 repository nor the agent's context.** Two surfaces, two different reasons.
@@ -30,7 +30,7 @@ request description, a log line, a comment. A human reads a secret and forgets i
 may *reproduce* it somewhere you never looked. So the secret must not sit anywhere the agent is pointed, which
 in practice means it must not sit in the code at all.
 
-## A reference in the code, the value at runtime
+## A reference in the code, the value at runtime \{#a-reference-in-the-code-the-value-at-runtime}
 
 One mechanism makes the invariant hold at every scale: secrets live *outside* the code as *references*, and are
 resolved into the running process only at runtime. Code reads a name — `DATABASE_URL`, `STRIPE_KEY` — never a
@@ -60,7 +60,7 @@ makes dangerous — the repo and the agent's context.
 
 :::
 
-## When prevention is not enough: scan, block, rotate
+## When prevention is not enough: scan, block, rotate \{#when-prevention-is-not-enough-scan-block-rotate}
 
 Prevention is not a plan, so the platform composes the same two-mechanism layering Part III used for
 [gate design](../part-3-verification/layered-gates/index.md). A **deterministic** secret scanner — a pattern-and-entropy
@@ -85,7 +85,7 @@ addresses*, directionally credible but not an independent measurement. The rate 
 roughly double, rather than simply more commits — which is exactly why the block has to be automatic. The
 report's own caveat belongs here too: a developer still chooses what to accept and push.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale — **the secret's value reaches neither the repository nor the agent's
 context** — and the blast-radius rule returns here in credential form: the closer a credential sits to real
@@ -102,7 +102,7 @@ damage, the shorter its life must be. What changes across tiers is the mechanism
   failure it prevents:* a static, broadly-scoped credential whose blast radius, once leaked, is every system it
   can reach, discovered only in the breach post-mortem.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - The invariant is one sentence at every scale: **the secret's value reaches neither the repository nor the
   agent's context.** Agents widen the second surface — they read, transmit, log, and reproduce — so the old

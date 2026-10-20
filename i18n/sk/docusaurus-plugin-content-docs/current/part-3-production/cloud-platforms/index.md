@@ -31,7 +31,7 @@ Prehľadné zhrnutie toho, čo inferencia — vec, ktorú tu predáva každá pl
 
 :::
 
-## Čo vlastne platforma predáva — perimeter
+## Čo vlastne platforma predáva — perimeter \{#the-platforms-product--the-perimeter}
 
 Čím sa platforma líši od priameho volania dodávateľa? Model je často presne tá istá množina váh, ku ktorej by si sa dostal cez API dodávateľa. Kupuješ si čosi iné: ten istý model za **bezpečnostným perimetrom** cloudu, ktorý už používaš.
 
@@ -43,7 +43,7 @@ Prehľadné zhrnutie toho, čo inferencia — vec, ktorú tu predáva každá pl
 
 Nič z toho nemení, čo model povie. Všetko z toho mení, či mu tvoja firma vôbec smie niečo povedať.
 
-## Tri platformy — a lekcia o menách
+## Tri platformy — a lekcia o menách \{#the-three-platforms--and-a-lesson-about-names}
 
 K polovici roka 2026 to na trhu vyzerá takto. Azure OpenAI je od Microsoftu a historicky bol cestou, ako používať modely OpenAI ako vlastnú službu Azure; platformu okolo neho Microsoft na konferencii Ignite v novembri 2025 premenoval z Azure AI Foundry na Microsoft Foundry a modely v nej sa dnes volajú Foundry Models, rozdelené na „Models sold by Azure“ a ponuky z trhoviska.
 
@@ -53,7 +53,7 @@ Vertex AI je od Google Cloudu a je uprostred premenovania: nový názov Gemini E
 
 Prečítaj si to ešte raz: dve z troch platforiem sa premenovali v priebehu jediného roka. Názvy produktov a hranice balíkov sa preskupujú neustále. Každé premenovanie prežijú kategórie schopností: katalóg modelov, záruky súkromia a rezidencie, úroveň spravovaného RAG, platformové guardrails a model priepustnosti a cien. Zvyšok lekcie je poskladaný podľa nich — celkom zámerne: nauč sa kategórie a každý názov produktu (vrátane všetkých, čo tu padnú) ber ako momentku. Lekcia o [MCP](../../part-2-agents/mcp/index.md) zvolila pri agentových protokoloch presne ten istý prístup; platí to aj tu.
 
-## Katalógy modelov — ktorá platforma obsluhuje ktoré modely
+## Katalógy modelov — ktorá platforma obsluhuje ktoré modely \{#model-catalogues--who-serves-whose-models}
 
 Prvá kategória je **model catalogue** (katalóg modelov): ktoré modely ti daná platforma dokáže obsluhovať ako managed endpointy?
 
@@ -71,7 +71,7 @@ U Googlu je vlastnou kotvou Gemini, kým Model Garden nesie modely tretích str�
 
 Dôsledok je väčší než ktorýkoľvek riadok tabuľky: kedysi výber modelu diktoval výber cloudu (potrebuješ GPT → ideš do Azure, koniec debaty). Éra exkluzívnych katalógov sa končí — hraničné OpenAI na Bedrocku, Anthropic v katalógu Foundry, Claude dnes na všetkých troch. Čím väzba medzi modelom a cloudom slabne, tým väčšmi sa ťažisko rozdielov presúva na nadstavbu: záruky rezidencie, úroveň spravovaného RAG, ekonomika kapacity. A práve tam mieri zvyšok lekcie.
 
-## Súkromie a rezidencia dát
+## Súkromie a rezidencia dát \{#privacy-and-data-residency}
 
 Všetky tri sa pri svojich podnikových AI-ponukách zaväzujú k rovnakému základu: tvoje prompty a výstupy sa nepoužívajú na trénovanie základných modelov a spracúvajú sa vnútri hraníc služby. Malým písmom sa však líšia dosť na to, aby to malo význam. Google to podmieňuje slovami „v predvolenom nastavení“. Azure nesie výhradu o monitorovaní zneužitia — v predvolenej konfigurácii môže obsah, ktorý monitorovanie zneužitia označí, prejsť ľudskou kontrolou, ak sa tvoja organizácia z toho výslovne neodhlásila. Prečítaj si aktuálnu stránku o ochrane dát tej platformy, na ktorú nasadzuješ — tu je produktom presné znenie.
 
@@ -81,7 +81,7 @@ Firmám na tom záleží z celkom konkrétneho dôvodu: regulačné režimy (GDP
 
 Tretia noha triády v jednej konkrétnej vete: všetky tri podporujú súkromné pripojenie, takže prompty nikdy neprejdú cez verejný internet — Azure Private Link, AWS PrivateLink s VPC endpointmi a Google Private Service Connect.
 
-## Spravovaný RAG a platformové guardrails
+## Spravovaný RAG a platformové guardrails \{#managed-rag-and-platform-guardrails}
 
 Každá platforma predáva úroveň **spravovaného RAG** (managed RAG) — pipeline z Prvej časti príručky (ingestion → chunking → embedding → vektorové úložisko → retrieval, občas reranking) zabalený ako produkt. AWS má klasické Bedrock Knowledge Bases, ku ktorým v júni 2026 pribudla plne spravovaná Amazon Bedrock Managed Knowledge Base s natívnymi konektormi a integráciou s AgentCore. U Azure je chrbtovou kosťou vyhľadávania Azure AI Search a súčasnou zabalenou úrovňou groundingu (opretie odpovede o kontext) je Foundry IQ; jeho predchodca „On Your Data“ sa vyraďuje v októbri 2026. U Googlu pokrýva pipeline RAG Engine, popri produkte na podnikové vyhľadávanie (Vertex AI Search, ktorý sa práve preznačuje pod Agent Platform). Postup je stále rovnaký: najprv schopnosť, mená až v zátvorke a s predpokladaným dátumom spotreby.
 
@@ -89,7 +89,7 @@ Kompromis, ktorý si treba osvojiť: spravovaný RAG ti dá rýchlosť — funk�
 
 Guardrails sú zabalené do produktu rovnako. Bedrock dodáva Guardrails — konfigurovateľné filtre na škodlivý obsah, PII a zakázané témy plus kontextové kontroly groundingu, ktoré odpoveď ohodnotia oproti získanému kontextu a vynútia prahové skóre. Azure dodáva AI Content Safety vrátane Prompt Shields na detekciu prompt injection, vystavené vo Foundry ako „Guardrails + controls“ — a Azure svoje obsahové filtre premenoval na „Guardrails“, čo je ďalší dôkaz, že mená sú len momentky. Google dodáva Model Armor. Všetky tri realizujú koncepty z lekcie o [guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) ako spravované služby — čím sa otvára otázka „postaviť či kúpiť“, ktorú priamo rieši lekcia o [ekosystéme nástrojov](../tooling-ecosystem/index.md).
 
-## Priepustnosť a cenové modely
+## Priepustnosť a cenové modely \{#throughput-and-pricing-models}
 
 Jedinú cenu tu nenájdeš — absolútne ceny zastarávajú ešte rýchlejšie než názvy platforiem. Stabilné sú cenové modely a každá platforma ponúka rovnaké dva režimy spotreby. **On-demand** (platba za tokeny) znamená, že platíš za spotrebované tokeny na zdieľanej kapacite, podliehajúcej rate limitom (strop na počet požiadaviek) a kvótam. Rezervovaná kapacita znamená vyhradenú priepustnosť s predvídateľnou latenciou pre ustálenú vysokú záťaž — všeobecne **rezervovaná priepustnosť** (provisioned throughput); v konkrétnych menách je to PTU (provisioned throughput units) na Azure, Provisioned Throughput na Vertexe a na Bedrocku úroveň Reserved, odkedy Bedrock v novembri 2025 preskladal ceny do úrovní Reserved, Priority, Standard a Flex (starý názov „Provisioned Throughput“ prežíva pri starších a vlastných modeloch).
 
@@ -97,13 +97,13 @@ Oplatí sa poznať aj tretiu úroveň: dávku. Všetky tri dokumentujú zľavnen
 
 Jedna prevádzková konštanta: kvóty sú na región a na model a produkčný návrh musí zvládať chyby 429 bez ohľadu na to, ktorá platforma za ním stojí. To je ten kontrolný zoznam opakovaní a stropov na počet požiadaviek z lekcie o [servingu](../serving/index.md) a zároveň úvodný problém [LLMOps](../llmops/index.md), kde smerovanie a fallbacky dodávajú, čo jediný endpoint zaručiť nevie.
 
-## Ako si vybrať
+## Ako si vybrať \{#how-to-choose}
 
 Začni tým, ako rozhodnutie naozaj vzniká: v praxi platformu spravidla určuje existujúci záväzok voči cloudu — to, kde už žijú tvoje dáta, IAM a podniková zmluva — a nie výsledky modelov v benchmarkoch. Znie to lenivejšie, než to je: nadstavba je produkt a nadstavba sa najviac oplatí práve tam, kde už máš infraštruktúru. Keď to vezmeš do úvahy, naozaj sa oplatí porovnať štyri veci: či obsluhuje modely, ktoré potrebuješ, v tvojom regióne; či rezidencia a súlad vyhovujú tvojmu regulátorovi; či sadne úroveň spravovaného RAG, alebo si radšej postavíš vlastnú pipeline; a aká je ekonomika rezervovanej kapacity pri tvojej záťaži.
 
 Nech vyhrá ktorákoľvek platforma, drž si jednu architektonickú poistku: aplikačnú vrstvu nechaj nezávislú od poskytovateľa. OpenAI-kompatibilní klienti a vrstva brány či routera — vzor, ktorý [LLMOps](../llmops/index.md) rozvíja s [LiteLLM](https://www.litellm.ai) a podobnými nástrojmi — ti zachovajú možnosť presunúť sa inam. Všimni si, kde **vendor lock-in** (uviaznutie u dodávateľa) v skutočnosti sídli: endpointy sú čoraz zameniteľnejšie, kým platformové SDK a spravované úrovne ťa priviažu. Uviaznutie nesídli v endpointe, ale v tom, čím je obalený.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Model získavaš tromi spôsobmi: prevádzkuješ ho na vlastných GPU, voláš priame API dodávateľa modelu, alebo použiješ spravovanú AI-platformu svojho cloudu — os medzi kontrolou a pohodlím.
 - Produktom platformy je model za existujúcim perimetrom tvojho cloudu: IAM, fakturácia, súkromné sieťové pripojenie, zdedený súlad, audit-logy a kvóty.

@@ -7,7 +7,7 @@ sidebar_position: 1
 
 Prvé tri časti sa odohrávali vnútri slučky — plánovanie, rozklad na úlohy, generovanie, brány. IV. časť je pôda, na ktorej tá slučka stojí: **platforma**, teda produkčná vrstva, ktorá rozhoduje o tom, koľko škody dokáže napáchať jedna chyba. Otvára ju najstaršie pravidlo v obore, lebo agenti mu potichu zväčšili platnosť. Znie takto: **hodnota secretu sa nikdy nedostane do repozitára** — teda tajný prístupový údaj: kľúč, token, heslo, certifikát. Ľudský vývojár, ktorý by produkčný kľúč nikdy nevložil do zdrojového súboru, je jeden úzky a dôveryhodný kanál. Programovací agent je kanál široký a množiaci: prečíta celý strom, čokoľvek prečíta, nesie so sebou do volania cudzieho modelu, zapisuje vlastné uvažovanie — a potom koná. Každé z toho je nové miesto, odkiaľ môžu prihlasovacie údaje uniknúť. Stará rada „nekomituj secrety“ má dnes druhú plochu, väčšiu než tá prvá: kontextové okno agenta.
 
-## Invariant a dve plochy, ktoré chráni
+## Invariant a dve plochy, ktoré chráni \{#the-invariant-and-the-two-surfaces-it-protects}
 
 Invariant je jedna veta a s rozsahom sa nemení: **hodnota secretu sa nedostane ani do repozitára, ani do kontextu agenta.** Dve plochy, dva odlišné dôvody.
 
@@ -15,7 +15,7 @@ Invariant je jedna veta a s rozsahom sa nemení: **hodnota secretu sa nedostane 
 
 **Kontext agenta** je kanál, ktorý nemáš celý pod kontrolou. Všetko, čo agent pri práci prečíta, odchádza poskytovateľovi modelu, môže sa tam uchovať alebo zapísať do logu a môže sa vrátiť aj späť von — do vygenerovaného súboru, do opisu pull requestu, do riadka logu, do komentára. Človek si secret prečíta a zabudne ho; agent si ho prečíta a môže ho *zopakovať* tam, kam si sa nikdy nepozrel. Secret teda nesmie ležať nikde, kam agenta smeruješ — a v praxi to znamená, že v kóde nemá byť vôbec.
 
-## Odkaz v kóde, hodnota až za behu
+## Odkaz v kóde, hodnota až za behu \{#a-reference-in-the-code-the-value-at-runtime}
 
 Invariant drží v každom rozsahu jediný mechanizmus: secrety žijú *mimo* kódu ako *odkazy* a do bežiaceho procesu sa rozbaľujú až za behu. Kód číta názov — `DATABASE_URL`, `STRIPE_KEY` — nikdy nie doslovnú hodnotu. Hodnotu vloží do prostredia procesu niečo, čo agent ani repozitár nikdy nevidia. Presne takéto prísne oddelenie konfigurácie od kódu odporúča [manifest twelve-factor](https://12factor.net/config) a v praxi sa takmer všeobecne dodržiava: agent dostane konfiguračnú plochu, ktorú na svoju prácu potrebuje — *názvy* vecí, ktoré prepája — a nedostane tú tajnú, ktorú nepotrebuje.
 
@@ -35,7 +35,7 @@ IBM prechádza správu secretov ako samostatnú disciplínu — uloženie, vklad
 
 :::
 
-## Keď prevencia nestačí: skenuj, blokuj, rotuj
+## Keď prevencia nestačí: skenuj, blokuj, rotuj \{#when-prevention-is-not-enough-scan-block-rotate}
 
 Prevencia nie je plán, a tak platforma skladá tie isté dva mechanizmy, aké III. časť použila pri [návrhu brán](../part-3-verification/layered-gates/index.md). **Deterministický** skener secretov — grep podľa vzorov a entropie, napríklad gitleaks alebo natívne skenovanie poskytovateľa — je lacná brána, ktorá doslovný kľúč zachytí ešte pred zápisom do histórie. Voči prihlasovacím údajom v nezvyčajnom tvare je slepý presne tak, ako je grep slepý voči parafráze, takže sa skladá s revíziou; na bežný prípad je však rýchla doslovná brána presne to pravé.
 
@@ -43,7 +43,7 @@ Poctivým ho držia dve pravidlá. Po prvé, **blokovať musí server, nielen pr
 
 Rozsah problému je skutočný a stojí za presné pomenovanie. [Správa *State of Secrets Sprawl 2026*](https://blog.gitguardian.com/the-state-of-secrets-sprawl-2026/), ktorú GitGuardian vydal v marci 2026 na základe údajov za rok 2025, zachytila vo verejných commitoch na GitHube **28,65 milióna** nových natvrdo zapísaných secretov, medziročne o **34%** viac. Dôležitejšiu mieru uvádza GitGuardian: uniknutý secret obsahovalo **3,2%** commitov písaných s pomocou programovacieho agenta oproti základnej hodnote **1,5%** naprieč všetkými verejnými commitmi — zhruba dvojnásobok. Samotná správa pritom upozorňuje, že vývojár stále rozhoduje, čo prijme a čo odošle. Čítaj to cez pravidlo kurzu o dodávateľoch: GitGuardian skenovanie secretov predáva, takže ide o tvrdenie o *rozsahu problému, ktorý jeho vlastný produkt rieši* — smerom vierohodné, no nie nezávislé meranie. Rozhodujúci je rozdiel v miere únikov: pri práci s agentom unikajú secrety zhruba dvakrát častejšie, a práve preto musí blokovanie bežať automaticky.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant platí v každom rozsahu — **hodnota secretu sa nedostane ani do repozitára, ani do kontextu agenta**. Pri prihlasovacích údajoch má blast radius (rozsah škôd) tento dôsledok: čím bližšie sedia k skutočnej škode, tým kratšie musia žiť. Medzi úrovňami sa mení mechanizmus, ktorý invariant vynucuje.
 
@@ -51,7 +51,7 @@ Invariant platí v každom rozsahu — **hodnota secretu sa nedostane ani do rep
 - **Malý tím.** Secrety vkladané z úložiska CI alebo platformy, push protection vynútená na strane repozitára a spísaný postup rotácie. *Akému zlyhaniu to predchádza:* jeden zdieľaný kľúč s dlhou platnosťou koluje v súbore `.env` cez chat a platí ešte mesiace po odchode človeka, ktorý ho vydal.
 - **Enterprise.** Spravovaný trezor vydáva krátkodobé, dynamicky generované prihlasovacie údaje pre jednotlivé workloady, s auditom a automatickou rotáciou — údaje stratia platnosť skôr, než odcudzená kópia stihne byť na niečo dobrá. *Akému zlyhaniu to predchádza:* statické, široko vymedzené prihlasovacie údaje, ktorých blast radius po úniku pokrýva každý systém, kam dosiahnu, a organizácia sa o tom dozvie až pri spätnej analýze incidentu.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Invariant je v každom rozsahu tá istá jedna veta: **hodnota secretu sa nedostane ani do repozitára, ani do kontextu agenta.** Agenti druhú plochu zväčšujú — čítajú, prenášajú, logujú, reprodukujú — takže staré „nekomituj secrety“ je dnes menšia polovica pravidla.
 - Hodnotu udržíš mimo tak, že v ruke držíš iba **odkaz**: kód číta názov a hodnotu vloží do procesu až za behu niečo, čo agent ani repozitár nevidia. Uniknúť nemôže to, čo si nikdy nedržal.
