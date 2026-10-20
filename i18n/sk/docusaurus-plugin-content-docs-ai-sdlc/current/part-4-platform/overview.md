@@ -40,7 +40,7 @@ sem, je únikom. Patrí do registra z III. časti spolu s názvom brány, ktorá
   nevyskúšal, nie je záloha.
 - **[Pozorovateľnosť, nasadzovanie a núdzový vypínač](./observability-rollout.md)** — niekoľko signálov
   sleduj dôkladne. Zlyhania, pri ktorých nepríde žiadny signál, zachytávaj sondami zvonku a hláseniami od
-  používateľov. Postupné nasadzovanie môže začať tieňovým behom a musí byť naviazané na automatické
+  používateľov. Postupné nasadzovanie môže začať tieňovým overovaním a musí byť naviazané na automatické
   vrátenie zmeny. Núdzový vypínač má meniť stav, nie spúšťať nový build.
 
 ## Predpoklady

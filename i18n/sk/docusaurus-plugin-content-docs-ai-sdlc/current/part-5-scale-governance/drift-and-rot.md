@@ -72,19 +72,19 @@ mazať sa zdá riskantnejšie než nechať tak, takže korpusy vedia iba rásť.
 Hranicu pre mazanie treba povedať priamo: **odstrániť pravidlo, ktoré už nezodpovedá realite, je údržba, nie
 strata.** Iba korpus, ktorý si ochotný zmenšovať, si agent ešte prečíta celý.
 
-Flagy zastarávajú rovnako ako pravidlá: feature flag (prepínač funkcie) je
-[pravidlo o tom, ktorý kód sa spustí](../part-4-platform/observability-rollout.md).
-[Andrey Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/) chce pri každom
-flagu opis a dátum odstránenia. Varuje, že bez nich o rok nebudeš vedieť, ktoré flagy môžeš bezpečne
-prepnúť ani čo nimi zmeníš. [Pete Hodgson](https://martinfowler.com/articles/feature-toggles.html)
-chápe prepínače ako zásobu, ktorej udržiavanie niečo stojí. Opisuje tímy, ktoré pri vytvorení flagu na
-sprístupnenie (release flag) hneď založia úlohu na jeho odstránenie alebo pridajú test s časovou poistkou
+Flagy zastarávajú rovnako ako pravidlá: feature flag (prepínač funkcie) je [pravidlo o tom, ktorý kód sa
+spustí](../part-4-platform/observability-rollout.md). [Andrej
+Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/) chce pri každom flagu
+opis a dátum odstránenia. Varuje, že bez nich o rok nebudeš vedieť, ktoré flagy môžeš bezpečne prepnúť
+ani čo nimi zmeníš. [Pete Hodgson](https://martinfowler.com/articles/feature-toggles.html) chápe
+prepínače ako skladové zásoby, ktorých udržiavanie má svoje náklady. Opisuje tímy, ktoré pri vytvorení
+flagu na sprístupnenie hneď založia úlohu na jeho odstránenie alebo pridajú test s časovou poistkou
 („time bomb“ test), ktorý zlyhá po prekročení dátumu platnosti flagu. Kurz k opisu a dátumu pridáva
 vlastníka a rozlišuje krátkodobé sprístupnenie od dlhodobého prevádzkového použitia. Každý flag na
-sprístupnenie musí mať vlastníka, opis a dátum odstránenia. Dlhodobý flag núdzového vypínača musí mať
-vlastníka a pravidelnú revíziu spolu s korpusom pravidiel, nie dátum skončenia platnosti ani dátum
-odstránenia. Obe vetvy zastaraného flagu totiž v kóde stále vyzerajú ako používané. Agent tak môže ďalej
-udržiavať, testovať a rozširovať aj vetvu, ktorá už neslúži ničomu.
+sprístupnenie (release flag) musí mať vlastníka, opis a dátum odstránenia. Dlhodobý flag núdzového
+vypínača musí mať vlastníka a treba ho pravidelne revidovať spolu so súborom pravidiel. Dátum skončenia
+platnosti ani dátum odstránenia sa mu neurčuje. Obe vetvy zastaraného flagu totiž v kóde stále vyzerajú
+ako používané. Agent tak môže ďalej udržiavať, testovať a rozširovať aj vetvu, ktorá už neslúži ničomu.
 
 ## Pamäť sa rozchádza s realitou rovnako
 
@@ -124,4 +124,4 @@ jeho chátranie musí niečo zviditeľniť.** Mení sa to, kto zaň zodpovedá a
 - Pravidlo, ktoré sa nikdy neaktivovalo, nedokazuje čistú kódovú základňu — je to neoverené pravidlo. Zámerne
   vlož porušenie a zisti, ktorý z tých dvoch prípadov to je.
 
-**[Nové pojmy](../glossary.md#drift-control-and-rule-rot)**: zastarávanie pravidiel, zastaranosť / rozpor / nafúknutosť, vykonateľné verzus textové pravidlo, tiché zastarávanie, vlastník pravidla, platnosť pravidla, nikdy neaktivované pravidlo, drift pamäti, nahradené rozhodnutie, Dlh z flagov (flag debt).
+**[Nové pojmy](../glossary.md#drift-control-and-rule-rot)**: zastarávanie pravidiel, zastaranosť / rozpor / nafúknutosť, vykonateľné verzus textové pravidlo, tiché zastarávanie, vlastník pravidla, platnosť pravidla, nikdy neaktivované pravidlo, drift pamäti, nahradené rozhodnutie, dlh z flagov (flag debt).

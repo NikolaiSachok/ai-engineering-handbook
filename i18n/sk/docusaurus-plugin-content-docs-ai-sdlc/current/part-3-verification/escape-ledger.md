@@ -24,7 +24,7 @@ Analýza bez hľadania vinníka skúma, čo v systéme umožnilo zlyhaniu prejs�
 
 To je celý artefakt. Soloistovi stačí jeden riadok v tabuľke; v enterprise prostredí môže ísť o evidovanú chybu s určeným vlastníkom. Náklady sú zanedbateľné a prínos sa postupne násobí: každý únik natrvalo odstráni jeden spôsob, akým môžu chyby prejsť cez brány.
 
-Úniky sa odhalia cez produkčné alerty, vyhodnotenia incidentov alebo hlásenia od používateľov. Hlásenie od používateľa je snímač poslednej záchrany. Chybu zistenú ktoroukoľvek z týchto ciest zapíšeš do rovnakého riadka registra. Ak hlásenie predbehlo všetky alerty, pomenuj v ňom aj [chýbajúci signál](../part-4-platform/observability-rollout.md).
+Úniky sa odhaľujú produkčnými alertmi, pri vyhodnoteniach incidentov alebo z hlásení od používateľov. Hlásenie od používateľa je posledná poistka pri odhaľovaní zlyhaní. Bez ohľadu na to, ako sa chyba odhalila, dostane v registri záznam s rovnakou štruktúrou. Hlásenie, ktoré predbehlo všetky alerty, odhaľuje aj [chýbajúci signál](../part-4-platform/observability-rollout.md).
 
 ## Ako úniky vyzerajú v praxi
 
