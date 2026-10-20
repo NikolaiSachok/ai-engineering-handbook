@@ -41,11 +41,11 @@ often more readily, because it is cheaper. So the design question is not "how do
 — an instruction is [not a control](../part-1-foundation/rules-that-hold.md) — but "how do I build the gate so
 the cheat isn't available."
 
-The plainest instance needs no cheat at all, only a gate that cannot see what it claims to check. In [one
-practitioner's account](https://realaillusions.com/ru/materials/ai-project-stabilization-case/) (in Russian) of
+The plainest instance needs no cheat at all, only a gate that cannot see what it claims to check. In [practitioner Andrey
+Beloborodov's account](https://realaillusions.com/ru/materials/ai-project-stabilization-case/) (in Russian) of
 stabilizing a working, revenue-earning platform of more than 100,000 lines of TypeScript, which its owner had built
 himself with AI coding assistants, the audit found that some of the critical checks were greps: they searched the
-code for a required string. As the practitioner puts it, if a test searches for `PAID`, it proves one thing: that
+code for a required string. As Beloborodov puts it, if a test searches for `PAID`, it proves one thing: that
 the word `PAID` is in the code; it does not prove that payment works. The tests are green and nothing is
 guaranteed. Part of his fix was replacing the critical grep checks with behavioral tests.
 
