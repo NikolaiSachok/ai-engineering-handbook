@@ -203,3 +203,23 @@ Požiadavka „vlastník“ patrí kurzu, nie Beloborodovovi: ten uvádza opis a
 | redesign vs rewrite | Redesign: debt audit, target architecture, staged move with working results. Rewrite: the open brief "rewrite it all properly". | **NEW DECISION, PROBATION — „prepracovanie návrhu verzus prepis“**; bez čiarky, jedna položka „Nové pojmy“. |
 
 Heslá glosára začínajú veľkým písmenom; položky „Nové pojmy“ sú s nimi totožné po zmene prvého písmena na malé. Prvá zmienka: „Andrej Beloborodov, praktik, ktorý…“, ďalej „Beloborodov“ alebo zámeno. Rozsahy percent „22–33%“. „Niekoľkonásobne“ bez čísla. Opakovaný reťazec „*Akému zlyhaniu to predchádza:*“ sa nemení.
+
+## Issue #797 — existing codebase (2026-10-20) — NEW DECISIONS, PROBATION
+
+| EN term | sense | SK decision + bridge + rejected variants |
+|---|---|---|
+| existing codebase (brownfield) | Already running code, often partly agent-written, knowledge scattered across chats, wikis and heads; the loop is installed around it, not before it. | **NEW DECISION, PROBATION — „existujúca kódová základňa“**; most „(brownfield)“ pri prvom definujúcom výskyte. Odmietnuté „existujúci projekt“ ako heslo (v próze prípustné) a „legacy“ ako termín (hodnotí kód ako zlý). |
+| audit before refactor | Before changing anything: what works, what blocks development, what is risky, what to do, how to check; never the brief "rewrite it all properly". | **NEW DECISION, PROBATION — „audit pred refaktoringom“**. Citované zadanie je „prepíš všetko poriadne“, rovnako ako v lekcii o erózii architektúry (#798); tá istá rada Beloborodova má v kurze znieť rovnako. Odmietnuté „refaktorizácia“ (český sklon). |
+| independent multi-model audit | Same fixed areas, several independent models; divergent verdicts read as different things checked, not averaged. | **NEW DECISION, PROBATION — „nezávislý audit viacerými modelmi“**. Odmietnuté „multimodelový audit“ (znie ako multimodálny) a „Rozdielne verdikty znamenajú…“ (tvrdenie namiesto čítania). Sloveso „nepriemeruj“, nie „nespriemerúvaj“. |
+| audit dimensions (13) | The unchanged checklist areas. | **NEW DECISION, PROBATION — „13 oblastí auditu“**; opakovaný audit „opakovaný audit v rovnakých oblastiach“. Odmietnuté „dimenzie“ (kalk). |
+| verification pack | Checks known to actually work, each with a known pass meaning, plus a basic CI gate for new work. | **NEW DECISION, PROBATION — „overovacia sada“**; most „(verification pack)“ v lekcii. Odmietnuté „verifikačný balík“ (kalk z package). |
+| single source of truth (rebuilt from the code) | Project documentation next to the code, reconciled with the implementation, split into history, target state and experiments. | **NEW DECISION, PROBATION — heslo „Jediný zdroj pravdy (obnovený z kódu)“**; v próze „jediný zdroj pravdy (single source of truth)“ s jedinou zátvorkou — dve zátvorky za sebou sú odmietnuté z rovnakého dôvodu ako pri charakterizačnom teste. |
+| the new-chat test | A fresh agent without chat history asked about last week's architecture decisions; no answer from the repo = memory still lives in old chats. | **NEW DECISION, PROBATION — „test nového chatu“**. Odmietnuté „test čerstvého rozhovoru“. |
+| characterization test | — | **REUSE (#792/#793) — „charakterizačný test“**; most na tejto stránke „(characterization test)“ bez golden master, ako v EN. |
+| light loop | task → acceptance criteria → implementation → independent critique → check → result. | **NEW DECISION, PROBATION — „odľahčená slučka“**. Odmietnuté „ľahká slučka“ (= jednoduchá). |
+| roll-forward | Fixing by deploying forward instead of reverting. | **NEW DECISION, PROBATION — „nasadenie opravy namiesto vrátenia (roll-forward)“**. Odmietnuté „rolovanie vpred“. |
+| baseline | Before/after measure on a named proxy metric with a stated denominator. | **NEW DECISION, PROBATION — „východiskové meranie (baseline)“**, nie tučne (nie je heslo tejto lekcie). Odmietnuté „základná čiara“ (kalk). |
+| bounded change class | A change type with a mechanical done-condition (e.g. a migration). | **NEW DECISION, PROBATION — „presne vymedzený typ zmien“**. Pôvodný kandidát „ohraničená trieda zmien“ odmietnutý ako ťažký kalk. |
+| experience report | The genre of the Google report, not a research study. | **NEW DECISION, PROBATION — „správa o skúsenostiach (experience report), nie výskumná štúdia“**. |
+
+Opakujúce sa reťazce: označenie zlyhania je `*Akému zlyhaniu to predchádza:*` (39 výskytov v korpuse, väčšinový tvar) a záverečný nadpis `## Čo si odniesť` (21 : 7); tvary „Zlyhanie, ktorému to predchádza:“ a „Čo si z toho odniesť“ sú v tejto lekcii odmietnuté. Meno: „Andrej Beloborodov“ pri prvom výskyte, ďalej skloňované priezvisko. H1 bez koncovej bodky (markdownlint MD026): „Kód už máš, slučku ešte nie“.
