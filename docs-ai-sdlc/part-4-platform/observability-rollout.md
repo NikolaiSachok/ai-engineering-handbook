@@ -82,8 +82,8 @@ turn release into a controlled progression.
 **Separate deploy from release.** Shipping code and enabling behaviour should be two different acts, which is
 what a feature flag buys you. The code goes out dark; the behaviour turns on for 1%, then 10%, then everyone.
 When something is wrong, you change the audience without shipping anything. Release flags need an owner, a
-description and a removal date; a long-lived kill-switch flag needs an owner and periodic review instead. Both belong in
-[flag maintenance](../part-5-scale-governance/drift-and-rot.md).
+description and a removal date; a long-lived kill-switch flag needs an owner and periodic review instead. Both
+belong in [flag maintenance](../part-5-scale-governance/drift-and-rot.md).
 
 **Run the new path in the shadow first, where outputs can be compared.** A rewritten query or a refactored
 permission check has a right answer: the old path's. Before a canary exposes users, run the candidate beside
