@@ -128,18 +128,6 @@ worth teaching: Anthropic's activation-reference-deep-dive and DefinitiveSpec's 
 same three-level ladder, invented independently — one for capabilities, one for specs, neither aware of the other.
 When two unconnected parties derive the same three tiers, the tiers are probably real.
 
-Tiering decides how much a document costs; status decides what it claims. A target-state document can read
-to an agent as a description of the current system. Unless you mark the difference, the implementation brief
-asks it to build against a world that does not exist. In his
-[account of stabilising a stalled client project](https://realaillusions.com/ru/materials/ai-project-stabilization-case/),
-Beloborodov reports separating documentation into history, target state and experiments among the first fixes.
-On his [own project page](https://realaillusions.com/ru/projects/cyprus-real-estate-project/), he states that
-plans remain plans until the function is confirmed in the working system; future architectural goals are not
-live features. Give every project document a status on its first line: as-is, target, experiment, or
-[superseded](../part-5-scale-governance/drift-and-rot.md). Target material is never the default context for an
-implementation task. Our argument is that this failure grows with the organisation: an enterprise wiki full
-of aspirational architecture gives the agent more opportunities to mistake intention for fact.
-
 And here is the gap the course names. Context engineering solved the *retrieval* half — for an agent's working
 memory. Spec-driven development built the *production* half — and never asked what happens to the output as it
 piles up. Nobody has carried the first across to the second: no tiered, budgeted, lifecycle-managed discipline for
@@ -149,6 +137,19 @@ tier a corpus (which spec is architectural, which is detail), a budget (how much
 retirement policy (when a spec stops being authoritative), and staleness detection (something that actually fails
 when a spec goes wrong). Naming those four is the shape of the contribution; the rest of Part I is about filling
 them.
+
+Document status is one concrete part of that retirement policy: tiering decides how much a document costs;
+status decides what it claims. A target-state document can read to an agent as a description of the current
+system. Unless you mark the difference, an agent given that document as implementation context can build
+against a world that does not exist. Beloborodov reports separating a stalled client project's documentation
+into history, target state and experiments among the first
+[stabilising fixes](https://realaillusions.com/ru/materials/ai-project-stabilization-case/), and on his
+[own project page](https://realaillusions.com/ru/projects/cyprus-real-estate-project/) says plans remain plans
+until the function is confirmed in the working system. Give every project document a status on its first line:
+as-is, target, experiment, or [superseded](../part-5-scale-governance/drift-and-rot.md). Target material is never
+the default context for an implementation task. By this course's reading, the mistake grows with the
+organisation: an enterprise wiki full of aspirational architecture gives the agent more chances to take
+intention for fact.
 
 ## Why we might be wrong
 
@@ -198,8 +199,7 @@ who owns the boundary and how it's proven.
 - The fix for overload is tiering, not more documents: a hot set that's always loaded, a cold set pulled on demand.
   The mechanism is borrowed openly from context engineering; carrying it to a spec or rule corpus is the gap this
   course names, and our own evidence for it is a single graded self-report, not proof.
+- Mark every document as-is, target, experiment, or superseded, and keep target plans out of an implementation
+  task's default context.
 
-- Put a status on every document's first line: as-is, target, experiment, or superseded. A target-state plan
-  must not become an implementation task's default account of what already works.
-
-**[New terms](../glossary.md#project-memory-and-tiering)**: project memory, amnesia, context tax, over-compliance, scar archive, knowledge tiering, LOD ladder, hot set / cold set, progressive disclosure, artifact overload, document status (as-is · target · experiment).
+**[New terms](../glossary.md#project-memory-and-tiering)**: project memory, amnesia, context tax, over-compliance, scar archive, knowledge tiering, LOD ladder, hot set / cold set, progressive disclosure, artifact overload, document status (as-is / target / experiment / superseded).

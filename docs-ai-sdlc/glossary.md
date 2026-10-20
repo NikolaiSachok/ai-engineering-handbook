@@ -65,7 +65,7 @@ its section here. The list grows as the course does.
 
 **Artifact overload** — spec-driven work's central unsolved failure: artifacts generated faster than review or context can absorb them, with no lifecycle discipline.
 
-**Document status (as-is / target / experiment)** — a first-line declaration of whether a document describes the working system, an intended state, or an experiment; superseded material records history and no longer governs implementation.
+**Document status (as-is / target / experiment / superseded)** — a first-line declaration of whether a document describes the working system, an intended state, an experiment, or history that no longer governs implementation.
 
 ## Rules that hold \{#rules-that-hold}
 
@@ -295,14 +295,6 @@ its section here. The list grows as the course does.
 
 **Telemetry signal set** — the small set of sensors worth watching per change: error rate on the new path, high-percentile (not mean) latency, saturation of the scarce resource, and one business signal.
 
-**Telemetry done-condition** — a task's explicit requirement for the signals it must emit, including a business signal, checked by the critic before the feature is accepted.
-
-**Black-box probe (synthetic probe, heartbeat)** — an outside check of whether the service works for its users, through a scheduled journey or an expected heartbeat whose absence raises an alert.
-
-**Symptom-based alerting / alert severity** — paging on urgent, actionable user-facing symptoms, with less urgent work routed to tickets and debugging context kept on dashboards or in logs.
-
-**User report (sensor of last resort)** — a tracked report of a problem the user encountered; a confirmed defect feeds the escape ledger, and a report that beats every alert also identifies a missing signal.
-
 **Business signal** — the product-level metric that moves when a change is technically healthy but functionally useless (checkouts started, messages sent). The signal teams most often omit and the one that catches the defect no technical metric can see.
 
 **Deploy/release separation** — shipping code and enabling behaviour as two distinct acts, usually via a feature flag, so the audience for a change becomes a dial that can be turned without another deploy.
@@ -311,15 +303,23 @@ its section here. The list grows as the course does.
 
 **Staged rollout (canary · ramp)** — exposing a change to a small population first and widening it in steps, converting a binary release event into a bounded one.
 
-**Shadow verification (shadow run)** — running a candidate beside the old path on real input, comparing results while users keep receiving the old result, with candidate side effects disabled.
-
-**Build once, promote the artefact** — passing the same built artefact through stage and production, pinned by digest, and retaining the previous artefact unchanged so rollback needs no rebuild.
-
 **Automated revert** — binding the rollout ramp to thresholds so a breach stops and reverses it without waiting for a human to notice; noticing a metric move is not a good use of scarce human attention.
 
 **Kill switch** — a state change (flag flip, traffic shift, routing revert) that one person can operate in seconds without producing a new artefact. If undoing requires the pipeline, it fails exactly when the pipeline is the problem.
 
 **Fleet pause** — the second position of the kill switch when agents are generating continuously: stopping the *source* as well as the *change*, so a fleet does not rebuild the problem on top of the revert.
+
+**Telemetry done-condition** — a task's explicit requirement for the signals it must emit, including a business signal, checked by the critic before the feature is accepted.
+
+**Black-box probe** — a synthetic check that walks a user journey from outside the service to test whether users are served; a missing-heartbeat alert instead checks liveness from a signal pushed by an internal emitter, not whether the journey works.
+
+**Symptom-based alerting** — paging on symptoms that hurt users now or are about to and need human judgment, with less urgent work routed to tickets and debugging context kept on dashboards or in logs.
+
+**Shadow verification (shadow run)** — running a candidate beside the old path on real input and comparing outputs while users keep receiving the control's response, with candidate side effects disabled.
+
+**Artefact promotion (build once)** — passing the same built artefact through stage and production, pinned by digest, and retaining the previous artefact unchanged so rollback needs no rebuild.
+
+**User report (sensor of last resort)** — a tracked report of a problem the user encountered; a confirmed defect feeds the escape ledger, and a report that beats every alert also identifies a missing signal.
 
 ## Running agent fleets: isolation and parallelism \{#running-agent-fleets-isolation-and-parallelism}
 
@@ -353,9 +353,9 @@ its section here. The list grows as the course does.
 
 **Memory drift** — the same decay in project memory: superseded decisions left standing beside the ones that replaced them, read by the agent as current fact.
 
-**Flag debt** — the maintenance cost of a flag and the branches it keeps alive; release flags need an owner, description and removal date, while a deliberately long-lived kill switch still needs ownership and review.
-
 **Superseded decision** — a decision replaced by a later one and marked as no longer in force, kept only as the history of how the current one was reached.
+
+**Flag debt** — the maintenance cost of a flag and the branches it keeps alive. Release flags get an owner and a removal date; a long-lived kill switch gets an owner and a periodic review instead of an expiry.
 
 ## Cost and the economics of agent work \{#cost-and-the-economics-of-agent-work}
 
