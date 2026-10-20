@@ -13,7 +13,7 @@ nie štvrtá, piata a šiesta fáza.
 Sú to zároveň tie tri, ktoré odlišujú demo od produkcie. Preto stoja na konci prvej časti a preto sa
 na ne na pohovoroch pýtajú najviac.
 
-## Čo je vnútri
+## Čo je vnútri \{#whats-inside}
 
 - **[Evaluácia](./evaluation/index.md)** — ako zistíš, že systém funguje, namiesto toho, aby si tomu
   veril. Vyhľadávanie a generovanie sa kazia inak a opravujú sa inými pákami, takže sa aj merajú

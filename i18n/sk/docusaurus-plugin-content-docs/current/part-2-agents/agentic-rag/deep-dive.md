@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Najprv jedna hranica, lebo o toto územie sa delia dve susedné lekcie. Všeobecná vrstva riadenia slučky (plan-and-execute oproti ReActu ako stratégie, rozpočty krokov, detekcia zacyklenia, reflexia nad celou trajektóriou) patrí do lekcie [plánovanie a slučky](../planning-loops/index.md). Táto stránka ostáva ukotvená na vyhľadávaní ako akcii: kedykoľvek treba všeobecnú myšlienku, dostane jeden riadok špecifický pre vyhľadávanie a odkaz tam, nikdy nie nové odvodzovanie.
 
-## Zo sebaopravy k pomenovaným vzorom vyhľadávania
+## Zo sebaopravy k pomenovaným vzorom vyhľadávania \{#from-self-correction-to-named-retrieval-patterns}
 
 Sebaoprava a iteratívne vyhľadávanie boli v prvej časti mechanizmy v abstraktnej rovine. Majú aj konkrétne, publikované podoby. Tri pomenované architektúry — každá je iná odpoveď na tú istú otázku: kedy a ako sa slučka rozhodne vyhľadávať, vyhľadať znova alebo zastaviť?
 
@@ -48,7 +48,7 @@ Je tu aj voľba stratégie, ktorá je vlastná práve vyhľadávaniu. Vyhľadáv
 
 Kedy po ničom z toho nesiahať: Self-RAG potrebuje zvlášť natrénovaný model. CRAG aj adaptívny RAG pridávajú hodnotiteľa alebo klasifikátor — náklad navyše a nové riziko zlyhania: hodnotiteľ sa môže pomýliť, zatajiť dobrý úryvok alebo spustiť zbytočné webové vyhľadávanie, ktoré dovlečie horší kontext, než aký nahradilo. Pri mnohých korpusoch solídny statický retriever (vyhľadávač) plus jednoduchý filter relevancie poráža naučeného hodnotiteľa na celej čiare. Rovnaká disciplína ako všade v Časti II príručky — zvoľ najjednoduchšiu úroveň, ktorá úlohu vyrieši, a zložitosť sa oplatí len vtedy, keď ju slučka naozaj potrebuje.
 
-## Ako udržať slučku vyhľadávania konvergentnú a ohraničiť ju
+## Ako udržať slučku vyhľadávania konvergentnú a ohraničiť ju \{#keeping-the-retrieval-loop-convergent-and-bounding-it}
 
 Keď vyhľadávanie beží v slučke, môže sa stať, že sa nezastaví — z tej istej príčiny ako ktorákoľvek slučka agenta; všeobecný príbeh **nezastavenia cyklu (non-termination)** je v lekcii [plánovanie a slučky](../planning-loops/index.md). Vyhľadávanie má dve vlastné podoby tohto problému.
 
@@ -64,7 +64,7 @@ Medzi tými dvoma stojí **detekcia zacyklenia (loop detection)** pre vyhľadáv
 
 Kedy z tohto nestavať nič: systém s jediným rozhodnutím (čistý router) sa točiť fyzicky nedokáže — je to jedno rozhodnutie a žiadna slučka, nie je kam sa vracať. Celý ten aparát rozpočtov, kontrol dostatočnosti a detekcie zacyklenia je náklad, ktorý na seba berieš až vtedy, keď sa zaviažeš púšťať plnú slučku. Ak tvoju úlohu vyrieši jediné rozhodnutie o smerovaní, nič z toho nepotrebuješ.
 
-## Ako odovzdať nájdený kontext medzi krokmi
+## Ako odovzdať nájdený kontext medzi krokmi \{#handing-retrieved-context-between-hops}
 
 Toto je časť, ktorú susedné lekcie pokrývajú najmenej — a zároveň tá, ktorá najviac rozhoduje, či multi-hop agent (viackrokový) funguje. Každý krok vysype svoje nájdené úryvky do kontextu. Sprav to naivne cez päťkrokovú trajektóriu a kontext napuchne: cena stúpa s každým volaním a lost-in-the-middle (z lekcie o generovaní) začne zavadzať presne vtedy, keď má agent najviac vecí, ktoré si treba udržať pohromade.
 
@@ -87,7 +87,7 @@ flowchart TB
     R3 --> Ans["Odpoveď s odkazom na zdroj"]
 ```
 
-## Ako hodnotiť trajektóriu vyhľadávania
+## Ako hodnotiť trajektóriu vyhľadávania \{#evaluating-the-retrieval-trajectory}
 
 Prvá časť povedala, že evaluácia teraz „meria kvalitu trajektórie“. Pri agentickom RAG sa to rozdvojuje na **výsledok a proces** a práve v procesnej polovici žije hodnotenie špecifické pre vyhľadávanie; a len keď tie dve udržíš od seba, dá sa pri zlom behu dohľadať, kde sa stala chyba.
 
@@ -103,7 +103,7 @@ Predpoklad, ktorý sa oplatí povedať priamo: *trajektóriu, ktorú nevidíš, 
 
 A ešte raz zdržanlivosť. Systém s jediným rozhodnutím (čistý router) nemá trajektóriu, ktorú by bolo čo hodnotiť (jedno rozhodnutie a potom statická cesta), takže stačí hodnotenie výsledku. Neinštrumentuj priamku, akoby bola slučka; aparát na hodnotenie trajektórie je náklad, ktorý na seba berieš iba vtedy, keď je naozaj čo hodnotiť.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Sebaoprava a iteratívne vyhľadávanie z prvej časti majú pomenované, publikované podoby: Self-RAG robí rozhodnutie o vyhľadaní a ohodnotení priamo natrénovanými reflexnými tokenmi; CRAG stavia pred generovanie samostatného hodnotiteľa so záložným webovým vyhľadávaním; adaptívny RAG klasifikuje zložitosť dopytu a smeruje ho na najlacnejšiu dostačujúcu stratégiu. Všetky tri menia „rozhodni sa, či vyhľadávať“ na naučené rozhodnutie — a všetky tri pridávajú náklad a nové riziko zlyhania, takže dobrý statický retriever plus filter relevancie často vyhrá.
 - Sebaopravu pri vyhľadávaní (ohodnoť *tento* úryvok) drž oddelene od reflexie pri plánovaní (ohodnoť *celý* plán) — ten istý inštinkt, iná rovina pohľadu.

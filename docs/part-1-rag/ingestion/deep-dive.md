@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Part 1](./index.md) built ingestion from two pillars: chunking — the size tradeoff, the strategies from fixed to structure-aware, the metadata you lay down — and embedding models — the bi-/cross-encoder split, the axes you choose along, cosine, the two pitfalls. Three things it left underdeveloped, and this page takes them on. First: Part 1 quietly assumed you already had clean text to chunk. In the enterprise that assumption is exactly where quality dies silently — the input isn't prose but PDFs, scans, tables, and HTML, and something has to turn that into the text you chunk. Second: even with clean text, a chunk torn out of its document loses the surrounding context, and there are techniques that give it back. Third: you took the embedding model off the shelf, but you can fit it to your domain, your budget, and your languages. So, in order: (1) document parsing; (2) advanced chunking — late chunking and contextual retrieval; (3) embeddings in depth — fine-tuning, Matryoshka dimensionality truncation, multilingual. Part 1 is assumed throughout — the chunk-size tradeoff and the bi-/cross-encoder distinction are not re-taught, only built on.
 
-## Parsing: the stage that caps everything downstream
+## Parsing: the stage that caps everything downstream \{#parsing-the-stage-that-caps-everything-downstream}
 
 Part 1's pipeline started at "chunk the document." But something has to turn a document *into* the text you chunk, and that step is where enterprise RAG most often fails silently. The rule is unforgiving: garbage in, garbage out. Every chunking strategy and every embedding trick further down is capped by the quality of the text you extracted. If the parser mangled the input, no downstream cleverness recovers it — you're chunking nonsense and embedding nonsense faithfully.
 
@@ -48,7 +48,7 @@ Parsing feeds Part 1's structure-aware chunking and its heading-path and table m
 
 :::
 
-## Advanced chunking: give a chunk back its context
+## Advanced chunking: give a chunk back its context \{#advanced-chunking-give-a-chunk-back-its-context}
 
 Part 1's core chunking tension was that a chunk embedded in isolation loses the context around it — "in the third quarter it grew 20%" is useless once the paragraph naming the company and the year is in a different chunk. Two techniques from 2024 attack that loss, at different moments in the pipeline. They're worth setting side by side, because they're the same medicine applied at two different sites.
 
@@ -75,23 +75,23 @@ The appeal is how little it costs. Late chunking changes *when* you pool, not wh
 
 Neither excludes the other — both operate at index time, and you can run both. One naming trap is worth flagging so it doesn't confuse you: Jina's paper also describes late chunking as producing "contextual chunk embeddings," which is nearly the same phrase as Anthropic's **contextual retrieval** but a different technique entirely. Name them cleanly and the collision disappears. And note the third relative you already met: Part 1's parent-document / small-to-big retrieval fixes the *same* context loss, but at query time inside retrieval rather than at index time — one disease, now three treatment sites, with the query-time detail living in the [retrieval deep dive](../retrieval/deep-dive.md).
 
-## Embedding depth: fine-tuning, Matryoshka, multilingual
+## Embedding depth: fine-tuning, Matryoshka, multilingual \{#embedding-depth-fine-tuning-matryoshka-multilingual}
 
 Part 1 said retrieval quality is capped by embedding quality, and that you pick a model along a set of axes. This section is the three levers you pull on the embedding itself once picking off the shelf isn't enough.
 
-### Fine-tuning the model to your domain
+### Fine-tuning the model to your domain \{#fine-tuning-the-model-to-your-domain}
 
 A general embedding model was trained on general web text. Your domain — legal, medical, internal jargon, product codes — may have query-to-passage relationships the base model simply gets wrong, mapping things near that should be far or far that should be near. **Fine-tuning** adapts the vector space to *your* data. The principled mechanism is **contrastive learning** on triples drawn from your domain — a query, a passage that truly answers it, and a passage that doesn't — pulling the true query–passage pairs together in the space and pushing the mismatched ones apart. The **hard negatives**, the plausible-but-wrong passages, are what actually make it work; easy negatives teach the model nothing it didn't already know. The training labels come from mined click and feedback logs, or, when you have none, from **synthetic generation** — an LLM writes plausible queries for each chunk, a common way to bootstrap with no labelled data.
 
 Here Part 1's corollary bites hard. Fine-tuning changes the model, and **changing the model means re-embedding the entire corpus** — query and document must always be encoded by the same model version, or their vectors live in different spaces and retrieval returns garbage. So fine-tuning is a committing, offline decision, not a knob you turn casually. Which sets the "when NOT to": only fine-tune after the evaluation layer has actually shown that a strong general or retrieval-optimised model is the bottleneck. It's high-effort and needs enough domain data to be worth it. Try a better off-the-shelf retrieval model and hybrid search *first* — they clear the bar surprisingly often, and for a fraction of the commitment.
 
-### Matryoshka Representation Learning and truncation
+### Matryoshka Representation Learning and truncation \{#matryoshka-representation-learning-and-truncation}
 
 Part 1 framed dimensionality as a fixed tradeoff: more dimensions are more expressive but cost more memory, slower search, and more money — bigger isn't always better. **Matryoshka Representation Learning (MRL)** (Kusupati et al., arXiv 2205.13147, May 2022; NeurIPS 2022) turns that fixed tradeoff into a dial you can turn *after* the fact. Named for the nested Russian doll, it trains the model so that information is packed **coarse-to-fine into nested prefixes** — the first N dimensions of the vector already form a usable standalone embedding on their own. So you can **truncate** a vector to its first 256, 512, or 1024 dimensions and keep most of the semantic signal, with no re-embedding and no extra forward pass — you just slice the vector and renormalize.
 
 The payoff is one embedding with many operating points. Store and search at a small dimension for speed and memory, and keep the option to use more dimensions where you need the accuracy. It's what makes **adaptive retrieval** practical: a cheap low-dimension first pass over the whole corpus, then a re-score of the shortlist with the full-dimension vectors. The clearest dated example is OpenAI's `text-embedding-3` models (January 2024), whose `dimensions` parameter is built on MRL; OpenAI reports that a `text-embedding-3-large` vector shortened to **256 dimensions still beats the older `text-embedding-ada-002` at its full 1536** on MTEB. The honest bound: truncation *does* cost some accuracy against the full vector — it's a controlled trade you measure against your own metrics, not a free lunch — and it only works on a model *trained* for MRL. You cannot chop a normal embedding and expect the prefix to hold up.
 
-### Multilingual specifics
+### Multilingual specifics \{#multilingual-specifics}
 
 Part 1 flagged language and domain as a selection axis and called multilingual critical for the enterprise. The mastery detail is what "multilingual" actually has to buy you: a **shared cross-lingual vector space**, where the same meaning in different languages lands at nearby vectors, so a query in one language retrieves passages in another. That cross-lingual retrieval is exactly what an enterprise corpus mixing languages needs — and it's the property most easily assumed and least often verified. Three failure modes are worth checking for directly:
 
@@ -101,7 +101,7 @@ Part 1 flagged language and domain as a selection axis and called multilingual c
 
 A handful of models are reasonable starting points, offered honestly and not as a benchmark: multilingual-E5 (Microsoft, 2024), BGE-M3 (BAAI, 2024, multilingual and multi-granularity), Cohere Embed multilingual, and IBM's granite-embedding multilingual (278M). And the bridge back to the first lever: for a specific language-plus-domain, fine-tuning — or picking a model explicitly trained for cross-lingual retrieval — beats a generic multilingual model. The practical enterprise line ties all of §3 together: measure on your own languages and domain in the [evaluation](../cross-cutting/evaluation/index.md) layer, because a published multilingual leaderboard averages over exactly the languages you may not have.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **Parsing is the upstream cap on the whole ingestion layer.** The text you extract bounds every chunking and embedding technique downstream; a flattened table can never be un-flattened later, so this is where enterprise RAG most often fails silently.
 - **Layout-aware parsing detects structure first and extracts second** — regions and reading order before text — preserving the tables and hierarchy that Part 1's structure-aware chunking and metadata depend on; use it (and OCR for scans) exactly when documents are tabular, multi-column, or scanned, and a cheap flat extractor when they aren't.

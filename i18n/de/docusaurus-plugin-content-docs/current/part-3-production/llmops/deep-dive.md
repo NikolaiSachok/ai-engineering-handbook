@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Drei Themen dieser Seite überschneiden sich mit Vertiefungen, die die Theorie dahinter schon behandeln; sie sind deshalb verlinkt und werden hier nicht neu hergeleitet. Die Mechanik der Zuverlässigkeit aus der SRE-Schule – wie Sie SLIs wählen, ein SLO über einen Zeitraum setzen, das Fehlerbudget als Abstand zu den vollen 100 % berechnen, Alerts auf die Burn Rate setzen, darauf bestehen, dass mindestens ein SLI die Qualität misst, und zur Laufzeit je Anfrage weiche und harte Obergrenzen durchsetzen – steht in der [Vertiefung zur Observability](../../part-1-rag/cross-cutting/observability/deep-dive.md). Dort steht auch die andere Hälfte einer Regression: eine statistisch belastbare Verschlechterung der Qualität überhaupt zu *erkennen* und sie über die Spans eines Traces der Stufe *zuzuordnen*, die sie verursacht hat, um die auffälligen Traces danach in den Goldstandard zu überführen. Und die Mechanik der Preise je Plattform – die Rabatte für eine zugesagte Nutzung, die Faktoren des Prompt-Cache, die Gestalt des Batch-Rabatts, der Egress zwischen Regionen – steht in der [Vertiefung zu den Cloud-KI-Plattformen](../cloud-platforms/deep-dive.md). Was diese Seite von Anfang bis Ende selbst behandelt, ist der Rest: der Betrieb des Fine-Tunings, die Governance der Ausgaben auf Ebene der Organisation, welche Rolle Freigabe und Rollback bei einer erkannten Regression spielen, Fehlerbudgets als schriftlich vereinbarter Prozess der Organisation und die Infrastruktur der Queues, die Arbeitslasten im Batch trägt.
 
-## Wann Sie die Gewichte ändern
+## Wann Sie die Gewichte ändern \{#when-to-change-the-weights}
 
 :::tip[▶ Video]
 
@@ -54,7 +54,7 @@ Die Größe des Korpus gegen das Kontextfenster ist der Zweig, den der Baum oben
 
 Keines der beiden Kriterien ersetzt das Argument der Aktualität von oben; beide laufen davor. Die Aktualität sagt Ihnen, ob Fakten in Gewichten leben *können*. Diese zwei sagen Ihnen, ob sie es *dürfen* – und ob Sie die Maschinerie überhaupt brauchen.
 
-## Die Kosten steuern
+## Die Kosten steuern \{#governing-the-spend}
 
 Die Hebel bei den Preisen der Plattformen – Rabatte für eine zugesagte Nutzung, die Faktoren des Prompt-Cache, der Batch-Tarif zu etwa der Hälfte, der Egress zwischen Regionen – sind das Thema der Vertiefung zu den Cloud-KI-Plattformen, und an jedem einzelnen davon zu ziehen ist eine technische Entscheidung. Die Governance liegt eine Ebene darüber. Ihre Aufgabe ist, die Kosten über Teams hinweg sichtbar, zugeordnet und begrenzt zu halten, damit an den Hebeln tatsächlich gezogen wird und kein einzelnes Team das Budget still aufbrauchen kann. Teil 1 hat die Budgets am Gateway verortet; hier steht die Organisation, die darum herum gebaut wird.
 
@@ -68,7 +68,7 @@ Drei Steuerungen auf Ebene der Organisation setzen die Grenzen, und alle drei si
 
 Jede dieser Steuerungen versagt auf eine vorhersehbare Weise, wenn sie fehlt. Wird per Chargeback abgerechnet, bevor die Zuordnung belastbar ist, führt das zu Streit und zu Spielchen. Ein Budget mit nur weichen Obergrenzen erzeugt Alarme, auf die niemand reagiert, während die Rechnung trotzdem kommt. Und ohne einen voreingestellten Weg zum günstigen Modell zahlt jede Anfrage aus reiner Trägheit den Preis des Spitzenmodells.
 
-## Die Freigabe vor dem Release und der Weg zurück
+## Die Freigabe vor dem Release und der Weg zurück \{#the-release-gate-and-the-rollback-path}
 
 Eine Regression zu *erkennen* – eine statistisch belastbare Verschlechterung der Qualität von einem schlechten Nachmittag zu unterscheiden – und sie über die Spans eines Traces einer Stufe *zuzuordnen*, um die auffälligen Traces danach zu neuen Fällen im Goldstandard zu machen, ist Thema der Vertiefung zur Observability. Dieser Abschnitt behandelt die andere Hälfte: wie das Release mit einer Regression *umgeht*, sobald sie erkannt ist. Entweder es blockiert sie, oder es nimmt sie zurück.
 
@@ -90,7 +90,7 @@ flowchart TB
     W -->|nein| RB["Automatischer Rollback:<br/>Prompt / Modell / Index / Adapter wieder festlegen"]
 ```
 
-## Fehlerbudgets als Vereinbarung in der Organisation
+## Fehlerbudgets als Vereinbarung in der Organisation \{#error-budgets-as-an-organisational-contract}
 
 Die Mechanik – SLIs wählen, ein SLO über einen Zeitraum setzen, das Fehlerbudget als Abstand zu den vollen 100 % berechnen, auf die Burn Rate alarmieren und die Regel, dass mindestens ein SLI ein Qualitäts-SLI aus der Online-Evaluierung sein muss – gehört ganz der Vertiefung zur Observability. Dieser Abschnitt behandelt, was aus diesen Zahlen eine Entscheidung macht, an die eine Organisation gebunden ist: die **Richtlinie zum Fehlerbudget**.
 
@@ -100,7 +100,7 @@ Zwei Dinge ändern sich, wenn diese Richtlinie für eine LLM-Anwendung gilt. Ers
 
 Diese Verständigung ist ein Vertrag zwischen zwei Seiten, denn das Budget hat zwei Eigentümer. Die Produktseite verbraucht es – jedes Feature und jede Änderung zehrt daran –, und die Seite der Zuverlässigkeit bewacht es und hat die Befugnis, den Stopp auszusprechen. Die Richtlinie ist das, was diese beiden Seiten vorher aushandeln, damit über den Stopp nicht mitten in einem Vorfall neu verhandelt wird, wenn keine der beiden zum Nachgeben aufgelegt ist. Fehlt die Unterschrift, kommt der Stopp einfach nie; das Budget wird zum Theater. Stützen Sie ihn nur auf einen SLI für die Verfügbarkeit, bekommen Sie grüne Dashboards über einem halluzinierenden Dienst – das Verfügbarkeitstheater aus der Vertiefung zur Observability, hier von der Seite der Governance aus erreicht.
 
-## Queues für die Arbeit, die warten kann
+## Queues für die Arbeit, die warten kann \{#queues-for-the-work-that-can-wait}
 
 Nicht alle Arbeit mit einem Sprachmodell ist interaktiv. Das nächtliche Anreichern des Korpus, Nachberechnungen, das Erzeugen synthetischer Daten für die Evaluierung, Klassifizierung in großen Mengen – diese Arbeit braucht viele Ressourcen und ist langsam, und sie soll nicht mit dem laufenden Verkehr um dieselbe Kapazität ringen. Eine **Job-Queue** trennt die Rate, mit der Arbeit ankommt, von der Rate, mit der sie abgearbeitet wird. Ein Producer stellt einen Job – die Arbeitseinheit, die durch die Queue läuft – in die Queue und bekommt sofort eine Job-ID zurück, ohne dass irgendetwas blockiert; ein Pool aus Workern arbeitet die Queue in dem Tempo ab, das Hardware und die Rate Limits des Anbieters zulassen; und die Ergebnisse landen in einem Ergebnisspeicher; der Client holt sie dort ab oder wird per Webhook benachrichtigt.
 
@@ -131,7 +131,7 @@ flowchart TB
     Q -.->|"Alter des ältesten Jobs zu hoch"| SHED["Last abweisen: 429 / Producer drosseln / Worker-Pool vergrößern"]
 ```
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Tunen Sie zuletzt, nachdem Prompt und RAG an ihre Kapazitätsgrenze gestoßen sind, und nur bei einer Lücke im Verhalten, im Format, im Ton oder in einer Fähigkeit – niemals für aktuelles Wissen, das ist die Aufgabe des Retrievers. Ein angepasstes Modell ist ein festgelegtes Artefakt, das dieselbe Prüfung durchläuft wie jedes Deployment; zurückgenommen wird es, indem Sie den Vorgänger wieder festlegen oder den LoRA-Adapter abhängen.
 - Zwei Kriterien laufen vor der Frage nach Wissen gegen Verhalten: Berechtigungen je Person lassen sich als Filter des Retrievals ausdrücken und nicht als Gewicht, ein abgestufter Zugang entscheidet die Architektur also von allein; und passt das Korpus hinein und bleibt es klein, gibt es womöglich weder etwas abzurufen noch etwas zu tunen – wobei hineinpassen nicht dasselbe ist wie beachtet werden.

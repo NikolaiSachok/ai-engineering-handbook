@@ -49,7 +49,7 @@ verdict under that attempt says so.
 
 <Reveal>
 
-## Attempt A — the common answer
+## Attempt A — the common answer \{#attempt-a--the-common-answer}
 
 *Persona given to the agent: Has shipped LLM features that work and follows the agent-framework and eval-tooling ecosystem closely. Thinks in components, layers and rubrics. Has never had to work without labels — every feature they evaluated came with a dataset, a benchmark, or a human reading the output, so "define the metric" has always meant choosing one rather than manufacturing a signal from nothing.*
 
@@ -125,7 +125,7 @@ spent before the eval runs. A calls that budget "the scarcest thing I have" and 
 
 </Verdict>
 
-## Attempt B — the strong answer
+## Attempt B — the strong answer \{#attempt-b--the-strong-answer}
 
 *Persona given to the agent: Has run a multi-step agent that takes real actions in production and been paged for it. Asks what signal exists, how late it arrives, and who has time to look at it, before designing any measurement. Has watched a metric go up while the business got worse, so attacks a success definition before using it. Prices reviewer hours and judge calls as it goes, and does arithmetic out loud when a number is load-bearing.*
 
@@ -200,7 +200,7 @@ never stops a bad change from shipping.
 
 </Verdict>
 
-## Attempt C — the over-built answer
+## Attempt C — the over-built answer \{#attempt-c--the-over-built-answer}
 
 *Persona given to the agent: Designs for where the system will be in two years. Has watched teams ship the quick version and then spend years unable to change it, and concluded that under-building is the expensive mistake. Turns the ad-hoc thing systematic — a schema instead of a convention, a platform instead of a script, a dataset instead of a sample. Does not naturally ask whether the current team, at its current size, can staff what has been drawn.*
 
@@ -276,11 +276,11 @@ and a half weeks of their entire output for one build, and C has committed that 
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 Each disagreement below is a decision you will have to make yourself.
 
-### What reads the trace: a judge or an assertion
+### What reads the trace: a judge or an assertion \{#what-reads-the-trace-a-judge-or-an-assertion}
 
 A puts the primary quality signal in an LLM judge that scores every trace on four or five dimensions, 1–5,
 against written anchors — "this is where the real signal lives". B demotes the judge to a stratified 3–5%
@@ -291,7 +291,7 @@ judge scoring credit-appropriateness produces a number nobody can validate. *Did
 scan before rerouting* is answerable from the state the agent already saw. A judge is a good tool for text
 with a reference; the preconditions are checkable without one.
 
-### The escalation queue: free labels or paid review
+### The escalation queue: free labels or paid review \{#the-escalation-queue-free-labels-or-paid-review}
 
 C treats the 15% that escalate — about 1,350 cases a day — as data already flowing ("that disposition is a
 label") and gives reviewer time only to cases the automated graders cannot call. B spends 150 of its 800
@@ -303,7 +303,7 @@ reviews are actually buying. And a human who closes a case with a credit produce
 rejects everywhere else, so even the direction the dispositions do cover is a comparator with unmeasured
 reviewer variance, not ground truth.
 
-### Correct-action labels: author them or grade invariants
+### Correct-action labels: author them or grade invariants \{#correct-action-labels-author-them-or-grade-invariants}
 
 C builds a policy spec per exception type plus ~1,500 adjudicated cases as the grading substrate. B never
 authors correct-action labels at all; the nearest it comes is a costed refusal: "I'm not measuring the
@@ -316,7 +316,7 @@ path per case. Credit-versus-reprint is a business tradeoff with no correct labe
 answer, and staffing overrides it here: 1,500 adjudicated cases is a hiring decision and 300 replayable ones
 is not, so B's version is the one that exists.
 
-### Degraded input: an infrastructure invariant or an eval target
+### Degraded input: an infrastructure invariant or an eval target \{#degraded-input-an-infrastructure-invariant-or-an-eval-target}
 
 A tags surge cases and tracks the same rubric scores on them separately. B does both: it calls the surge "a
 load-and-degraded-input scenario" and then declines to trust the agent anyway, hard-capping reroute and
@@ -327,7 +327,7 @@ many nine-dollar reroutes a bad hour can spend while nothing else is ready, and 
 of the three precise enough that it can fail before a deploy. A's tagged score slice is the weakest of the
 three — it tells you what the surge cost after it was spent.
 
-## The principle
+## The principle \{#the-principle}
 
 > When the only ground-truth label is late and confounded, your evaluation is the signal that already arrives
 > for free plus the assertions you can check without a human plus the review hours you can actually staff —
@@ -355,7 +355,7 @@ three — it tells you what the surge cost after it was spent.
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 

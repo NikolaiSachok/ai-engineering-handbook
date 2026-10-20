@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Vorher eine Abgrenzung, denn zwei Nachbarlektionen teilen sich dieses Gebiet. Die *allgemeine* Schleifensteuerung – `Plan-and-Execute` gegen ReAct (Reasoning + Acting) als Strategien, Schrittbudgets, die Schleifenerkennung, die Reflexion über den ganzen Pfad – gehört in [Planung und Schleifen](../planning-loops/index.md). Diese Seite bleibt beim **Retrieval als Aktion** verankert: Wo ein allgemeiner Gedanke gebraucht wird, bekommt er einen retrievalspezifischen Satz und einen Verweis dorthin, nie eine zweite Herleitung.
 
-## Von der Selbstkorrektur zu den benannten Retrieval-Mustern
+## Von der Selbstkorrektur zu den benannten Retrieval-Mustern \{#from-self-correction-to-named-retrieval-patterns}
 
 Die Selbstkorrektur und das iterative Retrieval aus Teil 1 waren Mechanismen, die im Abstrakten beschrieben blieben. Inzwischen gibt es dafür konkrete, veröffentlichte Bauformen. Drei benannte Architekturen lohnen sich, weil jede eine andere Antwort auf dieselbe Frage gibt: *Wann und wie entscheidet die Schleife, abzurufen, erneut abzurufen oder anzuhalten?*
 
@@ -42,7 +42,7 @@ Es gibt außerdem eine Strategiewahl, die nur für das Retrieval gilt. Ein Retri
 
 Wann Sie zu all dem *nicht* greifen: Self-RAG braucht ein eigens trainiertes Modell. CRAG und Adaptive RAG setzen einen Bewerter oder einen Klassifikator davor – zusätzliche Kosten und eine neue Fehlerfläche: Der Bewerter kann danebenliegen, eine gute Passage aussortieren oder eine überflüssige Websuche auslösen, die schlechteren Kontext hereinholt als den, den sie ersetzt. Für viele Korpora schlägt ein solider statischer Retriever mit einem einfachen Relevanzfilter einen gelernten Bewerter deutlich. Es ist dieselbe Disziplin wie überall in Teil II: die einfachste Stufe nehmen, die die Aufgabe löst, und die Schleife ihre Komplexität verdienen lassen.
 
-## Damit die Retrieval-Schleife anhält – und die harte Obergrenze dahinter
+## Damit die Retrieval-Schleife anhält – und die harte Obergrenze dahinter \{#keeping-the-retrieval-loop-convergent-and-bounding-it}
 
 Sobald das Retrieval in einer Schleife läuft, kann es passieren, dass sie nicht mehr anhält – aus denselben Gründen wie bei jeder anderen Schleife eines Agenten. Die allgemeine Darstellung dazu steht in [Planung und Schleifen](../planning-loops/index.md). Beim Retrieval hat sie zwei eigene Gestalten.
 
@@ -58,7 +58,7 @@ Dazwischen sitzt die **Schleifenerkennung** für das Retrieval. Die allgemeine F
 
 Wann Sie das alles *nicht* bauen: Ein System, das nur routet – eine Entscheidung, keine Schleife –, kann sich gar nicht im Kreis drehen; es gibt keine Stelle, an die es zurückspringen könnte. Der ganze Apparat aus Budgets, Prüfungen auf ausreichenden Kontext und Schleifenerkennung ist ein Aufwand, den Sie erst dann auf sich nehmen, wenn Sie sich auf die volle Schleife festlegen. Löst eine einzelne Routing-Entscheidung Ihre Aufgabe, brauchen Sie nichts davon.
 
-## Was ein Hop an den nächsten weitergibt
+## Was ein Hop an den nächsten weitergibt \{#handing-retrieved-context-between-hops}
 
 Das ist der Teil, den die Nachbarlektionen am wenigsten abdecken, und zugleich der Teil, an dem sich am stärksten entscheidet, ob ein Agent über mehrere Hops funktioniert. Jeder Hop kippt seine abgerufenen Passagen in den Kontext. Tun Sie das über einen Pfad mit fünf Hops unbedacht, dann bläht sich der Kontext auf: Die Kosten steigen mit jeder Anfrage, und Lost-in-the-Middle aus der Lektion zur Generation fängt genau dann an zu beißen, wenn der Agent am meisten auseinanderzuhalten hat.
 
@@ -79,7 +79,7 @@ flowchart TB
     R3 --> Ans["Antwort mit Herkunft"]
 ```
 
-## Den ganzen Pfad des Retrievals bewerten
+## Den ganzen Pfad des Retrievals bewerten \{#evaluating-the-retrieval-trajectory}
 
 Teil 1 hat gesagt, die Evaluierung messe jetzt „die Qualität des Pfades“. Für Agentic RAG zerfällt das in zwei Hälften – das Ergebnis und den Ablauf –, und in der zweiten Hälfte sitzt die retrievalspezifische Bewertung; die beiden auseinanderzuhalten ist das, was einen misslungenen Durchlauf überhaupt untersuchbar macht.
 
@@ -95,7 +95,7 @@ Womit die Voraussetzung ausgesprochen ist, und sie gehört klar gesagt: *Einen P
 
 Und noch einmal die Zurückhaltung. Ein System, das nur routet, hat keinen Pfad zu bewerten – eine Entscheidung, danach ein statischer Weg –, also reicht die Evaluierung des Ergebnisses allein. Instrumentieren Sie keine gerade Linie, als wäre sie eine Schleife; die Mechanik für die Bewertung des Pfades ist ein Aufwand, den Sie erst dann auf sich nehmen, wenn es wirklich einen Pfad zu beurteilen gibt.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Die Selbstkorrektur und das iterative Retrieval aus Teil 1 haben inzwischen konkrete, veröffentlichte Bauformen: Self-RAG trifft die Entscheidung über Abrufen und Bewerten mit trainierten `Reflection-Tokens`, schon während es schreibt; CRAG setzt einen eigenen Bewerter vor die Generation, mit der Websuche als Ausweg; Adaptive RAG stuft die Komplexität der Frage ein und leitet an die billigste Strategie weiter, die noch ausreicht. Alle drei machen aus „entscheide, ob du abrufst“ eine gelernte Entscheidung – und alle drei kosten zusätzlich und bringen eine neue Fehlerfläche mit, weshalb ein guter statischer Retriever mit einem Relevanzfilter oft gewinnt.
 - Halten Sie die Selbstkorrektur des Retrievals (bewertet *diese Passage*) von der Reflexion der Planung (bewertet *den ganzen Plan*) getrennt – derselbe Instinkt, eine andere Flughöhe.

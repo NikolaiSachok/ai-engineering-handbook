@@ -33,7 +33,7 @@ wählen, wie die Aufgabe verlangt, und nicht so viel wie möglich. (Das Video is
 
 :::
 
-## Tool-Einsatz – derselbe Ablauf, drei Nachrichtenformate
+## Tool-Einsatz – derselbe Ablauf, drei Nachrichtenformate \{#tool-use--the-same-round-trip-three-wire-shapes}
 
 Jeder Agent bekommt auf demselben Weg Hände. Sie deklarieren ein Tool über drei Dinge: einen Namen, eine
 Beschreibung in Worten und ein JSON Schema seiner Argumente. Das Modell gibt eine **strukturierte Absicht**
@@ -85,7 +85,7 @@ nicht aus der API, die sie transportiert. Enge Schemata und ein kleiner, übersc
 helfen bei allen dreien, und kein Anbieter nimmt Ihnen diese Arbeit ab
 ([Tool-Einsatz](./tool-use/index.md)).
 
-## An Daten kommen – Retrieval ist ein Tool mit Quellenangaben
+## An Daten kommen – Retrieval ist ein Tool mit Quellenangaben \{#getting-data--retrieval-is-a-tool-with-citations}
 
 Retrieval ist nichts anderes als ein Tool, für das sich der Agent entscheidet. Er greift zum Web oder zu einer
 Datei wie zu jeder anderen Funktion, und die Antwort kommt mit **Quellenangaben** zurück, damit ein Mensch das
@@ -120,7 +120,7 @@ erlauben einem Menschen, Faithfulness zu prüfen; sie verbürgen sie nicht. Und 
 auseinanderzuhalten, ist die Aufteilung in das Fehlerbild des Retrievals und das Fehlerbild der Generation aus
 Teil I genau das richtige Werkzeug ([Agentic RAG](./agentic-rag/index.md)).
 
-## Planung und Schleifen – Rechenzeit gegen bessere Entscheidungen, unter einer Obergrenze
+## Planung und Schleifen – Rechenzeit gegen bessere Entscheidungen, unter einer Obergrenze \{#planning-and-loops--spend-compute-to-decide-better-then-cap-it}
 
 Die Schleife des Agenten lautet `nachdenken → entscheiden → handeln → beobachten`, so lange wiederholt, bis eine
 Abbruchbedingung greift. Lassen Sie das Modell vor dem Handeln ausdrücklich nachdenken, entscheidet es besser;
@@ -155,7 +155,7 @@ die, die das Ziel aus den Augen verliert, sind genau die Fehlerbilder, vor denen
 [Planung und Schleifen](./planning-loops/index.md) gewarnt hat, und das Schrittbudget ist die letzte Sicherung
 dagegen – gleichgültig, wie viel Nachdenken Sie eingekauft haben.
 
-## Selbstheilung – den Fehler zurückgeben und den Durchlauf fortsetzen können
+## Selbstheilung – den Fehler zurückgeben und den Durchlauf fortsetzen können \{#self-recovery--feed-the-error-back-and-make-the-run-resumable}
 
 Ein guter Agent erholt sich, statt zu sterben. Ein Fehler aus einem Tool geht als *für das Modell lesbarer Text*
 zurück, damit das Modell sich korrigiert und es noch einmal versucht; und längere Arbeit lässt sich
@@ -188,7 +188,7 @@ Sie sagen können, *was tatsächlich fertig geworden ist*. Die zweite Hälfte is
 eine Disziplin, und sie führt geradewegs zu dem Fall aus der Praxis, in dem der Fortschritt am tatsächlichen
 Zustand gemessen wird und nicht an einem Zeitstempel ([Planung und Schleifen](./planning-loops/index.md)).
 
-## Hooks und Guardrails – Prüfungen vorschalten, statt der Schleife zu vertrauen
+## Hooks und Guardrails – Prüfungen vorschalten, statt der Schleife zu vertrauen \{#hooks-and-guardrails--interpose-checks-dont-trust-the-loop}
 
 Der Schleife vertrauen Sie nicht blind. Sie schalten Prüfungen um die Tool-Calls und um die Ein- und Ausgaben
 herum vor: einen vorgelagerten Hook, der vor einer gefährlichen Aktion blockieren oder eine Bestätigung
@@ -225,7 +225,7 @@ ein Tool *schreibt oder handelt*, erreichbar über eine Prompt-Injection – des
 einen Menschen bei gefährlichen Aktionen die eigentliche Sicherung. Ein Hook, der nur protokolliert, hält gar
 nichts auf ([Tool-Einsatz](./tool-use/index.md)).
 
-## Multi-Agenten-Systeme – die Arbeit auf einen Orchestrator und isolierte Worker verteilen
+## Multi-Agenten-Systeme – die Arbeit auf einen Orchestrator und isolierte Worker verteilen \{#multi-agent--split-into-an-orchestrator-and-isolated-workers}
 
 Nimmt sich eine einzelne Schleife zu viel vor, teilen Sie sie auf: ein Orchestrator und dazu isolierte Worker,
 jeder mit seinem eigenen Kontext, jeder mit einer Aufgabe und einem Ergebnis, das der Orchestrator
@@ -267,7 +267,7 @@ Arbeitsbereich teilen, geraten sich in die Quere. Das ist die Frage „wann **ni
 [Multi-Agenten-Systeme](./multi-agent/index.md), und sie führt zu dem Fall aus der Praxis, in dem jeder Worker
 seine eigene Arbeitskopie bekommt.
 
-## MCP – ein Protokoll, mit dem jeder Agent jedes Tool erreicht
+## MCP – ein Protokoll, mit dem jeder Agent jedes Tool erreicht \{#mcp--one-protocol-so-any-agent-talks-to-any-tool}
 
 Die letzte Technik ist der Standard, der Ihnen erspart, jedes Tool immer wieder an jeden Agenten zu kleben.
 Verpacken Sie ein Tool einmal als MCP-Server und schreiben Sie den Client einmal, dann erreicht jeder Agent
@@ -303,7 +303,7 @@ hinausgreifen. Die Abwehr ist dieselbe wie in [MCP und Agentenprotokolle](./mcp/
 geringsten Berechtigungen, nur Server, denen Sie vertrauen, und die Bestätigung durch einen Menschen bei
 gefährlichen Aktionen.
 
-## Sieben Techniken, drei Agenten
+## Sieben Techniken, drei Agenten \{#the-seven-techniques-three-agents}
 
 | Technik | Claude | OpenAI | Gemini |
 |---|---|---|---|
@@ -315,7 +315,7 @@ gefährlichen Aktionen.
 | Multi-Agenten | isolierte Subagenten (nur die letzte Nachricht kommt zurück) | Übergabe gegen Agent-als-Tool | koordinierender Agent + deterministische Workflow-Agenten |
 | MCP | selbst geschrieben; Connector in der API nur entfernt | Mitgründer; größte Auswahl an Transportprotokollen und Anbindungen | `McpToolset`; entferntes MCP „kommt demnächst“ |
 
-## Vier Fälle aus der Praxis – die Techniken im laufenden Betrieb
+## Vier Fälle aus der Praxis – die Techniken im laufenden Betrieb \{#war-stories--the-techniques-when-you-actually-run-agents}
 
 Diese Techniken sind nicht abstrakt. So sehen sie aus, wenn Sie Agenten laufen lassen, um damit wirklich etwas
 zu bauen – mit Absicht allgemein gehalten: nur öffentliche Werkzeuge, keine Geheimnisse.
@@ -349,7 +349,7 @@ Nachrichtenformaten – Claudes Blöcke, OpenAIs typisierte Einträge, Geminis `
 verschieben, und dann noch einmal; was bleibt, ist das Muster. Wer es einmal sieht, schlägt in der Dokumentation
 eines neuen Anbieters nach, statt sie neu zu lernen.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Jeder Agent bekommt auf demselben Weg Hände: Tools deklarieren (Name, Beschreibung, JSON Schema), das Modell
   gibt eine strukturierte Absicht aus, Ihr Code führt sie aus, das Ergebnis geht zurück. Verschieden ist nur das

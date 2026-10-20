@@ -13,7 +13,7 @@ die Schicht, auf die es in der Praxis ankommt; in Stellenanzeigen wird sie zu ei
 Werkzeugnamen. Sie trennt „läuft auf meinem Laptop“ von „läuft unter Last, lässt sich dabei
 beobachten und bleibt im Kostenrahmen“.
 
-## Was Sie hier finden
+## Was Sie hier finden \{#whats-inside}
 
 - **[Bereitstellung und Betrieb – FastAPI + Docker](./serving/index.md)** – ein Modell oder einen Agenten
   als Dienst verpacken: API, Streaming, Container, Inferenz-Engines (*inference server*).
@@ -23,7 +23,7 @@ beobachten und bleibt im Kostenrahmen“.
   Produktivbetrieb: was Sie messen, was Sie absichern, was Sie sehen.
 - **[LLMOps – ausrollen, überwachen, Kosten](./llmops/index.md)** – das Leben des LLM-Systems nach dem Release.
 
-## Voraussetzungen
+## Voraussetzungen \{#prerequisites}
 
 Teil I und Teil II vollständig – Bereitstellung und laufender Betrieb setzen voraus, dass Sie den
 RAG-Agenten selbst schon gebaut haben und verstehen.

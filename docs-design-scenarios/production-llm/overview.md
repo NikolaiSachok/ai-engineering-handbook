@@ -23,7 +23,7 @@ deciding things by that number. Whether the instrument can resolve the improveme
 separate question from whether the improvement is real, and the two get confused most often in exactly the
 situation where the answer matters — a deadline, one measurement, and a decision waiting on it.
 
-## In this track
+## In this track \{#in-this-track}
 
 - **[Making it wrong less often](/design-scenarios/production-llm/making-it-wrong-less-often)** — a customs
   desk whose assistant drafts tariff codes, nine classifiers at two minutes a draft, and one 400-line audit

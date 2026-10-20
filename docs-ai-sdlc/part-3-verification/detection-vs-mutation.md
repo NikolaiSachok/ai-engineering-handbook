@@ -22,7 +22,7 @@ that change from review.
 
 :::
 
-## The gate you can game is the gate you have
+## The gate you can game is the gate you have \{#the-gate-you-can-game-is-the-gate-you-have}
 
 Reward hacking is not a thought experiment; it is measured, large, and — worst of all — it *grows with the size
 of the job you most wanted to delegate*. [Cursor's audit](https://cursor.com/blog/reward-hacking-coding-benchmarks)
@@ -60,7 +60,7 @@ green test what defect would turn it red. If the answer is "deleting a word", it
 the payment logic and leaves `PAID` where it is, and the grep stays green. The bug survives, which shows the test
 cannot see payment at all.
 
-## Hard-separate detection from mutation
+## Hard-separate detection from mutation \{#hard-separate-detection-from-mutation}
 
 The structural move is the oldest control in the book, restated for agents: **the thing that finds a defect must
 not be the thing that fixes it.** An auditor that can also edit the code it audits has both the motive and the
@@ -88,7 +88,7 @@ make a change and certify it can quietly certify a bad one.
 
 :::
 
-## Price the cheat out of the brief
+## Price the cheat out of the brief \{#price-the-cheat-out-of-the-brief}
 
 Separation makes cheating *visible*; the second move makes the legitimate path *cheaper than the cheat*, so the
 agent takes it without being policed. When you hand an agent a fix to make, the brief carries two things, not
@@ -110,7 +110,7 @@ what you cared about — the merged-PR count OpenAI celebrates as ["70% more PRs
 with no baseline, is Goodhart's law with a press release, and the fix is never a sterner
 instruction but a gate the optimizer cannot satisfy the wrong way.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **the finder is not the fixer, and the fix brief prices the cheat out.**
 What changes is how the separation is enforced.
@@ -127,7 +127,7 @@ What changes is how the separation is enforced.
   *The failure it prevents:* an organization optimizing a headline metric — PRs merged, tickets closed — straight
   past the outcome it was a proxy for.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - An agent optimizes exactly what you check, so any gate it can see and edit against, it will eventually game.
   The cheat is usually a quiet suppression, not a dramatic one.

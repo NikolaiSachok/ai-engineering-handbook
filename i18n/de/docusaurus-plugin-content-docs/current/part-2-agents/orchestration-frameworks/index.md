@@ -28,7 +28,7 @@ eine gute Orientierung, bevor es darum geht, was jede Schicht Ihnen einbringt. (
 
 :::
 
-## Der Boilerplate-Code, den Sie sonst selbst schreiben
+## Der Boilerplate-Code, den Sie sonst selbst schreiben \{#what-youd-otherwise-hand-roll}
 
 Beginnen Sie mit der ehrlichen Frage: Was schreiben Sie selbst, wenn Sie das Framework weglassen? Wer ein paar Agenten
 von Grund auf gebaut hat, kennt die Antwort: immer wieder dieselbe Mechanik, und davon eine ganze Menge.
@@ -51,7 +51,7 @@ Nichts davon ist der interessante Teil Ihres Agenten. Es ist der Boilerplate-Cod
 Frameworks lautet, dass es diese Mechanik ein für alle Mal und überall gleich mitbringt, damit in Ihrem Code das Verhalten steht
 und nicht die Verdrahtung.
 
-## Die zentrale Abstraktion: der Agent als Graph, als Zustandsautomat
+## Die zentrale Abstraktion: der Agent als Graph, als Zustandsautomat \{#the-main-abstraction--an-agent-as-a-graph--state-machine}
 
 Hinter den Markennamen kommen die meisten Frameworks bei einem Gedanken zusammen, und LangGraph spricht ihn am klarsten aus:
 Modellieren Sie den Agenten als **Graphen**, als **Zustandsautomaten**. Aus den Schritten werden **Knoten** – das Modell
@@ -66,7 +66,7 @@ Verzweigungen, die deterministisch sind, statt in der frei laufenden Schleife de
 Satz liegt hier der entscheidende Unterschied: Der Graph macht aus einer undurchsichtigen Schleife eine Maschine, die
 sich steuern, einsehen und wieder aufnehmen lässt.
 
-## Das Feld, nach Schichten sortiert
+## Das Feld, nach Schichten sortiert \{#the-players-by-layer}
 
 Die Framework-Landschaft wirkt überfüllt, bis Sie sie danach sortieren, was das jeweilige Werkzeug eigentlich sein will.
 Drei grobe Schichten.
@@ -93,7 +93,7 @@ schnell in Bewegung: Microsoft Agent Framework 1.0 (allgemein verfügbar seit Ap
 Wartungsmodus. Lesen Sie die drei Schichten als Momentaufnahme von Philosophien, nicht als haltbare Rangliste. Lernen Sie
 die Kategorien; die Versionsnummern haben sich verschoben, bevor Sie ausliefern.
 
-## Wiederkehrende Muster im Alltag
+## Wiederkehrende Muster im Alltag \{#typical-patterns-you-actually-use}
 
 In der täglichen Arbeit kommen immer wieder dieselben wenigen Formen vor, und wer sie beim Namen kennt, braucht aus der
 Dokumentation eines Frameworks kaum mehr.
@@ -116,7 +116,7 @@ durch alles hindurch läuft die **Tracing-Anbindung**, [LangSmith](https://www.l
 Beispiel: die Schicht für Observability (Beobachtbarkeit), mit der Sie sehen, was der Graph tatsächlich getan hat. Das
 ist der Gegenstand von [Teil III](../../part-3-production/overview.md), und hier ist die Stelle, an der diese Schicht andockt.
 
-## Wann besser nicht – und was es kostet
+## Wann besser nicht – und was es kostet \{#when-not-to--the-tradeoffs}
 
 Ein Framework ist nicht umsonst, und die Kosten sind das Spiegelbild des Nutzens.
 
@@ -137,7 +137,7 @@ ersparen, was er tut. Holen Sie ein Graph-Framework herein, wenn Sie wirklich st
 Checkpoints, Human-in-the-Loop, Verzweigungen, die Koordination mehrerer Agenten. Für einen einfachen Agenten nehmen Sie
 das SDK des Anbieters direkt und lassen die Schicht weg.
 
-## Wo diese Lektion anschließt
+## Wo diese Lektion anschließt \{#where-it-connects}
 
 Nichts in dieser Lektion ist ein neuer *Begriff*. Frameworks ändern die Gedanken der vorangegangenen Lektionen nicht –
 die Schleife, die Tools, die Planung, die Topologien für mehrere Agenten. Sie verpacken sie und geben sie Ihnen zurück,
@@ -145,7 +145,7 @@ abzüglich des Boilerplate-Codes. Und weil sie dieselben Grundbausteine verpacke
 für Observability und Evaluierung, die [Teil III](../../part-3-production/overview.md) aufgreift: Der Graph, den Sie hier
 gebaut haben, ist genau das, was Sie dort tracen und messen werden.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Ein Orchestrierungs-Framework nimmt Ihnen den Boilerplate-Code ab, den Sie sonst um die eigene Schleife herum
   schreiben: die Mechanik der Schleife, die Verdrahtung der Tool-Calls, Zustand und Gedächtnis, den Kontrollfluss, die

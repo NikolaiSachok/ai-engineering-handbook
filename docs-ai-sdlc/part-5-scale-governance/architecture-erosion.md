@@ -20,7 +20,7 @@ That mechanism joins decisions to code. Keep a decision log that every fix consu
 constraints into executable checks, and agree when repeated patching must give way to redesign. A reversed
 decision stays in that log, marked superseded, so the history never passes for the current rule.
 
-## How erosion gets in: through the small fix
+## How erosion gets in: through the small fix \{#how-erosion-gets-in-through-the-small-fix}
 
 [Andrey Beloborodov, a practitioner who writes about running AI-first development on his own projects](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/),
 describes a project changing its rules without anyone deciding to change its architecture. Duplicates appear,
@@ -56,7 +56,7 @@ constraining and evaluating the work, which is exactly the missing step in the s
 
 :::
 
-## Decision before change: an ADR log that every fix consults
+## Decision before change: an ADR log that every fix consults \{#decision-before-change-an-adr-log-that-every-fix-consults}
 
 In his [account of architectural control as a dynamic system](https://realaillusions.com/ru/materials/sovety_ai_praktika_part3/),
 Beloborodov describes a project that grew to a scale he compares to a small team of 10–20 people. A described
@@ -96,7 +96,7 @@ conformance. Keep additions to the log serial, as [Running agent fleets](./agent
 other accretive artefacts: two agents working in parallel must not each write their own version of the same
 decision.
 
-## Architecture as executable constraints
+## Architecture as executable constraints \{#architecture-as-executable-constraints}
 
 An ADR explains why a boundary exists. A fitness function checks whether an architectural characteristic still
 holds. The [Thoughtworks Technology Radar entry](https://www.thoughtworks.com/radar/techniques/architectural-fitness-function),
@@ -141,7 +141,7 @@ AI attribution. The [Carnegie Mellon difference-in-differences study](https://ar
 agent-first duplication change statistically insignificant, while complexity and static-analysis warnings rose
 significantly. Gate those too; copy-paste is one symptom among several.
 
-## Which principles a machine can check
+## Which principles a machine can check \{#which-principles-a-machine-can-check}
 
 In his practice tips, Beloborodov recommends stating YAGNI, KISS, SRP and DRY explicitly because a generic instruction
 to follow best practices does not reliably produce what he wants. His interpretations are concrete: avoid
@@ -175,7 +175,7 @@ Make the computational part a gate and retain the inferential part as a critic q
 semantic review where the change warrants it; do not turn every commit into an unbounded architectural audit.
 The point is to know which assurance you bought.
 
-## Fix-on-fix: the signal and the redesign trigger
+## Fix-on-fix: the signal and the redesign trigger \{#fix-on-fix-the-signal-and-the-redesign-trigger}
 
 Beloborodov uses three consecutive edits as his warning: fixes accumulating on fixes mean it is time to return to
 architectural work. Nobody has measured whether three is the right threshold. Use it as a starting value for
@@ -215,7 +215,7 @@ the controls that make a redesign stage bounded and recoverable.
 
 :::
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 **The invariant: record the decision before changing the structure, enforce its checkable boundaries, and
 agree when repeated fixes require redesign.** Scale changes the ownership and the evidence required.
@@ -234,7 +234,7 @@ agree when repeated fixes require redesign.** Scale changes the ownership and th
   blocking an unapproved structural change — and the proof: a trace from each change to its governing decision.
   *The failure it prevents:* architecture surviving on slides after the system has diverged from it.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **Small fixes can change the architecture.** Review the ownership and contracts they affect, even when the
   immediate behaviour is restored.

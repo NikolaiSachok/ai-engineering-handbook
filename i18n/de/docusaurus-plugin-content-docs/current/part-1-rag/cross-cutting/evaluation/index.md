@@ -13,7 +13,7 @@ Reranker, und hinterher „fühlt es sich besser an“. Eine Evaluierung macht a
 Zahl. Genau das trennt ein System im Produktivbetrieb von einer Vorführung, und genau danach wird im
 Vorstellungsgespräch am hartnäckigsten gefragt.
 
-## Das Grundprinzip: Retrieval und Generation getrennt messen
+## Das Grundprinzip: Retrieval und Generation getrennt messen \{#the-core-principle-evaluate-retrieval-and-generation-separately}
 
 Die Aufschlüsselung der Fehlerbilder aus dem Überblick zu Teil I wird hier zum Arbeitsmittel. Die beiden Stufen
 gehen auf verschiedene Weise kaputt und werden mit verschiedenen Hebeln repariert – deshalb müssen sie auch
@@ -28,7 +28,7 @@ Warum Recall@K die zentrale Größe ist: Fehlt der benötigte Chunk in den Ergeb
 Frage schlicht nicht richtig beantworten. Auf der ersten Stufe wiegt Recall schwerer als Precision – was dort
 verloren geht, holt keine spätere Stufe zurück.
 
-## Ohne Datensatz keine Evaluierung
+## Ohne Datensatz keine Evaluierung \{#no-dataset-no-evaluation}
 
 Messen setzt eine Referenz voraus: Fragen, dazu entweder die passenden Chunks oder die richtige Antwort. Das
 ist der **Goldstandard** (golden set) – der handgeprüfte Referenzdatensatz. Sie bauen ihn von Hand oder
@@ -36,7 +36,7 @@ synthetisch: Ein LLM erzeugt aus dem Korpus Frage-Antwort-Paare, ein Mensch lies
 sauberer Datensatz schlägt einen großen, verrauschten. Genau hier sparen Teams am häufigsten – und ohne
 Referenz bricht die ganze Evaluierung in sich zusammen.
 
-## LLM-as-a-judge: frei formulierten Text bewerten
+## LLM-as-a-judge: frei formulierten Text bewerten \{#llm-as-a-judge--evaluating-free-form-text}
 
 Antworten sind frei formulierter Text; mit einem exakten Abgleich kommen Sie da nicht weit. Für die Qualität
 der Generation – Faithfulness und Answer-Relevance – ziehen Sie deshalb **ein zweites Modell als Judge** heran
@@ -67,7 +67,7 @@ Die Bias-Formen eines Judges – und wie weit Sie ihm trauen dürfen. (Das Video
 
 :::
 
-## Offline und online – zwei Schleifen
+## Offline und online – zwei Schleifen \{#offline-and-online--two-loops}
 
 - **Offline:** Sie schicken den Goldstandard vor der Bereitstellung durch die Pipeline, in der CI. Das sind
   die Unit-Tests eines RAG-Systems – sie fangen eine **Regression** (eine durch eine Änderung verursachte
@@ -75,7 +75,7 @@ Die Bias-Formen eines Judges – und wie weit Sie ihm trauen dürfen. (Das Video
 - **Online:** Sie messen im Produktivbetrieb – **Nutzerfeedback** (Daumen hoch, Daumen runter), implizite
   Signale, A/B-Tests. Echte Fragen bringen ans Licht, woran der Goldstandard nicht gedacht hat.
 
-## Die Evaluierung treibt die Entwicklung
+## Die Evaluierung treibt die Entwicklung \{#eval-driven-development}
 
 Daraus entsteht die Schleife, die die Pipeline überhaupt erst einstellbar macht: etwas ändern → Evaluierung
 laufen lassen → Metriken vergleichen → behalten oder verwerfen. Damit schließen sich alle früheren Stellen,
@@ -83,7 +83,7 @@ an denen es „hier wird gemessen“ hieß, zu einem Vorgang zusammen – im Eng
 *eval-driven development*. Und weil die CI dabei auf Regressionen prüft, geht eine Verbesserung an der einen
 Stelle nicht auf Kosten einer anderen.
 
-## Metriken zeigen, wo Sie ansetzen müssen
+## Metriken zeigen, wo Sie ansetzen müssen \{#metrics-tell-you-what-to-fix}
 
 Der praktische Hauptnutzen: Die Evaluierung zeigt, auf welcher Stufe der Fehler sitzt.
 
@@ -92,7 +92,7 @@ Der praktische Hauptnutzen: Die Evaluierung zeigt, auf welcher Stufe der Fehler 
 | Antwort falsch, der benötigte Chunk war **nicht** in den Ergebnissen | Fehlerbild des Retrievals → Recall@K zu niedrig | Chunking / hybride Suche / Reranking |
 | Antwort falsch, der benötigte Chunk stand aber **im Kontext** | Fehlerbild der Generation → Faithfulness zu niedrig | Grounding (Rückbindung der Antwort an den Kontext) / Prompt |
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Eine Evaluierung macht aus „fühlt sich besser an“ eine Zahl; erst dadurch wird die Pipeline einstellbar,
   und erst dadurch unterscheidet sich ein System im Produktivbetrieb von einer bloßen Vorführung.

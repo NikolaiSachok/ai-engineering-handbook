@@ -26,7 +26,7 @@ IBM erläutert denselben Mechanismus und zeigt, wie ein Tool-Call das Modell an 
 
 :::
 
-## Text ist keine Handlung – deshalb braucht das Modell ein Protokoll
+## Text ist keine Handlung – deshalb braucht das Modell ein Protokoll \{#why-the-model-needs-an-intermediary--it-only-produces-text}
 
 Ein Sprachmodell führt nichts aus. Es erzeugt Text, und dabei bleibt es: Es greift nicht selbst in eine Datenbank, es setzt keine Anfrage an eine API ab, und Code führt es schon gar nicht aus. Der Tool-Einsatz ist das Protokoll, das diese Lücke überbrückt – zwischen dem Text, den das Modell erzeugt, und dem, was am Ende jemand wirklich tun muss. Der Ablauf ist dabei immer derselbe:
 
@@ -37,7 +37,7 @@ Ein Sprachmodell führt nichts aus. Es erzeugt Text, und dabei bleibt es: Es gre
 
 Die Arbeitsteilung ist strikt: Das Modell entscheidet, *was* aufgerufen wird; den Aufruf selbst setzt Ihre Anwendung ab. Die echten Systeme fasst das Modell nie an. Dieselbe Trennlinie wird sich weiter unten als Sicherheitsgrenze erweisen.
 
-## Der Tool-Call in vier Schritten
+## Der Tool-Call in vier Schritten \{#the-mechanism-a-tool-call}
 
 Der Mechanismus besteht aus vier Schritten, und die Schleife dahinter kennen Sie schon aus Agentic RAG – neu ist allein, dass die Aktion jetzt beliebig sein darf.
 
@@ -56,13 +56,13 @@ flowchart TB
     M --> Ans["Antwort"]
 ```
 
-## Die Tool-Definition ist ein Prompt, nicht nur eine Signatur
+## Die Tool-Definition ist ein Prompt, nicht nur eine Signatur \{#a-tool-definition-is-a-prompt-not-just-a-signature}
 
 Hier liegt der entscheidende Unterschied zur gewöhnlichen API-Entwicklung. Ein Modell wählt sein Tool aus und füllt dessen Argumente allein anhand der Beschreibung; in Ihre Implementierung kann es nicht hineinsehen. Wann und wie die Funktion aufgerufen wird, entscheidet ein probabilistisches Modell also anhand von drei Dingen: dem Namen, dem Beschreibungstext und den Beschreibungen der Parameter.
 
 Ist diese Beschreibung vage, hat das drei Folgen: Das Modell löst den Aufruf zum falschen Zeitpunkt aus, es greift zum falschen Tool, oder es füllt die Argumente mit Unsinn. Tool-Beschreibungen gehören deshalb zum **Prompt-Engineering** – der Aufrufer ist hier kein deterministischer Code, sondern ein Modell, das natürliche Sprache liest.
 
-## Fünf Merkmale eines guten Tools
+## Fünf Merkmale eines guten Tools \{#what-makes-a-tool-good}
 
 - **Eine klare, eindeutige Beschreibung** – das Modell unterscheidet Tools anhand ihrer Beschreibung, nicht anhand des Codes dahinter.
 - **Streng typisierte, eingeschränkte Parameter** (JSON Schema, `enum`, Formate) – sie engen ein, was das Modell überhaupt erzeugen kann, und senken die Quote fehlerhafter Aufrufe.
@@ -70,20 +70,20 @@ Ist diese Beschreibung vage, hat das drei Folgen: Das Modell löst den Aufruf zu
 - **Klare Fehler.** Schlägt ein Tool fehl, geben Sie eine Meldung zurück, mit der das Modell den Fehler beheben kann – etwa „date must be YYYY-MM-DD“. Dann korrigiert sich die Schleife selbst: Auf einen falschen Aufruf folgt ein klarer Fehler, das Modell formuliert neu und ruft erneut auf.
 - **Die richtige Granularität** – nicht zu fein (zehn Aufrufe für eine Aufgabe) und nicht zu grob (ein Tool für alles).
 
-## Vier Fehlerbilder des Tool-Einsatzes
+## Vier Fehlerbilder des Tool-Einsatzes \{#where-it-breaks}
 
 - **Das falsche Tool – oder gar keines.** Das Modell hat die falsche Funktion genommen, oder es hat aus dem Gedächtnis geantwortet, statt überhaupt ein Tool aufzurufen. Abhilfe: bessere Beschreibungen und ein kleinerer Katalog.
 - **Ungültige Argumente** – erfundene oder schlicht falsche Parameter. Abhilfe: ein eng gefasstes Schema, gegen das validiert wird, und klare Fehler, die dem Modell die Selbstkorrektur ermöglichen.
 - **Erfindungen über das Ergebnis hinaus.** Das Modell kann auf einem Ergebnis aufsetzen und halluzinieren – besonders dann, wenn das Ergebnis unklar oder leer ist. Dagegen hilft, es als eigene Nachricht zurückzugeben und ausdrücklich als Tool-Ausgabe zu kennzeichnen. Das senkt das Risiko, beseitigt es aber nicht.
 - **Ein schreibendes Tool wird über die Modellausgabe gesteuert.** Was schreibt, versendet oder Code ausführt, hängt damit an Text, den ein Angreifer beeinflussen kann: Eine **Prompt-Injection** (eingeschleuste Anweisungen im Text) manipuliert die Ausgabe des Modells – auch indirekt, über Anweisungen, die in abgerufenen Inhalten stecken. Die Gegenmaßnahme heißt **Prinzip der geringsten Berechtigungen**: Geben Sie dem Agenten nur die Tools, die er wirklich braucht; trennen Sie lesende von schreibenden Tools; verlangen Sie für gefährliche Aktionen eine ausdrückliche Bestätigung. Dann richtet selbst eine erfolgreiche Injection nur noch sehr wenig aus.
 
-## Agentic RAG als Sonderfall des Tool-Einsatzes
+## Agentic RAG als Sonderfall des Tool-Einsatzes \{#the-link-back-to-rag}
 
 Damit schließt sich der Kreis: *Retrieval ist ein Tool.* Agentic RAG aus der vorangegangenen Lektion ist ein Sonderfall des Tool-Einsatzes, bei dem das wichtigste Tool die Suche ist.
 
 Sobald der Agent über mehrere Tools verfügt, deckt er den Fall ab, dass verschiedene Fragen verschiedene Quellen brauchen: Retrieval aus der Wissensdatenbank, SQL für die Tabellen, eine Websuche für alles, was aktuell sein muss, und ein Taschenrechner dort, wo exakt gerechnet werden muss. Der Router aus der vorangegangenen Lektion ist genau die Stelle, an der entschieden wird, welches Tool zum Zug kommt.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Tool-Einsatz (Function Calling) ist der allgemeine Mechanismus: Das Modell ruft eine beliebige externe Funktion auf, und Retrieval ist davon ein Sonderfall.
 - Das Modell formuliert nur die Absicht, ausgeführt wird sie von Ihrem Code: Das Modell entscheidet das *Was*, Ihre Anwendung das *Wie*. Genau dort verläuft auch die Sicherheitsgrenze.

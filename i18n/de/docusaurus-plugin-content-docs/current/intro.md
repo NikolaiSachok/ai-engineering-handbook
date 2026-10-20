@@ -12,7 +12,7 @@ Agenten im Produktivbetrieb: nicht „welche Werkzeuge es gibt“, sondern **war
 wie es ist – und wo es versagt. Das Handbuch wird fortlaufend erweitert: Es wächst Schicht für Schicht,
 während der Kurs voranschreitet.
 
-## Für wen dieses Handbuch ist
+## Für wen dieses Handbuch ist \{#who-this-handbook-is-for}
 
 Es spielt drei Rollen gleichzeitig:
 
@@ -27,7 +27,7 @@ Wir setzen Erfahrung voraus: Gängige Standardwerkzeuge (Vektordatenbanken, Orch
 von Grund auf – stattdessen zeigen wir das **KI-Delta**, also was sich tatsächlich ändert, wenn sie in einem
 System mit einem Sprachmodell zum Einsatz kommen.
 
-## Struktur
+## Struktur \{#structure}
 
 - **[Teil I – RAG](./part-1-rag/overview.md):** Ingestion, Retrieval, Generation, strukturiertes Wissen und
   die Querschnittsthemen (Evaluation, Guardrails, Observability) der statischen Pipeline.

@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Part 1](./index.md) laid out the mechanism — tool definition → tool call → tool result → continue. This page takes that same round-trip to mastery: what happens when the model fires several calls at once, how a schema gets enforced token by token, how a loop recovers from a bad call instead of dying, and what breaks once the toolset grows to dozens. Part 1 is assumed throughout — the round-trip, the security boundary, "a tool definition is a prompt," and the good-tool checklist are not re-taught here, only built on.
 
-## When the model fires several calls at once
+## When the model fires several calls at once \{#when-the-model-fires-several-calls-at-once}
 
 A single turn is not one call. The model can emit several independent tool calls in one response — three database reads, two API lookups — instead of dribbling them out one per turn. Your runtime then does two things in order: it fans them *out*, running them concurrently, and fans them *in*, collecting every result and handing them back together before the model continues. That is the **fan-out / fan-in** shape: one turn explodes into N parallel calls, N results collapse back into a single message, the loop goes on.
 
@@ -46,7 +46,7 @@ flowchart TB
     C --> M2["Model continues"]
 ```
 
-## How a schema is actually enforced
+## How a schema is actually enforced \{#how-a-schema-is-actually-enforced}
 
 A tool's arguments are described by a **schema** — usually **JSON Schema** (Gemini uses an **OpenAPI-subset** schema). Part 1 treated that schema as the typed menu the model fills in. It is more than documentation: in **strict** mode the schema is *enforced*, and the model cannot emit arguments that violate it. What follows is how "cannot" is made literally true.
 
@@ -78,7 +78,7 @@ flowchart TB
     Sample --> Step
 ```
 
-## When a call fails — and how the loop recovers
+## When a call fails — and how the loop recovers \{#when-a-call-fails--and-how-the-loop-recovers}
 
 A tool call fails in more than one way, and lumping the ways together is the first mistake, because the recovery that fixes one makes another worse. The taxonomy:
 
@@ -98,7 +98,7 @@ Which points at the real distinction. Retrying earns its keep only when the inpu
 
 That leaves two things not to retry. Do not retry a deterministic failure unchanged; nothing has changed, so the outcome won't either. And do not retry a side-effectful write that might have partially succeeded without an idempotency guarantee behind it — the retry can double-apply what the first attempt already did. Retries are for transient faults and self-corrected arguments; they are not a way to avoid fixing the call. The idempotency section below makes that concrete for writes.
 
-## The context cost of dozens of tools
+## The context cost of dozens of tools \{#the-context-cost-of-dozens-of-tools}
 
 Every tool definition costs tokens in every request: the name, the description, and the full parameter schema of each tool are serialised into the prompt on every call, used or not. A dozen tools is a standing tax — tokens, latency, money — paid whether or not the model touches any of them. That is the concrete price behind Part 1's "few, non-overlapping tools."
 
@@ -112,7 +112,7 @@ Past some point the answer is not a longer list at all. When one agent is haulin
 
 The restraint runs the other way too. Do not reach for tool-RAG prematurely. For a handful of tools it is needless machinery with its own failure surface — a retrieval step that can now misfire and hide a tool the model needed. The simplest thing that works is the full static set; dynamic loadout earns its complexity only when the catalogue is genuinely large. Same discipline as everywhere in Part 2: take the simplest level that solves the task.
 
-## Idempotency and the writes that leave a mark
+## Idempotency and the writes that leave a mark \{#idempotency-and-the-writes-that-leave-a-mark}
 
 Retry safety is not a property of your retry policy. It is a property of the tool. Read tools and write tools differ on retry: re-running a read costs you nothing but latency, while re-running a write — create the order, send the email, charge the card — can duplicate the side effect. Whether a retry is safe is decided by what the tool does, not by how you retry it.
 
@@ -126,7 +126,7 @@ Here the parallel section and this one meet. A fan-out batch has undefined order
 
 And the rule that ties retries back to writes: do not lean on retries for a write tool that is not idempotent and has no key. A retry after a timeout that had in fact succeeded double-applies the effect — a second charge, a second email. Fix idempotency first, then allow retries. That order does not flip.
 
-## Validating arguments before you act
+## Validating arguments before you act \{#validating-arguments-before-you-act}
 
 Strict decoding gets you well-formed arguments. It does not get you *acceptable* ones — and the place to tell the difference is between "the model emitted arguments" and "you run the tool." Validate before you execute: insert a gate that inspects the arguments before any side effect can fire.
 
@@ -139,7 +139,7 @@ When validation rejects an argument, it feeds back the same way an execution err
 
 That fixes the line between the two levels. Don't push semantic checks into the schema, where most of them are unrepresentable; and don't skip validation because decoding is strict, since strict guarantees well-formed, never correct. The two layers are complementary, and neither stands in for the other.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - In one turn the model can fire several independent calls; your runtime fans them out to run concurrently and fans the results back in together. That is valid only when the calls truly don't depend on or interfere with each other — and nothing enforces it but you.
 - Strict mode enforces a schema by constrained decoding: the schema compiles to a grammar, and the sampler masks every token that would break it. It buys well-formed arguments, not correct ones, and the first call on a new schema pays a compile cost before the cache warms.

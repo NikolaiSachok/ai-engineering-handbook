@@ -22,7 +22,7 @@ whether to look again — reformulate, re-retrieve, judge sufficiency — you ar
 [agentic RAG](../../part-2-agents/agentic-rag/deep-dive.md), whose loop can call the graph as one more
 tool. Part 1's decisions are assumed throughout and not re-argued.
 
-## How a graph actually gets built
+## How a graph actually gets built \{#how-a-graph-actually-gets-built}
 
 Microsoft's GraphRAG is the reference implementation to reason against, because it is the one readers have
 heard of and because its pipeline is documented stage by stage. Its
@@ -73,7 +73,7 @@ exists at all: it defers exactly these passes to query time, and reports indexin
 RAG and 0.1% of the costs of full GraphRAG". If your global-question volume is low, deferring the work is
 the better trade, and that is a design choice available to you rather than a fixed property of graphs.
 
-## GraphRAG's four query methods, and which question each serves
+## GraphRAG's four query methods, and which question each serves \{#graphrags-four-query-methods-and-which-question-each-serves}
 
 A graph is not one retrieval mode. GraphRAG's [query
 methods](https://microsoft.github.io/graphrag/query/overview/) are four distinct paths over the same index,
@@ -133,7 +133,7 @@ LLM-generated graph. A hallucinated edge is materially worse than a hallucinated
 answer, because it is *persisted*: it enters the index, gets summarised into a community report at phase 5,
 and is then cited as structure by every query that touches that neighbourhood.
 
-## Evaluating a graph is not evaluating retrieval
+## Evaluating a graph is not evaluating retrieval \{#evaluating-a-graph-is-not-evaluating-retrieval}
 
 The retrieval metrics you already have do not transfer, and assuming they do is how a bad graph passes.
 
@@ -205,7 +205,7 @@ via middleware", by pattern matching over a directed labelled graph. SPARQL over
 data is a real deployment shape, and it means adopting the query language doesn't require migrating your
 storage.
 
-### The schema most teams should build instead
+### The schema most teams should build instead \{#the-schema-most-teams-should-build-instead}
 
 Map those four onto what an LLM pipeline actually needs and the honest default appears: a **JSON Schema**
 naming your classes and permitted relation types, plus a **validator** that rejects what violates it. That
@@ -217,7 +217,7 @@ are the conditions [Part 1](./index.md) sets for climbing to the formal stack, a
 preference. Absent them, the formal stack is a large permanent commitment bought for the benefit a validator
 already delivers.
 
-## What text-to-SQL gets wrong, and what a semantic layer removes
+## What text-to-SQL gets wrong, and what a semantic layer removes \{#what-text-to-sql-gets-wrong-and-what-a-semantic-layer-removes}
 
 Part 1 stated the headline for the metrics layer: against a raw schema a model must **derive** a query,
 against a semantic layer it **selects** a defined metric. The difficulty in "derive" is not where people
@@ -265,7 +265,7 @@ control; a policy the query cannot bypass is.
 That is the structured analogue of a tool schema, and it removes an entire class of failure where the model
 invents a metric that sounds reasonable and does not exist.
 
-## Routing: how the structured paths ship in production
+## Routing: how the structured paths ship in production \{#routing-how-the-structured-paths-ship-in-production}
 
 Nothing on this page replaces the pipeline built in Ingestion, Retrieval and Generation. In production the
 structured paths sit *beside* it, and something decides which one a question takes:
@@ -284,7 +284,7 @@ misrouting as its own tracked failure mode in the
 [observability deep dive](../cross-cutting/observability/deep-dive.md), because it won't look like a
 retrieval failure or a generation failure when it happens.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - GraphRAG's build is six phases, two of which are LLM passes over everything — extraction over every chunk
   and summarisation over every community — which is the whole cost story in one sentence. Claim extraction,

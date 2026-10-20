@@ -14,7 +14,7 @@ down, is also the failure mode. This lesson is the escape: tier the knowledge by
 it, rather than producing more of it. The lesson grades its own central claim as strictly as any other: it is ours
 and single-sourced, and hiding that would be a lie.
 
-## The smart friend with amnesia
+## The smart friend with amnesia \{#the-smart-friend-with-amnesia}
 
 One practitioner writing a public series on AI-first development,
 [Andrey Beloborodov](https://www.threads.com/@andreybwhite), frames the model's self-description as a "very
@@ -30,7 +30,7 @@ summarisation, violations stayed at **0%**; when the summariser dropped it, they
 never disobeying — the harness had deleted the rule. The point generalises past compaction: anything that must
 survive has to be pinned or re-injected, never stated once and trusted to persist.
 
-## Write more down, and you drown
+## Write more down, and you drown \{#write-more-down-and-you-drown}
 
 Beloborodov's next admission reads better as corroboration than as a stumble. Having told you to build project
 memory, he reports that you "drown in generated documents within a couple of days" — the AI writes specs "in tens
@@ -52,7 +52,7 @@ human-written ones. And the mechanism isn't the one you'd guess: agents "followe
 unnecessarily" — over-compliance — burning the extra budget obeying the file too well, with no gain. More memory
 here isn't merely wasteful. It's directionally wrong.
 
-## Don't let the agent write its own rules
+## Don't let the agent write its own rules \{#dont-let-the-agent-write-its-own-rules}
 
 The same study turns up a result you wouldn't predict. Of its three conditions — no context file, an LLM-generated
 one, a human-written one — **the LLM-generated file is the only one measured net-negative**: **−0.5%** task
@@ -70,7 +70,7 @@ tokens and wall-clock. Map both; crown no winner. What survives either reading i
 bootstrap your rules file, cut anything the agent could learn by reading the code (a hand-written "Architecture"
 section is usually exactly this), and keep only commands, constraints, and genuinely non-standard patterns.
 
-## The scar archive
+## The scar archive \{#the-scar-archive}
 
 If most of a rule file should be cut, what earns its place? In my own production practice the highest-value part
 of any project memory is what I'd call the scar archive: the reasoning behind each locked decision, appended every
@@ -98,7 +98,7 @@ much of it is loaded at once.
 
 :::
 
-## Tier the knowledge, don't produce more of it
+## Tier the knowledge, don't produce more of it \{#tier-the-knowledge-dont-produce-more-of-it}
 
 The problem underneath all of this has no name. Amnesia, the per-turn tax, over-compliance, drowning in documents
 — twenty months into the spec-driven era, the failure they add up to still has no agreed term. "Context rot"
@@ -151,7 +151,7 @@ the default context for an implementation task. By this course's reading, the mi
 organisation: an enterprise wiki full of aspirational architecture gives the agent more chances to take
 intention for fact.
 
-## Why we might be wrong
+## Why we might be wrong \{#why-we-might-be-wrong}
 
 The honest move is to admit how thin the ground under "tiering saved it" is. It is a single-source self-report, and
 mine. The convergence of several parties on the same lever raises confidence that the *lever* is right, not that
@@ -166,7 +166,7 @@ Last, the oldest warning here isn't about AI. The one large empirical study of m
 rediscovered the same law for AI: it amplifies what a team already is; it doesn't fix it. Tiering is a technical
 answer. It works exactly to the extent that someone owns it — and no tool can supply that owner.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **memory must be tiered by relevance, or it taxes every turn.** What changes is
 who owns the boundary and how it's proven.
@@ -185,7 +185,7 @@ who owns the boundary and how it's proven.
   *proof*, an auditable record for later, while the soloist's hot set is *capability*, because it changes what the
   agent can afford to load right now.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Agents keep nothing between runs but the files on disk, so anything that must survive has to be pinned or
   re-injected. Compaction will silently drop a rule and the model will look like it disobeyed — `0%` violations

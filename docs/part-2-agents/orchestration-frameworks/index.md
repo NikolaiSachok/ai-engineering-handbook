@@ -27,7 +27,7 @@ is a good orientation before we get into what each layer buys you.
 
 :::
 
-## What you'd otherwise hand-roll
+## What you'd otherwise hand-roll \{#what-youd-otherwise-hand-roll}
 
 Start with the honest question: if you skip the framework, what do you write yourself? Once you've built a
 couple of agents from scratch, the answer is a familiar pile of plumbing.
@@ -48,7 +48,7 @@ None of this is the interesting part of your agent. It's the boilerplate underne
 pitch is that it writes this pile for you, once and consistently, so your code is about the behaviour and not
 the wiring.
 
-## The main abstraction — an agent as a graph / state machine
+## The main abstraction — an agent as a graph / state machine \{#the-main-abstraction--an-agent-as-a-graph--state-machine}
 
 Strip away the branding and most frameworks converge on one idea, and LangGraph states it most clearly: model
 the agent as a **graph**, a state machine. The steps become **nodes** — call the model, call a tool, make a
@@ -62,7 +62,7 @@ retries scoped to a single step, and branching that's deterministic instead of b
 free-running loop. That is the AI-delta in one line: the graph turns an opaque loop into a controllable,
 inspectable, resumable machine.
 
-## The players, by layer
+## The players, by layer \{#the-players-by-layer}
 
 The framework landscape looks crowded until you sort it by what each tool is trying to be. Three rough layers.
 
@@ -86,7 +86,7 @@ Microsoft Agent Framework 1.0 (GA April 2026) absorbed [Semantic Kernel](https:/
 mode. Read the three layers as a snapshot of philosophies, not a durable leaderboard. Learn the categories; the version
 numbers will have moved by the time you ship.
 
-## Typical patterns you actually use
+## Typical patterns you actually use \{#typical-patterns-you-actually-use}
 
 In day-to-day work a small set of shapes recurs, and knowing them by name is most of what you need from a
 framework's docs.
@@ -106,7 +106,7 @@ so you configure the topology rather than code it. And running through all of it
 [LangSmith](https://www.langchain.com/langsmith) being the obvious example: the observability layer that lets you see what the graph actually did.
 That's [Part III](../../part-3-production/overview.md)'s subject, and it plugs in here.
 
-## When NOT to — the tradeoffs
+## When NOT to — the tradeoffs \{#when-not-to--the-tradeoffs}
 
 A framework is not free, and the costs are the mirror image of the benefits.
 
@@ -126,7 +126,7 @@ delete boilerplate, never to avoid understanding what the boilerplate does. Pull
 genuinely need controllable complex flows — checkpoints, HITL, branching, multi-agent coordination. For a
 simple agent, use the provider SDK directly and skip the layer.
 
-## Where it connects
+## Where it connects \{#where-it-connects}
 
 Nothing in this lesson is a new *concept*. Frameworks don't change the ideas from the earlier lessons — the loop,
 tools, planning, the multi-agent topologies. They package them, and hand them back to you minus the
@@ -134,7 +134,7 @@ boilerplate. And because they package the same primitives, they plug straight in
 that [Part III](../../part-3-production/overview.md) takes up: the graph you built here is the thing you'll
 trace and measure there.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - An **orchestration framework** removes the boilerplate you'd otherwise write around the bare loop — the
   loop plumbing, tool-calling glue, state and memory, control flow, multi-agent handoffs, and the tracing /

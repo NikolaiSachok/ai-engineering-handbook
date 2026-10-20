@@ -19,7 +19,7 @@ Ten istý mechanizmus vo výklade IBM: ako volanie nástroja prepojí model s tv
 
 :::
 
-## Prečo model potrebuje prostredníka — sám generuje iba text
+## Prečo model potrebuje prostredníka — sám generuje iba text \{#why-the-model-needs-an-intermediary--it-only-produces-text}
 
 Model sám nevykoná nič — iba generuje text. Nesiahne do databázy ani nezavolá API; nijaký kód nespúšťa. Tool use je protokol, ktorý túto medzeru prekleňuje.
 
@@ -27,7 +27,7 @@ Prebieha v štyroch krokoch. Po prvé, model vyjadrí **štruktúrovaný zámer*
 
 Deľba práce je jasná: model rozhoduje, *čo* zavolať; tvoja aplikácia volanie vykoná. Model sa reálnych systémov nikdy nedotkne — a práve toto rozdelenie sa napokon ukáže ako **bezpečnostná hranica** (security boundary), k čomu sa ešte vrátime.
 
-## Mechanizmus: volanie nástroja
+## Mechanizmus: volanie nástroja \{#the-mechanism-a-tool-call}
 
 Mechanizmus sa skladá z niekoľkých častí a beží v tej istej slučke ako agentický RAG — len akciou už môže byť čokoľvek.
 
@@ -46,13 +46,13 @@ flowchart TB
     M --> Ans["Odpoveď"]
 ```
 
-## Definícia nástroja je prompt, nie iba signatúra funkcie
+## Definícia nástroja je prompt, nie iba signatúra funkcie \{#a-tool-definition-is-a-prompt-not-just-a-signature}
 
 Práve v tomto sa návrh nástrojov pre model líši od bežného návrhu API: model si nástroj vyberá a jeho argumenty vypĺňa tak, že *číta slovný opis* — do tvojej implementácie nedovidí. Pravdepodobnostný model usudzuje z názvu, z textu opisu a z opisov jednotlivých parametrov, *kedy* a *ako* funkciu zavolať.
 
 Keď je opis vágny, model zavolá nástroj v nesprávnej chvíli, vyberie nesprávny nástroj alebo vygeneruje nezmyselné argumenty. Opisy nástrojov sú preto súčasťou prompt engineeringu (práca s promptom); „volajúci“ tu nie je deterministický kód — je to model, ktorý číta prirodzený jazyk.
 
-## Čo robí nástroj dobrým
+## Čo robí nástroj dobrým \{#what-makes-a-tool-good}
 
 - **Jasný, jednoznačný opis** — model rozlišuje nástroje podľa opisu, nie podľa kódu za nimi.
 - **Prísne typované, obmedzené parametre** (JSON Schema, `enum`, formáty) zúžia, čo model smie vygenerovať, a znížia počet chybných volaní.
@@ -60,20 +60,20 @@ Keď je opis vágny, model zavolá nástroj v nesprávnej chvíli, vyberie nespr
 - **Zrozumiteľné chyby.** Keď nástroj zlyhá, vráť správu, vďaka ktorej sa slučka dokáže z chyby zotaviť („dátum musí byť vo formáte `YYYY-MM-DD`“). Model potom môže volanie opraviť a skúsiť ho znova: chybné volanie → zrozumiteľná chyba → oprava volania → opakovanie.
 - **Správna granularita** — nie príliš jemná (desať volaní na jednu úlohu), ani príliš hrubá (jeden nástroj na všetko).
 
-## Kde sa to láme
+## Kde sa to láme \{#where-it-breaks}
 
 - **Nesprávny nástroj — alebo žiadny.** Model siahol po nesprávnej funkcii alebo odpovedal z pamäte namiesto použitia nástroja. Rieši to jasnejší opis a menšia sada nástrojov.
 - **Neplatné argumenty** — vymyslené alebo nesprávne parametre. Rieši to prísna schéma, validácia a zrozumiteľné chyby, podľa ktorých model dokáže chybné volanie opraviť.
 - **Domýšľanie si toho, čo vo výsledku nie je.** Model si k výsledku môže domyslieť fakty, ktoré v ňom nie sú — najmä pri nejasnom alebo prázdnom výsledku. Vráť výsledok ako samostatnú správu, výslovne označenú ako výstup nástroja; riziko to zníži, no neodstráni.
 - **Bezpečnosť — nové a vážne riziko.** O tom, či sa nástroj, ktorý *koná* — zapisuje, odosiela, spúšťa kód — naozaj zavolá a s akými argumentmi, rozhoduje teraz výstup modelu. A ten výstup sa dá cez **prompt injection** (podvrhnutie inštrukcií do promptu) zmanipulovať — aj nepriamo, inštrukciami ukrytými v nájdenom obsahu. Obranou je **princíp najnižších oprávnení** (least privilege): obmedz sadu nástrojov, oddeľ čítacie nástroje od zapisovacích a pri nebezpečných akciách vyžaduj potvrdenie. Aj úspešný útok cez prompt injection má potom iba obmedzené následky.
 
-## Späť k RAG
+## Späť k RAG \{#the-link-back-to-rag}
 
 Kruh sa uzatvára: *vyhľadávanie je nástroj.* Agentický RAG je špeciálny prípad tool use, kde je hlavným nástrojom vyhľadávanie.
 
 Keď má agent viac nástrojov, rieši situáciu, v ktorej rôzne otázky potrebujú rôzne zdroje: vyhľadávanie v znalostnej báze, SQL nad tabuľkami, webové vyhľadávanie na aktuálne informácie, kalkulačka na presný výpočet. Vhodný nástroj vyberá práve **router (smerovač)** z predchádzajúcej lekcie.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Tool use (function calling) je všeobecný mechanizmus: model zavolá ľubovoľnú vonkajšiu funkciu a vyhľadávanie je jeho špeciálny prípad.
 - Model zámer iba vyjadrí — samotné volanie vykoná tvoj kód: model rozhoduje „čo“, tvoja aplikácia rieši „ako“. To je zároveň bezpečnostná hranica.

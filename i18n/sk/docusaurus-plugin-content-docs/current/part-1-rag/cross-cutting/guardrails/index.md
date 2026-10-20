@@ -9,11 +9,11 @@ Postaviť presný systém už vieš — vyhľadávanie prinesie správne chunky,
 
 Túto úlohu nesú **guardrails** (bezpečnostné mantinely): ochranná vrstva na vstupe aj na výstupe. Pre podnikovú AI to nie je nadštandard, po ktorom siahneš, ak ostane čas — patrí k systému rovnako neoddeliteľne ako samotná odpoveď.
 
-## Základný problém: LLM verí svojmu vstupu priveľmi
+## Základný problém: LLM verí svojmu vstupu priveľmi \{#the-root-problem-an-llm-trusts-its-input-too-much}
 
 Model nerozlišuje, odkiaľ text prišiel. Všetko, čo sa ocitne v kontexte — otázka používateľa, nájdené chunky, výstupy nástrojov — je preň len text, ktorý môže poslúchnuť. A práve v tom je jadro: model nedokáže spoľahlivo rozlíšiť inštrukcie od dát. Odtiaľ pramení väčšina bezpečnostných problémov LLM.
 
-## Prompt injection — hrozba č. 1
+## Prompt injection — hrozba č. 1 \{#prompt-injection--threat-1}
 
 Útočník prepašuje inštrukcie do textu, ktorý model číta, a prebije nimi tvoj systémový prompt. Tomuto útoku sa hovorí **prompt injection** (útok, ktorý modelu podstrčí cudzie inštrukcie) a má dve podoby:
 
@@ -32,7 +32,7 @@ Ako útok cez prompt injection funguje v praxi. (Video je v angličtine.)
 
 :::
 
-## Obrana — základná sada
+## Obrana — základná sada \{#defences-the-baseline-set}
 
 Obrana proti injection nie je jeden trik, ale sada opatrení, ktoré útok postupne zdražujú:
 
@@ -42,13 +42,13 @@ Obrana proti injection nie je jeden trik, ale sada opatrení, ktoré útok postu
 - **Validácia výstupu.** Skontroluj odpoveď, než sa odošle: žiadne vynesené tajomstvá, žiadne PII (osobné údaje), žiadne porušenie pravidiel.
 - **Princíp najnižších oprávnení (least privilege) pre agentov.** Ak model siaha po nástrojoch, obmedz, ktoré nástroje a akcie smie použiť (tool allow-listing). Potom aj úspešný útok zmôže málo.
 
-## Osobné údaje a ochrana dát
+## Osobné údaje a ochrana dát \{#pii-and-data-protection}
 
 Osobné údaje — mená, e-maily, čísla — treba rozpoznať a zamaskovať na dvoch miestach: na vstupe (skôr, než sa čokoľvek zaloguje a než to odíde k poskytovateľovi API) aj na výstupe (skôr, než odpoveď uvidí používateľ).
 
 Kritické je to najmä pri externých LLM API, kde dáta opúšťajú tvoj bezpečnostný perimeter. Je to tá istá úvaha ako voľba medzi modelom prevádzkovaným u seba a modelom za API, ktorú si zvažoval pri embeddingoch.
 
-## Bezpečnosť obsahu — na oboch stranách
+## Bezpečnosť obsahu — na oboch stranách \{#content-safety--on-both-surfaces}
 
 Bezpečnosť obsahu (content safety) stráži obe strany naraz: na vstupe odmietne škodlivú či zakázanú požiadavku (aj tú mimo témy), na výstupe odfiltruje toxický alebo pravidlám odporujúci text.
 
@@ -56,7 +56,7 @@ RAG pridáva tretí bod, ingestion (príjem obsahu do indexu): otrávený dokume
 
 Samotné nástroje na to — [Guardrails AI](https://www.guardrailsai.com), [NeMo Guardrails](https://developer.nvidia.com/nemo-guardrails), [Llama Guard](https://www.llama.com/llama-protections/), Granite Guardian — tvoria samostatnú vrstvu, ktorej sa venuje [lekcia o ekosystéme nástrojov](../../../part-3-production/tooling-ecosystem/); tu nám ide o princíp.
 
-## Guardrails nie sú všeliek
+## Guardrails nie sú všeliek \{#guardrails-arent-a-silver-bullet}
 
 Úplná ochrana neexistuje — guardrails fungujú ako **defence-in-depth** (viacvrstvová ochrana), teda obrana poskladaná do vrstiev, kde každá zachytí to, čo predchádzajúca prepustí.
 
@@ -64,7 +64,7 @@ Zároveň musíš vyvažovať prísnosť a použiteľnosť: priveľmi prísne na
 
 Preto sa aj guardrails merajú — cez **attack success rate** (miera úspešnosti útokov), teda podiel útokov z vopred pripravenej sady, ktoré prejdú. Je to skóre, na ktoré sa pozeráš rovnako ako na ktorúkoľvek metriku z lekcie o [evaluácii](../evaluation/); po zavedení ho píšeme už len skratkou ASR.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Koreň zraniteľnosti: LLM nedokáže spoľahlivo oddeliť inštrukcie od dát.
 - Prompt injection (priama aj nepriama) je hrozba č. 1; nepriama je v RAG obzvlášť nebezpečná, lebo otrávený nájdený obsah vojde do kontextu spolu s dátami.

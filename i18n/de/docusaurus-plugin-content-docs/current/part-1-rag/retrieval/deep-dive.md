@@ -14,7 +14,7 @@ Teil 1 wird durchgehend vorausgesetzt: Die vier Schichten, das zweistufige Schem
 
 Zuvor eine Grenze. Alles hier ist *statisches* Retrieval: ein Durchgang, vorab festgelegt, ohne Schleife. Sobald das Modell das Retrieval selbst noch einmal anstößt – neu formulieren, erneut abrufen, prüfen, ob es genug hat, aufhören –, sind Sie bei der iterativen Variante, und dieses Gebiet (Self-RAG, CRAG, die Prüfung auf hinreichenden Kontext, die gelernte Wahl der Route für die jeweilige Frage) gehört in die [Vertiefung zu Agentic RAG](../../part-2-agents/agentic-rag/deep-dive.md). Diese Seite holt aus dem einen Durchgang heraus, was herauszuholen ist.
 
-## HyDE: was es verschiebt und wann es nach hinten losgeht
+## HyDE: was es verschiebt und wann es nach hinten losgeht \{#hyde-what-it-moves-and-when-it-backfires}
 
 Teil 1 hat **HyDE** (*hypothetical document embeddings*) als „eine hypothetische Antwort skizzieren, sie einbetten, damit suchen“ eingeführt. Der Mechanismus ist planvoller, als dieser eine Satz vermuten lässt (Gao et al., 2022). Ein Modell, das Anweisungen befolgt, schreibt für die Frage ein hypothetisches Antwortdokument, **Zero-Shot** (ohne Trainingsbeispiele). Ein unüberwacht trainierter kontrastiver Encoder – im Paper Contriever – bettet *dieses Dokument* ein, und gesucht wird im Korpus mit dessen Vektor, nicht mit dem der Frage. Im Detail liegt das erfundene Dokument oft falsch; das macht nichts. Der dichte Encoder ist ein verlustbehafteter Flaschenhals: Er behält das Relevanzmuster und wirft die erfundenen Einzelheiten weg, sodass die Suche wieder bei echten Nachbarn landet.
 
@@ -29,7 +29,7 @@ Dieselbe Einordnung sagt Ihnen auch, wann Sie die Finger davon lassen.
 
 Das Fazit fällt darum eng aus: Greifen Sie zu HyDE, wenn Sie keine Labels aus der eigenen Domäne haben und die Fragen kurz und unterbestimmt sind. Lassen Sie es, wenn die Latenz Sie bindet, wenn der Retriever schon nachtrainiert ist oder wenn exakt gesucht wird.
 
-## Warum sich die Scores zweier Retriever nicht einfach addieren lassen
+## Warum sich die Scores zweier Retriever nicht einfach addieren lassen \{#why-two-retrievers-scores-cant-just-be-added}
 
 Die hybride Suche war in Teil 1 der mit Abstand größte Fortschritt, und im Wort „zusammenführen“ hat sie ein echtes Problem versteckt. Die Ähnlichkeit im Dense Retrieval ist beschränkt – die Kosinus-Ähnlichkeit liegt ungefähr in [-1, 1], oft zusammengedrückt auf [0, 1]. BM25 ist unbeschränkt, und seine Skala verschiebt sich mit dem Korpus und mit der Frage. Die beiden Skalen sind unvereinbar, und deshalb lassen sich die Scores nicht addieren. Alle Verfahren zur **Zusammenführung der beiden Ergebnislisten** umgehen dieses Problem auf die eine oder andere Weise.
 
@@ -56,7 +56,7 @@ flowchart TB
 
 Der Nachteil der rangbasierten Zusammenführung ist das Gegenstück zur Schwäche der score-basierten. RRF ist einfach und robust, aber blind für die Größenordnung – ein Treffer, der das ganze Feld weit hinter sich lässt, wird als „Rang 1“ verbucht und sonst nichts. Die score-basierte Zusammenführung behält diese Größenordnung, verlangt für ihre Verlässlichkeit aber eine sorgfältige Normierung, die die Verteilung kennt und für jede Frage neu ansetzt. Nehmen Sie deshalb RRF als Voreinstellung und wechseln Sie erst dann zur score-basierten Zusammenführung, wenn Sie tatsächlich gemessen haben, dass die Größenordnung für Ihre Daten ein Signal trägt, *und* wenn Sie sie für jede Frage zuverlässig normieren können. Wer zuerst zur score-basierten Zusammenführung greift, erbt ihre Anfälligkeit, ohne ihren Ertrag zu bekommen.
 
-## Welcher Reranker – und wann
+## Welcher Reranker – und wann \{#which-reranker-and-when}
 
 Die zweite Stufe bewertet die top-K neu; der Cross-Encoder aus Teil 1 kodiert dafür Frage und Passage gemeinsam. Auf dieser Ebene stellt sich die Frage, *welche Art* von Reranker es sein soll, und entschieden wird sie über den Zielkonflikt zwischen Latenz und Qualität.
 
@@ -72,7 +72,7 @@ Seine Stärken sind die, die ein trainierter Cross-Encoder nicht bieten kann: Ze
 
 Damit steht fest, wo sich welches Verfahren bezahlt macht. Der Cross-Encoder ist die Voreinstellung überall dort, wo die Latenz bindet und viele Anfragen pro Sekunde eintreffen. Der LLM-Reranker ist für die Fälle da, in denen Qualität vor Latenz geht, das Volumen klein ist oder die Reihenfolge wirklich eine über Anweisungen gesteuerte Relevanz braucht. Verbreitet ist die Kombination aus beiden: Ein Cross-Encoder bewertet zunächst die gesamten top-K neu, und das LLM bewertet nur die Handvoll neu, die davon übrig bleibt – Sie kaufen das Befolgen von Anweisungen für wenige Kandidaten ein, statt es über den ganzen Stapel zu bezahlen.
 
-## Late Interaction liegt zwischen Bi-Encoder und Cross-Encoder
+## Late Interaction liegt zwischen Bi-Encoder und Cross-Encoder \{#where-late-interaction-sits-between-the-two-encoders}
 
 Drei Verfahren des Retrievals liegen auf einer Achse, und erst die gemeinsame Benennung macht das dritte lesbar. Ein **Bi-Encoder** – der Dense Retriever aus Teil 1 – kodiert jedes Dokument vorab zu einem einzigen Vektor; beim Suchen besteht die Interaktion aus einem Skalarprodukt. Billig, vorberechenbar und grob, denn eine ganze Passage wird in einen einzigen Punkt gepresst. Am anderen Ende steht der Cross-Encoder: Er kodiert Frage und Dokument gemeinsam, weshalb sich nichts vorberechnen lässt, und er ist der genaueste und der teuerste – deshalb bewertet er immer nur K Kandidaten neu und durchsucht nie das Korpus.
 
@@ -80,7 +80,7 @@ Drei Verfahren des Retrievals liegen auf einer Achse, und erst die gemeinsame Be
 
 Was Sie bekommen, ist der größte Teil der Genauigkeit, die ein Cross-Encoder auf Tokenebene erreicht – stark bei exakten Treffern, bei Eigennamen und bei der Übertragung auf fremde Domänen –, und zugleich bleibt die Dokumentseite vorberechenbar, sodass sich ein ganzes Korpus durchsuchen lässt und nicht nur K Kandidaten neu bewerten. Bezahlt wird das mit Speicher, und zwar reichlich: ein Vektor *je Token* statt je Chunk bedeutet Hunderte von Vektoren je Passage. ColBERTv2 (2021) komprimiert zusätzlich die **Residuen** – die Abweichungen der einzelnen Tokenvektoren von einem gemeinsamen Zentroiden – und senkt damit den Platzbedarf. Und der Index ist keine schlichte **ANN**-Suche (*approximate nearest neighbour*: die Suche nach den ungefähren nächsten Nachbarn, die Genauigkeit gegen Geschwindigkeit tauscht) über einen Vektor je Dokument, sondern verlangt eine eigens darauf ausgelegte Suchinfrastruktur. Dieser Preis für Speicher und Infrastruktur, nicht etwa eine Schwäche in der Qualität, ist der Grund, warum Late Interaction ein starker Mittelweg bleibt und nicht zur Voreinstellung wird.
 
-## Das Chunk-Problem von beiden Enden angehen
+## Das Chunk-Problem von beiden Enden angehen \{#the-chunk-problem-attacked-from-both-ends}
 
 Die Ingestion hat eine Spannung ungelöst hinterlassen. Ein kleiner Chunk ergibt ein trennscharfes Embedding und wird genau gefunden, gibt dem Modell aber zu wenig an die Hand. Ein großer Chunk trägt den Kontext, den das Modell braucht, aber sein Embedding ist unscharf und ohne Fokus, und er wird deshalb schlechter gefunden. Die Einheit, die sich gut durchsuchen lässt, und die Einheit, aus der das Modell eine gute Antwort baut, sind nicht dieselbe – und diese Lücke lässt sich an beiden Enden der Pipeline schließen.
 
@@ -94,7 +94,7 @@ Die Ingestion hat eine Spannung ungelöst hinterlassen. Ein kleiner Chunk ergibt
 
 Lesen Sie die letzte Zeile richtig: Das Contextual Retrieval ersetzt die hybride Suche und das Reranking nicht, es verstärkt sie. Und stellen Sie die beiden Verfahren nebeneinander, denn sie beheben denselben Mangel an zwei verschiedenen Stellen – das Parent-Document-Retrieval reichert an, was Sie *zurückgeben*, und zwar erst beim Suchen; das Contextual Retrieval reichert an, was Sie *indexieren*, und zwar schon bei der Ingestion. Dasselbe Problem, zwei Ansatzstellen, und nichts hindert Sie daran, beide zu nutzen.
 
-## Wie die richtige Kandidatenmenge zustande kommt
+## Wie die richtige Kandidatenmenge zustande kommt \{#getting-into-the-right-candidate-set}
 
 Alle Verfahren oben setzen voraus, dass der richtige Chunk irgendwo in der Kandidatenmenge steckt. Ob er überhaupt dorthin gelangt, entscheiden das Routing und das Filtern – und damit stehen beide ganz am Anfang der Kette, wo Fehler am leichtesten passieren und sich am schwersten wieder gutmachen lassen.
 
@@ -117,7 +117,7 @@ flowchart TB
     AN --> Cand["Kandidaten (top-K)"]
 ```
 
-## Welche Metrik welche Stufe misst
+## Welche Metrik welche Stufe misst \{#which-metric-watches-which-stage}
 
 Teil 1 hat versprochen, dass die Metriken in der Schicht [Evaluierung](../cross-cutting/evaluation/index.md) formal gefasst werden, und dort steht die vollständige Behandlung auch. Für die Arbeit am Retrieval genügt zunächst die Frage, welche Metrik welche Stufe misst. Recall@K – ist der benötigte Chunk in den top-K gelandet? – ist die Metrik der ersten Stufe und misst das Fehlerbild des Retrievals unmittelbar. Precision@K ist der Anteil der top-K, der relevant ist. Zwei weitere bewerten die *Reihenfolge*, die der Reranker erzeugt.
 
@@ -127,7 +127,7 @@ Teil 1 hat versprochen, dass die Metriken in der Schicht [Evaluierung](../cross-
 
 Der rote Faden hält die ganze Seite zusammen: Messen Sie dort, wo Sie etwas verändern. Recall@K sagt Ihnen, ob der Retriever der ersten Stufe die Antwort überhaupt in die Kandidatenmenge gebracht hat; nDCG oder MRR sagen Ihnen, ob der Reranker sie danach richtig eingeordnet hat. Verwenden Sie in der ersten Stufe eine Ranking-Metrik oder beim Reranker Recall@K, dann sind Sie blind für genau den Fehler, den Sie beheben wollen.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - HyDE sucht mit einer eingebetteten hypothetischen Antwort und überbrückt damit den Abstand zwischen der Gestalt einer Frage und der Gestalt ihrer Antwort; am meisten gewinnt es ohne Labels aus der eigenen Domäne und bei kurzen Fragen, und es geht nach hinten los, wo die Latenz gedeckelt ist, wo der Retriever schon nachtrainiert ist, wo exakt gesucht wird und bei fremden Themen, zu denen das Modell ein Dokument erfindet, das von Ihrem Korpus wegzeigt.
 - Die Scores von Dense Retrieval und BM25 liegen auf unvereinbaren Skalen und lassen sich nicht addieren: Die rangbasierte Zusammenführung ist die robuste Voreinstellung, weil sie keine Score-Normierung braucht, und die score-basierte lohnt ihre Anfälligkeit erst, wenn Sie gemessen haben, dass die Größenordnung ein Signal trägt, das Sie für jede Frage normieren können.

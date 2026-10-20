@@ -48,7 +48,7 @@ Diagram zámerne nezobrazuje tri veci ako samostatné bloky, pretože by tým na
 
 *Mapa je obsahom kurzu.* Päť fáz slučky — plán, dekompozícia, implementácia, dodanie, prevádzka — predstavuje Časti II až IV, teda samotnú prácu. Základ pod slučkou predstavuje Časť I. Tri úrovne zrelosti sú Časť V. Každá Časť sa začína tým, že povie, kde na tejto mape leží, a odkáže na ňu — takže vždy budeš vedieť, kde sa nachádzaš.
 
-## Úprimný titulok a úprimná metóda
+## Úprimný titulok a úprimná metóda \{#the-honest-headline-and-the-honest-method}
 
 Množstvo výstupov preukázateľne rastie. Či rastie aj *hodnota*, zatiaľ nie je potvrdené. A o tom, či bude výsledok kladný alebo záporný, rozhoduje kapacita na revíziu a overovanie. To nie je vyhýbavá formulácia; práve k tomu smerujú aj najsilnejšie čísla v prospech AI. Za jedným z najväčších nameraných nárastov priepustnosti v tejto oblasti stoja priamo výskumníci Microsoftu. Napriek tomu píšu, že zlúčený pull request nie je to isté ako hodnota, ktorú prináša — a že v odbore chýbajú všeobecne prijaté metriky na meranie tohto rozdielu.
 
@@ -60,7 +60,7 @@ Kurz sa preto zaväzuje k metóde, nie k záveru:
 
 Celým kurzom sa tiahne jeden rámec — **tri úrovne zrelosti**: postup zostáva rovnaký, mechanizmus sa škáluje. Pri každom kontrolnom opatrení lekcie najprv uvedú invariant, potom mechanizmus pre každú úroveň a napokon konkrétne zlyhanie, ktorému prechod na vyššiu úroveň zabráni — nikdy nie vysvetlenie typu „enterprise má viac peňazí“. V celom kurze sa opakovane objavuje aj spresnená podoba tejto myšlienky: čím ďalej je kontrolné opatrenie od miesta škody (blast radius), tým viac ide o *dôkaz*; čím je bližšie, tým viac ide o *schopnosť*.
 
-## Prečo slučka, a nie postupnosť krokov
+## Prečo slučka, a nie postupnosť krokov \{#why-a-loop-and-not-a-pipeline}
 
 Mnohé schémy — vrátane materiálov od odborníkov z praxe, z ktorých tento kurz čerpá — zobrazujú postupnosť krokov, ktorá sa končí „produkciou“ a spätnú väzbu už neobsahuje. Kurz sa tento nedostatok snaží napraviť. Najväčšou štrukturálnou medzerou v súčasných textoch je, že slučka učenia sa uzatvára na internom QA, a nie na živej prevádzke. Dobre nastavená slučka chybnú zmenu sama odhalí a vráti späť ešte predtým, ako sa musí ozvať používateľ.
 
@@ -68,7 +68,7 @@ Jeden výsledok merania naznačuje, že hodnota sa ukrýva práve v hrane spätn
 
 Na záver ešte úprimná poznámka k samotnému diagramu. Je to navrhovaný organizačný rámec — vlastný spôsob kurzu, ako usporiadať materiál, nie preukázateľne optimálny životný cyklus. Používaj ho na orientáciu; necituj ho ako výsledok.
 
-## Kam pokračovať
+## Kam pokračovať \{#where-to-go-next}
 
 Časť I je základ — šesť lekcií:
 

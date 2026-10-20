@@ -16,7 +16,7 @@ counts blocked accounts among his reasons to use several assistants. In [his wri
 quotes here). His assistants share one repository and knowledge base, so when one model misbehaves he moves
 to the next editor pane.
 
-## A pin limits what can move
+## A pin limits what can move \{#a-pin-limits-what-can-move}
 
 A model ID can identify a fixed **snapshot** or a **moving alias**, whose target the supplier can replace.
 Selecting the snapshot in configuration is **model pinning**, which limits alias-driven changes. Record
@@ -42,7 +42,7 @@ differences under unchanged IDs and weights. Its own [incident report](https://w
 hour on August 31. So [production quality signals](../part-4-platform/observability-rollout.md) must stay on
 after pinning, because infrastructure can still change outputs.
 
-## Qualify an upgrade against fixed references
+## Qualify an upgrade against fixed references \{#qualify-an-upgrade-against-fixed-references}
 
 In an arXiv paper, [Chen, Zaharia and Zou](https://arxiv.org/abs/2307.09009v3) report a controlled study that
 found GPT-4's prime-versus-composite accuracy fell from 84% in March 2023 to 51% in June. Its third revision (October 2023) concludes that the same service can change substantially within a short time.
@@ -83,7 +83,7 @@ that remains necessary after you pin.
 
 :::
 
-## Exit has a deadline
+## Exit has a deadline \{#exit-has-a-deadline}
 
 Once retirement is announced, the **deprecation notice period** is your time to qualify and migrate.
 Some platforms also **auto-upgrade**, potentially replacing a version before you have qualified its successor.
@@ -125,7 +125,7 @@ alternate provider or self-hosted model against regression cases on a schedule. 
 rate separately, because a different fallback model has its own cost per accepted change. Like a
 [backup restore](../part-4-platform/environments-migrations-data.md), switching needs rehearsal to expose failures.
 
-## Memory makes the exit usable
+## Memory makes the exit usable \{#memory-makes-the-exit-usable}
 
 In a [separate post](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/), Beloborodov
 writes that context loss is what people most often bring him. The realisation that project knowledge belongs
@@ -135,7 +135,7 @@ Knowledge held only in chat depends on account access. Keep rules, decisions, ar
 briefs as [project memory](../part-1-foundation/project-memory-and-tiering.md) in repository files or a knowledge
 store: this **vendor-portable memory** lets a replacement assistant read them without the old account.
 
-## The account determines the data terms
+## The account determines the data terms \{#the-account-determines-the-data-terms}
 
 Paste the company's code into a personal chat and that subscription's consumer terms govern it.
 Once prompts leave your machine, **data terms** determine training use, retention and processing location.
@@ -185,7 +185,7 @@ document dates not stated on the cited parent pages.
 The [secrets](../part-4-platform/secrets.md) and [environments](../part-4-platform/environments-migrations-data.md)
 lessons limited what may enter context. For data that reaches the supplier, record the applicable terms, and re-read them when they change.
 
-## Route by the cost of accepted work
+## Route by the cost of accepted work \{#route-by-the-cost-of-accepted-work}
 
 A cheaper model wins only if its first-try success rate falls by less than its price does. Half the price
 with less than half the success rate costs more per accepted change. That is **routing by break-even**:
@@ -203,7 +203,7 @@ process to each task class you route.
 
 :::
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant: **pin the version you run, qualify every change to it, and prove you can leave.**
 
@@ -217,7 +217,7 @@ The invariant: **pin the version you run, qualify every change to it, and prove 
   residency and retention commitments; retain qualification and exit evidence. *The failure it prevents:*
   a customer asking where data went and which model produced a change, with nobody able to answer.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Pinning limits alias-driven changes; retirement, replacement routing and infrastructure remain outside it.
   Keep attribution and quality monitoring in place.

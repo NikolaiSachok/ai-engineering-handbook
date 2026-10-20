@@ -11,7 +11,7 @@ Evaluácia je *spôsob merania* — a nie okrajová téma. Práve ňou vôbec zi
 
 Práve to evaluácia zmení: z „takto je to lepšie“ spraví číslo (skóre). Tým sa produkčný systém odlišuje od dema — a práve na toto sa ťa na pohovoroch najčastejšie pýtajú.
 
-## Základný princíp: vyhľadávanie a generovanie hodnoť oddelene
+## Základný princíp: vyhľadávanie a generovanie hodnoť oddelene \{#the-core-principle-evaluate-retrieval-and-generation-separately}
 
 Rozklad zlyhania, ktorý sme si ukázali v prehľade časti — zlyhanie vyhľadávania verzus zlyhanie generovania — sa tu z pojmu stáva pracovným nástrojom. Tie dve etapy sa kazia inak a naprávaš ich inými pákami, takže ich aj meraj každú zvlášť. Jedno súhrnné „skóre kvality“ ti nepovie, kde chyba väzí.
 
@@ -22,7 +22,7 @@ Rozklad zlyhania, ktorý sme si ukázali v prehľade časti — zlyhanie vyhľad
 
 Prečo je Recall@K tá hlavná: keď sa potrebný chunk vôbec nedostane do výsledkov, generovanie fyzicky nemá z čoho zostaviť správnu odpoveď. V prvej fáze záleží na úplnosti (recall) viac než na presnosti (precision) — čo tu prepadne, to už žiadny neskorší krok nezachráni.
 
-## Bez dát niet čo hodnotiť
+## Bez dát niet čo hodnotiť \{#no-dataset-no-evaluation}
 
 Aby si vôbec mal čo merať, potrebuješ príklady s referenciou: otázky a k nim buď relevantné chunky, alebo správnu odpoveď. Táto zbierka príkladov je **golden set** (etalónová sada).
 
@@ -30,7 +30,7 @@ Postavíš ho dvoma spôsobmi: ručne, alebo synteticky — LLM vygeneruje dvoji
 
 Práve tu si tímy najčastejšie skracujú cestu — a je to najhoršie možné miesto na šetrenie. Bez referencie sa celá evaluácia rozsype: nemáš totiž s čím porovnávať, takže každé „skóre“ je len číslo bez ukotvenia.
 
-## LLM-as-a-judge — ako hodnotiť voľný text
+## LLM-as-a-judge — ako hodnotiť voľný text \{#llm-as-a-judge--evaluating-free-form-text}
 
 Odpoveď z RAG je voľný text, nie hodnota z číselníka. Nezmeriaš ju presnou zhodou reťazcov — dve správne odpovede môžu byť naformulované úplne inak a obe sú dobré.
 
@@ -60,20 +60,20 @@ Zaujatosti sudcu a či sa na jeho rozhodnutie dá spoľahnúť. (Video je v angl
 
 :::
 
-## Offline a online — dve slučky
+## Offline a online — dve slučky \{#offline-and-online--two-loops}
 
 Hodnotenie beží v dvoch slučkách naraz a každá chytá iné veci:
 
 - **Offline (pred nasadením, v CI).** Golden set preženieš cez pipeline ešte pred nasadením, automaticky v CI. Sú to jednotkové testy pre RAG: zachytia regresiu, keď zlepšenie na jednom mieste potichu pokazí iné („zlepšil som X, nevedomky rozbil Y“).
 - **Online (v produkcii).** Meriaš na živej prevádzke — spätná väzba od používateľov (palec hore/dole), nepriame signály a A/B testovanie. Skutočné dopyty odhalia to, čo golden set nepokryl.
 
-## Vývoj riadený hodnotením
+## Vývoj riadený hodnotením \{#eval-driven-development}
 
 Odtiaľto vychádza slučka, vďaka ktorej sa pipeline vôbec dá ladiť: niečo zmeníš → spustíš evaluáciu → porovnáš skóre → zmenu si necháš, alebo ju vrátiš späť. Nič viac za tým nie je, a predsa práve toto oddeľuje systematické ladenie od hádania.
 
 Táto slučka uzatvára všetky skoršie „a tu sa to meria“ do jedného postupu. Regresné hodnotenie (regression eval) v CI pritom dáva pozor, aby zlepšenie jednej veci nezhoršilo druhú — tú istú poistku poznáš z jednotkových testov v bežnom softvéri.
 
-## Metriky ti povedia, čo opraviť
+## Metriky ti povedia, čo opraviť \{#metrics-tell-you-what-to-fix}
 
 Najväčšia praktická sila hodnotenia: ukáže ti, v ktorej etape zlyhanie väzí. Zlá odpoveď nie je jeden problém — sú to dva rôzne druhy zlyhania, každý s inou nápravou, a metriky ich od seba odlíšia.
 
@@ -82,7 +82,7 @@ Najväčšia praktická sila hodnotenia: ukáže ti, v ktorej etape zlyhanie vä
 | Odpoveď je zlá a potrebný chunk NEBOL vo výsledkoch | zlyhanie vyhľadávania → nízky Recall@K | chunking / hybridné vyhľadávanie / reranking |
 | Odpoveď je zlá, hoci potrebný chunk v kontexte BOL | zlyhanie generovania → nízka faithfulness | grounding (opretie odpovede o kontext) / prompt |
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Evaluácia zmení „takto je to lepšie“ na číslo (skóre); vďaka nej sa pipeline dá ladiť a práve ona delí produkčný systém od dema.
 - Vyhľadávanie a generovanie hodnoť oddelene — kazia sa inak a naprávaš ich inými pákami.

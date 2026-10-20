@@ -77,7 +77,7 @@ described in [how these are made](/design-scenarios/how-these-are-made).
 
 <Reveal>
 
-## Attempt A — the diagnostic answer
+## Attempt A — the diagnostic answer \{#attempt-a--the-diagnostic-answer}
 
 *Persona given to the agent: Has stood in front of an outside assessor and explained, step by step, why a system did what it did, to someone who did not know or care what a model is. Has also been the only person left maintaining something built three jobs ago, so thinks about what survives them — the smallest permanent thing that still works when nobody remembers why it exists. Unmoved by whether something is called an agent.*
 
@@ -126,7 +126,7 @@ three, asserted as a property of everything in the closing paragraph and never s
 
 </Verdict>
 
-## Attempt B — the plumbing-first answer
+## Attempt B — the plumbing-first answer \{#attempt-b--the-plumbing-first-answer}
 
 *Persona given to the agent: What has bitten them, repeatedly, is undocumented knowledge walking out of the door. Treats a departure date as the hard edge of a project and plans backwards from it. Comfortable with the unglamorous half of a problem, low tolerance for building the interesting part first. When told a decision "depends", wants to know how much of it actually depends and how much was simply never written down.*
 
@@ -167,7 +167,7 @@ is not a measurement.
 
 </Verdict>
 
-## Attempt C — the hours-back answer
+## Attempt C — the hours-back answer \{#attempt-c--the-hours-back-answer}
 
 *Persona given to the agent: Measured on hours given back, and looks for where expensive people spend time reading rather than deciding. Unstructured input does not worry them — a good model has consistently got through what rules could not. Conscious that whatever gets built has to be visible to somebody outside engineering by a date, because work nobody can see does not get funded twice.*
 
@@ -210,12 +210,12 @@ pulls the description past the design.
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 Each disagreement below is a decision you will have to make yourself. The last entry is the exception: not a
 disagreement but the place all three arrived together, and what went unexamined once they had.
 
-### Where the 3.5-day front end comes from: structural queue, or submissions waiting on a client answer
+### Where the 3.5-day front end comes from: structural queue, or submissions waiting on a client answer \{#where-the-35-day-front-end-comes-from-structural-queue-or-submissions-waiting-on-a-client-answer}
 
 A contradicts B and C with an argument, and A is right about the median and wrong about the consequence. The
 prompt says as much: the figure is "the median across all standard jobs, the ones that got chased and the ones
@@ -236,7 +236,7 @@ receipt-to-query latency, and the P90 of the front end. A was the only candidate
 and aimed at the wrong half of the population; B and C aimed at the right population with an argument that
 would have mismeasured it.
 
-### What the model does inside the scheduling piece: her reasons, the diff, or the output
+### What the model does inside the scheduling piece: her reasons, the diff, or the output \{#what-the-model-does-inside-the-scheduling-piece-her-reasons-the-diff-or-the-output}
 
 A puts it on her reasons — "turning her free-text reason into a structured candidate rule I can read, argue
 with, and either promote into the instruction or leave as a documented exception." B puts no model there at
@@ -250,7 +250,7 @@ scalable: it works because the engineer is sitting next to her, a condition with
 as the knowledge. C's narration solves a real and different problem — a successor trusting a sheet she did not
 build — and does nothing about the overrides themselves.
 
-### The audit log: a first build, or a property of later ones
+### The audit log: a first build, or a property of later ones \{#the-audit-log-a-first-build-or-a-property-of-later-ones}
 
 B schedules it in weeks one and two as plumbing. A and C describe it as a property of everything else — A in
 the December paragraph, C under what it will not build, though C names the richer field set including
@@ -258,7 +258,7 @@ retrieved sources. B's argument is drawn from the prompt's own history: a record
 four-month investigation. C's fields are better, B's placement is better, and placement wins, because fields
 can be added in week six and history cannot.
 
-### Why the out-of-spec decision stays with the analyst: nobody would trust it, or it is not where the money is
+### Why the out-of-spec decision stays with the analyst: nobody would trust it, or it is not where the money is \{#why-the-out-of-spec-decision-stays-with-the-analyst-nobody-would-trust-it-or-it-is-not-where-the-money-is}
 
 Two reasons and an omission, and this is the most instructive disagreement here. B: nobody would use it —
 "Halving 40 minutes by removing the fetching is worth more than a recommendation nobody will trust." C: it is
@@ -270,7 +270,7 @@ C's is the strongest because it is the only one you can compute: A's own estimat
 time for all of the risk. B's trust argument concedes the case the moment trust improves. A, having done the
 arithmetic that supports C's position, declines to state the conclusion.
 
-### Whether the extraction is measured before anyone relies on it: checked against the record, or controlled by a human
+### Whether the extraction is measured before anyone relies on it: checked against the record, or controlled by a human \{#whether-the-extraction-is-measured-before-anyone-relies-on-it-checked-against-the-record-or-controlled-by-a-human}
 
 C alone proposes to check it against what the LIMS already recorded as booked. B substitutes a model
 self-report; A substitutes a human confirm. Both are reasonable operational controls and neither is evidence.
@@ -278,7 +278,7 @@ Shipping an extraction step with no measured accuracy, into a building whose pro
 is not trusted until its performance has been demonstrated, is the deepest mismatch on the page — and two of
 three made it.
 
-### What all three agreed on, and none of them examined
+### What all three agreed on, and none of them examined \{#what-all-three-agreed-on-and-none-of-them-examined}
 
 All three: capture the overrides from week one; implement the six-page instruction as a deterministic solver;
 keep the model on the unstructured and the assembling work, never on the commit; assemble but never decide the
@@ -302,7 +302,7 @@ her with themselves, unremarked. **And nobody talks to the director before Decem
 — every candidate avoided building to her word, correctly, and then left the date itself unexamined, when week
 one is when that conversation costs least.
 
-## The principle
+## The principle \{#the-principle}
 
 > Before you build to move a number, check that the number contains the thing you are fixing — a median is
 > made of the ordinary cases, and the work that breaks promises lives in the tail.
@@ -333,7 +333,7 @@ reads — is taught.
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 

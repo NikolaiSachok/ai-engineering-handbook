@@ -11,7 +11,7 @@ what the grant points *at*: the data and the schema. Two halves, and they fail i
 agent should be working against data that is realistic but not real — and every structural change it makes
 should have a way back that you have actually exercised.
 
-## Realistic data, not real data
+## Realistic data, not real data \{#realistic-data-not-real-data}
 
 Agents reason better with plausible data, and that creates a standing temptation: copy a production dump into
 the development environment and let the agent work against something true. It solves the realism problem and
@@ -53,7 +53,7 @@ it lowers risk rather than removing it, and why the safe default stays "the agen
 
 :::
 
-## Migrations: expand, migrate, contract
+## Migrations: expand, migrate, contract \{#migrations-expand-migrate-contract}
 
 Schema change is where an agent's speed turns dangerous, because a destructive migration and a safe one look
 structurally identical in a diff — a few lines of SQL either way. Part III's
@@ -75,7 +75,7 @@ migration containing a destructive statement unless it carries an explicit marke
 into [a rule that holds](../part-1-foundation/rules-that-hold.md). That is the whole Part I argument, applied
 to the one file type where a mistake is not revertible by editing code.
 
-## Rollback is something you build, not something you hope for
+## Rollback is something you build, not something you hope for \{#rollback-is-something-you-build-not-something-you-hope-for}
 
 A backup you have never restored is not a backup; it is an untested assertion about a file. This is exactly
 Part III's point about [a gate you have never watched fail](../part-3-verification/layered-gates/index.md) —
@@ -88,7 +88,7 @@ was impossible — and the agent was wrong. The interesting failure is not the f
 contradict it. When recovery is a known, exercised procedure, an agent's opinion about whether it is possible
 is irrelevant. When it is not, the fastest confident voice in the room wins, and it may be a language model.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant is constant: **the agent works against a realistic copy, and there is a way back that
 someone has actually run.** What scales is how the copy is produced and how strongly reversibility is
@@ -106,7 +106,7 @@ proven — from one rehearsed restore, to per-migration reversibility, to drills
   recovery time objective (RPO and RTO). *The failure it prevents:* a recovery capability that exists on paper, is owned by no one, and is
   first exercised during the incident it was meant for.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **Realistic, not real.** A production dump in a development environment multiplies the places that carry the
   obligations of personal data — and hands real records to the agent's context, which is not a channel you

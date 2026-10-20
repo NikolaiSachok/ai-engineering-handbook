@@ -10,7 +10,7 @@ context**. Go back to the frame from the part overview: a **generation failure**
 *was* in the context, but the answer still came out wrong. The model ignored it, garbled it, or mixed in its
 own guess. This layer is about not letting that happen.
 
-## The core idea: answer from the context, not from memory
+## The core idea: answer from the context, not from memory \{#the-core-idea-answer-from-the-context-not-from-memory}
 
 An LLM carries **parametric knowledge** — everything it absorbed during training. Left unconstrained, it
 will happily answer from that internal memory: possibly stale, possibly wrong, and certainly not from your
@@ -25,7 +25,7 @@ Why a model makes things up in the first place.
 
 :::
 
-## Building the prompt and packing the context
+## Building the prompt and packing the context \{#building-the-prompt-and-packing-the-context}
 
 How you assemble the prompt is half the battle. The basic structure: a system instruction + the retrieved
 chunks (clearly set apart) + the user's question. Three things break most often:
@@ -47,26 +47,26 @@ Ways to structure a prompt.
 
 :::
 
-## Grounding instructions — the main lever against hallucinations
+## Grounding instructions — the main lever against hallucinations \{#grounding-instructions--the-main-lever-against-hallucinations}
 
 The strongest tool is a simple one: give the model explicit boundaries. "Answer **only** from the provided
 context. If the answer isn't there, say so — don't make it up." That one instruction noticeably cuts the
 share of hallucinations, because it strips the model of its "licence" to top up the answer from memory.
 
-## Citations
+## Citations \{#citations}
 
 Make the model state which chunk or source each claim came from. The payoff is twofold. The user can
 **check** the answer — that's trust. And the model itself invents less: it's harder to fabricate a fact when
 you have to put a source next to it. This runs off the metadata laid down at chunking.
 
-## Refusal is a feature, not a bug
+## Refusal is a feature, not a bug \{#refusal-is-a-feature-not-a-bug}
 
 The system must be allowed to say "I don't know" — and it has to be instructed to. A confident wrong answer
 is worse than an honest "that isn't in the documents." If retrieval came back empty, the answer should be a
 **refusal**, not a guess. In an enterprise setting this is fundamental: people lean on a confident answer as
 if it were fact, and a single error travels further — into a report, into someone's decision.
 
-## Faithfulness: where generation runs into measurement
+## Faithfulness: where generation runs into measurement \{#faithfulness-where-generation-runs-into-measurement}
 
 Even with instructions, a model will sometimes override the context with its own knowledge, or stumble when
 the context contradicts what it "believes." How far the answer actually rests on the sources is something you
@@ -74,7 +74,7 @@ the context contradicts what it "believes." How far the answer actually rests on
 [Evaluation](../cross-cutting/evaluation/index.md) layer; for now, hold on to the idea that "the model behaves well" isn't a
 feeling, it's a number.
 
-## Fixing generation failure, class by class
+## Fixing generation failure, class by class \{#fixing-generation-failure-class-by-class}
 
 | Failure | The fix |
 |---|---|
@@ -83,7 +83,7 @@ feeling, it's a number.
 | Lost what was buried in the middle | Chunk order, fewer chunks |
 | Answered from stale memory | A hard tie to the context, "sources only" |
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Generation in RAG = an answer **from the context**, not from parametric memory.
 - Prompt assembly: set the sources apart explicitly, mind lost-in-the-middle, pass a handful of the best

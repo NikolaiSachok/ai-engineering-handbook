@@ -65,7 +65,7 @@ wrong lesson:
 are Parts II through IV, the doing. The foundation under the loop is Part I. The three tiers are Part V. Each
 Part opens by saying where it sits on this map and linking back to it, so you always know where you are.
 
-## The honest headline, and the honest method
+## The honest headline, and the honest method \{#the-honest-headline-and-the-honest-method}
 
 Output is measurably up. Whether *value* is up is not established. And the thing that decides the sign is
 review and verification capacity. That is not a hedge; it is where the strongest pro-AI numbers themselves
@@ -90,7 +90,7 @@ the upgrade prevents — never "enterprises are richer." A refined version of th
 the further a control sits from the blast radius, the more it is about *proof*; the closer it sits, the more it
 is about *capability*.
 
-## Why a loop, and not a pipeline
+## Why a loop, and not a pipeline \{#why-a-loop-and-not-a-pipeline}
 
 Most published schemes — including the practitioner corpus this course draws on — draw a pipeline that ends at
 "production" and never feeds back. That is the framing this course corrects. It is worth flagging as a
@@ -109,7 +109,7 @@ Parts IV and V will give it.
 A last honesty note about the diagram itself. It is an organising frame — the course's own proposal for
 arranging the material, not a proven-optimal lifecycle. Use it to navigate; do not cite it as a result.
 
-## Where to go next
+## Where to go next \{#where-to-go-next}
 
 Part I is the foundation — six lessons:
 

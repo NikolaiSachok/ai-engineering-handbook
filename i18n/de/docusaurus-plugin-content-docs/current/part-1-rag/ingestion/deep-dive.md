@@ -12,7 +12,7 @@ Drei Dinge sind dabei unterbelichtet geblieben, und diese Seite nimmt sie auf. E
 
 Der Reihe nach also: (1) das Parsing der Dokumente; (2) fortgeschrittenes Chunking, also Late Chunking und Contextual Retrieval; (3) die Embeddings selbst, also Fine-Tuning, das Kürzen der Vektoren nach Matryoshka und Mehrsprachigkeit. Teil 1 wird durchgehend vorausgesetzt: Die Abwägung über die Chunk-Größe und die Unterscheidung zwischen Bi- und Cross-Encoder werden nicht noch einmal erklärt, sondern nur weitergebaut.
 
-## Parsing begrenzt alles, was danach kommt
+## Parsing begrenzt alles, was danach kommt \{#parsing-the-stage-that-caps-everything-downstream}
 
 Die Pipeline aus Teil 1 begann bei „Zerlegen Sie das Dokument“. Aber irgendetwas muss ein Dokument erst *in* den Text verwandeln, den Sie zerlegen, und genau an diesem Schritt verliert RAG im Unternehmen am häufigsten unbemerkt Qualität. Die Regel ist unerbittlich und heißt seit jeher *garbage in, garbage out*. Die Qualität des extrahierten Textes setzt allen nachfolgenden Chunking-Strategien und Embedding-Kniffen Grenzen. Hat der Parser die Eingabe verstümmelt, holt sie keine der folgenden Stufen zurück – Sie zerlegen dann Unsinn und betten Unsinn getreulich ein.
 
@@ -52,7 +52,7 @@ Das Parsing speist das an der Dokumentstruktur orientierte Chunking aus Teil 1 u
 
 :::
 
-## Fortgeschrittenes Chunking: dem Chunk den Kontext zurückgeben
+## Fortgeschrittenes Chunking: dem Chunk den Kontext zurückgeben \{#advanced-chunking-give-a-chunk-back-its-context}
 
 Das zentrale Problem des Chunkings aus Teil 1 war, dass ein einzeln eingebetteter Chunk den Kontext um sich herum verliert: „Im dritten Quartal ist er um 20 % gewachsen“ ist wertlos, sobald der Absatz mit Firmennamen und Jahreszahl in einem anderen Chunk steht. Zwei Verfahren aus dem Jahr 2024 setzen genau dort an, und zwar an verschiedenen Stellen der Pipeline. Es lohnt sich, sie nebeneinanderzustellen, denn sie sind dieselbe Medizin, an zwei verschiedenen Stellen verabreicht.
 
@@ -79,23 +79,23 @@ Der Reiz liegt darin, wie wenig zusätzlichen Aufwand es verlangt. Das Late Chun
 
 Das eine schließt das andere nicht aus: Beide arbeiten beim Indexieren, und Sie können beide zugleich einsetzen. Eine Namensfalle sollten Sie noch kennen. Das Paper von Jina beschreibt das Late Chunking auch als Erzeugung „kontextualisierter Chunk-Embeddings“, was fast dieselbe Wendung ist wie Anthropics **Contextual Retrieval** und doch ein ganz anderes Verfahren bezeichnet; benennen Sie beide sauber, und die Kollision löst sich auf. Und beachten Sie den dritten Verwandten, den Sie schon kennen: Das *Parent-Document*- bzw. *Small-to-Big-Retrieval* aus Teil 1 behebt *denselben* Kontextverlust, aber beim Beantworten der Frage im Retrieval statt beim Indexieren – eine Krankheit, inzwischen drei Behandlungsorte, wobei das Detail zur Abfrage in der [Vertiefung zum Retrieval](../retrieval/deep-dive.md) steht.
 
-## Drei Hebel am Embedding selbst
+## Drei Hebel am Embedding selbst \{#embedding-depth-fine-tuning-matryoshka-multilingual}
 
 Teil 1 sagte, dass die Qualität der Embeddings bestimmt, wie gut das Retrieval überhaupt werden kann, und dass Sie ein Modell entlang mehrerer Achsen auswählen. Hier stehen die drei Hebel am Embedding selbst, für den Fall, dass ein Modell von der Stange nicht mehr reicht: Fine-Tuning, Matryoshka und Mehrsprachigkeit.
 
-### Das Modell an Ihre Domäne anpassen
+### Das Modell an Ihre Domäne anpassen \{#fine-tuning-the-model-to-your-domain}
 
 Ein allgemeines Embedding-Modell wurde auf allgemeinem Webtext trainiert. Ihre Domäne – Recht, Medizin, hausinterner Jargon, Produktcodes – kann Beziehungen zwischen Frage und Passage enthalten, die das Basismodell schlicht falsch abbildet: Es ordnet nahe beieinander an, was weit auseinandergehört, und weit auseinander, was zusammengehört. **Fine-Tuning** (Nachtrainieren des Modells) passt den Vektorraum an *Ihre* Daten an. Der grundlegende Mechanismus ist **Contrastive Learning** auf Tripeln aus Ihrer Domäne – eine Frage, eine Passage, die sie wirklich beantwortet, und eine, die das nicht tut: Die zusammengehörenden Paare aus Frage und Passage werden im Raum zueinander gezogen, die unpassenden auseinandergedrückt. Was das Verfahren wirklich zum Laufen bringt, sind die **Hard Negatives**, also die plausiblen, aber falschen Passagen; leicht erkennbare Gegenbeispiele lehren das Modell nichts, was es nicht schon wüsste. Die Labels für das Training stammen aus ausgewerteten Klick- und Feedback-Logs oder, wenn Sie keine haben, aus **synthetisch erzeugten Beispielen**: Ein Sprachmodell schreibt zu jedem Chunk plausible Fragen – ein verbreiteter Weg, ganz ohne gelabelte Daten anzufangen.
 
 Hier wird die Folgerung aus Teil 1 unangenehm konkret. Fine-Tuning verändert das Modell, und **ein verändertes Modell heißt: das gesamte Korpus neu einbetten** – Frage und Dokument müssen immer von derselben Modellversion kodiert werden, sonst liegen ihre Vektoren in verschiedenen Räumen und das Retrieval liefert Unsinn. Fine-Tuning ist deshalb eine vorgelagerte Weichenstellung mit langfristigen Folgen und kein Regler, an dem Sie beiläufig drehen. Daraus folgt das „wann besser nicht“: Trainieren Sie erst nach, wenn die Evaluierung tatsächlich gezeigt hat, dass ein starkes allgemeines oder retrieval-optimiertes Modell der Engpass ist. Es macht viel Arbeit und braucht genug Daten aus der eigenen Domäne, damit es sich lohnt. Probieren Sie *zuerst* ein besseres Modell von der Stange und die hybride Suche – die beiden reichen überraschend oft schon aus, ohne dass Sie sich langfristig festlegen.
 
-### Matryoshka Representation Learning: den Vektor hinten abschneiden
+### Matryoshka Representation Learning: den Vektor hinten abschneiden \{#matryoshka-representation-learning-and-truncation}
 
 Teil 1 hat die Dimensionszahl als feste Abwägung dargestellt: mehr Dimensionen sind ausdrucksstärker, kosten aber mehr Speicher, machen die Suche langsamer und sind teurer – größer ist nicht immer besser. Matryoshka Representation Learning (MRL) (Kusupati et al., arXiv 2205.13147, Mai 2022; NeurIPS 2022) macht aus dieser festen Abwägung einen Regler, an dem Sie *nachträglich* drehen. Benannt nach der ineinandergesteckten Matrjoschka, trainiert es das Modell so, dass die Information **von grob nach fein in ineinandergeschachtelte Präfixe** gepackt wird: Schon die ersten N Dimensionen des Vektors bilden für sich ein brauchbares Embedding. Sie können einen Vektor also auf seine ersten 256, 512 oder 1024 Dimensionen **kürzen** und behalten den größten Teil des semantischen Signals – ohne neues Einbetten und ohne zusätzlichen Durchlauf durch das Modell; Sie schneiden den Vektor ab und normieren ihn neu.
 
 Der Gewinn: Dasselbe Modell liefert Embeddings in mehreren Längen. Legen Sie sie in kleiner Dimension ab und suchen Sie darin, wenn es auf Geschwindigkeit und Speicher ankommt, und greifen Sie dort auf mehr Dimensionen zurück, wo Sie die Genauigkeit brauchen. Genau das macht ein **adaptives Retrieval** praktikabel: ein billiger erster Durchgang in niedriger Dimension über das ganze Korpus, dann eine Neubewertung der Vorauswahl mit den vollen Vektoren. Das deutlichste Beispiel aus der Praxis sind OpenAIs `text-embedding-3`-Modelle (Januar 2024), deren Parameter `dimensions` auf MRL beruht; OpenAI berichtet, dass ein Vektor von `text-embedding-3-large`, **auf 256 Dimensionen gekürzt, das ältere `text-embedding-ada-002` bei dessen vollen 1536** auf MTEB noch schlägt. Eine Einschränkung gehört dazu: Das Kürzen *kostet* gegenüber dem vollen Vektor etwas Genauigkeit – es ist ein kontrollierter Tausch, den Sie an Ihren eigenen Metriken messen, kein kostenloser Zugewinn – und es funktioniert nur bei einem Modell, das *für* MRL trainiert wurde. Ein gewöhnliches Embedding können Sie nicht abschneiden und darauf hoffen, dass das Präfix noch etwas taugt.
 
-### Besonderheiten mehrsprachiger Modelle
+### Besonderheiten mehrsprachiger Modelle \{#multilingual-specifics}
 
 Teil 1 hat Sprache und Domäne als Auswahlachse benannt und Mehrsprachigkeit im Unternehmen als entscheidend bezeichnet. Entscheidend ist, was „mehrsprachig“ tatsächlich leisten muss: einen gemeinsamen **sprachübergreifenden Vektorraum** erzeugen, in dem gleichbedeutende Texte aus verschiedenen Sprachen bei benachbarten Vektoren liegen, sodass eine Frage in der einen Sprache Passagen in einer anderen findet. Genau dieses sprachübergreifende Retrieval braucht ein Unternehmenskorpus, in dem sich Sprachen mischen – und es ist die Eigenschaft, die man am leichtesten voraussetzt und am seltensten nachprüft. Drei Fehlerbilder sollten Sie unmittelbar prüfen:
 
@@ -105,7 +105,7 @@ Teil 1 hat Sprache und Domäne als Auswahlachse benannt und Mehrsprachigkeit im 
 
 Ein paar Modelle sind vernünftige Ausgangspunkte – genannt ohne Anspruch auf eine Rangfolge: multilingual-E5 (Microsoft, 2024), BGE-M3 (BAAI, 2024, mehrsprachig und über mehrere Granularitäten), Cohere Embed multilingual und IBMs granite-embedding multilingual (278M). Und die Brücke zurück zum ersten Hebel: Für eine bestimmte Kombination aus Sprache und Domäne schlägt Fine-Tuning – oder ein Modell, das ausdrücklich für das sprachübergreifende Retrieval trainiert wurde – ein allgemeines mehrsprachiges Modell. Für die Praxis im Unternehmen folgt daraus, was diesen ganzen Abschnitt zusammenhält: Messen Sie auf Ihren eigenen Sprachen und in Ihrer eigenen Domäne, in der Schicht [Evaluierung](../cross-cutting/evaluation/index.md) – denn eine veröffentlichte mehrsprachige Bestenliste mittelt über genau die Sprachen, die Sie vielleicht gar nicht haben.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - **Das Parsing begrenzt alles, was danach kommt.** Der Text, den Sie extrahieren, bestimmt, wie weit jede Chunking- und jede Embedding-Technik weiter unten überhaupt kommen kann. Eine plattgewalzte Tabelle lässt sich später nie wieder aufrichten, und deshalb verliert RAG im Unternehmen genau hier am häufigsten unbemerkt Qualität.
 - **Ein Parsing, das die Struktur zuerst erkennt, extrahiert den Text erst danach:** Regionen und Lesereihenfolge zuerst. So bleiben die Tabellen und die Hierarchie erhalten, auf denen das an der Dokumentstruktur orientierte Chunking und die Metadaten aus Teil 1 aufbauen. Setzen Sie es (und OCR für Scans) genau dann ein, wenn Dokumente tabellarisch, mehrspaltig oder gescannt sind, und einen billigen flachen Extraktor, wenn sie es nicht sind.

@@ -12,7 +12,7 @@ tieto tvrdenia presne vyčísli. Nejde o nič zložité, iba o niekoľko násobe
 intuícia založená na cenníku sa obráti. Nižšie uvedené sadzby sú len ilustračné (dosaď si údaje svojho
 poskytovateľa), no o výške účtu rozhoduje práve *tvar* týchto súčtov.
 
-## Rozklad jedného pokusu
+## Rozklad jedného pokusu \{#one-attempt-decomposed}
 
 Pri jednom pokuse sa účtujú dva prúdy s odlišnými sadzbami, sčítané za všetky jeho kroky: **vstup** (všetko, čo
 odosielaš — systémový prompt, pravidlá, zadanie, predchádzajúce kroky, výsledky nástrojov) a **výstup** (to, čo
@@ -27,7 +27,7 @@ attempt_cost = input_tokens × input_rate + output_tokens × output_rate
 Výstupom jedného kroku agenta býva diff, volanie nástroja či odsek — stovky tokenov. Na vstupe je celý pracovný
 kontext — tisíce až desiatky tisíc tokenov. Veľký objem preváži nad nízkou sadzbou.
 
-## Prečo rozhoduje kontext: opakované posielanie rastie kvadraticky
+## Prečo rozhoduje kontext: opakované posielanie rastie kvadraticky \{#why-context-dominates-the-re-send-is-quadratic}
 
 Cenník jedného volania túto časť zakrýva. Agent pri každom kroku znova odosiela celú konverzáciu, pretože model
 si medzi volaniami stav nepamätá — v 5. kroku teda opäť platíš za načítanie krokov 1 až 4. Ak úloha trvá `N`
@@ -41,7 +41,7 @@ raz, aj prečo má [nafúknutý korpus pravidiel](../drift-and-rot.md) z lekcie 
 aj priamu cenovku. Najväčšiu úsporu pri práci agentov prináša zmenšenie kontextu, no z cenníka jedného volania
 to neuvidíš.
 
-## Prompt caching zmierňuje rast nákladov
+## Prompt caching zmierňuje rast nákladov \{#prompt-caching-bends-the-curve-back}
 
 Kvadratické opakované posielanie má priamu protiváhu: poskytovatelia umožňujú cez **prompt caching (cachovanie
 promptu) uložiť stabilný prefix**, takže za jeho opätovné odoslanie zaplatíš iba zlomok bežnej vstupnej
@@ -56,7 +56,7 @@ Z toho vyplýva konkrétne pravidlo návrhu, ktoré nadväzuje na predchádzajú
 prefix sa rozpadne a o zľavu prídeš. Hygiena korpusu, ktorú lekcia o drifte zdôvodnila správnosťou, teda
 pomáha riadiť aj náklady. Disciplína stabilného prefixu tlmí dôsledky kvadratického rastu.
 
-## Batch vymieňa rýchlosť za zľavu
+## Batch vymieňa rýchlosť za zľavu \{#batching-trades-latency-for-a-discount}
 
 Ďalšiu možnosť máš pri práci, na ktorej výsledok človek práve nečaká. Poskytovatelia v cenníkoch ponúkajú výrazne lacnejšie rozhrania pre batch — odošleš veľa
 požiadaviek a výsledky vyzdvihneš o niekoľko minút až hodín — často približne za polovicu ceny,
@@ -66,7 +66,7 @@ do batchu nepatrí; **offline** práca — hromadné evaly, transformácia celé
 fixtures — áno. Dodatočné overovacie prechody z III. časti sa často dajú spracovať cez batch, aj keď samotné
 generovanie prebiehalo interaktívne.
 
-## Daň za opakovania a hranica, pri ktorej sa cenník obráti
+## Daň za opakovania a hranica, pri ktorej sa cenník obráti \{#the-retry-tax-and-the-break-even-that-inverts-the-price-list}
 
 Teraz presne vyjadrime hlavnú tézu z prvej časti. Ak zmena uspeje na prvý pokus s pravdepodobnosťou `p`,
 očakávaný počet pokusov je `1/p`, takže:
@@ -89,7 +89,7 @@ Hranica rentability je jednoznačná: lacnejší model sa oplatí iba vtedy, ke�
 pri presne polovičnej spoľahlivosti a pod ňou ťa už bude stáť viac. Celé tvrdenie, že „miera opakovaných
 pokusov preváži nad cenníkovou cenou“, sa tak zmestí do jednej nerovnosti, ktorú vieš merať.
 
-## Položka, ktorú zľava na tokenoch nezmení
+## Položka, ktorú zľava na tokenoch nezmení \{#the-line-a-token-discount-cannot-touch}
 
 Posledný súčet zasadí ostatné do správneho rámca. Zo štyroch nákladových položiek z prvej časti je mimo dosahu
 ceny tokenov jediná — **ľudská revízia**: oceňuje sa mzdou a žiadnym nákupom ju nezrýchliš. **Overovanie** je
@@ -99,7 +99,7 @@ tvorí napríklad 40% celkových nákladov na zmenu, ani ľubovoľne veľká zľ
 než zvyšných 60%. Keď prevláda revízia, šetrenie na tokenoch optimalizuje najmenšiu položku. Práve preto prvá
 časť tvrdila, že rozhodujúce obmedzenie je ocenené v mzdách, nie v tokenoch.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - **Rozlož náklady pokusu:** `input_tokens × input_rate + output_tokens × output_rate`. Výstup stojí za token
   viac, no objem vstupu je oveľa väčší, a preto účet určuje vstup.

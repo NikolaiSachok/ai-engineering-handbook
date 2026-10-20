@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Najprv dve hranice, pretože to, čo leží hneď vedľa, rozoberajú susedné lekcie. Idempotenciu nástroja — čo je kľúč idempotencie, prečo ho zápis potrebuje a ako funguje skúšobné spustenie s následným potvrdením — vysvetľuje lekcia [používanie nástrojov, druhá časť](../tool-use/deep-dive.md); táto stránka ju predpokladá a neopakuje. Checkpointer, thready, režimy `durability` a správanie uzla s volaním `interrupt()` rozoberá lekcia [orchestračné frameworky, druhá časť](../orchestration-frameworks/deep-dive.md) a tu sa berú ako známe. Nové je **prepojenie týchto tém**: lekcia o nástrojoch hovorí, že zápis potrebuje kľúč, a táto stránka vysvetľuje, odkiaľ sa hodnota tohto kľúča berie, keď zápis volá graf, ktorý sa znova prehráva.
 
-## Každý krok musí bezpečne zvládnuť opakovanie
+## Každý krok musí bezpečne zvládnuť opakovanie \{#the-step-is-the-unit-of-safety}
 
 Pri **odolnom vykonávaní** sa replay začína na hranici kroku. Pre engine je jednotkou postupu krok. Engine zaznamená dokončenie kroku a po obnovení behu začne prvým krokom, ktorého dokončenie nevie preukázať. Uprostred kroku nepokračuje, pretože čiastočne vykonaný krok nikdy nezaznamenal ako stav.
 
@@ -30,7 +30,7 @@ Následky závisia od druhu kroku. Pri volaní modelu sa dávka z prvej časti z
 
 Kľúč preto musí byť **argumentom kroku** odvodeným z identity, ktorú engine dokáže zreprodukovať. Nesmie ísť o hodnotu, ktorú si krok sám vymyslí. Ak slučku implementuješ sám namiesto použitia enginu, za toto odvodenie zodpovedáš ty. Pre orchestrátor postavený na mieru je jeho správnosť najdôležitejšou požiadavkou. Túto zodpovednosť zohľadni pri porovnaní s cenami z prvej časti.
 
-## Keď nový plán prečísluje vetvy
+## Keď nový plán prečísluje vetvy \{#when-step-identity-moves}
 
 Toto pravidlo má skrytý predpoklad, ktorý uniká aj dôsledným tímom. Kľúč odvodený z identity kroku je stabilný iba natoľko, nakoľko je stabilná samotná identita kroku. Ak sa identita kroku medzi behmi zmení, prestane fungovať aj kľúč, ktorý je od nej odvodený.
 
@@ -40,7 +40,7 @@ Identitu kroku preto odvodzuj z vlastnosti, ktorú nový plán nemôže prečís
 
 Apache Airflow tu patrí ako výstražný príklad, nie ako vzor, hoci sa najčastejšie uvádza ako systém s prirodzene stabilnou identitou kroku. Takúto vlastnosť nemá a dokumentácia [Airflow](https://airflow.apache.org/docs/apache-airflow/stable/templates-ref.html) to uvádza jednoznačne. Logický dátum ani hodnoty od neho odvodené „sa v Dagu nemajú považovať za jedinečné“ a dokumentácia namiesto nich odkazuje na `run_id`. Airflow 3 v [AIP-83](https://cwiki.apache.org/confluence/display/AIRFLOW/AIP-83+Rename+execution_date+-%3E+logical_date+and+make+logical_date+optional) zašiel ďalej a zmenil `logical_date` na nullable, teda s možnou prázdnou hodnotou. Pre potreby plánovania pridal `run_after`, pretože na túto úlohu sa predtým nesprávne používal logický dátum. Stabilnú identitu preto tvorí `run_id` spolu s identifikátorom úlohy, teda identita samotného behu spolu s identitou samotnej úlohy. Rovnakú skladbu predpisuje Temporal. Poučenie platí aj mimo oboch produktov: **neodvodzuj identitu z hodnoty, ktorá znamená niečo iné**. Dátum je dátum. Nie je to identifikátor, nech vyzerá v testovacích dátach akokoľvek jedinečne. Stav k augustu 2026 — tento detail sa už raz zmenil.
 
-## Jeden graf, viac vetiev, spoločný stav
+## Jeden graf, viac vetiev, spoločný stav \{#fan-out-inside-one-graph}
 
 Druhý mechanizmus je o úroveň nižšie než všetko, čo rozoberajú lekcie o multiagentových systémoch. Nejde o viac agentov v tíme ani o viac nástrojov volaných v jednej dávke. **Jeden graf** sa cez fan-out rozvetví na paralelné vetvy, ktoré čítajú a menia **jeden spoločný objekt stavu**. Rozhodujúce je, čo sa stane, keď dve vetvy zapíšu do rovnakého kľúča.
 
@@ -66,7 +66,7 @@ Toto rozlíšenie váži viac, než sa zdá, a zamieňať obe predvolené pravid
 
 Riešením je **reducer**, teda funkcia deklarovaná na kľúči stavu, ktorá určuje zlúčenie dvoch hodnôt. [LangGraph](https://docs.langchain.com/oss/python/langgraph/use-graph-api) dokumentuje presne dva vstavané reducery: `operator.add` a `add_messages`. Nejde o ukážku zo širšieho katalógu, ale o celý dokumentovaný zoznam. `operator.add` hodnoty spája, čo potrebuješ, keď každá vetva pridáva položky do zoznamu. `add_messages` spracúva históriu konverzácie vlastnou sémantikou, ktorá zohľadňuje identitu správ. Pre každý iný spôsob zlúčenia napíšeš vlastnú funkciu, čo je bežný postup, nie pokročilá technika.
 
-## Ako spojiť dva paralelné zápisy?
+## Ako spojiť dva paralelné zápisy? \{#the-merge-you-have-to-specify}
 
 Keď deklaruješ reducer, rozhodnutie prechádza z frameworku na teba, a práve tam vzniká **tichá chyba**.
 
@@ -78,7 +78,7 @@ Druhou požiadavkou je určiť poradie a najlepšie sa tu držať slov samotnéh
 
 Presne tu môžu spôsobiť problémy ďalšie dve zdokumentované nastavenia. Predvolená hodnota [`durability`](https://docs.langchain.com/oss/python/langgraph/durable-execution) je **`"async"`**, nie `"exit"`. Režim `"async"` zapisuje checkpoint na pozadí, hoci ďalší krok už beží, takže pri zlyhaní procesu môžeš prísť o posledný zápis. Je to rozumná predvoľba, ale nie tá, ktorá odolnosť naozaj zaručí. Ak sa na odolnosť spoliehaš pri kroku, ktorý stojí peniaze, skontroluj režim, v ktorom systém skutočne beží, a nespoliehaj sa na význam slova `durability`. Priraďovanie hodnôt pri obnovení po [`interrupt()`](https://docs.langchain.com/oss/python/langgraph/interrupts) je **striktne podľa indexu**, takže hodnoty sa párujú s prerušeniami podľa ich poradia. Graf s podmieneným prerušením alebo prerušením v cykle preto môže odovzdať hodnotu nesprávnemu prerušeniu. V oboch prípadoch ide o rovnaké riziko ako pri zlúčení: predvolené správanie vyhovuje bežnému prípadu, ale nie nevyhnutne tomu tvojmu.
 
-## Na čom sa systémy zhodli
+## Na čom sa systémy zhodli \{#what-the-engines-settled}
 
 Prvá časť ukázala, že enginy odolného vykonávania umožňujú posúdiť vlastnosti checkpointera. Každému enginu sa oplatí položiť štyri otázky a porovnať jeho odpovede.
 
@@ -100,11 +100,11 @@ Tretí riadok sa často prehliada, hoci opisuje opačný profil rizika než druh
 
 A jedna prevádzková poznámka, ktorá uzatvára argument o uchovávaní z prvej časti. [Express](https://docs.aws.amazon.com/step-functions/latest/dg/choosing-workflow-type.html) workflowy nezaznamenávajú v Step Functions žiadnu históriu vykonávania. Ak ju potrebuješ, musíš ju sám odosielať do CloudWatch Logs. Dodávateľ tým hovorí presne to, čo táto lekcia obhajuje: história enginu slúži na vykonávanie a za vlastný záznam zodpovedáš ty.
 
-## Dôkaz namiesto tvrdenia
+## Dôkaz namiesto tvrdenia \{#proving-it-rather-than-claiming-it}
 
 Všetko na tejto stránke sú tvrdenia o správaní pri zlyhaní a pravdivosť im nezaručí nijaká dôslednosť pri návrhu. Rozhodujúci test musí pád vyvolať, nie naň čakať. Zabi workera na hranici kroku — konkrétne v okne po spustení spoplatneného vedľajšieho účinku a pred zápisom, ktorý ho zaznamená. Potom beh obnov a neoveruj iba jeho dokončenie, ale to, že vedľajší účinok nastal **práve raz**. Ide o techniku overovania, nie návrhu, preto patrí do kurzu o AI SDLC medzi ostatné [vrstvené brány a rozmanitosť mechanizmov](/ai-sdlc/part-3-verification/layered-gates). Keď máš návrh z týchto dvoch stránok hotový, je prirodzené pokračovať práve týmto testom.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - **Bezpečnosť kroku.** Replay prebieha na hranici kroku, preto je krok jednotkou bezpečnosti. Kľúč idempotencie odvoď z identity behu a identity kroku. Temporal podľa dokumentácie spája Workflow Run ID s Activity ID, takže kľúč zostáva rovnaký pri opakovaných pokusoch a jedinečný medzi vykonaniami. Kľúč vytvorený až v opakovane prehrávanom uzle je pri každom replay nový, preto deduplikácia nezaberie a pri obnovení sa práca zaplatí znova.
 - **Stabilná identita kroku.** Ak sa identita kroku medzi behmi mení, kľúč odvodený z tejto identity stráca účinok. Bežnou príčinou je opätovne naplánovaný dynamický fan-out. Identitu kroku odvodzuj z obsahu samotnej práce, nikdy nie z jej pozície. Apache Airflow je výstražný príklad, nie vzor: jeho dokumentácia uvádza, že hodnoty odvodené z logického dátumu „sa v Dagu nemajú považovať za jedinečné“, a odkazuje na `run_id`.

@@ -7,13 +7,13 @@ sidebar_position: 5
 
 Medzi jednotlivými spusteniami si agenti nič nepamätajú. Keď ukončíš reláciu, všetko, k čomu model dospel — dohodnuté obmedzenia, zavrhnuté slepé uličky aj dôvody, prečo má funkcia práve takú podobu — sa vytratí. Zostanú iba súbory na disku. Trvalá pamäť projektu je nevyhnutná, aby sa vôbec dalo pracovať s celou skupinou zábudlivých agentov. Táto pamäť však prináša priebežné náklady: súbor s pravidlami sa nezapíše raz a neotvára iba podľa potreby. Model ho dostáva znova pri každom kroku a jediné dôkladné meranie ukázalo, že náklady na jeden krok vzrástli o viac ako 20%. Zdanlivo samozrejmé riešenie — zapisovať toho viac — sa tak samo stáva zdrojom problémov. Táto lekcia ukazuje východisko: rozvrstviť znalosti podľa toho, ako často ich agent pri konkrétnej úlohe skutočne potrebuje, namiesto vytvárania ďalších materiálov. Otvorene treba posúdiť ústredné tvrdenie tejto lekcie: pochádza od nás, opiera sa o jediný zdroj a zatajovať to by bolo nepoctivé.
 
-## Veľmi múdry priateľ s amnéziou
+## Veľmi múdry priateľ s amnéziou \{#the-smart-friend-with-amnesia}
 
 Jeden z odborníkov, ktorí verejne píšu o vývoji založenom na AI, [Andrej Beloborodov](https://www.threads.com/@andreybwhite), preberá prirovnanie, ktorým sa opísal samotný model: „veľmi múdry priateľ s amnéziou“. Po skončení dialógu neprežije nič okrem kódu. Keď rozhovor prekročí kontextové okno a automatické skracovanie zhrnie jeho doterajší priebeh, podľa neho to pomôže, „ale nie veľmi“.
 
 Túto predstavu už podporuje aj meranie, ktoré ju zachytáva presnejšie než samotná metafora. Autori [štúdie o „rozklade riadenia“](https://arxiv.org/abs/2606.22528) (jún 2026) v 1323 behoch merali, či agent dodržiava pravidlá, ktoré dostal. Kým videl ich úplné znenie, miera porušení bola **0%**. Keď sa história po skrátení nahradila súhrnom, miera porušení vzrástla **celkovo na 30%, pri niektorých modeloch až na 59%**. Najpoučnejší je rozbor príčin: ak obmedzenie prežilo sumarizáciu, miera porušení zostala na **0%**; ak ho sumarizátor vynechal, vyskočila na **38%**. Model pravidlo nikdy neporušil zámerne — pri skrátení ho z kontextu odstránil testovací mechanizmus. Tento záver platí aj mimo automatického skracovania: všetko, čo musí prežiť, treba napevno ponechať v kontexte alebo doň opakovane vkladať. Nestačí to uviesť raz a spoliehať sa, že to zostane zachované.
 
-## Keď zapíšeš viac, utopíš sa v tom
+## Keď zapíšeš viac, utopíš sa v tom \{#write-more-down-and-you-drown}
 
 Ďalšie Beloborodovovo priznanie pôsobí skôr ako potvrdenie než ako zaváhanie. Najprv odporúča vybudovať pamäť projektu, no potom pripúšťa, že sa „v priebehu niekoľkých dní utopíš vo vygenerovaných dokumentoch“ — AI píše špecifikácie „s desiatkami kilobajtov“ a úložisko „sa zmení na smetisko“. Následne sľubuje riešenie, ku ktorému sa však už v sérii nedostane. Napriek tomu túto metódu používal ďalej. Práve to je podstatné: zahltenie je problém, ktorý treba technicky zvládnuť, nie dôvod zavrhnúť celý prístup.
 
@@ -21,13 +21,13 @@ Ide o najlepšie doložené zistenie v tejto oblasti. Nezávisle od seba k nemu 
 
 Náklady už možno vyjadriť aj číselne. Trvalý kontextový súbor nie je dokument, do ktorého nahliadneš podľa potreby. Funguje ako predplatné, za ktoré platíš pri každom kroku, pretože každý riadok sa modelu posiela znova a účtuje sa v každom kroku. ETH Zurich tieto náklady zmerala ([Gloaguen et al.](https://arxiv.org/abs/2602.11988)): kontextové súbory zvýšili náklady na inferenciu **v priemere o viac než 20% na krok** — pri súboroch vygenerovaných LLM o **+20% v SWE-bench Lite a +23% v AGENTbench**, pri súboroch napísaných ľuďmi až o **+19%**. Príčina pritom nie je tá, ktorú by si čakal: agenti „dodržiavali pokyny dôsledne, ale zbytočne“. Agent prejavil nadmernú poslušnosť — pokynmi sa riadil až priveľmi svedomito a bez akéhokoľvek prínosu minul dodatočný rozpočet. Viac pamäte tu neznamená iba plytvanie. Vedie nesprávnym smerom.
 
-## Nedovoľ agentovi písať vlastné pravidlá
+## Nedovoľ agentovi písať vlastné pravidlá \{#dont-let-the-agent-write-its-own-rules}
 
 Tá istá štúdia priniesla nečakaný výsledok. Z troch podmienok — bez kontextového súboru, so súborom vygenerovaným LLM a so súborom napísaným človekom — **mal merateľne záporný celkový účinok iba súbor vygenerovaný LLM**: úspešnosť úloh klesla o **−0,5%** v SWE-bench Lite a o **−2%** v AGENTbench. Súbory napísané ľuďmi priniesli mierne zlepšenie, **v priemere +4%**; zlepšili sa všetci agenti okrem jedného. Dôvod vystihuje podstatu problému: človek zapisuje to, čo agent nedokáže odvodiť z repozitára, zatiaľ čo agent pri písaní vlastných pravidiel väčšinou iba opakuje informácie, ktoré si už mohol prečítať.
 
 Nevykladaj si to však ako dôkaz, že „AGENTS.md nefunguje“. Druhá štúdia prináša opačný výsledok a obe môžu mať pravdu. [Lulla et al.](https://arxiv.org/abs/2601.20404) zistili, že prítomnosť súboru AGENTS.md *súvisela s* **28,64% nižším mediánom času behu** a **16,58% menším počtom výstupných tokenov**. Výsledky si neprotirečia — sledujú odlišné náklady v odlišných skupinách. Gloaguen meria úspešnosť úloh a náklady na vstup, pričom sa súbor posiela znova pri každom kroku. Lulla meria čas behu a výstupné tokeny: ak súbor zabráni agentovi tápať, skráti celý postup. Navyše ide o pozorovanie, nie o experimentálne potvrdenie príčinnej súvislosti. Súbor môže zvýšiť náklady na vstup a zároveň znížiť počet výstupných tokenov aj celkový čas behu. Zohľadni oba výsledky a nevyhlasuj víťaza. Pri oboch výkladoch však zostáva praktický záver rovnaký: nedovoľ LLM, aby ti od základu vytvoril súbor s pravidlami; odstráň všetko, čo sa agent môže dozvedieť prečítaním kódu — ručne napísaná časť „Architektúra“ býva typickým príkladom — a ponechaj iba príkazy, obmedzenia a skutočne neštandardné postupy.
 
-## Archív jaziev
+## Archív jaziev \{#the-scar-archive}
 
 Ak treba väčšinu súboru s pravidlami vymazať, čo si zaslúži zostať? V mojej produkčnej praxi je najcennejšou súčasťou pamäte projektu archív jaziev: stručný záznam dôvodov každého uzamknutého rozhodnutia, akýsi blameless postmortem. Dopĺňam ho vždy, keď kontrola celej dávky odhalí a opraví určitú triedu chýb. V odvetví sa rovnaká myšlienka označuje ako blameless postmortem. Verzia pre soloistu je však uložená tam, kde verzia na úrovni enterprise zvyčajne nebýva: v súbore, ktorý agent musí čítať, nie vo wiki, ktorú nikto neotvára. Preto si vyžaduje menej úsilia a agent sa k nej dostane častejšie než ku knižnici ADR.
 
@@ -41,7 +41,7 @@ IBM opisuje inžinierstvo kontextu (context engineering) ako rozhodovanie o tom,
 
 :::
 
-## Rozvrstvuj znalosti, nevytváraj ich viac
+## Rozvrstvuj znalosti, nevytváraj ich viac \{#tier-the-knowledge-dont-produce-more-of-it}
 
 Problém v pozadí všetkých týchto javov zatiaľ nemá meno. Amnézia, priebežné náklady každého kroku, nadmerná poslušnosť, topenie sa v dokumentoch — ani po dvadsiatich mesiacoch éry vývoja riadeného špecifikáciami neexistuje dohodnutý názov pre spoločné zlyhanie, ktoré tieto javy vytvárajú. Jav označovaný ako `context rot` (hnitie kontextu) bol do roka pomenovaný aj odborne opísaný. Zahltenie artefaktmi sa označuje ako „demencia“ agentov či „pamäť určená iba na zápis“ (Yegge), ako priveľa markdownových súborov (Böckeler) alebo jednoducho počtom riadkov (Eberhardt). Tento zatiaľ nepomenovaný problém je územím, o ktoré sa ešte nikto neprihlásil.
 
@@ -53,11 +53,11 @@ Tu sa dostávame k medzere, ktorú tento kurz pomenúva. Inžinierstvo kontextu 
 
 Stav dokumentu dopĺňa pravidlá vyradenia: vrstvenie určuje, koľko miesta dokument zaberie v kontexte, kým stav určuje, čo dokument tvrdí. Opis cieľového stavu si agent môže vyložiť ako opis fungujúceho systému. Ak rozdiel neoznačíš a takýto dokument mu dáš ako kontext k implementácii, môže vyvíjať pre svet, ktorý neexistuje. Beloborodov pri [opise stabilizácie uviaznutého klientského projektu](https://realaillusions.com/ru/materials/ai-project-stabilization-case/) uvádza, že ako jeden z prvých krokov nápravy rozdelil dokumentáciu na históriu, cieľový stav a experimenty. Na [stránke svojho projektu](https://realaillusions.com/ru/projects/cyprus-real-estate-project/) hovorí, že plány zostávajú plánmi, kým sa funkcia nepotvrdí vo fungujúcom systéme. Na prvom riadku každého projektového dokumentu uveď jeden zo štyroch stavov: „súčasný stav“, „cieľový stav“, „experiment“ alebo [„nahradené“](../part-5-scale-governance/drift-and-rot.md). Materiál o cieľovom stave nikdy nepatrí do predvoleného kontextu implementačnej úlohy. Podľa výkladu tohto kurzu sa riziko tejto chyby zväčšuje s veľkosťou organizácie: enterprise wiki plná zamýšľanej architektúry dáva agentovi viac príležitostí zameniť zámer za skutočnosť.
 
-## Prečo sa môžeme mýliť
+## Prečo sa môžeme mýliť \{#why-we-might-be-wrong}
 
 Poctivé je priznať, o aké slabé podklady sa opiera tvrdenie, že „vrstvenie znalostí nás zachránilo“. Ide o opis vlastnej praxe z jediného zdroja a tým zdrojom som ja. To, že viaceré nezávislé zdroje siahli po rovnakom riešení, zvyšuje dôveru v správnosť *smeru*, nie v overenie *mechanizmu*. Nikto vrátane nás nemá nič presvedčivejšie než vlastné tvrdenie, že to funguje. Navyše pochádza práve od skupiny, pri ktorej [METR](https://arxiv.org/abs/2507.09089) zistil, že sa pri odhade svojej produktivity v ére AI pomýlila približne o štyridsať bodov, a to opačným smerom a s vysokou sebaistotou (Lekcia 1). Naše tvrdenie „funguje to“ je poznačené rovnakým skreslením. Kurz, ktorý ťa v Lekcii 2 učil hodnotiť dôveryhodnosť tvrdení, by bol podvodom, keby z hodnotenia vyňal vlastné tvrdenia. Výsledky ETH možno navyše vykladať aj v náš neprospech: ak vygenerované artefakty škodia, možno by korpus vôbec nemal existovať a vrstvenie iba upratuje neporiadok, ktorý sme sami vytvorili. Preto je dôležité hovoriť o šetrení kontextom a netvrdiť, že vrstvenie znalostí je *dokázané*. Najstaršie varovanie napokon vôbec nesúvisí s AI. Veľká empirická štúdia modelom riadeného vývoja (Hutchinson et al., 2014) zistila, že o úspechu rozhodovali *organizačné*, nie technické faktory. [DORA](https://dora.dev/dora-report-2025/) neskôr pri AI znovu objavila rovnaký zákon: AI zosilňuje to, čím tím už je; neopraví ho. Vrstvenie znalostí je technická odpoveď. Funguje iba do tej miery, do akej zaň niekto zodpovedá — a žiadny nástroj nedokáže zabezpečiť, aby zaň niekto skutočne prevzal zodpovednosť.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Na každej úrovni platí rovnaké pravidlo: **pamäť treba vrstviť podľa relevantnosti, inak vytvára stálu réžiu pri každom kroku.** Mení sa iba to, kto zodpovedá za hranice medzi vrstvami a ako sa dokazuje ich správnosť.
 
@@ -67,7 +67,7 @@ Na každej úrovni platí rovnaké pravidlo: **pamäť treba vrstviť podľa rel
 
 - **Enterprise.** Knižnica ADR spolu so spravovanou a verzovanou znalostnou bázou, ktorá obsahuje údaje potrebné na vyhľadávanie — pri každom súbore uvádza, na čo sa vzťahuje, kedy sa má načítať, či patrí do hot set alebo cold set a aký má stav. *Čomu to zabraňuje:* korpusu bez vlastníka, ktorý si protirečí a nemá mechanizmus na odhalenie zastaraných informácií — teda rozchádzaniu, ktorému sa venuje Lekcia 5. Aj tu platí už spomínané rozlíšenie: knižnica ADR slúži najmä ako *dôkaz*, čiže spätne kontrolovateľný záznam, zatiaľ čo hot set soloistu predstavuje *schopnosť*, pretože priamo určuje, čo môže agent práve teraz načítať bez neúmerných nákladov.
 
-## Čo si z toho odniesť
+## Čo si z toho odniesť \{#what-to-take-away}
 
 - Medzi jednotlivými spusteniami si agenti nepamätajú nič okrem súborov na disku. Všetko, čo musí prežiť, preto treba napevno ponechať v kontexte alebo doň znova vkladať. Automatické skrátenie môže pravidlo potichu vynechať a potom sa zdá, akoby ho model neposlúchol — kým bolo pravidlo viditeľné, miera porušení bola `0%`; po jeho odstránení zo súhrnu vzrástla až na `59%`.
 - Trvalý kontextový súbor nezostáva iba uložený: jeho obsah sa pri každom kroku posiela modelu znova, a preto sa znova aj účtuje. ETH namerala viac než `20%` dodatočných nákladov na krok, ktoré spôsobovala nadmerná poslušnosť. Takýto súbor funguje ako predplatné, nie ako dokument, do ktorého sa nahliada iba podľa potreby. Každý riadok si musí svoje miesto zaslúžiť.

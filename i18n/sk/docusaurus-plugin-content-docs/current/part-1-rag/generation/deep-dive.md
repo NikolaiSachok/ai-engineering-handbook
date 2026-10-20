@@ -12,11 +12,11 @@ Najprv jedna hranica — tá istá, akú si vytýčilo prehĺbenie lekcie Retrie
 
 Chrbtica po poriadku: minúť výpočtový výkon pri inferencii na zachytenie vlastných chýb modelu (sebakontrola); vtlačiť odpoveď do tvaru, ktorému parser aj kontrolór citácií môžu veriť (štruktúrovaný výstup a vynútené citácie); postaviť sa konfliktu medzi kontextom a pamäťou čelne, namiesto dúfania, že grounding vyhrá; poskladať dlhý kontext za hranicou pravidla lost-in-the-middle; a tvarovať formát, tón a dĺžku odpovede tak, aby tvarovanie neprebilo grounding.
 
-## Výpočtový výkon navyše, ktorý zachytí vlastné chyby modelu
+## Výpočtový výkon navyše, ktorý zachytí vlastné chyby modelu \{#spend-compute-to-catch-the-models-own-mistakes}
 
 **Grounding instruction** (inštrukcia na opretie o kontext) z Časti 1 znižuje mieru halucinácií. Neoverí ani jednu konkrétnu odpoveď. Dve publikované techniky minú výpočtový výkon navyše pri inferencii, aby preverili samotnú odpoveď — obe na strane generovania, ani jedna nevyhľadáva nanovo, obe vymieňajú tokeny a latenciu za **faithfulness** (vernosť zdrojom). Riešia problémy odlišného druhu a najrýchlejšie ich odlíšiš takto: jedna vzorkuje a hlasuje, druhá generuje a kontroluje.
 
-### Self-consistency: navzorkuj viac ciest, hlasuj raz
+### Self-consistency: navzorkuj viac ciest, hlasuj raz \{#self-consistency-sample-many-paths-vote-once}
 
 **Self-consistency** (navzorkuj viac ciest a hlasuj) nahradí jediné hladné (greedy) dekódovanie chain-of-thought (reťazec úvah) malým ansámblom behov (Wang a kol., „Self-Consistency Improves Chain of Thought Reasoning in Language Models“, arXiv 2203.11171, marec 2022; ICLR 2023). Pri teplote nad nulou navzorkuješ rozmanitú množinu ciest úvah, tie potom marginalizuješ (odmyslíš si konkrétnu cestu) a na finálnej odpovedi spravíš väčšinové hlasovanie.
 
@@ -28,7 +28,7 @@ V systéme RAG sadne self-consistency na odpoveď s diskrétnou, vytiahnuteľnou
 
 To ti zároveň povie, kedy po nej nesiahať. Otvorená, dlhá odpoveď nemá jednu hodnotu na hlasovanie — niet čo odmyslieť a self-consistency sa jednoducho nedá použiť. Navyše násobí náklad N-krát: N plných generovaní na každý dopyt. Preto je to uvážené rozhodnutie o latencii a rozpočte pri úzkej triede otázok, nikdy nie predvoľba, ktorú zapneš všade.
 
-### Chain-of-verification: najprv návrh, potom výsluch návrhu
+### Chain-of-verification: najprv návrh, potom výsluch návrhu \{#chain-of-verification-draft-then-interrogate-the-draft}
 
 **Chain-of-verification (CoVe)** (Dhuliawala a kol., „Chain-of-Verification Reduces Hallucination in Large Language Models“, arXiv 2309.11495, september 2023) je výslovná slučka, v ktorej si model sám kladie kontrolné otázky, v štyroch krokoch: napíš základný návrh odpovede; naplánuj sadu overovacích otázok, ktoré ten návrh faktograficky preveria; na každú overovaciu otázku odpovedz nezávisle; a nakoniec vygeneruj finálnu overenú odpoveď, v ktorej návrh prepracuješ podľa toho, čo kontroly ukázali.
 
@@ -47,7 +47,7 @@ V RAG sa overovacie otázky nanovo opierajú o nájdený kontext — každá sa 
 
 Postav si tie dve techniky vedľa seba a deľba práce je čistá: self-consistency vzorkuje a hlasuje (bez kritiky, potrebuje odpoveď, o ktorej sa dá hlasovať, a funguje tam, kde je jedna diskrétna hodnota); CoVe generuje a kontroluje (výslovné kladenie kontrolných otázok samému sebe, funguje na dlhej próze, kde niet o čom hlasovať). Obe stoja prechody navyše. Ani jedna nevyhľadáva nanovo.
 
-## Prestaň o štruktúru prosiť, vynúť si ju
+## Prestaň o štruktúru prosiť, vynúť si ju \{#stop-asking-for-structure-enforce-it}
 
 Časť 1 model prosila, nech cituje zdroje a nech odpovie čisto. Na pokročilej úrovni prestaneš prosiť a začneš vynucovať — tvar výstupu sa stane tvrdou zárukou namiesto nádeje.
 
@@ -78,7 +78,7 @@ Jedno obmedzenie treba zvážiť už pri návrhu, nie ho odsúvať pod čiaru: v
 
 Toto všetko má svoju cenu a kľúčové je vedieť, kedy ju neplatiť. Vtlačenie výstupného rozdelenia do rigidnej schémy môže zhoršiť uvažovanie odpovede: model minie rozpočet na uspokojenie gramatiky namiesto premýšľania. Nechaj preto uvažovanie voľné a obmedz len finálnu odpoveď — nech model uvažuje v neobmedzenom scratchpade či poli na premýšľanie a schémou zamknutú odpoveď vygeneruje až na konci. Obmedz to, čo dodávaš, nie to, ako uvažuješ.
 
-## Keď si kontext a pamäť modelu protirečia
+## Keď si kontext a pamäť modelu protirečia \{#when-the-context-and-the-models-memory-disagree}
 
 Časť 1 dala pravidlo: odpovedaj z kontextu, potlač **parametrickú pamäť** (parametric knowledge). Pravidlo nie je absolútne a predstierať, že je, ti prinesie celú triedu potichu nesprávnych odpovedí.
 
@@ -94,7 +94,7 @@ Máš páky nad rámec základnej grounding instruction, hoci ani jedna nie je v
 
 Ostáva jedna úprimná hranica. Nijaký prompt nespraví grounding absolútnym — parametrické prebitie znižuješ a meriaš, neodstraňuješ ho. Práve preto je faithfulness sledované číslo, nie vyriešený problém.
 
-## Skladanie dlhého kontextu za hranicou lost-in-the-middle
+## Skladanie dlhého kontextu za hranicou lost-in-the-middle \{#packing-a-long-context-past-lost-in-the-middle}
 
 Použi kánonový termín, netreba ho vymýšľať nanovo: **lost-in-the-middle** (strata uprostred) (Liu a kol., arXiv 2307.03172, TACL 2023). Časť 1 ti dala orientačné pravidlo — málo najlepších chunkov, najrelevantnejšie na okraje. Tu je mechanizmus a disciplína za ním.
 
@@ -119,7 +119,7 @@ Ešte dvoma krokmi získaš rozpočet skôr, než vôbec naďabíš na hranicu o
 
 Niť naprieč všetkým: skladanie dlhého kontextu je pravidlo z Časti 1 „málo najlepších, na okraje“, dotiahnuté do prísnosti — vyber (rerank), deduplikuj, usporiadaj podľa krivky U. Okno sa zväčšilo. Disciplína nezvoľnela.
 
-## Tvarovanie odpovede bez toho, aby prebilo grounding
+## Tvarovanie odpovede bez toho, aby prebilo grounding \{#shaping-the-answer-without-overriding-the-grounding}
 
 Vygenerovaná odpoveď je tá časť produktu, ktorú používateľ naozaj číta, a **tvarovanie odpovede** (answer-shaping) rozhoduje, ako dopadne. Jednu výhradu si drž od začiatku, lebo je zároveň pointou: tvarovanie nesmie nikdy prebiť správnosť.
 
@@ -131,7 +131,7 @@ Tón nastavíš v systémovom prompte a držíš ho vyrovnaný. Register zlaď s
 
 A teraz pravidlo, ktorému to všetko slúži. Tvarovanie odpovede je podriadené groundingu a faithfulness. „Buď stručný“ nesmie nikdy zahodiť citáciu, výhradu ani úprimné „toto v dokumentoch nie je“. Keď sa inštrukcia na tvarovanie a grounding instruction zrazia, vyhráva grounding, zakaždým. Nejde tu len o poriadok: krásne naformátovaná, sebavedomo ladená nesprávna odpoveď je najhorší výsledok, aký vie celá vrstva vyprodukovať, lebo tvarovanie spraví nesprávnu odpoveď presvedčivejšou. Práve preto prichádza tvarovanie posledné a ustupuje správnosti — je to leštidlo, ktoré nanášaš na niečo, čo si už spravil pravdivým.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Sebakontrola minie výpočtový výkon navyše pri inferencii na preverenie vlastnej odpovede modelu: self-consistency navzorkuje viac ciest úvah a väčšinovo odhlasuje diskrétnu hodnotu, kým chain-of-verification najprv napíše návrh a potom odpovedá na izolované overovacie otázky, aby vlastnú chybu nemohol len odobriť — a ani jedna technika nevyhľadáva nanovo.
 - Obmedzené dekódovanie spraví z tvaru výstupu záruku namiesto prosby: schéma v každom kroku zamaskuje (vylúči) neplatné tokeny, takže zle sformovaný JSON je nemožný, a Structured Outputs od OpenAI (`strict: true`) zaručí dodržanie tvojej schémy, nie iba platný JSON.

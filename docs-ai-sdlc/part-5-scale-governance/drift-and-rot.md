@@ -12,7 +12,7 @@ about a codebase. The codebase changes weekly; the rule was written once. When t
 politely become irrelevant — it becomes **actively harmful**, because unlike a human, who reads a stale
 convention and quietly ignores it, an agent reads it and complies.
 
-## Three ways a rule corpus decays
+## Three ways a rule corpus decays \{#three-ways-a-rule-corpus-decays}
 
 The failure has three distinct shapes, and each wants a different remedy: a check that fails, a
 review that reconciles, a deletion.
@@ -33,7 +33,7 @@ point, the important constraints are diluted by accumulated trivia, and what hap
 miss: a corpus too large to fit the working context gets *truncated*, and at that point neither you nor the
 agent gets to choose which rules survive the cut.
 
-## Executable rules rot loudly; prose rules rot silently
+## Executable rules rot loudly; prose rules rot silently \{#executable-rules-rot-loudly-prose-rules-rot-silently}
 
 The single most useful property of a rule is whether its decay is *visible*. A rule expressed as a check — a
 test, a lint rule, a CI gate — fails the moment reality moves out from under it. That failure is annoying and
@@ -54,7 +54,7 @@ invisibly, and the bill arrives as agents confidently building against a world t
 
 :::
 
-## Ownership and expiry: the part nobody assigns
+## Ownership and expiry: the part nobody assigns \{#ownership-and-expiry-the-part-nobody-assigns}
 
 Every rule needs two things written next to it that almost never are: **who owns it** and **what
 triggers the next review**. Without an owner the rule belongs to everyone, which means it belongs to
@@ -82,7 +82,7 @@ owner: each release flag carries an owner, a description and a removal date. A l
 it needs an owner and review with the rule corpus, rather than an expiry. Both branches of a stale flag still
 look live in the code, so an agent can keep maintaining, testing and extending the dead one.
 
-## Memory drifts the same way
+## Memory drifts the same way \{#memory-drifts-the-same-way}
 
 Project memory decays with the same three shapes, but it degrades more insidiously than rules do, because
 memory reads as *description* rather than *instruction* — so nobody audits it. An entry recording "we chose X
@@ -91,7 +91,7 @@ discipline is the same: entries carry dates, contradictions get reconciled rathe
 superseded decisions are marked superseded instead of quietly left standing next to the decision that replaced
 them.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant does not change with scale: **a rule is only as good as its last verification against reality,
 and something must make its decay visible.** What changes is who is accountable and how the review is
@@ -109,7 +109,7 @@ triggered.
   and an audit trail showing when each rule was last confirmed against the code. *The failure it prevents:* a control that exists on
   paper, has not matched the system for two years, and is discovered during the audit that assumed it worked.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **A stale rule is worse than no rule.** A human ignores an obsolete convention; an agent complies with it.
 - Decay comes in three shapes — **staleness, contradiction, bloat** — and they need different fixes.

@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Part 1](./index.md) laid the ground: the three ways to consume a model, the perimeter a platform actually sells, the big three and the rule that their names are only snapshots, the model catalogues, the privacy-and-residency triad, managed RAG and platform guardrails, the three pricing models — on-demand, provisioned, batch — and how the choice really gets made. This is the deep second pass, the mastery layer over the same platforms. It answers five questions Part 1 left open: what you customise when prompting and RAG aren't enough, what runs the agent once you've built it, what the whole thing costs and how to model that, how to stay portable across clouds, and who is legally allowed to touch any of it. Part 1 is assumed throughout and none of it is re-taught here. Everything below is a snapshot as of mid-2026 (July 2026); as in Part 1, the product names are dated and the durable thing is the category under them.
 
-## What a custom model costs to serve
+## What a custom model costs to serve \{#what-a-custom-model-costs-to-serve}
 
 Every hyperscaler offers the same **customisation ladder**, and it climbs in one direction — cheaper and looser to more expensive and tighter. Prompt engineering and RAG sit at the bottom, then parameter-efficient tuning (LoRA and other PEFT methods), then full supervised fine-tuning (SFT), then preference and reinforcement methods (DPO, reinforcement fine-tuning), then distillation, and at the top continued pre-training. The rung names and the list of eligible base models churn quarterly, so treat the specifics as a snapshot and hold onto the ladder.
 
@@ -36,7 +36,7 @@ flowchart TD
 
 All of which decides *when* the ladder is worth climbing. The order is prompt first, then RAG, and fine-tuning only when neither is enough — and when you do reach for it, fine-tune for form, not for facts. Style and tone, a rigid output schema, refusal and formatting behaviour, or a smaller specialised model that is cheaper and faster at scale are all good reasons. Injecting knowledge that changes is not; that is RAG's job, and baking a moving fact into weights only guarantees it goes stale. This is the same self-hosted-versus-API fork [ingestion](../../part-1-rag/ingestion/index.md) drew for embedding models, and the same managed-versus-own call Part 1 made for RAG, now at the level of the model itself.
 
-## The runtimes that host the agent loop
+## The runtimes that host the agent loop \{#the-runtimes-that-host-the-agent-loop}
 
 Part 1's platforms serve models. A **managed agent runtime** serves something one layer up: it hosts the agent loop for you and wraps it in session and memory persistence, a tool and identity and gateway layer, observability, and scale-to-zero. Those are precisely the deltas over running your own agent in a container the way the [serving](../serving/index.md) lesson described. As with the platforms, the product names are a snapshot; the category is the thing to learn.
 
@@ -46,7 +46,7 @@ Part 1's platforms serve models. A **managed agent runtime** serves something on
 
 Line them up and the durable teaching point is the delta, not the feature list. Against hand-rolling the loop in a container you get six things out of the box: the loop hosted with long-running execution windows, session plus short- and long-term memory, a tool gateway that adapts an MCP server or an API into a callable tool alongside an identity layer for act-on-behalf-of and token vaults, built-in OpenTelemetry, session isolation for multi-tenant safety, and scale-to-zero economics. What you pay for it is platform lock-in and less control over the loop — the same make-or-buy tension the guardrails and managed-RAG decisions posed in Part 1, and the one the [tooling ecosystem](../tooling-ecosystem/index.md) lesson takes head-on.
 
-## Modelling the bill
+## Modelling the bill \{#modelling-the-bill}
 
 LLM spend has the same levers on every cloud, and **FinOps** is the discipline of driving them to a number you can defend: the **unit economics** of the feature — cost per request, per active user, per feature shipped. The exact discounts and dollar figures below are a snapshot; re-quote the live pricing page for any hard number. The levers themselves are stable.
 
@@ -64,7 +64,7 @@ Discipline is what turns these levers into a managed number. Attribute token spe
 
 The overspend, when it comes, is usually one of three failures. A runaway agent loop re-sends a growing context every turn, so token spend compounds — the non-termination and step-budget problem from Part II, now denominated in dollars. RAG context creep quietly inflates every input by stuffing in more retrieved passages than the answer needs. And the most common of all is the cheapest to fix: leaving the free levers, batch and caching, switched off.
 
-## Staying portable — the multi-cloud gateway
+## Staying portable — the multi-cloud gateway \{#staying-portable--the-multi-cloud-gateway}
 
 Part 1 closed on a hedge: keep the application layer provider-agnostic. The concrete form of that hedge is a **multi-cloud gateway** — a unified router in front of many providers and clouds that speaks one wire standard, the OpenAI-compatible API the serving lesson already named, so your application talks to one interface while the gateway fans out behind it. You get lock-in avoidance, cross-cloud failover, cost-based routing, and a central place for rate limits, quotas, budgets and observability. Which specific gateway leads is a snapshot; the pattern is not.
 
@@ -83,7 +83,7 @@ flowchart LR
 
 A gateway is not free, and there is a real case for not building one. It pins you to a lowest-common-denominator feature set, so a provider's native prompt caching or its particular tool-call format can fall away behind the uniform interface. It adds a latency hop. It becomes a single point of failure that now needs its own high availability. And it hides the fact that the same prompt can behave differently across providers, which a uniform API papers over precisely where you most want to see it. When a single cloud and a thin provider-agnostic client already meet your needs, a full gateway is over-engineering. Where it does earn its place, note the bonus: the same router that picks the cheapest endpoint can enforce residency, keeping traffic in-region or pinning it to a sovereign endpoint by policy — which is the bridge to the last section.
 
-## Who is allowed to touch it
+## Who is allowed to touch it \{#who-is-allowed-to-touch-it}
 
 **Digital sovereignty** asks a harder question than residency. Where residency (from Part 1) tells you *where* your data sits, sovereignty is about *who controls it* — who can access, operate and legally compel your data and workloads, and under whose jurisdiction. The distinction is the whole point: residency is a location, sovereignty is a chain of control, and the two come apart under a specific threat model — extraterritorial compulsion. The US CLOUD Act, for instance, can reach data held by a US-owned provider even when it physically sits in an EU region. Sovereignty is what closes that gap, delivered through EU- or nationally-operated regions, partner "trusted clouds", and fully air-gapped deployments. The entities and dates here move faster than anything else on the page.
 
@@ -103,7 +103,7 @@ A clean conceptual take on what sovereign cloud actually means — the access-an
 
 :::
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Climb the customisation ladder in order — prompt, then RAG, then fine-tune — and tune style and schema rather than facts that change. The hidden cost is serving: a custom model usually needs dedicated capacity that bills by the hour, and at low volume the hosting fee dwarfs the tokens, as Azure's own $1,422 example (with $1,224 pure hosting) shows.
 - A managed agent runtime hosts the loop and hands you session and memory persistence, a tool-and-identity gateway, observability, session isolation and scale-to-zero out of the box — Bedrock AgentCore, Foundry Agent Service, Vertex Agent Engine — in exchange for lock-in and less control over the loop.

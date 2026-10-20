@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Eine Grenze noch vorweg. Alles hier ist weiterhin **statisch**: Die Struktur entsteht vor der Frage, und die Frage sucht sich einen Weg hindurch. In dem Moment, in dem das System selbst darüber befindet, ob es noch einmal nachsieht – ob es also umformuliert, erneut abruft, die Hinlänglichkeit beurteilt –, sind Sie bei [Agentic RAG](../../part-2-agents/agentic-rag/deep-dive.md), dessen Schleife den Graphen als ein Tool unter vielen aufrufen kann. Die Entscheidungen aus Teil 1 gelten hier durchgehend und werden nicht neu begründet.
 
-## Wie ein Graph tatsächlich entsteht
+## Wie ein Graph tatsächlich entsteht \{#how-a-graph-actually-gets-built}
 
 Microsofts GraphRAG ist die Referenzimplementierung, an der man das Ganze am besten nachvollzieht – weil die Leserschaft von ihr gehört hat und weil ihre Pipeline Stufe für Stufe dokumentiert ist. Ihr [Ablauf der Indexierung](https://microsoft.github.io/graphrag/index/default_dataflow/) läuft in sechs Phasen:
 
@@ -39,7 +39,7 @@ Die Gruppen entstehen mit dem **hierarchischen Leiden-Algorithmus**, rekursiv an
 
 Halten Sie nun die Phasen gegen die Rechnung. Phase 3 und Phase 5 sind beide Durchläufe des Sprachmodells über das gesamte Korpus – einer über jeden Chunk, einer über jede Community. Genau das meinte Teil 1 damit, die Extraktion wie einen Durchlauf über alles zu bepreisen, und genau deshalb gibt es [LazyGraphRAG](https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/) überhaupt: Es schiebt eben diese Läufe auf den Zeitpunkt der Abfrage und gibt die Kosten der Indexierung mit „identisch mit Vektor-RAG und 0,1 % der Kosten eines vollständigen GraphRAG“ an. Fällt bei Ihnen wenig globales Fragevolumen an, ist das Aufschieben die bessere Wahl – und das ist eine Entwurfsmöglichkeit, die Ihnen offensteht, keine feste Eigenschaft von Graphen.
 
-## GraphRAGs vier Abfragemethoden – und welche Frage jede bedient
+## GraphRAGs vier Abfragemethoden – und welche Frage jede bedient \{#graphrags-four-query-methods-and-which-question-each-serves}
 
 Ein Graph ist nicht ein Retrieval-Modus. GraphRAGs [Abfragemethoden](https://microsoft.github.io/graphrag/query/overview/) sind vier verschiedene Wege über denselben Index, und zwischen ihnen zu wählen ist der größere Teil der Ingenieursarbeit:
 
@@ -70,7 +70,7 @@ Das schlägt unmittelbar auf das Versprechen durch. Die Frage *„Alles, was wir
 
 Der verwandte Fehler sitzt einen Schritt früher. Weil die Extraktion ein Durchlauf des Sprachmodells ist, erzeugt sie Beziehungen, die in keinem Dokument stehen – dieselbe Untersuchung hält fest, dass falsche Fakten in einem Korpus fehlerhafte Tripel in einem maschinell erzeugten Graphen ergeben. Eine halluzinierte Kante ist sachlich schlimmer als ein halluzinierter Satz in einer erzeugten Antwort, denn sie ist *gespeichert*: Sie geht in den Index ein, wird in Phase 5 in einen Community-Report zusammengefasst und wird danach von jeder Abfrage, die diese Nachbarschaft berührt, als belegte Struktur behandelt.
 
-## Die Metriken des Retrievals bewerten keinen Graphen
+## Die Metriken des Retrievals bewerten keinen Graphen \{#evaluating-a-graph-is-not-evaluating-retrieval}
 
 Die Metriken des Retrievals, die Sie bereits haben, lassen sich nicht übertragen, und die Annahme, sie ließen sich übertragen, ist der Weg, auf dem ein schlechter Graph durchkommt.
 
@@ -102,13 +102,13 @@ OWL beantwortet außerdem den Einwand, der Rechenaufwand dafür sei ruinös, bes
 
 **SPARQL – wie frage ich?** [SPARQL 1.1](https://www.w3.org/TR/sparql11-query/) (W3C-Empfehlung, 2013) formuliert „Abfragen über verschiedenartige Datenquellen hinweg, ganz gleich, ob die Daten nativ als RDF vorliegen oder über eine Zwischenschicht als RDF gesehen werden“, und tut das über den Abgleich von Mustern auf einem gerichteten, beschrifteten Graphen. SPARQL auf einer *Sicht* relationaler Daten ist eine reale Betriebsform, und sie bedeutet: Die Abfragesprache zu übernehmen zwingt Sie nicht, Ihre Ablage umzuziehen.
 
-### Das Schema, das die meisten Teams stattdessen bauen sollten
+### Das Schema, das die meisten Teams stattdessen bauen sollten \{#the-schema-most-teams-should-build-instead}
 
 Bilden Sie diese vier auf das ab, was eine Pipeline mit einem Sprachmodell tatsächlich braucht, und die ehrliche Voreinstellung tritt hervor: ein **JSON Schema**, das Ihre Klassen und die zugelassenen Beziehungstypen benennt, plus ein **Validator**, der zurückweist, was dagegen verstößt. Damit ist die Extraktion gebunden – das `works_for`/`employed_by`-Problem aus Teil 1 –, und der deterministische Kontrollpunkt steht. Beides zahlt sich sofort aus, mit Werkzeugen, die im Team ohnehin alle kennen.
 
 Was es Ihnen nicht gibt, sind die Ableitung, die Interoperabilität mit Standards und eine formal prüfbare Bedeutung. Genau das sind die Bedingungen, die [Teil 1](./index.md) für den Aufstieg zum formalen Unterbau nennt, und jede davon ist ein *Grund*, keine Vorliebe. Fehlen sie, ist der formale Unterbau eine große, dauerhafte Verpflichtung, die Sie für einen Nutzen eingehen, den ein Validator bereits liefert.
 
-## Was bei Text-to-SQL wirklich schwierig ist – und was eine semantische Schicht davon abnimmt
+## Was bei Text-to-SQL wirklich schwierig ist – und was eine semantische Schicht davon abnimmt \{#what-text-to-sql-gets-wrong-and-what-a-semantic-layer-removes}
 
 Teil 1 hat die Kernaussage für die Kennzahlenschicht festgehalten: Gegen ein rohes Schema muss ein Modell eine Abfrage **herleiten**, gegen eine semantische Schicht **wählt** es eine definierte Kennzahl aus. Die Schwierigkeit beim Herleiten liegt nicht dort, wo man sie vermutet.
 
@@ -131,7 +131,7 @@ Zwei weitere Eigenschaften zählen für alle, die einen Agenten davorsetzen.
 
 **Was abfragbar ist**, gibt die Schicht bekannt; das Modell muss es nicht erraten. Cube stellt dafür eine **Meta API** bereit, damit „KI-Agenten herausfinden, was abfragbar ist“. Das ist die strukturierte Entsprechung eines Tool-Schemas, und es beseitigt eine ganze Fehlerklasse, bei der ein Modell eine Kennzahl erfindet, die vernünftig klingt und gar nicht existiert.
 
-## Routing: wie die strukturierten Pfade ausgeliefert werden
+## Routing: wie die strukturierten Pfade ausgeliefert werden \{#routing-how-the-structured-paths-ship-in-production}
 
 Nichts auf dieser Seite ersetzt die Pipeline, die in Ingestion, Retrieval und Generation entstanden ist. Im Produktivbetrieb stehen die strukturierten Pfade *daneben*, und etwas entscheidet, über welchen davon eine Frage läuft:
 
@@ -142,7 +142,7 @@ Nichts auf dieser Seite ersetzt die Pipeline, die in Ingestion, Retrieval und Ge
 
 Diese Entscheidung ist das [Routing der Frage](../retrieval/deep-dive.md), das die Vertiefung zum Retrieval bereits aufbaut – verwenden Sie es wieder, statt eine zweite Maschinerie danebenzustellen. Die praktische Warnung: Der Router trifft jetzt eine Entscheidung, die teuer wird, wenn sie falsch ausfällt. Eine Frage nach einem Aggregat den Vektorpfad hinunterzuschicken liefert eine flüssige, mit Quellen versehene, falsche Zahl. Routen Sie nach der *Gestalt* der Frage, halten Sie die Einordnung beobachtbar, und führen Sie das Fehlrouting in der [Vertiefung zur Observability](../cross-cutting/observability/deep-dive.md) als eigenes, nachverfolgtes Fehlerbild – denn wenn es eintritt, sieht es weder nach einem Fehlerbild des Retrievals noch nach einem der Generation aus.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - GraphRAGs Aufbau hat sechs Phasen, zwei davon sind Durchläufe des Sprachmodells über alles – die Extraktion über jeden Chunk und die Zusammenfassung über jede Community –, und darin steckt die ganze Kostengeschichte in einem Satz. Die Extraktion der Aussagen, der reichhaltigste und am stärksten von der Domäne abhängige Teil, ist standardmäßig aus; Kosten aus einer Vorführung enthalten sie deshalb fast nie.
 - Die hierarchische Gruppenbildung mit Leiden ist es, die Fragen an das ganze Korpus beantwortbar macht: Die Zusammenfassung, die für eine globale Frage gelesen wird, wurde beim Aufbau geschrieben, auf Ihre Rechnung.

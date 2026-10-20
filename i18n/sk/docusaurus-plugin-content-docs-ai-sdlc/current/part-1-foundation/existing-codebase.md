@@ -11,7 +11,7 @@ Príkladom **existujúcej kódovej základne (brownfield)** je `dotnet/runtime`.
 
 V rozbehnutom projekte však najprv potrebuješ obnoviť spoločné porozumenie systému a dôveryhodné overovanie. Až potom má takáto príprava zmysel.
 
-## Za požiadavkou na dokumentáciu sa môže skrývať nestabilný vývoj
+## Za požiadavkou na dokumentáciu sa môže skrývať nestabilný vývoj \{#a-documentation-request-can-hide-a-broken-development-process}
 
 Andrej Beloborodov [zverejnil vlastný opis stabilizácie, ktorú viedol](https://realaillusions.com/ru/materials/ai-project-stabilization-case/). Išlo o online platformu, ktorú si majiteľ vybudoval sám s dvoma AI asistentmi. Mala vyše 100 000 riadkov TypeScriptu, niekoľko aplikácií, desiatky API trás, databázu a platby. Patrili k nej aj boti v komunikačných službách, predajné lieviky, používateľské účty, administrácia a zjednodušená vzdelávacia platforma. Projekt obsahoval vyše stovky kontrolných skriptov a už zarábal. Pri upratovaní sa preto nesmelo pokaziť nič, čo už fungovalo.
 
@@ -35,7 +35,7 @@ Hranica 3 z 9 je jeho orientačné pravidlo, nie overená diagnostická metóda.
 
 Beloborodov navrhuje aj **test nového chatu**: otvor nový chat a opýtaj sa agenta na architektonické rozhodnutia z minulého týždňa. Ak nevie odpovedať alebo jeho odpoveď odporuje tvojej predstave, podľa Beloborodova pravdepodobne pracuje s vlastnou verziou projektu.
 
-## Audit pred refaktoringom: každý model nech pracuje nezávisle
+## Audit pred refaktoringom: každý model nech pracuje nezávisle \{#audit-before-refactoring-with-independent-models}
 
 V [nadväzujúcom texte o technickom dlhu](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/) Beloborodov odmieta postup, pri ktorom požiadaš AI, aby všetko poriadne prepísala. Výsledkom by podľa neho bol nový projekt s novými problémami. **Audit pred refaktoringom** má najprv rozlíšiť dlh, ktorý vývoj skutočne brzdí, rozhodnutia, ktoré zatiaľ môžu zostať, a časti, do ktorých sa bez osobitnej prípravy nemá zasahovať. Potom urči cieľovú architektúru a cestu k nej rozdeľ na etapy. Každá sa musí skončiť funkčným výsledkom.
 
@@ -63,7 +63,7 @@ Audit odhalil aj niektoré neaktuálne kontroly platieb. Niektoré kritické kon
 
 Audit premeň na postup: čo funguje → čo brzdí vývoj → čo je rizikové → čo urobiť → ako overiť výsledok. Bez neho dostane ďalší agent aj po verdikte len vágne zadanie „prepíš všetko“.
 
-## Pred zmenou zachyť súčasné správanie
+## Pred zmenou zachyť súčasné správanie \{#pin-behaviour-before-changing-it}
 
 Michael Feathers v knihe *Working Effectively with Legacy Code* zaviedol pojem **charakterizačný test** (characterization test). Vo svojom [vysvetlení charakterizačného testovania](https://michaelfeathers.silvrback.com/characterization-testing) píše: *„Účelom charakterizačného testovania je zdokumentovať skutočné správanie systému, nie overiť, či sa správa tak, ako by si si želal.“*
 
@@ -75,7 +75,7 @@ Kritické kontroly založené na grepe nahraď testami správania a súčasné s
 
 Plán obnovy zahŕňal aktualizovanú **overovaciu sadu (verification pack)** – súbor skutočne funkčných kontrol – a základnú automatickú bránu v CI pre nové funkcie. Predtým, než sa na sadu spoľahneš, zisti, čo každá kontrola vykoná a čo znamená jej úspešný výsledok. Kontrolóra oddeľ od implementácie podľa hranice opísanej v lekcii [Detekcia verzus oprava](../part-3-verification/detection-vs-mutation.md).
 
-## Zdroj pravdy obnovuj podľa kódu
+## Zdroj pravdy obnovuj podľa kódu \{#rebuild-the-source-of-truth-from-the-code}
 
 Plán dokumentácie sa začal opisom skutočného stavu projektu a prostredia. Všetka projektová dokumentácia mala byť pri kóde, bez rozporov, s oddelenou históriou, cieľovým stavom a experimentmi. Plán vykonal samotný majiteľ podľa Beloborodovových pokynov. Spúšťal skripty, ktoré Beloborodov pripravil na presun dokumentov z chatov do repozitára.
 
@@ -89,7 +89,7 @@ Kurz tento záver rozširuje aj na sumarizáciu starých chatov: aj takto vznikn
 
 Test nového chatu tu použi ako akceptačnú kontrolu. Novému agentovi daj prístup k repozitáru, bez histórie starých chatov, a opýtaj sa ho na nedávne architektonické rozhodnutia. Musí odpovedať z podkladov v repozitári a odlíšiť existujúci stav od zamýšľaného. Ak stále potrebuješ nájsť ten správny starý rozhovor, spoločnú pamäť si ešte neobnovil.
 
-## Obnov slučku, odstráň zistené riziká a zopakuj audit
+## Obnov slučku, odstráň zistené riziká a zopakuj audit \{#restore-the-loop-close-the-audited-risks-then-re-audit}
 
 Prvá fáza plánu obnovy mala znovu umožniť kontrolované zmeny. Obsahovala šesť položiek:
 
@@ -116,7 +116,7 @@ Video IBM Technology sa venuje využitiu generatívnej AI pri modernizácii exis
 
 :::
 
-## Vo veľkej organizácii začni v malom a audítora vyber mimo tímu
+## Vo veľkej organizácii začni v malom a audítora vyber mimo tímu \{#at-enterprise-scale-start-small-and-separate-the-auditor}
 
 V zrelom repozitári nie je pocit rýchlosti dobrým kritériom na zavádzanie AI. [Randomizovaný experiment METR z roku 2025](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) sledoval 16 skúsených vývojárov pri 246 úlohách vo veľkých open-source repozitároch, do ktorých roky prispievali. [Repozitáre mali v priemere približne 10 rokov a vyše 1 100 000 riadkov kódu](https://arxiv.org/abs/2507.09089). Účastníkom trvala práca s AI o 19% dlhšie, hoci pred experimentom očakávali zrýchlenie o 24% a aj po ňom verili, že ich AI zrýchlila o 20%.
 
@@ -130,7 +130,7 @@ Začni presne vymedzeným typom zmien, napríklad migráciou. Pri zmene s mechan
 
 Na enterprise úrovni zver audit ľuďom mimo tímu, ktorý zmeny dodáva. Títo audítori môžu pri práci používať agentov. Audítori nesmú upravovať kód, ktorý auditujú. Takto prenesieš [detekciu oddelenú od opravy](../part-3-verification/detection-vs-mutation.md) na [enterprise úroveň](../part-5-scale-governance/enterprise-tier/index.md). Uchovávaj výsledky opakovaných auditov v rovnakých oblastiach, aby ich neskôr mohla skontrolovať aj tretia strana.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Na každej úrovni platí: **skôr než agenti začnú meniť systém, zisti, čo už existuje, a zachyť jeho súčasné správanie testami.**
 
@@ -140,7 +140,7 @@ Na každej úrovni platí: **skôr než agenti začnú meniť systém, zisti, č
 
 - **Enterprise.** Pilot obmedz na presne vymedzený typ zmien a vyhodnoť ho voči východiskovému meraniu tímu. Audítorov vyber mimo tímu, ktorý zmeny dodáva; auditovaný kód neupravujú. Uchovávaj porovnateľné opakované audity. *Akému zlyhaniu to predchádza:* tím zavedie AI len preto, že sa mu zdá rýchlejšia, a vlastné tvrdenie, že chybu opravil, považuje za nezávislé overenie. Záznamy opakovaných auditov poskytujú *dôkaz*, ktorý môže neskôr preskúmať tretia strana. Naproti tomu test nového chatu na úrovni soloistu preveruje iba *schopnosť*: čo dokáže nový agent zistiť z repozitára dnes.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Požiadavka na dokumentáciu môže skrývať nestabilný vývoj. Skôr než agentovi zadáš reorganizáciu alebo prepis, auditom zisti, čo bráni bezpečným zmenám.
 - Zachovaj 13 oblastí stabilizačného auditu a preskúmaj rozpory medzi verdiktmi. Pochvala kódu od jedného modelu neodpovedá na otázku, či sa systém dá prevádzkovať.

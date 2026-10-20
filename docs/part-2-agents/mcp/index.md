@@ -27,7 +27,7 @@ spec already describe what a tool does, what does MCP actually add?
 
 :::
 
-## What MCP is
+## What MCP is \{#what-mcp-is}
 
 **MCP (Model Context Protocol)** is an open standard introduced by Anthropic in late 2024 and donated in
 December 2025 to the Agentic AI Foundation under the Linux Foundation — neutral, community-driven
@@ -49,7 +49,7 @@ Transport is deliberately boring. A server that runs on your own machine speaks 
 server speaks over **streamable HTTP**. The primitives are the same either way — where the server runs is a
 deployment detail, not a change to what the client sees.
 
-## The AI delta — decoupling tools from agents
+## The AI delta — decoupling tools from agents \{#the-ai-delta--decoupling-tools-from-agents}
 
 The point of all this is not tidiness. MCP decouples *building tools* from *building agents*. You author an
 MCP server once, and every MCP client — across apps, across frameworks, across models — can use it, with no
@@ -61,7 +61,7 @@ for one app is now reusable by any app, the same way a USB-C peripheral works wi
 up not in a single project but in the second, third, and tenth project that reuse the server instead of
 rebuilding it.
 
-## How MCP differs from Swagger/OpenAPI and CLI `--help`
+## How MCP differs from Swagger/OpenAPI and CLI `--help` \{#how-mcp-differs-from-swaggeropenapi-and-cli---help}
 
 Here is the objection worth taking seriously, because a sharp engineer will raise it: *"MCP is just Swagger
 for LLMs. It slaps descriptions on your endpoints so a model can read them. We've had OpenAPI for a decade."*
@@ -109,7 +109,7 @@ difference, not a semantic power OpenAPI lacks. Swagger can carry every bit of m
 are simply, by convention, written to be consumed by a model. Keep the two apart in your head — "curated for
 an agent" is a habit of authorship, not a property of the protocol.
 
-## MCP vs A2A — agent-to-tools versus agent-to-agent
+## MCP vs A2A — agent-to-tools versus agent-to-agent \{#mcp-vs-a2a--agent-to-tools-versus-agent-to-agent}
 
 MCP standardises one axis: agent to tool, agent to data. There is a second axis it says nothing about — agent
 to *agent*, the communication you needed the moment you built [multi-agent](../multi-agent/index.md) systems. When
@@ -122,7 +122,7 @@ Linux Foundation — and it is not the only contender. The distinction worth com
 time you read this, so learn the *distinction* rather than the names. The two axes are real and durable; any
 particular protocol on either axis is a snapshot.
 
-## Security — a new attack surface
+## Security — a new attack surface \{#security--a-new-attack-surface}
 
 Connecting an agent to a server you don't control is connecting it to input you don't control. An MCP server
 is a **new attack surface**. A malicious or compromised server can smuggle indirect **prompt injection** into
@@ -151,7 +151,7 @@ standard protocols that wire agents to tools, and to each other, in production. 
 that connects to the world through a common plug. What all of it looks like on live Claude, OpenAI, and
 Gemini is the [closing capstone on real agents](../real-agents.md).
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - The **M×N integration problem** — M apps × N tools = M × N bespoke connectors — is what a standard exists to
   kill. MCP collapses it to **N + M**: wrap each tool once as a server, implement the client once per app.

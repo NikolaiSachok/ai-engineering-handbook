@@ -12,7 +12,7 @@ setting the done-conditions, owning the gates, deciding what routes where and wh
 wired in as a stage is the first thing the loop starves when it speeds up; a human above it is the thing the
 loop is accountable to.
 
-## The roles, and the one that isn't a stage
+## The roles, and the one that isn't a stage \{#the-roles-and-the-one-that-isnt-a-stage}
 
 Across the loop there are working roles: something plans, something implements, something critiques. Agents can
 hold all three, and increasingly do. The human holds a different kind of role — not a step in the sequence but
@@ -21,7 +21,7 @@ means, owns the critic gate, and makes the final call to land. Kief Morris puts 
 it: [the human supervises the loop rather than taking a turn inside it](https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html). In the loop, you become a bottleneck the moment the agents outpace you. On the loop, you are the
 control the whole thing answers to — and that role does not get slower as generation gets faster.
 
-## Where the human must stay
+## Where the human must stay \{#where-the-human-must-stay}
 
 Not everything needs a human, and pretending it does is its own failure. But a few checkpoints are irreducible —
 delegate them to the loop and the loop loses the thing that made it trustworthy. Three of them: **setting the
@@ -32,7 +32,7 @@ are not "review everything." Reviewing everything is the rubber-stamp trap — a
 agent outputs a day is not exercising oversight, only laundering it. The irreducible checkpoints are the
 specific points where a human's judgment *is* the control and nothing else can be.
 
-## Overload evicts the human first
+## Overload evicts the human first \{#overload-evicts-the-human-first}
 
 Part II's recurring failure returns one last time. When artifacts pile up faster than anyone can read them, the
 human in the loop is the first casualty — not because someone decided to remove them, but because the volume
@@ -54,7 +54,7 @@ quietly becomes a rubber stamp.
 
 :::
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **the human is the router over the loop, not a stage within it — and the
 router role can't be collapsed into the work.** What changes is who holds it and how it's enforced.
@@ -72,7 +72,7 @@ router role can't be collapsed into the work.** What changes is who holds it and
   it prevents:* "human in the loop" as a compliance checkbox — a name on a form who could not actually have
   reviewed what they signed.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - The human is the router, not a stage: on the loop, not in it. Frame the goal, set the done-conditions, own the
   gates, make the land call — don't take a turn between the agents.

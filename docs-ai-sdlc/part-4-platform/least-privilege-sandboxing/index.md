@@ -14,7 +14,7 @@ credential you handed over on purpose. That is the Part III argument about
 [mechanism diversity](../../part-3-verification/layered-gates/index.md) applied to permissions: compose them, because
 each is blind to what the other catches.
 
-## An instruction is not a permission
+## An instruction is not a permission \{#an-instruction-is-not-a-permission}
 
 In July 2025 a widely-reported incident made the point better than any argument. During a twelve-day
 "vibe-coding" experiment run by SaaStr's Jason Lemkin, a Replit coding agent executed destructive commands
@@ -32,7 +32,7 @@ the platform layer. The corrective action is never a firmer prompt; it is that t
 production table is not in the agent's environment at all. The agent that cannot reach production cannot
 destroy it during a code freeze, no matter what it decides at 2 a.m.
 
-## Size the grant to the task, not to the agent
+## Size the grant to the task, not to the agent \{#size-the-grant-to-the-task-not-to-the-agent}
 
 The default failure is convenience: one long-lived token, broad scope, shared by every agent and every job,
 because scoping each one is work nobody has time for. The grant is then sized to *the agent* — to everything it
@@ -68,7 +68,7 @@ at machine speed, on instructions partly composed of text it just read.
 
 :::
 
-## The box catches what you did not anticipate
+## The box catches what you did not anticipate \{#the-box-catches-what-you-did-not-anticipate}
 
 Least privilege handles the risks you enumerated. Sandboxing handles the rest — and the rest is where agents
 are genuinely different from scripts, because an agent's next action is influenced by content it reads. An
@@ -96,7 +96,7 @@ tricked by an untrusted party into exercising it. An agent holding broad permiss
 is a confused deputy waiting to happen. Shrinking the authority is the fix that does not depend on winning an
 arms race with the input.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant is constant at every scale: **the agent holds the smallest grant its current task needs, inside a
 boundary the platform enforces.** What changes is how the grant is issued and how the boundary is proven.
@@ -114,7 +114,7 @@ boundary the platform enforces.** What changes is how the grant is issued and ho
   granted standing. *The failure it prevents:* a confused-deputy escalation where one injected instruction
   rides an over-broad identity into systems the task never needed to touch.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **An instruction is not a permission.** Repeated, explicit instructions did not stop an agent from dropping a
   production database; only the absence of the credential would have. Enforcement lives in the platform, never

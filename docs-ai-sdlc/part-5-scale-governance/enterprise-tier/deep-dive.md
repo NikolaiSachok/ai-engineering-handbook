@@ -15,7 +15,7 @@ and CycloneDX), the signing layer that makes any of it non-repudiable (in-toto a
 agent-shaped question none of them was designed for. The honest limit comes last, because it is the part that
 gets oversold.
 
-## SLSA: provenance as a ladder, not a checkbox
+## SLSA: provenance as a ladder, not a checkbox \{#slsa-provenance-as-a-ladder-not-a-checkbox}
 
 Provenance is not on-or-off; it comes in strengths, and [SLSA](https://slsa.dev/spec/v1.0/levels)'s build
 track puts numbers on them. The specification presents the levels as answers to "how hard is this provenance to forge":
@@ -34,7 +34,7 @@ L3's separation has a sharp reading — **the agent that generated the code must
 to it**, the same separation-of-duties argument from
 [Part 1](./index.md), now enforced by the platform instead of asserted in a policy.
 
-## SBOM: the inventory, in one of two dialects
+## SBOM: the inventory, in one of two dialects \{#sbom-the-inventory-in-one-of-two-dialects}
 
 A **software bill of materials** is the list of what went into an artifact — every dependency, version, and
 license — so that a newly-disclosed vulnerability becomes a lookup instead of an investigation. By this course's
@@ -50,7 +50,7 @@ build rather than written by hand, and is kept current. Agent-generated code sha
 in dependencies at machine speed, so the inventory a human might have tracked informally now has to be
 produced mechanically or it is simply wrong.
 
-## in-toto and Sigstore: what makes it non-repudiable
+## in-toto and Sigstore: what makes it non-repudiable \{#in-toto-and-sigstore-what-makes-it-non-repudiable}
 
 An SBOM and a provenance statement are just documents until something binds them to the build and makes them
 un-editable after the fact — which is Part 1's **non-repudiation** requirement, now concrete. Two pieces carry
@@ -71,7 +71,7 @@ provenance says *how and by what it was built*, and the signature says *this can
 A record an operator could edit afterwards is a story; a signature the operator's own build step could not
 produce is evidence.
 
-## Separation of duties, when both parties are agents
+## Separation of duties, when both parties are agents \{#separation-of-duties-when-both-parties-are-agents}
 
 Part 1 made separation of duties an engineering argument and then a compliance one. The machinery is where the
 two meet. SLSA L3's "signing key inaccessible to user-defined build steps" and the classic **two-party
@@ -86,7 +86,7 @@ oversight — it is the [review-at-volume](../../part-3-verification/review-at-v
 compliance signature. The machinery makes the approval *provable*; it cannot make it *true*. That is the job
 of the layers below it.
 
-## The honest limit: provenance is not correctness
+## The honest limit: provenance is not correctness \{#the-honest-limit-provenance-is-not-correctness}
 
 The thing this machinery proves is narrow, and overselling it is the standard mistake. A fully attested,
 SLSA-L3, SBOM-carrying, Sigstore-signed artifact can still be **wrong** — insecure, buggy, subtly incorrect.
@@ -102,7 +102,7 @@ signing service, a transparency log, an inventory pipeline. You climb the ladder
 and no further, and you never let the strength of the provenance be mistaken for the quality of the thing whose
 provenance it is.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - **SLSA is a ladder, not a checkbox:** L1 provenance exists (forgeable), L2 is signed by a hosted platform
   (forging needs an attack), L3 makes the signing key **inaccessible to user-defined build steps** —

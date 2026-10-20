@@ -12,13 +12,13 @@ Ohne sie bleiben die Probleme des Produktivbetriebs unsichtbar: Sie wissen nicht
 Antwort schlecht ausgefallen ist, was aus der Vektordatenbank geholt wurde, was sie gekostet hat und wie lange
 sie gebraucht hat.
 
-## Was Sie schon kennen – und was an KI-Systemen neu ist
+## Was Sie schon kennen – und was an KI-Systemen neu ist \{#whats-shared-and-whats-about-ai}
 
 Die drei Säulen der Observability – **Traces, Metriken, Logs** – kennen Sie aus der gewöhnlichen
 Softwareentwicklung bereits. In dieser Lektion geht es um den Unterschied: Was ändert sich, wenn Sie statt
 eines gewöhnlichen Dienstes ein LLM- oder RAG-System beobachten?
 
-## Warum ein LLM-System schwerer zu beobachten ist
+## Warum ein LLM-System schwerer zu beobachten ist \{#why-an-llm-system-is-harder-to-observe}
 
 Zwei Dinge kommen zusammen: Das System antwortet nicht deterministisch, und das Modell ist eine Blackbox. Eine
 schlechte Antwort aus dem Produktivbetrieb lässt sich ohne die vollständige Aufzeichnung nicht nachstellen,
@@ -27,7 +27,7 @@ zurückkamen und mit welchem Score, welcher Prompt an das Modell ging, was es zu
 Agent aufrief. Gewöhnliche Software ist deterministisch, dort gibt es einen Stacktrace. Eine LLM-Anwendung
 braucht die Aufzeichnung des **gesamten Wegs, auf dem die Antwort zustande kam**.
 
-## Der Trace durch die Pipeline – der zentrale Baustein
+## Der Trace durch die Pipeline – der zentrale Baustein \{#the-pipeline-trace--the-core-primitive}
 
 Ein **Trace** ist genau diese Aufzeichnung: eine einzelne Anfrage, vollständig festgehalten auf ihrem Weg
 durch die Pipeline. Abfrage → umformulierte Abfrage → Chunks samt Score → Reranking → der abgeschickte
@@ -35,7 +35,7 @@ Prompt → die Ausgabe des Modells → bei einem Agenten zusätzlich jeder Schri
 dieser Schritte ist ein **Span**. Damit beantwortet der Trace die Frage, um die sich jede Fehlersuche dreht:
 Warum ist aus genau dieser Abfrage genau diese Antwort geworden?
 
-## Was Sie protokollieren – die RAG-Besonderheiten
+## Was Sie protokollieren – die RAG-Besonderheiten \{#what-to-log-rag-specifics}
 
 - **Die abgerufenen Chunks und ihre Scores** – war der richtige dabei? Das hängt unmittelbar an der
   Retrieval-Evaluierung.
@@ -44,14 +44,14 @@ Warum ist aus genau dieser Abfrage genau diese Antwort geworden?
 - Bei Agenten **der vollständige Trace aus Schritten und Tool-Calls**.
 - Pro Schritt: Latenz, Zahl der Token, Kosten, Modellversion.
 
-## Kosten und Latenz sind keine Nebensache
+## Kosten und Latenz sind keine Nebensache \{#cost-and-latency--first-class-concerns}
 
 Anders als bei einer gewöhnlichen Anwendung kostet hier jede Anfrage Geld – in Token –, und die Aufrufe des
 Modells sind langsam. Die Observability muss deshalb den Preis pro Anfrage und die Latenz pro Schritt
 ausweisen, vor allem für Generation und Reranking. Erst dann fallen die Anfragen auf, die teuer oder langsam
 sind, und Sie können gegensteuern: ein Cache, ein günstigeres Modell, weniger Chunks im Prompt.
 
-## Feedback: Die Observability liefert der Evaluierung neue Fälle
+## Feedback: Die Observability liefert der Evaluierung neue Fälle \{#feedback-observability-feeds-eval}
 
 Traces aus dem Produktivbetrieb und das **Nutzerfeedback** werden zu neuen Fällen für die Evaluierung – und
 zwar zu genau den schweren, an denen ein System in der Praxis scheitert. Fangen Sie eine schlechte Antwort im
@@ -74,7 +74,7 @@ sichtbar. In [Teil II](../../../part-2-agents/overview.md) wird diese starre Pip
 entscheidet das Modell über den Ablauf – und alles, was Sie sich hier an Disziplin erarbeitet haben, nehmen
 Sie mit.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Observability heißt: sehen, was ein laufendes LLM-System tatsächlich tut. Sie brauchen sie, weil das System
   nicht deterministisch antwortet und sich eine schlechte Antwort ohne vollständige Aufzeichnung nicht

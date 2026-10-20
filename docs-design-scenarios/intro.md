@@ -44,7 +44,7 @@ Nothing else in either is written yet.
 
 :::
 
-## Why three answers instead of one
+## Why three answers instead of one \{#why-three-answers-instead-of-one}
 
 A single worked answer teaches you what someone concluded. It does not teach you why the
 alternatives were worse, and that is where the reasoning lives.
@@ -67,7 +67,7 @@ sets out when each form applies.
 
 Then a verdict on each, and one sentence stating the principle that carries to other scenarios.
 
-## Reading a scenario
+## Reading a scenario \{#reading-a-scenario}
 
 Read the question. Answer it yourself, out loud or on paper, before you open the reveal: the three
 attempts stay hidden until you do. Then read them and find out which one you just wrote.
@@ -81,7 +81,7 @@ under it is taught there. **If they push** lists the follow-up questions the int
 for next. Those questions separate understanding from memory: if you memorised an answer here, the first
 one will find that out.
 
-## Where the questions come from
+## Where the questions come from \{#where-the-questions-come-from}
 
 The questions are sampled, not invented. They come from the stated requirements of real
 AI-engineering job postings, clustered and weighted by what recurs across them. Themes that appear

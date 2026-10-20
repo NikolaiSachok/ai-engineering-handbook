@@ -19,7 +19,7 @@ Presne tá zmena, o ktorej je táto lekcia: ako z jednoduchého vyhľadávania v
 
 :::
 
-## Prečo — kde statický RAG zlyháva
+## Prečo — kde statický RAG zlyháva \{#why--where-static-rag-breaks}
 
 Agentnosť sa nepridáva pre módu. Pevné `retrieve → generate` na celých triedach dopytov naozaj zlyháva.
 
@@ -30,7 +30,7 @@ Agentnosť sa nepridáva pre módu. Pevné `retrieve → generate` na celých tr
 
 Spoločný menovateľ: skutočný dopyt potrebuje premenlivý počet krokov a voľbu cesty — pipeline ponúka jednu pevnú.
 
-## Mechanizmus: slučka agenta
+## Mechanizmus: slučka agenta \{#the-mechanism-the-agent-loop}
 
 V jadre je jednoduchá **slučka agenta** (agent loop). Točí sa dovtedy, kým model neusúdi, že má na odpoveď dosť.
 
@@ -59,7 +59,7 @@ Tá istá slučka z iného uhla: prejde roly agenta — plánovanie, volania ná
 
 :::
 
-## Čo agentnosť konkrétne pridáva
+## Čo agentnosť konkrétne pridáva \{#what-agency-concretely-adds}
 
 Rozmeňme „model má riadenie“ na konkrétne schopnosti.
 
@@ -72,7 +72,7 @@ Rozmeňme „model má riadenie“ na konkrétne schopnosti.
 | Reakcia na zlý výsledok | Pošle ho ďalej | Vidí, že je „mimo“, a ide znova |
 | Počet krokov | Pevný | Premenlivý, rozhoduje model |
 
-## Spektrum, nie prepínač
+## Spektrum, nie prepínač \{#a-spectrum-not-a-switch}
 
 Nemysli na to ako „buď statický, alebo agentický“. Medzi tými dvoma pólmi je plynulé spektrum, odstupňované podľa toho, koľko voľnosti modelu odovzdáš.
 
@@ -82,7 +82,7 @@ Nemysli na to ako „buď statický, alebo agentický“. Medzi tými dvoma pól
 
 Jedno praktické pravidlo si zafixuj hneď teraz: zvoľ najjednoduchšiu úroveň, ktorá úlohu vyrieši. Plná agentická slučka nie je výhra, je to náklad. Router nad dobrým statickým RAG často prekoná „plného agenta“ v nákladoch, latencii aj stabilite.
 
-## Cena — a most späť k Časti I
+## Cena — a most späť k Časti I \{#the-price--and-the-bridge-back-to-part-i}
 
 Keď riadenie odovzdáš modelu, presne za to aj zaplatíš.
 
@@ -94,7 +94,7 @@ Práve tu vedie priamy most na prierezovú vrstvu. **Observability** (pozorovate
 
 Časť I príručky sa neruší — stáva sa základom, nad ktorým agent rozhoduje.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Statický RAG je pevná pipeline `retrieve → generate`, riadenie má kód. Agentický RAG mení vyhľadávanie na akciu v slučke a riadenie prechádza na model.
 - Agentnosť potrebuješ tam, kde pipeline zlyháva: multi-hop, „vyhľadávanie netreba“, smerovanie na správny zdroj, sebaoprava po zlom výsledku.

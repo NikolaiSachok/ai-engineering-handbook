@@ -13,7 +13,7 @@ Táto lekcia rozoberá tento konflikt a rozhodnutia, ktoré z neho vyplývajú. 
 
 Celou lekciou nás sprevádza zámerne všeobecný príklad. Jedna **dávka** obsahuje približne **12 000 jednotiek**, napríklad dokumentov, žiadostí či podaní podľa toho, čo tvoja doména spracúva hromadne. Beh jednej jednotky stojí na volaniach modelu zhruba **2 centy**, takže celá dávka vyjde asi na **$240**. Približne **jedna jednotka zo štyridsiatich** sa po niekoľkých mesiacoch znova otvorí, keď príde oprava. Záznam sa musí dať predložiť počas **pätnástich mesiacov**. Jediný inžinier, ktorý kedy ladil aktuálny plánovač, navyše odchádza o **šesť týždňov**. Každá nasledujúca sekcia rieši jedno rozhodnutie vynútené týmto scenárom.
 
-## Prečo musí checkpointer vlastniť stav?
+## Prečo musí checkpointer vlastniť stav? \{#a-checkpointer-is-an-ownership-claim}
 
 Keď dokumentáciu o perzistencii vo frameworku čítaš ako tvrdenie, nie ako zoznam funkcií, vyznieva inak. Checkpointer nesľubuje, že si za teba niečo zapamätá. Tvrdí, že **stav behu** musí byť uložený práve v ňom. Presne to znamená „obnoviť beh od posledného úspešného kroku“ a inak sa tento prísľub nedá splniť. Aby framework vedel, odkiaľ má pokračovať, musí sám evidovať, čo sa už dokončilo.
 
@@ -31,7 +31,7 @@ Tretí dôsledok sa dá vyjadriť číslami. Engine uchováva históriu iba poč
 
 Z tejto sekcie si odnes jednoduchú tézu. Checkpointer uchováva **prevádzkový stav**, aby bolo možné obnoviť beh. Nie je audítorským záznamom ani **systémom záznamu** (system of record). Ak ho na tento účel použiješ, robíš architektonické rozhodnutie bez ohľadu na to, či si ho uvedomuješ.
 
-## Dve úložiská, jedna autorita
+## Dve úložiská, jedna autorita \{#two-writers-one-truth}
 
 Riešením nie je nedôverovať frameworku. Raz a výslovne rozhodni, ktoré úložisko je **autoritatívne** a ktoré **odvodené**, a toto rozhodnutie vynucuj v kóde, nie v dokumente, ktorý nikto nečíta.
 
@@ -59,7 +59,7 @@ Kľúčové tvrdenie celej stránky sa dá ľahko prehliadnuť: **toto rozdeleni
 
 Framework môžeš prijať naplno vrátane grafu, checkpointera, prerušení a celého jeho aparátu, pričom doménový záznam zostane autoritatívny a checkpoint bude odvodenou projekciou. Nie je to kompromis ani polovičné prijatie. Takéto usporiadanie ti poskytne sémantiku obnovenia behu z frameworku aj audítorskú stopu, ktorá pretrvá po jeho výmene. Túto možnosť máš bez ohľadu na výsledok rozhodovania o prijatí frameworku, preto treba vlastníctvo záznamu posudzovať samostatne.
 
-## Pokračovanie pozastaveného behu alebo nový beh?
+## Pokračovanie pozastaveného behu alebo nový beh? \{#suspending-an-open-run-is-not-reopening-a-closed-one}
 
 Pod prvým nedorozumením sa skrýva ešte druhé. Pred výberom technológie ich treba oddeliť, pretože každý z týchto problémov si vyžaduje iné riešenie.
 
@@ -75,7 +75,7 @@ Záznam je navrhnutý tak, aby sa dal načítať aj po niekoľkých mesiacoch. C
 
 Praktický test tvorí jediná otázka: **čaká niečo?** Ak áno, ide o pozastavenie a mechanizmom je odolnosť. Ak nie, máš záznam a nový dôvod konať. Potrebuješ nový beh so spätným prepojením, ktorý mimochodom nevyžaduje žiadny checkpointer.
 
-## Čo už vyriešili systémy mimo AI?
+## Čo už vyriešili systémy mimo AI? \{#the-category-outside-ai}
 
 Všetko uvedené sa posudzuje ľahšie, keď vieš, že nejde o nové problémy. Mimo oblasti AI sú vyriešené už dávno.
 
@@ -87,7 +87,7 @@ Vďaka tomuto slovníku možno model stavu frameworku **posúdiť** a rozhodnuti
 
 S porovnaním sa môžeš pýtať na vlastnosti, ktoré rozhodujú o kvalite návrhu. Akú sémantiku doručenia má krok? Čo sa stane pri opakovanom pokuse o krok, ktorý už uspel? Ako dlho sa uchováva história a kto ju uchováva? Čo engine vyžaduje od môjho kódu, aby dokázal beh znova prehrať? Framework pre LLM môže na tieto otázky odpovedať inak než Temporal. Nemôže ich však nechať bez odpovede. Kým nevieš, že táto kategória už má ustálené odpovede, nevieš ani to, že sa na ne máš pýtať.
 
-## Koľko stojí riešenie, ktoré si postavíš?
+## Koľko stojí riešenie, ktoré si postavíš? \{#pricing-the-thing-you-build-instead}
 
 [Lekcia o orchestračných frameworkoch](../orchestration-frameworks/index.md) poctivo vyčísľuje, čo prijatie stojí: cenu abstrakcie, zmeny v ekosystéme a voľbu medzi prenositeľnosťou a viazanosťou na dodávateľa (vendor lock-in). Nevyčísľuje však náklady na odporúčanú alternatívu. Súčasný výklad opisuje riziká viazanosti iba v jednom smere, hoci ani orchestrátor postavený na mieru nie je zadarmo. Náklady sa iba prejavia neskôr a v inej rozpočtovej položke.
 
@@ -101,7 +101,7 @@ Treba však zvážiť aj opačnú stranu. 300-riadková slučka môže mať vyš
 
 Vyčísli preto obe možnosti a až potom rozhodni. Pri riešení na mieru nesieš údržbu, zaškoľovanie závisí od jedného človeka a bus factor zodpovedá počtu ľudí, ktorí systém skutočne poznajú. Framework prináša cenu abstrakcie, zmeny, lock-in a krivku učenia, ktorú však nový kolega zvládne bez rezervovania času niekoho iného. V našom scenári rozhoduje odchod o šesť týždňov, a to v prospech frameworku. Je to tak správne. Ak zmeníš jediný fakt — slučku už ovládajú štyria inžinieri a nikto v tíme nemá skúsenosť s frameworkom — presne rovnaké uvažovanie preklopí rozhodnutie na druhú stranu.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - **Checkpointer a vlastníctvo stavu.** Checkpointer predstavuje nárok na vlastníctvo stavu behu, nie neutrálnu funkciu. Obnovenie od posledného úspešného kroku funguje iba vtedy, keď framework vie, čo sa dokončilo. Ak stav behu ešte nevlastní iný systém, môžeš tento nárok zveriť frameworku. Ak ho už vlastní doménový záznam, rozhodnutie si dôkladne premysli.
 - **Autoritatívny a odvodený stav.** Raz a výslovne urči, ktoré úložisko je autoritatívnym systémom záznamu a ktoré je odvodené. Toto rozdelenie dodržiavaj pomocou štyroch rozhodnutí: zásady jediného zapisovateľa, pomenovaného smeru projekcie, jasne určeného vlastníka schémy a jej migrácií a zosúladenia pri obnovení behu. Ak tú istú pravdu zapisujú dva komponenty, návrh je chybný.

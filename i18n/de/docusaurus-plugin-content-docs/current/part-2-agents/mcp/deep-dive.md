@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Vor dem Bau noch eine Abgrenzung, denn was unmittelbar daneben liegt, behandeln die Nachbarlektionen. Die Koordination von Agent zu Agent – Topologien und wie ein Team bewertet wird – steht in [Multi-Agenten-Systeme](../multi-agent/index.md) und der zugehörigen [Vertiefung](../multi-agent/deep-dive.md); wie sich diese Verbindungen in eine Bibliothek packen lassen, steht in [Orchestrierungs-Frameworks](../orchestration-frameworks/index.md) und deren [Vertiefung](../orchestration-frameworks/deep-dive.md); die Betriebssicht – Gateways, Allowlists, zentrale Richtlinien – liegt beim [Tooling-Ökosystem](../../part-3-production/tooling-ecosystem/index.md) in Teil III und bei den [Guardrails](../../part-1-rag/cross-cutting/guardrails/index.md); und wie MCP auf laufenden Agenten aussieht, zeigt [der Abschluss dieses Teils](../real-agents.md). Diese Seite behandelt die Protokoll- und Transportschicht, die Landschaft der Agentenprotokolle und den gehärteten Betrieb mit nicht vertrauenswürdigen Servern. Teil 1 wird durchgehend vorausgesetzt.
 
-## Einen Server bauen
+## Einen Server bauen \{#building-a-server}
 
 Teil 1 hat zwei Rollen benannt, Client und Server. Im Detail kommt eine dritte hinzu, und sie verändert, wie Sie die beiden anderen lesen. **Der Host** ist die LLM-Anwendung, die die Verbindungen aufbaut – eine Entwicklungsumgebung, eine Chat-App, eine Agentenlaufzeit. In ihm sitzen ein oder mehrere **Clients**, und jeder Client hält genau eine Verbindung zu genau einem Server. Ein „MCP-Client“ ist also nicht die ganze Anwendung; er ist eine Verbindung innerhalb des Hosts, eine je Server, mit dem er spricht. Host, Clients, Server – drei Rollen, nicht zwei.
 
@@ -50,7 +50,7 @@ flowchart TB
 
 *Ein Host hält mehrere Clients, jeder mit genau einer Verbindung zu genau einem Server und mit seinem eigenen Transportprotokoll – `stdio` zu einem lokalen Unterprozess, Streamable HTTP über das Netz zu einem entfernten Server. „Vertrauenswürdig, weil lokal“ ist eine Voreinstellung und keine Garantie: Wie der Abschnitt über die Transportprotokolle zeigt, ist auch ein lokaler `stdio`-Server fremder Code mit den Rechten Ihres Rechners.*
 
-## Drei Funktionen, die die Verbindung umkehren
+## Drei Funktionen, die die Verbindung umkehren \{#the-capabilities-that-invert-the-connection}
 
 Bisher läuft alles in eine Richtung: Der Client ruft auf, der Server antwortet. Die aktuelle Spezifikation kennt auch die Gegenrichtung. Neben dem, was ein Server anbietet, bietet der *Client* dem *Server* etwas an – und diese Umkehrung ist der weitreichendste Zug im Sitzungsmodell von MCP. Drei Funktionen des Clients tragen sie: Sampling, Elicitation und Roots.
 
@@ -64,7 +64,7 @@ Beide umgekehrten Funktionen sind noch in Bewegung, datieren Sie also, was Sie l
 
 Und warum die Umkehrung mehr ist als Mechanik: Eine statische API beantwortet immer nur die Aufrufe, die an sie gerichtet werden. Die zustandsbehaftete Sitzung von MCP lässt den Server *von sich aus* anfangen – Text erzeugen lassen, eine Eingabe der Nutzenden erbitten, eine Aktualisierung schicken. Und jede Funktion, die vom Server ausgeht, ist **eine Stelle, an der Sie zustimmen müssen**: ein Punkt, an dem eine Partei, der Sie nicht vollständig vertrauen, zu Ihnen zurückgreifen kann. Benennen Sie es so, und der Sicherheitsabschnitt hört auf, ein eigenes Thema zu sein; er wird zur unmittelbaren Folge dieses hier.
 
-## Zwei Transportprotokolle – und wem Sie dabei vertrauen
+## Zwei Transportprotokolle – und wem Sie dabei vertrauen \{#two-transports-two-trust-profiles}
 
 Dieselben Komponenten fahren über beide Transportprotokolle, und wo der Server läuft, bleibt eine Frage der Bereitstellung – der Punkt aus Teil 1 gilt weiter. Teil 1 hat eine Frage offengelassen, die hierher gehört: Die beiden Transportprotokolle stellen deutlich verschiedene Anforderungen an Vertrauen und Betrieb.
 
@@ -74,7 +74,7 @@ Dieselben Komponenten fahren über beide Transportprotokolle, und wo der Server 
 
 Ein Transportprotokoll zu wählen heißt also, eine Haltung zum Vertrauen zu wählen. Greifen Sie zu `stdio`, wenn der Server lokal läuft, von einer einzelnen Person genutzt wird und Ihnen allein wegen dieser Nähe vertrauenswürdig erscheint – ein Entwicklungswerkzeug, eine Kapselung um eine lokale Datei oder Datenbank. Greifen Sie zu Streamable HTTP, wenn der Server gemeinsam genutzt wird, entfernt läuft, mehrere Mandanten bedient oder skalieren muss – und nehmen Sie in Kauf, dass Authentifizierung, eng gefasste Token und die Sichtbarkeit im Netz damit zu erstrangigen Themen werden. Die Wahl des Transportprotokolls ist eine Entscheidung über Vertrauen im Kostüm einer Betriebsfrage.
 
-## Einen Server zu finden heißt nicht, ihm zu vertrauen
+## Einen Server zu finden heißt nicht, ihm zu vertrauen \{#finding-a-server-is-not-trusting-it}
 
 **Wie ein Client Server findet**, geschieht auf zwei Ebenen. Beim Verbindungsaufbau findet ein Client die Fähigkeiten *eines bestimmten* Servers über den Handshake von weiter oben – das ist die kleine Ebene. Auf der Ebene des Ökosystems findet ein Client über eine Registry heraus, *welche Server es überhaupt gibt* – das ist die große.
 
@@ -82,7 +82,7 @@ Die offizielle **MCP-Registry** ([registry.modelcontextprotocol.io](https://regi
 
 Und jetzt der tragende Punkt: In einer Registry gelistet zu sein ist keine Prüfung. Eine Registry veröffentlicht Metadaten, die ein Anbieter über seinen eigenen Server geliefert hat; sie prüft nicht nach, was der Server tatsächlich tut, und ein Server kann sein Verhalten ändern, nachdem er gelistet wurde (siehe den Rug-Pull weiter unten). Das Auffinden beantwortet die Frage „Gibt es diesen Server, und wie erreiche ich ihn?“ – nie die Frage „Kann ich diesem Server vertrauen?“. Die zweite bleibt Ihre.
 
-## MCP im Feld der Agentenprotokolle einordnen
+## MCP im Feld der Agentenprotokolle einordnen \{#placing-mcp-on-the-protocol-map}
 
 MCP besetzt eine Achse: vom Agenten zu Tools und Daten. Über eine zweite sagt es nichts – die von Agent zu Agent, bei der ein Agent Arbeit an ein Gegenüber weitergibt –, und das ist ein eigenes Problem mit eigenen Protokollen. Leiten Sie es hier nicht noch einmal her; die Koordination selbst steht in [Multi-Agenten-Systeme](../multi-agent/index.md). Wo das Protokoll auf jener Achse steht, ist aber eine Einordnung wert.
 
@@ -92,7 +92,7 @@ Der dauerhafte Satz passt in eine Zeile: MCP führt vom Agenten zu Tools und Kon
 
 Ein Vorbehalt zum Schluss, mit Datum versehen und nicht zu schwer zu nehmen: Selbst die beiden Achsen beginnen sich zu berühren. MCPs eigene Fassung 2025-11-25 hat mit **Tasks** experimentelle, dauerhafte und abfragbare Anfragen eingeführt, die an den Lebenszyklus der A2A-Tasks erinnern. Lesen Sie nicht zu viel hinein. Stand Ende 2025 bleiben die Achsen getrennt, und das hier ist eine Annäherung, die Sie beobachten sollten, keine Verschmelzung, die sich vorhersagen ließe.
 
-## Nicht vertrauenswürdige Server sicher anbinden
+## Nicht vertrauenswürdige Server sicher anbinden \{#hardened-deployment-for-untrusted-servers}
 
 Wer einen Agenten an einen Server anbindet, den er nicht kontrolliert, bindet ihn an Eingaben und an Verhalten an, die er nicht kontrolliert – zwischen Ihrem Host und allem, was dieser Server schickt, liegt damit eine **Vertrauensgrenze**. Das ist die „neue Angriffsfläche“ aus Teil 1, und dieser Abschnitt arbeitet sie als Katalog von Fehlerbildern und als gestaffelte Abwehr aus. Eine Disziplin liegt unter allem, was folgt: Behandeln Sie jedes Byte, das ein Server schickt, als nicht vertrauenswürdige *Daten* und nie als vertrauenswürdige *Anweisung*.
 
@@ -142,7 +142,7 @@ flowchart TB
 
 Bleibt der eine Zug, auf den jede Funktion dieser Seite hingearbeitet hat: Manchmal binden Sie den Server einfach nicht an. Ist ein Server ungeprüft, für die Aufgabe zu weit berechtigt oder von einem Anbieter, den Sie nicht kennen, oder steht viel auf dem Spiel und der Server lässt sich nicht abschotten – dann nehmen Sie ihn nicht dazu. Nicht jede Fähigkeit ist ihre Angriffsfläche wert, und der sicherste Server ist der, den Sie nie angebunden haben. Wie sich das im Betrieb in großem Maßstab durchsetzen lässt – Gateways, Allowlists, zentrale Protokollierung, unternehmensweite Richtlinien –, steht beim [Tooling-Ökosystem](../../part-3-production/tooling-ecosystem/index.md) in Teil III und bei den [Guardrails](../../part-1-rag/cross-cutting/guardrails/index.md); verweisen Sie darauf, statt es hier noch einmal herzuleiten. Worauf es hier ankommt, ist das Abwägen selbst.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - MCP kennt drei Rollen, nicht zwei: Ein Host (die LLM-Anwendung) hält einen oder mehrere Clients, jeder mit genau einer Verbindung zu genau einem Server. Eine Sitzung beginnt mit dem `initialize`-Handshake, der Version und Fähigkeiten über JSON-RPC 2.0 aushandelt; das SDK übernimmt Protokollverkehr und Handshake, und Sie schreiben die Routinen für Tools, Ressourcen und Prompts. Für ein Modell zu bauen heißt: Die Beschreibung ist ein Prompt, der Tool-Katalog ist zugeschnitten, und Mehrdeutigkeit wird zum falschen Aufruf zur Laufzeit – und wenn eine Anwendung ein Tool benutzt, lassen Sie den Server ganz weg.
 - Zwei Funktionen des Clients kehren die Verbindung um: Über Sampling leiht sich ein Server das Modell des Clients, um Text zu erzeugen, über Elicitation fragt er dessen Nutzende nach fehlenden Angaben. Beides sind Stellen, an denen Sie zustimmen müssen – für Sampling ist die Zustimmung laut Spezifikation verbindlich –, und beide wuchsen noch bis zur Fassung 2025-11-25. Roots ist die leisere dritte: Der Client zäunt ein, auf welches Dateisystem und welche URIs der Server zugreifen darf – das Prinzip der geringsten Berechtigungen auf der Ebene des Protokolls.

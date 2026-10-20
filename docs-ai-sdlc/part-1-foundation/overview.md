@@ -25,7 +25,7 @@ not stored but billed: it is re-sent on every turn, at a measured cost of over 2
 turn. A rules corpus with no owner rots until two authoritative files prescribe opposite architectures.
 Preparation is never one-time — that is the part of "preparation over model" people drop.
 
-## What's inside
+## What's inside \{#whats-inside}
 
 - **[The verification bottleneck](./verification-bottleneck.md)** — the thesis, argued from the primaries:
   output rises and replicates, quality and comprehension fall, and you cannot feel either effect on yourself.
@@ -41,13 +41,13 @@ Preparation is never one-time — that is the part of "preparation over model" p
 - **[Bringing the loop to an existing codebase](./existing-codebase.md)** — most adoption starts from code that
   is already there: audit it and pin its behaviour before an agent changes it, then install the loop.
 
-## Prerequisites
+## Prerequisites \{#prerequisites}
 
 None from this course — this is where it starts. What it does assume is that you have run a coding agent on
 real work and formed an opinion about whether it made you faster. Lesson 1 is largely about why that opinion
 is not evidence, so bring it and be willing to put it down.
 
-## What changes after this part
+## What changes after this part \{#what-changes-after-this-part}
 
 You can take any productivity claim in this field and place it: what the denominator was, who paid for the
 study, whether the number is still current, and whether "17%" was percent or percentage points. You can look

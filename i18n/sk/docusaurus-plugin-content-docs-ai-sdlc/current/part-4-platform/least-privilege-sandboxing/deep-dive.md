@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Prvá časť](./index.md) stanovila cieľ návrhu agenta, ktorý číta nedôveryhodný text: nie dokonalý filter podstrčených pokynov, ale natoľko malý priestor, aby ani *úspešný* podstrčený pokyn nespôsobil trvalú škodu. Vymenovala tri parametre — súborový systém, egress, prostredie — a uviedla, že ich vynucuje platforma. Teraz sa pozrieme dovnútra. Čo jednotlivé hranice v skutočnosti tvoria, čo útočník získa úspešným útokom na predchádzajúcu vrstvu, čo ho zastaví na tejto vrstve a kadiaľ skutočné sandboxy nenápadne prepúšťajú. Celou stránkou sa nesie princíp z [lekcie o viacúrovňových bránach](../../part-3-verification/layered-gates/index.md): žiadnej hranici nedôveruj samostatne a každú navrhni s predpokladom, že tá pred ňou občas zlyhá — [defense in depth (hĺbková ochrana)](../../glossary.md#layered-gates), tentoraz použitá na schopnosti namiesto detekcie.
 
-## Vrstvy izolácie, hranica po hranici
+## Vrstvy izolácie, hranica po hranici \{#the-confinement-stack-boundary-by-boundary}
 
 Štyri hranice zoradené od najvonkajšej — teda zároveň od najslabšej, pretože vonkajšiemu múru treba dôverovať najmenej. Čítaj ich ako vrstvy: každá existuje preto, lebo predchádzajúcu vrstvu možno prekonať.
 
@@ -20,7 +20,7 @@ sidebar_position: 2
 
 **Riadenie egressu.** Sieťový allowlist vynucuje proxy, cez ktoré agent komunikuje; nespolieha sa na to, že agent poslúchne. Ak môže agent nadviazať spojenie iba s registrom balíkov a endpointom modelu, nedokáže odoslať tvoj repozitár ľubovoľnému hostiteľovi bez ohľadu na pokyn, ktorému uveril. Egress tvorí **hranicu exfiltrácie** — poslednú vrstvu, vďaka ktorej situácia „agent prečítal niečo, čo nemal“ nemusí mať následky, pretože dáta nemá kam odoslať.
 
-## Model hrozieb kladie každej hranici jednu otázku
+## Model hrozieb kladie každej hranici jednu otázku \{#the-threat-model-is-one-question-per-boundary}
 
 Hranica má význam iba voči konkrétnemu útoku. Preto model hrozieb pomenuj výslovne pre každú vrstvu. Pýtaj sa: *ak podstrčený pokyn úplne ovládne predchádzajúcu vrstvu, čo tým útočník získa a čo ho zastaví tu?*
 
@@ -31,7 +31,7 @@ Hranica má význam iba voči konkrétnemu útoku. Preto model hrozieb pomenuj v
 
 Takto zapísané vrstvy predstavujú [rozmanitosť mechanizmov](../../part-3-verification/layered-gates/index.md) uplatnenú na schopnosti: každá vrstva nedokáže zachytiť iný druh útoku a ochranu poskytuje až ich skladba, nie ktorýkoľvek múr samostatne. Zároveň odhalia lacnú chybu — jednu zdanlivo pevnú vrstvu, za ktorou už nič nie je. Spevnený container s úplne otvoreným egress allowlistom síce zabráni úniku procesu, ale exfiltrácii nechá voľnú cestu.
 
-## Kadiaľ sandboxy prepúšťajú
+## Kadiaľ sandboxy prepúšťajú \{#where-sandboxes-leak}
 
 Príčiny zlyhaní nie sú nijako nezvyčajné. V každom prípade niekto nenápadne odstránil jednu hranicu, zvyčajne pre pohodlie a bez predstavy o možnom útoku.
 
@@ -41,7 +41,7 @@ Príčiny zlyhaní nie sú nijako nezvyčajné. V každom prípade niekto nenáp
 - **Voľne dostupné prihlasovacie údaje v sandboxe.** Secret v prostredí izolovaného procesu popiera zmysel celej ochrany: sandbox obmedzuje, kam agent *dosiahne*, no prihlasovacie údaje, ktoré si mu odovzdal, už má v rukách. Na hranici sandboxu platí [invariant z prvej časti](./index.md).
 - **Cache zdieľaná medzi spusteniami.** Zapisovateľná cache alebo stavový adresár opakovane používaný rôznymi úlohami umožňuje jednému spusteniu ovplyvniť nasledujúce. Oproti sieti ide o pomalší a nenápadnejší kanál, na ktorý sa pri zabezpečení všetkého ostatného ľahko zabudne.
 
-## Náklady a dva spôsoby, ako sa sandbox zmení na bezpečnostné divadlo
+## Náklady a dva spôsoby, ako sa sandbox zmení na bezpečnostné divadlo \{#the-cost-and-the-two-ways-it-becomes-theatre}
 
 Sandbox nie je zadarmo: predlžuje spúšťanie, vyžaduje údržbu obrazov a politík a sťažuje ladenie, pri ktorom budeš často hovoriť „mimo sandboxu to funguje“. Argument z prvej časti stále platí — hranica vynucovaná platformou nezávisí od ochoty agenta spolupracovať, takže aj úspešný podstrčený pokyn zostane prežiteľný — no dva druhy zlyhania zmenia sandbox na bezpečnostné divadlo.
 
@@ -49,7 +49,7 @@ Prvým je **drift**, teda [zastarávanie pravidiel](../../part-5-scale-governanc
 
 Druhým je **nereprodukovateľnosť**. Ručne zostavený a neverzionovaný sandbox, ktorý dokáže obnoviť iba jeden človek, nie je kontrola — je to stroj, ktorý je dnes zhodou okolností nakonfigurovaný bezpečne. Obmedzenia musia byť definované ako kód a zakaždým zostavené rovnakým spôsobom. Až potom bude tvrdenie „agent beží v izolácii“ vlastnosťou systému, nie opisom jedného notebooku. Rovnakú latku kurz používa pri všetkom, čo označuje za kontrolu.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Sandbox tvorí **sústava hraníc**, pričom každá ráta so zlyhaním tej predchádzajúcej: izolácia procesu, filter syscallov, obmedzenie súborového systému a egress. Ochranu poskytuje ich skladba — rozmanitosť mechanizmov uplatnená na schopnosti.
 - **Container sám osebe oddeľuje procesy, ale nie je pevnou bezpečnostnou hranicou** — s hostiteľom zdieľa kernel, preto patrí na začiatok skladby a nikdy nesmie zostať jedinou vrstvou.

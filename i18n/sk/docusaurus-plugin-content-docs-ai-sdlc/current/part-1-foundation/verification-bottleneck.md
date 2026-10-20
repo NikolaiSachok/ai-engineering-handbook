@@ -15,7 +15,7 @@ Tvrdenie tejto lekcie sa potvrdilo aj na mne samom — píšem o tom v článku 
 
 :::
 
-## Objem odovzdanej práce rastie — táto polovica príbehu je skutočná a výsledky sa opakujú
+## Objem odovzdanej práce rastie — táto polovica príbehu je skutočná a výsledky sa opakujú \{#throughput-rises--this-half-of-the-story-is-real-and-it-replicates}
 
 Začnime tým, o čom niet pochýb. Ľudia, ktorí začali používať programovacích agentov ovládaných z príkazového riadka, zlučujú viac pull requestov. Účinok je veľký, trvalý a objavil sa vo viacerých firmách.
 
@@ -27,7 +27,7 @@ V obehu je aj tretie namerané číslo, ktoré má zmysel citovať iba spolu s v
 
 Pravidlo pre výklad je jednoduché a prísne: nárast uveď presne a vždy pomenuj proxy metriku. Hovor „Microsoft zaznamenal o 24% viac zlúčených PR“, nikdy nie „produktivita stúpla o 24%“.
 
-## Kvalita klesá — a technický dlh berieš na úver
+## Kvalita klesá — a technický dlh berieš na úver \{#quality-falls--and-the-debt-is-on-credit}
 
 Teraz druhá polovica príbehu. Kód vytvorený tou istou vlnou agentov má merateľne horšiu vnútornú kvalitu a toto zhoršenie pretrváva aj po tom, čo počiatočné zrýchlenie zmizne.
 
@@ -39,7 +39,7 @@ Netreba zamlčať, že obe štúdie kvality uskutočnila tá istá výskumná sk
 
 Poučenie je jednoduché: zrýchlenie nedostaneš zadarmo. Berieš si ho na úver.
 
-## Porozumenie klesá — a nezískaš zaň ani vyššiu rýchlosť
+## Porozumenie klesá — a nezískaš zaň ani vyššiu rýchlosť \{#comprehension-falls--without-even-buying-speed}
 
 [Randomizovaný kontrolovaný experiment tímov z Anthropic a Stanfordovej univerzity](https://www.anthropic.com/research/AI-assistance-coding-skills) ukázal nepríjemnejšiu cenu než len horšiu kvalitu kódu: slabšie porozumenie. Vývojári, ktorí sa učili pracovať s neznámou asynchrónnou knižnicou, dosiahli s AI v teste porozumenia **50%**, kým pri práci bez AI **67%**. Rozdiel je **17 percentuálnych bodov** (relatívny pokles o 25%). AI im pritom nepriniesla ani merateľné zrýchlenie: úlohu dokončili približne o dve minúty skôr, no rozdiel nebol štatisticky významný. Štúdie sa zúčastnilo 52 prevažne začínajúcich vývojárov, ktorí pracovali s neznámou knižnicou.
 
@@ -49,7 +49,7 @@ Skutočne zaujímavé zistenie sa skrýva vo výsledkoch skupiny používajúcej
 
 Poctivý výklad si vyžaduje dve výhrady. Štúdia skúmala *učenie sa pracovať s neznámou knižnicou*, nie bežnú prácu v kódovej základni, ktorú dobre poznáš. Podmienky boli zámerne zvolené tak, aby preverili porozumenie. Výsledok navyše odporuje obchodným záujmom organizácie, z ktorej autor pochádza: výskumník z Anthropic zverejnil zistenie poukazujúce na obmedzenie AI. Práve preto si toto meranie zaslúži väčšiu dôveru. Či sa dlh v porozumení hromadí počas celej kariéry, nikto nezmeral.
 
-## Sebahodnotenie je nespoľahlivé — účinok nedokážeš vycítiť, musíš ho merať
+## Sebahodnotenie je nespoľahlivé — účinok nedokážeš vycítiť, musíš ho merať \{#self-assessment-is-broken--you-cant-feel-the-effect-you-have-to-measure-it}
 
 Keby utrpela iba kvalita a porozumenie, mohol by si dúfať, že si škodu počas práce všimneš. Nevšimneš — a práve toto zistenie mení celý spôsob uvažovania o probléme.
 
@@ -59,7 +59,7 @@ Pri tejto štúdii treba vedieť dve veci. Bola malá — zahŕňala 16 vývojá
 
 A teraz zásadná výhrada k aktuálnosti, pretože toto číslo patrí medzi najčastejšie nesprávne citované údaje v odbore: výsledok „o 19% pomalší“ [označil samotný METR za zastaraný](https://metr.org/blog/2026-02-24-uplift-update/). Neopakuj preto „AI spomaľuje vývojárov o 19%“ ako aktuálny fakt. Platné poučenie nespočíva v tomto čísle, ale v mechanizme: účinok AI na vlastnú rýchlosť nedokážeš spoľahlivo vycítiť. Musíš ho zmerať.
 
-## Benchmarky nepredpovedajú produkciu — pasca voľby menovateľa
+## Benchmarky nepredpovedajú produkciu — pasca voľby menovateľa \{#benchmarks-dont-predict-production--the-denominator-trap}
 
 Keď prejdeš od pocitov vývojárov k výsledkom nástrojov, medzi číslom a skutočnosťou, ktorú má číslo zastupovať, sa opäť otvorí priepasť.
 
@@ -67,7 +67,7 @@ Keď prejdeš od pocitov vývojárov k výsledkom nástrojov, medzi číslom a s
 
 [Rovnaké telemetrické údaje od Googlu](https://arxiv.org/abs/2601.19964) odhaľujú aj pascu voľby menovateľa: z *tých istých* údajov vyjde, že AI napísala buď **28,7%, alebo 70,6%** kódu — podľa toho, či sa do menovateľa započíta kopírovanie a vkladanie. Google obe hodnoty z jedného súboru údajov uvádza vedľa seba. Poučenie platí všeobecne: každý titulok typu „X% nášho kódu napísala AI“ je výsledkom **voľby menovateľa**, nie jednoznačným faktom. Všetky takéto ukazovatele produktivity — zlúčené PR, commity, riadky kódu, znaky či čas potrebný na úlohu — sú proxy metriky. Ani jedna nemeria vytvorenú hodnotu.
 
-## Zlyhal aj samotný benchmark
+## Zlyhal aj samotný benchmark \{#the-benchmark-itself-collapsed}
 
 Pre každého, kto dúfa, že spor rozhodne benchmark, je situácia ešte horšia: momentálne neexistuje dôveryhodný benchmark, o ktorý by sa dalo oprieť.
 
@@ -83,7 +83,7 @@ Pre každého, kto dúfa, že spor rozhodne benchmark, je situácia ešte horši
 
 Dve ďalšie zistenia vysvetľujú mechanizmus problému, nielen jeho viditeľný dôsledok. [Kontrola zistila](https://cursor.com/blog/reward-hacking-coding-benchmarks), že v **63% úspešných riešení model hotovú opravu vyhľadal, namiesto toho, aby ju sám odvodil**. [Z opráv, ktoré vyzerali hodnoverne](https://arxiv.org/abs/2503.15223), **29,6% prešlo testami, hoci problém opravovali nesprávne**. Nejde teda o jediný chybný súbor údajov, ktorý by stačilo nahradiť lepším. Keď sa úlohy do benchmarkov získavajú zo zlúčených pull requestov, stále vzniká rovnaký druh chyby. Dôvod je systémový a treba ho povedať priamo: **zlúčený PR nikdy nebol špecifikáciou.** Dokazuje, že sa niečo nasadilo, nie čo sa malo vytvoriť. A riešenie nemôžeš hodnotiť podľa špecifikácie, ktorú si nikdy nemal. (K tejto téme sa vrátime v 3. lekcii pri nesprávnom výklade toho, čo dokazuje zlúčenie, a v 5. lekcii pri kontrolách, ktoré sa dajú obísť.)
 
-## Jediný poctivý titulok
+## Jediný poctivý titulok \{#the-one-honest-headline}
 
 Keď obe polovice spojíš, poctivý záver je zrejmý — a vyslovili ho ľudia, ktorí namerali najsilnejší výsledok v prospech AI. Objem odovzdanej práce rastie. Či rastie aj vytvorená *hodnota*, nebolo preukázané. Odbor sa navyše nezhodol na metrikách, ktorými by sa to dalo zistiť. Presne k tomuto záveru dospel tím Microsoftu, ktorý zaznamenal 24% nárast objemu práce. Výskumníci, ktorí mali najväčší dôvod vyhlásiť víťazstvo, to odmietli urobiť.
 
@@ -95,7 +95,7 @@ Každá štúdia, bez ohľadu na smer výsledku, pritom poukazuje na rovnaké ú
 
 :::
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Na každej úrovni platí to isté: **nekontrolované generovanie je riziko, nie skutočný pracovný výkon.** Úzke miesto overovania *(verification bottleneck)* je všade rovnaké. S veľkosťou organizácie sa menia iba prostriedky, ktoré môžeš vyčleniť na overovanie. Platí pritom pravidlo, ku ktorému sa kurz opakovane vracia: čím bližšie je kontrola k produkcii, tým väčšmi záleží na tom, čomu zabráni; čím je od produkcie ďalej, tým väčšmi záleží na tom, čo ňou vieš dokázať.
 
@@ -105,7 +105,7 @@ Na každej úrovni platí to isté: **nekontrolované generovanie je riziko, nie
 
 - **Enterprise.** Nezávislá kontrola sa stáva systémovou požiadavkou — musí byť preukázateľné, že kontrolór nie je autorom. Údaje z produkčnej telemetrie sa potom premietajú späť do ďalších opráv a spätnoväzbová slučka sa uzatvára v produkcii. *Čomu táto kontrola zabráni:* aby rastúca rýchlosť zvyšovala počet zmien bez kontrolného systému, ktorý ich dokáže zvládnuť. Práve takúto následnú nestabilitu sleduje [DORA](https://dora.dev/dora-report-2025/). Na tejto úrovni prax takmer presne zodpovedá uvedeným normám. Oddelenie roly kontrolóra od roly človeka, ktorý zmenu implementuje, sa nazýva **oddelenie právomocí (separation of duties)** — dlhoročný princíp auditu a bezpečnosti. Nejde iba o odporúčanie, ale o kodifikovanú požiadavku. OpenSSF [**SLSA Source Level 4**](https://slsa.dev/spec/v1.2/) vyžaduje „Two-Party Review“ a európske nariadenie [**DORA (RTS, článok 17)**](https://eur-lex.europa.eu/eli/reg_del/2024/1774/oj/eng) prikazuje oddeliť funkcie schvaľujúce zmenu od funkcií, ktoré ju implementujú. Dôkazová opora tejto požiadavky je silná: výskum schvaľovania zmien, z ktorého vychádza, priniesol namerané výsledky a ustanovenie DORA je záväznou regulačnou požiadavkou. Na úrovni enterprise už kontrola neslúži iba na zachytenie chyby, ale aj ako dôkaz, ktorý môže preveriť tretia strana alebo audítor. Na úrovni samostatného vývojára ide čisto o schopnosť chybu zachytiť. Treba pomenovať aj medzeru, ktorú normy nechávajú otvorenú: vyžadujú nezávislého kontrolóra, ale neprikazujú, aby každá vrstva kontroly uviedla, čo zo svojej podstaty *nedokáže* odhaliť. Práve dôsledné pomenúvanie slepého miesta každej kontroly je vlastným prínosom tohto kurzu a vrátime sa k nemu v 5. lekcii.
 
-## Čo si z toho odniesť
+## Čo si z toho odniesť \{#what-to-take-away}
 
 - Generovanie je lacné, kontrola nie. Pri softvéri vytváranom agentmi je rozhodujúcim obmedzením kapacita overovania, nie schopnosti modelu.
 - Objem odovzdanej práce skutočne rastie a výsledok sa opakuje — každý takýto údaj (zlúčené PR, zoznamy zmien, riadky či znaky) je však iba proxy metrika. Ani jeden nemeria hodnotu.

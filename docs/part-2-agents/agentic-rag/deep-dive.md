@@ -10,7 +10,7 @@ sidebar_position: 2
 
 One boundary to set before we start, because two sibling lessons share this territory. The *general* loop-control layer — plan-and-execute versus ReAct as strategies, step budgets, loop detection, reflection over the whole trajectory — belongs to [planning & loops](../planning-loops/index.md). This page stays anchored on **retrieval as the action**: whenever a general idea is needed, it gets one retrieval-specific line and a pointer there, never a re-derivation.
 
-## From self-correction to named retrieval patterns
+## From self-correction to named retrieval patterns \{#from-self-correction-to-named-retrieval-patterns}
 
 Part 1's "self-correction" and "iterative retrieval" were mechanisms described in the abstract. They have concrete, published shapes. Three named architectures are worth learning, because each is a different answer to the same question — *when, and how, does the loop decide to retrieve, re-retrieve, or stop?*
 
@@ -42,7 +42,7 @@ There's also a strategy choice specific to retrieval. ReAct-style retrieval inte
 
 When *not* to reach for any of this: Self-RAG needs a specially trained model. CRAG and Adaptive RAG add an evaluator or a classifier — extra cost, and a new failure surface: the evaluator can misfire, hiding a good passage or firing a needless web search that drags in worse context than it replaced. For many corpora a solid static retriever plus a simple relevance filter beats a learned evaluator outright. Same discipline as everywhere in Part 2 — take the simplest level that solves the task, and make the loop earn its complexity.
 
-## Keeping the retrieval loop convergent, and bounding it
+## Keeping the retrieval loop convergent, and bounding it \{#keeping-the-retrieval-loop-convergent-and-bounding-it}
 
 Once retrieval runs in a loop, it can fail to stop for the same reason any agent loop can — the general non-termination story is in [planning & loops](../planning-loops/index.md). Retrieval has its own two shapes of it.
 
@@ -58,7 +58,7 @@ Between the two sits **loop detection** for retrieval. The general form is in [p
 
 When *not* to build any of this: a router-only system — one decision, no loop — physically cannot spin; there's nowhere to loop back to. The whole apparatus of budgets, sufficiency checks, and loop detection is a cost you only take on once you commit to running the full loop. If a single routing decision solves your task, you owe none of it.
 
-## Handing retrieved context between hops
+## Handing retrieved context between hops \{#handing-retrieved-context-between-hops}
 
 This is the part least covered by the sibling lessons, and the part that most decides whether a multi-hop agent works. Every hop dumps its retrieved passages into the context. Do that naively across a five-hop trajectory and the context bloats: cost climbs with every call, and lost-in-the-middle, from the generation lesson, starts to bite exactly when the agent has the most to keep straight.
 
@@ -79,7 +79,7 @@ flowchart TB
     R3 --> Ans["Answer with provenance"]
 ```
 
-## Evaluating the retrieval trajectory
+## Evaluating the retrieval trajectory \{#evaluating-the-retrieval-trajectory}
 
 Part 1 said eval now "measures the quality of the trajectory." For agentic RAG that splits in two — outcome and process — and the process half is where the retrieval-specific grading lives; keeping the two apart is what makes a failing run debuggable.
 
@@ -95,7 +95,7 @@ Which is the precondition worth stating plainly: *you cannot evaluate a trajecto
 
 And the restraint, once more. A router-only system has no trajectory to evaluate — one decision, then a static path — so outcome eval alone is enough. Don't instrument a straight line as if it were a loop; the trajectory machinery is a cost you take on only when there's an actual trajectory to judge.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Part 1's self-correction and iterative retrieval have named, published shapes: Self-RAG makes the retrieve-and-grade decision with trained reflection tokens inline; CRAG puts a separate evaluator in front of generation with a web-search fallback; Adaptive RAG classifies query complexity and routes to the cheapest sufficient strategy. All three turn "decide whether to retrieve" into a learned decision — and all three add cost and a new failure surface, so a good static retriever plus a relevance filter often wins.
 - Keep the retrieval self-correction (grade *this passage*) distinct from planning's reflection (grade *the whole plan*) — same instinct, different altitude.

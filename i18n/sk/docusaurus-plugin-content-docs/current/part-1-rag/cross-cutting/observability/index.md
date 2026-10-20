@@ -9,19 +9,19 @@ Evaluácia ti povie, či je systém dobrý — offline, na dátovej sade; guardr
 
 Bez nej sú problémy v produkcii neviditeľné. Nevieš, prečo odpoveď vyšla zle, čo sa vytiahlo z úložiska, koľko to stálo ani aké to bolo pomalé.
 
-## Čo je spoločné a čo prináša AI
+## Čo je spoločné a čo prináša AI \{#whats-shared-and-whats-about-ai}
 
 Tri piliere observability — traces, metrics, logs — ako inžinier už poznáš. Táto lekcia je o rozdiele, ktorý vnáša AI: čo sa mení, keď namiesto obyčajnej služby pozoruješ LLM/RAG systém.
 
-## Prečo sa LLM systém pozoruje ťažšie
+## Prečo sa LLM systém pozoruje ťažšie \{#why-an-llm-system-is-harder-to-observe}
 
 Nedeterminizmus plus čierna skrinka. Zlú produkčnú odpoveď nezreprodukuješ bez úplného záznamu: dopyt (už po transformácii), ktoré chunky (úseky textu) sa vrátili a s akým skóre, aký prompt šiel do modelu, čo model vrátil, ktoré nástroje agent zavolal. Obyčajný softvér je deterministický — má stack trace. LLM aplikácia potrebuje záznam celého reťazca úvah.
 
-## Trace celej pipeline — základný stavebný prvok
+## Trace celej pipeline — základný stavebný prvok \{#the-pipeline-trace--the-core-primitive}
 
 **Trace** (úplný záznam jednej požiadavky) sleduje jednu požiadavku krok za krokom, ako prešla celou pipeline: dopyt → transformovaný dopyt → chunky (+ skóre) → rerank (preusporiadanie) → prompt, ktorý sa odoslal → výstup modelu → (pri agentovi) každý krok a volanie nástroja. Každý krok je span (jeden krok tracu). Trace odpovedá na hlavnú otázku ladenia: „prečo z tohto dopytu vyšla práve táto odpoveď?“
 
-## Čo logovať: špecifiká RAG
+## Čo logovať: špecifiká RAG \{#what-to-log-rag-specifics}
 
 - **Nájdené chunky a ich skóre** — ukázal sa medzi nimi ten správny? Priama väzba na hodnotenie vyhľadávania.
 - Finálny prompt — čo model naozaj videl.
@@ -29,11 +29,11 @@ Nedeterminizmus plus čierna skrinka. Zlú produkčnú odpoveď nezreprodukuješ
 - Pri agentoch celý trace krokov a volaní nástrojov.
 - Na každý krok: latencia, počet tokenov, náklad, verzia modelu.
 
-## Náklad a latencia sú prvoradé
+## Náklad a latencia sú prvoradé \{#cost-and-latency--first-class-concerns}
 
 Na rozdiel od bežnej aplikácie každá požiadavka stojí peniaze (tokeny) a volania LLM sú pomalé. Observability musí počítať náklad na požiadavku a latenciu na každý krok — najmä pri generovaní a reranku — aby zachytila drahé a pomalé vzorce a otvorila cestu k optimalizácii: cache, lacnejší model, menej chunkov v prompte.
 
-## Spätná väzba: observability dáva evaluácii nové prípady
+## Spätná väzba: observability dáva evaluácii nové prípady \{#feedback-observability-feeds-eval}
 
 Produkčné tracy a spätná väzba používateľov sa stávajú novými prípadmi pre evaluáciu — presne tie ťažké, zlyhávajúce dopyty z reálneho sveta. Zachytíš zlú odpoveď v produkcii → pridáš ju do golden setu (etalónová sada) → poistíš sa proti tomu, aby sa tá regresia vrátila.
 
@@ -47,7 +47,7 @@ Týmto sa uzatvára viac než lekcia — uzatvára sa Časť I. V rukách máš 
 
 V [Časti II](../../../part-2-agents/overview) táto statická pipeline ožíva: model začína rozhodovať o toku riadenia — a všetka disciplína, ktorú si si tu vybudoval, putuje s tebou.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Observability je vidieť, čo živý LLM systém naozaj robí; potrebuješ ju preto, že systém je nedeterministický a bez úplného záznamu sa zlá odpoveď nedá odladiť.
 - Základný stavebný prvok je trace (spany) jednej požiadavky od začiatku do konca: dopyt → vyhľadávanie + skóre → prompt → výstup → kroky agenta.

@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Časť 1](./index.md) vysvetlila samotný mechanizmus: definícia nástroja (tool definition) → volanie nástroja (tool call) → výsledok nástroja (tool result) → pokračuj. Táto stránka ho rozoberá podrobnejšie: čo sa deje, keď model vytvorí viac volaní naraz; ako sa schéma vynucuje token po tokene; ako sa slučka po chybnom volaní zotaví namiesto toho, aby sa zrútila; a čo sa pokazí, keď sada nástrojov narastie na desiatky. Predpokladáme, že obsah prvej časti poznáš. Slučku, bezpečnostnú hranicu, zásadu „definícia nástroja je prompt“ ani zoznam znakov dobrého nástroja nevysvetľujeme znova — iba na ne nadväzujeme.
 
-## Keď model vytvorí viac volaní naraz
+## Keď model vytvorí viac volaní naraz \{#when-the-model-fires-several-calls-at-once}
 
 Jeden krok neznamená jedno volanie. Model dokáže v jednej odpovedi vytvoriť niekoľko *nezávislých* volaní — **paralelné volania nástrojov** (parallel tool calls): tri čítania z databázy, dva dopyty cez API — namiesto toho, aby ich posielal po jednom v samostatných krokoch.
 
@@ -46,7 +46,7 @@ flowchart TB
     C --> M2["Model pokračuje"]
 ```
 
-## Ako sa schéma naozaj vynucuje
+## Ako sa schéma naozaj vynucuje \{#how-a-schema-is-actually-enforced}
 
 Argumenty nástroja opisuje **schéma** (schema) — zvyčajne JSON Schema (Gemini používa schému z podmnožiny OpenAPI). Zatiaľ sme s ňou zaobchádzali ako s typovaným formulárom, ktorý model vypĺňa. Je to však viac než dokumentácia: v **prísnom režime** (strict mode) sa schéma *vynucuje* a model nedokáže vygenerovať argumenty, ktoré ju porušujú.
 
@@ -76,7 +76,7 @@ flowchart TB
     Sample --> Step
 ```
 
-## Keď volanie zlyhá — a ako sa slučka zotaví
+## Keď volanie zlyhá — a ako sa slučka zotaví \{#when-a-call-fails--and-how-the-loop-recovers}
 
 Volanie nástroja môže zlyhať viacerými spôsobmi a hádzať ich do jedného vreca je prvá chyba: postup, ktorý vyrieši jeden druh chyby, môže iný druh zhoršiť. Taxonómia:
 
@@ -96,7 +96,7 @@ Opakovať sa oplatí len vtedy, keď sa medzitým niečo zmenilo — model oprav
 
 V dvoch prípadoch volanie neopakuj: po deterministickej chybe bez zmeny vstupu — nič sa nezmenilo, takže sa nezmení ani výsledok; a pri zápise s vedľajším účinkom, ktorý mohol čiastočne prebehnúť a nemá záruku idempotencie — opakovanie by tú istú operáciu mohlo vykonať druhý raz. Opakovania sú na prechodné poruchy a na argumenty, ktoré model opravil; nie sú náhradou za opravu volania. Ako to vyzerá pri zápisoch, rozoberá sekcia o idempotencii nižšie.
 
-## Kontextová cena desiatok nástrojov
+## Kontextová cena desiatok nástrojov \{#the-context-cost-of-dozens-of-tools}
 
 Každá definícia nástroja zaberá tokeny v každej požiadavke: názov, opis a celá schéma parametrov sa do promptu serializujú pri každom volaní, či sa použijú, alebo nie. Tucet nástrojov je **stála réžia** — tokeny, latencia, peniaze — a platíš ju bez ohľadu na to, či model niektorý z nástrojov vôbec použije. Presne túto cenu mala prvá časť na mysli, keď odporúčala „málo nástrojov, bez prekryvov“.
 
@@ -110,7 +110,7 @@ Od určitého počtu nástrojov už dlhší zoznam nepomôže. Keď jeden agent 
 
 Pozor však aj na opačný extrém: po tool-RAG nesiahaj predčasne. Pri hrstke nástrojov je to zbytočná zložitosť s vlastným rizikom zlyhania — pribudne krok vyhľadávania, ktorý sa môže pomýliť, a nástroj, ktorý model potreboval, sa do požiadavky vôbec nedostane. Kým katalóg nie je naozaj veľký, úplne stačí plná statická sada; dynamický výber sa oplatí až potom. Aj tu platí rovnaká zásada ako v celej Časti II príručky: zvoľ najjednoduchšie riešenie, ktoré na úlohu stačí.
 
-## Idempotencia a zápisy s trvalým následkom
+## Idempotencia a zápisy s trvalým následkom \{#idempotency-and-the-writes-that-leave-a-mark}
 
 To, či je bezpečné volanie zopakovať, neurčuje tvoja politika opakovaní — určuje to sám *nástroj*. Čítacie a zapisovacie nástroje sa pri opakovaní správajú rozdielne: zopakovať čítanie ťa nestojí nič okrem latencie; zopakovať zápis — vytvoriť objednávku, odoslať e-mail, strhnúť peniaze z karty — môže tú istú operáciu vykonať dvakrát. O bezpečnosti opakovania rozhoduje to, čo nástroj robí, nie spôsob, akým volanie opakuješ.
 
@@ -124,7 +124,7 @@ Tu sa vraciame k paralelizmu zo začiatku stránky. Skupina fan-out nemá defino
 
 Pre zápisy platí ešte jedno pravidlo: nespoliehaj sa na opakovania pri zapisovacom nástroji, ktorý nie je idempotentný a nemá kľúč. Ak volanie v skutočnosti prešlo a iba vypršal časový limit, opakovanie vykoná operáciu druhý raz — druhé strhnutie z karty, druhý e-mail. Najprv vyrieš idempotenciu, až potom povoľ opakovania; naopak to nefunguje.
 
-## Validácia argumentov predtým, než konáš
+## Validácia argumentov predtým, než konáš \{#validating-arguments-before-you-act}
 
 Obmedzené dekódovanie ti dá správne sformované argumenty — nie *prijateľné*. **Validácia argumentov** (argument validation) má preto svoje miesto medzi okamihom, keď model argumenty vygeneruje, a okamihom, keď nástroj spustíš: argumenty skontroluj skôr, než nastane akýkoľvek vedľajší účinok. Kontrola má dve úrovne a každá zachytáva iné chyby.
 
@@ -135,7 +135,7 @@ Ak argument neprejde validáciou, vráť modelu zrozumiteľnú správu, podľa k
 
 Hranica medzi oboma úrovňami je teda jasná. Netlač sémantické kontroly do schémy — väčšina sa v nej vyjadriť nedá. A validáciu nevynechávaj len preto, že beží obmedzené dekódovanie: to zaručí správne sformované argumenty, nikdy nie vecne správne. Obe úrovne sa dopĺňajú a ani jedna nezastúpi druhú.
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - V jednom kroku model vytvorí viac nezávislých volaní; tvoja aplikácia ich spustí súbežne a výsledky pozbiera naraz. Platí to len vtedy, keď volania jedno od druhého naozaj nezávisia a navzájom si neprekážajú — túto nezávislosť nič automaticky nekontroluje; overiť ju je úloha tvojej aplikácie.
 - Prísny režim (strict mode) vynucuje schému cez obmedzené dekódovanie: schéma sa skompiluje na gramatiku a vzorkovač zamaskuje každý token, ktorý by ju porušil. Zaručuje správne sformované argumenty, nie ich vecnú správnosť — a prvé volanie s novou schémou je pomalšie, kým sa hotová gramatika neuloží do cache.

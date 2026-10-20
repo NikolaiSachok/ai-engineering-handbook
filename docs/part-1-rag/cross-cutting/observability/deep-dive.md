@@ -10,7 +10,7 @@ sidebar_position: 2
 
 One boundary first. This page is about running observability as a production discipline: at volume you cannot keep every trace, so you sample; you cannot store everything you capture, so you decide what is safe to keep; you cannot watch every chart, so you set targets and alert on the ones a user feels; you have to attribute a quality drop to a cause; and you have to cap what all of this spends. It is not a re-derivation of the trace primitive — Part 1 has that. It is not the tool catalogue, which is [Part III](../../../part-3-production/tooling-ecosystem/index.md), and it is not how to fix the pipeline, which lives in the [Retrieval](../../retrieval/index.md) and [Generation](../../generation/index.md) layer pages. Here the object under study is the observability system itself.
 
-## You cannot keep every trace
+## You cannot keep every trace \{#you-cannot-keep-every-trace}
 
 At production volume, storing 100% of traces is prohibitively expensive — the observability store fills as fast as the traffic arrives, and most of what lands in it is unremarkable. So you keep a subset that is both representative and interesting, and throw the rest away. That is *sampling*, and the whole question is which traces you decide to keep.
 
@@ -32,7 +32,7 @@ flowchart TB
     K --> S["Trace store"]
 ```
 
-## What you most want to log is what you least want to keep
+## What you most want to log is what you least want to keep \{#what-you-most-want-to-log-is-what-you-least-want-to-keep}
 
 The single most useful thing to record for debugging an LLM application — the full prompt that went to the model and the full output that came back — is also the most sensitive thing you hold. Those payloads routinely carry user data and personal information; the most debuggable trace is, by construction, the most privacy-laden. You cannot store everything you are able to capture, and the tension is not incidental to the design — it *is* the design.
 
@@ -42,7 +42,7 @@ Controls come in layers, and they compose. First, redact or anonymise personal d
 
 The masking choice reuses the axis the Guardrails layer drew, and it is a genuine tradeoff rather than a default. Irreversible masking — hashing, redaction, replacement — maximises privacy and destroys debuggability in the same stroke: you can no longer see what the user actually asked. Reversible masking — encryption — keeps a path back for authorised debugging, but a recoverable value is a larger liability, and it makes the data pseudonymised rather than anonymised, because the key is now a stored secret worth attacking. You pick per field and per retention tier: the phone number can be hashed and gone, the query body encrypted for a short window and then dropped.
 
-## Deciding what to watch, and when to page someone
+## Deciding what to watch, and when to page someone \{#deciding-what-to-watch-and-when-to-page-someone}
 
 An LLM-system dashboard charts everything an ordinary service does — the **golden signals** of the Google SRE tradition, latency and traffic and errors and saturation — and then one pillar those four never anticipated. On the ordinary axis you want latency as a distribution, p50, p95 and p99, plus **TTFT**, time-to-first-token, which is what a user of a streaming answer actually experiences; cost and token usage per request; throughput; and error rate. The LLM-specific pillar is quality, charted as a first-class signal from the start: online-eval scores on sampled traffic (faithfulness pass-rate, answer relevance), the thumbs-down rate, the refusal rate, the guardrail-block rate. A dashboard that shows latency and cost but not quality is blind to the failure mode unique to this kind of system.
 
@@ -50,7 +50,7 @@ That quality signal is what lets you apply the SRE reliability frame honestly. Y
 
 Alerting follows from the budget rather than from the raw metrics. You page on what a user feels: the error budget's **burn rate** — how fast you are spending it, so a fast burn pages someone now while a slow drift merely warns — a p95 latency breach, a cost spike, a quality drop, a spike in guardrail blocks. The discipline here is restraint, because over-alerting is its own failure mode. Wire an alert to every metric and the real regression, when it comes, arrives buried in a stream of noise nobody reads any more — alert fatigue, and it is how a genuine incident goes unnoticed for an hour. Burn-rate alerting is symptom-based by design: it fires on the user-visible consequence, not on every twitch of every underlying number, and that is what keeps the pager credible.
 
-## Tracing a quality drop back to its cause
+## Tracing a quality drop back to its cause \{#tracing-a-quality-drop-back-to-its-cause}
 
 When a quality metric sags, two questions follow in order: is the drop real, and what caused it. The first is detection. Online eval on sampled traces, together with collected user feedback, gives you a quality-metric time series; a statistically real fall in that series — not a single bad afternoon — is a quality regression, and the same reasoning applies to the latency and cost series. The point is to distinguish a trend from noise before anyone is paged.
 
@@ -75,7 +75,7 @@ flowchart TB
     F --> E["Back into eval"]
 ```
 
-## Putting a cap on what a request spends
+## Putting a cap on what a request spends \{#putting-a-cap-on-what-a-request-spends}
 
 Cost begins with per-request token accounting: the bill is input tokens plus output tokens, each priced per model, and you cannot manage what you have not counted. The OpenTelemetry GenAI conventions give the exact instruments to count it with. The attributes are `gen_ai.usage.input_tokens` and `gen_ai.usage.output_tokens` for the token split, `gen_ai.request.model` and `gen_ai.response.model` for what you asked for versus what answered, `gen_ai.operation.name`, and `gen_ai.provider.name`; the metrics are `gen_ai.client.token.usage`, in units of `{token}`, and `gen_ai.client.operation.duration`, in seconds. As with message content, these are in Development status in Semantic Conventions v1.41.x (2026) and you opt in through `OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental` — stable enough to build on, not yet frozen.
 
@@ -85,7 +85,7 @@ Latency gets the same treatment on the time axis. You set p50 and p95 targets an
 
 The policy that turns a budget from a chart into a control is the **soft cap** / **hard cap** distinction. A soft cap warns — it alerts, it colours a dashboard red — and lets the request through. A hard cap actually stops: it rejects the request, downgrades to a cheaper model, or truncates the context to fit. The hard cap is a runtime guard rather than a report after the fact, and it is the same shape as the step and token budgets an agent runs against in Part II — a limit the system enforces on itself while it is working, not one you read about the next morning.
 
-## Where this goes wrong
+## Where this goes wrong \{#where-this-goes-wrong}
 
 The failure modes are worth stating plainly, because each is a place a team has actually landed.
 
@@ -95,7 +95,7 @@ The failure modes are worth stating plainly, because each is a place a team has 
 - Alerting on every metric ends in alert fatigue, and alert fatigue ends with the real regression scrolling past unread. More alerts is not more safety past the point where anyone still reads them.
 - A quality SLO with no online eval behind it is uptime theatre: a wall of green dashboards over a service that is confidently, measurably wrong. The objective is only worth as much as the measurement underneath it.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Sampling is unavoidable at scale, and the strategy decides what you keep: head-based sampling is cheap and stateless but decides before the outcome is known, so it cannot preferentially keep failures; tail-based sampling buffers the whole trace and decides on outcome, at a stateful memory and load-balancing cost (the Collector Contrib `tail_sampling` processor); priority/hybrid keeps 100% of the must-not-lose traces and samples the rest.
 - For an LLM system, "interesting" includes quality, not just errors and latency — a 200-OK can be a hallucination — so the keep decision is wired to an eval score, a thumbs-down, a guardrail block, or a refusal.

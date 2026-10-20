@@ -13,7 +13,7 @@ That is what makes these three concerns *cross-cutting* rather than a fourth, fi
 They are also the three that separate a demo from a production system, which is why they come last
 in Part I and get the most attention in interviews.
 
-## What's inside
+## What's inside \{#whats-inside}
 
 - **[Evaluation](./evaluation/index.md)** — how you know the system works, instead of believing it
   does. Retrieval and generation break in different ways and get fixed with different levers, so

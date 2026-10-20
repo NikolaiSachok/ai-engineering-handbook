@@ -19,9 +19,9 @@ Každú tému preberáme najprv tak, ako funguje naprieč odvetvím. Všetko, č
 
 ---
 
-## Chunking
+## Chunking \{#chunking}
 
-### Prečo dokumenty vôbec deliť
+### Prečo dokumenty vôbec deliť \{#why-split-documents-at-all}
 
 Naivný recept znie „rozdeľ dokument na chunky“ — a viac ten recept nepovie. Lenže prečo dokumenty vôbec deliť? A prečo väčšina problémov s kvalitou vzniká práve v tomto kroku? K deleniu ťa nútia dve navzájom nezávislé obmedzenia.
 
@@ -29,7 +29,7 @@ Prvé obmedzenie: embeddingový model stláča celý kus textu do jediného vekt
 
 Druhé obmedzenie: chunk hrá dve roly naraz. Vyhľadáva sa nad chunkami — a nájdené chunky sa potom bez zmeny podajú modelu do kontextu. Drž to v hlave počas celej sekcie: jedna rola tlačí veľkosť chunku nadol, druhá nahor.
 
-### Kľúčový kompromis: priveľký vs. primalý chunk
+### Kľúčový kompromis: priveľký vs. primalý chunk \{#the-key-tradeoff-large-chunk-vs-small-chunk}
 
 Všetko podstatné z tejto sekcie sa zmestí do jednej tabuľky:
 
@@ -47,7 +47,7 @@ Ako samostatný chunk je tá veta nanič. Čo vzrástlo? Tretí kvartál ktoréh
 
 Presne preto zlyháva prístup „strihaj každých N znakov“ — a presne preto vznikli múdrejšie stratégie.
 
-### Stratégie delenia: od najjednoduchšej po najdômyselnejšiu
+### Stratégie delenia: od najjednoduchšej po najdômyselnejšiu \{#chunking-strategies-from-simple-to-sophisticated}
 
 1. **Delenie na pevnú veľkosť (fixed-size)** — strihaj každých N tokenov alebo znakov. Jednoduché, rýchle, reprodukovateľné. Nevýhoda: strihá naslepo — uprostred vety, uprostred tabuľky. Je to základ, z ktorého vychádza všetko ostatné.
 2. **Chunk overlap (prekryv)** — susedné chunky sa čiastočne prekrývajú: delenie beží ako posuvné okno (sliding window). Fakt, ktorý padne presne na hranicu medzi dvoma chunkami, prežije celý aspoň v jednom z nich — ak je kratší než prekryv. Lacná záchrana faktov rozstrihnutých napoly; cenou je zduplikovaný text. Nasadzuje sa takmer vždy, v kombinácii s ktoroukoľvek stratégiou; prekryv býva zvyčajne 10–20% veľkosti chunku.
@@ -61,7 +61,7 @@ Správna veľkosť závisí od typu dokumentov (hustý právny text nie je to is
 
 :::
 
-### Metadáta chunku
+### Metadáta chunku \{#chunk-metadata--where-enterprise-specifics-turn-into-search-quality}
 
 Práve cez metadáta sa podnikové špecifiká premietajú do kvality vyhľadávania. Chunk nie je len text: pripájaš k nemu **metadáta chunku** (chunk metadata) — zdroj (súbor alebo URL), názov, cestu po sekciách, dátum a verziu. Pre podnikové prostredie je rozhodujúce ešte jedno pole: riadenie prístupu (access control) — kto chunk smie vidieť. Dôvody, prečo metadáta pripojiť hneď tu, sú tri:
 
@@ -71,11 +71,11 @@ Práve cez metadáta sa podnikové špecifiká premietajú do kvality vyhľadáv
 
 *Metadáta sa k chunku pripájajú vo fáze delenia* — ak si ich nepripojil vtedy, neskôr ich už nemáš odkiaľ vziať.
 
-### Pohľad dopredu: dve roly chunku sa dajú rozdeliť
+### Pohľad dopredu: dve roly chunku sa dajú rozdeliť \{#looking-ahead-a-chunk-has-two-roles--you-can-split-them-apart}
 
 Vráťme sa k faktu, že nad chunkom sa vyhľadáva a ten istý chunk sa podáva modelu. Pokročilá myšlienka — podrobne ju rozoberá vrstva [Retrieval](../retrieval/) — znie: nemusí ísť o ten istý kus textu. Vyhľadávať môžeš nad malými, ostrými chunkami, ktoré dávajú dobrý embedding, a modelu podať väčší rodičovský fragment okolo nájdeného miesta, ktorý nesie plný kontext. Tejto rodine postupov sa hovorí **parent-document / small-to-big retrieval**. Nateraz si stačí zapamätať, že tie dve roly sa od seba oddeliť dajú.
 
-### Čo si odniesť z tejto sekcie
+### Čo si odniesť z tejto sekcie \{#what-to-take-away}
 
 - Nad chunkom sa vyhľadáva a ten istý chunk číta model — dve roly s protichodnými požiadavkami na veľkosť.
 - Priveľký chunk → rozmazaný embedding a šum v kontexte; primalý → stratený kontext: z chunku sa nedá zistiť, o čom jeho slová hovoria.
@@ -87,11 +87,11 @@ Vráťme sa k faktu, že nad chunkom sa vyhľadáva a ten istý chunk sa podáva
 
 ---
 
-## Embeddingové modely
+## Embeddingové modely \{#embedding-models}
 
 Všeobecnú mechaniku už poznáš: chunk → vektor → vektorová databáza. Táto sekcia je o nuansách — o tých, ktoré odlišujú „pozrel som si o tom video“ od „rozumiem, prečo je to navrhnuté práve takto“.
 
-### Čo embedding vlastne je
+### Čo embedding vlastne je \{#what-an-embedding-actually-is}
 
 **Embedding** je vektor v priestore, kde geometrická blízkosť znamená blízkosť významu. Model je natrénovaná funkcia „text → vektor“: texty o tom istom skončia blízko seba, nesúvisiace texty ďaleko od seba. Vyhľadávanie potom znamená nájsť k vektoru dopytu najbližšie vektory.
 
@@ -105,7 +105,7 @@ Video rozoberá embeddingy jednotlivých slov — historický koreň celej myšl
 
 :::
 
-### Bi-encoder vs. cross-encoder
+### Bi-encoder vs. cross-encoder \{#bi-encoder-vs-cross-encoder}
 
 Za vektorovým vyhľadávaním aj **rerankingom** (preusporiadaním) stojí jedna kľúčová dvojica modelov — **bi-encoder** a **cross-encoder**.
 
@@ -119,7 +119,7 @@ Za vektorovým vyhľadávaním aj **rerankingom** (preusporiadaním) stojí jedn
 
 Konflikt medzi „presný, ale pomalý“ a „rýchly, ale hrubší“ rieši ich kombinácia: bi-encoder z miliónov chunkov rýchlo vytiahne top-K, aby sa nič podstatné nestratilo — úplnosť (recall); cross-encoder potom tých K preskóruje, aby navrch vyšlo to najrelevantnejšie — presnosť (precision). Presne tento krok preskórovania je reranking. Viac vo vrstve [Retrieval](../retrieval/).
 
-### Podľa čoho vyberáš embeddingový model
+### Podľa čoho vyberáš embeddingový model \{#how-you-pick-an-embedding-model}
 
 Osi výberu:
 
@@ -129,16 +129,16 @@ Osi výberu:
 - **Maximálna dĺžka vstupu.** Určuje, akú veľkosť chunku model vôbec prijme — priama väzba na chunking.
 - **API vs. prevádzka u seba (self-hosted).** Proprietárne API — OpenAI, Cohere, Voyage — je jednoduché a výkonné, ale dáta opúšťajú bezpečnostný perimeter firmy a každé volanie sa platí. Otvorené modely prevádzkované u seba — E5, BGE, gte — držia dáta v perimetri (pre dôvernosť firemných dát často rozhodujúci argument) a za jednotlivé volania neplatíš; infraštruktúru si však prevádzkuješ sám.
 
-### Metrika podobnosti, v skratke
+### Metrika podobnosti, v skratke \{#the-similarity-metric--in-brief}
 
 Predvolenou voľbou je **kosínusová podobnosť** (cosine similarity): uhol medzi vektormi — zohľadňuje smer, dĺžku ignoruje. Mnohé modely vracajú normalizované vektory; vtedy kosínus prakticky splýva so **skalárnym súčinom** (dot product). Pravidlo znie: použi metriku, na ktorú bol model trénovaný — nájdeš ju na karte modelu (model card); nesúlad kvalite škodí.
 
-### Dve časté pasce
+### Dve časté pasce \{#two-common-pitfalls}
 
 - **Iný model na dopyty, iný na dokumenty.** Dokumenty si zaembeddoval jedným modelom a dopyty embedduješ druhým: vektory žijú v dvoch rôznych priestoroch a vyhľadávanie vracia nepoužiteľné výsledky. Dôsledok: výmena embeddingového modelu znamená preindexáciu celého korpusu.
 - **Asymetria query/passage.** Retrieval-optimised modely často očakávajú prefixy (`query:` pre dopyt, `passage:` pre úryvok); keď ich zameníš, kvalita klesne bez jediného chybového hlásenia.
 
-### Čo si odniesť z tejto sekcie
+### Čo si odniesť z tejto sekcie \{#what-to-take-away-1}
 
 - Bi-encoder je rýchly a jeho vektory sa predpočítajú — to je vektorové vyhľadávanie; cross-encoder je presnejší, ale počíta každý pár — to je reranking.
 - Kvalita vyhľadávania je zhora ohraničená kvalitou embeddingov.

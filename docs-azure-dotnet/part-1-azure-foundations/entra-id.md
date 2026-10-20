@@ -248,7 +248,7 @@ creation commands; retrieve its current identifiers then.
 
 Verified as of 2026-10-17.
 
-### Identity objects
+### Identity objects \{#identity-objects}
 
 - [Identity fundamentals](https://learn.microsoft.com/en-us/entra/architecture/secure-fundamentals)
 - [Groups and access management](https://learn.microsoft.com/en-us/entra/fundamentals/concept-learn-about-groups)
@@ -262,7 +262,7 @@ Verified as of 2026-10-17.
 - [User-assigned identity resource: Get, REST 2024-11-30](https://learn.microsoft.com/en-us/rest/api/managedidentity/user-assigned-identities/get?view=rest-managedidentity-2024-11-30)
 - [Select a user-assigned identity in .NET](https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication/user-assigned-managed-identity)
 
-### Tokens
+### Tokens \{#tokens}
 
 - [Access tokens](https://learn.microsoft.com/en-us/entra/identity-platform/access-tokens)
 - [Access token claims reference](https://learn.microsoft.com/en-us/entra/identity-platform/access-token-claims-reference)
@@ -271,14 +271,14 @@ Verified as of 2026-10-17.
 - [Client credentials flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-client-creds-grant-flow)
 - [Bearer authentication and 401/403 responses in ASP.NET Core 10](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/configure-jwt-bearer-authentication?view=aspnetcore-10.0)
 
-### Project services
+### Project services \{#project-services}
 
 - [Configure Entra ID for Foundry Models](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/configure-entra-id)
 - [Azure AI Search role-based access](https://learn.microsoft.com/en-us/azure/search/search-security-rbac)
 - [Authorise access to blobs with Entra ID](https://learn.microsoft.com/en-us/azure/storage/blobs/authorize-access-azure-active-directory)
 - [Key Vault authentication](https://learn.microsoft.com/en-us/azure/key-vault/general/authentication)
 
-### CLI exercise
+### CLI exercise \{#cli-exercise}
 
 - [Azure CLI: identity create and show](https://learn.microsoft.com/en-us/cli/azure/identity?view=azure-cli-latest)
 - [Azure CLI: login](https://learn.microsoft.com/en-us/cli/azure/reference-index?view=azure-cli-latest#az-login)

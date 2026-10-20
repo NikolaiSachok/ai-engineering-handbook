@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Part 1](./index.md) mapped Part I's three cross-cutting concerns — evaluation, guardrails, observability — onto the 2026 product roster and answered the question the earlier lessons left open: what do you install, and when? It closed on a default order — tracing first, then eval in CI, then guardrails. This second pass is the operations layer over that same roster. Not which tool to pick, but how to run one yourself when the managed version won't do, how to write the piece of a guardrail that no library ships for you, and how the eval, observability and guardrails tools wire into a single stack instead of three disconnected products. Everything below is a snapshot as of mid-2026 (July 2026); as in Part 1, the product names are dated and the durable thing is the category — and, this time, the operational shape — underneath them.
 
-## Where the theory lives
+## Where the theory lives \{#where-the-theory-lives}
 
 This page owns the wiring, not the theory, and it helps to say exactly what that excludes before starting. The concepts each tool implements are taught once, in the deep-dives that own them, and cross-linked here rather than repeated:
 
@@ -19,7 +19,7 @@ This page owns the wiring, not the theory, and it helps to say exactly what that
 
 The split is deliberate. A metric's definition and an injection defence are durable — learn them once and they hold across whichever product you deploy. The wiring is the opposite: it changes with every stack, every backend swap, every scaling decision, and it is the part a tool's own docs bury or assume. That is what this page is for.
 
-## Self-hosting Langfuse: not one container
+## Self-hosting Langfuse: not one container \{#self-hosting-langfuse-not-one-container}
 
 Start with the decision, because it is a decision and not a default. Part 1's reason to reach for Langfuse over a SaaS-first tool was a single property: the core is MIT-licensed and you can run it inside your own perimeter, so the trace data — which carries prompts, retrieved context, sometimes user content — never leaves. When your data is *allowed* to leave, managed Langfuse Cloud or LangSmith is straightforwardly less work, and you should take it. Self-hosting is a cost you accept for control and residency. This is the same make-or-buy fork Part 1 drew; here it comes with an itemised bill.
 
@@ -52,7 +52,7 @@ Step back and the real price is visible. You are now operating a Postgres *and* 
 
 Two honesty notes on the snapshot. The exact component list is mid-2026; Langfuse keeps moving — there is a 2026 "simplify for scale" direction in flight, and the company joined ClickHouse in 2026 — so treat this specific topology as current-but-moving. What is durable is the *shape*: a stateless app tier plus an async worker, an OLTP store for configuration, an OLAP store for the high-volume telemetry, a queue to decouple ingestion, and object storage for raw payloads. Any self-hosted trace platform at scale converges on that pattern, whatever the logos.
 
-## The validator you write yourself
+## The validator you write yourself \{#the-validator-you-write-yourself}
 
 Part 1 drew the guardrails split — frameworks orchestrate, safety classifiers judge — and noted that the Guardrails Hub ships ready-made validators off the shelf. The **validator** is the unit that matters here: it is the smallest piece of a custom guardrail you actually author. Your domain rule — a banned policy phrase, a business constraint, a house output schema — usually isn't on the Hub, and that gap is exactly what you write. The order is: look on the Hub first, author your own only for the check that is specific to you.
 
@@ -100,7 +100,7 @@ Two composition facts tie this back to Part 1. A validator's check can *be* a sa
 
 Now the restraint, because a validator is not free. Don't reimplement a Hub validator that already exists. Every validator is a latency and cost tax on the request path — most of all `reask`, which spends a whole extra model call, and any validator whose check is itself an LLM judge — so budget it like any other synchronous dependency. And test validators like the code they are: this is precisely where Part 1's eval-in-CI meets guardrails, because a validator with an untested false-positive rate set to `exception` is a production incident waiting for its first legitimate user.
 
-## The stack, wired
+## The stack, wired \{#the-stack-wired}
 
 Part 1's three categories map cleanly onto two lanes each: an open-source, self-host lane and a managed, SaaS lane. Laid out, the roster looks like this.
 
@@ -132,7 +132,7 @@ That is Part 1's production loop, but the point here is not the boxes — it is 
 
 One arrow on that diagram is itself an operational practice worth pinning down. Red-teaming here is cadence and tooling, not theory — the injection catalogue and attack mechanics stay in [guardrails](../../part-1-rag/cross-cutting/guardrails/deep-dive.md). Operationally: schedule red-team runs as CI or pre-release gates (promptfoo's red-team features, a platform's own red-team tooling, or PyRIT from the guardrails deep-dive), and track attack success rate over time as a regression metric, the way you track any other number that must not drift the wrong way. Wiring and schedule; the theory lives at the link.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - This page is operations, not theory: the metric internals, the OTel conventions, the injection defences and the trajectory evals are cross-linked to the deep-dives that own them, and deliberately not repeated here.
 - Self-hosting Langfuse (v3, since December 2024) is a distributed system, not a container — Web + Worker + Postgres (OLTP) + ClickHouse (OLAP, holding traces, observations and scores) + Redis/Valkey (queue and cache) + S3/blob (raw events). Async queued ingestion absorbs spikes, and you now operate four data stores; that surface, not the licence, is the price of keeping data inside the perimeter.

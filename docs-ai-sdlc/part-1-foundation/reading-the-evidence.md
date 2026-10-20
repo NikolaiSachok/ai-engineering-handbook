@@ -12,7 +12,7 @@ numbers in both directions as they travel. Boosters inflate one way, skeptics th
 hand to hand loses the one thing that made it mean anything. So the method is small and unglamorous: go to the
 primary source, grade what you find, and say the grade out loud.
 
-## Every claim gets a grade
+## Every claim gets a grade \{#every-claim-gets-a-grade}
 
 Three grades, and the whole discipline rides on keeping them apart.
 
@@ -28,7 +28,7 @@ words you choose: "a randomised trial found," "practitioners report," "one influ
 Those three openings are not decoration. They are the grade, spoken.
 The rest of the course keeps to that: it phrases each claim so the wording carries the grade.
 
-## Four things to read for
+## Four things to read for \{#four-things-to-read-for}
 
 Once a claim has a grade, four checks decide whether the number survives contact.
 
@@ -51,7 +51,7 @@ being true.
 repeatedly — inventing decimals, turning percentages into counts, attaching real numbers to the wrong paper.
 The fix was never a better snippet. It was opening the paper.
 
-## Percentage points are not percent
+## Percentage points are not percent \{#percentage-points-are-not-percent}
 
 One check earns the course the right to teach the rest, and it is the one most outlets get wrong. When
 [comprehension falls from `67%` to `50%`](https://www.anthropic.com/research/AI-assistance-coding-skills) (`MEASURED`), that is a drop of **17 percentage points** — a 25%
@@ -60,7 +60,7 @@ relative increase is not a share: "+31.3% more PRs merge without review" does no
 unreviewed. These are different quantities. Blurring them is exactly the sloppiness this lesson exists to
 correct — get it wrong once and you forfeit the right to teach it.
 
-## The most-repeated number in the genre — and why you can't use it
+## The most-repeated number in the genre — and why you can't use it \{#the-most-repeated-number-in-the-genre--and-why-you-cant-use-it}
 
 Put those checks to work on the single most-quoted statistic in the "AI hurts code quality" genre: block
 duplication up `81%` since 2023, copy-paste from `9.4%` to `15.7%`. It comes from [GitClear](https://www.gitclear.com/the_ai_code_quality_maintainability_gap), a vendor that sells
@@ -85,7 +85,7 @@ that fails to replicate; the real finding is the quieter one beside it. And note
 decimals, GitClear is `REPORTED`, not `MEASURED`. A time-series over an adoption period is not a measurement of
 AI's effect.
 
-## The secondary layer distorts in both directions
+## The secondary layer distorts in both directions \{#the-secondary-layer-distorts-in-both-directions}
 
 GitClear is not an outlier; it is a type. Across the research for this course, six claims came apart the same
 way — and the point is never that people lie. It is survival, not scholarship. These are why the course goes to
@@ -119,7 +119,7 @@ this lesson trains, one field over.
 
 :::
 
-## A few numbers you may already be carrying
+## A few numbers you may already be carrying \{#a-few-numbers-you-may-already-be-carrying}
 
 Some distorted claims are common enough to name and set down.
 
@@ -134,7 +134,7 @@ Some distorted claims are common enough to name and set down.
   revision](https://metr.org/blog/2026-1-29-time-horizon-1-1/) puts the recent rate at 131 days. It is a regression through twelve models on tasks METR itself
   calls "unpunishing" and "static." Cite the fit; don't cite it as a law.
 
-## How to state a finding honestly
+## How to state a finding honestly \{#how-to-state-a-finding-honestly}
 
 The failure mode on both sides is identical: a real number, stripped of its population and its proxy. The
 repair is a sentence shape. State the number, then attach what most retellings drop — who it was measured on,
@@ -149,7 +149,7 @@ result, lead with that. And prefer the finding that cuts against whoever publish
 cost of its own tool, OpenAI retiring its own benchmark. A result that hurts its author's interest is the
 strongest evidence a field full of conflicts can offer.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Grading evidence is a universal skill; only the stakes scale.
 
@@ -165,7 +165,7 @@ Grading evidence is a universal skill; only the stakes scale.
   *proof* that others rely on. Once "the study says X" is written into a standard, everyone downstream inherits
   the error without ever seeing the source.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Grade every claim — `MEASURED`, `REPORTED`, `ASSERTED` — and never upgrade a grade in the retelling. Fame is
   not evidence.

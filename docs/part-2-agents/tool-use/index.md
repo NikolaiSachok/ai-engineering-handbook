@@ -22,7 +22,7 @@ The same mechanism from IBM: how a tool call wires the model into your data and 
 
 :::
 
-## Why the model needs an intermediary — it only produces text
+## Why the model needs an intermediary — it only produces text \{#why-the-model-needs-an-intermediary--it-only-produces-text}
 
 The model executes nothing itself — it only emits text. It won't reach into a database or hit an API; it
 physically doesn't run code. Tool use is the bridging protocol:
@@ -35,7 +35,7 @@ physically doesn't run code. Tool use is the bridging protocol:
 The split is strict: the model decides what to call; your runtime does the calling. The model never
 touches the real systems — and that very split will turn out to be the security boundary (more below).
 
-## The mechanism: a tool call
+## The mechanism: a tool call \{#the-mechanism-a-tool-call}
 
 It has a few parts. It's the same loop as in Agentic RAG, only the action is now anything.
 
@@ -58,7 +58,7 @@ flowchart TB
     M --> Ans["Answer"]
 ```
 
-## A tool definition is a prompt, not just a signature
+## A tool definition is a prompt, not just a signature \{#a-tool-definition-is-a-prompt-not-just-a-signature}
 
 Here's the main AI delta versus ordinary API design. The model selects a tool and fills its arguments by
 **reading the description in words** — it cannot look into your implementation. The name, the description
@@ -67,7 +67,7 @@ invoke the function. A vague description, and the model calls at the wrong time,
 arguments. So tool descriptions are part of prompt engineering, and the "caller" here isn't deterministic
 code — it's a model reading natural language.
 
-## What makes a tool good
+## What makes a tool good \{#what-makes-a-tool-good}
 
 - **A clear, unambiguous description** — the model tells tools apart by their description, not by the code
   behind them.
@@ -80,7 +80,7 @@ code — it's a model reading natural language.
 - **The right granularity** — not too fine (ten calls for one task), not too coarse (one tool for
   everything).
 
-## Where it breaks
+## Where it breaks \{#where-it-breaks}
 
 - **The wrong tool — or none.** The model took the wrong function, or answered from memory instead of
   calling. Fixed by descriptions and a smaller set.
@@ -95,7 +95,7 @@ code — it's a model reading natural language.
   agent, separate read tools from write tools, require confirmation for dangerous actions. Then even a
   successful injection can do very little.
 
-## The link back to RAG
+## The link back to RAG \{#the-link-back-to-rag}
 
 The circle closes: **retrieval is a tool.** Agentic RAG from the previous lesson is a special case of tool
 use where the main tool is search. Once the agent has several tools, it covers that "different sources for
@@ -103,7 +103,7 @@ different questions" case: retrieval into the knowledge base, SQL into tables, w
 a calculator for exact arithmetic. The router from the previous lesson is precisely what picks which tool to
 use.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Tool use (function calling) — the general mechanism: the model calls any external function; retrieval
   is a special case of it.

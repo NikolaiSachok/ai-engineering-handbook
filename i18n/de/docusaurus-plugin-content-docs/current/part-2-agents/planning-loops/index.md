@@ -26,7 +26,7 @@ bestimmen, sie möglich macht. (Das Video ist auf Englisch.)
 
 :::
 
-## Aufgabenzerlegung – vom Ziel zu den Schritten
+## Aufgabenzerlegung – vom Ziel zu den Schritten \{#task-decomposition--turning-a-goal-into-steps}
 
 **Die Aufgabenzerlegung** (task decomposition) bedeutet, das Ziel in Teilaufgaben zu zerlegen, die der Agent
 einzeln abarbeiten kann. Eine echte Anfrage – „Diese beiden Berichte abgleichen und die Abweichungen
@@ -45,7 +45,7 @@ Kopf behalten muss. Und er gibt *Ihnen* etwas, woran Sie den Fortschritt ablesen
 Sie, welche Teilaufgaben erledigt sind und welche nicht. Der zweite Punkt wiegt schwerer, als er klingt;
 merken Sie ihn sich.
 
-## Zwei Strategien für die Reihenfolge der Schritte
+## Zwei Strategien für die Reihenfolge der Schritte \{#two-strategies-for-sequencing-the-steps}
 
 Sobald Sie zerlegen, gibt es zwei Arten, das Ergebnis in eine Reihenfolge zu bringen. Sie ziehen in
 entgegengesetzte Richtungen.
@@ -72,7 +72,7 @@ vorab planen, jeden Schritt mit einer lokalen ReAct-Schleife ausführen und umpl
 fehlschlägt. Der Plan hält den Zusammenhang, die innere Schleife sorgt für Beweglichkeit im Kleinen, und die
 Umplanung ist das Gelenk zwischen beiden.
 
-## Das zentrale Fehlerbild – eine Schleife, die nicht richtig endet
+## Das zentrale Fehlerbild – eine Schleife, die nicht richtig endet \{#the-core-failure--a-loop-that-wont-terminate-correctly}
 
 Das ist das Fehlerbild dieser ganzen Schicht: **Die Schleife endet nicht richtig.** Geben Sie dem Agenten die
 Freiheit, die Reihenfolge selbst zu bestimmen, dann kann er dort versagen, wo eine starre Pipeline es nie
@@ -89,7 +89,7 @@ Sie misslingt in drei Gestalten:
 Exotisch ist keine der drei. Alle drei sind der Preis für die Freiheit, die Agentic RAG eingeführt hat –
 dieselbe Freiheit, mit der die Schleife Fragen über mehrere Hops beantworten kann, lässt sie auch leerlaufen.
 
-## Verteidigung in Schichten
+## Verteidigung in Schichten \{#defences--layered}
 
 Gegen eine Schleife, die nicht anhält, gibt es keinen einzelnen Schalter. Sie legen die Verteidigung in
 Schichten übereinander: unten die schwächste und zugleich unnachgiebigste, oben die klügste.
@@ -116,7 +116,7 @@ verliert es seltener aus den Augen.
 
 **Die Reflexion.** Die klügste Schicht – und einen eigenen Abschnitt wert.
 
-## Reflexion: der wirksamste Hebel gegen Abschweifen und unbemerktes Kreisen
+## Reflexion: der wirksamste Hebel gegen Abschweifen und unbemerktes Kreisen \{#reflection--the-main-lever-against-drift-and-silent-looping}
 
 **Die Reflexion** (reflection / self-critique) ist ein eigener Schritt, in dem der Agent den Pfad beurteilt, den
 sein Durchlauf bis hierher genommen hat. Komme ich voran? Funktioniert das überhaupt? Sollte ich den Kurs
@@ -134,7 +134,7 @@ merken kann, dass die Schleife entgleist ist, und die sie vor der Obergrenze wie
 steuern statt abschneiden. Das Budget ist Ihre Garantie, dass der Agent anhält; die Reflexion ist Ihre beste
 Aussicht darauf, dass er *aus dem richtigen Grund* anhält.
 
-## Der Coding-Agent macht diese Schicht sichtbar
+## Der Coding-Agent macht diese Schicht sichtbar \{#the-coding-agent--this-layer-made-visible}
 
 Wenn Sie diese Schicht mit eigenen Augen sehen wollen, nehmen Sie einen **Coding-Agenten** – einen Agenten, der
 Programmieraufgaben erledigt. Geben Sie ihm eine solche Aufgabe und sehen Sie zu, wie seine ReAct-Kette
@@ -151,7 +151,7 @@ Genau dieser alltägliche Reflex *ist* die Lehre. Die Unterbrechung von Hand ist
 ist das konkreteste Argument dafür, warum Budgets, Reflexion und ein menschlicher Eingriff zusammen zählen:
 Sie haben den Fehler bereits ablaufen sehen und nach dem Stoppknopf gegriffen.
 
-## Was lange Pfade an Kontext kosten
+## Was lange Pfade an Kontext kosten \{#long-trajectories-cost-context}
 
 Noch eine Kostenstelle, leiser als eine Schleife, die nicht anhält, aber immer vorhanden. Die Schleife füllt
 den Kontext Schritt für Schritt mit Tool-Calls und deren Ergebnissen. Über einen langen Pfad hinweg heißt das:
@@ -164,7 +164,7 @@ während er wächst; nur das noch Relevante in einem **Arbeitsgedächtnis** (scr
 und eine strukturierte Liste des bereits Erledigten führen. Das Letzte ist wieder Ihr ausgeschriebener Plan,
 der sich bezahlt macht.
 
-## Wo diese Schicht sitzt – und was sie nachgelagert kostet
+## Wo diese Schicht sitzt – und was sie nachgelagert kostet \{#where-this-sits--and-what-it-costs-downstream}
 
 Zuerst der Ort. Sie steuert und beendet die Schleife aus Agentic RAG und liegt *über* den Tools aus
 Tool-Einsatz: Zerlegung und Abbruch sitzen auf der Schleife `nachdenken → entscheiden → handeln → beobachten`, die die Tools
@@ -179,7 +179,7 @@ Agent das Ziel erreicht, und in wie vielen Schritten? Effizienz und Terminierung
 endet – gehören jetzt zur Qualität; ein Agent, der die richtige Antwort in vierzig Schritten findet, wo sechs
 gereicht hätten, ist kein guter Agent.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Diese Lektion ist die Schleifensteuerung über der Schleife und den Tools – Zerlegung und Abbruch sitzen auf
   `nachdenken → entscheiden → handeln → beobachten`. Sie lenkt die Freiheit, die die früheren Lektionen dem Modell gegeben

@@ -26,7 +26,7 @@ než 20% na krok. Bez vlastníka pravidlá postupne strácajú konzistentnosť, 
 platia ako záväzné, predpisujú protichodné architektúry. Príprava sa musí opakovať. Práve toto ľudia pri
 zásade „príprava je dôležitejšia než model“ vynechávajú.
 
-## Čo je vnútri
+## Čo je vnútri \{#whats-inside}
 
 - **[Úzke miesto overovania](./verification-bottleneck.md)** — téza podložená prvotnými zdrojmi: objem výstupu
   rastie a tento výsledok sa opakuje, kvalita aj porozumenie klesajú a sám na sebe nedokážeš spoľahlivo
@@ -45,14 +45,14 @@ zásade „príprava je dôležitejšia než model“ vynechávajú.
 - **[Slučka v existujúcom projekte](./existing-codebase.md)** — väčšinou začínaš s kódom, ktorý už existuje:
   najprv ho prever auditom a zachyť jeho správanie testami, než ho agent začne meniť. Potom zaveď slučku.
 
-## Predpoklady
+## Predpoklady \{#prerequisites}
 
 Z tohto kurzu nepotrebuješ nič, pretože práve tu sa začína. Predpokladáme však, že si už programovacieho
 agenta použil pri skutočnej práci a vytvoril si názor na to, či ťa zrýchlil. Prvá lekcia z veľkej časti
 vysvetľuje, prečo tento názor nie je dôkazom. Prines si ho so sebou a počítaj s tým, že ho možno budeš musieť
 odložiť.
 
-## Čo sa mení po tejto časti
+## Čo sa mení po tejto časti \{#what-changes-after-this-part}
 
 Každé tvrdenie o produktivite v tejto oblasti dokážeš zaradiť podľa toho, aký malo menovateľ, kto výskum
 financoval, či je údaj stále aktuálny a či „17%“ znamenalo percentá alebo percentuálne body. Keď máš konvenciu

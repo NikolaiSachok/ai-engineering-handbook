@@ -30,7 +30,7 @@ with them. Every ceiling here is that one constraint, priced differently. The mo
 the exception: its risk sits on the supplier's side of the API call, where the service can change or
 disappear while your own capacity stays the same.
 
-## What's inside
+## What's inside \{#whats-inside}
 
 - **[Running agent fleets: isolation and parallelism](./agent-fleets.md)** — what is shared is what
   serialises. Isolate the workspace, keep the accretive artefacts serial, and size the fleet to what the
@@ -49,7 +49,7 @@ disappear while your own capacity stays the same.
   lesson: non-repudiation, provenance that names the agent and model, and separation of duties when both
   parties are agents.
 
-## Prerequisites
+## Prerequisites \{#prerequisites}
 
 Part I's **verification bottleneck**, read as a claim about *capacity* rather than about quality — the first
 lesson here caps fleet size with it directly. Then Part I's *Project memory* and *Rules that hold*, because
@@ -62,7 +62,7 @@ provider possible, and picks up where Part IV's [secrets](../part-4-platform/sec
 [environments](../part-4-platform/environments-migrations-data.md) lessons stopped, with what happens to data
 that reaches the supplier. The closing lesson assumes Part III's separation-of-duties argument.
 
-## What changes after this part
+## What changes after this part \{#what-changes-after-this-part}
 
 You can size a fleet to what the chain absorbs rather than to the budget, and say which fraction of the work
 is irreducibly serial. You can put a bill on a rules corpus instead of only a quality complaint. You can

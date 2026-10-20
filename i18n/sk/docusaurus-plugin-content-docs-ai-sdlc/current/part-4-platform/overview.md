@@ -27,7 +27,7 @@ Posledná lekcia uzatvára slučku načrtnutú v úvode. Produkcia neprichádza 
 predstavuje **koncovú bránu reťaze** a telemetria slúži ako jej snímač. Každý defekt, ktorý sa dostane až
 sem, je únikom. Patrí do registra z III. časti spolu s názvom brány, ktorá ho nezachytila.
 
-## Čo je vnútri
+## Čo je vnútri \{#whats-inside}
 
 - **[Secrets](./secrets.md)** — samotná hodnota sa nedostane do repozitára ani do kontextu agenta.
   Uchovávaj iba odkaz, hodnotu vkladaj až počas behu, blokuj ju na strane servera a namiesto vymazania ju
@@ -43,7 +43,7 @@ sem, je únikom. Patrí do registra z III. časti spolu s názvom brány, ktorá
   používateľov. Postupné nasadzovanie môže začať tieňovým overovaním a musí byť naviazané na automatické
   vrátenie zmeny. Núdzový vypínač má meniť stav, nie spúšťať nový build.
 
-## Predpoklady
+## Predpoklady \{#prerequisites}
 
 Veta z úvodu pochádza z lekcie *Pravidlá, ktoré platia* v I. časti. Všetky štyri lekcie túto zásadu
 uplatňujú na úrovni platformy a viaceré odkazujú na tie isté incidenty. Preto ti tu tá jedna lekcia dá viac
@@ -52,7 +52,7 @@ skener na secrets dopĺňa kontrolu pri revízii; sandbox sa zas dopĺňa s rozs
 III. časti preto potrebuješ prvú lekciu aj register únikov. Posledná lekcia tejto časti doň zapisuje vždy,
 keď sa chyba dostane do produkcie.
 
-## Čo sa mení po tejto časti
+## Čo sa mení po tejto časti \{#what-changes-after-this-part}
 
 Pri každom agentovi, ktorého spustíš, budeš vedieť štyri odpovede podložiť faktmi o platforme, nie sľubmi:
 čo uchováva, kam dosiahne, s akými dátami pracuje a za aký čas ho dokáže jediný človek zastaviť bez toho,

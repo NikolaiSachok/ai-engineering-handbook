@@ -21,7 +21,7 @@ it was a separate step in the workflow, not an instruction the drafting task cou
 
 :::
 
-## Three streams reach the same place
+## Three streams reach the same place \{#three-streams-reach-the-same-place}
 
 Start with the voices, the softest evidence. The people who argue about coding agents for a living have quietly
 settled a question they spent 2025 contesting: standing prose rules are the weakest control you can write.
@@ -47,7 +47,7 @@ next section. The third is a primary artifact: a real 11,000-line rules corpus f
 found *every mechanizable prohibition left as prose — nothing is linted*, and named it "the
 single biggest gap." Three streams, one conclusion. The rest of the lesson is mechanism.
 
-## An instruction is not a control
+## An instruction is not a control \{#an-instruction-is-not-a-control-1}
 
 Four documented incidents share one shape. Each root cause is boring infrastructure — the agent only made the
 failure fast. Read them the way a blameless postmortem would: the control existed as words, never as an enforced
@@ -96,7 +96,7 @@ is the capability-boundary argument of this section, shown as an attack.
 
 :::
 
-## Why prose loses to an optimizer
+## Why prose loses to an optimizer \{#why-prose-loses-to-an-optimizer}
 
 There is a deeper reason prose fails, and it is the best-measured result in this whole course. An agent
 optimizes the thing you check. So anything you do not check does not exist — the gate defines the artifact.
@@ -132,7 +132,7 @@ cheat. And detection is hard-separated from mutation: the auditor never edits th
 separation of duties, restated for agents — an inspector that can make its own findings disappear stops
 producing honest ones.
 
-## Hook versus skill
+## Hook versus skill \{#hook-versus-skill}
 
 By 2026 the community had a compact name for the enforceable-versus-asked distinction. A **skill** is advice the
 model may or may not take. A **hook** is executed by the harness regardless
@@ -148,7 +148,7 @@ reproducible and cannot be talked out of a hit; the semantic check catches what 
 same layered gate this course applies to its own leak defense: a cheap deterministic pass and an expensive
 judgment pass, stacked, because each is blind to what the other sees.
 
-## Rules decay unless someone owns them
+## Rules decay unless someone owns them \{#rules-decay-unless-someone-owns-them}
 
 Written rules also rot, and the primary corpus shows how. Across its 11,000 lines the audit found **no staleness
 mechanism of any kind** — not one file carries a date, a version, an
@@ -172,7 +172,7 @@ could enforce perfectly. Hence the punchline: **a rule you can lint is not a rul
 down.** Durable memory — the tiered kind Lesson 4 is about — is for what tooling genuinely cannot check.
 Everything else should graduate out of the corpus and into CI.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **if a rule can be executed, executing it beats writing it down.** What
 changes is how close to the blast radius the enforcement sits.
@@ -195,7 +195,7 @@ changes is how close to the blast radius the enforcement sits.
   sign-off, further from the blast radius, are the *proof* controls. Teaching the capability controls as
   "enterprise ceremony" would get a reader hurt.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Prefer executable rules to written ones. A hook runs regardless of what the model decides; a skill is advice
   it may ignore — so anything whose failure is a security or correctness problem must be a hook.

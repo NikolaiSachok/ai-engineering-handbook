@@ -24,7 +24,7 @@ person. So the closing lesson designs what reaches them.
 Read down that list and each lesson is the specification for the next one — the same move the first lesson
 recommends for the gates themselves.
 
-## What's inside
+## What's inside \{#whats-inside}
 
 - **[Layered gates and mechanism diversity](./layered-gates/index.md)** — every gate is blind to something.
   Write the sentence naming what each one structurally cannot see, and let it specify the gate after it.
@@ -35,14 +35,14 @@ recommends for the gates themselves.
 - **[Reviewing agent output at volume](./review-at-volume.md)** — automate to concentrate attention, then
   enumerate the things only a human can perceive and reserve the human strictly for that list.
 
-## Prerequisites
+## Prerequisites \{#prerequisites}
 
 The real prerequisite is Part II's **critic gate** — this part is its deconstruction, so the argument lands
 much harder if you have it. Behind that sits one measurement from Part I's *Rules that hold*: an agent
 optimizes exactly what you check. Lesson 3 here is built on that finding and does not re-argue the evidence
 for it.
 
-## What changes after this part
+## What changes after this part \{#what-changes-after-this-part}
 
 You can design a verification chain instead of accumulating checks — naming what each layer cannot perceive
 and letting that name choose the next layer. A green gate stops reading as evidence about the code and starts

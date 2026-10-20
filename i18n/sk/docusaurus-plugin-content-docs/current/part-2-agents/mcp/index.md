@@ -23,7 +23,7 @@ Pozri si ho ešte pred sekciou o Swaggeri — kladie tú istú otázku: keď ná
 
 :::
 
-## Čo je MCP
+## Čo je MCP \{#what-mcp-is}
 
 **MCP (Model Context Protocol)** je otvorený štandard. Predstavil ho Anthropic koncom roka 2024 a v decembri 2025 ho daroval nadácii Agentic AI Foundation pod Linux Foundation — jeho správa je odvtedy neutrálna a komunitná. Stojí na architektúre klient–server.
 
@@ -37,13 +37,13 @@ MCP neštandardizuje jednu vec, ale tri — tri **primitíva (základné stavebn
 
 Prenos (transport) je zámerne nudný. Lokálny server beží cez **stdio** (spojenie cez štandardný vstup a výstup), vzdialený cez **streamable HTTP** (prenos cez HTTP so streamovaním). Primitíva sú v oboch prípadoch tie isté; kde server beží, je detail nasadenia, nie zmena toho, čo klient vidí.
 
-## Rozdiel, ktorý vnáša AI — oddelenie nástrojov od agentov
+## Rozdiel, ktorý vnáša AI — oddelenie nástrojov od agentov \{#the-ai-delta--decoupling-tools-from-agents}
 
 Nejde o poriadok pre poriadok. MCP oddelí tvorbu nástrojov od tvorby agentov. Napíšeš MCP server raz a použije ho každý MCP klient — naprieč aplikáciami, frameworkami, modelmi — bez lepiaceho kódu na každé napojenie. Obal okolo tvojho ticketovacieho systému dodá jeden tím raz a pripája sa naň každý.
 
 Je to efekt ekosystému, nie fičúra. Výhra N + M v ľudskej reči: nástroj postavený pre jednu aplikáciu použije ktorákoľvek iná, tak ako USB-C periféria funguje s ľubovoľným hostiteľom. Hodnota sa ukáže až v druhom, treťom, desiatom projekte, ktorý server znova použije namiesto toho, aby ho staval nanovo.
 
-## Ako sa MCP líši od Swaggeru/OpenAPI a CLI --help
+## Ako sa MCP líši od Swaggeru/OpenAPI a CLI --help \{#how-mcp-differs-from-swaggeropenapi-and-cli---help}
 
 Vážna námietka znie takto: *„MCP je len Swagger pre LLM — nalepí opisy na endpointy, aby si ich model prečítal. OpenAPI máme desať rokov.“* Férové. A odpovedať naň úprimne je najrýchlejšia cesta k tomu, čo MCP je a čo nie je.
 
@@ -58,13 +58,13 @@ Skutočné rozdiely sú štyri a ani jeden sa netýka toho, či opisy máš:
 
 A ešte úprimný dodatok. V praxi bývajú MCP servery pre model naozaj čitateľnejšie než surový výpis z OpenAPI, ale z remesla, nie zo schopnosti protokolu. MCP servery sa píšu s agentom na prvom mieste: opisy formulované ako prompty, starostlivo vybraná a zúžená sada nástrojov namiesto všetkých endpointov — „málo nástrojov, bez prekryvov“ z používania nástrojov. Ručne napísaný MCP server býva pre model prívetivejší než automaticky vygenerovaný dvestoendpointový Swagger. To je však rozdiel v spôsobe návrhu, nie v sémantickej sile, ktorá by OpenAPI chýbala. Swagger unesie presne toľko významu ako MCP; MCP servery sú len z konvencie písané tak, aby ich spotreboval model. „Vybrané pre agenta“ je zvyk autora, nie vlastnosť protokolu.
 
-## MCP verzus A2A — os agent↔nástroj oproti osi agent↔agent
+## MCP verzus A2A — os agent↔nástroj oproti osi agent↔agent \{#mcp-vs-a2a--agent-to-tools-versus-agent-to-agent}
 
 MCP štandardizuje jednu os: agent k nástroju, agent k dátam. O druhej osi mlčí — agent k agentovi. Presne tú komunikáciu si potreboval vo chvíli, keď si postavil prvý multiagentový systém. Keď jeden agent odovzdáva prácu druhému, MCP je nesprávny nástroj: spája agenta s jeho nástrojmi, nie s rovnocenným partnerom.
 
 **[A2A (Agent-to-Agent)](https://a2a-protocol.org)** je nastupujúca odpoveď — navrhol ho Google a odvtedy prešiel pod Linux Foundation — a nie je jediný uchádzač. Rozlíšenie, ktoré si zapamätaj, je jednou vetou: MCP spája agenta s nástrojmi a kontextom, A2A spája agenta s agentom. Táto oblasť sa mení rýchlo a zoznam uchádzačov bude v čase, keď toto čítaš, iný — nauč sa rozlíšenie, nie mená. Dve osi sú reálne a trvácne; ktorýkoľvek konkrétny protokol je len momentka.
 
-## Bezpečnosť — nová plocha útoku
+## Bezpečnosť — nová plocha útoku \{#security--a-new-attack-surface}
 
 Napojiť agenta na server, ktorý neriadiš, znamená napojiť ho na vstup, ktorý neriadiš. MCP server je **nová plocha útoku**. Nepriateľský alebo kompromitovaný server dokáže do zdrojov a výsledkov nástrojov, ktoré vráti, prepašovať nepriamu **prompt injection** (útok, ktorý modelu podstrčí cudzie inštrukcie) — text, ktorý si tvoj model prečíta ako pokyny. Útočným vektorom je aj samotný opis nástroja (tzv. tool poisoning, otrávený opis nástroja), lebo opis je prompt. Server dokáže vyniesť dáta, na ktoré agent dosiahne (data exfiltration). Dokáže prekročiť udelené oprávnenia a robiť viac než tú jednu úlohu, kvôli ktorej si ho pripojil. Ten istý jednotný protokol, vďaka ktorému server ľahko zapojíš, rovnako ľahko zapojí aj server nepriateľský.
 
@@ -74,7 +74,7 @@ Obrana je disciplína, ktorú už máš, roztiahnutá o vrstvu ďalej. Uplatňuj
 
 Tým sa lekcia uzatvára — a s ňou aj základná výbava Časti II príručky. Časť II sa začala jedinou agentickou slučkou v [agentickom RAG](../agentic-rag/index.md), kde sa vyhľadávanie stalo akciou, ktorú si model volí. Dali sme mu nástroje, ktorými koná ([používanie nástrojov](../tool-use/index.md)), spôsob, ako plánovať cez mnoho krokov a naozaj sa zastaviť ([plánovanie a slučky](../planning-loops/index.md)), spoluhráčov na rozdelenie práce ([multiagentové systémy](../multi-agent/index.md)) a frameworky, ktoré to celé zabalia ([orchestračné frameworky](../orchestration-frameworks/index.md)). Táto lekcia dodala poslednú časť: štandardné protokoly, ktoré agentov v produkcii prepoja s nástrojmi aj navzájom. Jedna slučka, ktorá dorástla na systém napojený na svet cez spoločnú zásuvku. Ako to celé vyzerá naživo na Claude, OpenAI a Gemini, ukáže [záverečná stránka o skutočných agentoch](../real-agents.md).
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Problém integrácie M × N (M aplikácií × N nástrojov = M × N konektorov šitých na mieru) je dôvod, prečo štandardy vôbec vznikajú. MCP ho scvrkne na N + M: každý nástroj obalíš raz ako server, klienta napíšeš raz pre každú aplikáciu. Predstav si USB-C port pre AI aplikácie.
 - MCP (Model Context Protocol) je otvorený štandard klient–server (Anthropic ho vytvoril koncom roka 2024, od decembra 2025 je projektom Agentic AI Foundation pod Linux Foundation). MCP server obalí nástroj alebo zdroj dát, MCP klient je agent, ktorý ho využíva. Štandardizuje tri primitíva — nástroje, zdroje, prompty — cez stdio (lokálne) alebo streamable HTTP (vzdialene).

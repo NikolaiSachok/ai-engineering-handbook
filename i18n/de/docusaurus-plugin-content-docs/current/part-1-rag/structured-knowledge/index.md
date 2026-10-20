@@ -35,7 +35,7 @@ Drei Dinge werden ständig miteinander verwechselt, und sie auseinanderzuhalten 
 
 Der Fehler, den ein kontrolliertes Vokabular behebt, ist der bekannteste der strukturierten Extraktion. Sie lassen ein Modell Beziehungen aus dreitausend Dokumenten herausziehen. Es tut das, und zwar flüssig. Im einen Dokument ist eine Person über `works_for` mit einer Firma verbunden, im nächsten über `employed_by`, im dritten kommt dieselbe Beziehung als `is_employee_of` zurück. Weiter hinten lässt sich davon nichts zusammenführen, denn für jede Abfrage sind das drei Prädikate ohne Verwandtschaft. Falsch lag das Modell in keinem einzelnen Dokument – es war nur über alle hinweg an nichts gebunden. Geben Sie ihm eine geschlossene Liste zugelassener Beziehungstypen, und das Problem verschwindet – es kostet Sie nicht mehr, als die Liste zu schreiben.
 
-### Wo sich ein Schema wirklich auszahlt
+### Wo sich ein Schema wirklich auszahlt \{#where-a-schema-actually-bites}
 
 Schemadisziplin zahlt sich an drei Stellen aus, die sich voneinander trennen lassen – und es lohnt sich zu wissen, welche der drei Sie gerade brauchen:
 
@@ -45,13 +45,13 @@ Schemadisziplin zahlt sich an drei Stellen aus, die sich voneinander trennen las
 
 **Bei der Abfrage.** Wenn Sie eine Frage einem Begriff zuordnen wollen statt einer Passage, brauchen Sie ein Modell der Begriffe. Das ist die [semantische Schicht](#the-semantic-layer-names-two-different-things) in ihrem zweiten Sinn, und das Domänenmodell ist das Artefakt, dem sie eine Äußerung zuordnet.
 
-### Ein Domänenschema ist kein Antwortschema
+### Ein Domänenschema ist kein Antwortschema \{#domain-schema-is-not-response-schema}
 
 Ein JSON Schema ist Ihnen in diesem Handbuch bereits begegnet: Es schränkt die **Form der Antwort eines Modells** ein – Pflichtfelder, zugelassene Aufzählungswerte, ein Parsen, das entweder gelingt oder scheitert. Eine Ontologie schränkt die **Form der Welt ein, von der die Antwort handelt**.
 
 Auf dem Papier sehen die beiden ähnlich aus, und sie sind zwei ganz verschiedene Artefakte. Ein Antwortschema gehört zu einem Prompt, ändert sich mit dem Prompt und gehört dem, dem dieses Feature gehört. Ein Domänenmodell gehört der Organisation, ändert sich, wenn sich das Geschäft ändert, und überlebt jeden Prompt, in dem es je verwendet wurde. Behandeln Sie das eine wie das andere, und Ihr Domänenmodell liegt am Ende versioniert neben einer Prompt-Vorlage – so erfährt ein Unternehmen, dass seine Definition von „Kunde“ bei einer Textkorrektur verändert wurde.
 
-### Die ehrliche Voreinstellung – und der Test, wann Sie sie verlassen
+### Die ehrliche Voreinstellung – und der Test, wann Sie sie verlassen \{#the-honest-default-and-the-test-for-leaving-it}
 
 Für die meisten Systeme mit einem Sprachmodell liefert ein JSON Schema samt Validator den wirksamen Teil des Nutzens zu einem Bruchteil der Kosten: eine geschlossene Menge von Typen und einen Weg, Verstöße zurückzuweisen. Das ist keine Notlösung, für die man sich entschuldigen müsste, sondern meistens die richtige Antwort. Der [formale Unterbau](./deep-dive.md#the-formal-stack-by-purpose) – RDF, OWL 2, SHACL, SPARQL – ist den Aufwand unter Bedingungen wert, die Sie benennen können: Sie müssen Fakten ableiten, die niemand hingeschrieben hat; Sie müssen sich an ein Standardvokabular halten, das es in Ihrer Branche bereits gibt; oder eine Aufsichtsbehörde hat das Schema vorgegeben, und die Konformität steht nicht zur Wahl.
 
@@ -67,7 +67,7 @@ Ein **Knowledge Graph** (Wissensgraph) legt Entitäten als Knoten und die Bezieh
 
 Diesen Grund gibt es – nur liefert ihn eine andere Klasse von Fragen.
 
-### Drei Klassen von Fragen – und nur eine entscheidet
+### Drei Klassen von Fragen – und nur eine entscheidet \{#three-question-classes-and-only-one-of-them-is-decisive}
 
 **Lokal – die Nachbarschaft einer Entität.** *„Was wissen wir über diesen Lieferanten, und womit hängt er zusammen?“* Hier hilft ein Graph. Es hilft aber auch die Zerlegung der Frage, und es hilft eine gut gefilterte Vektorsuche über Dokumente, die mit dem Lieferanten verschlagwortet sind. Der Gewinn ist bescheiden, und er rechtfertigt die Maschinerie nicht.
 
@@ -75,7 +75,7 @@ Diesen Grund gibt es – nur liefert ihn eine andere Klasse von Fragen.
 
 **Dieselbe Entität aus verschiedenen Quellen.** Dieselbe Organisation als `Acme Corp`, `Acme Corporation`, `ACME Corp.` und dazu ein Tippfehler. In einem Graphen wird dieses Problem sichtbar – und hier wird aus der Arbeit am Graphen unversehens [Arbeit an der Duplikaterkennung](./deep-dive.md#entity-resolution), eine eigene Disziplin mit einem eigenen Budget.
 
-### Die Kosten sind Entscheidungskriterien, keine Fußnoten
+### Die Kosten sind Entscheidungskriterien, keine Fußnoten \{#the-costs-are-decision-criteria-not-caveats}
 
 **Die Extraktion ist ein Durchlauf des Sprachmodells über Ihr gesamtes Korpus** und wird entsprechend bepreist. Die deutlichste verfügbare Zahl stammt aus Microsoft Researchs eigener Nachfolgearbeit: [LazyGraphRAG](https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/) wurde eigens gebaut, um die Kosten der Indexierung im Voraus zu vermeiden, und für seine Indexierung wird angegeben, sie sei „identisch mit Vektor-RAG und 0,1 % der Kosten eines vollständigen GraphRAG“. Von hinten gelesen heißt das: Der vollständige Aufbau liegt in der Größenordnung des Tausendfachen dessen, was es kostet, dasselbe Korpus bloß einzubetten. Das ist eine Zahl für ein Angebot.
 
@@ -85,7 +85,7 @@ Diesen Grund gibt es – nur liefert ihn eine andere Klasse von Fragen.
 
 **Einen Graphen zu bewerten ist nicht dasselbe wie das Retrieval zu bewerten.** Recall@K über Chunks sagt Ihnen nichts darüber, ob die herausgezogenen Beziehungen *wahr* sind. Sie brauchen Precision auf den extrahierten Tripeln, gemessen an einer gelabelten Stichprobe, und eine End-to-End-Bewertung der Antworten, und zwar für genau die Fragetypen, die nur der Graph bedienen kann. Die Lektion zur [Evaluierung](../cross-cutting/evaluation/index.md) hält die Maschinerie dafür bereit; die Einzelheiten stehen in der Vertiefung.
 
-### Wann Sie keinen Graphen bauen sollten
+### Wann Sie keinen Graphen bauen sollten \{#when-not-to-build-a-graph}
 
 Ein kleines Korpus. Fragen, die auf ein Nachschlagen hinauslaufen. Daten, die sich schneller ändern, als Sie neu extrahieren können. Und der Punkt, der es in der Praxis entscheidet: Niemand hat zugesagt, das Extraktionsschema dauerhaft zu pflegen. Ohne diese Zuständigkeit wird man den Fehlschlag der Technik anlasten statt der Personalentscheidung, die ihn verursacht hat.
 
@@ -101,7 +101,7 @@ Dieser Ausdruck steht vor allem deshalb in dieser Lektion, weil er zwei verschie
 
 Gemeinsam ist den beiden, dass sie eine Auslegung von Fall zu Fall durch ein gemeinsames Modell ersetzen. Dieselbe Schicht sind sie nicht, sie teilen keine Werkzeuge, und meist gehören sie verschiedenen Teams. Sagen Sie im ersten Satz, welche der beiden Sie meinen, und das übrige Gespräch wird leichter.
 
-### Text-to-SQL: auswählen statt herleiten
+### Text-to-SQL: auswählen statt herleiten \{#text-to-sql-selection-instead-of-derivation}
 
 Den praktischen Ertrag bringt die Kennzahlenschicht, und er ist in dieser Lektion der deutlichste Fall dafür, wie sehr Struktur ein Problem vereinfachen kann.
 
@@ -111,13 +111,13 @@ Setzen Sie dasselbe Modell auf eine semantische Schicht an, und seine Aufgabe ä
 
 Die Schicht bringt noch etwas Zweites, und es fällt stärker ins Gewicht, als es klingt. Weil jede Abfrage durch sie hindurchgeht, verschiebt sich der Ort, an dem die Richtlinien durchgesetzt werden – Cube formuliert es so, dass eine Abfrage „gegen das Datenmodell geprüft wird und die Zugriffsrichtlinien deterministisch auf sie angewendet werden, bevor sie das Warehouse erreicht“. Das ist dasselbe Prinzip, auf dem die Vertiefung zum Retrieval besteht – [vor der Suche filtern, nie danach](../retrieval/deep-dive.md) –, nur von der strukturierten Seite her.
 
-### Warum Unternehmen Antworten lieber einem Begriff zuordnen
+### Warum Unternehmen Antworten lieber einem Begriff zuordnen \{#why-enterprises-want-answers-resolved-to-concepts}
 
 Der Weg über den Begriff bringt zwei Dinge, die eine Quellenangabe nicht bringt. **Widerspruchsfreiheit**: Dieselbe Frage, zweimal anders formuliert, wird demselben Begriff zugeordnet und bekommt damit dieselbe Antwort. **Nachprüfbarkeit**: Sie können zeigen, *welchem* Begriff sie zugeordnet wurde und warum. Eine Quellenangabe sagt Ihnen, welchen Text das Modell gelesen hat; sie sagt Ihnen nicht, wofür das Modell diesen Text genommen hat.
 
 Hier treffen sich zwei der drei Abschnitte dieser Lektion: Das Domänenmodell, dem zugeordnet wird, ist genau [die Ontologie](#three-kinds-of-structure) – weshalb „wir brauchen eine Ontologie“ und „wir brauchen eine semantische Schicht“ so oft derselbe Wunsch sind, der aus zwei Abteilungen ankommt.
 
-### Was eine semantische Schicht kostet – und wann Sie darauf verzichten
+### Was eine semantische Schicht kostet – und wann Sie darauf verzichten \{#what-a-semantic-layer-costs-and-when-to-skip-it}
 
 Eine semantische Schicht ist eine Verhandlung über Definitionen, bevor sie ein technisches Artefakt ist, und die Verhandlung ist der teure Teil. Zwei Abteilungen, die „aktiver Kunde“ verschieden definieren, müssen innehalten, und jemand mit der nötigen Befugnis muss entscheiden. Die Modellierung dauert eine Woche; die Einigung kann ein Quartal dauern. Danach driften die Definitionen, also ist jemand dauerhaft für sie zuständig. Eine Kennzahl, deren Bedeutung sich unbemerkt ändert, ist schlimmer als gar keine Kennzahl – aus demselben Grund, aus dem eine falsche Ontologie schlimmer ist als gar keine.
 
@@ -134,7 +134,7 @@ Die drei Abschnitte sind drei Antworten auf eine Frage: *Wo liegt die Struktur i
 
 Ontologie, Graph und semantische Schicht teilen ein Fehlerbild: Jedes von ihnen versagt lautlos und plausibel. Eine falsche Ontologie validiert. Ein veralteter Graph liefert selbstsichere Beziehungen. Eine abgedriftete Kennzahl erscheint im Dashboard. Keines wirft einen Fehler. Jedes braucht eine namentlich zuständige Person und eine Prüfung, die den Fehler auffangen würde.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Die Pipeline aus Teil I setzt voraus, dass die Antwort in irgendeiner Passage steht; drei Klassen von Fragen brechen diese Voraussetzung, und jede hat eine andere strukturelle Antwort.
 - Kontrolliertes Vokabular, Taxonomie und Ontologie sind drei verschiedene Verpflichtungen – die meisten Wünsche nach einer Ontologie erfüllt ein kontrolliertes Vokabular, und der Test dafür, ob Sie weitergehen sollten, ist eine Abfrage zu benennen, die Sie heute nicht beantworten können.

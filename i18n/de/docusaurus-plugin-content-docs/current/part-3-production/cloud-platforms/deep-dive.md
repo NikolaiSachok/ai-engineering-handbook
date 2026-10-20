@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Teil 1 der Lektion](./index.md) hat den Boden bereitet: die drei Wege, an Token aus einem Modell zu kommen, den Perimeter, den eine Plattform tatsächlich verkauft, die drei großen Plattformen und die Regel, dass ihre Namen nur Momentaufnahmen sind, die Modellkataloge, die Triade aus Datenschutz und Speicherort, das verwaltete RAG-Angebot und die Guardrails der Plattform, die drei Preismodelle – On-Demand, reservierte Kapazität, Batch – und die Frage, wie die Entscheidung in der Praxis wirklich fällt. Dies ist der zweite, tiefe Durchgang über dieselben Plattformen. Er beantwortet fünf Fragen, die Teil 1 offengelassen hat: was Sie anpassen, wenn Prompting und RAG nicht mehr genügen; was den Agenten ausführt, sobald Sie ihn gebaut haben; was das Ganze kostet und wie Sie diese Kosten vorher ausrechnen; wie Sie über die Clouds hinweg unabhängig bleiben; und wer rechtlich überhaupt darauf zugreifen darf. Teil 1 wird durchgehend vorausgesetzt und hier nirgends noch einmal erklärt. Alles Folgende ist eine Momentaufnahme von Mitte 2026 (Juli 2026); wie schon in Teil 1 sind die Produktnamen datiert, und was bleibt, ist die Kategorie darunter.
 
-## Was es kostet, ein angepasstes Modell bereitzustellen
+## Was es kostet, ein angepasstes Modell bereitzustellen \{#what-a-custom-model-costs-to-serve}
 
 Jeder Hyperscaler bietet dieselbe **Leiter der Anpassung**, und sie führt in genau eine Richtung: von billiger und lockerer zu teurer und strenger. Unten stehen Prompt-Engineering und RAG, darüber das parametereffiziente Tuning (LoRA und die übrigen PEFT-Verfahren), darüber das vollständige überwachte Fine-Tuning (SFT), darüber die Verfahren mit Präferenzdaten und Reinforcement Learning (DPO, Reinforcement-Fine-Tuning), darüber die Distillation und ganz oben das fortgesetzte Vortraining (*continued pre-training*). Die Namen der Sprossen und die Liste der infrage kommenden Basismodelle wechseln vierteljährlich; nehmen Sie die Einzelheiten als Momentaufnahme und behalten Sie die Leiter.
 
@@ -36,7 +36,7 @@ flowchart TD
 
 Daraus ergibt sich, *wann* das Steigen auf dieser Leiter überhaupt lohnt. Die Reihenfolge lautet: erst der Prompt, dann RAG, und Fine-Tuning erst, wenn beides nicht genügt – und wenn Sie dann dazu greifen, tunen Sie die Form, nicht die Fakten. Gute Gründe sind Stil und Ton, ein starres Ausgabeschema, das Verhalten bei Verweigerung und Formatierung oder ein kleineres Spezialmodell, das im großen Maßstab günstiger und schneller ist. Kein guter Grund ist es, Wissen einzubringen, das sich ändert: Dafür ist RAG da, und wer eine bewegliche Tatsache in die Gewichte backt, sorgt nur dafür, dass sie dort veraltet. Es ist dieselbe Weggabelung zwischen Eigenbetrieb und API, die [Ingestion](../../part-1-rag/ingestion/index.md) für die Embedding-Modelle gezogen hat, und dieselbe Entscheidung zwischen verwaltet und selbst gebaut, die Teil 1 für RAG getroffen hat – jetzt auf der Ebene des Modells selbst.
 
-## Wo die Agentenschleife läuft: die verwalteten Laufzeitumgebungen
+## Wo die Agentenschleife läuft: die verwalteten Laufzeitumgebungen \{#the-runtimes-that-host-the-agent-loop}
 
 Die Plattformen aus Teil 1 stellen Modelle bereit. Eine **verwaltete Agenten-Laufzeitumgebung** stellt etwas eine Ebene darüber bereit: Sie führt die Agentenschleife für Sie aus und bringt Sitzungs- und Gedächtnispersistenz, eine Schicht für Tools, Identität und Gateway, Observability und Scale-to-Zero (Herunterskalieren auf null Instanzen) gleich mit. Genau das sind die Unterschiede gegenüber einem Agenten, den Sie nach Art der Lektion [Bereitstellung und Betrieb](../serving/index.md) selbst in einem Container betreiben. Wie bei den Plattformen sind die Produktnamen eine Momentaufnahme; zu lernen ist die Kategorie.
 
@@ -46,7 +46,7 @@ Die Plattformen aus Teil 1 stellen Modelle bereit. Eine **verwaltete Agenten-Lau
 
 Wer die drei nebeneinanderlegt, sieht, was von ihnen bleibt: der Unterschied, nicht die Funktionsliste. Gegenüber der von Hand gebauten Schleife in einem eigenen Container bekommen Sie sechs Dinge von Haus aus: die Schleife gehostet, mit langlaufenden Ausführungsfenstern; die Sitzung samt Kurzzeit- und Langzeitgedächtnis; ein Gateway für Tools, das einen MCP-Server oder eine API in ein aufrufbares Tool übersetzt, dazu eine Schicht für die Identität, die das Handeln im Namen eines Nutzers und Tresore für Zugangstoken trägt; eingebautes OpenTelemetry; Isolation je Sitzung für die Sicherheit im Mehrmandantenbetrieb; und die Wirtschaftlichkeit von Scale-to-Zero. Bezahlt wird das mit der Bindung an die Plattform und mit weniger Kontrolle über die Schleife – dieselbe Make-or-Buy-Frage, die in Teil 1 schon bei den Guardrails und beim verwalteten RAG-Angebot stand und die [das Tooling-Ökosystem](../tooling-ecosystem/index.md) unmittelbar aufgreift.
 
-## Die Cloud-Rechnung modellieren
+## Die Cloud-Rechnung modellieren \{#modelling-the-bill}
 
 Die Kosten eines LLM-Systems hängen in jeder Cloud an denselben Hebeln, und **FinOps** ist die Disziplin, die sie auf eine Zahl bringt, die Sie verteidigen können: auf die **Stückkosten des Features** – die Kosten pro Anfrage, pro aktiven Nutzer, pro ausgeliefertem Feature. Die genauen Rabatte und Dollarbeträge unten sind eine Momentaufnahme; schlagen Sie für jede harte Zahl die aktuelle Preisseite nach. Die Hebel selbst sind stabil.
 
@@ -64,7 +64,7 @@ Aus Hebeln wird erst durch Disziplin eine gesteuerte Zahl. Schreiben Sie die Kos
 
 Zu hohe Kosten haben, wenn sie auftreten, meist eine von drei Ursachen. Eine außer Kontrolle geratene Agentenschleife schickt in jeder Runde einen wachsenden Kontext erneut mit, sodass sich die Kosten der Token aufschaukeln – das Problem der nicht endenden Schleife und des Schrittbudgets aus Teil II, jetzt in Dollar gerechnet. Ein schleichend wachsender RAG-Kontext bläht jede Eingabe still auf, weil mehr abgerufene Passagen hineingestopft werden, als die Antwort braucht. Und der häufigste Fall von allen ist der billigste zu beheben: Die kostenlosen Hebel, Batch und Caching, bleiben abgeschaltet.
 
-## Anbieterunabhängig bleiben – das Gateway über mehrere Clouds hinweg
+## Anbieterunabhängig bleiben – das Gateway über mehrere Clouds hinweg \{#staying-portable--the-multi-cloud-gateway}
 
 Teil 1 endete mit einer Absicherung: Halten Sie die Anwendungsschicht anbieterunabhängig. Die konkrete Gestalt dieser Absicherung ist ein **Gateway über mehrere Clouds hinweg** – ein einheitlicher Router vor vielen Anbietern und Clouds, der einen einzigen Schnittstellenstandard bedient, die OpenAI-kompatible API, die die Serving-Lektion schon benannt hat: Ihre Anwendung spricht mit einer einzigen Schnittstelle, während das Gateway dahinter die Aufrufe verteilt. Sie bekommen dafür Schutz vor Vendor-Lock-in, Failover über Clouds hinweg, ein Routing nach Kosten und einen zentralen Ort für Rate Limits, Kontingente, Budgets und Observability. Welches Gateway gerade führt, ist eine Momentaufnahme; das Muster ist es nicht.
 
@@ -83,7 +83,7 @@ flowchart LR
 
 Ein Gateway ist nicht umsonst, und es gibt gute Gründe, keines zu bauen. Es legt Sie auf den kleinsten gemeinsamen Nenner an Funktionen fest, sodass das hauseigene Prompt-Caching eines Anbieters oder sein besonderes Format für Tool-Calls hinter der einheitlichen Schnittstelle verloren geht. Es kostet einen zusätzlichen Netzsprung und damit Latenz. Es wird zu einer einzelnen Stelle, an der alles ausfallen kann, und braucht damit selbst Hochverfügbarkeit. Und es verdeckt, dass sich derselbe Prompt bei verschiedenen Anbietern verschieden verhält – eine einheitliche API glättet das genau dort, wo Sie es am dringendsten sehen wollen. Wo eine einzige Cloud und ein schlanker anbieterunabhängiger Client bereits genügen, ist ein vollwertiges Gateway zu viel des Guten. Wo es sich seinen Platz verdient, hat es noch einen Nebennutzen: Derselbe Router, der den günstigsten Endpunkt wählt, kann auch die Auflagen zum Speicherort durchsetzen und den Verkehr per Richtlinie in derselben Region halten oder an einen souveränen Endpunkt binden – womit die Brücke zum letzten Abschnitt steht.
 
-## Wer darauf zugreifen darf
+## Wer darauf zugreifen darf \{#who-is-allowed-to-touch-it}
 
 **Die digitale Souveränität** stellt eine härtere Frage als die **Data Residency**. Data Residency, aus Teil 1 bekannt, sagt Ihnen, *wo* Ihre Daten liegen; bei der Souveränität geht es darum, *wer über sie bestimmt* – wer auf Ihre Daten und Arbeitslasten zugreifen kann, wer sie betreibt, wer sie rechtlich herausverlangen kann und unter welcher Gerichtsbarkeit das geschieht. Auf dieser Unterscheidung ruht der ganze Abschnitt: Die Frage nach dem Ort ist eine Frage der Geografie, die Souveränität eine Frage der Macht. Auseinander gehen die beiden unter einem bestimmten Bedrohungsmodell, dem Herausgabezwang über Landesgrenzen hinweg. Der US-amerikanische CLOUD Act etwa reicht an Daten heran, die ein Anbieter in US-Eigentum hält, auch wenn diese Daten physisch in einer EU-Region liegen. Diese Lücke schließt die Souveränität: über Regionen, die in europäischer oder nationaler Hand betrieben werden, über „vertrauenswürdige Clouds“ von Partnern und über vollständig physisch getrennte Bereitstellungen (*air-gapped*). Die genannten Unternehmen und die Zeitangaben in diesem Abschnitt ändern sich schneller als alles andere auf dieser Seite.
 
@@ -103,7 +103,7 @@ Eine klare begriffliche Darstellung dessen, was eine souveräne Cloud tatsächli
 
 :::
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Steigen Sie die Leiter der Anpassung der Reihe nach: erst der Prompt, dann RAG, dann Fine-Tuning – und tunen Sie Stil und Schema, nicht Fakten, die sich ändern. Die versteckten Kosten stecken in der Bereitstellung: Ein angepasstes Modell braucht meist dedizierte Kapazität, die stundenweise abgerechnet wird, und bei geringem Volumen überwiegt die Gebühr für den Betrieb die Kosten der Token – Azures eigenes Beispiel mit 1.422 $, davon 1.224 $ reiner Betrieb, zeigt es.
 - Eine verwaltete Agenten-Laufzeitumgebung führt die Schleife aus und liefert Sitzungs- und Gedächtnispersistenz, ein Gateway für Tools und Identität, Observability, Isolation je Sitzung und Scale-to-Zero von Haus aus – Bedrock AgentCore, Foundry Agent Service, Vertex Agent Engine –, und Sie bezahlen dafür mit der Bindung an die Plattform und mit weniger Kontrolle über die Schleife.

@@ -13,7 +13,7 @@ základni. Základňa sa mení každý týždeň, pravidlo vzniklo raz. Keď sa 
 nepodstatným — začne **aktívne škodiť**. Človek si zastaranú konvenciu prečíta a potichu ju obíde; agent si ju
 prečíta a poslúchne.
 
-## Korpus pravidiel chátra troma spôsobmi
+## Korpus pravidiel chátra troma spôsobmi \{#three-ways-a-rule-corpus-decays}
 
 Zlyhanie má tri odlišné tvary a každý si žiada inú nápravu: kontrolu, ktorá zlyhá; revíziu, ktorá rozpor
 urovná; zmazanie.
@@ -32,7 +32,7 @@ Za istou hranicou sa podstatné obmedzenia rozriedia v nánose maličkostí — 
 väčšina ľudí prehliadne: korpus, ktorý sa už nezmestí do pracovného kontextu, sa *skráti* a v tej chvíli už
 ani ty, ani agent nerozhodujete o tom, ktoré pravidlá ten rez prežijú.
 
-## Vykonateľné pravidlá zastarávajú nahlas, textové potichu
+## Vykonateľné pravidlá zastarávajú nahlas, textové potichu \{#executable-rules-rot-loudly-prose-rules-rot-silently}
 
 Najužitočnejšia vlastnosť pravidla je, či jeho chátranie *vidno*. Pravidlo zapísané ako kontrola — test,
 lintovacie pravidlo, brána v CI — zlyhá vo chvíli, keď sa mu realita vyšmykne spod nôh. Také zlyhanie
@@ -53,7 +53,7 @@ a účet príde v podobe agentov, ktorí sebavedomo stavajú pre svet, ktorý u�
 
 :::
 
-## Vlastník a platnosť: zodpovednosť, ktorú nikto nepridelí
+## Vlastník a platnosť: zodpovednosť, ktorú nikto nepridelí \{#ownership-and-expiry-the-part-nobody-assigns}
 
 Pri každom pravidle majú byť napísané dve veci, ktoré tam takmer nikdy nie sú: **kto zaň zodpovedá** a **čo
 spúšťa jeho najbližšiu revíziu**. Bez vlastníka patrí pravidlo všetkým, čiže nikomu, a nikdy sa nezmaže —
@@ -86,7 +86,7 @@ vypínača musí mať vlastníka a treba ho pravidelne revidovať spolu so súbo
 platnosti ani dátum odstránenia sa mu neurčuje. Obe vetvy zastaraného flagu totiž v kóde stále vyzerajú
 ako používané. Agent tak môže ďalej udržiavať, testovať a rozširovať aj vetvu, ktorá už neslúži ničomu.
 
-## Pamäť sa rozchádza s realitou rovnako
+## Pamäť sa rozchádza s realitou rovnako \{#memory-drifts-the-same-way}
 
 Pamäť projektu chátra tými istými troma spôsobmi, no jej drift je zákernejší než pri pravidlách: pamäť sa
 číta ako *opis*, nie ako *pokyn*, a preto ju nikto nekontroluje. Záznam „zvolili sme X, pretože Y“ zostáva
@@ -94,7 +94,7 @@ v súbore dlho po tom, čo Y prestalo platiť, a agent ho berie ako aktuálny fa
 nesú dátum, rozpory sa urovnávajú namiesto hromadenia a prekonané rozhodnutia sa označia ako nahradené,
 nenechajú sa potichu stáť vedľa toho, ktoré ich nahradilo.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant sa so škálou nemení: **pravidlo má takú hodnotu, aké bolo jeho posledné overenie voči realite, a
 jeho chátranie musí niečo zviditeľniť.** Mení sa to, kto zaň zodpovedá a čo revíziu spustí.
@@ -112,7 +112,7 @@ jeho chátranie musí niečo zviditeľniť.** Mení sa to, kto zaň zodpovedá a
   kontrola existuje na papieri, dva roky nezodpovedá systému a odhalí sa počas auditu, ktorý predpokladal, že
   funguje.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - **Zastarané pravidlo je horšie než žiadne.** Človek prekonanú konvenciu obíde, agent ju poslúchne.
 - Chátranie má tri tvary — **zastaranosť, rozpor, nafúknutosť** — a každý si žiada inú nápravu. Najhorší je

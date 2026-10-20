@@ -10,7 +10,7 @@ sidebar_position: 2
 
 That page named the defences. This one opens their machinery. You'll see how spotlighting actually marks text and what each variant costs, the full injection catalogue and which defence meets which class, how red-teaming produces the attack success rate you're tracking, and how a PII pipeline detects and masks in practice. One boundary stays drawn: running these mechanisms at organisation scale — gateways, allowlists, centralised policy — is the operations layer, and this page leaves it to [Part III](../../../part-3-production/tooling-ecosystem/index.md).
 
-## How spotlighting marks untrusted text
+## How spotlighting marks untrusted text \{#how-spotlighting-marks-untrusted-text}
 
 Part 1 said to "apply spotlighting so an injected instruction reads as just data." That was the goal. **Spotlighting** is not a single trick but a family of three prompt-engineering techniques, one shared idea underneath them: transform the untrusted input so the model can tell it apart from the trusted instructions continuously — the separation the model can't do on its own, made mechanical. The technique family and every measured result below come from one paper, worth naming because it is the source of both: Hines et al. (Microsoft), "Defending Against Indirect Prompt Injection Attacks With Spotlighting," arXiv 2403.14720, submitted 20 March 2024.
 
@@ -35,7 +35,7 @@ flowchart TB
 
 The ladder is the takeaway. Delimiting is cheap and weak; datamarking is cheap and strong, the default; encoding is strong and expensive and needs a capable model to carry it. Strength and cost climb together, and no rung removes the vulnerability — each only raises the price of exploiting it. And all three are prompt-level: spotlighting reshapes the input, it does not retrain the model. That distinction sets up the next section, where the defence lives on the training side instead.
 
-## The attack catalogue, and the defence trained into the model
+## The attack catalogue, and the defence trained into the model \{#the-attack-catalogue-and-the-defence-trained-into-the-model}
 
 Part 1 named direct versus indirect injection as threat #1. Mastery means holding the whole catalogue, because a single defence never covers it — different attack classes need different layers. The field's reference risk catalogue is OWASP's, and it is unambiguous about the ranking: **LLM01:2025 Prompt Injection** holds the top slot in the OWASP Top 10 for LLM Applications 2025 (the list published late 2024), keeping #1 for the second consecutive edition. OWASP's stated root cause is the one Part 1 opened on — instructions and data share one channel with no separation, so the model cannot tell a crafted "instruction" from ordinary content.
 
@@ -54,7 +54,7 @@ That last class has a richer agent-side version — tool poisoning (a malicious 
 
 Keep one distinction crisp, because Part 1 flagged it and the two blur in practice. A **jailbreak** targets the model's *own* built-in safety training, coaxing it to produce disallowed content ("pretend you're an AI with no rules"). An injection targets your *application's* inability to separate instructions from data, overriding the developer's system prompt. The target is what separates them — the model's alignment versus your instructions — and real attacks often combine both.
 
-### The instruction hierarchy is a training-side defence
+### The instruction hierarchy is a training-side defence \{#the-instruction-hierarchy-is-a-training-side-defence}
 
 Part 1 listed the instruction hierarchy — system > developer > user > tool/retrieved — as a defence. The mechanism the reader needs is that this is not merely a prompt convention. OpenAI's paper — Wallace et al., "The Instruction Hierarchy: Training LLMs to Prioritise Privileged Instructions," arXiv 2404.13208, submitted 19 April 2024 — *trains* the model to assign privilege levels to instructions and to obey higher levels over lower ones. The order runs system and developer messages at the top, the user beneath them, and tool outputs, third-party content, and retrieved chunks at the bottom.
 
@@ -62,7 +62,7 @@ What makes it work is the treatment of **aligned versus misaligned instructions*
 
 Neither half is total. Spotlighting is bypassable, as the ladder showed; the instruction hierarchy raises resistance but doesn't guarantee it, since the model stays probabilistic. That is exactly why OWASP's own guidance is defence-in-depth — input validation, output filtering, privilege restriction, and human review on sensitive actions, layered. The catalogue is what makes the reason concrete: each layer meets a different class in the taxonomy, so no single one can suffice.
 
-## Proving the guard holds under attack
+## Proving the guard holds under attack \{#proving-the-guard-holds-under-attack}
 
 Part 1 noted guardrails get measured too — attack success rate over a set of attacks. **Red-teaming** is how you build that set and produce that number. It is systematic adversarial testing: you attack your own system on purpose, using the catalogue from the previous section, to find where the guard fails before a real attacker does. Read it as the offensive complement to the defensive layers — you don't trust a defence you haven't tried to break — and as the sibling of the [Evaluation](../evaluation/index.md) layer, pointed at adversaries instead of quality.
 
@@ -76,11 +76,11 @@ Three properties of a serious red-team follow from that.
 
 Automation scales coverage; it does not remove the human. Microsoft's "Lessons From Red Teaming 100 Generative AI Products" (arXiv 2501.07238, January 2025) is blunt that human judgment, subject-matter expertise, and creativity stay load-bearing — automation runs the volume, humans find the novel and the context-specific failure. It's the same shape as Evaluation's rule about labels: you never automate the human away, you amortise them.
 
-## Where PII gets caught, and how it's masked
+## Where PII gets caught, and how it's masked \{#where-pii-gets-caught-and-how-its-masked}
 
 Part 1 told you to detect and mask personal data on the input — before logging, before the provider's API — and on the output, before the user sees it. Mastery is knowing exactly where the pipeline sits, why detection is a precision/recall problem, and the design axis that decides how you mask. The concrete reference implementation to reason about is Microsoft's [Presidio](https://microsoft.github.io/presidio/), an open-source PII detection and de-identification SDK built in two stages: an **Analyzer** (recognizers that find candidate PII spans, label each with an entity type — PERSON, PHONE_NUMBER, EMAIL_ADDRESS — and attach a confidence score) and an **Anonymizer** (operators that transform the found spans).
 
-### Three points where it sits
+### Three points where it sits \{#three-points-where-it-sits}
 
 Part 1's two-surface picture holds, and RAG adds a third point.
 
@@ -88,7 +88,7 @@ Part 1's two-surface picture holds, and RAG adds a third point.
 - **Output** — detect and mask before the answer is shown, in case the model surfaced PII out of its context.
 - **RAG ingestion** — PII baked into the corpus is better caught while indexing than only at query time, the same argument as the poisoned document from Part 1: fix it once at the source rather than on every read.
 
-### Detection is a two-family problem
+### Detection is a two-family problem \{#detection-is-a-two-family-problem}
 
 Presidio's Analyzer shows both families, and you need both because they cover different PII.
 
@@ -97,7 +97,7 @@ Presidio's Analyzer shows both families, and you need both because they cover di
 
 Each candidate span arrives with a confidence score, a number you threshold on. And that threshold sits on the core tension: PII detection is a **precision/recall tradeoff**, and both errors hurt, asymmetrically. A false negative — missed PII — is a leak: the data you were protecting walks out the door. A false positive — flagging non-PII — over-redacts and destroys utility: the masked text and any answer built on it degrade, and enough of it makes the system useless. You can't push recall to 100% without dragging precision down with it, so the threshold is a risk decision — a compliance context leans toward recall and over-masking, a utility context can't. No setting is free of both errors at once; it mirrors the strictness balance Part 1 named for the guard as a whole.
 
-### Reversible or not — the masking decision
+### Reversible or not — the masking decision \{#reversible-or-not--the-masking-decision}
 
 How you mask is a real design axis you decide deliberately, and Presidio's operators map straight onto it. The axis is **reversible versus irreversible**.
 
@@ -108,7 +108,7 @@ The trap is that the choice is a liability decision in disguise. Picking hash wh
 
 That's the pipeline as a principle — the recognizers, the thresholds, the operators. Running it as a managed service with centralised policy across an organisation is the operations layer, and that's [Part III](../../../part-3-production/tooling-ecosystem/index.md), the same boundary this page drew at the start. For watching any of these guards behave in production, the instrument is [Observability](../observability/index.md).
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Spotlighting is a ladder of three prompt-level techniques: delimiting (weak, boundary-only, escapable by a guessed delimiter), datamarking (a marker interleaved on every gap — the strong default, near-free on task quality), and encoding (near-total on injection but a capability tax that only a strong model absorbs). Strength and cost rise together, and none removes the vulnerability.
 - The injection catalogue has two axes — delivery (direct vs indirect, where indirect is the RAG danger) and goal (instruction override → data exfiltration → unauthorised action, escalating with the agent's reach). The agent-surface version — tool poisoning, confused deputy, rug pull — lives in the MCP deep-dive.

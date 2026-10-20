@@ -70,7 +70,7 @@ arrangement is described in [how these are made](/design-scenarios/how-these-are
 
 <Reveal>
 
-## Attempt A — the layered answer
+## Attempt A — the layered answer \{#attempt-a--the-layered-answer}
 
 *Persona given to the agent: Follows the field closely and can name the current guardrail stack accurately. Maps a problem onto the component that owns it, and a design feels finished when every named risk has a named component sitting on it. Messy input has never been a wall, because a well-configured model has always got through what rules could not. Budget headroom reads as permission. Has never had to hand a guarantee to somebody who did not take their word for it.*
 
@@ -122,7 +122,7 @@ supplier-list rule pins the revision to a date printed on the untrusted document
 
 </Verdict>
 
-## Attempt B — the provable answer
+## Attempt B — the provable answer \{#attempt-b--the-provable-answer}
 
 *Persona given to the agent: Has had to hand their guarantees to somebody who did not take their word for them, and it permanently changed what counts as a check — "we verified it" means nothing without an artefact you can re-run a year later. Asks first who is on the other end of a pipe and whether that is provable. Does arithmetic out loud whenever a number is load-bearing. Messy inputs do not frighten them; unprovable ones do.*
 
@@ -172,7 +172,7 @@ mistake the list for the defence. One arithmetic slip: "Roughly 1,140 of the 1,4
 
 </Verdict>
 
-## Attempt C — the minimal-authority answer
+## Attempt C — the minimal-authority answer \{#attempt-c--the-minimal-authority-answer}
 
 *Persona given to the agent: Under risk, takes capability away from the system rather than adding checking to it, after having to explain an automated write into a system of record. Counts in people and minutes — how long a step takes, who is waiting, what queue depth does when you add thirty seconds. Layers are an abstraction; the roster and the clock are real. Unimpressed by budget headroom.*
 
@@ -220,12 +220,12 @@ cannot parse at all, and it is the one claim the organisation will test at twelv
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 Each disagreement below is a decision you will have to make yourself. The last entry is the exception: not a
 disagreement but a gap all three left in the same place, and none of them noticed.
 
-### Verbatim source text in the record: quoted spans, an attachment, or none
+### Verbatim source text in the record: quoted spans, an attachment, or none \{#verbatim-source-text-in-the-record-quoted-spans-an-attachment-or-none}
 
 B allows it, narrowly — the remark is "controlled phrasing plus quoted spans that survived redaction". A forbids
 it in the record but preserves it elsewhere: the supplier's own words are "stored as a quoted attachment on the
@@ -236,7 +236,7 @@ remaining path by which last quarter's line reaches an entry. A's attachment mod
 an auditor without putting it in the artefact that transfers. C's gets the strongest guarantee and pays for it
 with a field nobody fills.
 
-### The certifying identity: extracted and validated, or never read at all
+### The certifying identity: extracted and validated, or never read at all \{#the-certifying-identity-extracted-and-validated-or-never-read-at-all}
 
 C never extracts it. A gates it — "the approval reference and the certifying individual's authorisation are
 current" — implying an extracted value that is then validated. B validates too: "authorisation number belonging
@@ -245,7 +245,7 @@ fictional numbers. It does not catch a valid number belonging to someone who did
 report — and neither A nor B closes it. C's rule makes the class impossible because the field is never read from
 anything. The cost is that C's own gate becomes unsatisfiable as written.
 
-### Which revision of the supplier list governs: the certificate's date, the receipt's, or both
+### Which revision of the supplier list governs: the certificate's date, the receipt's, or both \{#which-revision-of-the-supplier-list-governs-the-certificates-date-the-receipts-or-both}
 
 Three different answers to one question. A: "at the version in force on the certificate date". B: "*at the
 revision current on the receipt date*". C: pinned at receipt "**and re-checked at the moment of signature**".
@@ -254,7 +254,7 @@ choose which revision of the control judges it, in an answer whose thesis is tha
 B's is defensible and auditable and blind to a supplier removed after receipt. C's double-check closes both, at
 the cost of a signature-time lookup that can fail inside a 45-minute turnaround with an aircraft on stand.
 
-### What "pending signature" may mean: verified-and-waiting, or nobody-has-looked
+### What "pending signature" may mean: verified-and-waiting, or nobody-has-looked \{#what-pending-signature-may-mean-verified-and-waiting-or-nobody-has-looked}
 
 A and B keep the state meaning *verified, awaiting authority* and add a second state for everything else — B
 explicitly: "a blocked draft gets its own visible state". C keeps one state and redefines it downward, wanting
@@ -263,7 +263,7 @@ its information content and pay with a new state and new queue discipline. C is 
 epistemic position and strips the stations of the distinction between *moving* and *stuck* — which is the
 six-day failure arrived at from the opposite direction.
 
-### The unit of signature: the entry, or the batch that shares its provenance
+### The unit of signature: the entry, or the batch that shares its provenance \{#the-unit-of-signature-the-entry-or-the-batch-that-shares-its-provenance}
 
 A collapses same-provenance entries into one signing action. B and C keep one signature per entry and attack the
 seconds instead — B targets a signature that "costs fifteen seconds instead of five minutes", C targets "how few
@@ -271,7 +271,7 @@ things reach a signature". A is the only one that changes the denominator rather
 regulator accepts a batch certification it is the largest single win available. If it does not, A's headline
 saving collapses; B and C degrade gracefully.
 
-### Where the redundancy budget goes: the fastest documents, or the hardest ones
+### Where the redundancy budget goes: the fastest documents, or the hardest ones \{#where-the-redundancy-budget-goes-the-fastest-documents-or-the-hardest-ones}
 
 A funds "a second independent extraction and a reconciler on every turnaround document". B: "two independent
 extractions on the 120 turnaround certificates". C: "two independent extractions on the hard 500". A and B spend
@@ -279,7 +279,7 @@ redundancy where the clock and the money are; C spends it where the error rate i
 directions, because the turnaround certificates are mostly the easy class — a double read there buys
 speed-with-confidence, while a double read on the 500 buys accuracy where accuracy is actually absent.
 
-### Whether the headcount closes: computed, or refused as unknowable
+### Whether the headcount closes: computed, or refused as unknowable \{#whether-the-headcount-closes-computed-or-refused-as-unknowable}
 
 C computes that it does — "Four clerks, roughly 140 working hours, 500 documents" at "about 17 minutes each,
 keyed from nothing", falling to five or six with pre-filled citations, so "three clerks carry it with room". B
@@ -287,14 +287,14 @@ refuses the claim outright: "this doesn't replace the retiring clerk", reframing
 does not answer, and spends the leaver on labelling instead. This is the promise the organisation will hold the
 team to in twelve weeks. C's is checkable and might be right; B's is unfalsifiable and safe.
 
-### What none of them priced
+### What none of them priced \{#what-none-of-them-priced}
 
 Across all three attempts the words *suspend*, *suspension* and *audit finding* appear zero times, while the
 cheap side is priced by all three — A "at €50 a minute of lateness", C "€50 a minute", B "€3,000 an hour" — so
 the omission is not that nobody costed the failure modes, it is that every attempt costed the recoverable one
 and none costed the unbounded one. Priced risks crowd out unpriced ones.
 
-## The principle
+## The principle \{#the-principle}
 
 > A document may supply a value, never a requirement — and the human who signs is a budget you compute before
 > you design, not an escape hatch you invoke after.
@@ -326,7 +326,7 @@ a specific day — months later in that lesson, and years here — and the two a
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 

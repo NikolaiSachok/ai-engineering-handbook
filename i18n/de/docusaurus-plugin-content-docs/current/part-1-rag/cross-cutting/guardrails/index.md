@@ -7,11 +7,11 @@ slug: /part-1-rag/cross-cutting/guardrails/
 
 Retrieval und Generation machen ein System genau, die Evaluierung macht es messbar. Im Produktivbetrieb muss es zusätzlich sicher sein: Angriffen standhalten, sensible Daten schützen, schädliche Anfragen ablehnen. **Guardrails** (Leitplanken – Schutzregeln um das Modell) sind genau diese Schicht: eine auf der Eingabeseite, eine auf der Ausgabeseite. Für KI im Unternehmen ist das Pflicht, nicht Kür.
 
-## Das Grundproblem: Ein LLM vertraut seiner Eingabe zu sehr
+## Das Grundproblem: Ein LLM vertraut seiner Eingabe zu sehr \{#the-root-problem-an-llm-trusts-its-input-too-much}
 
 Alles, was im Kontext landet – die gestellte Frage, die abgerufenen Chunks, die Ausgaben der Tools –, ist für das Modell zunächst nur Text – und Text nimmt es als Anweisung. Zwischen *Anweisung* und *Daten* kann es nicht zuverlässig unterscheiden. Daraus entsteht der größte Teil der Sicherheitsprobleme rund um LLMs.
 
-## Prompt-Injection – die Bedrohung Nummer 1
+## Prompt-Injection – die Bedrohung Nummer 1 \{#prompt-injection--threat-1}
 
 Ein Angreifer schleust Anweisungen in Text ein, den das Modell liest, und setzt damit Ihren System-Prompt außer Kraft. Das geschieht auf zwei Wegen:
 
@@ -28,7 +28,7 @@ IBM zeigt Schritt für Schritt, wie ein Prompt-Injection-Angriff abläuft. (Das 
 
 :::
 
-## Die Grundausstattung an Abwehrmaßnahmen
+## Die Grundausstattung an Abwehrmaßnahmen \{#defences-the-baseline-set}
 
 - **Trennung und Spotlighting.** Markieren Sie deutlich, wo die Daten stehen und wo die Anweisungen: Fassen Sie die abgerufenen Inhalte in Trennzeichen ein, oder wenden Sie **Spotlighting** an – zufällige Markierungen oder eine Kodierung, damit eine eingeschleuste Anweisung sich wie bloßes Datenmaterial liest. Dem Modell sagen Sie dazu: Der Text zwischen den Marken ist nicht vertrauenswürdig; er ist Datenmaterial, keine Anweisung.
 - **Die Rangfolge der Anweisungen** (*instruction hierarchy*). System > Developer > User > Tool und abgerufener Inhalt: Das Modell gewichtet die oberen Stufen höher, und die abgerufenen Inhalte genießen das geringste Vertrauen.
@@ -36,19 +36,19 @@ IBM zeigt Schritt für Schritt, wie ein Prompt-Injection-Angriff abläuft. (Das 
 - **Die Ausgabe prüfen.** Sehen Sie sich die Antwort an, bevor sie hinausgeht: keine abgeflossenen Geheimnisse, keine personenbezogenen Daten, kein Verstoß gegen Ihre Richtlinien.
 - **Das Prinzip der geringsten Berechtigungen für Agenten.** Greift das Modell zu Tools, dann schränken Sie ein, welche Tools und welche Aktionen ihm offenstehen – lassen Sie nur ausdrücklich freigegebene Tools zu. Dann richtet selbst eine gelungene Injection nur noch wenig aus.
 
-## Personenbezogene Daten und Datenschutz
+## Personenbezogene Daten und Datenschutz \{#pii-and-data-protection}
 
 Erkennen und maskieren Sie personenbezogene Daten (**PII**) – Namen, E-Mail-Adressen, Nummern – auf der Eingabeseite, also bevor protokolliert wird und bevor etwas an die API des Anbieters geht, und ebenso auf der Ausgabeseite, bevor die Antwort angezeigt wird. Bei externen LLM-APIs ist das besonders heikel, denn dort verlassen die Daten Ihre eigene Infrastruktur. Damit hängt diese Schicht unmittelbar an der Wahl zwischen Eigenbetrieb und fremder API, die die Lektion über Embeddings behandelt hat.
 
-## Schädliche Inhalte abwehren – Eingabe wie Ausgabe
+## Schädliche Inhalte abwehren – Eingabe wie Ausgabe \{#content-safety--on-both-surfaces}
 
 Lehnen Sie schädliche oder unzulässige Anfragen ab, und filtern Sie Ausgaben heraus, die verletzend sind oder gegen Ihre Richtlinien verstoßen. Es sind immer zwei Stellen: Auf der Eingabeseite wehren Sie ab, was schädlich oder themenfremd ist; auf der Ausgabeseite halten Sie eine unsichere Antwort zurück. Bei RAG kommt eine dritte Stelle hinzu, nämlich der Aufbau des Index: Ein vergiftetes Dokument fangen Sie besser beim Indexieren ab als erst bei jeder einzelnen Anfrage. (Die Werkzeuge dafür – [Guardrails AI](https://www.guardrailsai.com), [NeMo Guardrails](https://developer.nvidia.com/nemo-guardrails), [Llama Guard](https://www.llama.com/llama-protections/), Granite Guardian – sind eine eigene Schicht, und die behandelt [die Lektion über das Tool-Ökosystem](../../../part-3-production/tooling-ecosystem/index.md). Hier geht es um das Prinzip.)
 
-## Guardrails sind kein Allheilmittel
+## Guardrails sind kein Allheilmittel \{#guardrails-arent-a-silver-bullet}
 
 Vollständigen Schutz gibt es nicht. Was es gibt, ist **Defence-in-Depth**: eine gestaffelte Abwehr aus mehreren Schichten. Und Sie müssen abwägen – je strenger die Regeln, desto mehr berechtigte Anfragen bleiben hängen. Deshalb werden auch Guardrails gemessen, und zwar an der **Erfolgsrate der Angriffe** (*attack success rate*, **ASR**): dem Anteil der Angriffe aus einer festgelegten Menge, bei denen das Modell am Ende tut, was es nicht tun soll. Damit greift die Evaluierung unmittelbar in diese Schicht hinein.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Die Wurzel der Verwundbarkeit: Ein LLM trennt Anweisungen nicht zuverlässig von Daten.
 - Prompt-Injection – direkt wie indirekt – ist die Bedrohung Nummer 1; die indirekte Form ist in RAG besonders gefährlich, weil vergiftete Inhalte über das Retrieval hereinkommen.

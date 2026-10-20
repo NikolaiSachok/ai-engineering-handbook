@@ -11,7 +11,7 @@ work into. A task too large to verify in one reading is a task you have already 
 agent is sure to fail it, but because you won't be able to tell whether it did. Atomicity is a verification
 budget, not a tidiness preference.
 
-## Decomposition is control
+## Decomposition is control \{#decomposition-is-control}
 
 The smaller the unit, the tighter the check you can wrap around it. A three-line change you can read in full and
 be sure of; a thousand-line change you can only spot-check and hope. Between those extremes control degrades
@@ -20,7 +20,7 @@ you draw between units is a place you're allowed to stop and verify, and the num
 of times you get to catch a problem before it compounds into the next unit. So the way you cut the work *is* how
 much control you keep over it, and nothing downstream recovers control you gave away at decomposition.
 
-## The right size has a floor and a ceiling
+## The right size has a floor and a ceiling \{#the-right-size-has-a-floor-and-a-ceiling}
 
 Cut too large and the done-condition goes soft: you can't verify the unit in one pass, so "done" collapses back
 into "looks done" — the inferential trap Lesson 1 warned against. Cut too small and a different cost appears:
@@ -29,7 +29,7 @@ overhead of coordinating the pieces costs more than the pieces save. The target 
 unit you can still verify in a single read.** Maximize the work inside each boundary without exceeding what you
 can actually check. That is the whole optimization.
 
-## Over-decomposition is its own failure mode
+## Over-decomposition is its own failure mode \{#over-decomposition-is-its-own-failure-mode}
 
 The reflex after a bad surprise is to cut finer and finer, as if smaller were always safer. It isn't, and the
 cost is measured. When ETH Zurich
@@ -40,7 +40,7 @@ briefs, more context re-sent each turn, more artifacts to keep consistent with o
 recurring failure — **artifact overload** — arriving through the back door of "just split it smaller." The cost
 curve has a floor. Find it; don't chase zero.
 
-## Something has to hold the whole
+## Something has to hold the whole \{#something-has-to-hold-the-whole}
 
 When you do split the work, the pieces still have to add up, and something has to keep the whole in view while
 the parts get done. The pattern that holds up: an orchestrator keeps the plan and the context; short-lived
@@ -57,7 +57,7 @@ enough that the check is real, large enough that the boundary earns its overhead
 lose checkability; cut below it and you pay overload. Decomposition is where you set the line, and it is the
 last cheap place to set it.
 
-## Every cut is a seam
+## Every cut is a seam \{#every-cut-is-a-seam}
 
 Decomposition buys checkability inside each unit and pays for it at the junctions. Each worker sees its own
 context; the orchestrator checks each result against its done-condition. None of those per-unit checks covers
@@ -101,7 +101,7 @@ against a single agent whose whole output you could still check yourself.
 
 :::
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **you control the work at the granularity you decompose it.** What changes
 is what the boundary is made of.
@@ -118,7 +118,7 @@ is what the boundary is made of.
   against the same contract. *The failure it prevents:* work batched so large that the provably-independent
   check degrades into a rubber stamp.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - You control the work at the granularity you decompose it. A unit too big to verify in one read is control
   you've already lost — decomposition is the last cheap place to keep it.

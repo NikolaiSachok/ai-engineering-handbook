@@ -15,7 +15,7 @@ Tri z tém tejto stránky sa prekrývajú s prehĺbeniami, ktoré ich teóriu u�
 
 Čo vlastní táto stránka od začiatku do konca: kedy a ako doladiť model, riadenie výdavkov na úrovni organizácie, pohľad releasovej brány a rollbacku na zachytenú regresiu, rozpočty chýb ako písaný organizačný proces a frontovú infraštruktúru, ktorá nesie dávkové záťaže.
 
-## Kedy meniť váhy
+## Kedy meniť váhy \{#when-to-change-the-weights}
 
 :::tip[▶ Video]
 
@@ -57,7 +57,7 @@ Strom vyššie nezachytáva ešte jednu vetvu: pomer medzi veľkosťou korpusu a
 
 Ani jedno z tých kritérií nenahrádza argument o čerstvosti; posúdiť ich však treba ešte pred ním. Čerstvosť ti povie, či fakty vo váhach *môžu* žiť. Tieto dve ti povedia, či tam žiť *smú* — a či ten aparát vôbec potrebuješ.
 
-## Riadenie výdavkov
+## Riadenie výdavkov \{#governing-the-spend}
 
 Cenové páky platformy — zľavy za záväzok využitia, násobky cachovania promptu, dávkový režim zhruba za polovicu ceny, medziregionálny egress — sú predmetom [prehĺbenia o cloudových platformách](../cloud-platforms/deep-dive.md) a potiahnuť každú z nich je inžinierske rozhodnutie. Riadenie (governance) je vrstva nad nimi. Jej úloha: spraviť výdavky viditeľnými, mať za ne majiteľa a ohraničiť ich naprieč tímami, aby sa páky naozaj ťahali a aby žiaden tím ticho nevyčerpal celý rozpočet sám. Úvod lekcie umiestnil rozpočty na LLM gateway (LLM-brána); toto je organizácia postavená okolo nich.
 
@@ -75,7 +75,7 @@ Ohraničenie robia tri kontroly na úrovni organizácie a všetky tri žijú tam
 
 Každá z týchto kontrol zlyhá predvídateľne, keď ju vynecháš. Chargeback fakturovaný skôr, než je priradenie dôveryhodné, splodí spory a hranie sa s číslami. Rozpočet len s mäkkými stropmi rozdá alerty, na ktoré nikto nekoná, a účet aj tak pristane. Bez predvolenej trasy na lacný model platí každá požiadavka vlajkovú cenu z čistej zotrvačnosti.
 
-## Releasová brána a cesta k rollbacku
+## Releasová brána a cesta k rollbacku \{#the-release-gate-and-the-rollback-path}
 
 Rozpoznať regresiu — odlíšiť štatisticky reálny pokles kvality od jedného zlého popoludnia — a priradiť ju naprieč spanmi trace konkrétnej fáze a potom povýšiť padajúce tracy do nových prípadov golden setu je predmet prehĺbenia o observability. Táto sekcia rozoberá druhú polovicu: čo releasový proces s regresiou *urobí*, keď ju už raz zachytí. Buď ju zablokuje, alebo ju vráti späť.
 
@@ -97,7 +97,7 @@ flowchart TB
     W -->|nie| RB["Auto-rollback:<br/>vráť prompt / model / index / adaptér"]
 ```
 
-## Rozpočty chýb ako organizačná zmluva
+## Rozpočty chýb ako organizačná zmluva \{#error-budgets-as-an-organisational-contract}
 
 Mechanika — výber SLI, nastavenie SLO nad oknom, výpočet rozpočtu chýb ako vzdialenosti k 100%, alerting podľa rýchlosti míňania aj pravidlo, že aspoň jeden SLI musí byť kvalitatívny SLI počítaný online evaluáciou — patrí celá prehĺbeniu o observability. Táto sekcia preberá to, čo z tých čísel robí rozhodnutie, ktorým je organizácia viazaná: error budget policy (politika rozpočtu chýb).
 
@@ -107,7 +107,7 @@ Keď je systémom pod politikou LLM-aplikácia, menia sa dve veci. Po prvé, to,
 
 Tá zhoda je zmluvou medzi dvomi stranami, lebo rozpočet je v spoločnom vlastníctve. Produktová strana ho míňa — každá funkcia a každá zmena ho uberá — a strana spoľahlivosti ho stráži a drží právomoc zmrazenie vyhlásiť. Politika je to, čo si tie dve strany vyjednajú dopredu, aby sa zmrazenie neriešilo nanovo uprostred incidentu, keď ani jedna strana nie je v nálade ustúpiť. Vynechaj podpis a zmrazenie sa nikdy nestane; z rozpočtu ostane iba gesto. Prevádzkuj ho len s jedným SLI na dostupnosť a máš zelené dashboardy nad halucinujúcou službou — divadlo dostupnosti z prehĺbenia o observability, k tomu istému bodu prídeš zo strany governance.
 
-## Fronty pre prácu, ktorá počká
+## Fronty pre prácu, ktorá počká \{#queues-for-the-work-that-can-wait}
 
 Nie každá práca s LLM je interaktívna. Nočné obohacovanie korpusu, dobehy, generovanie syntetických eval dát, hromadná klasifikácia — sú viazané na zdroje a pomalé, a nechceš, aby súperili so živou prevádzkou o tú istú kapacitu. Job queue (fronta úloh) oddelí tempo, akým práca prichádza, od tempa, akým sa spracúva. Producent zaradí úlohu a okamžite dostane späť job id, nič sa neblokuje; fond workerov (worker pool) vyprázdňuje frontu takým tempom, aké hardvér a limity poskytovateľa dovolia; výsledky pristanú v úložisku, ktoré klient buď periodicky kontroluje (poll), alebo mu prídu webhookom.
 
@@ -138,7 +138,7 @@ flowchart TB
     Q -.->|"vek najstaršej úlohy vysoký"| SHED["Zhoď záťaž: 429 / spomaľ producentov / škáluj"]
 ```
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Dolaďuj až naposledy, keď prompt a RAG narazili na strop, a len na medzeru v správaní, formáte, tóne či zručnosti — nikdy pre čerstvé znalosti, čo je úloha retrievera. Doladený model je pripnutý artefakt na tej istej eval bráne ako každé nasadenie, vrátený opätovným pripnutím predchodcu alebo odpojením LoRA adaptéra.
 - Ešte pred rozhodovaním medzi znalosťami a správaním posúď dve kritériá. Oprávnenia konkrétneho používateľa vieš uplatniť vo filtri pri vyhľadávaní, vo váhach modelu nie — stupňovaný prístup preto môže sám určiť architektúru. A ak sa korpus zmestí do kontextu a ostane malý, nemusí byť čo vyhľadávať ani čo dolaďovať — hoci to, že sa niečo zmestí, ešte neznamená, že tomu model venuje pozornosť.

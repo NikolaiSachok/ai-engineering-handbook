@@ -13,7 +13,7 @@ Pri písaní tejto lekcie vznikol únik priamo v nej — opisujem ho v článku 
 
 :::
 
-## Záznam v registri
+## Záznam v registri \{#the-ledger-entry}
 
 Analýza bez hľadania vinníka skúma, čo v systéme umožnilo zlyhaniu prejsť, nie kto urobil chybu. Register únikov uplatňuje rovnaký prístup na *brány*, nie na riešenie incidentov. Jeho základom je jeden riadok:
 
@@ -26,7 +26,7 @@ To je celý artefakt. Soloistovi stačí jeden riadok v tabuľke; v enterprise p
 
 Úniky sa odhaľujú produkčnými alertmi, pri vyhodnoteniach incidentov alebo z hlásení od používateľov. Hlásenie od používateľa je posledná poistka pri odhaľovaní zlyhaní. Bez ohľadu na to, ako sa chyba odhalila, dostane v registri záznam s rovnakou štruktúrou. Hlásenie, ktoré predbehlo všetky alerty, odhaľuje aj [chýbajúci signál](../part-4-platform/observability-rollout.md).
 
-## Ako úniky vyzerajú v praxi
+## Ako úniky vyzerajú v praxi \{#what-escapes-actually-look-like}
 
 Takto vyzerali úniky vo verifikačnom reťazci, ktorý som prevádzkoval v produkcii — išlo o automatizovaný reťazec piatich brán, po ktorom nasledovala ľudská vizuálna kontrola, teda ten istý reťazec, ktorý sme znázornili v [Lekcii 1](./layered-gates/index.md). Počas jeho životnosti sa približne **sedem rôznych tried chýb dostalo až k človeku alebo používateľovi, hoci prešli všetkými automatizovanými bránami.** Každý zaznamenaný únik odhalil skutočné slepé miesto:
 
@@ -44,13 +44,13 @@ Jeff Crume z IBM vysvetľuje threat hunting — disciplínu, pri ktorej aktívne
 
 :::
 
-## Hľadaj triedu, ktorá chýba vo všetkých zoznamoch
+## Hľadaj triedu, ktorá chýba vo všetkých zoznamoch \{#hunt-the-class-that-is-off-every-list}
 
 Register únikov je zo svojej podstaty reaktívny — učí sa z toho, čo už uniklo. Dopĺňa ho zámerný proaktívny postup zameraný presne na slepé miesto, ktoré register opakovane odhaľuje: pravidelne sa zastav a spýtaj sa, **„ktorá trieda chýb je zo svojej podstaty *mimo* všetkých detektorov, ktoré spúšťame?“** Odpoveď nezískaš intenzívnejším spúšťaním existujúcich detektorov. Zoznam detektorov je totiž pamäťou minulých incidentov, a preto sa sústreďuje na miesta, kde už problémy nastali. Funguje zdanlivo nelogický trik: vytvor **hrubý detektor, ktorý sa spúšťa príliš často**, a jeho nálezy potom posúď a prefiltruj. V spomínanom produkčnom reťazci takýto zámerne hrubý detektor našiel **približne desaťkrát viac potenciálnych prípadov** než presný detektor, ktorý dopĺňal. V tomto šume sa skrývala celá trieda chýb, ktorú presný detektor zo svojej podstaty nedokázal identifikovať. Detektor vyladený na presnosť hľadá triedy, ktoré už poznáš; detektor so zámerne *širokým* záberom ti pomôže nájsť triedu, ktorú ešte nepoznáš.
 
 Oba postupy rozvíjajú ten istý systém. Reaktívny register pomenuje slepé miesto po úniku; proaktívny hrubý detektor hľadá slepé miesta skôr, než k úniku dôjde. Každá nová trieda, ktorú odhalia, sa premení na kontrolu — a to neznamená poznámku v dokumente, ale novú bránu alebo pravidlo v reťazci, ideálne vykonateľné. Tu vzniká priame prepojenie s [vynútiteľnými pravidlami](../part-1-foundation/rules-that-hold.md): únik zaznamenaný iba v texte je ústne podanie, ktoré si ďalší agent môže, ale nemusí prečítať. Únik premenený na lint pravidlo, test alebo hook je hranica, cez ktorú ďalší beh *nemôže* prejsť. Vďaka registru sa verifikácia časom zlepšuje, namiesto toho, aby zostávala na rovnakej úrovni.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Princíp platí pri každej veľkosti: **každý únik ukáže na slepé miesto niektorej brány; zaznamenaj ho a premeň na kontrolu v reťazci.** Mení sa iba formálnosť registra a to, kto zodpovedá za premenu na kontrolu.
 
@@ -58,7 +58,7 @@ Princíp platí pri každej veľkosti: **každý únik ukáže na slepé miesto 
 - **Malý tím.** Spoločný register, z ktorého vzniká backlog detektorov. Únik sa neuzatvára opravou konkrétnej chyby, ale až zlepšením brány tak, aby sa daná trieda nemohla zopakovať. *Akému zlyhaniu to predchádza:* znalostiam uzavretým v hlavách jednotlivcov — jeden človek „pozná“ krehkú časť systému, no jeho poznatok sa nikdy nezmení na kontrolu, ktorou musí prejsť aj práca ostatných.
 - **Enterprise.** Úniky sa evidujú ako chyby s určenými vlastníkmi a pravidelnými revíziami. Určujú plán rozvoja brán podobne, ako backlog z analýz bez hľadania vinníka určuje prácu na spoľahlivosti. *Akému zlyhaniu to predchádza:* dlhému, nemennému verifikačnému reťazcu, ktorý sa nikdy neučí — na papieri pôsobí impozantne, ale zostáva slepý voči tým istým triedam ako pred rokom.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - Únik je údaj o bráne, nielen o chybe. Opravou konkrétnej chyby vyriešiš jeden problém; *zaznamenaný* únik ti ukáže, kde má reťazec slepé miesto.
 - Zapíš do registra triedu **chýb**, bránu, ktorá ju mala zachytiť, slepé miesto opísané jednou vetou a premenu na kontrolu, ktorá už danú triedu pokrýva. Únik označ za uzavretý až po zlepšení *brány*, nie po oprave konkrétnej chyby.

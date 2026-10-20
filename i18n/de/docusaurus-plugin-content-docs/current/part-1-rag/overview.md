@@ -18,7 +18,7 @@ der Generation** liegt vor, wenn diese Stelle zwar abgerufen wurde, das Modell s
 verstümmelt hat. Fast jede Entscheidung in der Pipeline zielt auf eines dieser beiden Fehlerbilder, und der erste
 Schritt ist immer derselbe: feststellen, welches der beiden vorliegt.
 
-## Was Sie hier finden
+## Was Sie hier finden \{#whats-inside}
 
 - **[Ingestion](./ingestion/index.md)** – die Aufbereitung der Dokumente im Voraus: Chunking, Embeddings und Metadaten. Hier entscheidet sich, wie gut die Suche überhaupt werden kann.
 - **[Retrieval](./retrieval/index.md)** – wie aus den nächstgelegenen Vektoren wirklich relevante Treffer
@@ -34,7 +34,7 @@ Schritt ist immer derselbe: feststellen, welches der beiden vorliegt.
   [Observability](./cross-cutting/observability/index.md) (woran Sie sehen, was es im Produktivbetrieb
   tut).
 
-## Voraussetzungen
+## Voraussetzungen \{#prerequisites}
 
 Sie sollten mit Sprachmodellen allgemein vertraut sein und in groben Zügen wissen, was ein Prompt, ein
 Kontext und ein Embedding sind. Vertiefte Mathematik brauchen Sie nicht – wir erklären von Grund auf.

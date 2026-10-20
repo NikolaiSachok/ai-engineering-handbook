@@ -60,7 +60,7 @@ arrangement is described in [how these are made](/design-scenarios/how-these-are
 
 <Reveal>
 
-## Attempt A — the common answer
+## Attempt A — the common answer \{#attempt-a--the-common-answer}
 
 *Persona given to the agent: Works under a standing rule, not written by them and not questioned, that nothing reaches a published table without a named human signing it off. Reaches first for the reliability toolkit they already trust — retries with backoff, rate limiting, timeouts, alerting, a ceiling on how much an automated process may do unattended. Treats failure as something a system survives and reports. Escalation has always had somewhere to go, so a design ending in "and then it pages someone" reads as finished.*
 
@@ -131,7 +131,7 @@ the rebuild refusal is derived rather than asserted.
 
 </Verdict>
 
-## Attempt B — the strong answer
+## Attempt B — the strong answer \{#attempt-b--the-strong-answer}
 
 *Persona given to the agent: Their own phone is the pager, and they are measured on whether the morning numbers are there. No tolerance for a design whose recovery step is a person, because at three in the morning that person is them, and often asleep — a runbook is not a mechanism. Of every operation they ask first whether it is safe to attempt twice, and would rather buy that property once than staff a rota around not having it. Prices things out loud, because money and the clock are the two constraints that have ever actually stopped them.*
 
@@ -182,7 +182,7 @@ rebuild every fortnight", about €607 — that is a 1% margin, not a saving.
 
 </Verdict>
 
-## Attempt C — the over-built answer
+## Attempt C — the over-built answer \{#attempt-c--the-over-built-answer}
 
 *Persona given to the agent: Measured on being able to state, weeks later and under questioning, exactly what changed and why. That pressure has made them build for reconstruction — every effect authored, every effect reversible, every decision attributable to something they can point at. Finds it genuinely difficult to present a design containing a blind spot they can already see, and designs for the system this will have to be in three years.*
 
@@ -236,12 +236,12 @@ alike, reads it as headroom.
 
 </Verdict>
 
-## Where they actually disagree
+## Where they actually disagree \{#where-they-actually-disagree}
 
 Each disagreement below is a decision you will have to make yourself. The last entry is the exception: a move all
 three made the same way, and none of them checked.
 
-### Who signs a publish: a named human or a deterministic gate
+### Who signs a publish: a named human or a deterministic gate \{#who-signs-a-publish-a-named-human-or-a-deterministic-gate}
 
 A: "Nothing reaches a published table without a named engineer signing that report…". B: contracts "Fail
 closed", and the agent publishes "when every contract passes". C: publishes per consumer "when that consumer's
@@ -250,7 +250,7 @@ are right on the prompt's own facts — three engineers, none nocturnal, thirtee
 wakes somebody on every bad night or falls through to yesterday's numbers, and A's own 05:40 route takes the
 second. A's insistence points at where a deterministic gate stops: it only ever checks what somebody wrote into it.
 
-### The appending job: convert it or never touch it
+### The appending job: convert it or never touch it \{#the-appending-job-convert-it-or-never-touch-it}
 
 B schedules the fix as its own week-one work — "a few days of one engineer, once" — and C schedules the same,
 adding a `load_batch_id` so "the only repair the agent needs is *delete where batch_id = X, re-run*". A refuses:
@@ -262,7 +262,7 @@ among the things the agent may not do: "touch the appending job until it's conve
 three that needs no change to that job,
 and it pays for that by conceding the path to a page every time.
 
-### What licenses a retry: the write or the failure
+### What licenses a retry: the write or the failure \{#what-licenses-a-retry-the-write-or-the-failure}
 
 C: "Job 22 overwrites, so a retry is safe and pre-authorised." A requires both conditions at once: "If job 23 is
 one of the thirty-nine partition-overwriting jobs and the code is transient… the agent retries alone…". B routes
@@ -270,7 +270,7 @@ on the typed error — `upstream_missing` means re-pull the window, not resubmit
 walkthrough is the evidence: an overwrite bounds what a retry can damage, but only the kind of failure says
 whether repeating can accomplish anything.
 
-### The stale publish: one state for the night, or one per consumer
+### The stale publish: one state for the night, or one per consumer \{#the-stale-publish-one-state-for-the-night-or-one-per-consumer}
 
 A's diagram shows one decision for everybody: its give-up branch reaches a single cell reading `LAST GOOD` and a
 stale flag addressed to all three consumers at once. C: "There is no global
@@ -281,7 +281,7 @@ are right on the prompt's own grading: ops lose a morning; finance and the app g
 flag the staleness. One flag for all three still treats a dashboard panel and a driver's charger status as the
 same failure, and the prompt does not.
 
-### What all three agreed on, and none of them checked
+### What all three agreed on, and none of them checked \{#what-all-three-agreed-on-and-none-of-them-checked}
 
 Every attempt falls back to last-known-good with a staleness marker, and not one puts an age limit on it.
 A's diagram reaches a `LAST GOOD` cell. B: "last-good with a visible as-of". C: "last-known-good status
@@ -291,7 +291,7 @@ record with reason and ETA" — but an ETA is a promise about one night, not a p
 age question B goes furthest: "sending someone to a charger on five-hour-old status is worse than telling them we
 don't know" — and still names no threshold at which a flag becomes a refusal to serve.
 
-## The principle
+## The principle \{#the-principle}
 
 > Idempotency tells you a retry is safe, never that it is worth its price: an unattended retry has to come out of
 > a fixed budget and be aimed at a failure that repeating might clear.
@@ -321,7 +321,7 @@ a key that survives the replay.
 
 :::
 
-## If they push
+## If they push \{#if-they-push}
 
 These are the three follow-ups an interviewer reaches for next, and what each one exposes.
 

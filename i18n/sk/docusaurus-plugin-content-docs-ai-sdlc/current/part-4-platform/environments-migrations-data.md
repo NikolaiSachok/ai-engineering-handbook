@@ -7,7 +7,7 @@ sidebar_position: 3
 
 [Lekcia 1](./secrets.md) držala hodnotu secretu mimo dosahu agenta a [Lekcia 2](./least-privilege-sandboxing/index.md) vymerala oprávnenie a postavila okolo neho sandbox. Táto lekcia je o tom, *na čo* to oprávnenie mieri: na dáta a na schému. Dve polovice, a každá zlyháva opačným smerom. Agent má pracovať s dátami, ktoré sú vierohodné, ale nie skutočné — a každá štrukturálna zmena, ktorú urobí, musí mať cestu späť, ktorú si už naozaj prešiel.
 
-## Vierohodné dáta, nie reálne dáta
+## Vierohodné dáta, nie reálne dáta \{#realistic-data-not-real-data}
 
 Agentovi sa nad vierohodnými dátami uvažuje lepšie, a tak tu stále visí jedno lákadlo: skopírovať produkčný dump do vývojového prostredia a nechať agenta pracovať nad niečím pravdivým. Problém vierohodnosti to vyrieši a naraz vyrobí dva horšie.
 
@@ -25,7 +25,7 @@ IBM kladie otázku, na ktorej táto lekcia trvá, namiesto toho, aby si odpoveď
 
 :::
 
-## Migrácie: rozšíriť, migrovať, zúžiť
+## Migrácie: rozšíriť, migrovať, zúžiť \{#migrations-expand-migrate-contract}
 
 Pri zmene schémy sa rýchlosť agenta mení na nebezpečenstvo, lebo deštruktívna a bezpečná migrácia vyzerajú v diffe rovnako — pár riadkov SQL tak či tak. III. časť už v texte o [revízii pri veľkom objeme](../part-3-verification/review-at-volume.md) ukázala, že ľudská pozornosť sa negeneruje spolu s kódom, takže „niekto si to `DROP` všimne“ nie je kontrola.
 
@@ -37,13 +37,13 @@ Rýchle generovanie prežije postup **rozšíriť → migrovať → zúžiť (ex
 
 Každý krok sa dá vrátiť samostatne, a práve táto vlastnosť rozhoduje, keď zmena vznikla za štyri sekundy. Vynucovať to má stroj, nie ostražitosť: deterministická brána, ktorá zhodí každú migráciu s deštruktívnym príkazom bez výslovnej značky, mení „dávaj pozor“ na [pravidlo, ktoré drží](../part-1-foundation/rules-that-hold.md). Je to celý argument I. časti, uplatnený na jediný typ súboru, kde sa chyba nedá napraviť úpravou kódu.
 
-## Možnosť vrátiť sa musíš postaviť, nie v ňu dúfať
+## Možnosť vrátiť sa musíš postaviť, nie v ňu dúfať \{#rollback-is-something-you-build-not-something-you-hope-for}
 
 Záloha, ktorú si nikdy neobnovil, nie je záloha; je to neoverené tvrdenie o súbore. Presne to hovorila III. časť o [bráne, ktorú si nikdy nevidel zlyhať](../part-3-verification/layered-gates/index.md) — ticho nie je to isté čo funkčnosť — len prenesené na cestu obnovy. Obnovu preukáže jedine nacvičený postup: vezmi zálohu, postav z nej dočasné prostredie a over, že dáta tam naozaj sú a držia spolu.
 
 [Incident v Replite](https://incidentdatabase.ai/cite/1152/) z predchádzajúcej lekcie v sebe ukrýva ešte druhé poučenie. Podľa záznamu v AI Incident Database agent zničil produkčné dáta a potom tvrdil, že návrat späť nie je možný — a mýlil sa. Zaujímavé zlyhanie nie je to nepravdivé tvrdenie; je ním fakt, že mu nikto nedokázal okamžite odporovať. Keď je obnova známy a odskúšaný postup, názor agenta na to, či je vôbec možná, nikoho nezaujíma. Keď taký postup nie je, vyhrá najrýchlejší sebaistý hlas v miestnosti — a môže patriť jazykovému modelu.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant sa nemení: **agent pracuje nad vierohodnou kópiou a existuje cesta späť, ktorú už niekto naozaj prešiel.** Škáluje sa to, ako kópia vzniká a ako silno je vratnosť preukázaná — od jednej nacvičenej obnovy cez vratnosť každej migrácie až po nácviky voči stanovenému cieľu.
 
@@ -51,7 +51,7 @@ Invariant sa nemení: **agent pracuje nad vierohodnou kópiou a existuje cesta s
 - **Malý tím.** Neprodukčné prostredie ako predvolený cieľ, maskovaná alebo syntetická množina z opakovateľnej pipeline namiesto ručnej výroby, migrácie postupom rozšíriť → migrovať → zúžiť s bránou v CI na deštruktívne príkazy a obnova k bodu v čase s pravidelným nácvikom. *Akému zlyhaniu to predchádza:* z „dočasného“ produkčného dumpu sa potichu stane spoločná testovacia vzorka celého tímu.
 - **Enterprise.** Preukázateľne oddelené prostredia, klasifikácia dát, ktorá automaticky riadi politiku maskovania, samostatné schvaľovanie zužujúcich migrácií a obnova po havárii testovaná voči stanovenému cieľovému bodu obnovy a stanovenému cieľovému času obnovy (RPO a RTO). *Akému zlyhaniu to predchádza:* schopnosť obnovy existuje na papieri, nepatrí nikomu a prvýkrát sa vyskúša počas incidentu, pre ktorý bola napísaná.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - **Vierohodné, nie reálne.** Produkčný dump vo vývojovom prostredí rozmnoží miesta, ktoré nesú povinnosti spojené s osobnými údajmi — a podá skutočné záznamy do kontextu agenta, ktorý nie je kanál pod tvojou kontrolou.
 - Použiteľná syntetická alebo maskovaná množina zachová **referenčnú integritu** a **škaredý chvost rozdelenia**. Vzorky s jedinou bezproblémovou cestou vyrobia zelené testy bez výpovede.

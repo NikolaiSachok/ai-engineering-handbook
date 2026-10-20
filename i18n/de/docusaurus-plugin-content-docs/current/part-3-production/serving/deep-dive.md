@@ -8,7 +8,7 @@ sidebar_position: 2
 
 [Teil 1 der Lektion](./index.md) hat den Dienst gebaut und seine Teile benannt: die Trennung zwischen Anwendung und Modell, den asynchronen Entwurf von FastAPI, der zu einer Last passt, die fast nur wartet, das Streaming über SSE, die Checkliste für den Produktivbetrieb, die Eigenheiten von Docker bei Gewichten, GPU und Cold-Start, und – in groben Zügen – die Inferenz-Engines mit Continuous Batching und PagedAttention. Dieser zweite Durchgang nimmt sich denselben Dienst unter echter Last vor: Diesmal geht es um das Innenleben, um die Stellen, an denen so ein Dienst versagt, und um eine Reihe von Fällen, in denen Sie auf ein Verfahren besser verzichten. Teil 1 wird durchgehend vorausgesetzt und hier nirgends noch einmal erklärt.
 
-## Worker, Event-Loop – und woher die Nebenläufigkeit wirklich kommt
+## Worker, Event-Loop – und woher die Nebenläufigkeit wirklich kommt \{#workers-the-event-loop-and-where-concurrency-really-comes-from}
 
 In der Voreinstellung läuft uvicorn als ein einziger Prozess: ein Event-Loop auf einem einzigen CPU-Kern. Um mehr als einen Kern zu nutzen, starten Sie mehrere **ASGI-Worker** – eigenständige Kopien des ASGI-Servers (uvicorn), die Ihre Anwendung ausführen –, und dafür gibt es 2026 zwei gängige Wege: das klassische Muster mit gunicorn als Prozessverwalter über `uvicorn.workers.UvicornWorker` und das eigene Flag `--workers` von uvicorn, das `fastapi run` mitbringt. Die Bereitstellungsdokumentation von FastAPI führt beide auf; die konkrete Empfehlung altert, und was bleibt, ist, was ein Worker *ist*.
 
@@ -20,7 +20,7 @@ Zur Threadpool-Regel aus Teil 1 gehört der Mechanismus dahinter. Eine gewöhnli
 
 Das Herunterfahren braucht dieselbe Sorgfalt, sobald Antworten gestreamt werden. Bei `SIGTERM` sollte der Server keine neuen Verbindungen mehr annehmen und die laufenden Anfragen innerhalb einer Frist für das geordnete Herunterfahren noch abschließen – und ein LLM-Strom kann Dutzende Sekunden dauern, länger als die voreingestellte Frist. Bemessen Sie diese Frist nach dem längsten Strom, mit dem Sie rechnen, sonst schneidet das nächste Deployment im laufenden Betrieb Antworten mitten in der Generation ab. (Eine andere Sorge beim Streaming ändert sich unter Last nicht und wird hier nicht neu hergeleitet: die Wahl zwischen gepufferter und schrittweiser Prüfung, die die [Guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) auf der Ausgabeseite einer gestreamten Antwort erzwingen – Teil 1 behandelt sie.)
 
-## Die Arbeit begrenzen, bevor der Dienst darin untergeht
+## Die Arbeit begrenzen, bevor der Dienst darin untergeht \{#bounding-the-work-before-the-service-drowns}
 
 Asynchronität macht es billig, eine Verbindung offen zu halten, und genau diese Billigkeit ist die Falle: Sie erlaubt einem Dienst, weit mehr Arbeit anzunehmen, als er zu Ende bringen kann. Unbegrenzte Nebenläufigkeit richtet einen LLM-Dienst dann auf drei Arten zugleich zugrunde. Erstens erschöpft sie den Speicher, denn jede laufende Anfrage hält KV-Cache-Blöcke und Verbindungszustand. Zweitens löst sie beim Anbieter 429-Stürme aus: Sie überschreiten das gemeinsame Kontingent, und alle, die den Dienst aufrufen, werden gemeinsam gedrosselt. Drittens geraten die langsamsten Anfragen außer Kontrolle – jenseits der Kapazitätsgrenze explodiert die Wartezeit, und der p99-Wert schnellt in die Höhe. Was „jenseits der Kapazitätsgrenze“ heißt, richtet sich nach Ihren **SLOs** für die Latenz – den Zielwerten, die die [Vertiefung zur Observability](../../part-1-rag/cross-cutting/observability/deep-dive.md) festlegt und an denen sich diese ganze Seite messen lassen muss.
 
@@ -45,7 +45,7 @@ flowchart TB
     end
 ```
 
-## Die Inferenz-Engine von innen
+## Die Inferenz-Engine von innen \{#inside-the-inference-server}
 
 Der Durchsatz einer Inferenz-Engine ist keine Zauberei; er kommt aus einer Handvoll konkreter Mechanismen, und [vLLM](https://docs.vllm.ai) ist für die meisten davon die Referenzimplementierung. Beginnen Sie beim Scheduler. Continuous Batching ist in Wahrheit **Scheduling auf Iterationsebene**: Der Scheduler lässt bei jedem Decode-Schritt neue Anfragen zu und wirft fertige hinaus, statt wie beim statischen Batching einen ganzen Batch auf sein langsamstes Mitglied warten zu lassen, bevor der nächste beginnen kann. Die Idee stammt aus dem Orca-Paper (Yu et al., OSDI 2022), das das Scheduling auf Iterationsebene eingeführt hat; vLLM, TGI und TensorRT-LLM bauen alle darauf auf.
 
@@ -71,7 +71,7 @@ Die Quantisierung wird mit zwei anderen Vorgängen verwechselt, denn alle drei l
 
 Nur der erste ist eine Entscheidung des Betriebs, und deshalb steht er auf dieser Seite; die beiden anderen sitzen auf der [Leiter der Anpassung](../cloud-platforms/deep-dive.md). Ein weiterer Ausdruck, den dieses Handbuch *destilliert* nennt, gehört zu keinem der drei: Der **destillierte Befund**, der in der [Vertiefung zu Agentic RAG](../../part-2-agents/agentic-rag/deep-dive.md) zwischen den Hops weitergereicht wird, ist eine Verdichtung von abgerufenem Text innerhalb einer einzigen Anfrage. Kein Training, keine neuen Gewichte – dasselbe Verb bei einer ganz anderen Arbeit.
 
-## Wenn ein Modell nicht mehr auf eine GPU passt
+## Wenn ein Modell nicht mehr auf eine GPU passt \{#when-a-model-no-longer-fits-on-one-gpu}
 
 Manche Modelle passen schlicht nicht auf eine einzelne GPU, und dann zerlegen Sie sie – aber wie Sie zerlegen, entscheidet darüber, welche Hardware Sie brauchen. **Tensor-Parallelität** verteilt die Gewichtsmatrizen jeder Schicht über mehrere GPUs. Jede Schicht braucht danach ein All-Reduce, um die Teilergebnisse wieder zusammenzurechnen; das macht sie kommunikationsintensiv und verlangt eine schnelle Verbindung zwischen den GPUs – **NVLink** –, weshalb sie innerhalb eines einzelnen Knotens bleiben sollte. In vLLM ist es die Stellschraube `tensor_parallel_size`. **Pipeline-Parallelität** teilt anders auf: Sie teilt die Schichten in Stufen, legt jede Stufe auf eine andere GPU oder einen anderen Knoten und schickt Mikro-Batches von Stufe zu Stufe. Das braucht weit weniger Kommunikation, verträgt also eine langsamere Verbindung und funktioniert über Knoten hinweg – zum Preis einer **Blase** (*bubble*) in der Pipeline, der Leerlaufzeit, während sie sich füllt und wieder leert. Ihre Stellschraube heißt `pipeline_parallel_size`.
 
@@ -91,7 +91,7 @@ flowchart LR
     end
 ```
 
-## GPU-Scheduling und Autoscaling in Kubernetes
+## GPU-Scheduling und Autoscaling in Kubernetes \{#scheduling-and-autoscaling-gpus-on-kubernetes}
 
 In Kubernetes ist eine GPU eine Ressource, die der Scheduler zuteilt, und ihr Zuschnitt hat Folgen. Das Device-Plugin von NVIDIA meldet sie als `nvidia.com/gpu`, eine Ganzzahl – ein Pod fordert also von Haus aus ganze GPUs an, und einen Bruchteil einer GPU kann er gar nicht anfordern. Diese teuren Maschinen halten Sie den Lasten frei, die sie wirklich brauchen: mit Taints und Tolerations an den Knoten oder über Node-Affinität zu eigenen GPU-Node-Pools, damit gewöhnliche Pods nie auf einem GPU-Knoten landen.
 
@@ -101,7 +101,7 @@ Das Schwierige am Autoscaling für GPUs ist die Wahl des Signals. Der voreingest
 
 Der **Cold-Start** aus Teil 1 sorgt dafür, dass jedes reaktive Autoscaling hinterherhinkt. Ein neues Replikat muss ein Image von mehreren Gigabyte holen und die Gewichte laden – Dutzende Sekunden bis Minuten –, bevor es eine einzige Anfrage bedient; eine Skalierung, die erst auf eine Lastspitze reagiert, kommt daher zwangsläufig zu spät. Dagegen hilft ein Vorrat bereits gestarteter Instanzen, oder Sie skalieren vorausschauend statt rein nach der Nachfrage; und der **Cluster Autoscaler** kann GPU-Knoten nachlegen, wenn der Pool leer ist, aber das dauert weitere Minuten – die Bereitstellung des Knotens kommt zum Holen des Images noch obendrauf. Über dem reinen Scheduler sitzen Bausteine für die Modellbereitstellung, die einen Teil dieser Handarbeit abnehmen: [KServe](https://kserve.github.io/website/) und Knative bieten ein Autoscaling, das sich nach den eingehenden Anfragen richtet – einschließlich Scale-to-Zero und einer Skalierung nach Nebenläufigkeit –, und Ray Serve ist eine weitere Möglichkeit. Diese Produktnamen werden wechseln; die Fähigkeit, nach eingehenden Anfragen zu skalieren, bleibt.
 
-## Die GPU sekundenweise mieten
+## Die GPU sekundenweise mieten \{#renting-the-gpu-by-the-second}
 
 **Serverless GPU** ist die radikalste Form des Mietens: GPU-Kapazität, sekundengenau abgerechnet, im Leerlauf auf null skaliert, ohne einen Cluster, den Sie betreiben müssten. 2026 gehören dazu [Modal](https://modal.com), das Serverless-Angebot von [RunPod](https://www.runpod.io), [Replicate](https://replicate.com), [Baseten](https://www.baseten.co) und Beam – daneben Fal und Cerebrium – sowie Googles Cloud Run mit angehängter GPU; was AWS an echtem Serverless für GPUs zu bieten hat, ist vergleichsweise schwach. Wie schon in Teil 1 ist die Aufzählung eine Momentaufnahme, die altert; was bleibt, ist die Kategorie.
 
@@ -109,7 +109,7 @@ Was die Kategorie ausmacht, ist zugleich ihr zentrales Problem: die Kosten des C
 
 Daraus ergibt sich, wann Sie danach greifen. Stoßweiser Verkehr mit starken Ausschlägen passt zu Serverless, ebenso der Verkehr in der Entwicklung und die Last aus Batch-Durchläufen, weil Sie zwischen den Stößen keine ungenutzte Kapazität bezahlen. Für gleichmäßig hohen Verkehr und überhaupt für jede Last, die keinen Cold-Start verträgt, ist stattdessen eine fest zugeteilte, dauerhaft warme GPU die richtige Wahl – bei hoher Auslastung günstiger pro Token und ohne die Kosten des Cold-Starts. Die ganze Abwägung zwischen Mieten und Eigenbetrieb, und überhaupt die Frage, wo das Modell laufen soll, ist Gegenstand der Lektion über die [Cloud-KI-Plattformen](../cloud-platforms/index.md); hier steht nur, was davon die Bereitstellung betrifft.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Ein Worker ist ein Prozess – er bringt Ihnen Kerne, nicht Nebenläufigkeit; der Event-Loop verschränkt ohnehin schon Hunderte wartender Anfragen, und deshalb richtet sich die Zahl der Worker nach den Kernen und nach der rechenlastigen Arbeit. Ein blockierender Aufruf in einem asynchronen Handler blockiert jede Anfrage im Prozess: Lagern Sie ihn auf einen Thread aus, und geben Sie langen Strömen beim Herunterfahren Zeit, zu Ende zu laufen.
 - Unbegrenzte Nebenläufigkeit ruiniert einen LLM-Dienst, und nach Little's Law wird schon aus einer niedrigen Anfragerate eine hohe Nebenläufigkeit. Begrenzen Sie sie mit einem Semaphor und einer begrenzten Queue, weisen Sie überzählige Last mit `429` und `Retry-After` ab, und setzen Sie die Obergrenze dort an, wo es knapp wird – beim Batch-Platz auf der GPU oder beim Kontingent des Anbieters –, nicht an der billigen Verbindung.

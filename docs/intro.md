@@ -11,7 +11,7 @@ A practical, first-principles guide to production RAG (retrieval-augmented gener
 tools exist" but **why** a system is built the way it is and where it breaks. The material is living — it
 grows layer by layer as the course goes on.
 
-## Who this handbook is for
+## Who this handbook is for \{#who-this-handbook-is-for}
 
 It plays three roles at once:
 
@@ -24,7 +24,7 @@ It plays three roles at once:
 We assume an experienced reader: commodity tools (vector databases, orchestrators) aren't covered from
 scratch — instead we show the **AI delta**, what actually changes when you apply them to an LLM system.
 
-## Structure
+## Structure \{#structure}
 
 - **[Part I — RAG](./part-1-rag/overview.md):** ingestion, retrieval, generation, structured knowledge, and
   the cross-cutting concerns (eval, guardrails, observability) of the static pipeline.

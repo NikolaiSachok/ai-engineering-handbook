@@ -22,9 +22,9 @@ implementation details.
 
 ---
 
-## Chunking
+## Chunking \{#chunking}
 
-### Why split documents at all
+### Why split documents at all \{#why-split-documents-at-all}
 
 The naive recipe goes: "split the document into chunks." But *why* split — and why is this the first
 place everything breaks?
@@ -39,7 +39,7 @@ Two independent constraints force the split:
    and the chunks it finds are what get fed to the model. Keep this in mind for the whole section: a
    chunk plays two roles at once, and they pull its size requirements in opposite directions.
 
-### The key tradeoff: large chunk vs. small chunk
+### The key tradeoff: large chunk vs. small chunk \{#the-key-tradeoff-large-chunk-vs-small-chunk}
 
 Everything in this section comes down to one table:
 
@@ -60,7 +60,7 @@ make it into this chunk.
 
 That's why the "just cut every N characters" approach fails — and why smarter strategies emerged.
 
-### Chunking strategies (from simple to sophisticated)
+### Chunking strategies (from simple to sophisticated) \{#chunking-strategies-from-simple-to-sophisticated}
 
 1. **Fixed-size.** Cut every N tokens/characters. Simple, fast, reproducible. Downside: it cuts blindly —
    mid-sentence, mid-table. The baseline that everything else builds on.
@@ -92,7 +92,7 @@ against metrics.
 
 :::
 
-### Chunk metadata — where enterprise specifics turn into search quality
+### Chunk metadata — where enterprise specifics turn into search quality \{#chunk-metadata--where-enterprise-specifics-turn-into-search-quality}
 
 A chunk isn't just text. You attach **metadata** to it: the source (file/URL), the title, the section
 path, the date, the version and — critically for enterprise — **access control** (who is allowed to see
@@ -109,7 +109,7 @@ it). Three reasons to lay this down right here:
 **Takeaway:** metadata is laid down at the chunking stage. If you didn't attach it then, there's nowhere
 to get it from later.
 
-### Looking ahead: a chunk has two roles — you can split them apart
+### Looking ahead: a chunk has two roles — you can split them apart \{#looking-ahead-a-chunk-has-two-roles--you-can-split-them-apart}
 
 Back to the fact that a chunk is both searched over and fed to the LLM. An advanced idea (in detail — in
 the [retrieval](../retrieval/index.md) layer): it doesn't have to be the same piece of text. You can *search*
@@ -117,7 +117,7 @@ over small, sharp chunks (a good embedding) and *feed the LLM* a larger parent f
 (full context). This family of techniques is *parent-document / small-to-big retrieval*. For now it's
 enough to remember that splitting a chunk's two roles apart is possible.
 
-### What to take away
+### What to take away \{#what-to-take-away}
 
 - A chunk is **both searched over and read by the model** — two roles, with conflicting size
   requirements.
@@ -132,12 +132,12 @@ chunking, chunk metadata, parent-document (small-to-big) retrieval.
 
 ---
 
-## Embedding models
+## Embedding models \{#embedding-models}
 
 You know the general mechanics: chunk → vector → vector database. Here are the nuances that separate
 "watched a video" from "I understand why it was built this way."
 
-### What an embedding actually is
+### What an embedding actually is \{#what-an-embedding-actually-is}
 
 An embedding is a vector in a space where geometric closeness means **closeness in meaning**. The model
 is a trained "text → vector" function: texts about the same thing land near each other, unrelated ones
@@ -157,7 +157,7 @@ the same principle, scaled up from a word to a piece of text.
 
 :::
 
-### Bi-encoder vs. cross-encoder
+### Bi-encoder vs. cross-encoder \{#bi-encoder-vs-cross-encoder}
 
 The key distinction that both vector search and reranking grow out of.
 
@@ -173,7 +173,7 @@ The "accuracy vs. speed" conflict is resolved by combining the two: the bi-encod
 top-K out of millions (recall), the cross-encoder re-scores those K (precision). That re-scoring step is
 exactly what **reranking** is. More in the [retrieval](../retrieval/index.md) layer.
 
-### How you pick an embedding model
+### How you pick an embedding model \{#how-you-pick-an-embedding-model}
 
 - **Tuned for retrieval (retrieval-optimised).** Not every model is trained for search — you want ones
   trained on "query ↔ passage" pairs, not on general sentence similarity.
@@ -188,13 +188,13 @@ exactly what **reranking** is. More in the [retrieval](../retrieval/index.md) la
   your data inside (often the deciding factor for enterprise privacy) and cost nothing per call, but you
   run the infrastructure yourself.
 
-### The similarity metric — in brief
+### The similarity metric — in brief \{#the-similarity-metric--in-brief}
 
 **Cosine similarity** (the angle between vectors; it accounts for direction and ignores length) is the
 default choice. Many models emit normalised vectors, where cosine ≈ dot product. The rule: use the
 metric the model was trained for (stated on its model card) — a mismatch hurts quality.
 
-### Two common pitfalls
+### Two common pitfalls \{#two-common-pitfalls}
 
 - **Different models for queries and documents.** You embedded the documents with one model and the queries
   with another → the vectors live in different spaces → garbage. A corollary: switching the model means
@@ -202,7 +202,7 @@ metric the model was trained for (stated on its model card) — a mismatch hurts
 - **query/passage asymmetry.** Retrieval models often expect a prefix (`query:` / `passage:`); mix them
   up and quality quietly drops.
 
-### What to take away
+### What to take away \{#what-to-take-away-1}
 
 - **Bi-encoder** (fast, precomputed, = vector search) vs. **cross-encoder** (accurate, per pair, =
   reranking).

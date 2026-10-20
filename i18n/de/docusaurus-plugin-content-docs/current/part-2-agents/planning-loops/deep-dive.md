@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Vorher eine Abgrenzung, denn eine Nachbarlektion behandelt dieselbe Materie. Die retrievalspezifische Fassung derselben Gedanken – eine *Retrieval*-Schleife begrenzen, die Zwischenergebnisse zwischen den Hops verdichten, einen *Retrieval*-Pfad bewerten – steht in der [Vertiefung zu Agentic RAG](../agentic-rag/deep-dive.md). Diese Seite hat die allgemeine Form: die Steuerung der Schleife und die Planung für jeden Agenten, ob er Retrieval betreibt oder nicht. Wo beide sich berühren, verweist sie dorthin, statt dasselbe noch einmal herzuleiten. Teil 1 wird durchgehend vorausgesetzt – die Zerlegung, der Gegensatz zwischen ReAct und Plan-and-Execute, die drei Gestalten einer Schleife, die nicht anhält, die gestapelte Verteidigung und die Reflexion als Begriff werden benutzt, nicht noch einmal erklärt.
 
-## Planung als Suche statt als feste Abfolge
+## Planung als Suche statt als feste Abfolge \{#planning-as-search-not-a-single-line}
 
 Teil 1 hat eine Abfolge geplant und umgeplant, wenn sie zerbrach. Für die meisten Agenten reicht das schon. Für Aufgaben, die es sich leisten können, geht es aber noch weiter: sich gar nicht erst auf einen Plan festzulegen und die Planung als Suche im Raum möglicher Pläne zu behandeln.
 
@@ -38,7 +38,7 @@ Nennen Sie die Kosten offen, denn sie entscheiden, wohin so etwas überhaupt geh
 
 Deshalb durchsuchen die meisten Agenten im Produktivbetrieb keine Pläne. Sie arbeiten einen Plan ab und planen bei einem Fehlschlag um, genau wie in Teil 1, weil das viel billiger und meistens genug ist. Heben Sie die Baumsuche für hochwertige Aufgaben auf, deren Zwischenschritte überprüfbar sind und für die es eine verlässliche Bewertungsfunktion gibt – Mathematik, Code, Rätsel, beschränkte Optimierung –, wo ein falscher Zweig billig zu erkennen ist und das Zurücksetzen seine Kosten wieder einspielt. Bei offener Arbeit ohne sauberes Erfolgssignal je Schritt ist die Bewertungsfunktion das schwache Glied, und die zusätzlichen Anfragen zahlen sich selten aus. Die Disziplin ist dieselbe wie in Teil 1: die einfachste Stufe nehmen, die die Aufgabe löst.
 
-## Benannte Formen der Reflexion
+## Benannte Formen der Reflexion \{#reflection-given-a-shape}
 
 Teil 1 hat die Reflexion als Begriff eingeführt – der Agent beurteilt seinen eigenen Pfad. Die Forschung hat daraus benannte Verfahren gemacht, und ein einziges Prinzip entscheidet, ob eines davon hilft.
 
@@ -66,7 +66,7 @@ Unter beiden liegt das Prinzip, das jede Reflexion regiert: Sie ist nur so gut w
 
 Dieses Prinzip hat eine scharfe Kante, und sie ist der Grund, nicht überall zu reflektieren. Reflexion kostet zusätzliche Anfragen und Latenz, und bei leichten Eingaben kann sie aktiv schaden – ein Modell, das eine richtige Antwort noch einmal überdenken soll, redet sie sich manchmal aus. Lösen Sie die Reflexion deshalb erst bei einem echten Fehlersignal aus – bei einer fehlgeschlagenen Prüfung oder einer Schleife, die nicht mehr vorankommt – und nicht in jedem Schritt. Dieselbe Regel der einfachsten Stufe, angewandt auf das Urteil über sich selbst.
 
-## Ein Budget ist ein Regelwerk, keine Zahl
+## Ein Budget ist ein Regelwerk, keine Zahl \{#budgets-as-a-policy-not-a-number}
 
 Teil 1 hat das Budget zur nicht verhandelbaren Sicherung gemacht: eine harte Obergrenze, die das Ende der Schleife garantiert. Die Verfeinerung ist, dass ein Budget ein *Regelwerk* ist und dass das, was an der Obergrenze geschieht, genauso zählt wie die Obergrenze selbst.
 
@@ -83,7 +83,7 @@ Und was Sie *an* der Obergrenze tun, ist eine Entwurfsentscheidung, kein nachtr�
 
 Und setzen Sie das Budget dort ein, wo es sich lohnt. Die teuren Verfahren von weiter oben – die Baumsuche und die Reflexion – vervielfachen die Anfragen, sodass es Verschwendung ist, sie gleichmäßig überall anzuwenden. Leiten Sie billige, leichte Aufgaben in einen einzelnen Durchgang und heben Sie Suche und Reflexion für die schweren auf. Das ist die allgemeine Form des Routings nach Komplexität der Frage, die die [Vertiefung zu Agentic RAG](../agentic-rag/deep-dive.md) *adaptive RAG* nennt; dort steuert es das Retrieval, hier regiert es die ganze Agentenschleife. Ein Regler verdient dabei einen eigenen Namen: **Thinking Budget** – wie viel Nachdenken eine Aufgabe bekommen darf – ist etwas anderes als das Schrittbudget und das Token-Budget, und es wird nach der Schwierigkeit der Aufgabe eingestellt, nicht nach der Länge der Schleife.
 
-## Gedächtnis für lange Pfade
+## Gedächtnis für lange Pfade \{#memory-for-long-trajectories}
 
 **Das Arbeitsgedächtnis** – das Scratchpad aus Teil 1 – war eine der Gegenmaßnahmen dagegen, dass der Kontext immer voller wird. Dahinter steht eine ganze Gedächtnisarchitektur, mit Typen, die sich darin unterscheiden, wie lange sie leben und wo sie physisch liegen.
 
@@ -121,7 +121,7 @@ Die praktische Mechanik für einen langen Pfad besteht aus drei Dingen, und die 
 
 Umsonst ist nichts davon, und die meisten Aufgaben brauchen es nicht. Das episodische Gedächtnis bringt ein ganzes Retrieval-Teilsystem mit eigenen Fehlerbildern mit – eine veraltete oder falsch abgerufene Erinnerung vergiftet den Kontext und kann schlimmer sein, als gar kein Gedächtnis zu haben. Aufgaben mit einem einzigen Durchgang brauchen nur das Arbeitsgedächtnis. Nehmen Sie das Langzeitgedächtnis erst dazu, wenn der Agent wirklich über Sitzungen hinweg lernen muss – ein persönlicher Assistent, ein langlaufendes Projekt – und keinen Moment früher.
 
-## Den ganzen Pfad bewerten
+## Den ganzen Pfad bewerten \{#grading-the-whole-path}
 
 Die Evaluierung misst jetzt den Pfad, hat Teil 1 gesagt. Konkret läuft das auf eine Handvoll Metriken hinaus – und auf eine Falle bei der Zuverlässigkeit, in die jedes Team tappt, das nach einem gelungenen Durchlauf aufhört.
 
@@ -135,7 +135,7 @@ Wie Sie einen Pfad tatsächlich bewerten, ist LLM-as-a-judge auf dem ganzen Pfad
 
 Und noch einmal die Zurückhaltung. Ein einfacher, kurzer Agent braucht keine vollständige Bewertung des Pfades – die Evaluierung des Ergebnisses plus eine Schrittzahl kann völlig reichen. Die Maschinerie für den Pfad ist ein Aufwand, den Sie auf sich nehmen, wenn es einen echten mehrschrittigen Pfad gibt, der unabhängig von der letzten Antwort untragfähig werden kann. Wenn es ihn gibt, zeigt [der Abschluss dieses Teils](../real-agents.md) die ganze Schleife – Planung, Budgets, Gedächtnis und Evaluierung – bei Claude, OpenAI und Gemini im Betrieb.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Planung kann zur Suche im Raum möglicher Pläne werden – Tree of Thoughts durchsucht einen Baum von Zwischenschritten, Graph of Thoughts einen Graphen, der Zweige verschmilzt, LATS eine Suche über Aktionen mit Rückmeldung aus der Umgebung. Bei Aufgaben mit überprüfbaren Zwischenschritten ist das eine ganz andere Größenordnung (ToT kam beim Game of 24 auf 74 % gegen 4 % für Chain-of-Thought), aber es vervielfacht die Anfragen und steht und fällt mit einer vertrauenswürdigen Bewertungsfunktion. Die meisten Agenten planen einfach um, und das ist richtig so.
 - Die Reflexion hat benannte Gestalten auf zwei Zeitskalen: Self-Refine überarbeitet innerhalb eines Durchlaufs, `Reflexion` trägt eine Lehre über einen episodischen Speicher in den nächsten. Welche Gestalt auch immer – die Reflexion ist nur so gut wie das Signal darunter. Nehmen Sie ein äußeres, und lösen Sie sie erst bei einem echten Fehlersignal aus, sonst redet sie eine richtige Antwort kaputt.

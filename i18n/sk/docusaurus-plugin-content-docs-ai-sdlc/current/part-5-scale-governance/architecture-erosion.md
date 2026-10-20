@@ -13,7 +13,7 @@ Pri práci s agentmi ber architektonický drift ako samozrejmosť. Agent rieši 
 
 Prepoj rozhodnutia s kódom troma spôsobmi: pri každej oprave vychádzaj z denníka rozhodnutí, štrukturálne obmedzenia over automatickými kontrolami a dohodni, kedy séria opráv vyžaduje prepracovanie návrhu. Keď rozhodnutie zmeníš, pôvodné ponechaj v denníku a označ ho ako nahradené. Ďalší čitateľ tak nebude pokladať staré rozhodnutie za platné pravidlo.
 
-## Erózia sa začína drobnou opravou
+## Erózia sa začína drobnou opravou \{#how-erosion-gets-in-through-the-small-fix}
 
 Andrej Beloborodov, praktik, ktorý [píše o tom, ako pri vlastných projektoch stavia vývoj od začiatku na AI](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/), opisuje, že sa v projekte postupne menili pravidlá bez toho, aby niekto rozhodol o zmene architektúry. Objavovali sa duplicity, rovnaké situácie sa riešili rôzne a oprava pokazila susednú funkciu. Je to skúsenosť jedného človeka s vlastnými projektmi, nie merané porovnanie vývojových metód.
 
@@ -33,7 +33,7 @@ Anna Gutowska vo videu IBM Technology vysvetľuje, že agentné systémy môžu 
 
 :::
 
-## Najprv rozhodnutie, potom zmena: denník, z ktorého vychádza každá oprava
+## Najprv rozhodnutie, potom zmena: denník, z ktorého vychádza každá oprava \{#decision-before-change-an-adr-log-that-every-fix-consults}
 
 Beloborodov v [opise riadenia architektúry ako dynamického systému](https://realaillusions.com/ru/materials/sovety_ai_praktika_part3/) uvádza, že jeho projekt narástol na rozsah, ktorý prirovnáva k práci malého tímu 10–20 ľudí. Architektúru mal opísanú, no zmeny a opravy ju podľa jeho slov postupne narúšali.
 
@@ -53,7 +53,7 @@ Kritikovi daj okrem diffu aj denník prijatých rozhodnutí. V príklade s faktu
 
 Do denníka smie v jednom čase zapisovať iba jeden agent. To isté odporúča lekcia [Flotily agentov: izolácia a paralelizmus](./agent-fleets.md) pre ostatné priebežne rastúce artefakty. Dvaja paralelne pracujúci agenti nesmú každý zapísať vlastnú verziu toho istého rozhodnutia.
 
-## Architektúra ako vykonateľné obmedzenia
+## Architektúra ako vykonateľné obmedzenia \{#architecture-as-executable-constraints}
 
 ADR vysvetľuje, prečo hranica existuje. **Fitness funkcia (fitness function)** kontroluje, či vybraná architektonická vlastnosť naďalej platí.
 
@@ -77,7 +77,7 @@ Na doslovne opakovaný kód slúži **kontrola duplicít (duplication gate)**, n
 
 Klony kódu navyše nesmú byť jediným signálom udržiavateľnosti. Ako vysvetľuje lekcia [Ako posudzovať dôkazy](../part-1-foundation/reading-the-evidence.md), často opakované tvrdenie GitClear o duplicite sa nedá overiť: chýba metodika aj priradenie jednotlivých riadkov k AI. [Štúdia Carnegie Mellon s metódou rozdielov v rozdieloch](https://arxiv.org/abs/2601.13597) zistila, že pri vývoji vedenom agentmi nebola zmena duplicity štatisticky významná. Zložitosť a počet upozornení statickej analýzy však štatisticky významne vzrástli. Zaveď kontroly aj na ne; kopírovanie kódu je len jeden z viacerých príznakov.
 
-## Ktoré princípy dokáže skontrolovať stroj
+## Ktoré princípy dokáže skontrolovať stroj \{#which-principles-a-machine-can-check}
 
 Beloborodov vo svojich praktických odporúčaniach radí pomenovať YAGNI, KISS, SRP a DRY výslovne. Všeobecný pokyn „dodržiavaj osvedčené postupy“ podľa neho spoľahlivo neprináša to, čo potrebuje. Pod YAGNI rozumie vynechanie nevyžiadaných abstrakcií, pod KISS hľadanie najjednoduchšej implementácie, pod SRP sústredenie funkcie na jednu zodpovednosť a pod DRY opätovné použitie existujúcej logiky. Zároveň varuje pred vložením všetkých pravidiel do konfigurácie naraz. Jeho postup je opačný: zlý výsledok, rozbor príčiny a až potom pravidlo zacielené na túto chybu.
 
@@ -98,7 +98,7 @@ Aj kontrola podmienok na vystavenie faktúry, ktorú agent najprv skopíroval a 
 
 Výpočtovú časť zaraď do brány, posúdenie významu ponechaj kritikovi. Nákladnú sémantickú kontrolu sústreď tam, kde ju zmena odôvodňuje; z každého commitu nerob neohraničený audit architektúry. Pri každej kontrole si ujasni, čo jej úspešný výsledok skutočne zaručuje.
 
-## Opravy opráv ako signál na prepracovanie návrhu
+## Opravy opráv ako signál na prepracovanie návrhu \{#fix-on-fix-the-signal-and-the-redesign-trigger}
 
 Beloborodov používa tri po sebe nasledujúce úpravy ako varovanie: keď sa opravy vrstvia na opravy, je podľa neho čas vrátiť sa k architektúre. Nikto nezmeral, či sú tri správny prah. Použi ich ako východiskovú hodnotu pre dohodnutý **spúšťač prepracovania návrhu (redesign trigger)** v určenej oblasti s dostupnou históriou. Nie je to všeobecný zákon o kvalite opráv.
 
@@ -132,7 +132,7 @@ Takéto kontroly dávajú etape prepracovania návrhu jasné hranice aj možnos�
 
 :::
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant platí na každej úrovni: **zaznamenaj rozhodnutie pred zmenou štruktúry, vynucuj jeho overiteľné hranice a dohodni, kedy opakované opravy vyžadujú prepracovanie návrhu.** S rozsahom sa menia zodpovednosti aj dôkazy, ktoré treba predložiť.
 
@@ -140,7 +140,7 @@ Invariant platí na každej úrovni: **zaznamenaj rozhodnutie pred zmenou štruk
 - **Malý tím.** Každej oblasti ADR prideľ vlastníka. Rozhodnutia nahrádzaj novými a pôvodné uchovaj. Kritik nech kontroluje súlad s denníkom. Fitness funkcie spúšťaj v CI, ktorej kontroly agenti nemôžu upravovať. Zmraz existujúce porušenia a postupne ich odstraňuj tak, aby sa opravené už nevrátili. Sleduj trend opakovaných opráv po moduloch a porovnávaj ho s prahom dohodnutým vopred. *Akému zlyhaniu to predchádza:* agenti vytvárajú paralelné implementácie toho istého kontraktu.
 - **Enterprise.** Spravuj ADR ako riadené záznamy a prepoj ich so záznamami zmien. Knižnicu ADR a komisiu pre riadenie zmien opisuje lekcia [Príprava je dôležitejšia než model](../part-1-foundation/preparation-over-model.md), audit a pôvod lekcia [Enterprise úroveň: audit, pôvod a čo je povinné](./enterprise-tier/index.md). Fitness funkcie zaraď do pipeline ako povinné kontroly. Pred porušením prijatého rozhodnutia vyžaduj nahrádzajúce ADR schválené vlastníkom. Tak dokážeš zablokovať neschválenú štrukturálnu zmenu a pri každej zmene doložiť, ktoré rozhodnutie ju riadi. *Akému zlyhaniu to predchádza:* architektúra zostane len v prezentáciách, hoci systém sa od nej už dávno odchýlil.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - **Drobné opravy môžu zmeniť architektúru.** Kontroluj zodpovednosti a kontrakty, ktorých sa dotýkajú, aj keď už pôvodné správanie funguje.
 - **Najprv rozhodnutie, potom zmena.** V každom zadaní opravy odkáž na príslušné ADR. Potrebnú výnimku zaznamenaj ešte pred implementáciou ako nahrádzajúce rozhodnutie a daj ju skontrolovať niekomu inému než autorovi opravy.

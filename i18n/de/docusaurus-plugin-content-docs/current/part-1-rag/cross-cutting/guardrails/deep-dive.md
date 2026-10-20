@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Teil 1 hat die Abwehrmaßnahmen benannt; diese Seite öffnet deren Innenleben. Sie sehen, wie Spotlighting den Text tatsächlich markiert und was jede Spielart leistet und dafür verlangt, wie der vollständige Angriffskatalog aussieht und welche Schicht welche Klasse abfängt, wie das Red-Teaming die Zahl liefert, die Sie verfolgen – die Erfolgsrate der Angriffe –, und wie eine Pipeline für personenbezogene Daten in der Praxis erkennt und maskiert. Eine Grenze bleibt gezogen: Diese Mechanismen unternehmensweit zu betreiben – Gateways, Allowlists, zentrale Richtlinien – gehört in den Betrieb, und dafür ist [Teil III](../../../part-3-production/tooling-ecosystem/index.md) zuständig.
 
-## Wie Spotlighting nicht vertrauenswürdigen Text markiert
+## Wie Spotlighting nicht vertrauenswürdigen Text markiert \{#how-spotlighting-marks-untrusted-text}
 
 In Teil 1 hieß es, Sie sollten Spotlighting anwenden, damit eine eingeschleuste Anweisung sich wie bloßes Datenmaterial liest. Das war das Ziel. **Spotlighting** ist aber kein einzelner Kniff, sondern eine Familie aus drei Verfahren des Prompt-Engineerings, und darunter liegt eine gemeinsame Idee: Die nicht vertrauenswürdige Eingabe wird so umgeformt, dass das Modell sie durchgehend von den vertrauenswürdigen Anweisungen unterscheiden kann. Die Trennung, die es von sich aus nicht leistet, wird mechanisch erzwungen. Sowohl die Verfahrensfamilie als auch jede gemessene Zahl weiter unten stammen aus einem einzigen Paper; es wird hier genannt, weil es die Quelle für beides ist: Hines et al. (Microsoft), „Defending Against Indirect Prompt Injection Attacks With Spotlighting“, arXiv 2403.14720, eingereicht am 20. März 2024.
 
@@ -35,7 +35,7 @@ flowchart TB
 
 Diese Leiter ist der Kern der Sache. Delimiting ist billig und schwach; Datamarking ist billig und stark und deshalb der Regelfall; Encoding ist am stärksten, setzt aber ein entsprechend leistungsfähiges Modell voraus und erkauft die Sicherheit mit Einbußen bei der Antwortqualität. Die Trennschärfe steigt also über die ganze Leiter, ein spürbarer Preis fällt dagegen erst am oberen Ende an – und keine Sprosse beseitigt die Verwundbarkeit; jede verteuert nur ihre Ausnutzung. Und alle drei bleiben auf der Ebene des Prompts: Spotlighting formt die Eingabe um, es trainiert das Modell nicht neu. Genau daran setzt der nächste Abschnitt an, denn dort sitzt die Abwehr im Training.
 
-## Der Angriffskatalog – und die Abwehr, die dem Modell antrainiert wird
+## Der Angriffskatalog – und die Abwehr, die dem Modell antrainiert wird \{#the-attack-catalogue-and-the-defence-trained-into-the-model}
 
 Teil 1 hat direkte und indirekte Injection als Bedrohung Nummer 1 benannt. Beherrschen heißt hier, den ganzen Katalog im Kopf zu haben, denn eine einzelne Abwehr deckt ihn nie ab: Verschiedene Angriffsklassen brauchen verschiedene Schichten. Der Referenzkatalog des Fachs ist der OWASP-Katalog, und sein Befund ist eindeutig: **LLM01:2025 Prompt Injection** steht auf Platz 1 der OWASP Top 10 for LLM Applications 2025 (die Liste erschien Ende 2024) und hält diesen Platz damit in der zweiten Ausgabe in Folge. Die Ursache, die OWASP dafür angibt, ist genau die, mit der Teil 1 begonnen hat: Anweisungen und Daten teilen sich einen Kanal ohne jede Trennung, und deshalb kann das Modell eine eigens konstruierte „Anweisung“ nicht von gewöhnlichem Inhalt unterscheiden.
 
@@ -54,7 +54,7 @@ Diese letzte Klasse hat auf der Agentenseite eine reichere Ausprägung: **Tool-P
 
 Eine Unterscheidung sollte scharf bleiben, denn Teil 1 hat sie angesprochen und in der Praxis verwischen die beiden. Ein **Jailbreak-Angriff** zielt auf das Sicherheitstraining des Modells *selbst* und lockt es dazu, unzulässige Inhalte zu erzeugen – „Tu so, als wärst du eine KI ohne Regeln“. Eine **Injection** zielt darauf, dass *Ihre Anwendung* Anweisungen nicht von Daten trennt, und setzt den System-Prompt außer Kraft, den Ihre Anwendung vorgibt. Was die beiden trennt, ist das Angriffsziel: hier das, was dem Modell antrainiert wurde, dort Ihre eigenen Anweisungen. In der Wirklichkeit kommen sie oft zusammen.
 
-### Die Rangfolge der Anweisungen steckt im Training, nicht im Prompt
+### Die Rangfolge der Anweisungen steckt im Training, nicht im Prompt \{#the-instruction-hierarchy-is-a-training-side-defence}
 
 Teil 1 hat die Rangfolge der Anweisungen – System > Developer > User > Tool und abgerufener Inhalt – als Abwehr aufgeführt. Entscheidend ist der Mechanismus dahinter, denn das ist nicht bloß eine Konvention im Prompt. Das Paper von OpenAI – Wallace et al., „The Instruction Hierarchy: Training LLMs to Prioritise Privileged Instructions“, arXiv 2404.13208, eingereicht am 19. April 2024 – *trainiert* das Modell darauf, Anweisungen Rangstufen zuzuordnen und die höhere Stufe der niedrigeren vorzuziehen. Ganz oben stehen die System- und die Developer-Nachricht, darunter die Nutzereingabe, ganz unten die Ausgaben der Tools, fremde Inhalte und die abgerufenen Chunks.
 
@@ -62,7 +62,7 @@ Wirksam wird die Rangfolge durch die Unterscheidung zwischen **passenden und wid
 
 Vollständig ist keine der beiden Hälften. Spotlighting lässt sich umgehen, wie die Leiter gezeigt hat; die Rangfolge erhöht die Widerstandsfähigkeit, garantiert sie aber nicht, denn das Modell bleibt probabilistisch. Genau deshalb empfiehlt OWASP selbst eine gestaffelte Abwehr: die Eingabe prüfen, die Ausgabe filtern, die Berechtigungen einschränken und bei heiklen Aktionen einen Menschen prüfen lassen – in Schichten übereinander. Der Katalog macht den Grund dafür greifbar: Jede Schicht fängt eine andere Klasse ab, keine einzelne kann also genügen.
 
-## Nachweisen, dass die Abwehr einem Angriff standhält
+## Nachweisen, dass die Abwehr einem Angriff standhält \{#proving-the-guard-holds-under-attack}
 
 Teil 1 hat festgehalten, dass auch Guardrails gemessen werden – an der Erfolgsrate der Angriffe über eine festgelegte Menge von Angriffen. **Red-Teaming** ist das Verfahren, mit dem Sie diese Menge aufbauen und diese Zahl ermitteln: systematisches Testen mit den Mitteln des Angriffs. Sie greifen Ihr eigenes System absichtlich an, mit dem Katalog aus dem vorigen Abschnitt, um die Stellen zu finden, an denen die Abwehr versagt, bevor ein echter Angreifer sie findet. Lesen Sie es als die offensive Ergänzung zu den defensiven Schichten – einer Abwehr, die Sie nie zu brechen versucht haben, sollten Sie nicht trauen – und als Schwesterdisziplin der [Evaluierung](../evaluation/index.md), nur auf Angreifer gerichtet statt auf Qualität.
 
@@ -76,11 +76,11 @@ Daraus folgen drei Eigenschaften eines ernsthaften Red-Teamings.
 
 Die Automatisierung skaliert die Abdeckung; den Menschen ersetzt sie nicht. Microsofts „Lessons From Red Teaming 100 Generative AI Products“ (arXiv 2501.07238, Januar 2025) sagt unumwunden, dass menschliches Urteil, Fachkenntnis und Einfallsreichtum unverzichtbar bleiben: Die Automatisierung erledigt die Masse, Menschen finden das Neue und das, was nur in diesem einen Kontext schiefgeht. Es ist dieselbe Denkfigur wie bei den Labels in der Evaluierung: Wegautomatisiert wird der Mensch nie, verteilt wird nur sein Aufwand.
 
-## Wo personenbezogene Daten abgefangen werden und wie Sie sie maskieren
+## Wo personenbezogene Daten abgefangen werden und wie Sie sie maskieren \{#where-pii-gets-caught-and-how-its-masked}
 
 Teil 1 hat verlangt, personenbezogene Daten auf der Eingabeseite zu erkennen und zu maskieren – bevor protokolliert wird, bevor die API des Anbieters sie sieht – und ebenso auf der Ausgabeseite, bevor die Antwort angezeigt wird. Zum Beherrschen gehört, genau zu wissen, wo diese Pipeline ansetzt, warum die Erkennung ein Problem zwischen Precision und Recall ist und welche Entwurfsentscheidung darüber bestimmt, *wie* maskiert wird. Als konkrete Referenz eignet sich Microsofts [Presidio](https://microsoft.github.io/presidio/), ein quelloffenes SDK zum Erkennen und Unkenntlichmachen personenbezogener Daten, gebaut in zwei Stufen: ein **Analyzer**, der die Fundstellen aufspürt und jede davon mit einem Entitätstyp – PERSON, PHONE_NUMBER, EMAIL_ADDRESS – und einem Konfidenzwert versieht, und ein **Anonymizer**, dessen Operatoren die gefundenen Stellen umformen.
 
-### Die drei Stellen, an denen die Erkennung ansetzt
+### Die drei Stellen, an denen die Erkennung ansetzt \{#three-points-where-it-sits}
 
 Das Bild mit den zwei Stellen aus Teil 1 gilt weiter, und in RAG kommt eine dritte hinzu.
 
@@ -88,7 +88,7 @@ Das Bild mit den zwei Stellen aus Teil 1 gilt weiter, und in RAG kommt eine drit
 - **Auf der Ausgabeseite** – erkennen und maskieren, bevor die Antwort angezeigt wird, für den Fall, dass das Modell personenbezogene Daten aus seinem Kontext in die Antwort geholt hat.
 - **Beim Aufbau des Index** – personenbezogene Daten, die im Korpus stecken, fangen Sie besser beim Indexieren ab als erst bei jeder Anfrage. Es ist dasselbe Argument wie beim vergifteten Dokument aus Teil 1: einmal an der Quelle beheben statt bei jedem Lesezugriff.
 
-### Die Erkennung braucht zwei Arten von Verfahren
+### Die Erkennung braucht zwei Arten von Verfahren \{#detection-is-a-two-family-problem}
 
 Der Analyzer von Presidio bringt beide mit, und Sie brauchen beide, weil sie unterschiedliche personenbezogene Daten abdecken.
 
@@ -97,7 +97,7 @@ Der Analyzer von Presidio bringt beide mit, und Sie brauchen beide, weil sie unt
 
 An jeder Fundstelle hängt ein Konfidenzwert, und ein Schwellenwert entscheidet, ab welchem Wert die Fundstelle als Treffer gilt. Und genau dort sitzt die eigentliche Spannung: Die Erkennung personenbezogener Daten ist eine **Abwägung zwischen Precision und Recall**, und beide Fehler tun weh, nur ungleich. Ein falsch negatives Ergebnis – übersehene Daten – ist ein Leck: Was Sie schützen wollten, geht zur Tür hinaus. Ein falsch positives Ergebnis – als personenbezogen markiert, was keines ist – schwärzt zu viel und zerstört den Nutzen: Der maskierte Text und jede Antwort darauf werden schlechter, und ab einer gewissen Menge ist das System unbrauchbar. Sie können den Recall nicht auf 100 % treiben, ohne die Precision mit nach unten zu ziehen; der Schwellenwert ist deshalb eine Risikoentscheidung. Wo regulatorische Vorgaben den Ausschlag geben, wiegt der Recall schwerer, und lieber wird zu viel maskiert; wo der Nutzen zählt, geht das nicht. Keine Einstellung ist von beiden Fehlern zugleich frei – es ist dieselbe Abwägung über die Strenge, die Teil 1 schon für die Abwehr als Ganzes benannt hat.
 
-### Reversible oder irreversible Maskierung?
+### Reversible oder irreversible Maskierung? \{#reversible-or-not--the-masking-decision}
 
 *Wie* maskiert wird, ist eine echte Entwurfsentscheidung, die Sie bewusst treffen, und die Operatoren von Presidio setzen sie unmittelbar um. Sie lautet: **reversibel oder irreversibel**.
 
@@ -108,7 +108,7 @@ Die Falle daran: Diese Wahl ist eine verkappte Haftungsentscheidung. Wer einen H
 
 Das ist die Pipeline als Prinzip: die Erkennung, die Schwellenwerte, die Operatoren. Diese Pipeline als zentral betriebenen Dienst mit einheitlichen Richtlinien über ein ganzes Unternehmen zu fahren, gehört in den Betrieb und damit zu [Teil III](../../../part-3-production/tooling-ecosystem/index.md) – dieselbe Grenze, die diese Seite am Anfang gezogen hat. Und um im Produktivbetrieb zuzusehen, wie sich diese Abwehr tatsächlich verhält, ist [Observability](../observability/index.md) das Instrument.
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Spotlighting ist eine Leiter aus drei Verfahren auf der Ebene des Prompts: Delimiting (schwach, markiert nur die Grenze, und ein erratenes Trennzeichen hebelt es aus), Datamarking (eine Marke in jeder Lücke, der starke Regelfall, fast kostenlos für die Antwortqualität) und Encoding (gegen Injection nahezu vollständig wirksam, kostet aber Modellkapazität, die nur ein starkes Modell übrig hat). Die Trennschärfe steigt über die ganze Leiter, ein spürbarer Preis fällt erst auf der obersten Sprosse an, und keine Sprosse beseitigt die Verwundbarkeit.
 - Der Angriffskatalog hat zwei Achsen: den Weg hinein (direkt oder indirekt, und die indirekte ist die Gefahr für RAG) und das Ziel (Anweisungen außer Kraft setzen → Daten ausleiten → unbefugte Aktion, deren Schwere mit der Reichweite des Agenten zunimmt). Die Ausprägung auf der Agentenseite – Tool-Poisoning, Confused Deputy, Rug Pull – steht in der Vertiefung zu MCP.

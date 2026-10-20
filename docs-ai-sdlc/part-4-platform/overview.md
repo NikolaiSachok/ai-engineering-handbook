@@ -26,7 +26,7 @@ That last lesson closes the loop the introduction drew. Production is not "after
 **terminal gate**, telemetry is its sensor, and a defect that reaches it is an escape that belongs in
 Part III's ledger with the gate that missed it named.
 
-## What's inside
+## What's inside \{#whats-inside}
 
 - **[Secrets](./secrets.md)** — the value reaches neither the repository nor the agent's context. Hold a
   reference, inject at runtime, block server-side, and rotate rather than delete.
@@ -38,7 +38,7 @@ Part III's ledger with the gate that missed it named.
   probes and user reports for the failures that send no signal, a ramp that can start in shadow and is bound to
   automatic reversal, and a switch that is a state change rather than a build.
 
-## Prerequisites
+## Prerequisites \{#prerequisites}
 
 The sentence this part opens on, from Part I's *Rules that hold*. Every lesson here is that sentence at the
 platform layer, and several cite the same incidents, so that one lesson buys you more here than Parts II and
@@ -46,7 +46,7 @@ III together. Two more from Part III: **mechanism diversity** returns twice — 
 scanner composed with review, and the box composed with the grant — and the **escape ledger**, which the last
 lesson writes into every time a defect reaches production.
 
-## What changes after this part
+## What changes after this part \{#what-changes-after-this-part}
 
 For any agent you run, you can answer four questions with platform facts instead of promises: what it holds,
 what it can reach, what data it is looking at, and how fast one person can stop it without producing a new

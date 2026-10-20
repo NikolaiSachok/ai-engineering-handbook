@@ -11,7 +11,7 @@ you actually ship it**: serving, cloud platforms, the tooling ecosystem, and ope
 layer the job market names by tool — the one that separates "works on my laptop" from "works under load,
 observably, and on budget."
 
-## What's inside
+## What's inside \{#whats-inside}
 
 - **[Serving — FastAPI + Docker](./serving/index.md)** — wrapping a model or agent in a service: API, streaming,
   container, inference servers.
@@ -21,7 +21,7 @@ observably, and on budget."
   what to measure, what to guard, what to see.
 - **[LLMOps — deploy, monitor, cost](./llmops/index.md)** — the LLM system's life after release.
 
-## Prerequisites
+## Prerequisites \{#prerequisites}
 
 All of Parts I and II — serving and operations assume the RAG agent itself is already built and understood.
 

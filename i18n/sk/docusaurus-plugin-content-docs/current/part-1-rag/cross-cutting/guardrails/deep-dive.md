@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Tá stránka obranu pomenovala. Táto otvára jej mechaniku: ako spotlighting text naozaj označkuje a čo každý variant stojí, celý katalóg útokov aj to, ktorá obrana zodpovedá ktorej triede, ako red-teaming vyrobí attack success rate, ktorý sleduješ, a ako pipeline na osobné údaje v praxi rozpoznáva a maskuje. Jednu hranicu tu vymedzíme: prevádzkovať tieto mechanizmy v rozsahu celej organizácie — brány, allowlisty (zoznamy povoleného), centralizovaná politika — je vec operačnej vrstvy a ostáva pre [Časť III príručky](../../../part-3-production/tooling-ecosystem/).
 
-## Ako spotlighting označkuje nedôveryhodný text
+## Ako spotlighting označkuje nedôveryhodný text \{#how-spotlighting-marks-untrusted-text}
 
 Časť 1 ti kázala „nasadiť spotlighting, aby sa vložená inštrukcia čítala len ako dáta“. To bol cieľ. **Spotlighting** (označkovanie nedôveryhodného textu) nie je jeden trik, ale rodina troch techník práce s promptom, ktoré spája jedna myšlienka: premeniť nedôveryhodný vstup tak, aby ho model dokázal odlíšiť od dôveryhodných inštrukcií priebežne — to oddelenie, ktoré sám nezvládne, sa takto zmechanizuje.
 
@@ -37,7 +37,7 @@ flowchart TB
 
 Odstupňovaný rad je celá pointa: delimiting je lacný a slabý; datamarking lacný a silný (predvolený); encoding silný a drahý, no potrebuje schopný model. Sila a cena stúpajú spolu a žiadny stupeň zraniteľnosť neodstráni — každý len zdvihne cenu za jej zneužitie. Všetky tri sú na úrovni promptu: spotlighting pretvára vstup, model netrénuje. Tým sa dostávame k obrane, ktorá už nepracuje s promptom, ale priamo s tréningom modelu.
 
-## Katalóg útokov a obrana vytrénovaná do modelu
+## Katalóg útokov a obrana vytrénovaná do modelu \{#the-attack-catalogue-and-the-defence-trained-into-the-model}
 
 Priamu a nepriamu **prompt injection** (útok, ktorý modelu podstrčí cudzie inštrukcie) Časť 1 pomenovala ako hrozbu č. 1. Zvládnuť ju znamená držať v hlave celý katalóg, lebo jediná obrana ho nikdy nepokryje — rôzne triedy útokov si žiadajú rôzne vrstvy.
 
@@ -58,7 +58,7 @@ Posledná trieda má bohatšiu podobu na strane agentov — tool poisoning (otr�
 
 Jeden rozdiel si drž jasne — Časť 1 ho naznačila a v praxi sa oba javy prelínajú: **jailbreak** (obídenie vlastných bezpečnostných pravidiel modelu) mieri na vlastný bezpečnostný tréning modelu a nahovára ho, aby vyprodukoval zakázaný obsah („tvár sa, že si AI bez pravidiel“). Injection mieri na to, že tvoja aplikácia nevie oddeliť inštrukcie od dát, a prebíja systémový prompt vývojára. Rozlišuje ich cieľ — zladenie samotného modelu verzus tvoje inštrukcie — a skutočné útoky oba často kombinujú.
 
-### Instruction hierarchy je obrana na strane tréningu
+### Instruction hierarchy je obrana na strane tréningu \{#the-instruction-hierarchy-is-a-training-side-defence}
 
 Časť 1 uviedla **instruction hierarchy** (hierarchia inštrukcií podľa oprávnení) — systém > vývojár > používateľ > nástroj/nájdený obsah — ako jednu z obrán. Mechanizmus, ktorý čitateľ potrebuje: nie je to len konvencia v prompte.
 
@@ -70,7 +70,7 @@ Postav to vedľa spotlightingu a máš dve polovice jednej obrany: spotlighting 
 
 Ani jedna polovica nie je úplná. Spotlighting sa dá obísť (ukázal to odstupňovaný rad); instruction hierarchy dvíha odolnosť, no nezaručuje ju, lebo model ostáva pravdepodobnostný. Presne preto aj samotné odporúčanie OWASP znie defence-in-depth (viacvrstvová ochrana) — kontrola vstupu, filtrovanie výstupu, obmedzenie oprávnení a ľudská kontrola pri citlivých akciách, poskladané do vrstiev. Katalóg ten dôvod zhmotňuje: každá vrstva mieri na inú triedu v taxonómii, takže žiadna sama osebe nestačí.
 
-## Ako dokážeš, že ochrana drží pod útokom
+## Ako dokážeš, že ochrana drží pod útokom \{#proving-the-guard-holds-under-attack}
 
 Časť 1 poznamenala, že aj guardrails sa merajú — cez attack success rate na sade útokov. **Red-teaming** (útočné testovanie) je postup, ktorým tú sadu zostavíš a vyrobíš to číslo: systematicky útočíš na vlastný systém, pomocou katalógu z predošlej sekcie, aby si našiel, kde obrana povolí, skôr než to nájde skutočný útočník.
 
@@ -88,13 +88,13 @@ Z toho plynú tri vlastnosti serióznej red-team práce:
 
 Automatizácia škáluje pokrytie, človeka však neodstráni. Microsoftov článok „Lessons From Red Teaming 100 Generative AI Products“ (arXiv 2501.07238, január 2025) hovorí bez okolkov, že ľudský úsudok, doménová expertíza a tvorivosť ostávajú nosné: automatizácia odbaví objem, no novú a kontextovo špecifickú zraniteľnosť nájde človek. Tá istá logika ako pravidlo z Evaluation o ľudských značkách: človeka nikdy celkom neautomatizuješ, jeho prácu len rozprestrieš cez objem.
 
-## Kde sa PII zachytí a ako sa maskuje
+## Kde sa PII zachytí a ako sa maskuje \{#where-pii-gets-caught-and-how-its-masked}
 
 Časť 1 ti povedala, aby si PII (osobné údaje) rozpoznal a zamaskoval na vstupe (skôr, než sa zalogujú, a skôr, než odídu do API poskytovateľa) aj na výstupe (skôr, než ich uvidí používateľ). Zvládnuť to znamená vedieť, kde presne pipeline sedí, prečo je rozpoznávanie problémom presnosti a úplnosti a aká os rozhoduje o spôsobe maskovania.
 
 Konkrétna referenčná implementácia je [Presidio](https://microsoft.github.io/presidio/) od Microsoftu, open-source SDK na rozpoznávanie a de-identifikáciu osobných údajov, postavené z dvoch stupňov: **Analyzer** (rozpoznávače, ktoré nájdu kandidátske úseky s PII, každému priradia typ entity — PERSON, PHONE_NUMBER, EMAIL_ADDRESS — a pripoja skóre spoľahlivosti) a **Anonymizer** (operátory, ktoré nájdené úseky premenia).
 
-### Tri miesta, kde sedí
+### Tri miesta, kde sedí \{#three-points-where-it-sits}
 
 Obraz dvoch bodov z Časti 1 drží; RAG pridáva tretí bod.
 
@@ -102,7 +102,7 @@ Obraz dvoch bodov z Časti 1 drží; RAG pridáva tretí bod.
 - **Výstup** — rozpoznať a zamaskovať skôr, než sa odpoveď zobrazí, pre prípad, že model vyniesol PII zo svojho kontextu.
 - **Ingestion (príjem obsahu do indexu) v RAG** — PII zabudované v korpuse je lepšie zachytiť pri indexovaní než až pri dopyte. Je to tá istá úvaha ako otrávený dokument z Časti 1: oprav to raz pri zdroji, nie pri každom čítaní.
 
-### Detekcia je problém dvoch rodín
+### Detekcia je problém dvoch rodín \{#detection-is-a-two-family-problem}
 
 Presidiov Analyzer ukazuje obe rodiny a potrebuješ obe, lebo pokrývajú iné PII.
 
@@ -116,7 +116,7 @@ Každý kandidátsky úsek prichádza so skóre spoľahlivosti — číslom, na 
 
 Úplnosť (recall) nevytlačíš na 100% bez toho, aby si stiahol presnosť (precision), takže ten prah je rozhodnutie o riziku — prostredie, kde ide o súlad s reguláciou, sa nakláňa k úplnosti a k prílišnému maskovaniu, kým prostredie, kde ide o úžitok, si to dovoliť nemôže. Žiadne nastavenie nie je bez oboch chýb naraz; zrkadlí to rovnováhu prísnosti, ktorú Časť 1 pomenovala pre ochranu ako celok.
 
-### Vratné či nevratné — rozhodnutie o maskovaní
+### Vratné či nevratné — rozhodnutie o maskovaní \{#reversible-or-not--the-masking-decision}
 
 Skutočná návrhová os je spôsob maskovania — rozhoduješ o ňom vedome a Presidiove operátory sa naň priamo viažu. Os je **vratné verzus nevratné (reversible vs irreversible)**.
 
@@ -129,7 +129,7 @@ Vratné maskovanie je **pseudonymizácia**, nie **anonymizácia** (pseudonymizat
 
 To je pipeline ako princíp — rozpoznávače, prahy, operátory. Prevádzkovať ju ako riadenú službu s centralizovanou politikou naprieč organizáciou je operačná vrstva, a to je [Časť III príručky](../../../part-3-production/tooling-ecosystem/) — tá istá hranica, ktorú táto stránka vytýčila na začiatku. A ak chceš ktoréhokoľvek z týchto strážcov sledovať priamo v produkcii, prístrojom je [Observability](../observability/) (pozorovateľnosť).
 
-## Čo si odniesť z lekcie
+## Čo si odniesť z lekcie \{#what-to-take-away}
 
 - Spotlighting je odstupňovaný rad troch techník na úrovni promptu: delimiting (slabé, len hranica, obíde ho uhádnutý oddeľovač), datamarking (značka votkaná do každej medzery — silný predvolený tvar, takmer bez straty na kvalite výstupu) a encoding (proti injection takmer úplné, no za cenu kapacity modelu, ktorú vstrebe len silný model). Sila a cena stúpajú spolu; zraniteľnosť neodstráni ani jedna.
 - Katalóg útokov má dve osi — doručenie (priama verzus nepriama, kde nepriama je nebezpečenstvo RAG) a cieľ (prebitie inštrukcií → vynesenie dát → neoprávnená akcia, so stúpajúcim dosahom agenta). Podoba na strane agenta — tool poisoning, confused deputy, rug pull — žije v prehĺbení o MCP.

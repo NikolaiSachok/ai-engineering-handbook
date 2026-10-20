@@ -17,7 +17,7 @@ there, and cannot inspect every artefact. The only thing that can carry the answ
 produced at the time. A control nobody can demonstrate afterwards is, from that person's position,
 indistinguishable from one that never ran.
 
-## Audit: what happened, and who is answerable
+## Audit: what happened, and who is answerable \{#audit-what-happened-and-who-is-answerable}
 
 An audit trail answers *who did what, when, and on whose authority* — and agents add a column. The record now
 has to name not only the human accountable but the agent, the model, and the brief that produced the
@@ -39,7 +39,7 @@ somebody can produce on request, or it stays a value statement.
 
 :::
 
-## Provenance: where the artefact came from
+## Provenance: where the artefact came from \{#provenance-where-the-artefact-came-from}
 
 Audit records the act; **provenance** records the lineage of the thing produced — which source, which build,
 which dependencies, which agent. Two mechanisms carry it in practice. A **software bill of materials** lists
@@ -54,7 +54,7 @@ which model produced this, under what instructions?* Record it at generation tim
 from commit messages is guesswork, and the moment you need it — a defect class traced to one model's habit, a
 licensing question about generated content — is exactly the moment guesswork will not do.
 
-## Separation of duties, when both parties are agents
+## Separation of duties, when both parties are agents \{#separation-of-duties-when-both-parties-are-agents}
 
 Part III made this an engineering argument: the agent that writes a change
 [cannot be the one that certifies it](../../part-3-verification/detection-vs-mutation.md), because whatever
@@ -69,7 +69,7 @@ have read is a compliance artefact rather than oversight. The enterprise version
 because the signature is legally meaningful — approving at a rate no human could actually sustain is the exact
 failure the control exists to prevent, wearing the control's own clothes.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant, stated for the last time: **a control counts when someone other than its operator can
 demonstrate afterwards that it ran.**
@@ -85,7 +85,7 @@ demonstrate afterwards that it ran.**
   failure it prevents:* controls that work in practice but cannot be shown to have worked — which, at this
   distance from the blast radius, counts as not having them.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - At this tier the mechanism is not stronger, it is **demonstrable**. A control nobody can evidence afterwards
   is, to the person answerable for it, indistinguishable from one that never ran.

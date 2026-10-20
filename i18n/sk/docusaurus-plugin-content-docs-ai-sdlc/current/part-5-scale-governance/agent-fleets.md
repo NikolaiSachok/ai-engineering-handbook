@@ -10,7 +10,7 @@ pod nimi. V. časť sa pýta, čo sa zmení, keď ich beží naraz viac, a zač�
 vyšším počtom agentov preskakuje. *Čo vlastne môže bežať paralelne?* S tým, koľkých agentov si môžeš
 dovoliť, to súvisí len málo. Rozhoduje o tom, čo medzi sebou zdieľajú.
 
-## Zo zdieľania vzniká sériové poradie
+## Zo zdieľania vzniká sériové poradie \{#sharing-is-what-serialises}
 
 Dvaja agenti sú nezávislí práve vtedy, keď ich práca siaha na navzájom oddelené množiny — iné súbory, iné
 vetvy, iné prostriedky. Len čo začnú zdieľať niečo meniteľné, prestane to byť detail a stane sa z toho
@@ -26,7 +26,7 @@ Rovnaký tvar sa opakuje aj inde. Jedna databáza, ktorú migrujú všetci. Jedn
 uberajú. A ten tichý prípad: **zdieľaný korpus, do ktorého každá úloha niečo dopisuje** — súbor pravidiel,
 denník rozhodnutí, kánon. Dva paralelné zápisy sa nezlúčia; druhý vyhrá, prvý zmizne a nič to neohlási.
 
-## Izolácia vyjde lacnejšie než koordinácia
+## Izolácia vyjde lacnejšie než koordinácia \{#isolation-is-cheaper-than-coordination}
 
 Prvý inštinkt býva koordinovať: zámky, front, „nech sa agenti proste striedajú“. Lacnejšia odpoveď je
 zdieľanie odstrániť. Daj každému agentovi vlastný checkout — `git worktree add` vytvorí samostatný pracovný
@@ -39,7 +39,7 @@ IV. časť pri [sandboxe](../part-4-platform/least-privilege-sandboxing/index.md
 spoľahlivejšia než spolupráca založená na dôvere — a ten istý dôvod, prečo náprava patrí do mechanizmu, nie
 do pokynu, aby si agenti dávali pozor.
 
-## Čo musí zostať sériové a prečo
+## Čo musí zostať sériové a prečo \{#what-must-stay-serial-and-why}
 
 Izolácia neurobí paralelným všetko. Tri veci zostávajú sériové a tváriť sa opačne je presne ten spôsob, akým
 flotila vyrobí prácu na prerobenie.
@@ -69,7 +69,7 @@ pracovný priestor.
 
 :::
 
-## Flotilu ohraničuje revízia, nie výpočtový výkon
+## Flotilu ohraničuje revízia, nie výpočtový výkon \{#the-fleet-is-bounded-by-review-not-by-compute}
 
 V najpraktickejšej podobe sa tu vracia téza I. časti:
 [úzkym miestom je overovanie](../part-1-foundation/verification-bottleneck.md). Dvojnásobok agentov znamená
@@ -83,7 +83,7 @@ Za ňou prinesú ďalší agenti už len **súperenie o prostriedky (contention)
 väčšieho množstva hotovej práce. Užitočná otázka nikdy neznie „koľkých agentov viem spustiť“, ale „koľko toho
 táto reťaz vstrebe“ — a poctivá odpoveď býva menšia než počet agentov, na ktorý máš peniaze.
 
-## Tri úrovne zrelosti: soloista · malý tím · enterprise
+## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Invariant platí všade: **paralelizuj iba prácu nad oddeleným stavom, pracovný priestor radšej izoluj, než by
 si koordinoval prístup k nemu, a veľkosť flotily prispôsob tomu, čo reťaz overovania vstrebe.**
@@ -100,7 +100,7 @@ si koordinoval prístup k nemu, a veľkosť flotily prispôsob tomu, čo reťaz 
   predchádza:* flotila sa škáluje podľa rozpočtu namiesto úzkeho miesta a jej strop sa ohlási až rastúcim
   zoznamom nezrevidovaných zmien.
 
-## Čo si odniesť
+## Čo si odniesť \{#what-to-take-away}
 
 - **O tom, čo môže bežať paralelne, rozhoduje zdieľanie,** nie počet agentov, ktorých vieš spustiť. Meniteľný
   zdieľaný stav je skutočný plánovač.

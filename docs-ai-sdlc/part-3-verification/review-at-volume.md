@@ -13,7 +13,7 @@ warned](../part-2-loop/roles-and-the-human.md). The answer is not to read faster
 volume** is a design problem: arrange things so the scarce human attention lands only where a human's judgment
 is the actual control, and everything a machine can check has already been checked before the human looks.
 
-## The volume is not hypothetical
+## The volume is not hypothetical \{#the-volume-is-not-hypothetical}
 
 The numbers are in, and they describe a review problem, not a generation one. In a field deployment of 802
 developers over 196,212 PRs, per-capita **merged PRs** reached **2.09×** the pre-mandate baseline
@@ -28,7 +28,7 @@ is where the bottleneck moved. "Review everything" was always the reflex, and at
 person could actually have read is not exercising oversight, only laundering it. Volume does not just strain
 review; past a point it quietly converts review into theater while every dashboard still shows it as green.
 
-## Automate to concentrate, then enumerate what's left
+## Automate to concentrate, then enumerate what's left \{#automate-to-concentrate-then-enumerate-whats-left}
 
 The design that survives volume has two halves, and the order matters. First, put the cheap automated gates
 *ahead* of the human so the expensive human step runs only on what has already passed them — in the chain I run
@@ -53,7 +53,7 @@ decisions that are theirs alone, with the rest gated by machine before it ever r
 
 :::
 
-## Risk-weight the queue: reachability and the modality trap
+## Risk-weight the queue: reachability and the modality trap \{#risk-weight-the-queue-reachability-and-the-modality-trap}
 
 Even the reduced queue needs triage, and two disciplines keep it honest. The first is **reachability
 calibration**: a finding's severity is meaningless until you know whether a user can actually reach the code that
@@ -72,7 +72,7 @@ possible functional gap until proven cosmetic, never the reverse. And give the a
 judgment call) that the later human gate consumes as its worklist. An agent that can say "I wasn't sure" is worth
 more than one that guesses and moves on, because it routes your attention instead of consuming it.
 
-## The three tiers — soloist · small-team · enterprise
+## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **automate to concentrate human attention, enumerate what only a human can
 check, and spend that attention on the reachable and the ambiguous.** What changes is who is protected from the
@@ -90,7 +90,7 @@ flood, and how.
   *The failure it prevents:* "human in the loop" as a compliance checkbox — a name on a form who, at the real
   volume, could not possibly have reviewed what they signed.
 
-## What to take away
+## What to take away \{#what-to-take-away}
 
 - Generation got cheap and reading did not, so the bottleneck moved to the review queue — **2.09×** merged PRs
   under a mandate that named that metric, with per-reviewer load roughly doubled. At that volume "review everything" is a rubber stamp.

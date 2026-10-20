@@ -30,7 +30,7 @@ dvojnásobný objem výstupu aj dvojnásobne dlhý rad čakajúci na kontrolu. K
 s nimi nezdvojnásobí — tvorí ju reťaz brán a človek, ktorý prácu smeruje. Za každým zo štyroch stropov je
 rovnaké obmedzenie, len zakaždým vytvára iný druh nákladov. Výnimkou je závislosť od modelu: toto riziko leží u poskytovateľa, na druhej strane volania API. Služba sa môže zmeniť alebo zmiznúť, aj keď tvoja kapacita zostane rovnaká.
 
-## Čo je vnútri
+## Čo je vnútri \{#whats-inside}
 
 - **[Flotily agentov: izolácia a paralelizmus](./agent-fleets.md)** — zdieľaný stav vynúti sériové
   spracovanie. Oddeľ pracovné priestory, no artefakty, do ktorých postupne pribúdajú zmeny, spracúvaj
@@ -49,7 +49,7 @@ rovnaké obmedzenie, len zakaždým vytvára iný druh nákladov. Výnimkou je z
   sa venuje nepopierateľnosti a pôvodu, v ktorom je zaznamenané, ktorý agent a ktorý model. Venuje sa aj
   oddeleniu právomocí, keď sú agentmi obe strany.
 
-## Predpoklady
+## Predpoklady \{#prerequisites}
 
 Najprv potrebuješ úzke miesto overovania z I. časti, tentoraz ako tvrdenie o *kapacite*, nie o kvalite. Prvá
 lekcia podľa neho priamo určuje hornú hranicu veľkosti flotily. Potrebuješ aj pamäť projektu a pravidlá, ktoré
@@ -59,7 +59,7 @@ Lekcia o nákladoch vyčísli, čo stoja sémantické brány z III. časti, a zo
 vydávané na úlohu, aby sa výdavky dali priradiť. Lekcia o modeli ako závislosti využíva pri smerovaní [hranicu rentability z prehĺbenia o nákladoch](./cost-economics/deep-dive.md). [Pamäť projektu](../part-1-foundation/project-memory-and-tiering.md) z I. časti v nej vystupuje ako predpoklad toho, aby si mohol od poskytovateľa odísť. Na lekcie o [secrets](../part-4-platform/secrets.md) a [prostrediach](../part-4-platform/environments-migrations-data.md) zo IV. časti lekcia nadväzuje otázkou, čo sa deje s dátami, ktoré sa dostanú k poskytovateľovi. Záverečná lekcia vychádza z argumentácie III. časti o
 oddelení právomocí.
 
-## Čo sa mení po tejto časti
+## Čo sa mení po tejto časti \{#what-changes-after-this-part}
 
 Veľkosť flotily dokážeš určiť podľa kapacity reťaze brán, nie podľa rozpočtu. Vieš tiež určiť, aký podiel
 práce sa nedá paralelizovať. Dokážeš vyčísliť náklady na súbor pravidiel namiesto toho, aby si sa iba

@@ -17,7 +17,7 @@ Der große Bogen: wie die Suche den Kontext in die Generation einspeist. (Das Vi
 
 :::
 
-## Warum die naive Vektorsuche über top-K nicht reicht
+## Warum die naive Vektorsuche über top-K nicht reicht \{#why-plain-vector-top-k-isnt-enough}
 
 Bei echten Fragen zeigt das naive Schema „die K nächsten Vektoren“ gleich mehrere Schwächen auf einmal.
 
@@ -25,7 +25,7 @@ Das **Dense Retrieval** (die dichte Vektorsuche) erfasst die Bedeutung, verfehlt
 
 Es sind vier: die Frage umformulieren, die blinden Flecken der Suche ausgleichen, die Reihenfolge korrigieren und den Suchraum auf das begrenzen, was zulässig ist.
 
-## Die Frage umformulieren, bevor gesucht wird
+## Die Frage umformulieren, bevor gesucht wird \{#query-transformation--fix-the-query-before-searching}
 
 Die Frage, die jemand eintippt, ist selten die beste Frage, mit der sich suchen lässt. Ein paar günstige Aufrufe an das Sprachmodell – von hier an kurz **LLM** – *vor* dem Retrieval sorgen dafür, dass der benötigte Chunk spürbar häufiger überhaupt gefunden wird. Diese Vorstufe heißt im Englischen **query transformation**, und sie hat drei gängige Formen.
 
@@ -33,7 +33,7 @@ Die Frage, die jemand eintippt, ist selten die beste Frage, mit der sich suchen 
 - **Multi-Query.** Mehrere Umformulierungen derselben Frage erzeugen, mit jeder einzeln suchen, die Ergebnisse zusammenführen.
 - **HyDE** (*hypothetical document embeddings*). Das Modell eine hypothetische Antwort skizzieren lassen, diese einbetten und damit suchen. Ein grob entworfener Antworttext liegt im Vektorraum oft näher am gesuchten Chunk als eine kurze Frage.
 
-## Hybride Suche – Dense Retrieval plus Stichwortsuche
+## Hybride Suche – Dense Retrieval plus Stichwortsuche \{#hybrid-search--dense-plus-keyword}
 
 Hier liegt der mit Abstand größte Fortschritt gegenüber der naiven Suche. Am Werk sind zwei Mechanismen mit entgegengesetzten Stärken:
 
@@ -46,13 +46,13 @@ Die **hybride Suche** (*hybrid search*) lässt beide Verfahren laufen und führt
 
 Nehmen Sie die Frage „Wie setze ich ein Passwort zurück?“ Das Dense Retrieval findet über die Bedeutung das Dokument „Zugang zum Konto wiederherstellen“; BM25 findet dagegen das Dokument, das wörtlich „Passwort zurücksetzen“ heißt. Zusammen liefern sie, was jedes für sich verfehlt hätte.
 
-## Reranking korrigiert die Reihenfolge
+## Reranking korrigiert die Reihenfolge \{#reranking--fix-the-ordering}
 
 Die erste Stufe – Dense Retrieval oder hybride Suche – ist auf **Recall** ausgelegt: Der benötigte Chunk soll irgendwo in die top-K geraten, wobei K bei 50 bis 100 liegt. Die Reihenfolge innerhalb dieser hundert ist allerdings grob, und in den Kontext des Modells passen nur wenige Chunks. Die zweite Stufe sorgt deshalb für **Precision**: Ein Cross-Encoder aus der [vorangegangenen Lektion](../ingestion/index.md) bewertet jeden **Kandidaten** (die Treffer der ersten Stufe) anhand der Frage neu und sortiert die Liste neu, sodass die besten nach oben steigen. Nur die wenigen besten gelangen in die Generation.
 
 Das ist das kanonische zweistufige Schema: günstig und breit (ein Bi-Encoder oder die hybride Suche – Recall), danach teuer und genau (ein Cross-Encoder – Precision). An dieser Stelle fügen sich Bi- und Cross-Encoder aus der Lektion zur Ingestion zu einem Bild zusammen.
 
-## Filter und Zugriffssteuerung – relevant und zugleich zulässig
+## Filter und Zugriffssteuerung – relevant und zugleich zulässig \{#filters-and-access-control--relevance-and-permissions}
 
 Im Unternehmen beantwortet das Retrieval mehr als die Frage, ob etwas der Bedeutung nach ähnlich ist. Es beantwortet auch, was diese Person überhaupt sehen darf.
 
@@ -61,7 +61,7 @@ Im Unternehmen beantwortet das Retrieval mehr als die Frage, ob etwas der Bedeut
 
 Die Zugriffssteuerung liest sich hier wie eine Mechanik des Retrievals, sie entscheidet aber etwas viel Größeres mit. Ein Filter kann für jede anfragende Person ein anderer sein; die Gewichte eines Modells sind für alle dieselben. Diese Asymmetrie entscheidet darüber, wo das Wissen einer Organisation überhaupt liegen darf – siehe [wann Sie die Gewichte ändern](../../part-3-production/llmops/deep-dive.md).
 
-## Die Pipeline im Ganzen
+## Die Pipeline im Ganzen \{#the-full-pipeline}
 
 ```text
 Frage → [umformulieren] → [hybrid: dense + BM25, Filter: Metadaten + ACL]
@@ -70,7 +70,7 @@ Frage → [umformulieren] → [hybrid: dense + BM25, Filter: Metadaten + ACL]
 
 Mit jeder Stufe versagt das Retrieval seltener. Wie viel die einzelne Stufe beiträgt, **messen** Sie: Recall@K, Precision@K, MRR, nDCG. Formal gefasst werden sie erst in der Schicht [Evaluierung](../cross-cutting/evaluation/index.md).
 
-## Das Wichtigste
+## Das Wichtigste \{#what-to-take-away}
 
 - Die naive Vektorsuche über top-K ist der Anfang, nicht das Ende.
 - Die Frage selbst lässt sich vor der Suche umformulieren: Bezüge auflösen, Multi-Query, HyDE.
