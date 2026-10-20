@@ -355,7 +355,7 @@ its section here. The list grows as the course does.
 
 **Superseded decision** — a decision replaced by a later one and marked as no longer in force, kept only as the history of how the current one was reached.
 
-**Flag debt** — the maintenance cost of a flag and the branches it keeps alive. Release flags get an owner and a removal date; a long-lived kill switch gets an owner and a periodic review instead of an expiry.
+**Flag debt** — the maintenance cost of a flag and the branches it keeps alive. Release flags get an owner, a description and a removal date; a long-lived kill switch gets an owner and a periodic review instead of an expiry.
 
 ## Cost and the economics of agent work \{#cost-and-the-economics-of-agent-work}
 
