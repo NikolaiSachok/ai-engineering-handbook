@@ -69,6 +69,16 @@ Two mechanisms make maintenance real rather than aspirational.
   longer occurs, or it is broken and you have been trusting silence. Both are worth knowing, and you find out
   the same way — plant a violation and see whether the rule fires.
 
+Flags rot exactly like rules: a feature flag is a rule about which code runs. Write an owner, a description
+and a removal date next to it. [Andrey Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/)
+warns that without that record, a year later you will not know which flags are safe to flip or what they change.
+[Pete Hodgson](https://martinfowler.com/articles/feature-toggles.html) frames toggles as inventory with a
+carrying cost and describes ways teams bound it: file a removal task when creating a release flag, set an
+expiration date, use a "time bomb" test that fails if the flag outlives it, or cap the number of flags. A long-lived ops kill
+switch is different by design: it needs an owner and review with the rule corpus, rather than an expiry.
+Our reasoning for agents is straightforward: both branches of a stale flag still look live in the code, so an
+agent can keep maintaining, testing and extending the dead one.
+
 The deletion bar deserves saying plainly: **removing a rule that no longer matches reality is maintenance, not
 loss.** A corpus you are willing to shrink is one an agent can still read in full.
 
@@ -92,7 +102,7 @@ triggered.
   a structure you abandoned months ago, confidently, because your own notes still describe it.
 - **Small-team.** An owner per rule area, rules reviewed when the code they describe changes — a better
   trigger than a date, wherever the rule maps to code — and contradictions resolved at review rather
-  than left for an agent to arbitrate.
+  than left for an agent to arbitrate; include flags in that ownership and expiry review.
   *The failure it prevents:* two conflicting rules producing nondeterministic agent behaviour that no one can
   reproduce or explain.
 - **Enterprise.** The corpus is a governed artefact: versioned, owned, with expiry and an audit trail showing
@@ -107,8 +117,9 @@ triggered.
 - **Executable rules rot loudly, prose rules rot silently.** Make it a check where you can; where you cannot,
   accept that you have chosen silent decay and schedule a human against it.
 - **Assign an owner and a review trigger, and date-stamp the rest.** Unowned corpora only grow, because
-  deleting always feels riskier than keeping.
+  deleting always feels riskier than keeping. Include flag debt: release flags need removal dates;
+  long-lived kill switches still need owners and review.
 - A rule that has never fired is not proof of a clean codebase — it is an unverified rule. Plant a violation
   and find out which.
 
-**[New terms](../glossary.md#drift-control-and-rule-rot)**: rule rot, staleness / contradiction / bloat, executable vs prose rule, silent decay, rule ownership, rule expiry, never-fired rule, memory drift, superseded decision.
+**[New terms](../glossary.md#drift-control-and-rule-rot)**: rule rot, staleness / contradiction / bloat, executable vs prose rule, silent decay, rule ownership, rule expiry, never-fired rule, memory drift, superseded decision, flag debt.

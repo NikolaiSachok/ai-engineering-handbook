@@ -128,6 +128,18 @@ worth teaching: Anthropic's activation-reference-deep-dive and DefinitiveSpec's 
 same three-level ladder, invented independently — one for capabilities, one for specs, neither aware of the other.
 When two unconnected parties derive the same three tiers, the tiers are probably real.
 
+Tiering decides how much a document costs; status decides what it claims. A target-state document can read
+to an agent as a description of the current system. Unless you mark the difference, the implementation brief
+asks it to build against a world that does not exist. In his
+[account of stabilising a stalled client project](https://realaillusions.com/ru/materials/ai-project-stabilization-case/),
+Beloborodov reports separating documentation into history, target state and experiments among the first fixes.
+On his [own project page](https://realaillusions.com/ru/projects/cyprus-real-estate-project/), he states that
+plans remain plans until the function is confirmed in the working system; future architectural goals are not
+live features. Give every project document a status on its first line: as-is, target, experiment, or
+[superseded](../part-5-scale-governance/drift-and-rot.md). Target material is never the default context for an
+implementation task. Our argument is that this failure grows with the organisation: an enterprise wiki full
+of aspirational architecture gives the agent more opportunities to mistake intention for fact.
+
 And here is the gap the course names. Context engineering solved the *retrieval* half — for an agent's working
 memory. Spec-driven development built the *production* half — and never asked what happens to the output as it
 piles up. Nobody has carried the first across to the second: no tiered, budgeted, lifecycle-managed discipline for
@@ -167,7 +179,7 @@ who owns the boundary and how it's proven.
   whole spec and the forks quietly diverging.
 
 - **Enterprise.** An ADR library plus an owned, versioned knowledge base carrying retrieval metadata — per-file
-  scope, a "load when" trigger, a hot/cold tier. *The failure it prevents:* an unowned, self-contradicting corpus
+  scope, a "load when" trigger, a hot/cold tier, a status. *The failure it prevents:* an unowned, self-contradicting corpus
   with no staleness mechanism — the drift Lesson 5 takes up. The recurring lens applies: the ADR library is mostly
   *proof*, an auditable record for later, while the soloist's hot set is *capability*, because it changes what the
   agent can afford to load right now.
@@ -187,4 +199,7 @@ who owns the boundary and how it's proven.
   The mechanism is borrowed openly from context engineering; carrying it to a spec or rule corpus is the gap this
   course names, and our own evidence for it is a single graded self-report, not proof.
 
-**[New terms](../glossary.md#project-memory-and-tiering)**: project memory, amnesia, context tax, over-compliance, scar archive, knowledge tiering, LOD ladder, hot set / cold set, progressive disclosure, artifact overload.
+- Put a status on every document's first line: as-is, target, experiment, or superseded. A target-state plan
+  must not become an implementation task's default account of what already works.
+
+**[New terms](../glossary.md#project-memory-and-tiering)**: project memory, amnesia, context tax, over-compliance, scar archive, knowledge tiering, LOD ladder, hot set / cold set, progressive disclosure, artifact overload, document status (as-is · target · experiment).

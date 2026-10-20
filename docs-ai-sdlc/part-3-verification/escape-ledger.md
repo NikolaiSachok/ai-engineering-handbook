@@ -37,6 +37,10 @@ discipline pointed at your *gates* instead of your incident response, and its un
 - **The promotion** — the new probe, test, or rule that now covers the class, and the gate it was added to. An
   escape you merely fix teaches nothing; an escape you *promote* changes the chain.
 
+Escapes arrive through a production alert, an incident review, or a user's report, the sensor of last resort;
+each becomes the same row. A report that arrives before any alert also names a
+[missing signal](../part-4-platform/observability-rollout.md).
+
 That is the whole artifact. For a soloist it is one row in a table; for an enterprise it is a tracked defect
 with an owner. The cost is trivial and the payoff compounds: each escape permanently retires a way things can
 get through.
