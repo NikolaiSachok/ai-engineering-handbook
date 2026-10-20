@@ -111,7 +111,7 @@ arranging the material, not a proven-optimal lifecycle. Use it to navigate; do n
 
 ## Where to go next
 
-Part I is the foundation — five lessons:
+Part I is the foundation — six lessons:
 
 1. **[The verification bottleneck](./part-1-foundation/verification-bottleneck.md)** — the thesis above,
    argued from the evidence.
@@ -120,5 +120,6 @@ Part I is the foundation — five lessons:
 3. **[Preparation over model](./part-1-foundation/preparation-over-model.md)** — why what you hand the agent beats which agent you hand it to.
 4. **[Project memory and tiering](./part-1-foundation/project-memory-and-tiering.md)** — the durable context a fleet works against.
 5. **[Rules that hold](./part-1-foundation/rules-that-hold.md)** — turning conventions into constraints a machine enforces.
+6. **[Bringing the loop to an existing codebase](./part-1-foundation/existing-codebase.md)** — the same foundation for code that already exists: audit first, then the loop.
 
 Start with Lesson 1: it proves the claim the rest of the course is built on.

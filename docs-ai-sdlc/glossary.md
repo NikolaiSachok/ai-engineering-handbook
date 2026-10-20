@@ -87,6 +87,22 @@ its section here. The list grows as the course does.
 
 **Consistency owner** — the role accountable for reconciling a corpus so that two authoritative files can't prescribe opposite things.
 
+## Bringing the loop to an existing codebase \{#existing-codebase}
+
+**Existing codebase (brownfield)** — code that is already running, often partly agent-written, with its knowledge scattered across chats, wikis and people's heads; the loop has to be installed around it, not before it.
+
+**Audit before refactor** — establish what works, what blocks development, what is risky, what to do and how to check the result before changing anything; never ask an agent to "rewrite it all properly".
+
+**Independent multi-model audit** — the same fixed audit dimensions run on several independent models, with divergent verdicts read as different things checked rather than averaged.
+
+**Verification pack** — the set of checks known to actually work, each with an established meaning for a pass, plus a basic CI gate for new work.
+
+**Single source of truth (rebuilt from the code)** — project documentation kept next to the code, reconciled against the implementation and split into history, target state and experiments; written memory keeps only what the code cannot tell.
+
+**The new-chat test** — ask a fresh agent, with no chat history, what architecture decisions were made last week; if it cannot answer from the repository, the shared memory still lives in old conversations.
+
+**Re-audit on the same dimensions** — repeating the audit with the original checklist, so that before and after are comparable.
+
 ## Vision to stages \{#vision-to-stages}
 
 **Verifiable stage** — a unit of a plan defined by a done-condition you can confirm, not by a step you can describe; the interval between two checks you can actually run.

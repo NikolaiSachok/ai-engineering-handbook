@@ -96,6 +96,24 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Vlastník konzistencie** — rola zodpovedná za zosúlaďovanie súboru pravidiel tak, aby dva záväzné súbory nemohli predpisovať protichodné riešenia.
 
+<a id="existing-codebase"></a>
+
+## Slučka v existujúcom projekte \{#existing-codebase}
+
+**Existujúca kódová základňa (brownfield)** — kód, ktorý už beží a často ho sčasti napísali agenti. Poznatky o ňom sú roztrúsené po chatoch, wiki a hlavách ľudí. Slučku preto zavádzaš okolo existujúceho kódu, nie pred jeho vznikom.
+
+**Audit pred refaktoringom** — skôr než čokoľvek zmeníš, zisti, čo funguje, čo brzdí vývoj, čo je rizikové, čo treba urobiť a ako overiť výsledok. Nikdy nedávaj agentovi zadanie „prepíš všetko poriadne“.
+
+**Nezávislý audit viacerými modelmi** — niekoľko nezávislých modelov preveruje rovnaké vopred určené oblasti. Rozdielne verdikty ber ako znak, že modely preverili rôzne veci; ich hodnotenia nepriemeruj.
+
+**Overovacia sada** — súbor kontrol, o ktorých vieš, že skutočne fungujú, a pri každej vieš, čo znamená úspešný výsledok. Súčasťou je aj základná brána v CI pre novú prácu.
+
+**Jediný zdroj pravdy (obnovený z kódu)** — projektová dokumentácia uložená pri kóde, zosúladená s implementáciou a rozdelená na históriu, cieľový stav a experimenty. V písomnej pamäti zostáva iba to, čo z kódu nevyčítaš.
+
+**Test nového chatu** — nového agenta bez histórie chatov sa opýtaj, aké architektonické rozhodnutia padli minulý týždeň. Ak nedokáže odpovedať z repozitára, spoločná pamäť stále zostáva v starých rozhovoroch.
+
+**Opakovaný audit v rovnakých oblastiach** — opakovanie auditu s pôvodným zoznamom kontrol, aby sa dal porovnať stav pred zmenami a po nich.
+
 <a id="vision-to-stages"></a>
 
 ## Od vízie k etapám \{#vision-to-stages}

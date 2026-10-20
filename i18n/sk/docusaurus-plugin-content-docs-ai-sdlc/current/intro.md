@@ -70,12 +70,13 @@ Na záver ešte úprimná poznámka k samotnému diagramu. Je to navrhovaný org
 
 ## Kam pokračovať
 
-Časť I je základ — päť lekcií:
+Časť I je základ — šesť lekcií:
 
 1. **[Úzke miesto overovania (verification bottleneck)](./part-1-foundation/verification-bottleneck.md)** — vyššie uvedená téza podložená dôkazmi.
 2. **[Ako čítať dôkazy](./part-1-foundation/reading-the-evidence.md)** — stupnica hodnotenia a spôsoby, akými sekundárna vrstva skresľuje oboma smermi.
 3. **[Príprava je dôležitejšia než model](./part-1-foundation/preparation-over-model.md)** — prečo je dôležitejšie, čo agentovi odovzdáš, než ktorému agentovi to odovzdáš.
 4. **[Pamäť projektu a vrstvenie znalostí](./part-1-foundation/project-memory-and-tiering.md)** — trvalý kontext, s ktorým flotila pracuje.
 5. **[Pravidlá, ktoré platia](./part-1-foundation/rules-that-hold.md)** — premena konvencií na obmedzenia, ktorých dodržiavanie vynucuje stroj.
+6. **[Slučka v existujúcom projekte](./part-1-foundation/existing-codebase.md)** — rovnaký základ aj pre kód, ktorý už existuje: najprv audit, potom slučka.
 
 Začni 1. lekciou: dokazuje tvrdenie, na ktorom stojí zvyšok kurzu.

@@ -15,10 +15,11 @@ vychádza z nej celý zvyšok kurzu.
 
 Časť má dve línie. Prvé dve lekcie ti pomôžu určiť, čomu možno veriť. Dostaneš namerané dáta, podľa ktorých
 objem výstupu rastie, no kvalita aj porozumenie klesajú a sebahodnotenie zlyháva. Zároveň získaš nástroj,
-ktorým každé tvrdenie o tejto téme zaradíš podľa sily dôkazu. Ďalšie tri lekcie tvoria samotný základ:
-prípravu, ktorú agentovi poskytneš, pamäť, s ktorou pracuje, a pravidlá, ktoré nedokáže obísť presviedčaním.
+ktorým každé tvrdenie o tejto téme zaradíš podľa sily dôkazu. Ďalšie štyri lekcie tvoria samotný základ:
+prípravu, ktorú agentovi poskytneš, pamäť, s ktorou pracuje, pravidlá, ktoré nedokáže obísť presviedčaním,
+a spôsob, ako všetky tri uplatniť na kód, ktorý už existuje.
 
-Tieto tri súčasti pripravuješ vopred a všetky majú **obmedzenú životnosť**. Harness (lešenie agenta) je
+Prvé tri z týchto súčastí pripravuješ vopred a všetky majú **obmedzenú životnosť**. Harness (lešenie agenta) je
 postavený na predpokladoch o modeli, ktoré so zlepšovaním modelov prestávajú platiť. Pamäťový súbor nezostáva
 iba uložený: model ho dostáva pri každom kroku znova a podľa meraní to zvyšuje náklady na inferenciu o viac
 než 20% na krok. Bez vlastníka pravidlá postupne strácajú konzistentnosť, až napokon dva súbory, ktoré oba
@@ -41,6 +42,8 @@ zásade „príprava je dôležitejšia než model“ vynechávajú.
   znalostí, nie pridávanie ďalších materiálov.
 - **[Pravidlá, ktoré platia](./rules-that-hold.md)** — pokyn nie je kontrola. Agent optimalizuje práve to, čo
   kontroluješ, preto vykonateľné pravidlo nikdy nesmie zostať iba zapísané.
+- **[Slučka v existujúcom projekte](./existing-codebase.md)** — väčšinou začínaš s kódom, ktorý už existuje:
+  najprv ho prever auditom a zachyť jeho správanie testami, než ho agent začne meniť. Potom zaveď slučku.
 
 ## Predpoklady
 
@@ -59,8 +62,8 @@ podľa skutočných potrieb úlohy a vykonateľné pravidlá.
 
 :::note[Stav]
 
-I. časť je hotová — publikovaných je všetkých päť lekcií. Nemá samostatnú prehĺbenú druhú časť. Látku,
-ktorá by do nej patrila, preberajú priamo časti II–V a každú z piatich myšlienok uplatňujú v jednej z etáp
+I. časť je hotová — publikovaných je všetkých šesť lekcií. Nemá samostatnú prehĺbenú druhú časť. Látku,
+ktorá by do nej patrila, preberajú priamo časti II–V a každú z týchto myšlienok uplatňujú v jednej z etáp
 slučky.
 
 :::

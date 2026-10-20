@@ -15,11 +15,12 @@ part the rest of the course leans on.
 
 It runs in two movements. The first two lessons are about knowing what is true — the measured picture
 (throughput up, quality and comprehension down, self-assessment broken) and the instrument for grading any
-claim you meet about it. The other three are the foundation itself: the setup you hand an agent, the memory it
-works against, and the rules it cannot talk its way past.
+claim you meet about it. The other four are the foundation itself: the setup you hand an agent, the memory it
+works against, the rules it cannot talk its way past, and how to install all three on code that already
+exists.
 
-Those last three share a shape worth carrying into them. Each is something you prepare in advance, and each
-one **decays**. A harness encodes assumptions about the model that expire as models improve. A memory file is
+The first three of them share a shape worth carrying into them. Each is something you prepare in advance, and
+each one **decays**. A harness encodes assumptions about the model that expire as models improve. A memory file is
 not stored but billed: it is re-sent on every turn, at a measured cost of over 20% more inference spend per
 turn. A rules corpus with no owner rots until two authoritative files prescribe opposite architectures.
 Preparation is never one-time — that is the part of "preparation over model" people drop.
@@ -37,6 +38,8 @@ Preparation is never one-time — that is the part of "preparation over model" p
   writing more down is the failure mode too. Tier the knowledge instead of producing more of it.
 - **[Rules that hold](./rules-that-hold.md)** — an instruction is not a control. What an agent optimizes is
   exactly what you check, so a rule you can execute should never merely be written down.
+- **[Bringing the loop to an existing codebase](./existing-codebase.md)** — most adoption starts from code that
+  is already there: audit it and pin its behaviour before an agent changes it, then install the loop.
 
 ## Prerequisites
 
@@ -54,8 +57,8 @@ tiered by what the task actually needs, and rules that execute.
 
 :::note[Status]
 
-Part I is complete — all five lessons are published. It carries no deep-dive second pass; the material that
-would go there is picked up directly by Parts II–V, which apply each of these five ideas to a stage of the
+Part I is complete — all six lessons are published. It carries no deep-dive second pass; the material that
+would go there is picked up directly by Parts II–V, which apply each of these ideas to a stage of the
 loop.
 
 :::
