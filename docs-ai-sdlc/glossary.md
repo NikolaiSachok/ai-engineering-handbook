@@ -429,6 +429,28 @@ its section here. The list grows as the course does.
 
 **Amdahl bound on token savings** — a token discount lowers generation and verification, both billed in tokens, but cannot touch human review, which is paid in salary. So it can reduce the total cost of a change by at most the fraction that is not review; when review dominates, the token bill is the smallest lever. *(deep dive)*
 
+## The model is a dependency: pinning, upgrades, exit, and data terms \{#the-model-is-a-dependency-pinning-upgrades-exit-and-data-terms}
+
+**Model snapshot vs moving alias** — a snapshot identifies a fixed model version; an alias points to a version the supplier can replace. The identifier's format alone does not establish which kind it is.
+
+**Model pinning** — selecting a specific snapshot in configuration and recording its ID on every change the agent produces. It limits alias-driven version changes; retirement, a supplier routing a deprecated ID to its replacement, platform auto-upgrades and infrastructure changes remain possible.
+
+**Re-qualification (of a model upgrade)** — checking a candidate against repeated regression cases with the judge held fixed, then measuring first-try success rate on a representative task sample before staged adoption. Qualify a judge upgrade separately against verdicts a human has confirmed, then revisit harness workarounds the new model makes unnecessary.
+
+**Item-level regression** — a previously passing case becoming a consistent failure after a model change, beyond the variation seen across repeated runs. Aggregate gains can hide it.
+
+**Deprecation notice period** — the interval a supplier gives you before retiring a model. Qualification and migration must fit inside it; some published policies state no minimum.
+
+**Auto-upgrade** — a platform automatically replacing a deployed model version, at retirement or when a new default becomes available, according to the deployment's settings and lifecycle policy.
+
+**Tested exit (fallback provider)** — an alternate provider or self-hosted model behind the same call seam, exercised against your regression set on a schedule. Measure its first-try success rate separately on representative work before you need to switch.
+
+**Vendor-portable memory** — project rules, decisions, architecture and briefs kept in repository files or a knowledge store outside an assistant's chat history, so a replacement can read them without the old account.
+
+**Data terms (training use, retention, zero data retention, residency, DPA)** — the dated terms governing training use, storage duration, processing residency and personal-data processing for a specific provider and tier. A data processing addendum defines processing on the customer's behalf; zero data retention is a separate arrangement with its own eligibility and exceptions.
+
+**Routing by break-even** — assigning a task class using representative first-try success rates and the inequality `p_cheap / p_expensive > price_cheap / price_expensive`, with human review of failed attempts added to the cost decision. Data requirements can independently justify a route.
+
 ## The enterprise tier: audit, provenance, and what's required \{#the-enterprise-tier-audit-provenance-and-whats-required}
 
 **Demonstrable control** — a control someone other than its operator can show, afterwards, to have run. At this distance from the blast radius, a control that cannot be evidenced is indistinguishable from one that never existed.

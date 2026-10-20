@@ -7,7 +7,8 @@ sidebar_label: Part overview
 # Part V — Scale & Governance
 
 Everything so far described one stream of work: a loop, a chain of gates, and a platform under it. Part V asks
-what breaks when you run many at once — and the answer is four ceilings, none of which is compute.
+what breaks when you run many at once. The answer is four ceilings, none of which is compute, plus one risk
+that does not wait for scale: the model is someone else's dependency.
 
 *Where this sits on [the course map](../intro.md#course-map): the three maturity tiers, read across every element of the loop.*
 
@@ -25,7 +26,9 @@ usually not stronger, only demonstrable.
 
 The through-line is Part I's, arriving in different currencies. Doubling the agents doubles the output and
 the review queue — but the capacity to work that queue, the gate chain and the human router, does not double
-with them. Every ceiling here is that one constraint, priced differently.
+with them. Every ceiling here is that one constraint, priced differently. The model-dependency lesson is
+the exception: its risk sits on the supplier's side of the API call, where the service can change or
+disappear while your own capacity stays the same.
 
 ## What's inside
 
@@ -39,6 +42,9 @@ with them. Every ceiling here is that one constraint, priced differently.
   a run of fixes on fixes as the trigger to redesign, not to rewrite.
 - **[Cost and the economics of agent work](./cost-economics/index.md)** — cost per accepted change, not per
   token. Context is the line item people forget, and human review is the input that does not scale with spend.
+- **[The model is a dependency: pinning, upgrades, exit, and data terms](./model-dependency.md)** — pin the
+  version, qualify upgrades, and keep an exit you have tested. Your API call can still succeed after the
+  workflow it supports has stopped working.
 - **[The enterprise tier: audit, provenance, and what's required](./enterprise-tier/index.md)** — the closing
   lesson: non-repudiation, provenance that names the agent and model, and separation of duties when both
   parties are agents.
@@ -50,20 +56,25 @@ lesson here caps fleet size with it directly. Then Part I's *Project memory* and
 the second lesson is entirely about what becomes of both once the code moves out from under them. The third
 assumes Part II's critic loop, because it hands the critic the decision log as well as the diff. The cost
 lesson prices Part III's semantic gates and borrows Part IV's per-task credentials to make spend
-attributable, and the closing lesson assumes Part III's separation-of-duties argument.
+attributable. The model-dependency lesson routes with the [cost deep dive's break-even](./cost-economics/deep-dive.md),
+treats Part I's [project memory](../part-1-foundation/project-memory-and-tiering.md) as what makes leaving a
+provider possible, and picks up where Part IV's [secrets](../part-4-platform/secrets.md) and
+[environments](../part-4-platform/environments-migrations-data.md) lessons stopped, with what happens to data
+that reaches the supplier. The closing lesson assumes Part III's separation-of-duties argument.
 
 ## What changes after this part
 
 You can size a fleet to what the chain absorbs rather than to the budget, and say which fraction of the work
 is irreducibly serial. You can put a bill on a rules corpus instead of only a quality complaint. You can
-make a load-bearing boundary fail the build instead of trusting every fix to respect it. And you can
-tell an enterprise control that exists for **capability** from one that exists for **proof** — which is the
-distinction that lets you argue for the first and stop dismissing the second as ceremony.
+make a load-bearing boundary fail the build instead of trusting every fix to respect it. You can qualify a
+model upgrade the way you would any other dependency upgrade, and leave a provider on your own schedule rather
+than theirs. And you can tell an enterprise control that exists for **capability** from one that exists for
+**proof** — which is the distinction that lets you argue for the first and stop dismissing the second as ceremony.
 
 :::note[Status]
 
-Part V is complete — all five lessons are published, and it closes the course. Two of them, **Cost and the
+Part V is complete — all six lessons are published, and it closes the course. Two of them, **Cost and the
 economics of agent work** and **The enterprise tier**, carry a deep-dive second pass; follow the "Next — part
-2 of the lesson" pointer at the bottom of either lesson to reach it. The other three stand as single pages.
+2 of the lesson" pointer at the bottom of either lesson to reach it. The other four stand as single pages.
 
 :::
