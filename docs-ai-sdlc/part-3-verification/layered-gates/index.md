@@ -65,6 +65,14 @@ lock the order — reviewing whether a screen *looks* right before checking whet
 aesthetic pass critiquing screens that a behavior fix will invalidate anyway. Order the chain by how much a fix
 at each stage moves the surface underneath it, most-invalidating first.
 
+Apply the same exercise to decomposition. Unit tests and a per-task critic can use different mechanisms and
+still share a structural blind spot: each checks one unit against its own done-condition. Neither check, as
+scoped, asks whether two units agree at their seam. More assertions inside either unit leave that relationship
+unchecked. Choose the next gate to cross the boundary: a contract check for the expectations shared by provider
+and consumer, a golden comparison for behaviour a refactor must preserve, or a critical journey through the
+joined pieces, so the gate checks the junction between units. The [atomic-tasks
+lesson](../../part-2-loop/atomic-tasks.md) makes budgeting those seam checks part of decomposition itself.
+
 :::tip[▶ Video]
 
 <YouTube id="nthEXs12nFE" title="Cybersecurity Architecture: Application Security — IBM Technology" />
@@ -88,6 +96,12 @@ mature form runs both and treats a hit from *either* as real. In the chain above
 graded serious *even when the general-purpose reviewer stays silent*, because the reviewer's silence is not
 evidence — it has no knowledge of the class, and absence of a flag from a gate blind to the class means nothing.
 
+A second LLM reviewer adds coverage only where it catches failures the first misses. Models trained on
+overlapping corpora can share blind spots, and even different families can agree on wrong answers. The
+[critic lesson](../../part-2-loop/plan-review-implement-critic.md) gives the evidence; the
+[deep dive](./deep-dive.md) gives the planted-defect method for measuring added detection. Name the shared blind
+spot: the second model's silence cannot close a gap it shares with the first.
+
 This course applies the same layering to its own leak defense: a cheap deterministic pass (a wordlist grep,
 run on every commit) composed with an expensive judgment pass (a semantic audit against a private domain policy),
 stacked precisely because each is blind to what the other sees — the grep cannot catch a domain leak phrased in
@@ -104,13 +118,14 @@ diversity, and every gate's blind spot must be named.** What changes is who name
   least one deterministic gate with one semantic one. *The failure it prevents:* trusting a quiet gate you have
   never watched fail, and shipping the whole class it cannot see.
 - **Small-team.** The gates are named checks in CI, and the blind-spot map is a shared artifact reviewed like any
-  other design. *The failure it prevents:* two people each assuming the *other's* favourite gate covers a class
-  that, in mechanism, neither one can see.
+  other design, with contract gates at seams between teams. *The failure it prevents:* two people each assuming
+  the *other's* favourite gate covers a class that, in mechanism, neither one can see.
 - **Enterprise.** The layers are enforced and provably independent, and the blind-spot review is a deliberate
   design exercise with an owner — the security world's [defense in depth](https://csrc.nist.gov/glossary/term/defense_in_depth),
-  where no single control is trusted and each assumes the one in front of it will sometimes fail. *The failure it
-  prevents:* a compliance chain that is long but mechanistically uniform — six gates that are all the same kind of
-  gate, blind to the same class, and therefore, against that class, no better than one. The number matches
+  where no single control is trusted and each assumes the one in front of it will sometimes fail. Record each
+  model reviewer's catches on a seeded defect set and the second reviewer's added detection as a property of
+  the gate. *The failure it prevents:* a compliance chain that is long but mechanistically uniform — six gates
+  that are all the same kind of gate, blind to the same class, and therefore, against that class, no better than one. The number matches
   the chain above; the gates do not.
 
 ## What to take away
@@ -125,6 +140,9 @@ diversity, and every gate's blind spot must be named.** What changes is who name
   fail on a defect you planted, you know it is quiet, not that it works.
 - Compose a deterministic gate with a semantic one and treat a hit from either as real. Silence from a gate that
   is blind to the class is not a pass.
+- Two model reviewers add coverage only where their failures differ. Measure the second reviewer's added
+  detection before counting it as another layer.
+- Per-unit gates share a blind spot at the seam. Add a check across the boundary when you decompose the work.
 
 **[New terms](../../glossary.md#layered-gates)**: layered gates, structural blind spot, mechanism diversity, thoroughness vs coverage, deterministic vs semantic gate, defense in depth.
 

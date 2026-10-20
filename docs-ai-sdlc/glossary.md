@@ -105,6 +105,14 @@ its section here. The list grows as the course does.
 
 **Orchestrator and ephemeral workers** — a split where a long-lived orchestrator holds the plan, context, and done-conditions while short-lived workers each take one atomic task and return a compressed result; the orchestrator's job is verification, not generation.
 
+**Seam** — the junction between units of decomposed work, where modules, contracts, data or user journeys must agree. Per-unit done-conditions leave that relationship unchecked unless you budget a check across it.
+
+**Consumer-driven contract test** — an automated check built from the parts of a provider's contract each consumer depends on, run on every provider build so a change that would break a consumer fails the build before it ships. ↗ [martinfowler.com](https://martinfowler.com/articles/consumerDrivenContracts.html)
+
+**Characterization (golden) test** — a test that records existing software's observed behaviour and compares later output against it to detect changes. The baseline records what the code does, not what it should do; correctness is not guaranteed, so a person decides whether a detected change is acceptable. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Characterization_test)
+
+**The four defences against regression** — documentation, a directive preserving working code and contracts, independent role separation, and tests, as reported by practitioner Andrey Beloborodov. This course classes the first three as inferential and tests as computational; a directive becomes computational only through enforcement. ↗ [Source](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/)
+
 ## Artifacts as interface \{#artifacts-as-interface}
 
 **Artifact as interface** — the rule that stages hand off through written artifacts, not conversation: what crosses a boundary must be a thing someone can inspect, diff, and check against a done-condition.
@@ -122,6 +130,10 @@ its section here. The list grows as the course does.
 **Plan-first review** — reviewing the plan before implementation, the highest-leverage check because a mistake in a plan costs a sentence to fix and the same mistake in code costs a rewrite.
 
 **Critic gate** — a check the work cannot pass without clearing (a hook, not a suggestion), run by something independent of the work and unable to edit it; an agent grading its own output optimizes the check instead of doing the job.
+
+**Correlated error** — the tendency of models to make the same mistakes, including across model families. A fresh context removes transcript dependence without guaranteeing error independence; a second reviewer adds coverage only where it catches failures the first misses. ↗ [arXiv](https://arxiv.org/abs/2506.07962)
+
+**Critic lens** — a reviewer's stated question, such as code correctness, operation, business logic or security, paired with the information needed to answer it. Use the lens to design disagreement deliberately; changing model families does not guarantee it. Measure what the second reviewer catches beyond the first on seeded defects.
 
 ## Roles and the human \{#roles-and-the-human}
 

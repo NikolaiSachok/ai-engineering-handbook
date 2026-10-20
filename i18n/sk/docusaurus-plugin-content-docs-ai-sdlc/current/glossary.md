@@ -118,6 +118,14 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Orchestrátor a dočasní vykonávatelia** — model, v ktorom dlhodobo fungujúci orchestrátor udržiava plán, kontext a podmienky dokončenia, zatiaľ čo dočasní vykonávatelia dostanú vždy jednu atomárnu úlohu a vrátia skrátený výsledok; úlohou orchestrátora je overovať, nie tvoriť.
 
+**Styčné miesto** — miesto spojenia jednotiek dekomponovanej práce, kde musia byť zladené moduly, kontrakty, dáta alebo používateľské scenáre. Podmienky dokončenia jednotlivých jednotiek tento vzťah neoverujú, pokiaľ nenaplánuješ aj kontrolu, ktorá prekročí ich spoločnú hranicu.
+
+**Kontraktový test riadený konzumentom** — automatizovaná kontrola vytvorená z tých častí kontraktu poskytovateľa, na ktoré sa jednotliví konzumenti spoliehajú. Spúšťa sa pri každom builde poskytovateľa, aby zmena, ktorá by niektorému konzumentovi narušila fungovanie, zastavila build ešte pred nasadením. ↗ [martinfowler.com](https://martinfowler.com/articles/consumerDrivenContracts.html)
+
+**Charakterizačný test** — zaznamená pozorované správanie existujúceho softvéru a porovnáva s ním neskoršie výstupy. Východiskom je to, čo kód robí, nie čo by robiť mal. Test teda nepotvrdzuje správnosť správania, preto o prijateľnosti zmeny rozhoduje človek. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Characterization_test)
+
+**Štyri obrany proti regresii** — dokumentácia, direktíva chrániaca funkčný kód a používané kontrakty, nezávislé oddelenie rolí a testy, ako ich opisuje Andrej Beloborodov. Kurz zaraďuje prvé tri medzi kontroly založené na úsudku a testy medzi výpočtové kontroly; direktíva sa stáva výpočtovou kontrolou až vynútením. ↗ [Zdroj](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/)
+
 <a id="artifacts-as-interface"></a>
 
 ## Artefakty ako rozhranie \{#artifacts-as-interface}
@@ -139,6 +147,10 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 **Kontrola plánu pred implementáciou** — kontrola plánu ešte pred implementáciou, ktorá prináša najväčší úžitok, pretože chybu v pláne opravíš jednou vetou, no rovnaká chyba v kóde znamená prepisovanie.
 
 **Brána kritika** — povinná kontrola, cez ktorú práca neprejde bez úspešného splnenia: je to hook, nie odporúčanie. Spravuje ju nezávislá strana, ktorá nemôže upravovať posudzovaný výsledok; ak agent hodnotí vlastný výstup, namiesto vykonania úlohy ho optimalizuje na kontrolu.
+
+**Korelované chyby** — sklon modelov robiť rovnaké chyby, a to aj naprieč rodinami. Čistý kontext odstráni závislosť od záznamu práce, modely však aj potom môžu robiť rovnaké chyby. Druhý kontrolór rozširuje pokrytie iba tam, kde nájde chyby, ktoré prvému unikli. ↗ [arXiv](https://arxiv.org/abs/2506.07962)
+
+**Uhol pohľadu kritika** — konkrétna otázka, ktorú má kontrolór zodpovedať, spolu s informáciami potrebnými na odpoveď; môže ísť o správnosť kódu, prevádzku, biznis logiku alebo bezpečnosť. Otázku aj vstupy vyberáš tak, aby kritici skúmali odlišné problémy. Ani po zmene rodiny modelu nemusia dospieť k odlišným záverom. Prínos druhého kritika sa meria na zámerne vložených chybách: počítajú sa tie, ktoré prvému unikli.
 
 <a id="roles-and-the-human"></a>
 
