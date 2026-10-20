@@ -602,7 +602,8 @@ const config: Config = {
   // Locale routing (out-of-scope fallback, first-visit detection), injected as a blocking
   // <head> script so it runs before paint (no flash-of-wrong-language). See
   // `localeDetectionScript`; client-side navigation reaches it via clientModules.
-  clientModules: ['./src/clientModules/localeRouting.ts'],
+  // hashLanding keeps a `#id` deep link on its section while Mermaid diagrams render (#816).
+  clientModules: ['./src/clientModules/localeRouting.ts', './src/clientModules/hashLanding.ts'],
 
   headTags: [
     {

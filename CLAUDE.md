@@ -219,7 +219,9 @@ drift).
   (`## Ingestion — chunking` → `ingestion--chunking`). That mismatch dropped readers at the top of the
   glossary instead of the entry in all three locales until #300; #813 extended the ids to every heading.
   A new heading takes its English auto-slug as its id (lowercase ASCII), and keeps it when reworded.
-  A locale may subdivide below H2; its extra H3/H4 headings carry their own English-style ids, unique on the page.
+  A locale may subdivide below H2; its extra H3/H4 headings carry their own English-style ids (a short gloss
+  of the heading, not a transliteration, unique on the page), and check 3 requires English's ids to appear
+  in the locale as an ordered, same-level subsequence.
   **The brace must be backslash-escaped** (`\{#id}`, not `{#id}`) — this site sets `future.v4: true`, which
   turns off the MDX-1 heading-id compat escape, so a bare `{` is parsed as a JSX expression and hard-fails
   the build. `scripts/heading-id-check.py` fails a heading without an id, `locale-parity-check.sh` (check 3)
@@ -384,7 +386,7 @@ proportionate to a docs site, no ceremony for its own sake.
 - Any other locale: `npm run start -- --locale <locale>` (e.g. `ru`) — the dev server serves one at a time.
 - Full build over every released locale (must pass before publish): `npm run build`; add
   `HANDBOOK_INCLUDE_UNRELEASED=1` to include the gated locales CI validates.
-- Locale-flip / detection E2E (needs a served prod build): `npm run test:e2e` (detection + locale-scroll +
-  tablet layout) — see `e2e/`.
+- E2E (needs a served prod build): `npm run test:e2e` (locale detection, locale-scroll, layout, locale
+  fallback, deep-link landing below diagrams) — see `e2e/`.
 - Deploy config in `docusaurus.config.ts` (`url`, `baseUrl`, `organizationName`) and the Pages workflow
   use placeholders — set them before the first deploy.
