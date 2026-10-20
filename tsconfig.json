@@ -4,8 +4,13 @@
 {
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
-    "ignoreDeprecations": "6.0",
+    // TypeScript 7 removed baseUrl, which @docusaurus/tsconfig still sets; unset it and
+    // redeclare the "@site/*" mapping here, since without baseUrl an inherited path
+    // resolves relative to the base config inside node_modules.
+    "baseUrl": null,
+    "paths": {
+      "@site/*": ["./*"]
+    },
     "strict": true
   },
   "exclude": [".docusaurus", "build", "e2e"]
