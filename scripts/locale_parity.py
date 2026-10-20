@@ -104,8 +104,8 @@ def headings(text: str, max_level: int = 2) -> list[int]:
     return out
 
 
-def heading_anchors(text: str) -> list[str]:
-    """The ORDERED sequence of explicit heading ids — `## Some term \\{#some-id}`.
+def heading_anchors(text: str) -> list[tuple[int, str]]:
+    """The ORDERED sequence of explicit heading ids as (level, id) — `## Some term \\{#some-id}`.
 
     An explicit id is a cross-locale CONTRACT, not decoration. A lesson's terms footer links to
     `../glossary.md#some-id` and that one link is shared by every locale, so the id has to name
@@ -124,6 +124,10 @@ def heading_anchors(text: str) -> list[str]:
     build. The escape is therefore the form on disk — but it is markup, not part of the id, so it
     is matched optionally and stripped: a bare `{#id}` must compare equal to `\\{#id}`, or this
     gate would report a mismatch for two headings that name the same anchor.
+
+    The level is returned because a locale may carry headings English does not: check 2 holds
+    H1/H2 equal, and below that a natively-authored locale subdivides its own prose. Since #813
+    every heading carries an id, so such a subsection carries one too — see check 3.
     """
     out, fence = [], False
     for line in strip_frontmatter(text).splitlines():
@@ -132,9 +136,9 @@ def heading_anchors(text: str) -> list[str]:
             continue
         if fence:
             continue
-        m = re.match(r"^#{1,6} .*?\\?\{#([^}\s]+)\}\s*$", line)
+        m = re.match(r"^(#{1,6}) .*?\\?\{#([^}\s]+)\}\s*$", line)
         if m:
-            out.append(m.group(1))
+            out.append((len(m.group(1)), m.group(2)))
     return out
 
 
@@ -443,21 +447,39 @@ def compare_pair(locale: str, released: bool, src: str, tgt: str, rep: Report) -
                 print(f"    {locale}: {b}")
 
         # 3. explicit heading anchors — the ordered id sequence (see heading_anchors())
+        #
+        # English's ids must appear in the locale in the same ORDER. The locale may carry extra ids,
+        # but only on an H3/H4: a natively-authored locale subdivides its own prose below H2 (check
+        # 2 draws the same line), and since #813 such a subsection carries an id of its own. An id
+        # that exists only in the locale names no English section, so no shared link can target it
+        # by mistake; what must not happen is an English id going missing or moving, which is the
+        # insert-shift and swap defect this check exists for.
         aa, ab = heading_anchors(en), heading_anchors(loc)
-        if aa != ab:
+        ea = [i for _, i in aa]
+        shared = [i for _, i in ab if i in set(ea)]
+        extra_h2 = [i for lv, i in ab if i not in set(ea) and lv <= 2]
+        if shared != ea:
             rep.fail(f"{where} — explicit heading id sequence differs (inbound "
                      f"`#anchor` links into {locale} would land on the wrong heading):")
-            gone = [i for i in aa if i not in ab]
-            extra = [i for i in ab if i not in aa]
+            gone = [i for i in ea if i not in shared]
             if gone:
                 print(f"    missing in {locale}: {gone}")
-            if extra:
-                print(f"    only in {locale}:    {extra}")
-            if not gone and not extra:
+            else:
                 print(f"    same ids, different ORDER — first divergence at index "
-                      f"{next(i for i, (x, y) in enumerate(zip(aa, ab)) if x != y)}:")
-                print(f"    en:     {aa}")
-                print(f"    {locale}: {ab}")
+                      f"{next((i for i, (x, y) in enumerate(zip(ea, shared)) if x != y), len(ea))}:")
+                print(f"    en:     {ea}")
+                print(f"    {locale}: {shared}")
+        if extra_h2:
+            rep.fail(f"{where} — H1/H2 id(s) only in {locale}: {extra_h2}. A locale may add its own "
+                     f"ids only on H3/H4 subsections; an H1/H2 is the page's shared section contract")
+        # A shared id must also sit at the same LEVEL. That is what catches ids applied by index to
+        # a locale with an extra subsection: the shift moves an English H2's id onto the locale's
+        # H3, and the order alone would still look right. (A shift between two same-level
+        # subsections is not structurally visible; it is a reading check.)
+        la = dict((i, lv) for lv, i in aa)
+        moved = [f"{i} (en H{la[i]}, {locale} H{lv})" for lv, i in ab if i in la and la[i] != lv]
+        if moved:
+            rep.fail(f"{where} — heading id(s) at a different level in {locale}: {moved}")
 
         # 4. component counts
         ca, cb = components(en), components(loc)
@@ -757,6 +779,52 @@ SELF_TEST_CASES = [
         },
         0,
         "1 file(s) in structural parity",
+    ),
+    # --- explicit heading ids (check 3). Since #813 every heading carries one, including the H3s a
+    # natively-authored locale adds on its own; the first case is the control that those pass.
+    (
+        "ids: locale-only H3 with its own id → passes",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\n## A \\{#a}\n\n## B \\{#b}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md": "# T\n\n## А \\{#a}\n\n### Своё \\{#ru-own}\n\n## Б \\{#b}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        0,
+        "1 file(s) in structural parity",
+    ),
+    (
+        "ids: an English id missing in the locale → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\n## A \\{#a}\n\n### C \\{#c}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md": "# T\n\n## А \\{#a}\n\n### Ц \\{#other}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "missing in ru: ['c']",
+    ),
+    (
+        "ids: same ids, swapped order → FAILS",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\n## A \\{#a}\n\n## B \\{#b}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md": "# T\n\n## Б \\{#b}\n\n## А \\{#a}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "different ORDER",
+    ),
+    (
+        "ids: applied by index past a locale-only H3 → FAILS on the level",
+        [("default", "/a", ["en", "ru"])],
+        {
+            "docs/x.md": "# T\n\n## A \\{#a}\n\n## B \\{#b}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current/x.md": "# T\n\n## А \\{#a}\n\n### Своё \\{#b}\n\n## Б \\{#c}\n",
+            "i18n/ru/docusaurus-plugin-content-docs/current.json": "{}\n",
+        },
+        1,
+        "at a different level",
     ),
     # --- frontmatter. The first case is the one that shipped: a rebuilt page lost its whole block
     # and every other check in this file passed. The third is the anti-false-positive control —
