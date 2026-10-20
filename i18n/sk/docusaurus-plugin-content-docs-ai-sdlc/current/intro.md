@@ -54,7 +54,7 @@ Množstvo výstupov preukázateľne rastie. Či rastie aj *hodnota*, zatiaľ nie
 
 Kurz sa preto zaväzuje k metóde, nie k záveru:
 
-- Každé tvrdenie dostane stupeň — `MEASURED` (namerané: potvrdila ho kontrolovaná štúdia), `REPORTED` (hlásené: podľa praxe odborníkov platí) alebo `ASSERTED` (tvrdené: niekto ho obhajuje) — a stupeň je vždy uvedený priamo v texte a nikdy sa potichu nevynechá, aby tvrdenie mohlo pôsobiť ako fakt. (Celý systém hodnotenia je definovaný v 2. lekcii.)
+- Každé tvrdenie patrí na jeden z troch stupňov rebríka dôkazov — namerané, uvádzané z praxe alebo tvrdené bez merania — a stupeň nesie samotná formulácia: „štúdia zistila“, „odborníci uvádzajú“, „niekto tvrdí“. Nikdy sa potichu nevynechá, aby sa domnienka nemohla nenápadne vydávať za fakt. (Celý systém hodnotenia je definovaný v 2. lekcii.)
 - Každé číslo odkazuje na primárny zdroj s dátumom. Na čísla od dodávateľov sa vzťahuje jednoduché pravidlo: kto nástroj predáva, nemôže byť zároveň tým, kto ho meria.
 - Sekundárna vrstva zdrojov skresľuje *oboma* smermi — nadšenci čísla nafukujú, skeptici lipnú na zastaranom údaji a odmietajú ho prehodnotiť. Náprava je v oboch prípadoch rovnaká: vrátiť sa k primárnym zdrojom, ohodnotiť zistenia a jasne to uviesť. Práve tomuto prístupu kurz učí.
 
@@ -64,9 +64,9 @@ Celým kurzom sa tiahne jeden rámec — **tri úrovne zrelosti**: postup zostá
 
 Mnohé schémy — vrátane materiálov od odborníkov z praxe, z ktorých tento kurz čerpá — zobrazujú postupnosť krokov, ktorá sa končí „produkciou“ a spätnú väzbu už neobsahuje. Kurz sa tento nedostatok snaží napraviť. Najväčšou štrukturálnou medzerou v súčasných textoch je, že slučka učenia sa uzatvára na internom QA, a nie na živej prevádzke. Dobre nastavená slučka chybnú zmenu sama odhalí a vráti späť ešte predtým, ako sa musí ozvať používateľ.
 
-Jeden výsledok merania naznačuje, že hodnota sa ukrýva práve v hrane spätnej väzby. Správa [DORA](https://dora.dev/dora-report-2025/) z roku 2025 zistila negatívny vzťah medzi používaním AI a *stabilitou* dodávania — zrýchlenie môže odhaliť slabiny v nadväzujúcich častiach procesu. Tento výsledok však treba čítať pozorne: stupeň `MEASURED` má iba v slabom zmysle sebahodnotiaceho prieskumu s približne 5 000 respondentmi. Ide o vnímanie, nie o telemetriu, a výsledok neoprávňuje tvrdiť ani „AI zrýchľuje tímy“, ani „AI spomaľuje tímy“. Oprávňuje presne na jediný záver: uzatváracia hrana si zaslúži pozornosť, ktorú jej venujú Časti IV a V.
+Jeden výsledok merania naznačuje, že hodnota sa ukrýva práve v hrane spätnej väzby. Správa [DORA](https://dora.dev/dora-report-2025/) z roku 2025 zistila negatívny vzťah medzi používaním AI a *stabilitou* dodávania — zrýchlenie môže odhaliť slabiny v nadväzujúcich častiach procesu. Tento výsledok však treba čítať pozorne: pochádza iba zo sebahodnotiaceho prieskumu s približne 5 000 respondentmi. Ide o vnímanie, nie o telemetriu, a výsledok neoprávňuje tvrdiť ani „AI zrýchľuje tímy“, ani „AI spomaľuje tímy“. Oprávňuje presne na jediný záver: uzatváracia hrana si zaslúži pozornosť, ktorú jej venujú Časti IV a V.
 
-Na záver ešte úprimná poznámka k samotnému diagramu. Je to organizačný rámec so stupňom `ASSERTED` — vlastný spôsob kurzu, ako usporiadať materiál, nie preukázateľne optimálny životný cyklus. Používaj ho na orientáciu; necituj ho ako výsledok.
+Na záver ešte úprimná poznámka k samotnému diagramu. Je to navrhovaný organizačný rámec — vlastný spôsob kurzu, ako usporiadať materiál, nie preukázateľne optimálny životný cyklus. Používaj ho na orientáciu; necituj ho ako výsledok.
 
 ## Kam pokračovať
 

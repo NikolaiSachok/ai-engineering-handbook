@@ -71,8 +71,8 @@ who did not picture the attack.
 - **The mounted runtime socket.** Bind-mounting the container runtime's control socket into the box hands
   anything inside it the ability to start a new, unconfined container — a full escape through the front door.
   It is a well-known misconfiguration precisely because it is so tempting for tooling that wants to manage
-  containers (`REPORTED`, [OWASP's Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
-  makes it Rule #1: access to the socket is equivalent to unrestricted root on the host).
+  containers — [OWASP's Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
+  makes it Rule #1: access to the socket is equivalent to unrestricted root on the host.
 - **The over-broad egress allowlist.** Allowlisting a whole cloud or CDN range to reach one service inside it
   reopens the exfiltration path, because the same range will proxy a request onward to anywhere.
 - **`--privileged`, or piling on capabilities.** Granting the box broad kernel capabilities to make one thing

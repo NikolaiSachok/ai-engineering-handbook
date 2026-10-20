@@ -36,15 +36,14 @@ pass without clearing. And it cannot be the same agent that produced the work, b
 the check instead of doing the job, and it will find the shortcut. So the critic has to be independent, and it
 must not be able to edit what it critiques: separation of duties, restated for the loop. Simon Willison puts the
 human version as a flat rule —
-[don't file pull requests with code you haven't reviewed yourself](https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/)
-(`REPORTED`). The critic gate is where Part I's "review is the control point" stops being a slogan and becomes a
+[don't file pull requests with code you haven't reviewed yourself](https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/). The critic gate is where Part I's "review is the control point" stops being a slogan and becomes a
 step you can't skip.
 
 ## When the loop is too much
 
 The loop is priced for change-risk, and not every task carries it. Run the full plan-review-implement-critic
 ceremony on a one-line fix and you get the sledgehammer [Böckeler ran into](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) —
-sixteen acceptance criteria for a small bug (`REPORTED`). The judgment is the one from Lesson 2: size the process to
+sixteen acceptance criteria for a small bug. The judgment is the one from Lesson 2: size the process to
 what is at stake. A throwaway script does not need a critic gate; a change to production authentication needs
 both gates and a human standing at the second one. The loop is a control system — you scale it to the blast
 radius, not to every keystroke.

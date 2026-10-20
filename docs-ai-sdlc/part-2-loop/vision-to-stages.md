@@ -46,11 +46,10 @@ me?" Size the stage to *that*.
 The common failure is to decompose by what the model seems able to do in one confident pass — a whole feature, a
 whole module — because it *offers* to, and the offer is persuasive. That inverts control. You end up with stages
 sized to the generator's reach instead of to your ability to check them, and the gap between "looks done" and "is
-done" widens exactly as the stakes rise. Birgitta Böckeler's blunt version of the same trap: an agent asked to do
+done" widens exactly as the stakes rise. Birgitta Böckeler gives a blunt account of the same trap from her own practice: an agent asked to do
 a large, loosely-bounded chunk turns
 [a small bug into "4 user stories with a total of 16 acceptance criteria"](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) —
-ceremony that looks like rigor while the one thing that mattered, a check you could actually run, never arrives
-(`REPORTED`, her own practice).
+ceremony that looks like rigor while the one thing that mattered, a check you could actually run, never arrives.
 
 The discipline is the reverse: let the size of the check set the size of the stage. Generation is cheap enough
 that cutting a feature into six verifiable stages costs you almost nothing in output and buys you six places to
@@ -67,14 +66,13 @@ verification is in the shape of the plan.
 
 ## The evidence, honestly graded
 
-The field is early here, and the honest grade on most of it is `REPORTED`, not `MEASURED` — practitioners
-converging, not a controlled trial. But the convergence is worth stating, because it points one way. Every
+The field is early here, and most of the evidence comes from practitioners who agree, not a controlled trial.
+But the convergence is worth stating, because it points one way. Every
 public account of spec-and-stage-driven development that *succeeds* is a **creation** story — a greenfield app,
 a fresh feature — and nearly every account that *fails* is a **maintenance** story, where the plan met a
-codebase that already existed and drifted from it. Colin Eberhardt's hands-on trial reaches the same
+codebase that already existed and drifted from it. Colin Eberhardt's write-up of his hands-on trial reaches the same
 uncomfortable place from the inside: the ceremony helps most exactly where the work is new and bounded, and
-[reads as "reinvented waterfall" when it isn't](https://blog.scottlogic.com/2025/11/26/putting-spec-kit-through-its-paces-radical-idea-or-reinvented-waterfall.html)
-(`REPORTED`).
+[reads as "reinvented waterfall" when it isn't](https://blog.scottlogic.com/2025/11/26/putting-spec-kit-through-its-paces-radical-idea-or-reinvented-waterfall.html).
 
 The falsifiable prediction the course is willing to be judged on: **stage-driven planning survives as a technique
 for well-bounded increments and does not survive as a methodology for evolving whole systems.** That is not a
@@ -116,7 +114,7 @@ describe.** What changes is how independent and how enforced that check has to b
   almost nothing and buy six early places to catch a problem.
 - This is the verification bottleneck moved to planning time: a plan with checkable stages has pre-decided where
   verification happens and whether it can succeed.
-- Honest grade: mostly `REPORTED`. The convergent signal — success is a creation story, failure a maintenance
+- The evidence is mostly practitioner reports. The convergent signal — success is a creation story, failure a maintenance
   story — is a reason to bound your stages to real increments, not to spec a whole system up front.
 
 **[New terms](../glossary.md#vision-to-stages)**: verifiable stage, done-condition, checkable vs inferential control, stage sizing.

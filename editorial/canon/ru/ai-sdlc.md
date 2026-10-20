@@ -17,9 +17,14 @@ decisions below are this course's own.
 Settled during the Part I canon bootstrap from the **de-jargoned** EN labels (the six academic coinages were
 simplified per PART-1-BRIEF's Register ruling; community terms-of-art kept as-is). Each decision is native
 from the EN meaning — never a literal translation. Register: **practitioner** — a term a mid-level RU engineer
-would not say at work is wrong. `REUSE` rows carry the RAG-canon citation; the grade tokens
-`MEASURED` / `REPORTED` / `ASSERTED` stay kept-EN, code-styled, with a one-time gloss «(измерено / сообщено /
-заявлено)».
+would not say at work is wrong. `REUSE` rows carry the RAG-canon citation. **Grade tokens (#800, NEW DECISION):** `MEASURED` /
+`REPORTED` / `ASSERTED` / `UNKNOWN` appear only in `reading-the-evidence.md` and `glossary.md`, where the
+ladder is the subject (kept-EN, code-styled, gloss «(измерено / сообщено / заявлено)»). Everywhere else
+the grade is carried by the wording and recorded in `editorial/evidence/ai-sdlc/`; the gate
+`scripts/evidence-ledger-check.py` fails on a returning token. Palette (vary it, never upgrade):
+measured — «исследование показало», «замеры показали», «измерили»; reported — «по его/её словам»,
+«по собственному опыту», «описывает в отчёте»; asserted — «утверждает», «считает — без замеров»;
+unknown — «этого пока никто не измерял»; vendor — «по данным самого производителя».
 
 ### Intro
 
@@ -46,7 +51,7 @@ would not say at work is wrong. `REUSE` rows carry the RAG-canon citation; the g
 
 | EN term | EN gloss | RU decision |
 |---|---|---|
-| Evidence grade / the ladder | the `MEASURED` / `REPORTED` / `ASSERTED` classification; grades inherited, never upgraded. | **native — «уровень доказательности» / «лестница доказательности»**. Токены `MEASURED` / `REPORTED` / `ASSERTED` — **kept-EN, code-styled, инвариант**; разовый глосс «(измерено / сообщено / заявлено)» при первом появлении. **Отвергнуто:** перевод токенов в теле каждый раз (теряется единый ярлык-якорь). |
+| Evidence grade / the ladder | the `MEASURED` / `REPORTED` / `ASSERTED` classification; grades inherited, never upgraded. | **native — «уровень доказательности» / «лестница доказательности»**. Токены `MEASURED` / `REPORTED` / `ASSERTED` — **kept-EN, code-styled, инвариант**, но **только** в «Как читать доказательства» и глоссарии; в остальном тексте уровень несёт формулировка (#800). **Отвергнуто:** токен после каждого утверждения (читатель видит служебную разметку — #800); перевод токенов в теле каждый раз (теряется единый ярлык-якорь). |
 | Can't-be-checked | a claim whose weakness is that nobody can check it (private corpus, no method), distinct from tested-and-failed. | **НЕ термин — plain «это нельзя проверить»** (де-жаргонизировано; «нефальсифицируемо, но не опровергнуто» снято). **Отвергнуто:** «нефальсифицируемое утверждение» (академизм). |
 | Citation laundering | a distorted claim passed along until it looks sourced. | **Чеканная фигура НЕ мандатируется (owner: DROP — «отмывание цитат» читается странно).** Выражать смысл **прямо**: «искажённое утверждение, которое пересказывают, пока оно не начнёт выглядеть как ссылка на исследование». Нативный автор вправе применить идиому, только если она действительно естественна. **Отвергнуто как мандат:** «отмывание ссылок / цитат». |
 | Evidence that cuts against whoever published it | a result that cuts against its publisher's incentive; the strongest evidence class in a field full of COI. | **НЕ термин — выражать ПРЯМО (owner: юридическая калька, un-Russian; была и de-jargon miss в EN — то же лечение, что citation-laundering).** Идея: результат невыгоден самому источнику, и именно это придаёт ему вес — Anthropic продаёт AI, а её автор публикует его предел, значит публиковать это было против их коммерческого интереса. Градуирует ДОКАЗАТЕЛЬСТВО, а НЕ хвалит Anthropic — держать vendor-neutral. Пример: «он невыгоден самому источнику … публиковать такое было против их коммерческого интереса, и потому измерению стоит доверять больше». **Отвергнуто как термин:** «свидетельство против собственного интереса», «находка против интереса» (кальки finding). |

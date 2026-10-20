@@ -35,7 +35,7 @@ The reflex after a bad surprise is to cut finer and finer, as if smaller were al
 cost is measured. When ETH Zurich
 [handed agents more written context per task, the extra artifacts *hurt*](https://arxiv.org/abs/2602.11988) —
 success fell and cost rose over 20% per turn, because the agent complied with everything it was given, thoroughly
-and unnecessarily (`MEASURED`). Finer decomposition pulls in exactly that direction: more units means more
+and unnecessarily. Finer decomposition pulls in exactly that direction: more units means more
 briefs, more context re-sent each turn, more artifacts to keep consistent with one another. That is Part II's
 recurring failure — **artifact overload** — arriving through the back door of "just split it smaller." The cost
 curve has a floor. Find it; don't chase zero.
@@ -45,10 +45,10 @@ curve has a floor. Find it; don't chase zero.
 When you do split the work, the pieces still have to add up, and something has to keep the whole in view while
 the parts get done. The pattern that holds up: an orchestrator keeps the plan and the context; short-lived
 workers each take one atomic task, do it, and return a compressed result rather than their entire transcript.
-Anthropic reports a
+Anthropic, the model vendor, measured a
 [multi-agent research system beating a single agent by 90.2%](https://www.anthropic.com/engineering/multi-agent-research-system)
-on their own task — while cautioning, in the same breath, that coding parallelizes far less cleanly, so the
-number doesn't carry across (`MEASURED`, vendor). Read the structure, not the figure: the orchestrator's job
+on its own internal research eval — while cautioning, in the same breath, that coding parallelizes far less cleanly, so the
+number doesn't carry across. Read the structure, not the figure: the orchestrator's job
 *is* the verification job. It holds the done-conditions and checks each returned piece against them. The workers
 generate; the orchestrator decides what counts as done.
 

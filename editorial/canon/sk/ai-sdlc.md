@@ -19,9 +19,14 @@ Settled during the Part I canon bootstrap from the **de-jargoned** EN labels (th
 simplified per PART-1-BRIEF's Register ruling; community terms-of-art kept as-is). Slovak developer speech
 **keeps more English than Russian** — kept-EN wins wherever the community says the English word; native forms
 are decided from the EN meaning, never by literal translation, and pass the anti-bohemism gate (§1.3). Suspect
-collocations were **web-verified** (a pair returning only Czech hits is a bohemism → rejected). The grade
-tokens `MEASURED` / `REPORTED` / `ASSERTED` stay kept-EN, code-styled, with a one-time gloss
-„(namerané / hlásené / tvrdené)".
+collocations were **web-verified** (a pair returning only Czech hits is a bohemism → rejected). **Grade
+tokens (#800, NEW DECISION):** `MEASURED` / `REPORTED` / `ASSERTED` / `UNKNOWN` appear only in
+`reading-the-evidence.md` and `glossary.md`, where the ladder is the subject (kept-EN, code-styled, gloss
+„(namerané / hlásené / tvrdené)"). Everywhere else the grade is carried by the wording and recorded in
+`editorial/evidence/ai-sdlc/`; `scripts/evidence-ledger-check.py` fails on a returning token. Palette
+(vary it, never upgrade): measured — „štúdia zistila", „namerali"; reported — „podľa jeho/jej slov",
+„opisuje z vlastnej praxe", „podľa správy"; asserted — „tvrdí", „ide o argument bez merania";
+unknown — „nikto to nezmeral"; vendor — „podľa údajov samotného výrobcu".
 
 ### Intro
 
@@ -48,7 +53,7 @@ tokens `MEASURED` / `REPORTED` / `ASSERTED` stay kept-EN, code-styled, with a on
 
 | EN term | EN gloss | SK decision |
 |---|---|---|
-| Evidence grade / the ladder | the `MEASURED` / `REPORTED` / `ASSERTED` classification; grades inherited, never upgraded. | **native — „stupeň dôkazu" / „rebrík dôkazov"** (`rebrík` = ladder, SK). Tokeny `MEASURED` / `REPORTED` / `ASSERTED` — **kept-EN, code-styled, invariant**; jednorazový glos „(namerané / hlásené / tvrdené)". |
+| Evidence grade / the ladder | the `MEASURED` / `REPORTED` / `ASSERTED` classification; grades inherited, never upgraded. | **native — „stupeň dôkazu" / „rebrík dôkazov"** (`rebrík` = ladder, SK). Tokeny `MEASURED` / `REPORTED` / `ASSERTED` — **kept-EN, code-styled, invariant**, ale **iba** v lekcii o čítaní dôkazov a v glosári; inde stupeň nesie formulácia (#800). Jednorazový glos „(namerané / hlásené / tvrdené)". |
 | Can't-be-checked | a claim whose weakness is that nobody can check it, distinct from tested-and-failed. | **NIE termín — plain „nedá sa overiť"** (de-jargón; „nefalzifikovateľné, nie vyvrátené" zrušené). **Odmietnuté:** „nefalzifikovateľné tvrdenie" (akademizmus). |
 | Citation laundering | a distorted claim passed along until it looks sourced. | **Razená figúra sa NEMANDÁTUJE (owner: DROP).** Význam sa vyjadruje **priamo**: „skreslené tvrdenie, ktoré sa opakuje, kým nevyzerá ako odkaz na štúdiu". Rodený pisateľ smie použiť idióm, iba ak je naozaj prirodzený. **Odmietnuté ako mandát:** „vypranie pôvodu". |
 | Evidence that cuts against whoever published it | a result that cuts against its publisher's incentive; the strongest evidence class in a COI-heavy field. | **NIE termín — vyjadriť PRIAMO (owner: právna kalka, un-Russian; bol to aj de-jargon miss v EN — rovnaké liečenie ako citation-laundering).** Myšlienka: výsledok je nevýhodný pre samotný zdroj, a práve to mu dodáva váhu — Anthropic AI predáva, no jeho autor zverejňuje jej hranicu, takže to bolo proti ich obchodnému záujmu. Hodnotí DÔKAZ, NIE je to chvála Anthropicu — vendor-neutral (žiadne „pripísať k dobru"). Príklad: „výsledok je nevýhodný pre samotný zdroj … bolo to proti ich obchodnému záujmu, a práve preto možno meraniu veriť viac". **Odmietnuté ako termín:** „zistenie proti vlastnému záujmu", „nález proti záujmu" (kalky finding). |

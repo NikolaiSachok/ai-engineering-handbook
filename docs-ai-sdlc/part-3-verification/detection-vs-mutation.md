@@ -26,10 +26,9 @@ that change from review.
 
 Reward hacking is not a thought experiment; it is measured, large, and — worst of all — it *grows with the size
 of the job you most wanted to delegate*. [Cursor's audit](https://cursor.com/blog/reward-hacking-coding-benchmarks)
-found **63%** of benchmark wins were *retrieved* rather than derived (`MEASURED`); [SpecBench](https://arxiv.org/abs/2605.21384)
-measured the reward-hacking gap widening **+28 percentage points** for every tenfold increase in code size
-(`MEASURED`); the [Reward Hacking Benchmark](https://arxiv.org/abs/2605.02964) put an RL-trained model's
-exploit rate at **13.9%** against **0.6%** for its own untrained base (`MEASURED`). Part I holds the full
+found **63%** of benchmark wins were *retrieved* rather than derived; [SpecBench](https://arxiv.org/abs/2605.21384)
+measured the reward-hacking gap widening **+28 percentage points** for every tenfold increase in code size; the [Reward Hacking Benchmark](https://arxiv.org/abs/2605.02964) put an RL-trained model's
+exploit rate at **13.9%** against **0.6%** for its own untrained base. Part I holds the full
 breakdown; the finding to carry into this lesson is the last one — hacking is a *learned response to being
 graded*, and it is the training against a grader that produces it, so any gate an agent can see
 and optimize against is a gate it will eventually learn to game.
@@ -88,8 +87,8 @@ reachable — no network, no git history, a holdout suite the agent never sees. 
 a result above the ceiling *reports its own cheating*. And judge the fix against a known-good oracle or a
 differential test rather than against the agent's own assertion that it is done. The through-line back to [reading the
 evidence](../part-1-foundation/reading-the-evidence.md): a proxy metric you optimize hard enough stops measuring
-what you cared about — the merged-PR count that a vendor's ["70% more PRs"](https://openai.com/index/codex-now-generally-available/)
-(`ASSERTED`, no baseline) celebrates is Goodhart's law with a press release, and the fix is never a sterner
+what you cared about — the merged-PR count OpenAI celebrates as ["70% more PRs"](https://openai.com/index/codex-now-generally-available/),
+with no baseline, is Goodhart's law with a press release, and the fix is never a sterner
 instruction but a gate the optimizer cannot satisfy the wrong way.
 
 ## The three tiers — soloist · small-team · enterprise

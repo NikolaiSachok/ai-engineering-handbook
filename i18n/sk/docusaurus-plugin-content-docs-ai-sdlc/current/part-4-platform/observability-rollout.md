@@ -28,7 +28,7 @@ Ak sa zlá zmena aj tak stane, užitočná otázka znie, koľko používateľov 
 
 **Vrátenie zmeny musí spúšťať automat, nie človek.** Zvyšovanie podielu, ktoré postupuje podľa harmonogramu a cúva až vtedy, keď si to niekto všimne, je pomalá brána prezlečená za rýchlu. Naviaž ho na signály vyššie: prekročenie miery chýb alebo latencie ho zastaví a obráti bez čakania na niečí úsudok. Ľudský úsudok je tá vzácna vec, ktorú ti III. časť kázala [míňať zámerne](../part-3-verification/review-at-volume.md); všimnúť si pohyb metriky nie je miesto, kde ho minúť.
 
-Existuje aj nameraný náznak, že si táto hrana pozornosť zaslúži. Správa [DORA](https://dora.dev/dora-report-2025/) z roku 2025 zistila negatívny vzťah medzi používaním AI a stabilitou dodávania — a ako trval úvod, stupeň `MEASURED` má len v tom slabom zmysle rozsiahleho sebahodnotiaceho prieskumu, teda ide o vnímanie, nie o telemetriu. Neoprávňuje to na „AI zhoršuje tímy“. Oprávňuje presne na jedno: nestabilita, ktorú prieskum zaznamenal, sa týka práve *dodávania* — teda cesty sprístupnenia a obnovy — takže tú cestu stavaj zámerne a nespoliehaj sa, že vydrží.
+Existuje aj nameraný náznak, že si táto hrana pozornosť zaslúži. Správa [DORA](https://dora.dev/dora-report-2025/) z roku 2025 zistila negatívny vzťah medzi používaním AI a stabilitou dodávania — a ako zdôraznil úvod, opiera sa iba o sebahodnotenie respondentov rozsiahleho prieskumu — ide o vnímanie, nie o telemetriu. Neoprávňuje to na „AI zhoršuje tímy“. Oprávňuje presne na jedno: nestabilita, ktorú prieskum zaznamenal, sa týka práve *dodávania* — teda cesty sprístupnenia a obnovy — takže tú cestu stavaj zámerne a nespoliehaj sa, že vydrží.
 
 :::tip[▶ Video]
 

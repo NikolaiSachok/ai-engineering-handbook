@@ -44,9 +44,9 @@ move in agent work, and it is invisible on a price list that quotes one call.
 ## Prompt caching bends the curve back
 
 The `O(N²)` re-send has a direct remedy: providers let you **cache a stable prefix** so that re-sending it
-costs a fraction of the fresh input rate — commonly on the order of a tenth (`REPORTED`; the exact discount is
-a provider figure, read through the course's vendor rule — it is a pricing lever they set, not a measured
-constant). The system prompt, the rules corpus, and settled earlier turns are the same bytes every call; cached,
+costs a fraction of the fresh input rate — commonly on the order of a tenth. The exact discount is
+a provider figure, so read it through the course's vendor rule: it is a pricing lever they set, not a measured
+constant. The system prompt, the rules corpus, and settled earlier turns are the same bytes every call; cached,
 they stop being re-billed at full price.
 
 The design consequence is concrete and it ties back to earlier lessons. Caching only works on a **stable
@@ -57,9 +57,9 @@ turns out to be a cost control too. Stable-prefix discipline is where the quadra
 
 ## Batching trades latency for a discount
 
-A second lever applies to work that is not waiting on a human. Batch APIs — submit many requests, collect
-results minutes to hours later — commonly run at a substantial discount, often around half price (`REPORTED`,
-provider pricing), because the provider schedules them off-peak. The trade is latency for cost, so it splits
+A second lever applies to work that is not waiting on a human. Providers commonly list Batch APIs — submit
+many requests, collect results minutes to hours later — at a substantial discount, often around half price,
+because they schedule the work off-peak. The trade is latency for cost, so it splits
 your workload cleanly: an **interactive** agent turn, where someone is waiting, cannot batch; **offline** work
 — bulk evaluation, a corpus-wide transform, regenerating fixtures — should. The verification passes from
 Part III that run after the fact are often batchable even when the generation that produced them was not.

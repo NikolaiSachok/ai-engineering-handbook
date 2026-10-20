@@ -75,9 +75,9 @@ agreed-upon measures for the difference.
 
 So the course commits to a method rather than a conclusion:
 
-- Every claim is graded — `MEASURED` (a controlled study found it), `REPORTED` (practitioners say it holds), or
-  `ASSERTED` (someone argues it) — and the grade is stated in the prose, never quietly dropped so an assertion
-  can pass as a fact. (The grading vocabulary is defined in full in Lesson 2.)
+- Every claim is graded on a three-step ladder (measured, reported, asserted), and the grade is carried
+  by how the claim is phrased — "a study found," "practitioners report," "someone argues" — never quietly
+  dropped so an assertion can pass as a fact. (The ladder is defined in full in Lesson 2.)
 - Every number traces to a primary source with a date. Vendor numbers are read through a simple rule: whoever
   sells the tool cannot be the one who measures it.
 - The field's second-hand layer distorts in *both* directions — boosters inflate, skeptics catch a stale
@@ -101,13 +101,13 @@ before a user has to complain.
 There is a measured hint that the feedback edge is where the value hides.
 [DORA's 2025 report](https://dora.dev/dora-report-2025/) finds that AI adoption carries a negative
 relationship with delivery *stability* — acceleration can expose weaknesses downstream. Read it carefully,
-though: that finding is `MEASURED` only in the weak sense of a self-reported survey of roughly 5,000
+though: that finding is measured only in the weak sense of a self-reported survey of roughly 5,000
 respondents. It is perception, not telemetry, and it does not license "AI makes teams
 faster" or "AI makes teams slower." It licenses exactly one thing: the closing edge deserves the attention
 Parts IV and V will give it.
 
-A last honesty note about the diagram itself. It is an organising frame, graded `ASSERTED` — the course's own
-way of arranging the material, not a proven-optimal lifecycle. Use it to navigate; do not cite it as a result.
+A last honesty note about the diagram itself. It is an organising frame — the course's own proposal for
+arranging the material, not a proven-optimal lifecycle. Use it to navigate; do not cite it as a result.
 
 ## Where to go next
 

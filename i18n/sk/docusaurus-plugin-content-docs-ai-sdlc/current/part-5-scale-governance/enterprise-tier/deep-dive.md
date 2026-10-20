@@ -18,8 +18,8 @@ tie sa zvyknú zveličovať.
 ## SLSA: pôvod ako rebrík, nie políčko na odškrtnutie
 
 Pôvod nie je binárna vlastnosť; môže mať rôznu silu a buildová vetva
-[SLSA](https://slsa.dev/spec/v1.0/levels) ju vyjadruje číslami. Jednotlivé úrovne čítaj ako odpovede na otázku
-„aké ťažké je tento pôvod sfalšovať“ (`ASSERTED` podľa špecifikácie):
+[SLSA](https://slsa.dev/spec/v1.0/levels) ju vyjadruje číslami. Samotná špecifikácia podáva jednotlivé úrovne ako odpovede na otázku
+„aké ťažké je tento pôvod sfalšovať“:
 
 - **Build L1** — artefakt obsahuje údaje o pôvode, ktoré opisujú, ako vznikol. Nemusia byť podpísané. Úroveň
   zachytí neúmyselné chyby, no sfalšovať ju je triviálne. Presne na to slúži: je základom, nie ochranou.
@@ -40,7 +40,7 @@ pôvod**. Je to ten istý argument pre oddelenie právomocí ako v
 
 **Súpis softvérových súčastí (software bill of materials, SBOM)** uvádza všetko, čo vstúpilo do artefaktu —
 každú závislosť, verziu a licenciu. Keď sa zverejní nová zraniteľnosť, namiesto vyšetrovania stačí vyhľadanie
-v súpise. Prevládajú dva štandardy, ktoré vznikli v odlišných prostrediach (`ASSERTED`):
+v súpise. Podľa hodnotenia kurzu prevládajú dva štandardy, ktoré vznikli v odlišných prostrediach:
 
 - **[SPDX](https://spdx.dev/)** — štandard Linux Foundation (a zároveň ISO/IEC 5962), ktorý modeluje balíky a
   vzťahy medzi nimi; historicky sa sústreďuje na súlad a licencie.

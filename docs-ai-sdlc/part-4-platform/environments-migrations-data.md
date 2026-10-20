@@ -17,9 +17,10 @@ Agents reason better with plausible data, and that creates a standing temptation
 the development environment and let the agent work against something true. It solves the realism problem and
 creates two worse ones at once.
 
-The first is regulatory and blunt: a copy of personal data is still personal data. Moving it into a
+The first is regulatory and blunt: a copy of personal data is still personal data. On a plain reading of
+data-protection regimes like the GDPR, moving it into a
 lower-protection environment does not shed the obligations attached to it — it multiplies the number of places
-that must satisfy them (`ASSERTED`, the plain reading of data-protection regimes like the GDPR). The second is
+that must satisfy them. The second is
 the one Part IV keeps circling: whatever sits in the development environment is what the agent reads, and
 [Lesson 1](./secrets.md) established that the agent's context is a channel you do not fully control. Real
 customer records enter a model provider's request, possibly its logs, and potentially a generated fixture file
@@ -36,11 +37,10 @@ One honest caveat belongs here, because the technique is often oversold. Masking
 anonymisation. A dataset scrubbed of direct identifiers can often be re-identified by joining it against
 another source: [Rocher et al.](https://www.nature.com/articles/s41467-019-10933-3) estimate that **99.98%**
 of Americans are correctly re-identifiable from **15 demographic attributes**, and conclude that current
-de-identification practice does not meet the anonymisation standard GDPR assumes (`REPORTED`). Synthetic data
-is not the way out either — across the generators tested by
-[Stadler et al.](https://www.usenix.org/conference/usenixsecurity22/presentation/stadler), synthetic data
-either failed to prevent inference about individual source records or lost the utility it was generated for
-(`REPORTED`). Treat a masked or synthetic set as *lower* risk, not *no* risk, and keep it out of public
+de-identification practice does not meet the anonymisation standard GDPR assumes. Synthetic data
+is not the way out either: [Stadler et al.](https://www.usenix.org/conference/usenixsecurity22/presentation/stadler)
+report that, across the generators they tested, it either failed to prevent inference about individual source
+records or lost the utility it was generated for. Treat a masked or synthetic set as *lower* risk, not *no* risk, and keep it out of public
 repositories accordingly.
 
 :::tip[▶ Video]
@@ -83,8 +83,8 @@ quiet is not the same as working — moved to the recovery path. The only thing 
 throwaway environment from it, and check that the data is actually there and coherent.
 
 The [Replit incident](https://incidentdatabase.ai/cite/1152/) from the previous lesson has a second lesson
-hiding in it. The agent destroyed the production data, then asserted that rollback was impossible — and it was
-wrong (`REPORTED`). The interesting failure is not the false claim; it is that nobody could immediately
+hiding in it. The AI Incident Database records that the agent destroyed the production data, then asserted that rollback
+was impossible — and the agent was wrong. The interesting failure is not the false claim; it is that nobody could immediately
 contradict it. When recovery is a known, exercised procedure, an agent's opinion about whether it is possible
 is irrelevant. When it is not, the fastest confident voice in the room wins, and it may be a language model.
 

@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Choď k prvotnému zdroju a nahlas pomenuj stupeň dôkazu
 
-V 1. lekcii mal každý údaj priradený stupeň dôkazu — `MEASURED` / `REPORTED` / `ASSERTED` (namerané / hlásené / tvrdené). V tejto lekcii sa dozvieš, ako tento stupeň určiť. Je to jediný nástroj, ktorý dostaneš v tomto kurze a budeš ho používať vo všetkých ďalších lekciách. Do kurzu si možno prinášaš aj tvrdenia, ktoré nie sú pravdivé — nie preto, že by niekto klamal, ale preto, že druhotné zdroje skresľujú údaje oboma smermi, keď ich preberajú jeden od druhého. Nadšenci ich zveličujú jedným smerom, skeptici druhým. A keď si ľudia údaj posúvajú z ruky do ruky, stratí sa práve kontext, ktorý mu dával výpovednú hodnotu. Postup je preto jednoduchý a nijako zvlášť pôsobivý: nájdi prvotný zdroj, urči stupeň toho, čo si našiel, a otvorene ho uveď.
+V 1. lekcii niesol každý údaj stupeň dôkazu — `MEASURED` / `REPORTED` / `ASSERTED` (namerané / hlásené / tvrdené). V tejto lekcii sa dozvieš, ako tento stupeň určiť. Je to jediný nástroj, ktorý dostaneš v tomto kurze a budeš ho používať vo všetkých ďalších lekciách. Do kurzu si možno prinášaš aj tvrdenia, ktoré nie sú pravdivé — nie preto, že by niekto klamal, ale preto, že druhotné zdroje skresľujú údaje oboma smermi, keď ich preberajú jeden od druhého. Nadšenci ich zveličujú jedným smerom, skeptici druhým. A keď si ľudia údaj posúvajú z ruky do ruky, stratí sa práve kontext, ktorý mu dával výpovednú hodnotu. Postup je preto jednoduchý a nijako zvlášť pôsobivý: nájdi prvotný zdroj, urči stupeň toho, čo si našiel, a otvorene ho uveď.
 
 ## Každé tvrdenie dostane stupeň
 
@@ -15,7 +15,7 @@ Máme tri stupne. Celý poctivý prístup stojí na tom, že ich nebudeš zamie�
 - **`REPORTED`** — konkrétny odborník alebo firma dôveryhodne opisuje vlastnú skúsenosť. Sem patrí väčšina poznatkov v tomto odbore.
 - **`ASSERTED`** — názor, marketingová formulácia alebo argument bez podkladov.
 
-Aby tento rebrík dôkazov zostal poctivý, treba dodržať dve pravidlá. Po prvé, známe meno nezvyšuje stupeň tvrdenia. Sláva nie je dôkaz. Aj formulácia „Karpathy hovorí“ zostáva na stupni `ASSERTED`, kým nezistíš, čo v skutočnosti nameral. Po druhé, pri ďalšom šírení nesmieš stupeň zvýšiť. Tvrdenie, ktoré zopakuje populárny účet, zostáva tvrdením. Stupeň vyjadri priamo slovami: „randomizovaný experiment zistil“, „odborníci uvádzajú“, „jeden vplyvný príspevok tvrdí“. Tieto tri úvody nie sú iba štylistická ozdoba. Výslovne pomenúvajú stupeň dôkazu.
+Aby tento rebrík dôkazov zostal poctivý, treba dodržať dve pravidlá. Po prvé, známe meno nezvyšuje stupeň tvrdenia. Sláva nie je dôkaz. Aj formulácia „Karpathy hovorí“ zostáva na stupni `ASSERTED`, kým nezistíš, čo v skutočnosti nameral. Po druhé, pri ďalšom šírení nesmieš stupeň zvýšiť. Tvrdenie, ktoré zopakuje populárny účet, zostáva tvrdením. Stupeň vyjadri priamo slovami: „randomizovaný experiment zistil“, „odborníci uvádzajú“, „jeden vplyvný príspevok tvrdí“. Tieto tri úvody nie sú iba štylistická ozdoba. Výslovne pomenúvajú stupeň dôkazu. Zvyšok kurzu sa týmto pravidlom riadi: tvrdenia nenesú štítky, stupeň dôkazu nesie samotné znenie.
 
 ## Štyri veci, ktoré si treba všímať
 

@@ -21,7 +21,7 @@ developers over 196,212 PRs, per-capita **merged PRs** reached **2.09×** the pr
 warns is a textbook Goodhart case, because the company mandated the very metric it then measured. Take it as a
 lift in merged PRs and nothing wider. What the same study records downstream is the part this lesson needs:
 per-reviewer load **roughly doubled**, and **automated review overtook human review**, while merge and revert
-rates held steady (`MEASURED`).
+rates held steady.
 That is the shape of the problem stated in data. Generation got cheap; the reading did not; and the review queue
 is where the bottleneck moved. "Review everything" was always the reflex, and at 2.09× it is the
 [rubber-stamp trap](../part-2-loop/roles-and-the-human.md) — a person waved through more diffs in a day than any

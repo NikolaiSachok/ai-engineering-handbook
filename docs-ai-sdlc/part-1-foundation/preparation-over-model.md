@@ -10,16 +10,15 @@ Both are the wrong lever. The strongest evidence in this lesson points somewhere
 hand the agent and the *environment* you set up before it writes a line. Get those right and an ordinary model
 outperforms a frontier one flailing without them. And there is a second skill
 folded inside the first: reading a first-party success number correctly is itself part of preparation, because
-the single most encouraging number in this field is also the easiest to copy the wrong way. The grades from
-Lesson 2 — `MEASURED`, `REPORTED`, `ASSERTED` — ride along with every number below.
+the single most encouraging number in this field is also the easiest to copy the wrong way.
 
 ## Setup nearly doubled the agent's success
 
 The best piece of first-party evidence in the whole corpus is not a lab study. It is a blog post by one
-engineer. [Stephen Toub of Microsoft](https://devblogs.microsoft.com/dotnet/ten-months-with-cca-in-dotnet-runtime/) published ten months of running an agent — GitHub's Copilot Coding Agent —
+engineer. In March 2026, [Stephen Toub of Microsoft](https://devblogs.microsoft.com/dotnet/ten-months-with-cca-in-dotnet-runtime/) published measurements from ten months of running an agent — GitHub's Copilot Coding Agent —
 against `dotnet/runtime`, a real, large, mission-critical open-source repository: **878 agent pull requests**,
-with the merge rates, the revert rates, the review burden, and the failures all included (`MEASURED`,
-March 2026). Buried in it is the most portable lesson in this course, and he states it flatly: *"if there's one
+with the merge rates, the revert rates, the review burden, and the failures all included.
+Buried in it is the most portable lesson in this course, and he states it flatly: *"if there's one
 lesson from this experience, it's this: preparation matters more than the model."*
 
 The number behind that sentence is startling. Before he set up the agent's environment, its success rate was
@@ -59,14 +58,14 @@ primary-reading discipline turned on a first-party number.
 If setup is the biggest lever, the first place to pull it is scope. What I do before handing an agent anything
 is refuse to hand it an open-ended goal — I start where the problem is bounded and I already know what "done"
 looks like. The idea long predates agents. One practitioner writing a public series on AI-first
-development, [Andrey Beloborodov](https://www.threads.com/@andreybwhite), restates it as a principle *"with more than twenty years of history"*: without
-a spec, you get nonsense out (`ASSERTED` — his framing, offered as experience, not measurement). A tracker or a
+development, [Andrey Beloborodov](https://www.threads.com/@andreybwhite), argues for it as a principle *"with more than twenty years of history"*: without
+a spec, you get nonsense out. A tracker or a
 finance tool you can hand over cold; something you have to grow and maintain, you cannot.
 
 The primary evidence points the same way, and independently. Toub reports that the agent *"struggles with
 problems that require architectural judgment… choosing the right API shape based on real-world usage patterns,
-anticipating ripple effects across platforms"* and *"can be lazy… doing the minimum to satisfy a request"*
-(`REPORTED`). Read that against where small teams actually spend their days — architectural work on brownfield
+anticipating ripple effects across platforms"* and *"can be lazy… doing the minimum to satisfy a request"*.
+Read that against where small teams actually spend their days — architectural work on brownfield
 code — and the warning sharpens: agents struggle exactly where the hard work lives. So you bound the work
 before you dispatch it. In practice a controllable task is one with declared inputs and outputs, a named
 artifact it must produce, and a check that decides whether it passed — and, above all, a human approval gate at
@@ -92,7 +91,7 @@ ending at seven layers of memory where he had hoped for one. Asked why not just 
 answer is disarming: *"I don't know, but it didn't work for me and I doubt it's possible."*
 
 Grade that carefully. It is a single self-report, unverifiable, and his broader claims — a two-to-tenfold
-speedup, the seven layers being "close to the brain" — are `ASSERTED` with no measurement, so we do not carry
+speedup, the seven layers being "close to the brain" — are asserted with no measurement, so we do not carry
 them as fact. What the story *does* earn is a teaching point no architecture standard states: even sound-looking
 architecture does not guarantee a first try. Every model signing off on the design did not stop it needing three
 passes. That is not an argument against designing first — it is the argument for the *loop*. The same shape
@@ -112,15 +111,15 @@ decisions this lesson says to make, and write down, before an agent starts build
 ## Why "preparation," not "the model"
 
 There is a deeper reason the lever is preparation and not model choice. The scaffolding around an agent — its
-rules, its tools, its guardrails — encodes assumptions that go stale. [Anthropic's engineers](https://www.anthropic.com/engineering/harness-design-long-running-apps) put it directly:
+rules, its tools, its guardrails — encodes assumptions that go stale. [Anthropic's engineers](https://www.anthropic.com/engineering/harness-design-long-running-apps) describe it plainly:
 *"harnesses encode assumptions that go stale as models improve,"* and *"every component… encodes an assumption
-about what the model can't do on its own"* (`REPORTED`). Their worked example: an older model concluded work
+about what the model can't do on its own"*. Their worked example: an older model concluded work
 prematurely as its context filled, so harnesses added a fix for it; on the next model that behaviour was gone,
 and the fix became dead weight — a tax on the stronger model.
 
 That is not just a vendor's anecdote. An independent study held the model constant and varied only the
-scaffolding across 35 sequential releases of a coding CLI, and quality still moved (`MEASURED`,
-*["Don't Blame the Large Language Model,"](https://arxiv.org/abs/2607.03691)* July 2026): practitioners report regressions after a scaffolding
+scaffolding across 35 sequential releases of a coding CLI, and found quality still moved
+(*["Don't Blame the Large Language Model,"](https://arxiv.org/abs/2607.03691)* July 2026): practitioners report regressions after a scaffolding
 update and reliably blame the model instead of the scaffold. The consequence for you is that preparation is
 never one-time. Every rule and every harness component carries an expiry date and needs a review that asks
 whether it still earns its place — which is where Lesson 4 (project memory) and Lesson 5 (rules that hold) pick

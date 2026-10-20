@@ -45,8 +45,8 @@ to neuvidíš.
 
 Kvadratické opakované posielanie má priamu protiváhu: poskytovatelia umožňujú cez **prompt caching (cachovanie
 promptu) uložiť stabilný prefix**, takže za jeho opätovné odoslanie zaplatíš iba zlomok bežnej vstupnej
-sadzby — bežne približne desatinu (`REPORTED`; presnú zľavu uvádza poskytovateľ, preto ju posudzuj podľa
-pravidla kurzu pre údaje od dodávateľov — je to ním nastavená cenová páka, nie nameraná konštanta). Systémový
+sadzby — bežne približne desatinu; presnú zľavu uvádza poskytovateľ, preto ju posudzuj podľa
+pravidla kurzu pre údaje od dodávateľov — je to ním nastavená cenová páka, nie nameraná konštanta. Systémový
 prompt, korpus pravidiel a uzavreté staršie kroky obsahujú pri každom volaní rovnaké bajty; po uložení do cache
 sa už neúčtujú v plnej výške.
 
@@ -58,9 +58,9 @@ pomáha riadiť aj náklady. Disciplína stabilného prefixu tlmí dôsledky kva
 
 ## Batch vymieňa rýchlosť za zľavu
 
-Ďalšiu možnosť máš pri práci, na ktorej výsledok človek práve nečaká. Rozhrania pre batch — odošleš veľa
-požiadaviek a výsledky vyzdvihneš o niekoľko minút až hodín — bývajú výrazne lacnejšie, často približne o
-polovicu (`REPORTED`, cenník poskytovateľa), pretože ich poskytovateľ naplánuje mimo špičky. Za nižšiu cenu
+Ďalšiu možnosť máš pri práci, na ktorej výsledok človek práve nečaká. Poskytovatelia v cenníkoch ponúkajú výrazne lacnejšie rozhrania pre batch — odošleš veľa
+požiadaviek a výsledky vyzdvihneš o niekoľko minút až hodín — často približne za polovicu ceny,
+pretože túto prácu plánujú mimo špičky. Za nižšiu cenu
 dostaneš vyššiu latenciu, čo prirodzene rozdelí workload: **interaktívny** krok agenta, na ktorý niekto čaká,
 do batchu nepatrí; **offline** práca — hromadné evaly, transformácia celého korpusu, opätovné generovanie
 fixtures — áno. Dodatočné overovacie prechody z III. časti sa často dajú spracovať cez batch, aj keď samotné
