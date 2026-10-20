@@ -57,6 +57,40 @@ enough that the check is real, large enough that the boundary earns its overhead
 lose checkability; cut below it and you pay overload. Decomposition is where you set the line, and it is the
 last cheap place to set it.
 
+## Every cut is a seam
+
+Decomposition buys checkability inside each unit and pays for it at the junctions. Each worker sees its own
+context; the orchestrator checks each result against its done-condition. None of those per-unit checks covers
+the relationship between two units: the seam between modules, contracts, data or user journeys. Budget a check
+for each seam when you cut.
+
+Practitioner [Andrey Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/) reports that
+limited context makes junctions the main source of operational errors. He ranks contract and parity/golden
+tests above checks of the current piece alone. He keeps end-to-end scenarios few because E2E is hard for AI.
+Reserve them for critical journeys.
+
+Match the check to the seam. Across a service or team boundary, a [consumer-driven contract
+test](https://martinfowler.com/articles/consumerDrivenContracts.html) turns each consumer's expectations into
+checks on every provider build. A change that would break that consumer fails the provider's build before it
+ships. Around a refactor, a [characterization (golden) test](https://en.wikipedia.org/wiki/Characterization_test)
+records today's behaviour and compares later output against it. It records what the code does, not what it
+should do; correctness is not guaranteed, so a person decides whether a detected change is acceptable.
+
+Regression is the user-visible form of the same failure: a change breaks something that worked. Beloborodov
+[traces it](https://realaillusions.com/ru/materials/vibecoding-ai-first-technical-debt/) to local fixes that
+change a shared component, an API contract or a data structure without regard for the scenarios linked to it,
+and names four defences:
+
+- **Documentation** — write down how existing code is used and which contracts it serves before changing it.
+- **Directive** — require a separate decision before rewriting working code or changing contracts in use.
+- **Role separation** — an independent critic checks whether the change touches previously built code and keeps it working.
+- **Tests** — exercise neighbouring functionality and working scenarios as well as the changed piece.
+
+This course classes the first three as inferential: they depend on what an agent reads and a reviewer judges.
+Tests supply the computational check. A directive becomes computational only through
+[enforcement](../part-1-foundation/rules-that-hold.md), such as a hook or CI rule blocking an unapproved contract
+edit.
+
 :::tip[▶ Video]
 
 <YouTube id="kYkZI3oj2W4" title="Multi AI Agent Systems: When One AI Brain Isn't Enough — IBM Technology" />
@@ -72,15 +106,17 @@ against a single agent whose whole output you could still check yourself.
 The invariant holds at every scale: **you control the work at the granularity you decompose it.** What changes
 is what the boundary is made of.
 
-- **Soloist.** Cut the work to what you can read in one sitting; the boundary is your own attention. *The failure
+- **Soloist.** Cut the work to what you can read in one sitting; the boundary is your own attention. List the
+  seams your cut creates and give each one a check. *The failure
   it prevents:* a change too big to review that you approve anyway, because re-reading it became more work than
   trusting it.
 - **Small-team.** Agree task boundaries up front and give each unit an owner; the boundary is a reviewable pull
-  request. *The failure it prevents:* a unit sized to the author's confidence, landing as a review no one can
-  actually perform.
+  request. Add contract tests where work passes between owners. *The failure it prevents:* a unit sized to
+  the author's confidence, landing as a review no one can actually perform.
 - **Enterprise.** Decomposition becomes a pipeline concern — units sized to independent review and audit, not to
-  convenience. *The failure it prevents:* work batched so large that the provably-independent check degrades into
-  a rubber stamp.
+  convenience. Contract tests scale across teams because neither team sees both sides; each can be checked
+  against the same contract. *The failure it prevents:* work batched so large that the provably-independent
+  check degrades into a rubber stamp.
 
 ## What to take away
 
@@ -92,5 +128,7 @@ is what the boundary is made of.
   more to keep consistent — the measured over-20%-per-turn cost. The cost curve has a floor.
 - When you split, keep an orchestrator holding the plan and the done-conditions while short-lived workers return
   compressed results. The orchestrator's job is verification, not generation.
+- Budget a check per seam. Per-unit done-conditions leave the junctions uncovered; contract, golden and
+  critical-journey tests check shared expectations, existing behaviour and flows through the joined pieces.
 
-**[New terms](../glossary.md#atomic-tasks)**: atomic task, decomposition as control, over-decomposition, orchestrator and ephemeral workers.
+**[New terms](../glossary.md#atomic-tasks)**: atomic task, decomposition as control, over-decomposition, orchestrator and ephemeral workers, seam, consumer-driven contract test, characterization (golden) test, the four defences against regression.
