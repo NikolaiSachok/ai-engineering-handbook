@@ -188,14 +188,11 @@ const COURSES: Course[] = [
     blurb:
       'The AI-assisted software development lifecycle: planning, building, reviewing and ' +
       'shipping when AI agents are part of the team.',
-    // NOT `de` yet — German AI SDLC is #284/#285, unstarted. The RAG course launched
-    // German ahead of it (#383), and a released locale that a course does not claim is
-    // exactly what per-course scope exists to express: the parity gate stops requiring a
-    // German tree here, the landing card stops advertising German for this course, and the
-    // German navbar stops linking it. **Add `'de'` back the moment #284/#285 land** — that
-    // single edit re-arms all three.
+    // No `de`: German AI SDLC was dropped (owner decision 2026-10-21, #284/#285 closed).
+    // 'by-design', so the German navbar still lists the course and links the English pages
+    // rather than hiding the course from German readers forever.
     locales: ['en', 'ru', 'sk'],
-    untranslatedPolicy: 'pending',
+    untranslatedPolicy: 'by-design',
     live: true,
     inNavbar: true,
     footerLinks: [
