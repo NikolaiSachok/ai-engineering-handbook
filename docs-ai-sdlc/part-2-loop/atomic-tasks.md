@@ -33,12 +33,12 @@ can actually check. That is the whole optimization.
 
 The reflex after a bad surprise is to cut finer and finer, as if smaller were always safer. It isn't, and the
 cost is measured. When ETH Zurich
-[handed agents more written context per task, the extra artifacts *hurt*](https://arxiv.org/abs/2602.11988) —
-success fell and cost rose over 20% per turn, because the agent complied with everything it was given, thoroughly
-and unnecessarily. Finer decomposition pulls in exactly that direction: more units means more
-briefs, more context re-sent each turn, more artifacts to keep consistent with one another. That is Part II's
-recurring failure — **artifact overload** — arriving through the back door of "just split it smaller." The cost
-curve has a floor. Find it; don't chase zero.
+[handed agents more written context per task, the extra artifacts *cost* without paying back](https://arxiv.org/abs/2602.11988) —
+inference cost per task rose over 20% while success showed no significant change. The agent followed what it was
+given: it tested and explored more, and the extra work bought no measured gain. Finer decomposition pulls in exactly
+that direction: more units means more briefs, more context re-sent each turn, more artifacts to keep consistent with
+one another. That is Part II's recurring failure — **artifact overload** — arriving through the back door of "just
+split it smaller." The cost curve has a floor. Find it; don't chase zero.
 
 ## Something has to hold the whole \{#something-has-to-hold-the-whole}
 
@@ -125,7 +125,7 @@ is what the boundary is made of.
 - Size to the check: the largest unit you can still verify in a single pass. Larger, and "done" goes inferential;
   smaller, and coordination overhead swamps the work.
 - Over-decomposition is a real failure, not a safe default. More units means more briefs, more context re-sent,
-  more to keep consistent — the measured over-20%-per-turn cost. The cost curve has a floor.
+  more to keep consistent, and more context per task was measured costing over 20% more. The cost curve has a floor.
 - When you split, keep an orchestrator holding the plan and the done-conditions while short-lived workers return
   compressed results. The orchestrator's job is verification, not generation.
 - Budget a check per seam. Per-unit done-conditions leave the junctions uncovered; contract, golden and

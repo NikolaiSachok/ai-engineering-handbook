@@ -21,8 +21,8 @@ exists.
 
 The first three of them share a shape worth carrying into them. Each is something you prepare in advance, and
 each one **decays**. A harness encodes assumptions about the model that expire as models improve. A memory file is
-not stored but billed: it is re-sent on every turn, at a measured cost of over 20% more inference spend per
-turn. A rules corpus with no owner rots until two authoritative files prescribe opposite architectures.
+not stored but billed: it is re-sent on every turn, and it was measured adding over 20% to the inference spend
+per task. A rules corpus with no owner rots until two authoritative files prescribe opposite architectures.
 Preparation is never one-time — that is the part of "preparation over model" people drop.
 
 ## What's inside \{#whats-inside}

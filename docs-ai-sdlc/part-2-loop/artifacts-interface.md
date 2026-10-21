@@ -41,7 +41,7 @@ deeper reason the interface has to be written down: it is the only thing that ou
 
 Here is the tension this Part keeps returning to. The same artifacts that make handoffs checkable are the ones
 that, unmanaged, become **artifact overload** — the measured failure where more generated context per task
-actually [lowers success and raises cost](https://arxiv.org/abs/2602.11988). So the interface can't
+[raises cost without raising success](https://arxiv.org/abs/2602.11988). So the interface can't
 simply accumulate. It has to be **scoped to the task and evicted when done**: what crosses the boundary is only
 what the next stage needs, and what's finished gets dropped, not carried forward out of habit. Scoping and
 eviction are the discipline; the tiering that makes them systematic is
