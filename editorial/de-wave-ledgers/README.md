@@ -13,10 +13,9 @@ and because they carry reasoning the canon deliberately does not.
 
 ## Why they are in the repo
 
-They were produced in a session scratchpad and would have been lost. Three things need them:
+They were produced in a session scratchpad and would have been lost. Two things need them:
 
 - **The RAG glossary (#283)** — a single 8 920-word file whose every term must be consistent with 37 shipped pages. The ledger is the only place that consistency is written down.
-- **The AI-SDLC waves (#284/#285)** — they need their *own* term pass, because the vocabulary barely overlaps, but they should model its shape on this one rather than reinventing it.
 - **The RU/SK re-gate (#345)** — the naturalness gate hardened between waves, so pages rendered against the earlier version carry defects the current gate catches. Knowing what was bound when is how you tell which.
 
 ## How to read them, and the limits they state about themselves

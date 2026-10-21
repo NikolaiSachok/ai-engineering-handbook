@@ -17,7 +17,7 @@ natively per the workflow below, never machine-translated).
 
 - **COVERAGE IS PER COURSE, NOT SITE-WIDE (from the DE launch on).** A released locale does **not** imply
   every course. Each course declares its `locales` in `COURSES` — German launched on **RAG & Agents alone**
-  (AI SDLC German is unstarted; Design Scenarios is English-only by declaration) — and the gates read that
+  (AI SDLC dropped German by owner decision, 2026-10-21, and shows English to German readers; Design Scenarios is English-only by declaration) — and the gates read that
   declaration instead of assuming site-wide coverage. Each course also declares `untranslatedPolicy`:
   `'pending'` **hides** it from a locale that lacks it (advertising a course in a language it is not in is a
   promise not kept), `'by-design'` **keeps it visible** (or readers in that locale never discover it).
