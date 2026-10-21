@@ -9,7 +9,7 @@ Agents keep nothing between runs. End a session and everything the model worked 
 agreed, the dead ends you ruled out, why a function is shaped the way it is — evaporates, leaving only the files
 on disk. Durable project memory is what makes a fleet of forgetful agents usable at all. But memory has a running
 price: a rule file isn't written once and consulted when needed — it is re-sent to the model on every turn, and
-the field's one rigorous measurement of that cost puts it above 20% per turn. So the obvious fix, write more of it
+the field's one rigorous measurement puts the added cost above 20% per task. So the obvious fix, write more of it
 down, is also the failure mode. This lesson is the escape: tier the knowledge by how often the task actually needs
 it, rather than producing more of it. The lesson grades its own central claim as strictly as any other: it is ours
 and single-sourced, and hiding that would be a lie.
@@ -46,28 +46,32 @@ corpus above. Eight walls hit from eight directions, one of them with instrument
 
 The cost is where the metaphor turns into a number. A standing context file isn't a document you consult; it's a
 subscription you pay every turn, because every line is re-sent to the model each time it acts. ETH Zurich measured
-the bill ([Gloaguen et al.](https://arxiv.org/abs/2602.11988)): context files raised inference cost **over 20% per turn
-on average** — **+20% on SWE-bench Lite, +23% on AGENTbench** for LLM-generated files, up to **+19%** for
-human-written ones. And the mechanism isn't the one you'd guess: agents "followed instructions thoroughly but
-unnecessarily" — over-compliance — burning the extra budget obeying the file too well, with no gain. More memory
-here isn't merely wasteful. It's directionally wrong.
+the bill ([Gloaguen et al.](https://arxiv.org/abs/2602.11988)): context files raised the inference cost of solving a
+task **by over 20% on average** — **+20% on SWE-bench Lite, +23% on CTXbench** (called AGENTbench in the paper's first
+version) for LLM-generated files, up to **+19%** for developer-written ones. And the mechanism isn't the one you'd
+guess. The agents followed the files' instructions well: they ran more tests, read and searched more files, and
+reached for the repository's own tooling. That extra work is what the bill pays for, and it bought no significant
+change in task success. This course calls the pattern over-compliance: obeying the file costs more than the task
+needed. More memory here isn't a free safety margin. It's a cost on every task with no measured return.
 
 ## Don't let the agent write its own rules \{#dont-let-the-agent-write-its-own-rules}
 
-The same study turns up a result you wouldn't predict. Of its three conditions — no context file, an LLM-generated
-one, a human-written one — **the LLM-generated file is the only one measured net-negative**: **−0.5%** task
-success on SWE-bench Lite, **−2%** on AGENTbench. Human-written files came out mildly positive, **+4%** on average
-(every agent improved except one), for the reason that is the whole point: a person writes down what the agent
-can't infer from the repo, while an agent writing its own rules mostly restates what it could already read.
+The same study turns up a result you wouldn't predict. It ran three conditions — no context file, an
+LLM-generated one, a developer-written one — and neither kind of file moved task success significantly against
+having none. The LLM-generated file nudged it down, **−0.5%** on SWE-bench Lite and **−2%** on CTXbench; the
+developer-written one nudged it up, **+2.4%** on average (every agent improved except one). The one gap that did
+clear statistical significance ran between the two files: **developer-written beat LLM-generated**. The likely
+reason is the whole point: a person writes down what the agent can't infer from the repo, while an agent writing its
+own rules mostly restates what it could already read.
 
 Don't over-read that into "AGENTS.md doesn't work." A second paper points the other way, and both are honest.
 [Lulla et al.](https://arxiv.org/abs/2601.20404) found an AGENTS.md file *associated with* **28.64% lower median
 runtime** and **16.58% fewer output tokens**. They don't collide — they weigh different ledgers on different
-populations. Gloaguen measures task success and input cost, where the file is re-sent every turn; Lulla measures
-runtime and output tokens, where a file that stops the agent flailing shortens the whole trajectory, and its
-finding is observational, not a clean causal contrast. A file can raise your input bill while lowering your output
-tokens and wall-clock. Map both; crown no winner. What survives either reading is practical: don't let an LLM
-bootstrap your rules file, cut anything the agent could learn by reading the code (a hand-written "Architecture"
+populations. Gloaguen measures task success and the total inference cost of a task in controlled runs with and
+without the file; Lulla measures runtime and output tokens, where a file that stops the agent flailing shortens the
+whole trajectory, and its finding is observational, not a clean causal contrast. A file can raise the cost of a task
+in one setting and still go with shorter, cheaper runs in another. Map both; crown no winner. What survives either
+reading is practical: don't let an LLM bootstrap your rules file, cut anything the agent could learn by reading the code (a hand-written "Architecture"
 section is usually exactly this), and keep only commands, constraints, and genuinely non-standard patterns.
 
 ## The scar archive \{#the-scar-archive}
@@ -113,7 +117,8 @@ triggered: progressive disclosure, or plainly, detail on demand. The field's sin
 same way: ETH's prescription from those cost numbers is parsimony — omit LLM-generated context files, keep only
 the non-inferable human notes. Reading parsimony and tiering as the same instinct — spend context only where the
 model can't infer it, with "name and ID only" as the limit case of leaving it out — is our argument, not ETH's
-finding, and it deserves the label: ETH measured that trimming the corpus helps; it never prescribed a ladder.
+finding, and it deserves the label: ETH measured that the files cost more without lifting success; it never
+prescribed a ladder.
 
 The ladder got built many times over, by parties who didn't know about each other. In my own orchestration corpus,
 project knowledge splits into tiers by rate of change — a reusable type spec, a batch roster, the item — because
@@ -159,8 +164,9 @@ the *mechanism* is validated — nobody, us included, has better than a self-rep
 self-report comes from exactly the population [METR](https://arxiv.org/abs/2507.09089) caught misjudging its own AI-era productivity by around forty
 points, in the wrong direction, with high confidence (Lesson 1). Our "it works" carries that bias, and a course
 that spent Lesson 2 teaching you to grade claims would be a fraud if it exempted its own. There's also a reading of
-ETH that cuts against us: if generated artifacts hurt, maybe the corpus shouldn't exist, and tiering is just
-tidying a mess we made — which is why the parsimony framing matters, and why we don't claim tiering is *proven*.
+ETH that cuts against us: if generated artifacts cost more and buy no measured gain, maybe the corpus shouldn't
+exist, and tiering is just tidying a mess we made — which is why the parsimony framing matters, and why we don't
+claim tiering is *proven*.
 Last, the oldest warning here isn't about AI. The one large empirical study of model-driven engineering
 (Hutchinson et al., 2014) found success turned on *organisational* factors, not technical ones, and [DORA](https://dora.dev/dora-report-2025/) later
 rediscovered the same law for AI: it amplifies what a team already is; it doesn't fix it. Tiering is a technical
@@ -172,7 +178,7 @@ The invariant holds at every scale: **memory must be tiered by relevance, or it 
 who owns the boundary and how it's proven.
 
 - **Soloist.** A lean CLAUDE.md — a one-screen hot set of non-negotiables — plus a scar archive kept as a plain
-  markdown file for the cold set. *The failure it prevents:* the over-20%-per-turn tax and the "drown within days"
+  markdown file for the cold set. *The failure it prevents:* the over-20%-per-task tax and the "drown within days"
   overload, and the quieter one where the agent loses the actual requirement inside your own instructions.
 
 - **Small-team.** Shared, reviewed rules with an explicit tier boundary — what belongs in the reusable type spec
@@ -190,10 +196,12 @@ who owns the boundary and how it's proven.
 - Agents keep nothing between runs but the files on disk, so anything that must survive has to be pinned or
   re-injected. Compaction will silently drop a rule and the model will look like it disobeyed — `0%` violations
   with the policy visible, up to `59%` once it's summarised away.
-- A standing context file is billed every turn, not stored: ETH measured over `20%` more cost per turn, driven by
-  over-compliance. Length is a subscription; the file has to earn it.
-- Don't let an agent write its own rules. LLM-generated context files were the one condition measured net-negative
-  (`−0.5%` / `−2%`); human-written ones helped (`+4%`) because they carry what the agent can't infer.
+- A standing context file is billed every turn, not stored: ETH measured over `20%` more inference cost per task,
+  spent on agents obeying the file, with no significant gain in success. Length is a subscription; the file has to
+  earn it.
+- Don't let an agent write its own rules. Neither kind of context file moved success significantly (`−0.5%` / `−2%`
+  for LLM-generated, `+2.4%` for developer-written), but developer-written files significantly beat generated ones,
+  likely because they carry what the agent can't infer.
 - The scar archive — the reasoning behind each locked decision — is the highest-value memory you keep: it stops the
   next agent re-litigating a tradeoff you already paid for.
 - The fix for overload is tiering, not more documents: a hot set that's always loaded, a cold set pulled on demand.

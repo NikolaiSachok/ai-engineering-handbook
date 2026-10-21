@@ -49,9 +49,9 @@ its section here. The list grows as the course does.
 
 **Amnesia** — agents keep nothing between sessions but the files on disk.
 
-**Context tax** — the measured &gt;20%-per-turn cost of standing context: every line is re-sent and billed each turn.
+**Context tax** — the running cost of standing context: every line is re-sent and billed each turn; measured at over 20% more inference cost per task.
 
-**Over-compliance** — the measured way extra artifacts hurt: agents follow instructions thoroughly but unnecessarily.
+**Over-compliance** — this course's name for how extra artifacts cost without paying back: agents follow the instructions well, testing and exploring more, and the extra work raises cost without a measured gain in success.
 
 **Scar archive** — the reasoning behind each locked decision, appended after every fixed bug class — a blameless postmortem kept where the agent will read it.
 

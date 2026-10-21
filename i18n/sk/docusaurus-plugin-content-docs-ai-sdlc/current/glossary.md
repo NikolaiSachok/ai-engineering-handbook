@@ -56,9 +56,9 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Amnézia** — medzi reláciami si agenti nepamätajú nič okrem súborov na disku.
 
-**Priebežné náklady kontextu** — nameraná réžia &gt;20% na krok pri trvalom kontexte — každý riadok sa modelu posiela znova a účtuje sa v každom kroku.
+**Priebežné náklady kontextu** — priebežné náklady trvalého kontextu: každý riadok sa modelu posiela znova a účtuje sa v každom kroku; výskumníci namerali nárast nákladov na inferenciu o viac než 20% na úlohu.
 
-**Nadmerná poslušnosť** — nameraný spôsob, akým nadbytočné artefakty škodia — agenti dodržiavajú pokyny dôsledne, ale zbytočne.
+**Nadmerná poslušnosť** — názov, ktorým tento kurz označuje správanie, pri ktorom nadbytočné artefakty zvyšujú náklady bez nameraného prínosu: agenti sa riadia pokynmi, viac testujú a skúmajú repozitár, no práca navyše zvyšuje náklady bez nameraného zlepšenia úspešnosti.
 
 **Archív jaziev** — dôvody každého uzamknutého rozhodnutia, doplnené po oprave každej triedy chýb — blameless postmortem uložený tam, kde ho agent prečíta.
 

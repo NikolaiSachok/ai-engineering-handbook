@@ -21,8 +21,8 @@ a spôsob, ako všetky tri uplatniť na kód, ktorý už existuje.
 
 Prvé tri z týchto súčastí pripravuješ vopred a všetky majú **obmedzenú životnosť**. Harness (lešenie agenta) je
 postavený na predpokladoch o modeli, ktoré so zlepšovaním modelov prestávajú platiť. Pamäťový súbor nezostáva
-iba uložený: model ho dostáva pri každom kroku znova a podľa meraní to zvyšuje náklady na inferenciu o viac
-než 20% na krok. Bez vlastníka pravidlá postupne strácajú konzistentnosť, až napokon dva súbory, ktoré oba
+iba uložený: model ho dostáva pri každom kroku znova a výskumníci namerali nárast nákladov na inferenciu o viac
+než 20% na úlohu. Bez vlastníka pravidlá postupne strácajú konzistentnosť, až napokon dva súbory, ktoré oba
 platia ako záväzné, predpisujú protichodné architektúry. Príprava sa musí opakovať. Práve toto ľudia pri
 zásade „príprava je dôležitejšia než model“ vynechávajú.
 
