@@ -158,6 +158,8 @@ classifier, or a model itself. Mind the terminology: this is routing *between mo
 router picked an index, Part II's agent picked a tool, and cloud-platform routing can pick a region or
 endpoint; this router picks which model answers.
 
+The [routing companion](./routing.md) works through cheap-first cascades, request-versus-spend mix, and the cost and latency of verification and escalation.
+
 ### Fallbacks and the gateway \{#fallbacks-and-the-gateway}
 
 Provider outages and 429s aren't incidents; they're weather. Production keeps a **fallback** chain — the

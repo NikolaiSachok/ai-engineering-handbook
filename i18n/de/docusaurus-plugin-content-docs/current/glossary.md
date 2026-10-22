@@ -1422,6 +1422,15 @@ Evaluierung abgesicherten Deployment statt zu einer stillen Verhaltensänderung.
 **das Routing über Modelle hinweg (model routing)** – jede Anfrage an das günstigste Modell schicken, das sie
 bewältigt; der Router kann eine Regel, ein Klassifikator oder wieder ein Modell sein. Zu unterscheiden vom Routing
 der Anfrage über Indexe (Teil I) und von der Auswahl eines Tools (Teil II): Hier wird entschieden, wer antwortet.
+↗ [RouteLLM](https://arxiv.org/abs/2406.18665)
+
+**die Modellkaskade (model cascade)** – zunächst eine Antwort mit einem günstigen Modell erzeugen und
+prüfen; fällt sie durch die Qualitätsprüfung, eine neue Antwort mit einem stärkeren Modell erzeugen.
+↗ [FrugalGPT](https://arxiv.org/abs/2305.05176)
+
+**die Eskalationsrate (escalation rate)** – der Anteil der Anfragen, die beim Durchlaufen einer Modellkaskade
+die nächste Modellstufe aufrufen. Der Nenner umfasst die in die Kaskade eintretenden Anfragen, nicht
+zusätzlich den Verkehr, der sie umgeht.
 
 **Fallbacks** – die im Voraus festgelegten Ausweichwege – eine andere Region, ein anderer Anbieter, ein günstigeres
 Modell –, auf die das System umschaltet, sobald das erste Modell einen Fehler liefert oder sein Rate Limit

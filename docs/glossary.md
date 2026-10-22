@@ -1193,6 +1193,15 @@ provider's model update then becomes an explicit, eval-gated deploy rather than 
 **Model routing** — sending each request to the cheapest model that can handle it; the router can be a
 rule, a classifier, or a model. Distinct from query routing (which index, Part I) and tool selection
 (which tool, Part II): this picks which model answers.
+↗ [arXiv — RouteLLM](https://arxiv.org/abs/2406.18665)
+
+**Model cascade** — a sequence that first generates with a cheaper model, checks its answer, and invokes
+another tier when the check fails. It can replace detected errors before release; an imperfect verifier
+can still accept a bad answer or reject a good one.
+↗ [arXiv — FrugalGPT](https://arxiv.org/abs/2305.05176)
+
+**Escalation rate** — the fraction of requests entering a model cascade that invoke its next tier. Its
+denominator excludes requests routed directly to a stronger model outside that cascade.
 
 **Fallback** — the pre-configured alternative — another region, another provider, a cheaper model — that
 the system switches to when the primary model errors or rate-limits.

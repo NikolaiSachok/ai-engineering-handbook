@@ -182,6 +182,9 @@ Modell. Achten Sie auf die Begriffe: Hier geht das Routing *über Modelle hinweg
 hat einen Index gewählt, der Agent aus Teil II ein Tool, und beim Cloud-Routing kann eine Region oder ein
 Endpunkt gewählt werden; dieser Router wählt, welches Modell antwortet.
 
+Die Ergänzung [Model-Routing – Kosten und Latenz der gesamten Anfrage](./routing.md) rechnet die
+Kosten durch und zeigt, wie eine Modellkaskade die Latenz vollständiger Anfragen verändert.
+
 ### Fallbacks und das Gateway \{#fallbacks-and-the-gateway}
 
 Ausfälle beim Anbieter und 429er sind keine Vorfälle, sondern Wetter. Der Produktivbetrieb hält eine

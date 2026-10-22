@@ -1210,7 +1210,11 @@ tichou zmenou správania.
 
 **Model routing (smerovanie medzi modelmi)** — poslanie každej požiadavky najlacnejšiemu modelu, ktorý ju
 zvládne; smerovač môže byť pravidlo, klasifikátor alebo model. Odlišné od smerovania dopytov (ktorý index,
-Časť I) a výberu nástroja (ktorý nástroj, Časť II): toto vyberá, ktorý model odpovedá.
+Časť I) a výberu nástroja (ktorý nástroj, Časť II): toto vyberá, ktorý model odpovedá. ↗ [RouteLLM](https://arxiv.org/abs/2406.18665)
+
+**Model cascade (kaskáda modelov)** — postup, pri ktorom odpoveď najprv vygeneruje lacný model a systém ju skontroluje; ak výsledok kontroly nevyhovuje, zavolá silnejší model. ↗ [FrugalGPT](https://arxiv.org/abs/2305.05176)
+
+**Escalation rate (miera eskalácie)** — podiel dopytov vstupujúcich do kaskády, pri ktorých sa zavolá ďalšia úroveň modelov. Dopyty, ktoré kaskádu obchádzajú, do menovateľa nepatria.
 
 **Fallback (záložná cesta)** — vopred nakonfigurovaná alternatíva — iný región, iný poskytovateľ, lacnejší
 model — na ktorú systém prepne, keď primárny model chybuje alebo naráža na limity.

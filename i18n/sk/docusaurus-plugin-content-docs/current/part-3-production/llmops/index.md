@@ -101,6 +101,8 @@ V klasickej službe sú náklady väčšinou infraštruktúra — starosť prev�
 
 Nie každá požiadavka si zaslúži vlajkový model. Klasifikáciu, jednoduché vyhľadania, krátke faktické otázky zvládne lacný rýchly model; drahý si svoju cenu zaslúži na ťažkom generovaní. **Model routing** (smerovanie medzi modelmi) pošle každú požiadavku najlacnejšiemu modelu, ktorý ju zvládne; smerovač môže byť pravidlo, natrénovaný klasifikátor alebo sám model. Pozor na terminológiu: toto je smerovanie medzi modelmi. Smerovač dopytov (query router) z Prvej časti príručky vyberal index, agent z Druhej vyberal nástroj a smerovanie na cloudovej platforme môže vyberať región alebo endpoint; tento smerovač vyberá model, ktorý odpovie.
 
+Podrobné výpočty nákladov, kaskádu modelov a latenciu celého dopytu rozoberá lekcia [Smerovanie medzi modelmi — náklady a latencia celého dopytu](./routing.md).
+
 ### Fallbacky a brána \{#fallbacks-and-the-gateway}
 
 Výpadky poskytovateľa a chyby 429 nie sú incidenty, sú to počasie. Produkcia drží reťaz **fallbackov** (záložných ciest): ten istý model v inom regióne, iný poskytovateľ alebo lacnejší model v núdzovom režime — skúšajú sa v poradí, keď primárny model chybuje alebo naráža na limity. Toto všetko prirodzene zastreší **LLM gateway** (LLM-brána): jedno OpenAI-kompatibilné rozhranie pred každým modelom, ktorý používaš; centralizuje smerovanie, fallbacky, API kľúče, rozpočty aj limity požiadaviek na tím. LiteLLM je open-source príklad, OpenRouter ten hostovaný.
