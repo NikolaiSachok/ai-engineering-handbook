@@ -24,9 +24,7 @@ getrennt gemessen werden.
 | Was sie messen | Ob der benötigte Chunk in den Ergebnissen gelandet ist – und auf welchem Rang | Ob die Antwort auf dem Kontext ruht und die gestellte Frage wirklich beantwortet |
 | Die wichtigsten | **Recall@K** (für RAG die zentrale Größe), Precision@K, MRR, nDCG | **Faithfulness**, **Answer-Relevance**, Korrektheit |
 
-Warum Recall@K die zentrale Größe ist: Fehlt der benötigte Chunk in den Ergebnissen, kann die Generation die
-Frage schlicht nicht richtig beantworten. Auf der ersten Stufe wiegt Recall schwerer als Precision – was dort
-verloren geht, holt keine spätere Stufe zurück.
+Warum Recall@K die zentrale Größe ist: Fehlt der benötigte Chunk in den Ergebnissen, kann die Generation aus den abgerufenen Belegen keine vollständig belegte Antwort erstellen. Auf der ersten Stufe wiegt Recall schwerer als Precision – was dort verloren geht, holt keine spätere Stufe zurück.
 
 ## Ohne Datensatz keine Evaluierung \{#no-dataset-no-evaluation}
 
@@ -90,7 +88,7 @@ Der praktische Hauptnutzen: Die Evaluierung zeigt, auf welcher Stufe der Fehler 
 | Symptom | Diagnose | Wo Sie ansetzen |
 |---|---|---|
 | Antwort falsch, der benötigte Chunk war **nicht** in den Ergebnissen | Fehlerbild des Retrievals → Recall@K zu niedrig | Chunking / hybride Suche / Reranking |
-| Antwort falsch, der benötigte Chunk stand aber **im Kontext** | Fehlerbild der Generation → Faithfulness zu niedrig | Grounding (Rückbindung der Antwort an den Kontext) / Prompt |
+| Antwort falsch, die benötigten Belege standen aber **im Kontext** | Korrektheit und Faithfulness getrennt prüfen; auch falsche Quellen können eine quellentreue, aber falsche Antwort ergeben | Quellenqualität / Grounding (Rückbindung der Antwort an den Kontext) / Prompt |
 
 ## Das Wichtigste \{#what-to-take-away}
 

@@ -9,15 +9,11 @@ Die Ingestion ist die vorgelagerte Hälfte von RAG: alles, was mit Ihren Dokumen
 erste Frage überhaupt gestellt wird. Alles, was später durchsucht wird, entsteht hier. Die Kette:
 Dokumente parsen → **Chunking** → Metadaten → in eine Vektordatenbank einbetten.
 
-Diese Seite behandelt **Chunking** und **Embedding-Modelle**, die beiden Säulen der Ingestion. Das Parsing
-der Dokumente gehört in den zweiten Durchgang, die Vertiefung dieser Schicht; siehe den Hinweis am Ende der
-Seite.
+Diese erste Seite behandelt **Chunking** und **Embedding-Modelle**, zwei Entscheidungen innerhalb der Pipeline. Das Parsing der Dokumente erklärt der [zweite Teil](./deep-dive.md#parsing-the-stage-that-caps-everything-downstream); der Hinweis am Seitenende führt ebenfalls dorthin.
 
 :::info[So lesen Sie diese Seite]
 
-Jedes Thema steht zuerst so da, „wie es in der Branche üblich ist“. Alles, was an einem bestimmten Projekt
-hängt (Strata-RAG), ist in eigene Fallstudienseiten ausgelagert – damit sich die Theorie nicht mit
-Implementierungsdetails vermischt.
+Diese Seite erklärt allgemeine Mechanismen und Abwägungen der Ingestion. Die Beispiele veranschaulichen die Theorie; sie dokumentieren keine bestimmte Projektimplementierung und verweisen nicht auf eine veröffentlichte Fallstudie.
 
 :::
 
