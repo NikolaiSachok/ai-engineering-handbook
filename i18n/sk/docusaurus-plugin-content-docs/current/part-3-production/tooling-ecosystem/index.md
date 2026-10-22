@@ -5,7 +5,7 @@ slug: /part-3-production/tooling-ecosystem/
 
 # Splácame dlh z Prvej časti príručky
 
-Tri lekcie z Prvej časti príručky sa skončili rovnakým prísľubom. [Evaluácia](../../part-1-rag/cross-cutting/evaluation/index.md), [guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) (bezpečnostné mantinely) aj [observability](../../part-1-rag/cross-cutting/observability/index.md) (pozorovateľnosť) — každá vyložila svoj princíp a samotné produkty odsunula: nástroje sú samostatná vrstva a prídu neskôr, tu sme pri princípe. Táto lekcia je to sľúbené „neskôr“.
+Prvá časť príručky vysvetlila princípy [evaluácie](../../part-1-rag/cross-cutting/evaluation/index.md), [guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) (bezpečnostných mantinelov) a [observability](../../part-1-rag/cross-cutting/observability/index.md) (pozorovateľnosti). Lekcie o guardrails a observability výslovne odložili nástroje do samostatnej vrstvy. Táto lekcia pokrýva nástroje pre všetky tri oblasti.
 
 Prvá časť dala pojmy — golden set (etalónová sada), trace, attack success rate. Táto lekcia ich premietne na sadu nástrojov roku 2026 a odpovie na otázku: čo si vlastne nainštaluješ a kedy?
 
@@ -21,7 +21,7 @@ Hranice medzi kategóriami sa navyše rozmazávajú. Observability platformy **L
 
 Konfiguračný prístup (config-driven) nesie **promptfoo** (promptfoo.dev) — open source: YAML súbory opisujú prompty, modely a tvrdenia, nástroj vykreslí porovnávacie matice prompt/model vedľa seba a beží v CI. Prináša aj funkcie na red-teaming (útočné testovanie) — to si nechaj na sekciu o guardrails.
 
-Čo nedodá ani jeden nástroj: **golden set**. Každý z nich počíta metriky nad príkladmi, ktoré poskytneš ty, a kvalita datasetu ostáva tvojou robotou — „malá čistá sada porazí veľkú zašumenú“ z Prvej časti platí aj teraz, keď metriky prichádzajú z knižnice. Ragas ti kandidátske príklady zosyntetizuje, no ľudská kontrola zostáva bránou kvality.
+Čo nedodá ani jeden nástroj: **golden set**. Každý z nich počíta metriky nad príkladmi, ktoré poskytneš ty, a kvalita datasetu ostáva tvojou robotou — poučenie z Prvej časti, že malá čistá sada je lepšia než veľká zašumená, platí aj teraz, keď metriky prichádzajú z knižnice. Ragas ti kandidátske príklady zosyntetizuje, no ľudská kontrola zostáva bránou kvality.
 
 ## Observability platformy \{#observability-platforms}
 

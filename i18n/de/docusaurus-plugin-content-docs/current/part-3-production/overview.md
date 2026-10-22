@@ -15,10 +15,11 @@ beobachten und bleibt im Kostenrahmen“.
 
 ## Was Sie hier finden \{#whats-inside}
 
+- **[Warum KI-Systeme im Produktivbetrieb versagen](./production-failures.md)** – Fehlerbilder und die Mechanismen, die ihnen entgegenwirken.
 - **[Bereitstellung und Betrieb – FastAPI + Docker](./serving/index.md)** – ein Modell oder einen Agenten
   als Dienst verpacken: API, Streaming, Container, Inferenz-Engines (*inference server*).
 - **[Cloud-KI-Plattformen](./cloud-platforms/index.md)** – [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service), [Amazon Bedrock](https://aws.amazon.com/bedrock/), Google Cloud Gemini
-  Enterprise Agent Platform (vormals [Vertex AI](https://cloud.google.com/vertex-ai)): was sie anbieten und worin sie sich unterscheiden.
+  Enterprise Agent Platform ([Vertex AI](https://cloud.google.com/vertex-ai) in älterer Dokumentation): was sie anbieten und worin sie sich unterscheiden.
 - **[Das Tooling-Ökosystem](./tooling-ecosystem/index.md)** – Evaluierung, Guardrails und Observability im
   Produktivbetrieb: was Sie messen, was Sie absichern, was Sie sehen.
 - **[LLMOps – ausrollen, überwachen, Kosten](./llmops/index.md)** – das Leben des LLM-Systems nach dem Release.

@@ -72,6 +72,16 @@ possible functional gap until proven cosmetic, never the reverse. And give the a
 judgment call) that the later human gate consumes as its worklist. An agent that can say "I wasn't sure" is worth
 more than one that guesses and moves on, because it routes your attention instead of consuming it.
 
+## Budget reviewer-minutes before routing work \{#budget-reviewer-minutes-before-routing-work}
+
+Compute the proposed queue's cost before calling it oversight. In an illustrative working day with **1,470 drafts** and **58 reviewer-hours** available across the team, two minutes on every draft costs `1,470 × 2 / 60 = 49 hours`. Only nine hours remain for escalations, adjudication, calibration, and interruptions. Removing the assistant and spending twelve minutes per case would cost **294 hours**; that fallback cannot fit either.
+
+A risk-based allocation can fit: six minutes on the riskiest 10% and ninety seconds on the remaining 90% costs `(147 × 6 + 1,323 × 1.5) / 60 = 47.775 hours`, about **47.8 hours**. It leaves about **10.2 hours**, before overhead. These are assumed review times, not measured productivity gains. Validate them with actual reviewers, include double-labelling and adjudication, and watch queue age: if arrivals consume the whole budget on average, bursts and slow cases accumulate. An escalation trigger needs an owner, a service target, and an overflow action such as restricting automation or delaying work. Adding flags does not add reviewer capacity.
+
+Capacity and detectability are separate tests. Auditing 200 out of 63,000 cases is about **0.32%** of the output, but that fraction alone says little about which failure rates the audit can detect. Under independent random sampling, a 1% failure rate gives an **86.6%** chance of at least one hit in 200 reviews; an observed 2/200 still has a broad approximate 95% interval, **0.27%–3.57%**. Detection is easier than precise estimation. The [sampling lesson](/rag-agents/part-1-rag/cross-cutting/evaluation/deep-dive#preserve-a-population-sample) owns the formulas, assumptions, confidence intervals, and stratified weighting.
+
+Reserve an explicit uniform audit slice to estimate the production rate, then allocate the remaining reviews to high-risk actions, threshold-adjacent cases, and machine-detected contradictions. Keep their denominators separate. A calibration set of 500 cases consumes **2.5 weeks** of a 200-review weekly budget before double-review or adjudication; schedule it rather than silently adding it to the queue. Turn adjudicated escapes into a frozen regression suite, measure judge agreement on a held-out human-labelled sample, and budget recurring recalibration. Otherwise the same human hours discover the same defect again next week.
+
 ## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **automate to concentrate human attention, enumerate what only a human can
@@ -99,6 +109,7 @@ flood, and how.
   exactly that list.
 - Risk-weight what remains: calibrate severity by reachability (an unreachable "critical" is latent), and
   distrust the modality trap — a structural gate's "missing" is a functional gap until proven cosmetic.
+- Budget reviewer-minutes before adding review triggers; preserve a random audit slice and distinguish finding a failure from estimating its rate.
 - Let the agent route your attention: a machine-readable "I need a human" marker on genuine judgment calls is
   worth more than a confident guess.
 - The human is the gate that doesn't scale with compute, so protect it by design — or volume will quietly turn

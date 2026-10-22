@@ -384,6 +384,22 @@ rovnaké značky; nízka zhoda je signál zostriť hodnotiace kritériá, nie pr
 značkovanie tam, kde je najinformatívnejší (kde je sudca najmenej istý, kde sa sudcovia rozchádzajú alebo kde
 produkcia odhalila chybu), namiesto značkovania naslepo.
 
+**Population audit (audit populácie)** — ľudská kontrola pravdepodobnostnej vzorky z vymedzenej populácie,
+ktorou odhaduješ chybovosť v celej populácii. Potrebuješ zachovať náhodný výber alebo poznať pravdepodobnosti
+zaradenia a použiť zodpovedajúce váhy. Cielene vybrané rizikové prípady bez korekcie neposkytujú takýto odhad.
+
+**Confidence interval (interval spoľahlivosti)** — interval vypočítaný zo vzorky postupom, ktorý pri
+opakovanom vzorkovaní zahŕňa skutočnú hodnotu so stanovenou mierou pokrytia, napríklad 95%. Neznamená to,
+že pevná skutočná hodnota leží v konkrétnom vypočítanom intervale s 95% pravdepodobnosťou. Interval
+nezohľadňuje skreslený výber ani chyby v značkách. Pri malom počte chýb použi Wilsonov alebo exaktný
+binomický interval. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm)
+
+**Detection probability (pravdepodobnosť zachytenia)** — pravdepodobnosť, že vzorka obsahuje aspoň jedno
+zlyhanie. Pri *n* nezávislých výberoch s konštantnou pravdepodobnosťou zlyhania *p* je to
+`1 − (1 − p)^n`. Odlišuj ju od štatistickej sily testu pri porovnávaní verzií: zachytiť jednu chybu
+neznamená preukázať zmenu chybovosti.
+↗ [NIST](https://www.itl.nist.gov/div898/handbook/eda/section3/eda366i.htm)
+
 <a id="guardrails"></a>
 
 ## Guardrails \{#guardrails}
@@ -612,6 +628,12 @@ kontext).
 
 **Trajectory evaluation (hodnotenie trajektórie)** — hodnotenie celej cesty, ktorou agent prešiel, nie iba záverečnej odpovede: výsledok (splnenie úlohy) oproti procesu (bol každý krok a volanie nástroja rozumný), plus efektívnosť po krokoch a zastavenie.
 
+**Prehrávanie odpovedí nástrojov (tool-response replay)** — pri opakovanom teste adaptér nahradí živé nástroje uloženými odpoveďami a izolovaným stavom, ktorý sa mení v súlade s vykonanými akciami. Zafixuje pozorovania agenta, nie jeho nové generovanie; nepokryté vetvy treba vykázať osobitne. ↗ [VCR.py — režimy záznamu a prehrávania](https://vcrpy.readthedocs.io/en/latest/usage.html#record-modes)
+
+**Invariant trajektórie (trajectory invariant)** — podmienka, ktorú musí prípustný beh agenta dodržať, napríklad schválenie pred zápisom alebo iba jedno vykonanie operácie pri opakovaných volaniach. Umožňuje hodnotiť rôzne správne postupy bez presnej zhody s jedinou vzorovou cestou; chýbajúci dôkaz znamená neznámy výsledok, nie splnenie pravidla. ↗ [LangChain — evaluácia agentov](https://www.langchain.com/resources/agent-evals)
+
+**Súlad správy s akciami (action–message consistency)** — zhoda toho, čo agent oznámi používateľovi, s potvrdenými akciami a stavom systému. Kontrola hľadá nepodložené tvrdenia aj vynechané podstatné výsledky a rozlišuje vyžiadanú, čakajúcu a dokončenú akciu; správna akcia sama osebe nezaručuje správnu správu. ↗ [LangChain — evaluácia agentov](https://www.langchain.com/resources/agent-evals)
+
 **pass^k** — podiel úloh, ktoré agent vyrieši vo všetkých k nezávislých pokusoch; metrika spoľahlivosti, ktorá odhalí rozptyl medzi behmi, aký jediné pass@1 skryje. ↗ [arXiv](https://arxiv.org/abs/2406.12045)
 
 <a id="multi-agent"></a>
@@ -781,8 +803,7 @@ a dátami; štandardizuje nástroje, zdroje a prompty. M×N integrácií šitýc
 
 **MCP server (MCP-server)** — obaľuje nástroj alebo zdroj dát a jednotne sprístupňuje jeho schopnosti.
 
-**MCP client (MCP-klient)** — agent alebo aplikácia, ktorá sa pripája na MCP-servery a konzumuje ich
-schopnosti.
+**MCP client (MCP-klient)** — konektor vytvorený hostiteľom MCP, ktorý udržiava spojenie 1:1 s jedným MCP-serverom a využíva jeho schopnosti.
 
 **MCP resources (zdroje MCP)** — dáta a kontext, ktoré MCP-server sprístupňuje (bez ekvivalentu v OpenAPI/CLI).
 
@@ -1138,6 +1159,15 @@ obranné záťaže; hraničné modely tam často zaostávajú alebo chýbajú.
 
 ## Production — ekosystém nástrojov \{#tooling-ecosystem}
 
+**Validátor (validator)** — kontrola hodnoty v Guardrails AI, ktorá vráti úspech alebo zlyhanie.
+Vlastné pravidlá pre danú oblasť implementuješ cez API `Validator`.
+
+**on_fail** — nastavenie akcie po zlyhaní validátora v Guardrails AI: napríklad vyvolanie výnimky,
+opätovné vyžiadanie odpovede, oprava alebo zápis do logu.
+
+**OpenTelemetry Collector** — samostatná služba, ktorá prijíma, spracúva a exportuje telemetriu.
+Konfigurovateľná pipeline oddeľuje inštrumentáciu aplikácie od backendu na ukladanie a analýzu telemetrie.
+
 **Instrumentation (inštrumentácia)** — pridanie kódu alebo SDK-hookov, ktoré vysielajú trace, spany a metriky
 z pipeline; predpoklad pre observability.
 
@@ -1155,6 +1185,9 @@ zabudované v eval-nástrojoch a platformových red-team funkciách.
 <a id="llmops"></a>
 
 ## Production — LLMOps \{#llmops}
+
+**SFT (supervised fine-tuning)** — doladenie modelu na označených dvojiciach vstup–výstup.
+Mení jeho správanie, štýl, formát odpovedí alebo úspešnosť pri konkrétnych úlohách.
 
 **LLMOps** — operačná disciplína pre LLM-aplikácie: nasadzovanie, monitorovanie a riadenie nákladov
 systémov, ktorých správanie žije v promptoch, verziách modelov, indexoch a konfiguráciách, a nie len v kóde.
@@ -1177,7 +1210,11 @@ tichou zmenou správania.
 
 **Model routing (smerovanie medzi modelmi)** — poslanie každej požiadavky najlacnejšiemu modelu, ktorý ju
 zvládne; smerovač môže byť pravidlo, klasifikátor alebo model. Odlišné od smerovania dopytov (ktorý index,
-Časť I) a výberu nástroja (ktorý nástroj, Časť II): toto vyberá, ktorý model odpovedá.
+Časť I) a výberu nástroja (ktorý nástroj, Časť II): toto vyberá, ktorý model odpovedá. ↗ [RouteLLM](https://arxiv.org/abs/2406.18665)
+
+**Model cascade (kaskáda modelov)** — postup, pri ktorom odpoveď najprv vygeneruje lacný model a systém ju skontroluje; ak výsledok kontroly nevyhovuje, zavolá silnejší model. ↗ [FrugalGPT](https://arxiv.org/abs/2305.05176)
+
+**Escalation rate (miera eskalácie)** — podiel dopytov vstupujúcich do kaskády, pri ktorých sa zavolá ďalšia úroveň modelov. Dopyty, ktoré kaskádu obchádzajú, do menovateľa nepatria.
 
 **Fallback (záložná cesta)** — vopred nakonfigurovaná alternatíva — iný región, iný poskytovateľ, lacnejší
 model — na ktorú systém prepne, keď primárny model chybuje alebo naráža na limity.

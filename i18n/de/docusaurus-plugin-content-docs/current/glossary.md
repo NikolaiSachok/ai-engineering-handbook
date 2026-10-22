@@ -443,6 +443,12 @@ Annotatoren. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Fleiss%27_kappa)
 dort einsetzen, wo es am meisten einbringt (wo der Judge am unsichersten ist, wo Judges auseinanderlaufen oder
 wo der Produktivbetrieb ein Fehlerbild gezeigt hat), statt die Labels gleichmäßig zufällig zu vergeben.
 
+**Die Stichprobenprüfung der Grundgesamtheit** (*population audit*) – eine Prüfung anhand einer Zufallsstichprobe, mit der Sie eine Quote für eine festgelegte Grundgesamtheit schätzen. Sichern Sie dafür eine gleichmäßig zufällig gezogene Teilstichprobe oder verwenden Sie bei geschichteter Auswahl die bekannten Gewichte der Schichten. Gezielt per Active Sampling ausgewählte oder mit Vorrang gespeicherte Fälle erlauben keine ungewichtete Schätzung für die Grundgesamtheit.
+
+**Das Konfidenzintervall einer Fehlerquote** (*confidence interval*) – ein Intervall aus einem Verfahren mit angegebener langfristiger Überdeckungsrate. Es beschreibt die Unsicherheit durch die Stichprobenziehung, weder eine verzerrte Auswahl noch die Richtigkeit der Labels. Bei wenigen Fehlern eignen sich Wilson- oder exakte Binomialintervalle. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm)
+
+**Die Entdeckungswahrscheinlichkeit** (*detection probability*) – die Wahrscheinlichkeit, dass ein Sampling-Verfahren ein bestimmtes Signal erfasst. Für mindestens einen Fehler bei unabhängigen Ziehungen mit konstanter Fehlerwahrscheinlichkeit *p* beträgt sie `1 − (1 − p)^n`. Sie unterscheidet sich von der Teststärke eines statistischen Tests zum Vergleich von Quoten. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/eda/section3/eda366i.htm)
+
 <a id="guardrails"></a>
 
 ## Guardrails \{#guardrails}
@@ -803,6 +809,12 @@ Schritt und jeder Tool-Call tragfähig), dazu die Effizienz in Schritten und die
 die Zuverlässigkeit, die die Streuung von Durchlauf zu Durchlauf offenlegt, die ein einzelnes pass@1 verdeckt.
 ↗ [arXiv](https://arxiv.org/abs/2406.12045)
 
+**Tool-Response-Replay** (*tool-response replay*) – aufgezeichnete Tool-Antworten für einen neuen Agentendurchlauf über einen isolierten Adapter bereitstellen. Eine versionierte Fixture hält Ausgangszustand, Anfragen, Ergebnisse, Fehler und bestätigte Schreibvorgänge fest; unbekannte Aufrufe dürfen keine echte API erreichen. Festgelegt sind die Beobachtungen, nicht die neuen Modellentscheidungen. Ein nicht aufgezeichneter Zweig bedeutet fehlende Replay-Abdeckung. ↗ [VCR.py: Record modes](https://vcrpy.readthedocs.io/en/latest/usage.html#record-modes)
+
+**Die Invariante eines Pfades** (*trajectory invariant*) – eine Verpflichtung, die jeder zulässige Pfad erfüllen muss, etwa eine Freigabe vor einer Gutschrift. Geprüft werden notwendige Abhängigkeiten und bestätigte Zustände; eine einzige exakte Aufrufsequenz ist dafür nicht erforderlich. Die Prüfung unterscheidet bestanden, fehlgeschlagen, nicht anwendbar und unbekannt. Kritische Verstöße verhindern die Freigabe; fehlende Belege erlauben kein positives Urteil. ↗ [LangChain: Agent evals](https://www.langchain.com/resources/agent-evals)
+
+**Die Übereinstimmung von Aktion und Nachricht** (*action–message consistency*) – prüfen, ob Aussagen über ausgeführte Handlungen in der abschließenden Nachricht mit bestätigten Aktionen und dem aktuellen Zustand übereinstimmen. Dazu gehören unbelegte Abschlussbehauptungen ebenso wie ausgelassene wesentliche Ergebnisse. Anders als bei Retrieval-Faithfulness dienen hier bestätigte Aktionsdaten als Beleg; die eigene Zusammenfassung des Agenten genügt nicht.
+
 <a id="multi-agent"></a>
 
 ## Agenten – Multi-Agenten-Systeme \{#multi-agent}
@@ -978,7 +990,7 @@ N + M. ↗ [modelcontextprotocol.io](https://modelcontextprotocol.io)
 
 **der MCP-Server** – kapselt ein Tool oder eine Datenquelle und stellt deren Fähigkeiten einheitlich bereit.
 
-**der MCP-Client** – der Agent oder die Anwendung, die sich mit MCP-Servern verbindet und nutzt, was diese anbieten.
+**der MCP-Client** – ein vom MCP-Host erzeugter Konnektor, der eine 1:1-Verbindung zu genau einem MCP-Server hält und dessen Fähigkeiten nutzt.
 
 **die MCP-Ressourcen** – Daten und Kontext, die ein MCP-Server bereitstellt (ohne Gegenstück in OpenAPI oder auf einer
 Kommandozeile).
@@ -1373,6 +1385,16 @@ spielt mit den Guardrails-Frameworks zusammen, die die Prüfungen orchestrieren.
 **das Red-Teaming** – das eigene System absichtlich angreifen, um seine Abwehr zu messen (die Erfolgsrate der
 Angriffe); als Funktion in den Werkzeugen für die Evaluierung und in den Plattformen enthalten.
 
+**der Validator** – in Guardrails AI eine Prüfung, die für einen Wert Erfolg oder Fehlschlag
+zurückgibt; eigene Validatoren setzen über die `Validator`-API Regeln der jeweiligen Domäne um.
+
+**on_fail** – die einem Validator zugeordnete Aktion in Guardrails AI, die nach einer fehlgeschlagenen Prüfung
+ausgeführt wird: etwa eine Exception auslösen, das Modell erneut fragen, eine Korrektur anwenden oder den
+Fehler protokollieren.
+
+**der OpenTelemetry Collector** – ein Dienst, der Telemetrie empfängt, verarbeitet und exportiert. Über diese
+separate Telemetrie-Pipeline können Anwendungen ihre Traces an ein konfigurierbares Backend senden.
+
 <a id="llmops"></a>
 
 ## Produktivbetrieb – LLMOps \{#llmops}
@@ -1400,6 +1422,15 @@ Evaluierung abgesicherten Deployment statt zu einer stillen Verhaltensänderung.
 **das Routing über Modelle hinweg (model routing)** – jede Anfrage an das günstigste Modell schicken, das sie
 bewältigt; der Router kann eine Regel, ein Klassifikator oder wieder ein Modell sein. Zu unterscheiden vom Routing
 der Anfrage über Indexe (Teil I) und von der Auswahl eines Tools (Teil II): Hier wird entschieden, wer antwortet.
+↗ [RouteLLM](https://arxiv.org/abs/2406.18665)
+
+**die Modellkaskade (model cascade)** – zunächst eine Antwort mit einem günstigen Modell erzeugen und
+prüfen; fällt sie durch die Qualitätsprüfung, eine neue Antwort mit einem stärkeren Modell erzeugen.
+↗ [FrugalGPT](https://arxiv.org/abs/2305.05176)
+
+**die Eskalationsrate (escalation rate)** – der Anteil der Anfragen, die beim Durchlaufen einer Modellkaskade
+die nächste Modellstufe aufrufen. Der Nenner umfasst die in die Kaskade eintretenden Anfragen, nicht
+zusätzlich den Verkehr, der sie umgeht.
 
 **Fallbacks** – die im Voraus festgelegten Ausweichwege – eine andere Region, ein anderer Anbieter, ein günstigeres
 Modell –, auf die das System umschaltet, sobald das erste Modell einen Fehler liefert oder sein Rate Limit
@@ -1420,6 +1451,9 @@ semantische Cache.
 **der Drift** – die Welt verschiebt sich unter einer eingefrorenen Konfiguration: der Eingabedrift (der Verkehr
 fragt nach neuen Dingen), der Korpusdrift (Dokumente altern) und der vorgelagerte Modelldrift (der Anbieter ändert
 ein Modell ohne festgelegte Version).
+
+**SFT (Supervised Fine-Tuning)** – Training eines Modells mit gelabelten Eingabe-Ausgabe-Beispielen, um sein
+Verhalten zu verändern, etwa seinen Stil, seine Formatierung oder seine Leistung bei einer Aufgabe.
 
 **der Bewerter (grader)** – beim Reinforcement-Fine-Tuning der Bepunkter, den Sie selbst festlegen und der jeden
 Antwortkandidaten bewertet; seine Punktzahl ist das Belohnungssignal, gegen das das Training optimiert.

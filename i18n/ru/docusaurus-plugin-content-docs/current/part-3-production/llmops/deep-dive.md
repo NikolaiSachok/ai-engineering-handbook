@@ -168,7 +168,7 @@ flowchart TD
 Рычагов управления, в отличие от ценовых, немного, и все они стоят там, где и так проходит весь трафик, — на
 **LLM-шлюзе** из Части 1.
 
-- **Бюджеты с оповещениями** — токен-бюджеты по командам и фичам: **мягкий потолок** предупреждает,
+- **Бюджеты с оповещениями** — лимиты расходов по командам и фичам: **мягкий потолок** предупреждает,
   **жёсткий потолок** отклоняет запрос или переводит его на модель попроще. Как именно потолки срабатывают во
   время выполнения — вопрос углубления про наблюдаемость; кто какой бюджет получает — здесь.
 - **Маршрутизация по цене** — маршрутизация запросов между моделями (model routing) из Части 1, поднятая до
@@ -363,6 +363,8 @@ eval» разбирает [углублённый урок про
 наблюдаемость](../../part-1-rag/cross-cutting/observability/deep-dive.md); тарифы по платформам — [углубление
 про облачные платформы](../cloud-platforms/deep-dive.md).
 
-**[Новые термины](../../glossary.md#llmops)**: SFT, DPO, RFT, grader, LoRA / PEFT, showback, chargeback,
-error budget policy, release freeze, release gate, job queue, dead-letter queue (DLQ), backpressure, load
-shedding.
+**[Новые термины](../../glossary.md#llmops)**: SFT, grader, showback, chargeback,
+error budget policy, release freeze, release gate, job queue, dead-letter queue (DLQ).
+
+**Уже знакомые термины**: [DPO, RFT, LoRA / PEFT](../../glossary.md#cloud-platforms);
+[backpressure, load shedding](../../glossary.md#serving).

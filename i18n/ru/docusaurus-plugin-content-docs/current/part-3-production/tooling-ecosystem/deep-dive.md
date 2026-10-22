@@ -237,5 +237,4 @@ flowchart TB
   два перекрывающихся инструмента лучше четырёх. Связывает всё OTel — инструментируй один раз, меняй бэкенд
   конфигом экспортёра, не инструментируй дважды.
 
-**[Новые термины](../../glossary.md#tooling-ecosystem)**: instrumentation, OpenTelemetry GenAI conventions, safety
-classifier, red-teaming, observability (наблюдаемость), guardrails.
+**[Новые термины](../../glossary.md#tooling-ecosystem)**: validator, on_fail, OpenTelemetry Collector.

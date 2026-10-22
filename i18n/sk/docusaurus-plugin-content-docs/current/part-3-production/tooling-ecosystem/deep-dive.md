@@ -141,4 +141,4 @@ Jedna šípka na tom diagrame je sama osebe prevádzková prax, ktorú sa oplat�
 - `on_fail` je vec politiky, nie nový kód: začni na `noop`, zmeraj mieru falošných pozitív na skutočných požiadavkách z produkcie a potom povýš na `exception` / `fix` / `filter` / `refrain`. Každý validátor je réžia na latenciu a náklady — testuj ho ako kód, ktorým je.
 - Každá kategória má OSS pruh s prevádzkou u seba a spravovaný pruh, a kategórie sa rozmazávajú (observability dodáva evaluáciu), takže dva prekrývajúce sa nástroje porazia štyri. OpenTelemetry je spojivo: inštrumentuj raz, backendy vymieňaj konfiguráciou exportéra a nikdy neinštrumentuj dvakrát.
 
-**[Nové pojmy](../../glossary.md#tooling-ecosystem)**: instrumentation, OpenTelemetry GenAI conventions, safety classifier, red-teaming, observability, guardrails.
+**[Nové pojmy](../../glossary.md#tooling-ecosystem)**: validátor, on_fail, OpenTelemetry Collector.

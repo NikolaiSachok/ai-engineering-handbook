@@ -52,7 +52,7 @@ Kedy po ničom z toho nesiahať: Self-RAG potrebuje zvlášť natrénovaný mode
 
 Keď vyhľadávanie beží v slučke, môže sa stať, že sa nezastaví — z tej istej príčiny ako ktorákoľvek slučka agenta; všeobecný príbeh **nezastavenia cyklu (non-termination)** je v lekcii [plánovanie a slučky](../planning-loops/index.md). Vyhľadávanie má dve vlastné podoby tohto problému.
 
-Prvá je **slučka opakovaného vyhľadávania (re-retrieval loop)** — agent pošle dopyt, výsledok sa mu nepáči, preformuluje ho na čosi nepatrne odlišné, dostane naspäť tie isté dokumenty, preformuluje znova, no do kontextu nikdy nepribudne nová informácia. Vyzerá to ako pokrok, v skutočnosti je to deterministické točenie na mieste. A pomenuj to presne: je to **chyba** v behu, nie „odmietnutie“ — slučka, ktorá sa nezastaví, je chyba (nezastavenie cyklu), nikdy nie rozhodnutie systému zdržať sa odpovede.
+Prvá je **slučka opakovaného vyhľadávania (re-retrieval loop)** — agent pošle dopyt, výsledok sa mu nepáči, preformuluje ho na čosi nepatrne odlišné, dostane naspäť tie isté dokumenty, preformuluje znova, no do kontextu nikdy nepribudne nová informácia. Vyzerá to ako pokrok, v skutočnosti je to deterministické točenie na mieste. Takúto slučku bez pokroku považuj za chybu počas behu a zastav ju po vyčerpaní rozpočtu opakovaní alebo krokov.
 
 Druhá je **nadmerné vyhľadávanie (over-retrieval)** — agent hľadá ďalej dávno po tom, čo mal dosť, a napcháva kontext okrajovo relevantným materiálom, ktorý nikdy nepoužije.
 
@@ -91,7 +91,7 @@ flowchart TB
 
 Prvá časť povedala, že evaluácia teraz „meria kvalitu trajektórie“. Pri agentickom RAG sa to rozdvojuje na **výsledok a proces** a práve v procesnej polovici žije hodnotenie špecifické pre vyhľadávanie; a len keď tie dve udržíš od seba, dá sa pri zlom behu dohľadať, kde sa stala chyba.
 
-**Výsledok verzus proces.** Výsledok je kvalita finálnej odpovede — **faithfulness (vernosť zdrojom)**, **relevancia odpovede (response relevancy)**, metriky z lekcie o evaluácii. Proces je to, či dávala cesta zmysel: vyhľadal agent vtedy, keď mal, a zdržal sa, keď nemal; vytiahol každý krok správne dokumenty; zastavil v pravú chvíľu; koľko krokov a koľko nákladov ho to stálo. Správna odpoveď dosiahnutá zlou cestou je šťastie. A šťastie neprežije stret s ďalším dopytom.
+**Výsledok verzus proces.** Výsledok je kvalita finálnej odpovede — **faithfulness (vernosť zdrojom)**, **relevancia odpovede (answer relevance)**, metriky z lekcie o evaluácii. Proces je to, či dávala cesta zmysel: vyhľadal agent vtedy, keď mal, a zdržal sa, keď nemal; vytiahol každý krok správne dokumenty; zastavil v pravú chvíľu; koľko krokov a koľko nákladov ho to stálo. Správna odpoveď dosiahnutá zlou cestou je šťastie. A šťastie neprežije stret s ďalším dopytom.
 
 **Kvalita vyhľadávania, na každom kroku.** Metriky vyhľadávania — **context precision (presnosť kontextu)**, **context recall (úplnosť kontextu)**, relevancia — uplatni na *každom* kroku, nie iba na finálne pozbieranej sade. To je rozlíšenie zlyhaní z prvej časti prenesené do slučky: trajektória sa môže dopracovať k správnej odpovedi zlou cestou, alebo ísť správnou cestou a aj tak zlyhať pri generovaní — a práve hodnotenie po krokoch odlíši **zlyhanie vyhľadávania** od **zlyhania generovania** a lokalizuje **chybu** na konkrétny krok.
 

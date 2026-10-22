@@ -5,12 +5,10 @@ slug: /part-3-production/tooling-ecosystem/
 
 # Paying Part I's debt
 
-Three lessons in Part I ended on the same promissory note.
-[Evaluation](../../part-1-rag/cross-cutting/evaluation/index.md),
+Part I taught the principles of [evaluation](../../part-1-rag/cross-cutting/evaluation/index.md),
 [guardrails](../../part-1-rag/cross-cutting/guardrails/index.md), and
-[observability](../../part-1-rag/cross-cutting/observability/index.md) each taught a principle and then deferred the
-products: "the tools are a separate tooling layer, coming later; here we're on the principle." This is
-later. Part I gave you the concepts — the golden set, the trace, attack success rate. This lesson maps
+[observability](../../part-1-rag/cross-cutting/observability/index.md). The guardrails and observability lessons
+explicitly deferred their tools to a separate layer. This lesson supplies that layer for all three concerns. Part I gave you the concepts — the golden set, the trace, attack success rate. This lesson maps
 those concepts onto the 2026 tool landscape and answers the question the earlier lessons left open: what do
 you actually install, and when?
 
@@ -41,7 +39,7 @@ the tool renders side-by-side prompt/model comparison matrices and runs in CI. I
 features — hold that thought for the guardrails section.
 
 Now the part no tool ships: the golden set. Every one of these computes metrics over examples *you*
-provide, and dataset quality stays your job — Part I's "a small clean set beats a big noisy one" doesn't
+provide, and dataset quality stays your job — Part I's lesson that a small, clean set beats a big, noisy one doesn't
 stop being true because the metrics come from a library now. Ragas will synthesize candidate examples for
 you, but human review remains the quality gate.
 

@@ -12,7 +12,7 @@ einen Weg, zu planen und auch wieder anzuhalten, in [Planung und Schleifen](./pl
 Mitspieler, die sich die Arbeit teilen, in [Multi-Agenten-Systeme](./multi-agent/index.md); die Frameworks, die
 all das verpacken, in [Orchestrierungs-Frameworks](./orchestration-frameworks/index.md); und das Protokoll, das
 ihn mit der Welt verbindet, in [MCP und Agentenprotokolle](./mcp/index.md). Neu ist auf dieser Seite nichts. Sie
-nimmt dieses ganze Repertoire mit zu den drei Agenten, denen Sie zuerst begegnen – Claude, OpenAI und Gemini –,
+veranschaulicht ausgewählte Muster anhand dreier Anbieterstacks – Anthropic Claude, OpenAI und Google Gemini –
 und zeigt: Jede Technik ist im Kern derselbe bleibende Handgriff, nur anders benannt und in einem anderen
 Nachrichtenformat über die Leitung geschickt.
 
@@ -55,7 +55,7 @@ Stand Mitte 2026 deklariert Claude die Tools in einem `tools`-Array (`name`, `de
 JSON Schema), und der Austausch läuft über **Blöcke innerhalb der Nachricht**: Das Modell liefert
 `stop_reason: "tool_use"` samt `tool_use`-Blöcken, und Sie antworten mit einer Nutzernachricht, die
 `tool_result`-Blöcke trägt. Der Parameter `tool_choice` kennt `auto`, `any`, ein erzwungenes einzelnes Tool und
-`none`; der Strict Mode ist `tool_choice:{type:"any"}` mit `strict:true`; parallele Tool-Calls sind
+`none`; `strict:true` steht für den Strict Mode in jeder Tool-Definition neben `input_schema`; `tool_choice:{type:"any"}` erzwingt davon unabhängig einen Tool-Aufruf bei Modellen, die diesen Modus unterstützen; parallele Tool-Calls sind
 voreingestellt an. OpenAI deklariert ein Tool als `{type:"function", name, description, parameters, strict}`,
 und in der Responses API läuft der Austausch nicht über Blöcke, sondern über **typisierte Einträge**: Das Modell
 gibt `function_call`-Einträge aus – jeder mit einer `call_id`, einem `name` und den `arguments` als
@@ -168,8 +168,8 @@ Nachricht zurück, die sagt, was zu tun ist; laut Dokumentation „wiederholt es
 sich entschuldigt“. Das Agent SDK speichert Sitzungen als lokale JSONL-Dateien und bietet *continue* (die
 jüngste Sitzung), *resume* (eine ausdrücklich benannte Sitzungskennung) und *fork* (eine Kopie als Abzweig) – und ein Durchlauf, der auf `error_max_turns` oder `error_max_budget_usd` stehen geblieben ist,
 lässt sich mit einer höheren Grenze fortsetzen. OpenAI hält die Fortsetzung stattdessen auf dem Server:
-`previous_response_id` hängt einen Aufruf an eine frühere Antwort, und die Conversations API gibt Ihnen
-dauerhaften Zustand, ohne dass er nach 30 Tagen verfällt. In seinem Agents SDK gibt die `failure_error_function`
+`previous_response_id` hängt einen Aufruf an eine frühere Antwort, und die Conversations API speichert
+Konversationselemente ohne die 30-Tage-Frist, die für gespeicherte Response-Objekte gilt. In seinem Agents SDK gibt die `failure_error_function`
 eines Tools eine für das Modell lesbare Fehlerzeichenkette zurück, woraufhin sich das Modell erholt – oder der
 Fehler wird erneut ausgelöst. Geminis ADK verpackt denselben Handgriff in ein `ReflectAndRetryToolPlugin`, das
 einen fehlgeschlagenen Tool-Aufruf abfängt, strukturierte Hinweise zurückgibt und es erneut versucht
@@ -278,8 +278,8 @@ anbinden“, und sein Bild ist **ein USB-C-Anschluss für KI-Anwendungen**
 Wie MCP verwaltet wird, ist eine genaue Datierung wert, denn daran sieht man, wie schnell das gegangen ist.
 Anthropic hat [MCP](https://modelcontextprotocol.io) am 25. November 2024 vorgestellt und es am 9. Dezember 2025
 an die Agentic AI Foundation übergeben – einen zweckgebundenen Fonds unter dem Dach der Linux Foundation, den
-Anthropic gemeinsam mit Block und OpenAI gegründet hat. Alle drei Anbieter sind heute MCP-*Clients*. Claude bietet in seiner API
-einen **MCP-Connector** (nur entfernt über HTTP, nur Tool-Calls) und dazu Claude Code als MCP-Client, der auch
+Anthropic gemeinsam mit Block und OpenAI gegründet hat. Alle drei Anbieterstacks unterstützen heute MCP-*Hosts*. Claude bietet in seiner API
+einen **MCP-Connector** (nur entfernt über HTTP, nur Tool-Calls) und dazu Claude Code als MCP-Host, der auch
 lokal über `stdio` spricht. Das Agents SDK von OpenAI bindet MCP-Server an (`MCPServerStdio`,
 `…StreamableHttp`, gehostet), und die Responses API führt ein gehostetes Tool `{type:"mcp"}` über einen Katalog
 von Anbindungen, die OpenAI pflegt. Gemini und das ADK verbinden sich über **`McpToolset`**, das die Schemata
@@ -303,7 +303,7 @@ hinausgreifen. Die Abwehr ist dieselbe wie in [MCP und Agentenprotokolle](./mcp/
 geringsten Berechtigungen, nur Server, denen Sie vertrauen, und die Bestätigung durch einen Menschen bei
 gefährlichen Aktionen.
 
-## Sieben Techniken, drei Agenten \{#the-seven-techniques-three-agents}
+## Sieben Muster in drei Anbieterstacks \{#the-seven-techniques-three-agents}
 
 | Technik | Claude | OpenAI | Gemini |
 |---|---|---|---|
@@ -371,7 +371,7 @@ eines neuen Anbieters nach, statt sie neu zu lernen.
   Subagenten bei Claude, Übergabe gegen Agent-als-Tool bei OpenAI, ein koordinierender Agent und
   deterministische Workflow-Agenten im ADK.
 - MCP hält das Ganze zusammen – 2024 von Anthropic geschrieben, im Dezember 2025 an die Agentic AI Foundation
-  der Linux Foundation übergeben; alle drei sind heute MCP-Clients. Lernen Sie das bleibende Muster; der
+  der Linux Foundation übergeben; alle drei unterstützen heute MCP-Hosts. Lernen Sie das bleibende Muster; der
   Anbieter ist ein datierter Einzelfall.
 
 **[Neue Begriffe](../glossary.md#real-agents)**: extended thinking, interleaved thinking, reasoning effort, thinking budget, Claude Code hooks, ADK callbacks, permission modes.

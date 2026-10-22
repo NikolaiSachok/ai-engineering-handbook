@@ -5,15 +5,15 @@ sidebar_label: Prečo AI zlyháva v produkcii
 sidebar_position: 0
 ---
 
-# Osem situácií, v ktorých funkčné demo zlyhá v produkcii
+# Prečo AI-systémy zlyhávajú v produkcii
 
 Demu stačí uspieť jediný raz, na trase, ktorú niekto vybral vopred. Produkčný systém musí sám ustáť aj trasy, ktoré nikto vopred nenapísal — tisíckrát denne, aj keď ľudia, ktorí ho postavili, spia. Sú to dva rôzne inžinierske problémy a zoznam nižšie je účtom za to, že si vyriešil iba prvý.
 
-Osem kariet čítaj ako mapu, nie ako výstrahu. Každá pomenuje jedno zlyhanie, ukáže produkčné riešenie, ktoré naň odpovedá, a odkáže na lekciu, ktorá ten mechanizmus naozaj vysvetľuje. S niektorými si sa už stretol: kvalita vyhľadávania v Prvej časti príručky, chyby nástrojov v Druhej časti príručky. Ostatné sú presne to, na čo je táto časť. A ak všetky spája jedna niť, tak táto: *takmer nič z toho nie je zlyhanie modelu.* Model je jediný komponent, ktorý si nenapísal. Všetko okolo neho je tvoje.
+Karty čítaj ako mapu, nie ako výstrahu. Pomenúvajú zlyhania, ukazujú ich produkčné riešenia a odkazujú na lekcie, ktoré príslušné mechanizmy naozaj vysvetľujú. S niektorými si sa už stretol: kvalita vyhľadávania v Prvej časti príručky, chyby nástrojov v Druhej časti príručky. Ostatné sú presne to, na čo je táto časť. A ak všetky spája jedna niť, tak táto: *takmer nič z toho nie je zlyhanie modelu.* Model je jediný komponent, ktorý si nenapísal. Všetko okolo neho je tvoje.
 
 :::note[Odkiaľ táto mapa pochádza]
 
-Týchto osem spôsobov zlyhania koluje v diskusiách o AI v produkcii; ich usporiadanie podnietila veľmi rozšírená infografika od Alexa Xu (ByteByteGo). Odlišujeme sa od nej zámerne v dvoch veciach. Pôvodná verzia ukazuje iba zlyhania, čo je pri diagnostickom plagáte poctivý rozsah — naše karty pripájajú ku každému zlyhaniu aj **produkčné riešenie**, pretože vedieť, že dáta prichádzajú v zlom stave, ešte nie je to isté ako vedieť, čo postaviť. A na troch miestach nesúhlasíme s rozšíreným odporúčaním: pri drifte, pri evaluačných sadách a pri smerovaní na lacnejší model. Každú nezhodu označíme tam, kde na ňu príde reč.
+Prvých osem sekcií pokrýva zlyhania, ktoré sa často spomínajú v diskusiách o AI v produkcii; ich usporiadanie podnietila veľmi rozšírená infografika od Alexa Xu (ByteByteGo). Odlišujeme sa od nej zámerne v dvoch veciach. Pôvodná verzia ukazuje iba zlyhania, čo je pri diagnostickom plagáte poctivý rozsah — naše karty pripájajú ku každému zlyhaniu aj **produkčné riešenie**, pretože vedieť, že dáta prichádzajú v zlom stave, ešte nie je to isté ako vedieť, čo postaviť. A na troch miestach nesúhlasíme s rozšíreným odporúčaním: pri drifte, pri evaluačných sadách a pri smerovaní na lacnejší model. Každú nezhodu označíme tam, kde na ňu príde reč.
 
 :::
 
@@ -127,21 +127,21 @@ Jednu vec rozhodni vedome a nepreberaj ju z predvolených nastavení: iný návr
 <Infographic
   src="/img/infographics/production-failures/05-cost.webp"
   alt="Tri lacné pokusy oproti jednému drahému pokusu s vyznačenou daňou za opakovania"
-  caption="Lacnejší model sa oplatí len vtedy, keď na úspešnosti získa aspoň toľko, koľko ušetrí na cene."
+  caption="Lacnejší model sa oplatí, ak je pomer jeho miery prijatia k miere drahšieho modelu väčší než pomer ich cien za pokus."
 />
 
 Výdavky, ktoré v deme nestoja za reč, rastú v produkcii z troch príčin naraz: agenti opakujú volania, konverzácie pri každom kroku znova odošlú celú svoju históriu a používatelia vložia celé dokumenty do poľa, ktoré si dimenzoval na jednu vetu. Opakované odosielanie sa prehliada najčastejšie — model bez vlastného stavu prečíta prepis znova pri každom kroku, takže dvojnásobne dlhá úloha stojí približne štvornásobok, a skrátiť to, čo sa v kontexte prenáša, je najsilnejšia páka, akú máš. Stabilný prefix promptu, ktorý sa dá cachovať, má väčšiu hodnotu než väčšina prechodov na iný model.
 
-A tu je druhá nezhoda: rada *smeruj rutinnú prácu na lacnejší model* má podmienku a tá sa zvyčajne vynechá. Rozhoduje náklad na prijatú odpoveď, nie náklad na token — lacnejší model, ktorý potrebuje tri pokusy tam, kde drahý potreboval jeden, lacnejší nie je. Ten rozdiel je **daň za opakovania**:
+A tu je druhá nezhoda: rada *smeruj rutinnú prácu na lacnejší model* má podmienku a tá sa zvyčajne vynechá. Rozhoduje náklad na prijatú odpoveď, nie náklad na token. Ak pokus s lacnejším modelom stojí polovicu, ale na prijatú odpoveď potrebuje priemerne tri pokusy namiesto jedného, celkový náklad je 1,5-násobný. Pri desatinovej cene za pokus sú tie isté tri pokusy stále lacnejšie: stoja 0,3-násobok. Opakovania teda úsporu znižujú — to je **daň za opakovania** — no nemusia ju celú zmazať. Jednoduchý model predpokladá pevnú cenu za pokus a nezávislé pokusy s nemennou pravdepodobnosťou prijatia `p`; pokusy sa opakujú až do prijatia odpovede:
 
 ```text
-cost_per_accepted ≈ attempt_cost / p          (p = first-try acceptance rate)
+cost_per_accepted ≈ attempt_cost / p          (p = acceptance probability per attempt)
 
 the cheaper model wins only when:
     p_cheap / p_expensive  >  price_cheap / price_expensive
 ```
 
-Čítaj to takto: `p` je podiel odpovedí prijatých na prvý pokus a lacnejší model vyhráva iba vtedy, keď je pomer jeho úspešnosti k úspešnosti drahého väčší než pomer ich cien. Polovičná cena teda nič neprinesie, ak spoľahlivosť nedosahuje ani polovicu. Než uveríš úspore, zmeraj `p` pre každú trasu. [LLMOps](./llmops/index.md) preberá páky — smerovanie, cachovanie, dávkový režim, rozpočty, ktoré sa naozaj vynucujú — a kurz AI-SDLC prepočítava tú istú aritmetiku pre inú jednotku: náklad na prijatú zmenu kódu.
+Čítaj to takto: `p` je pravdepodobnosť prijatia odpovede pri každom pokuse a lacnejší model vyhráva iba vtedy, keď je pomer jeho úspešnosti k úspešnosti drahého väčší než pomer ich cien. Polovičná cena teda nič neprinesie, ak spoľahlivosť nedosahuje ani polovicu. Než uveríš úspore, zmeraj `p` pre každú trasu. [LLMOps](./llmops/index.md) preberá páky — smerovanie, cachovanie, dávkový režim, rozpočty, ktoré sa naozaj vynucujú — a [kurz AI-SDLC](/ai-sdlc/part-5-scale-governance/cost-economics) prepočítava tú istú aritmetiku pre inú jednotku: náklad na prijatú zmenu kódu.
 
 ## 6 · Pred pretrénovaním preindexuj \{#6--re-index-before-you-retrain}
 
@@ -214,7 +214,7 @@ Potom uplatni ten istý štandard na všetko ostatné, čo mení správanie bez 
 
 Vo viackrokovej pipeline sa prvý chybný výstup stane dôveryhodným vstupom ďalšieho kroku. Zlyhanie vyhľadávania sa zmení na sebavedomý súhrn, súhrn na rozhodnutie — a kým si niekto všimne, že je niečo v neporiadku, pôvodná chyba leží o niekoľko transformácií dozadu. Odpoveďou je validácia medzi krokmi a každá etapa má byť postavená tak, aby chybný vstup odmietla, nie aby s ním urobila, čo sa dá: etapa, ktorá nikdy neodmietne, robí z chyby dôveryhodný výsledok.
 
-Doplniť sa oplatí ešte jedno: poradie. Brány nie sú rovnako drahé. Kontrola schémy stojí mikrosekundy, kontrola citácií a ich groundingu (opretia odpovede o kontext) stojí jedno vyhľadávanie a posúdenie modelom stojí volanie modelu. Púšťaj ich tak, že najlacnejšia kontrola ide prvá — za chyby, ktoré by zachytil regulárny výraz, tak nikdy nezaplatíš cenu sudcu. Toto poradie rozvádza kurz AI-SDLC v lekcii o vrstvených bránach; mechaniku na strane RAG — čo strážiť na vstupe, na výstupe a pri ingestione — vysvetľujú [guardrails](../part-1-rag/cross-cutting/guardrails/index.md).
+Doplniť sa oplatí ešte jedno: poradie. Brány nie sú rovnako drahé. Kontrola schémy stojí mikrosekundy, kontrola citácií a ich groundingu (opretia odpovede o kontext) stojí jedno vyhľadávanie a posúdenie modelom stojí volanie modelu. Púšťaj ich tak, že najlacnejšia kontrola ide prvá — za chyby, ktoré by zachytil regulárny výraz, tak nikdy nezaplatíš cenu sudcu. Toto poradie rozvádza kurz AI-SDLC v [lekcii o vrstvených bránach](/ai-sdlc/part-3-verification/layered-gates); mechaniku na strane RAG — čo strážiť na vstupe, na výstupe a pri ingestione — vysvetľujú [guardrails](../part-1-rag/cross-cutting/guardrails/index.md).
 
 ## 9 · Štyri zlyhania, ktoré v zoznamoch zvyčajne chýbajú \{#9--four-that-rarely-make-the-list}
 

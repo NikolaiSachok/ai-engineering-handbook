@@ -36,7 +36,7 @@ Liekom je protitlak (backpressure) — ochrana pred zahltením: súbežnosť zá
 
 Kontrola prijatia (admission control) tú istú myšlienku vyostruje: nezaraď do fronty prácu, ktorej v čase, keď sa k nej dostaneš, beztak už vyprší časový limit klienta — odmietnuť ju vopred je lacnejšie než minúť GPU-slot na odpoveď, na ktorú už nikto nečaká. A férovosť si žiada štruktúru — fronty na jednotlivého nájomcu a stropy súbežnosti na nájomcu zabránia tomu, aby jeden nenásytný používateľ obral o zdroje všetkých ostatných. Je to rate limit (strop na počet požiadaviek) na používateľa z prvej časti, teraz zabudovaný priamo do cesty prijímania namiesto prilepenia zvonka.
 
-Základný princíp: ohranič pri vzácnom zdroji, nie pri spojení. Čakajúce spojenie je lacné, no každá rozbehnutá požiadavka aj tak niečo vzácne spotrebúva ďalej v reťazci — batch-slot na GPU alebo kúsok tokenového rozpočtu poskytovateľa. Strop preto patrí práve k nemu. V praxi žije na dvoch úrovniach: aplikačná vrstva ohraničuje vlastným semaforom a frontou a inference server (inferenčný server) presadzuje vlastné prijímanie cez `max_num_seqs` (nižšie). Dvojitá poistka.
+Základný princíp: ohranič pri vzácnom zdroji, nie pri spojení. Čakajúce spojenie je lacné, no každá rozbehnutá požiadavka aj tak niečo vzácne spotrebúva ďalej v reťazci — batch-slot na GPU alebo časť kvóty poskytovateľa na počet tokenov za minútu. Strop preto patrí práve k nemu. V praxi žije na dvoch úrovniach: aplikačná vrstva ohraničuje vlastným semaforom a frontou a inference server (inferenčný server) presadzuje vlastné prijímanie cez `max_num_seqs` (nižšie). Dvojitá poistka.
 
 ```mermaid
 flowchart TB

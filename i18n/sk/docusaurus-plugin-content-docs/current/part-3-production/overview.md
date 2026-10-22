@@ -13,11 +13,12 @@ funguje“ od „funguje pod záťažou, s observability a v rámci rozpočtu“
 
 ## Čo je vnútri \{#whats-inside}
 
+- **[Prečo AI-systémy zlyhávajú v produkcii](./production-failures.md)** — prehľad zlyhaní a mechanizmov, ktorými ich riešiš.
 - **[Serving — FastAPI + Docker](./serving/index.md)** — ako zabaliť model alebo agenta do služby: API,
   streaming, kontajner, inferenčné servery.
 - **[Cloudové AI platformy](./cloud-platforms/index.md)** — [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service),
-  [Amazon Bedrock](https://aws.amazon.com/bedrock/), Google Cloud Gemini Enterprise Agent Platform (predtým
-  [Vertex AI](https://cloud.google.com/vertex-ai)): čo ponúkajú a čím sa líšia.
+  [Amazon Bedrock](https://aws.amazon.com/bedrock/), Google Cloud Gemini Enterprise Agent Platform ([Vertex AI](https://cloud.google.com/vertex-ai)
+  v staršej dokumentácii): čo ponúkajú a čím sa líšia.
 - **[Ekosystém nástrojov](./tooling-ecosystem/index.md)** — eval, guardrails, observability v produkcii: čo
   merať, čo strážiť, čo vidieť.
 - **[LLMOps — nasadenie, monitoring, náklady](./llmops/index.md)** — život LLM-systému po vydaní.

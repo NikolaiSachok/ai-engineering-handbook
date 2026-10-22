@@ -11,7 +11,7 @@ Der übliche Ausweg ist ein Standard. Kapseln Sie jedes Tool ein einziges Mal hi
 
 :::tip[▶ Video]
 
-<YouTube id="g9JIUM0MHgQ" title="CLI vs [MCP](https://modelcontextprotocol.io): How AI Agents Choose the Right Tool for the Job — IBM Technology" />
+<YouTube id="g9JIUM0MHgQ" title="CLI vs MCP: How AI Agents Choose the Right Tool for the Job — IBM Technology" />
 
 Sehen Sie es sich vor dem Swagger-Abschnitt weiter unten an: Es stellt dieselbe Frage ohne Umschweife – wenn die Kommandozeile und die API-Spezifikation längst beschreiben, was ein Tool tut, was kommt durch MCP eigentlich hinzu? (Das Video ist auf Englisch.)
 
@@ -19,7 +19,7 @@ Sehen Sie es sich vor dem Swagger-Abschnitt weiter unten an: Es stellt dieselbe 
 
 ## Was MCP ist \{#what-mcp-is}
 
-**MCP** (Model Context Protocol) ist ein offener Standard. Anthropic hat ihn Ende 2024 vorgestellt und im Dezember 2025 an die Agentic AI Foundation unter dem Dach der Linux Foundation übergeben; seither liegt die Steuerung bei einem neutralen, von der Community getragenen Gremium. Aufgebaut ist er als Client-Server-Architektur, und zwei Rollen erledigen darin die Arbeit. **Der MCP-Server** kapselt ein einzelnes Tool oder eine einzelne Datenquelle – eine Datenbank, ein Dateisystem, eine SaaS-API, ein Code-Repository – und stellt dessen Fähigkeiten einheitlich bereit; er ist ein Dienst, der Funktionen oder Daten zur Verfügung stellt. **Der MCP-Client** ist der Agent oder die Anwendung am anderen Ende: Er verbindet sich mit Servern und nutzt, was sie anbieten. Ein Server ist für viele Clients erreichbar; ein Client kann Verbindungen zu vielen Servern halten.
+**MCP** (Model Context Protocol) ist ein offener Standard. Anthropic hat ihn Ende 2024 vorgestellt und im Dezember 2025 an die Agentic AI Foundation unter dem Dach der Linux Foundation übergeben; seither liegt die Steuerung bei einem neutralen, von der Community getragenen Gremium. Aufgebaut ist er als Host-Client-Server-Architektur mit drei Rollen. **Der MCP-Host** ist die Agentenanwendung; er erzeugt und verwaltet für jede Serververbindung einen Client. **Der MCP-Server** kapselt ein einzelnes Tool oder eine einzelne Datenquelle – eine Datenbank, ein Dateisystem, eine SaaS-API, ein Code-Repository – und stellt dessen Fähigkeiten einheitlich bereit; er ist ein Dienst, der Funktionen oder Daten zur Verfügung stellt. **Der MCP-Client** ist ein Konnektor innerhalb des Hosts: Er hält eine 1:1-Verbindung zu genau einem Server und nutzt dessen Angebot. Ein Host kann viele Clients verwalten; ein Server kann viele Clients bedienen.
 
 Mehr als eine Konvention für Tool-Calls wird MCP dadurch, dass es nicht eine, sondern drei Komponenten standardisiert:
 
@@ -57,7 +57,7 @@ Und nun die ehrliche Einschränkung, denn in einem Punkt trifft der Einwand zu. 
 
 MCP standardisiert eine Achse: vom Agenten zum Tool, vom Agenten zu den Daten. Über eine zweite Achse sagt es nichts – die von Agent zu Agent, also genau die Verständigung, die Sie ab dem Moment brauchten, in dem Sie [Multi-Agenten-Systeme](../multi-agent/index.md) gebaut haben. Wenn ein Agent an einen anderen übergibt, welches Protokoll trägt diese Übergabe? MCP ist dafür nicht gemacht; es verbindet einen Agenten mit seinen Tools, nicht mit einem Gegenüber.
 
-**[A2A](https://a2a-protocol.org) (Agent-to-Agent)** ist die Antwort, die sich gerade herausbildet – ein Standard, den Google vorgeschlagen hat und der inzwischen unter dem Dach der Linux Foundation liegt –, und A2A ist nicht der einzige Anwärter. Die Unterscheidung, die sich zu merken lohnt, ist sauber: **MCP führt vom Agenten zu Tools und Kontext, A2A von Agent zu Agent.** Diese Ecke des Fachs bewegt sich schnell, und bis Sie das hier lesen, wird die Liste der Anwärter eine andere sein; lernen Sie deshalb die *Unterscheidung* und nicht die Namen. Die beiden Achsen gibt es wirklich, und sie bleiben; jedes einzelne Protokoll auf einer von ihnen ist eine Momentaufnahme.
+**[A2A](https://a2a-protocol.org) (Agent2Agent)** ist die Antwort, die sich gerade herausbildet – ein Standard, den Google vorgeschlagen hat und der inzwischen unter dem Dach der Linux Foundation liegt –, und A2A ist nicht der einzige Anwärter. Die Unterscheidung, die sich zu merken lohnt, ist sauber: **MCP führt vom Agenten zu Tools und Kontext, A2A von Agent zu Agent.** Diese Ecke des Fachs bewegt sich schnell, und bis Sie das hier lesen, wird die Liste der Anwärter eine andere sein; lernen Sie deshalb die *Unterscheidung* und nicht die Namen. Die beiden Achsen gibt es wirklich, und sie bleiben; jedes einzelne Protokoll auf einer von ihnen ist eine Momentaufnahme.
 
 ## Jeder angebundene Server vergrößert die Angriffsfläche \{#security--a-new-attack-surface}
 
@@ -72,13 +72,13 @@ Damit ist die Lektion abgeschlossen – und mit ihr die Grundausstattung von Tei
 ## Das Wichtigste \{#what-to-take-away}
 
 - **Das M×N-Integrationsproblem** – M Anwendungen × N Tools ergeben M × N einzeln gebaute Anbindungen – ist der Grund, warum es Standards gibt. MCP macht daraus **N + M**: jedes Tool einmal als Server kapseln, den Client einmal je Anwendung umsetzen. Das Bild dazu ist **ein USB-C-Anschluss für KI-Anwendungen**.
-- **MCP** (Model Context Protocol) ist ein offener Client-Server-Standard – 2024 bei Anthropic entstanden, seit Dezember 2025 ein Projekt der Agentic AI Foundation unter dem Dach der Linux Foundation. **Der MCP-Server** kapselt ein Tool oder eine Datenquelle, **der MCP-Client** ist der Agent, der sie nutzt. Standardisiert werden drei Komponenten – **Tools**, **Ressourcen** und **Prompts** – über `stdio` (lokal) oder Streamable HTTP (entfernt).
+- **MCP** (Model Context Protocol) ist ein offener Client-Server-Standard – 2024 bei Anthropic entstanden, seit Dezember 2025 ein Projekt der Agentic AI Foundation unter dem Dach der Linux Foundation. **Der MCP-Server** kapselt ein Tool oder eine Datenquelle, **der MCP-Host** ist die Anwendung, und jeder **MCP-Client** verbindet sie mit genau einem Server. Standardisiert werden drei Komponenten – **Tools**, **Ressourcen** und **Prompts** – über `stdio` (lokal) oder Streamable HTTP (entfernt).
 - Der Gewinn: **Tools zu bauen und Agenten zu bauen sind mit MCP zwei getrennte Aufgaben.** Schreiben Sie einen Server einmal, und jeder Client verwendet ihn weiter – eine Wirkung im Ökosystem, kein Merkmal des Protokolls.
 - MCP ist *nicht* „Swagger mit Beschreibungen“. Swagger und der `--help`-Text tragen längst Bedeutung, und ein LLM lässt sich auch aus einer OpenAPI-Spezifikation heraus steuern. Die wirklichen Unterschiede sind: Laufzeit statt Entwurfszeit, Komponenten jenseits der Aktionen (Ressourcen, Prompts), ein einziger einheitlicher Client und eine Sitzung in beide Richtungen (Sampling). MCP-Server sind für ein Modell *meist* besser lesbar – aber weil sie so geschrieben werden, nicht weil OpenAPI keine Bedeutung tragen könnte.
-- **MCP führt vom Agenten zu Tools, A2A (Agent-to-Agent) von Agent zu Agent.** Zwei Achsen. Das Feld ist in Bewegung – lernen Sie die Unterscheidung, nicht die aktuellen Namen.
+- **MCP führt vom Agenten zu Tools, A2A (Agent2Agent) von Agent zu Agent.** Zwei Achsen. Das Feld ist in Bewegung – lernen Sie die Unterscheidung, nicht die aktuellen Namen.
 - Ein MCP-Server ist **eine neue Angriffsfläche**: indirekte Prompt-Injection, abgezogene Daten, überschrittene Berechtigungen. Wehren Sie sich mit dem **Prinzip der geringsten Berechtigungen**, mit ausschließlich geprüften Servern und mit einer Bestätigung durch einen Menschen für gefährliche Aktionen; behandeln Sie alles, was ein Server liefert, als nicht vertrauenswürdige Eingabe, nie als Anweisung.
 
-**[Neue Begriffe](../../glossary.md#mcp)**: MCP (Model Context Protocol), MCP server, MCP client, MCP resources, MCP prompts, M×N integration problem, A2A (Agent-to-Agent).
+**[Neue Begriffe](../../glossary.md#mcp)**: MCP (Model Context Protocol), der MCP-Host, MCP server, MCP client, MCP resources, MCP prompts, M×N integration problem, A2A (Agent2Agent).
 
 ---
 

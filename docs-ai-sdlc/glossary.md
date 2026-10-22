@@ -341,7 +341,7 @@ its section here. The list grows as the course does.
 
 **Agent fleet** — several agents working concurrently on one codebase. Its size is governed not by available compute but by how much the verification chain can absorb.
 
-**Shared-state serialiser** — any mutable thing two agents both touch (a working tree, a database, a quota, an appended-to corpus). Whatever is shared decides who waits, so it, not the scheduler, sets the real concurrency.
+**Shared-state serialiser** — any mutable thing two agents both touch (a working tree, a database, a quota, an appended-to corpus). Whatever is shared decides who waits, so contention over that shared state, rather than the configured scheduler alone, sets the real concurrency. This is the fleet lesson's effective-scheduler metaphor: contention constrains the order even when an orchestrator has already scheduled the work.
 
 **Worktree isolation** — giving each agent its own checkout against the same object store, so one branch switch or one stray commit cannot disturb a neighbour. Isolation removes a class of interference that coordination can only manage.
 

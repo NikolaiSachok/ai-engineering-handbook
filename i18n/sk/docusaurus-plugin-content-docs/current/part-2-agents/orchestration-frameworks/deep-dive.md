@@ -51,7 +51,7 @@ Keďže je uložený každý krok, obnovenie nie je jediné, čo vieš. Vieš sa
 Checkpointer je jedno rozhranie nad vymeniteľným úložiskom a tým úložiskom je **checkpoint backend** (backend pre checkpointy). K júlu 2026 sú konkrétne možnosti tieto:
 
 - `InMemorySaver` — drží stav v RAM a pri reštarte ho stratí; LEN NA VÝVOJ.
-- `SqliteSaver` (balík `langgraph-checkpoint-sqlite`, v3.1.0, máj 2026) — na lokálne jednouzlové použitie.
+- `SqliteSaver` (balík `langgraph-checkpoint-sqlite`, v3.1.0, máj 2026) — na lokálne použitie na jednom stroji.
 - `PostgresSaver` (balík `langgraph-checkpoint-postgres`, tiež v3.1.0) — na produkciu, stav je zdieľaný a odolný.
 - `RedisSaver` (`langgraph-checkpoint-redis`) — ďalšia produkčná možnosť, keď už Redis prevádzkuješ.
 

@@ -270,3 +270,31 @@ EN-фаза (§1a) фиксировала статусы английских т
 **Испытание снято не тем проходом, который форму предложил** (`style-canon.md`, no self-issued exemption):
 форму ввёл проход рендера, а подтвердил её независимый холодный монолингвальный читатель на раунде 3 плюс
 отдельный аудит реестра отказов.
+
+## Integration batch — evaluation, replay, routing and production (2026-10-22)
+
+Concept/sense records for the new glossary entries and their lesson footers. New prose forms are
+PROBATION; this batch does not settle them. Existing frozen decisions remain in force.
+
+| Concept (EN) | Form in this locale | Sense boundary / status |
+|---|---|---|
+| population audit | выборочный аудит | PROBATION. Population-rate estimate; separate from targeted defect discovery. |
+| confidence interval for a failure rate | доверительный интервал | PROBATION. Sampling uncertainty for a rate; not detection probability or label validity. |
+| detection probability | вероятность обнаружения | PROBATION. At least one specified failure; not power for a version-comparison test. |
+| tool-response replay | tool-response replay (воспроизведение ответов инструментов) | PROBATION. Recorded tool observations in an isolated test; not live retry or deterministic model generation. |
+| trajectory invariant | trajectory invariant (инвариант траектории) | PROBATION. Constraint over applicable actions/state; not one required golden path. |
+| action–message consistency | action–message consistency (согласованность сообщения с действиями) | PROBATION. Message claims versus confirmed action/state evidence; not retrieval faithfulness. |
+| model cascade | каскад моделей | PROBATION. Generate, check, then escalate on quality; distinct from availability fallback and pre-generation model routing. |
+| escalation rate | доля эскалаций | PROBATION. Next-tier calls / requests entering that cascade; excludes bypass traffic. |
+| validator | validator (валидатор) | PROBATION. Guardrails AI value check; `Validator` is the API literal, not every review gate. |
+| on_fail | `on_fail` | Literal token; new glossary sense recorded. Guardrails AI failure-action identifier; preserve spelling. |
+| OpenTelemetry Collector | OpenTelemetry Collector | Literal token; new glossary sense recorded. Telemetry service proper name; distinct from application instrumentation. |
+| SFT (supervised fine-tuning) | SFT (supervised fine-tuning, дообучение с учителем) | PROBATION. Labelled input–output training; not context distillation or reinforcement fine-tuning. |
+
+Surfaces: `glossary.md`; evaluation and planning-loops deep dives; `llmops/routing.md`;
+`tooling-ecosystem/index.md`; `llmops/deep-dive.md`. The statistics and replay entries retain the
+NIST, VCR.py and LangChain references on those pages; the cascade entry retains FrugalGPT.
+
+EN uses the concept-column forms (glossary title casing). The settled `replay` → «воспроизведение»
+sense in §1d is reused inside the new compound; its settled status is unchanged. Model routing
+selects an answering model; query routing selects a retrieval destination; tool selection stays separate.

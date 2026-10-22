@@ -5,21 +5,21 @@ sidebar_label: Why AI fails in production
 sidebar_position: 0
 ---
 
-# Eight ways a working demo dies in production
+# Why AI systems fail in production
 
 A demo has to win once, on a path someone chose. Production has to catch itself on the paths nobody
 scripted, thousands of times a day, while the people who built it are asleep. Those are two different
 engineering problems, and the list below is the bill for having solved only the first one.
 
-Read the eight cards as a map rather than a warning. Each one names a failure, shows the shape that answers it,
-and points at the lesson where the mechanism is actually taught. Some you have already met — retrieval quality
+Read these cards as a map rather than a warning. They name failure modes, show the shapes that answer them,
+and point at the lessons where the mechanisms are actually taught. Some you have already met — retrieval quality
 in Part I, tool failure in Part II. The rest are what this part is for. And if a single thread runs through all
 of them, it is this: **almost nothing here is a model failure.** The model is the one component you did not
 write. Everything around it is yours.
 
 :::note[Where this map comes from]
 
-These eight are the failure modes that circulate widely in production-AI discussion; the arrangement here was
+The first eight sections cover failure modes that circulate widely in production-AI discussion; the arrangement here was
 prompted by a much-shared infographic from Alex Xu (ByteByteGo). Two deliberate differences. That version
 shows only the failures, which is the honest scope of a diagnostic poster — these cards show the **production
 shape** alongside each failure, because knowing that data arrives messy is not the same as knowing what to
@@ -184,7 +184,7 @@ setting. Decide which one you are building before an auditor decides for you.
 <Infographic
   src="/img/infographics/production-failures/05-cost.webp"
   alt="Three cheap attempts against one expensive attempt, with the retry tax marked"
-  caption="A cheaper model only wins if its success rate beats the expensive one by more than the price gap."
+  caption="A cheaper model wins when its relative acceptance rate exceeds its relative attempt cost."
 />
 
 Costs that look like rounding errors in a demo compound in three ways at once: agents retry, conversations
@@ -195,11 +195,14 @@ lever you have. A stable prompt prefix that can be cached is worth more than mos
 
 Which brings the second disagreement: *route routine work to a lighter model* is advice with a condition
 attached, and the condition is usually left out. The unit that matters is cost per **accepted** answer, not
-cost per token, so a cheaper model that needs three attempts where the expensive one needed one is not
-cheaper — that gap is the **retry tax**:
+cost per token. If one model costs half as much per attempt but needs three attempts on average where
+the expensive model needs one, it costs 1.5 times as much per accepted answer. At one tenth of the attempt
+cost, those same three attempts would still be cheaper. Retries erode the saving — the **retry tax** —
+but do not automatically erase it. A simple model assumes fixed attempt costs and independent attempts
+with the same acceptance probability `p`, retrying until acceptance:
 
 ```text
-cost_per_accepted ≈ attempt_cost / p          (p = first-try acceptance rate)
+cost_per_accepted ≈ attempt_cost / p          (p = acceptance probability per attempt)
 
 the cheaper model wins only when:
     p_cheap / p_expensive  >  price_cheap / price_expensive
@@ -207,8 +210,8 @@ the cheaper model wins only when:
 
 Half the price buys nothing at less than half the reliability. Measure `p` per route before you believe a
 saving. [LLMOps](./llmops/index.md) covers the levers — routing, caching, the batch tier, budgets that
-actually close the loop — and the AI-SDLC course works the same arithmetic out for a different unit, cost per
-accepted code change.
+actually close the loop — and the [AI-SDLC course](/ai-sdlc/part-5-scale-governance/cost-economics)
+works the same arithmetic out for a different unit, cost per accepted code change.
 
 ## 6 · Re-index before you retrain \{#6--re-index-before-you-retrain}
 
@@ -302,7 +305,7 @@ errors.
 The refinement worth adding is **ordering**. Gates are not equally expensive: a schema check costs
 microseconds, a citation-grounding check costs a retrieval, a model-graded judgement costs a model call. Run
 them cheapest-first, so the failures a regex could have caught are never paid for at judge prices. That
-ordering argument is developed properly in the AI-SDLC course's layered-gates lesson; the RAG-side machinery —
+ordering argument is developed in the AI-SDLC course's [layered-gates lesson](/ai-sdlc/part-3-verification/layered-gates); the RAG-side machinery —
 what to guard on input, output and at ingestion — is [guardrails](../part-1-rag/cross-cutting/guardrails/index.md).
 
 ## 9 · Four that rarely make the list \{#9--four-that-rarely-make-the-list}

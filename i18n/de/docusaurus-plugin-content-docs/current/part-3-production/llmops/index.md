@@ -178,9 +178,12 @@ Nicht jede Anfrage braucht das Spitzenmodell. Klassifizieren, einfaches Nachschl
 erledigt ein günstiges, schnelles Modell; das teure ist seinen Preis erst dort wert, wo die Generation
 wirklich schwierig wird. Das **Routing über Modelle hinweg** schickt jede Anfrage an das günstigste Modell,
 das sie bewältigt, und der Router selbst kann eine Regel sein, ein trainierter Klassifikator oder wieder ein
-Modell. Achten Sie auf die Begriffe: Hier geht das Routing *über Modelle hinweg* – der dritte Sinn von Routing
-in diesem Buch. Der Query-Router aus Teil I hat einen Index gewählt, der Agent aus Teil II ein Tool; dieser
-hier wählt, wer antwortet.
+Modell. Achten Sie auf die Begriffe: Hier geht das Routing *über Modelle hinweg*. Der Query-Router aus Teil I
+hat einen Index gewählt, der Agent aus Teil II ein Tool, und beim Cloud-Routing kann eine Region oder ein
+Endpunkt gewählt werden; dieser Router wählt, welches Modell antwortet.
+
+Die Ergänzung [Model-Routing – Kosten und Latenz der gesamten Anfrage](./routing.md) rechnet die
+Kosten durch und zeigt, wie eine Modellkaskade die Latenz vollständiger Anfragen verändert.
 
 ### Fallbacks und das Gateway \{#fallbacks-and-the-gateway}
 
@@ -197,11 +200,13 @@ gehostete.
 
 Der erste Cache ist der des Anbieters. Das **Prompt-Caching** legt das wiederkehrende *Präfix* Ihres Prompts
 ab – den System-Prompt, die Few-Shot-Beispiele, den statischen Kontext –, sodass er nicht bei jedem Aufruf neu
-verarbeitet wird. Beide großen Anbieter rechnen zwischengespeicherte Eingabe-Token inzwischen pauschal in der
-Größenordnung eines Zehntels des Grundpreises für die Eingabe ab (die genauen Faktoren stehen auf ihren
-Preisseiten). Die ehrliche Einschränkung: Ein *Schreiben* in den Cache kostet mehr als die Eingabe zum
-Grundpreis – Anthropic verlangt 1,25x oder 2x, je nach Lebensdauer des Eintrags, OpenAI 1,25x auf seinen
-neuesten Modellen –, und deshalb ist ein Präfix, das nie wieder gelesen wird, im Cache ein Verlustgeschäft.
+verarbeitet wird. Anthropic und OpenAI berechnen Lesezugriffe auf den Cache günstiger als frische Eingabe;
+der Rabatt hängt vom Modell und der Cache-Strategie ab. Bei vielen Modellen liegt der Preis ungefähr bei
+einem Zehntel des Grundpreises für die Eingabe (die genauen Faktoren stehen auf ihren Preisseiten).
+Die ehrliche Einschränkung: Beim *Schreiben* in den Cache kann ein Aufschlag auf den Grundpreis für die
+Eingabe anfallen. Ob und in welcher Höhe, hängt vom Anbieter, vom Modell und von der Lebensdauer des
+Cache-Eintrags ab. Wo dieser Aufschlag anfällt, ist ein Präfix, das nie wieder gelesen wird, im Cache ein
+Verlustgeschäft.
 Die Folge für den Entwurf: Bauen Sie den Prompt so, dass der Cache greift – erst das statische Präfix, dann
 das veränderliche Ende, denn alles Dynamische beendet das wiederverwendbare Präfix genau an der Stelle, an der
 es auftritt.
@@ -232,7 +237,7 @@ Arbeitslast als nicht interaktiv einordnen und den Rabatt mitnehmen.
 
 ### Budgets schließen die Schleife \{#budgets-close-the-loop}
 
-Die ausgereifte Praxis – verbreitet, aber kein Standard – sind **Token-Budgets** je Team und je Funktion samt
+Die ausgereifte Praxis – verbreitet, aber kein Standard – sind **Ausgabenlimits** je Team und je Funktion samt
 Alarmen, durchgesetzt dort, wo aller Verkehr ohnehin schon zusammenläuft: am Gateway. Und die Durchsicht der
 Kosten kommt auf die Checkliste für das Deployment, denn der Unterschied, mit dem die Lektion beginnt, gilt in
 beide Richtungen – eine Änderung am Prompt ist eine Änderung der Kosten. Die Schleife vom Anfang dieser Seite

@@ -5,23 +5,23 @@ sidebar_label: Warum KI im Betrieb versagt
 sidebar_position: 0
 ---
 
-# Acht Situationen, in denen ein funktionierendes Demo den Produktivbetrieb nicht übersteht
+# Warum KI-Systeme im Produktivbetrieb versagen
 
 Ein Demo muss ein einziges Mal gelingen, auf einem Weg, den jemand ausgesucht hat. Ein Produktivsystem muss
 allein zurechtkommen, auf Wegen, die niemand vorgezeichnet hat, viele tausend Mal am Tag, während die
 Leute schlafen, die es gebaut haben. Das sind zwei verschiedene technische Aufgaben, und die Liste unten ist
 die Quittung dafür, nur die erste gelöst zu haben.
 
-Lesen Sie die acht Karten als Landkarte und nicht als Warnung. Jede benennt einen Fehler, zeigt die
-Architektur, die ihn verhindert, und verweist auf die Lektion, in der der Mechanismus wirklich erklärt wird.
+Lesen Sie diese Karten als Landkarte und nicht als Warnung. Sie benennen Fehlerbilder, zeigen passende
+Architekturen und verweisen auf die Lektionen, in denen die Mechanismen wirklich erklärt werden.
 Einige kennen Sie schon – die Qualität des Retrievals aus Teil I, den Ausfall eines Tools aus Teil II. Der
-Rest ist der Gegenstand dieses Teils. Und alle acht haben eines gemeinsam: **Fast nichts
+Rest ist der Gegenstand dieses Teils. Und eines haben sie gemeinsam: **Fast nichts
 davon ist ein Fehler des Modells.** Das Modell ist das eine Bauteil, das Sie nicht geschrieben haben. Alles
 darum herum haben Sie gebaut.
 
 :::note[Woher diese Landkarte kommt]
 
-Diese acht Fehlerbilder machen in Diskussionen über KI im Produktivbetrieb die Runde;
+Die ersten acht Abschnitte behandeln Fehlerbilder, die in Diskussionen über KI im Produktivbetrieb die Runde machen;
 den Anstoß zu dieser Anordnung gab eine viel geteilte Infografik von Alex Xu (ByteByteGo). Zwei Unterschiede
 sind Absicht. Jene Fassung zeigt nur die Fehler, und für ein diagnostisches Plakat ist das der ehrliche
 Zuschnitt – diese Karten stellen neben jeden Fehler die **Architektur für den Produktivbetrieb**, denn zu
@@ -206,7 +206,7 @@ Ausführlichkeit. Entscheiden Sie, welches von beiden Sie bauen, bevor ein Prüf
 <Infographic
   src="/img/infographics/production-failures/05-cost.webp"
   alt="Drei Versuche mit dem günstigen Modell gegen einen Versuch mit dem teuren Modell; der Abstand ist als retry tax beschriftet, also als Mehrkosten der Wiederholungen"
-  caption="Ein günstigeres Modell gewinnt nur, wenn sein Vorsprung bei der Erfolgsquote größer ist als der Abstand beim Preis."
+  caption="Ein günstigeres Modell gewinnt, wenn das Verhältnis der Annahmequoten größer ist als das Verhältnis der Kosten je Versuch."
 />
 
 Kosten, die in einem Demo wie ein Rundungsfehler aussehen, wachsen im Produktivbetrieb an drei Stellen
@@ -219,11 +219,15 @@ lässt, hilft mehr als jeder Wechsel auf ein anderes Modell.
 
 Damit kommt der zweite Einwand: „Überlassen Sie die Routine einem kleineren Modell“ ist ein Rat mit einer
 Bedingung, und die Bedingung wird meist weggelassen. Es zählen die **Kosten für eine angenommene Antwort**
-und nicht die Kosten je Token. Ein günstigeres Modell, das drei Versuche braucht, während das teure mit
-einem auskam, ist damit nicht günstiger – diesen Abstand fressen die **Mehrkosten der Wiederholungen**:
+und nicht die Kosten je Token. Kostet ein Modell je Versuch halb so viel, braucht aber im Durchschnitt drei
+Versuche, wo das teure einen braucht, kostet jede angenommene Antwort das 1,5-Fache. Bei einem Zehntel der
+Kosten je Versuch wären dieselben drei Versuche noch günstiger: Sie kämen auf das 0,3-Fache. Wiederholungen
+schmälern die Ersparnis – durch die **Mehrkosten der Wiederholungen** –, heben sie aber nicht zwangsläufig
+auf. Ein einfaches Modell setzt feste Kosten je Versuch und voneinander unabhängige Versuche mit
+gleichbleibender Annahmewahrscheinlichkeit `p` voraus; wiederholt wird bis zur Annahme:
 
 ```text
-cost_per_accepted ≈ attempt_cost / p          (p = Erfolgsquote beim ersten Versuch)
+cost_per_accepted ≈ attempt_cost / p          (p = Annahmewahrscheinlichkeit je Versuch)
 
 Das günstigere Modell gewinnt nur, wenn:
     p_cheap / p_expensive  >  price_cheap / price_expensive
@@ -231,7 +235,7 @@ Das günstigere Modell gewinnt nur, wenn:
 
 Der halbe Preis bringt nichts, wenn die Zuverlässigkeit unter der Hälfte liegt. Messen Sie `p` für jede
 Route, bevor Sie einer Einsparung glauben. [LLMOps](./llmops/index.md) behandelt die Hebel – das Routing, das
-Caching, den Batch-Tarif, Budgets, die den Verbrauch wirklich stoppen –, und der Kurs zum AI-SDLC rechnet
+Caching, den Batch-Tarif, Budgets, die den Verbrauch wirklich stoppen –, und der [Kurs zum AI-SDLC](/ai-sdlc/part-5-scale-governance/cost-economics) rechnet
 dieselbe Arithmetik für eine andere Einheit aus: für die Kosten einer angenommenen Änderung am Code.
 
 ## 6 · Indexieren Sie neu, bevor Sie neu trainieren \{#6--re-index-before-you-retrain}
@@ -332,8 +336,8 @@ Die Verfeinerung, die sich lohnt, ist die **Reihenfolge**. Nicht jede Prüfung k
 Prüfung des Schemas kostet Mikrosekunden, die Prüfung, ob die Antwort von den angegebenen Quellen gedeckt ist,
 kostet ein Retrieval, ein Urteil durch ein Modell kostet einen Modellaufruf. Lassen Sie die günstigste
 zuerst laufen, damit Sie für Fehler, die ein regulärer Ausdruck abgefangen hätte, nie den Preis eines
-Judges zahlen. Dieses Argument über die Reihenfolge entwickelt die Lektion über die mehrschichtigen Prüfungen
-im Kurs zum AI-SDLC in aller Ruhe; die Maschinerie auf der RAG-Seite – was Sie an der Eingabe, an der
+Judges zahlen. Dieses Argument über die Reihenfolge entwickelt die
+[Lektion über die mehrschichtigen Prüfungen](/ai-sdlc/part-3-verification/layered-gates) im Kurs zum AI-SDLC; die Maschinerie auf der RAG-Seite – was Sie an der Eingabe, an der
 Ausgabe und bei der Ingestion absichern – steht in der Lektion zu den
 [Guardrails](../part-1-rag/cross-cutting/guardrails/index.md).
 

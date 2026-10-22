@@ -329,6 +329,12 @@ executable test, a human label — not from a different vendor.
 (chain-of-verification). The second is the across-models property that correlated error takes away. Having
 the first does not give you the second.
 
+**Population audit** — a probability sample used to estimate a rate in a defined population. Preserve a uniform random slice or use known stratum weights; active-sampled and priority-retained records do not support an unweighted population rate.
+
+**Confidence interval for a failure rate** — an interval from a procedure with a stated long-run coverage rate. It describes sampling uncertainty, not selection bias or label correctness; Wilson or exact binomial intervals are useful for small failure counts. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm)
+
+**Detection probability** — the chance that a sampling procedure observes a specified signal. For at least one failure in independent draws at constant rate *p*, it is `1 − (1 − p)^n`; this differs from the statistical power of a test comparing rates. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/eda/section3/eda366i.htm)
+
 **Offline vs online eval** — evaluating on a golden set before deploy (regression in CI) versus measuring
 in production (user feedback, A/B).
 
@@ -650,6 +656,12 @@ store; long-term, unlike the ephemeral scratchpad.
 window as "main context" (like RAM) and an external store as "external context" (like disk), paging data in
 and out with tool calls to work beyond the window. ↗ [arXiv](https://arxiv.org/abs/2310.08560)
 
+**Tool-response replay** — re-running agent decisions against versioned recorded tool observations, with live side effects disabled. Unmatched requests expose missing replay coverage; fixed tool responses do not make model generation deterministic. ↗ [VCR.py](https://vcrpy.readthedocs.io/en/latest/usage.html#record-modes)
+
+**Trajectory invariant** — an assertion that must hold over applicable actions and state, such as approval before an irreversible write. It permits alternative valid paths; exact sequence matching is appropriate only where that sequence is required. ↗ [LangChain](https://www.langchain.com/resources/agent-evals)
+
+**Action–message consistency** — agreement between user-facing claims about actions and confirmed action results or state. An attempted or pending write cannot support a claim of completion; check omitted material outcomes as well as invented ones.
+
 **Trajectory evaluation** — grading the whole path the agent took, not just its final answer: outcome (task
 success) versus process (was each step and tool call sound), plus step efficiency and termination.
 
@@ -807,7 +819,7 @@ N+M. ↗ [modelcontextprotocol.io](https://modelcontextprotocol.io)
 
 **MCP server** — wraps a tool or data source and exposes its capabilities uniformly.
 
-**MCP client** — the agent or app that connects to MCP servers and consumes their capabilities.
+**MCP client** — a connector created by an MCP host, maintaining a 1:1 connection to one MCP server and consuming its capabilities.
 
 **MCP resources** — data and context an MCP server exposes (no OpenAPI/CLI equivalent).
 
@@ -1147,6 +1159,15 @@ mid-2026. ↗ [GitHub](https://github.com/open-telemetry/semantic-conventions-ge
 **Red-teaming** — deliberately attacking your own system to measure its defences (attack success rate);
 productized in eval tools and platform red-team features.
 
+**Validator** — in Guardrails AI, a check that returns a pass or failure for a value; custom validators
+implement a domain rule through the `Validator` API.
+
+**on_fail** — the Guardrails AI action attached to a validator that determines what happens after a failed
+check: for example, raise an exception, re-ask the model, apply a fix, or record the failure.
+
+**OpenTelemetry Collector** — a service that receives, processes, and exports telemetry, letting
+applications send traces to a configurable backend through a separate telemetry pipeline.
+
 <a id="llmops"></a>
 
 ## Production — LLMOps \{#llmops}
@@ -1172,6 +1193,15 @@ provider's model update then becomes an explicit, eval-gated deploy rather than 
 **Model routing** — sending each request to the cheapest model that can handle it; the router can be a
 rule, a classifier, or a model. Distinct from query routing (which index, Part I) and tool selection
 (which tool, Part II): this picks which model answers.
+↗ [arXiv — RouteLLM](https://arxiv.org/abs/2406.18665)
+
+**Model cascade** — a sequence that first generates with a cheaper model, checks its answer, and invokes
+another tier when the check fails. It can replace detected errors before release; an imperfect verifier
+can still accept a bad answer or reject a good one.
+↗ [arXiv — FrugalGPT](https://arxiv.org/abs/2305.05176)
+
+**Escalation rate** — the fraction of requests entering a model cascade that invoke its next tier. Its
+denominator excludes requests routed directly to a stronger model outside that cascade.
 
 **Fallback** — the pre-configured alternative — another region, another provider, a cheaper model — that
 the system switches to when the primary model errors or rate-limits.
@@ -1187,6 +1217,9 @@ similarity; saves the whole request's cost at the risk of a false hit on a subtl
 
 **Drift** — the world shifting under a fixed configuration: input drift (traffic asks new kinds of
 questions), corpus drift (documents age), upstream model drift (the provider changes an unpinned model).
+
+**SFT (supervised fine-tuning)** — training a model on labelled input–output examples to change its
+behaviour, such as its style, formatting, or task performance.
 
 **Grader** — in reinforcement fine-tuning, the scorer you define that rates each candidate answer; its
 score is the reward signal the training optimises against.

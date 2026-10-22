@@ -99,7 +99,9 @@ V klasickej službe sú náklady väčšinou infraštruktúra — starosť prev�
 
 ### Smerovanie medzi modelmi \{#route-between-models}
 
-Nie každá požiadavka si zaslúži vlajkový model. Klasifikáciu, jednoduché vyhľadania, krátke faktické otázky zvládne lacný rýchly model; drahý si svoju cenu zaslúži na ťažkom generovaní. **Model routing** (smerovanie medzi modelmi) pošle každú požiadavku najlacnejšiemu modelu, ktorý ju zvládne; smerovač môže byť pravidlo, natrénovaný klasifikátor alebo sám model. Pozor na terminológiu: toto je smerovanie medzi modelmi — tretí význam smerovania v tejto knihe. Smerovač dopytov (query router) z Prvej časti príručky vyberal index, agent z Druhej vyberal nástroj; tento vyberá, kto odpovie.
+Nie každá požiadavka si zaslúži vlajkový model. Klasifikáciu, jednoduché vyhľadania, krátke faktické otázky zvládne lacný rýchly model; drahý si svoju cenu zaslúži na ťažkom generovaní. **Model routing** (smerovanie medzi modelmi) pošle každú požiadavku najlacnejšiemu modelu, ktorý ju zvládne; smerovač môže byť pravidlo, natrénovaný klasifikátor alebo sám model. Pozor na terminológiu: toto je smerovanie medzi modelmi. Smerovač dopytov (query router) z Prvej časti príručky vyberal index, agent z Druhej vyberal nástroj a smerovanie na cloudovej platforme môže vyberať región alebo endpoint; tento smerovač vyberá model, ktorý odpovie.
+
+Podrobné výpočty nákladov, kaskádu modelov a latenciu celého dopytu rozoberá lekcia [Smerovanie medzi modelmi — náklady a latencia celého dopytu](./routing.md).
 
 ### Fallbacky a brána \{#fallbacks-and-the-gateway}
 
@@ -107,7 +109,7 @@ Výpadky poskytovateľa a chyby 429 nie sú incidenty, sú to počasie. Produkci
 
 ### Cache — dvakrát \{#caching--twice}
 
-Prvá cache je poskytovateľova. **Prompt caching** (cachovanie promptu) uloží opakovaný prefix tvojho promptu — systémový prompt, few-shot príklady, statický kontext — aby sa nespracúval znova pri každom volaní. Obaja veľkí poskytovatelia dnes účtujú cachované vstupné tokeny paušálne, približne za desatinu základnej ceny vstupu (presné násobky sú na ich cenníkoch). Poctivá výhrada: zápis do cache stojí viac než základný vstup — Anthropic účtuje 1,25× alebo 2× podľa životnosti cache, OpenAI 1,25× na svojich najnovších modeloch — takže cachovať prefix, ktorý sa nikdy znova neprečíta, je čistá strata. Dôsledok pre návrh: stavaj prompty tak, aby cache zabrala, teda najprv statický prefix a potom premenlivý koniec, lebo čokoľvek dynamické ukončí použiteľný prefix presne tam, kde sa objaví.
+Prvá cache je poskytovateľova. **Prompt caching** (cachovanie promptu) uloží opakovaný prefix tvojho promptu — systémový prompt, few-shot príklady, statický kontext — aby sa nespracúval znova pri každom volaní. Anthropic aj OpenAI účtujú čítanie z cache lacnejšie než čerstvý vstup. Výška zľavy závisí od modelu a pravidiel cache; pri mnohých modeloch je cena približne desatinová (presné násobky nájdeš v cenníkoch). Poctivá výhrada: zápis do cache môže mať oproti základnému vstupu prirážku podľa poskytovateľa, modelu a životnosti cache. Tam, kde sa prirážka účtuje, je cachovanie prefixu, ktorý sa nikdy znova neprečíta, čistá strata. Dôsledok pre návrh: stavaj prompty tak, aby cache zabrala, teda najprv statický prefix a potom premenlivý koniec, lebo čokoľvek dynamické ukončí použiteľný prefix presne tam, kde sa objaví.
 
 Druhá cache je tvoja. Cachovanie odpovedí vráti uloženú odpoveď na zopakovanú otázku, buď presnou zhodou, alebo cez **semantic caching** (sémantické cachovanie), ktoré páruje takmer duplicitné otázky podľa podobnosti embeddingov. Sémantické cachovanie vymieňa riziko správnosti za náklad: falošný zásah pri jemne odlišnej otázke podá používateľovi cudziu odpoveď.
 
@@ -121,7 +123,7 @@ Práca, ktorá počká, nemá platiť interaktívnu cenu. Nočné obohacovanie k
 
 ### Rozpočty uzatvárajú slučku \{#budgets-close-the-loop}
 
-Zrelá prax — bežná, hoci nie štandard — sú tokenové rozpočty na tím a na funkciu s alertmi, vynucované tam, kadiaľ už aj tak tečie všetka premávka: na bráne. A do kontrolného zoznamu pred nasadením pribudne prehľad nákladov, lebo úvodný rozdiel tejto lekcie platí aj pre náklady: zmena promptu je zmena nákladov. Slučka z hlavičky tejto stránky beží na kvalite aj na dolároch.
+Zrelá prax — bežná, hoci nie štandard — sú limity výdavkov na tím a na funkciu s alertmi, vynucované tam, kadiaľ už aj tak tečie všetka premávka: na bráne. A do kontrolného zoznamu pred nasadením pribudne prehľad nákladov, lebo úvodný rozdiel tejto lekcie platí aj pre náklady: zmena promptu je zmena nákladov. Slučka z hlavičky tejto stránky beží na kvalite aj na dolároch.
 
 ```mermaid
 flowchart TB

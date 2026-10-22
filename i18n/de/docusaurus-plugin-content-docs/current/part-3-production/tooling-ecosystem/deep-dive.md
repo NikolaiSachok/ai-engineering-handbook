@@ -141,4 +141,4 @@ Ein Pfeil in diesem Diagramm ist selbst eine Betriebspraxis, die es festzuhalten
 - `on_fail` ist ein Regler in der Richtlinie und kein neuer Code: Beginnen Sie mit `noop`, um die Rate falsch positiver Ergebnisse im echten Produktivverkehr zu messen, und schalten Sie dann auf `exception` / `fix` / `filter` / `refrain` um. Jeder Validator kostet Latenz und Geld – testen Sie ihn wie jeden anderen Code.
 - Jede Kategorie gibt es quelloffen im Eigenbetrieb und verwaltet als SaaS, und die Kategorien gehen ineinander über (die Observability-Plattformen bringen die Evaluierung mit), weshalb zwei einander überlappende Werkzeuge besser sind als vier. OpenTelemetry ist das Bindegewebe: einmal instrumentieren, das Backend über die Konfiguration des Exporters tauschen und nie doppelt instrumentieren.
 
-**[Neue Begriffe](../../glossary.md#tooling-ecosystem)**: instrumentation, OpenTelemetry GenAI conventions, safety classifier, red-teaming, observability, guardrails.
+**[Neue Begriffe](../../glossary.md#tooling-ecosystem)**: Validator, on_fail, OpenTelemetry Collector.

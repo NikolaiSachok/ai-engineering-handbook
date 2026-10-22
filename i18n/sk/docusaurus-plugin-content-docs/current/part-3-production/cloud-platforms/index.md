@@ -47,7 +47,7 @@ Nič z toho nemení, čo model povie. Všetko z toho mení, či mu tvoja firma v
 
 K polovici roka 2026 to na trhu vyzerá takto. Azure OpenAI je od Microsoftu a historicky bol cestou, ako používať modely OpenAI ako vlastnú službu Azure; platformu okolo neho Microsoft na konferencii Ignite v novembri 2025 premenoval z Azure AI Foundry na Microsoft Foundry a modely v nej sa dnes volajú Foundry Models, rozdelené na „Models sold by Azure“ a ponuky z trhoviska.
 
-AWS Bedrock je od Amazonu — jediné z tých troch mien, ktoré sa ani nepohlo.
+Amazon Bedrock je od Amazonu — jediné z tých troch mien, ktoré sa ani nepohlo.
 
 Vertex AI je od Google Cloudu a je uprostred premenovania: nový názov Gemini Enterprise Agent Platform ohlásili v apríli 2026, migrácia konzoly sa dokončila v máji 2026, no API endpointy sa nepresunuli — a dokumentácia zatiaľ visí medzi oboma menami.
 
@@ -66,7 +66,7 @@ U Googlu je vlastnou kotvou Gemini, kým Model Garden nesie modely tretích str�
 | Platforma | Vlastný základ | Šírka katalógu |
 |---|---|---|
 | Microsoft Foundry (Azure OpenAI) | rodina OpenAI GPT ako vlastná služba Azure | ~1 900 modelov: Microsoft, OpenAI, Anthropic, Mistral, xAI, Meta, DeepSeek, Hugging Face |
-| AWS Bedrock | vlastná rodina Amazonu Nova | multi-vendor od prvého dňa: Anthropic, Meta, Mistral, Cohere a ďalší — teraz vrátane OpenAI |
+| Amazon Bedrock | vlastná rodina Amazonu Nova | multi-vendor od prvého dňa: Anthropic, Meta, Mistral, Cohere a ďalší — teraz vrátane OpenAI |
 | Gemini Enterprise Agent Platform (Vertex AI) | Gemini | Model Garden: modely tretích strán (vrátane Claude) plus otvorené modely |
 
 Dôsledok je väčší než ktorýkoľvek riadok tabuľky: kedysi výber modelu diktoval výber cloudu (potrebuješ GPT → ideš do Azure, koniec debaty). Éra exkluzívnych katalógov sa končí — hraničné OpenAI na Bedrocku, Anthropic v katalógu Foundry, Claude dnes na všetkých troch. Čím väzba medzi modelom a cloudom slabne, tým väčšmi sa ťažisko rozdielov presúva na nadstavbu: záruky rezidencie, úroveň spravovaného RAG, ekonomika kapacity. A práve tam mieri zvyšok lekcie.
@@ -91,9 +91,9 @@ Guardrails sú zabalené do produktu rovnako. Bedrock dodáva Guardrails — kon
 
 ## Priepustnosť a cenové modely \{#throughput-and-pricing-models}
 
-Jedinú cenu tu nenájdeš — absolútne ceny zastarávajú ešte rýchlejšie než názvy platforiem. Stabilné sú cenové modely a každá platforma ponúka rovnaké dva režimy spotreby. **On-demand** (platba za tokeny) znamená, že platíš za spotrebované tokeny na zdieľanej kapacite, podliehajúcej rate limitom (strop na počet požiadaviek) a kvótam. Rezervovaná kapacita znamená vyhradenú priepustnosť s predvídateľnou latenciou pre ustálenú vysokú záťaž — všeobecne **rezervovaná priepustnosť** (provisioned throughput); v konkrétnych menách je to PTU (provisioned throughput units) na Azure, Provisioned Throughput na Vertexe a na Bedrocku úroveň Reserved, odkedy Bedrock v novembri 2025 preskladal ceny do úrovní Reserved, Priority, Standard a Flex (starý názov „Provisioned Throughput“ prežíva pri starších a vlastných modeloch).
+Jedinú cenu tu nenájdeš — absolútne ceny zastarávajú ešte rýchlejšie než názvy platforiem. Pri interaktívnych požiadavkách je základný rozdiel medzi zdieľanou on-demand kapacitou a rezervovanou kapacitou. **On-demand** (platba za tokeny) znamená, že platíš za spotrebované tokeny na zdieľanej kapacite, podliehajúcej rate limitom (strop na počet požiadaviek) a kvótam. Rezervovaná kapacita znamená vyhradenú priepustnosť s predvídateľnou latenciou pre ustálenú vysokú záťaž — všeobecne **rezervovaná priepustnosť** (provisioned throughput); v konkrétnych menách je to PTU (provisioned throughput units) na Azure, Provisioned Throughput na Vertexe a na Bedrocku úroveň Reserved (samostatný starší produkt „Provisioned Throughput“ prežíva pri starších a vlastných modeloch). Úrovne Standard, Priority a Flex na Bedrocku slúžia na on-demand požiadavky bez rezervácie kapacity; líšia sa prioritou spracovania a cenou. Aj Google oddeľuje možnosti Standard, Priority a Flex PayGo od Provisioned Throughput.
 
-Oplatí sa poznať aj tretiu úroveň: dávku. Všetky tri dokumentujú zľavnené asynchrónne dávkové spracovanie pre neinteraktívne záťaže — zhruba za polovicu on-demand ceny, pri podporovaných modeloch (Azure Batch, Bedrock batch inference, Vertex batch predictions). Ak záťaž nepotrebuje odpoveď v priebehu sekúnd — nočné spracovanie dokumentov, hromadná klasifikácia, offline behy evaluácie — **dávkový režim** ti predá najlacnejšie tokeny, aké platforma má. Nezamieňaj ho s continuous batching z lekcie o [servingu](../serving/index.md): to žije v plánovači GPU inferenčného servera, kým dávkový režim je cenová úroveň na strane API.
+Pre neinteraktívnu prácu existuje aj samostatný režim spracovania: dávka. Všetky tri dokumentujú zľavnené asynchrónne dávkové spracovanie pre neinteraktívne záťaže — zhruba za polovicu on-demand ceny, pri podporovaných modeloch (Azure Batch, Bedrock batch inference, Vertex batch predictions). Ak záťaž nepotrebuje odpoveď v priebehu sekúnd — nočné spracovanie dokumentov, hromadná klasifikácia, offline behy evaluácie — **dávkový režim** ti predá najlacnejšie tokeny, aké platforma má. Nezamieňaj ho s continuous batching z lekcie o [servingu](../serving/index.md): to žije v plánovači GPU inferenčného servera, kým dávkový režim je cenová úroveň na strane API.
 
 Jedna prevádzková konštanta: kvóty sú na región a na model a produkčný návrh musí zvládať chyby 429 bez ohľadu na to, ktorá platforma za ním stojí. To je ten kontrolný zoznam opakovaní a stropov na počet požiadaviek z lekcie o [servingu](../serving/index.md) a zároveň úvodný problém [LLMOps](../llmops/index.md), kde smerovanie a fallbacky dodávajú, čo jediný endpoint zaručiť nevie.
 

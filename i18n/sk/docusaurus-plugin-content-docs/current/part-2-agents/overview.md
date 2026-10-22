@@ -32,8 +32,8 @@ vyššie náklady a náročnejšie ladenie. Inžinierska úloha nie je „spravi
   systémom záznamu, a ako sa obnovený beh vyhne druhej platbe za už dokončenú prácu.
 - **[MCP a protokoly agentov](./mcp/index.md)** — štandardizovaný spôsob, akým agent siahne po nástrojoch
   a dátach; [MCP](https://modelcontextprotocol.io) verzus [A2A](https://a2a-protocol.org).
-- **[Reálni agenti — Claude, OpenAI, Gemini](./real-agents.md)** — záver časti: každá technika Časti II
-  prehnaná cez všetkých troch poskytovateľov; ten istý trvácny postup pod desiatkou nekompatibilných API.
+- **[Reálni agenti — Claude, OpenAI, Gemini](./real-agents.md)** — záver časti: vybrané techniky Časti II
+  na príkladoch troch poskytovateľov; ten istý trvácny postup pod desiatkou nekompatibilných API.
 
 ## Predpoklady \{#prerequisites}
 
@@ -42,10 +42,6 @@ a observability menia zo želateľných na povinné.
 
 :::note[Stav]
 
-Základ Časti II je hotový — publikované sú všetky lekcie: Agentic RAG, používanie nástrojov, plánovanie
-a slučky, multiagentové systémy, orchestračné frameworky, obnoviteľné behy, MCP a záverečná lekcia o reálnych
-agentoch (Claude,
-OpenAI, Gemini). 🚧 Ešte je pred nami druhý prechod — prehĺbenie každej vrstvy; témy sú v poznámkach „Ďalej —
-druhá časť lekcie“ na stránkach lekcií.
+Základ Časti II je hotový: publikované sú lekcie o agentickom RAG, používaní nástrojov, plánovaní a slučkách, multiagentových systémoch, orchestračných frameworkoch, obnoviteľných behoch, MCP aj záverečná lekcia. Každá zo šiestich pôvodných hlavných lekcií má prehĺbenie. Záverečná lekcia porovnáva vybrané vzory v dodávateľských stekoch a ďalšie témy uvádza v záverečnej poznámke.
 
 :::

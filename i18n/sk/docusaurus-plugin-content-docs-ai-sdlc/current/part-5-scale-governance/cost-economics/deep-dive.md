@@ -78,11 +78,11 @@ cost_per_accepted ≈ attempt_cost / p
 Porovnaj dva modely. Drahý model s cenou `C` a úspešnosťou prvého pokusu `0.8` stojí na prijatú zmenu `C / 0.8 =
 1.25 C`. Lacný model za polovicu, teda `0.5 C`, musí prekonať určitú hranicu úspešnosti:
 
-| Cheap model's success rate | Cost per accepted change | vs 1.25 C |
+| Úspešnosť lacnejšieho modelu | Náklady na prijatú zmenu | V porovnaní s 1,25 C |
 |---|---|---|
-| 0.40 | 0.5 C / 0.40 = 1.25 C | tie |
-| 0.50 | 0.5 C / 0.50 = 1.00 C | cheaper wins |
-| 0.30 | 0.5 C / 0.30 = 1.67 C | *more* expensive |
+| 0,40 | 0,5 C / 0,40 = 1,25 C | rovnaké náklady |
+| 0,50 | 0,5 C / 0,50 = 1,00 C | lacnejší model sa oplatí |
+| 0,30 | 0,5 C / 0,30 = 1,67 C | *vyššie* náklady |
 
 Hranica rentability je jednoznačná: lacnejší model sa oplatí iba vtedy, keď `p_cheap / p_expensive > price_cheap / price_expensive`
 — pomer jeho úspešnosti k drahšiemu modelu musí byť vyšší než pomer ich cien. Polovičná cena neprinesie nič

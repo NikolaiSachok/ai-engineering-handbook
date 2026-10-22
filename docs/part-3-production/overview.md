@@ -13,10 +13,11 @@ observably, and on budget."
 
 ## What's inside \{#whats-inside}
 
+- **[Why AI systems fail in production](./production-failures.md)** — a map of failure modes and the mechanisms that address them.
 - **[Serving — FastAPI + Docker](./serving/index.md)** — wrapping a model or agent in a service: API, streaming,
   container, inference servers.
 - **[Cloud AI platforms](./cloud-platforms/index.md)** — [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service), [Amazon Bedrock](https://aws.amazon.com/bedrock/), Google Cloud Gemini
-  Enterprise Agent Platform (formerly [Vertex AI](https://cloud.google.com/vertex-ai)): what they offer and how they differ.
+  Enterprise Agent Platform ([Vertex AI](https://cloud.google.com/vertex-ai) in older documentation): what they offer and how they differ.
 - **[The tooling ecosystem](./tooling-ecosystem/index.md)** — eval, guardrails, observability in production:
   what to measure, what to guard, what to see.
 - **[LLMOps — deploy, monitor, cost](./llmops/index.md)** — the LLM system's life after release.

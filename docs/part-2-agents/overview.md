@@ -31,7 +31,7 @@ latency, cost, and debugging difficulty. The engineering job isn't to "make it m
   record, and how a resumed run avoids paying twice for work already done.
 - **[MCP and agent protocols](./mcp/index.md)** — a standardised way for an agent to reach tools and data; [MCP](https://modelcontextprotocol.io)
   versus [A2A](https://a2a-protocol.org).
-- **[Real agents — Claude, OpenAI, Gemini](./real-agents.md)** — the capstone: every Part II technique run
+- **[Real agents — Claude, OpenAI, Gemini](./real-agents.md)** — the capstone: selected Part II techniques illustrated
   across all three vendors, showing the same durable move under a dozen incompatible APIs.
 
 ## Prerequisites \{#prerequisites}
@@ -41,10 +41,6 @@ concerns** — here eval and observability move from nice-to-have to mandatory.
 
 :::note[Status]
 
-Part II's base is complete — every lesson is published: Agentic RAG, tool use, planning & loops, multi-agent
-systems, orchestration frameworks, durable runs, MCP, and the closing capstone on real agents (Claude,
-OpenAI, Gemini).
-🚧 A second pass is still ahead — deepening each layer (topics listed in the "Next — going deeper" notes on
-the lesson pages).
+Part II's base is complete: Agentic RAG, tool use, planning & loops, multi-agent systems, orchestration frameworks, durable runs, MCP, and the capstone are published. The six original core lessons each include a deep dive. The capstone compares selected patterns across vendor stacks and lists further topics in its closing note.
 
 :::
