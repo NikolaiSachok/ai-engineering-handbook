@@ -9,11 +9,11 @@ slug: /part-1-rag/ingestion/
 
 Celá táto vrstva RAG beží ako pipeline — reťaz štyroch krokov. Dokumenty sa najprv parsujú, potom sa delia na **chunky** (kúsky dokumentu) — tomuto kroku sa hovorí **chunking**. Ku každému chunku sa pripoja metadáta a napokon sa chunky prevedú na **embeddingy** (vektorové reprezentácie textu) a uložia do vektorovej databázy (vector database).
 
-Táto stránka sa venuje chunkingu a embeddingovým modelom — dvom pilierom celej vrstvy. Parsovanie dokumentov (document parsing) rozoberá až druhá časť lekcie; pozri poznámku na konci stránky.
+Táto stránka sa venuje chunkingu a embeddingovým modelom — dvom rozhodnutiam v tejto pipeline. Parsovanie dokumentov (document parsing) rozoberá [druhá časť lekcie](./deep-dive.md#parsing-the-stage-that-caps-everything-downstream), na ktorú odkazujeme aj na konci stránky.
 
 :::info[Ako čítať túto stránku]
 
-Každú tému preberáme najprv tak, ako funguje naprieč odvetvím. Všetko, čo sa viaže na konkrétny projekt (Strata-RAG), je vyčlenené do samostatných prípadových štúdií — teória sa tak nemieša s detailmi implementácie.
+Stránka vysvetľuje všeobecné mechanizmy ingestion a ich kompromisy. Neopisuje implementáciu konkrétneho projektu; príklady ilustrujú teóriu a neodkazujú na publikovanú prípadovú štúdiu.
 
 :::
 

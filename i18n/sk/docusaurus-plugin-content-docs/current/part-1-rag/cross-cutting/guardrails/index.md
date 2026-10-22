@@ -39,12 +39,12 @@ Obrana proti injection nie je jeden trik, ale sada opatrení, ktoré útok postu
 - **Oddelenie a spotlighting** (označkovanie nedôveryhodného textu). Jasne vyznač, kde sú dáta a kde inštrukcie: nájdený obsah obaľ do oddeľovačov, alebo naň nasaď spotlighting (náhodné značky či zakódovanie), aby sa vložená inštrukcia čítala „len ako dáta“. Modelu tým povieš: všetko medzi značkami sú nedôveryhodné dáta, nie inštrukcie.
 - **Instruction hierarchy** (hierarchia inštrukcií podľa oprávnení): systém > vývojár > používateľ > nástroj/nájdený obsah. Model uprednostní vyššie úrovne; nájdenému obsahu dôveruje najmenej.
 - **Kontrola vstupu.** Zachyť pokusy o injection a známe vzory útokov skôr, než sa dostanú k modelu.
-- **Validácia výstupu.** Skontroluj odpoveď, než sa odošle: žiadne vynesené tajomstvá, žiadne PII (osobné údaje), žiadne porušenie pravidiel.
+- **Validácia výstupu.** Skontroluj odpoveď, než sa odošle: žiadne vynesené tajomstvá, neoprávnene sprístupnené PII (osobné údaje) ani porušenie pravidiel.
 - **Princíp najnižších oprávnení (least privilege) pre agentov.** Ak model siaha po nástrojoch, obmedz, ktoré nástroje a akcie smie použiť (tool allow-listing). Potom aj úspešný útok zmôže málo.
 
 ## Osobné údaje a ochrana dát \{#pii-and-data-protection}
 
-Osobné údaje — mená, e-maily, čísla — treba rozpoznať a zamaskovať na dvoch miestach: na vstupe (skôr, než sa čokoľvek zaloguje a než to odíde k poskytovateľovi API) aj na výstupe (skôr, než odpoveď uvidí používateľ).
+Pri osobných údajoch — menách, e-mailoch či číslach — najprv urč, ktoré polia daný účel vyžaduje a kto ich smie dostať. Podnikový záznam môže potrebovať meno oprávnenej schvaľujúcej osoby, kým diagnostickému tracu tej istej operácie môže stačiť identifikátor záznamu a výsledok. Pre každý cieľ spracovania urči účel, oprávnenie na použitie údajov, príjemcov a dobu uchovávania. Nepotrebné polia vynechaj alebo vhodne zamaskuj pred odoslaním do logov či API poskytovateľa aj pred zobrazením odpovede. Povinnosť uchovať údaj v podnikovom zázname sama osebe neoprávňuje vytvoriť jeho diagnostickú kópiu. Pravidlá závisia od konkrétneho použitia a jurisdikcie; detektor PII iba vyhľadá možné osobné údaje, nerozhodne o práve príjemcu ich vidieť.
 
 Kritické je to najmä pri externých LLM API, kde dáta opúšťajú tvoj bezpečnostný perimeter. Je to tá istá úvaha ako voľba medzi modelom prevádzkovaným u seba a modelom za API, ktorú si zvažoval pri embeddingoch.
 
@@ -69,7 +69,7 @@ Preto sa aj guardrails merajú — cez **attack success rate** (miera úspešnos
 - Koreň zraniteľnosti: LLM nedokáže spoľahlivo oddeliť inštrukcie od dát.
 - Prompt injection (priama aj nepriama) je hrozba č. 1; nepriama je v RAG obzvlášť nebezpečná, lebo otrávený nájdený obsah vojde do kontextu spolu s dátami.
 - Obrana: oddelenie a spotlighting, instruction hierarchy, kontrola vstupu, validácia výstupu, najnižšie oprávnenia pre nástroje.
-- Maskovanie osobných údajov na vstupe aj výstupe (kritické pri externých API).
+- Osobné údaje na vstupe aj výstupe spracúvaj podľa účelu a oprávnení príjemcu: potrebné polia v oprávnenom zázname zachovaj, nepotrebné kópie do diagnostiky neposielaj.
 - Bezpečnosť obsahu na oboch stranách plus ingestion v RAG.
 - Defence-in-depth, nie všeliek; meraj attack success rate a udrž rovnováhu voči prílišnej prísnosti.
 
