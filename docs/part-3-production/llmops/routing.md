@@ -56,7 +56,7 @@ For a serial buffered cascade, each accepted request takes the small generation 
 
 Here is a deterministic distribution of 100 requests with two distinct latency groups. Each small answer finishes at 450 ms; verification takes 100 ms; an escalated large answer adds 1,200 ms including its final release check. All other overhead is zero in this toy example. Accepted answers are released at 550 ms, escalated answers at 1,750 ms. For a nearest-rank p95, sort all 100 latencies and take the 95th.
 
-| Escalations | At 550 ms | At 1,750 ms | p95 | Fraction meeting 800 ms |
+| Escalations | Requests at 550 ms | Requests at 1,750 ms | p95 | Fraction meeting 800 ms |
 |---|---:|---:|---:|---:|
 | 4% | 96 | 4 | 550 ms | 96% |
 | 5% | 95 | 5 | 550 ms | 95% |

@@ -78,7 +78,7 @@ Damit ist die Lektion abgeschlossen – und mit ihr die Grundausstattung von Tei
 - **MCP führt vom Agenten zu Tools, A2A (Agent2Agent) von Agent zu Agent.** Zwei Achsen. Das Feld ist in Bewegung – lernen Sie die Unterscheidung, nicht die aktuellen Namen.
 - Ein MCP-Server ist **eine neue Angriffsfläche**: indirekte Prompt-Injection, abgezogene Daten, überschrittene Berechtigungen. Wehren Sie sich mit dem **Prinzip der geringsten Berechtigungen**, mit ausschließlich geprüften Servern und mit einer Bestätigung durch einen Menschen für gefährliche Aktionen; behandeln Sie alles, was ein Server liefert, als nicht vertrauenswürdige Eingabe, nie als Anweisung.
 
-**[Neue Begriffe](../../glossary.md#mcp)**: MCP (Model Context Protocol), MCP server, MCP client, MCP resources, MCP prompts, M×N integration problem, A2A (Agent2Agent).
+**[Neue Begriffe](../../glossary.md#mcp)**: MCP (Model Context Protocol), der MCP-Host, MCP server, MCP client, MCP resources, MCP prompts, M×N integration problem, A2A (Agent2Agent).
 
 ---
 

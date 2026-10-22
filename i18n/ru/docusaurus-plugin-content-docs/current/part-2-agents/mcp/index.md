@@ -177,7 +177,7 @@ MCP стандартизует связь **агент ↔ инструмент�
   Защита прежняя — **принцип наименьших привилегий**, только проверенные серверы, подтверждение человека на
   опасное; иерархия инструкций и spotlighting из Части I накрывают и содержимое серверов.
 
-**[Новые термины](../../glossary.md#mcp)**: MCP (Model Context Protocol), MCP server, MCP client, MCP resources, MCP prompts, M×N integration problem, A2A (Agent2Agent).
+**[Новые термины](../../glossary.md#mcp)**: MCP (Model Context Protocol), MCP host (MCP-хост), MCP server, MCP client, MCP resources, MCP prompts, M×N integration problem, A2A (Agent2Agent).
 
 ---
 

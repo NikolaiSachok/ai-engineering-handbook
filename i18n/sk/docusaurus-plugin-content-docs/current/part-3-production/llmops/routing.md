@@ -46,7 +46,7 @@ Predstav si 100 dopytov troch druhov. Pri každom druhu porovnaj vybraný model 
 
 Ak klasifikátor spotrebuje ďalších 0,001 $ na každý zo 100 dopytov, pripočítaš 0,100 $. Celkom zaplatíš 0,570 $ a úspora klesne na približne 60,7%.
 
-Pre jednoduchú kaskádu označ náklad na malé generovanie `Cs`, na kontrolu `Cv` a na dodatočné volanie veľkého modelu `Cl`. Pri pevných nákladoch na jednotlivé kroky je očakávaný náklad na dopyt vstupujúci do kaskády:
+Pre jednoduchú kaskádu označ náklad na generovanie malým modelom `Cs`, na kontrolu `Cv` a na dodatočné volanie veľkého modelu `Cl`. Pri pevných nákladoch na jednotlivé kroky je očakávaný náklad na dopyt vstupujúci do kaskády:
 
 `E[C] = Cs + Cv + r × Cl`
 
@@ -58,15 +58,15 @@ Ak eskaluješ 80% dopytov, zaplatíš priemerne 0,011 $, teda viac než pri pri
 
 Tento výpočet predpokladá pevné náklady. Ak na silnejší model postupujú najmä dlhšie dopyty, použi priemerný náklad jeho volania podmienený tým, že dopyt eskaloval. Započítaj aj smerovač, opakované pokusy, opätovne posielaný kontext, ďalšie kontroly a nástroje, ak ich používaš. Dopyty, ktoré kaskádu obchádzajú, zahrň do celku samostatne s príslušnou váhou. Porovnávaj rovnaké úlohy pri rovnakej požadovanej kvalite: lacnejšie nesprávne odpovede nie sú dôkazom úspory.
 
-## Dve generovania menia percentil celého dopytu \{#a-two-pass-path-changes-the-percentile}
+## Dve generovania menia percentil času odozvy celého dopytu \{#a-two-pass-path-changes-the-percentile}
 
 **TTFT (time-to-first-token — čas do prvého tokenu)** u poskytovateľa meria čas po prvý token na jeho rozhraní. Používateľ však čaká až na prvý token, ktorý mu aplikácia skutočne sprístupní. Do tohto času patrí vyhľadávanie, smerovanie, čakanie vo frontoch aj kontroly, ktoré blokujú zobrazenie. Čas do dokončenia celej odpovede je ďalšia metrika. Keď text zadržiavaš až do výsledku kontroly, dobré TTFT poskytovateľa sa používateľovi nemusí prejaviť. Rozlíšenie metrík vysvetľuje [lekcia o servingu](../serving/index.md).
 
-Pri sériovej kaskáde so zadržaným výstupom čakáš pri prijatej odpovedi na malý model a kontrolu. Pri eskalovanom dopyte sa pripočíta veľký model a záverečné kontroly blokujúce zobrazenie. Najprv spočítaj skutočný uplynutý čas v každom trace, teda zázname priebehu jedného dopytu. Až z týchto celkov vypočítaj percentil. Súčet p95 jednotlivých spanov nie je p95 celého dopytu: jednotlivé percentily môžu patriť iným dopytom a záleží aj na koreláciách a na tom, ktoré dopyty eskalujú.
+Pri sériovej kaskáde so zadržaným výstupom čakáš pri prijatej odpovedi na generovanie malým modelom a kontrolu. Pri eskalovanom dopyte sa pripočíta čas generovania veľkým modelom a záverečných kontrol blokujúcich zobrazenie. Najprv spočítaj skutočný uplynutý čas v každom trace, teda zázname priebehu jedného dopytu. Až z týchto celkov vypočítaj percentil. Súčet p95 jednotlivých spanov nie je p95 celého dopytu: jednotlivé percentily môžu patriť iným dopytom a záleží aj na koreláciách a na tom, ktoré dopyty eskalujú.
 
-V ďalšom hypotetickom príklade trvá malé generovanie vždy 450 ms a kontrola 100 ms. Veľké generovanie so záverečnou kontrolou pridá vždy 1200 ms. Ostatná réžia je nulová. Prijatú odpoveď preto zobrazíš po 550 ms, eskalovanú po 1750 ms. Zo 100 časov zoradených vzostupne vezmi pre p95 hodnotu na 95. mieste — konvenciu nearest-rank.
+V ďalšom hypotetickom príklade trvá generovanie malým modelom vždy 450 ms a kontrola 100 ms. Generovanie veľkým modelom so záverečnou kontrolou pridá vždy 1200 ms. Ostatná réžia je nulová. Prijatú odpoveď preto zobrazíš po 550 ms, eskalovanú po 1750 ms. Zo 100 časov zoradených vzostupne vezmi pre p95 hodnotu na 95. mieste — konvenciu nearest-rank.
 
-| Miera eskalácie | Dopyty s časom 550 ms | Dopyty s časom 1750 ms | p95 | Podiel do 800 ms |
+| Miera eskalácie | Dopyty s časom 550 ms | Dopyty s časom 1750 ms | p95 | Podiel dopytov dokončených do 800 ms |
 | --- | ---: | ---: | ---: | ---: |
 | 4% | 96 | 4 | 550 ms | 96% |
 | 5% | 95 | 5 | 550 ms | 95% |
@@ -80,17 +80,17 @@ Všeobecnejšie označ `Fa(t)` podmienenú distribučnú funkciu času prijatýc
 
 Cieľ „aspoň 95% dopytov do termínu“ spĺňaš práve vtedy, keď `F(deadline) ≥ 0.95`. Ak sa časy vetiev prekrývajú alebo má aj rýchla vetva dlhý chvost, 5% nie je univerzálne bezpečná hranica eskalácie. Meraj celé tracy pod záťažou: pri rastúcom `r` môžu spoločné fronty a protitlak spomaliť aj prijaté dopyty. Meranie rozoberá [observability — prehĺbenie](../../part-1-rag/cross-cutting/observability/deep-dive.md), fronty a riadenie záťaže [serving — prehĺbenie](../serving/deep-dive.md).
 
-Jednou možnosťou je synchrónne kontrolovať rýchlu úroveň, ak sa kontrola podľa meraní zmestí do časového rozpočtu, a pomalú úroveň auditovať asynchrónne, ak je zostávajúce riziko chybnej doručenej odpovede prijateľné. Asynchrónny audit však už zobrazenú chybu nezastaví. Povinné bezpečnostné kontroly pred zobrazením zachovaj. Ak požadovanú kvalitu do termínu nevieš overiť, systém má odpoveď odmietnuť alebo odložiť. Panel metrík nenahrádza požiadavku zachytiť chybu pred zobrazením.
+Jednou možnosťou je synchrónne kontrolovať rýchlu úroveň, ak sa kontrola podľa meraní zmestí do časového rozpočtu, a pomalú úroveň auditovať asynchrónne, ak je zostávajúce riziko, že používateľ dostane chybnú odpoveď, prijateľné. Asynchrónny audit však už zobrazenú chybu nezastaví. Povinné bezpečnostné kontroly pred zobrazením zachovaj. Ak požadovanú kvalitu do termínu nevieš overiť, systém má odpoveď odmietnuť alebo odložiť. Panel metrík nenahrádza požiadavku zachytiť chybu pred zobrazením.
 
-## Prevádzkuj celú politiku, nielen prah \{#operate-the-policy-not-just-the-threshold}
+## Spravuj všetky pravidlá smerovania, nielen prah \{#operate-the-policy-not-just-the-threshold}
 
-Prísnejší prah kontroly môže zvýšiť `r` a pomôcť nahradiť chybné odpovede. Zlepšenie kvality však musíš preukázať meraním. Po druhoch úloh a úrovniach modelov sleduj mieru eskalácie, chyby medzi prijatými odpoveďami, nesprávne prijatia aj odmietnutia overovačom, výslednú kvalitu, náklad na úspešne vybavený dopyt, TTFT z pohľadu používateľa aj čas dokončenia.
+Prísnejší prah kontroly môže zvýšiť `r` a pomôcť nahradiť chybné odpovede. Zlepšenie kvality však musíš preukázať meraním. Pre jednotlivé druhy úloh a úrovne modelov sleduj mieru eskalácie, chyby medzi prijatými odpoveďami, nesprávne prijatia aj odmietnutia overovačom, výslednú kvalitu, náklad na úspešne vybavený dopyt, TTFT z pohľadu používateľa aj čas dokončenia.
 
 Keď `r` rastie, preskúmaj zmeny vstupov, vyhľadávania, overovača a malého modelu. Nezmierňuj prah iba preto, aby si znížil výdavky. Politiku prehodnocuj podľa nových dôkazov a zmien závislostí; neexistuje všeobecné pravidlo, že po štvrťroku prestane platiť.
 
 Konfiguráciu verziuj a umožni jej načítanie za behu. Má určovať prípustné úrovne modelov, pravidlá pre jednotlivé druhy úloh, prahy, termíny, limity výdavkov aj postup pri vypršaní času na kontrolu. Pred použitím ju validuj a uplatni ju naraz, aby nevznikla zmes dvoch verzií. Do každého tracu zaznamenaj verziu konfigurácie a dôvod výberu. Zmenu over na oddelenej testovacej sade a potom na malej časti produkčnej premávky so sledovaním kvality. Predchádzajúcu konfiguráciu maj pripravenú na rollback.
 
-Každú úroveň musíš vedieť samostatne vypnúť. Vypnutie malej úrovne znamená obísť malé generovanie aj jeho kontrolu. Pri vypnutí silnej úrovne výslovne urči, ako sa systém zachová, napríklad či odpoveď odmietne alebo odloží. Rovnako urč bezpečný postup pri výpadku overovača. Ohranič počet pokusov aj celkový čas, aby systém neeskaloval donekonečna. Presmerovanie mení zaťaženie aj výdavky cieľovej úrovne; over jej kapacitu a rozpočet. Pri zhoršení podmienok sa systém má riadiť známou politikou s jasnými limitmi.
+Každú úroveň musíš vedieť samostatne vypnúť. Vypnutie úrovne malého modelu znamená obísť generovanie týmto modelom aj jeho kontrolu. Pri vypnutí silnej úrovne výslovne urči, ako sa systém zachová, napríklad či odpoveď odmietne alebo odloží. Rovnako urč bezpečný postup pri výpadku overovača. Ohranič počet pokusov aj celkový čas, aby systém neeskaloval donekonečna. Presmerovanie mení zaťaženie aj výdavky cieľovej úrovne; over jej kapacitu a rozpočet. Pri zhoršení podmienok sa systém má riadiť známou politikou s jasnými limitmi.
 
 ## Čo si odniesť z lekcie \{#what-to-take-away}
 

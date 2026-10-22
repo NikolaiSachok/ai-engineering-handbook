@@ -42,8 +42,8 @@ reagiert auf die Verfügbarkeit, die Eskalation hier auf ein Qualitätssignal.
 
 | Verfahren | Wofür Sie zahlen | Folge einer Fehlentscheidung |
 |---|---|---|
-| Vorab getroffene Auswahl | Router und ausgewählte Generation | Eine schwache Antwort kann ohne zusätzliche Prüfung oder Stichprobenkontrolle unbemerkt bleiben. |
-| Modellkaskade | Immer günstige Generation und Prüfung; bei Eskalation zusätzlich stärkere Generation | Eine erkannte schwache Antwort lässt sich ersetzen, sofern bis zur Frist noch Zeit bleibt. |
+| Vorab getroffene Auswahl | Router und Antwortgenerierung durch das ausgewählte Modell | Eine schwache Antwort kann ohne zusätzliche Prüfung oder Stichprobenkontrolle unbemerkt bleiben. |
+| Modellkaskade | Immer Antwortgenerierung durch das günstige Modell und Prüfung; bei Eskalation zusätzlich Antwortgenerierung durch das stärkere Modell | Eine erkannte schwache Antwort lässt sich ersetzen, sofern bis zur Frist noch Zeit bleibt. |
 
 Keines der Verfahren garantiert eine richtige Antwort. Eine Prüfinstanz, hier **Verifier** genannt,
 kann schlechte Antworten akzeptieren und gute verwerfen. Auch das stärkere Modell kann denselben
@@ -79,19 +79,19 @@ Anteile haben unterschiedliche Nenner. Kostet ein zusätzlicher Klassifikator 0,
 kommen für die 100 Anfragen 0,100 $ hinzu. Die Gesamtkosten steigen auf 0,570 $, die Ersparnis sinkt
 auf rund 60,7 %.
 
-Für eine Kaskade seien `Cs` die festen Kosten der kleinen Generation, `Cv` die der Prüfung und `Cl`
-die zusätzlichen Kosten der großen Generation. Dann gilt je Anfrage, die in die Kaskade eintritt:
+Für eine Kaskade seien `Cs` die festen Kosten der Antwortgenerierung durch das kleine Modell, `Cv` die der Prüfung und `Cl`
+die zusätzlichen Kosten der Antwortgenerierung durch das große Modell. Dann gilt je Anfrage, die in die Kaskade eintritt:
 
 `E[C] = Cs + Cv + r × Cl`
 
 Bei `Cs = 0.002`, `Cv = 0.001`, `Cl = 0.010` und `r = 0.20` ergibt sich `E[C] = 0.005`: halb so viel
-wie die starke Generation allein. Kostengleichheit erreichen die beiden Varianten bei
+wie die Antwortgenerierung durch das starke Modell allein. Kostengleichheit erreichen die beiden Varianten bei
 `r = (Cl − Cs − Cv) / Cl = 0.70`. Steigt `r` auf 80 %, kostet die Kaskade 0,011 $ und damit mehr als
 das starke Modell allein. Bei einer Eskalation bezahlen Sie beide Generationen; daraus folgt jedoch
 kein fester Faktor zwei.
 
 Diese Rechnung setzt feste Kosten pro Stufe voraus. Sind gerade die eskalierten Anfragen länger,
-brauchen Sie für `Cl` den mittleren Preis des großen Aufrufs *unter dieser Bedingung*. Rechnen Sie
+brauchen Sie für `Cl` den mittleren Preis des Aufrufs des großen Modells *unter dieser Bedingung*. Rechnen Sie
 Router, Wiederholungen, erneut übertragenen Kontext, zusätzliche Prüfungen und Tools hinzu, soweit
 Sie diese einsetzen. Anfragen, die die Kaskade umgehen, gehen mit ihrem eigenen Kostenanteil in die
 Gesamtrechnung ein. Vergleichen Sie immer dieselbe Arbeitslast bei der geforderten Qualität.
@@ -106,14 +106,14 @@ Gepufferte Ausgaben können eine gute Anbieter-TTFT vollständig verdecken. Die
 [Lektion zur Bereitstellung](../serving/index.md) ordnet diese Messgrenzen ein.
 
 Messen Sie bei einer seriellen Kaskade mit gepufferter Ausgabe zunächst die gesamte Dauer jeder
-Anfrage. Eine akzeptierte Antwort braucht die kleine Generation und die Prüfung. Eine eskalierte
-Anfrage braucht zusätzlich die große Generation und alle abschließenden blockierenden Prüfungen.
+Anfrage. Eine akzeptierte Antwort erfordert die Antwortgenerierung durch das kleine Modell und die Prüfung. Eine eskalierte
+Anfrage erfordert zusätzlich die Antwortgenerierung durch das große Modell und alle abschließenden blockierenden Prüfungen.
 Erst über diese Gesamtdauern berechnen Sie das Perzentil. Die p95-Werte einzelner Stufen dürfen Sie
 nicht einfach addieren: Sie können von unterschiedlichen Anfragen stammen; Abhängigkeiten und die
 Auswahl der eskalierten Anfragen verändern die Verteilung.
 
-Nehmen wir 100 Anfragen an: Die kleine Generation dauert immer 450 ms, die Prüfung 100 ms. Die
-zusätzliche große Generation einschließlich abschließender Prüfung dauert 1200 ms. Alle übrigen
+Nehmen wir 100 Anfragen an: Die Antwortgenerierung durch das kleine Modell dauert immer 450 ms, die Prüfung 100 ms. Die
+zusätzliche Antwortgenerierung durch das große Modell einschließlich abschließender Prüfung dauert 1200 ms. Alle übrigen
 Zeitanteile setzen wir für dieses Beispiel auf null. Akzeptierte Antworten werden nach 550 ms
 freigegeben, eskalierte nach 1750 ms. Für p95 verwenden wir die Nearest-Rank-Konvention: Nach dem
 Sortieren der 100 Dauern zählt der 95. Wert.
@@ -144,15 +144,15 @@ Eskalationsrate auch die akzeptierten Anfragen verlangsamen. Die
 [Vertiefung zur Observability](../../part-1-rag/cross-cutting/observability/deep-dive.md) behandelt die
 Messung; die [Vertiefung zur Bereitstellung](../serving/deep-dive.md) behandelt den Betrieb unter Last.
 
-Eine mögliche Aufteilung ist eine synchrone Prüfung auf der schnellen Stufe, sofern die gemessene
-Dauer das Latenzziel zulässt, und eine asynchrone Stichprobenkontrolle auf der langsamen Stufe,
+Eine mögliche Aufteilung ist eine synchrone Prüfung auf der schnellen Stufe, sofern sich bei der gemessenen
+Dauer das Latenzziel einhalten lässt, und eine asynchrone Stichprobenkontrolle auf der langsamen Stufe,
 sofern das verbleibende Risiko bereits ausgelieferter Fehler akzeptabel ist. Eine asynchrone
 Kontrolle kann eine schon ausgelieferte falsche Antwort nicht mehr zurückhalten. Vorgeschriebene
 Sicherheitsprüfungen vor der Freigabe bleiben bestehen. Lässt sich die erforderliche Qualität bis zur
 Frist nicht feststellen, muss das System auf eine Antwort verzichten oder die Bearbeitung
 aufschieben. Ein späterer Dashboard-Befund erfüllt keine Anforderung an die Richtigkeit vor der Freigabe.
 
-## Die gesamte Routing-Regelung betreiben \{#operate-the-policy-not-just-the-threshold}
+## Das gesamte Routing-Verfahren betreiben \{#operate-the-policy-not-just-the-threshold}
 
 Ein strengerer Schwellenwert des Verifiers kann die Eskalationsrate erhöhen und mehr Fehler abfangen.
 Ob dadurch die Qualität steigt, müssen Sie messen. Verfolgen Sie je Arbeitslast und Modellstufe die
@@ -173,7 +173,7 @@ zurückgehaltenen Testfällen und einem Canary Release mit Qualitätsmessung im 
 halten Sie die vorherige Konfiguration für einen Rollback bereit.
 
 Jede Modellstufe braucht einen Abschalter mit festgelegten Folgen. Ist das kleine Modell deaktiviert,
-entfallen dessen Generation und Prüfung. Ist das starke Modell deaktiviert, muss ausdrücklich
+entfallen die Antwortgenerierung durch dieses Modell und die anschließende Prüfung. Ist das starke Modell deaktiviert, muss ausdrücklich
 feststehen, ob das System auf eine Antwort verzichtet, die Anfrage aufschiebt oder einen anderen
 zulässigen Weg wählt. Auch für den Ausfall des Verifiers brauchen Sie eine explizite sichere
 Reaktion. Begrenzen Sie Versuche und Gesamtdauer, damit keine endlose Eskalation entsteht.
@@ -189,7 +189,8 @@ Verkehr verschieben. Der eingeschränkte Betrieb muss innerhalb bekannter Grenze
 - Berechnen Sie Perzentile über vollständige Anfragen. Die Eskalationsrate allein belegt nicht,
   dass das Latenzziel eingehalten wird.
 - Erkannte Fehler lassen sich vor der Freigabe oder einer unumkehrbaren Aktion abfangen. Kontrollieren
-  Sie auch akzeptierte Antworten und legen Sie begrenzte Wege für den eingeschränkten Betrieb fest.
+  Sie auch akzeptierte Antworten. Legen Sie zulässige Ausweichpfade für den eingeschränkten Betrieb fest
+  und begrenzen Sie die Zahl der Versuche sowie die gesamte Bearbeitungszeit.
 
 **[Neue Begriffe](../../glossary.md#llmops)**: Modellkaskade (*model cascade*), Eskalationsrate (*escalation rate*).
 
