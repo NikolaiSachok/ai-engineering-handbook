@@ -39,7 +39,7 @@ z nich nesie, a čas ľudskej revízie.
 
 ## Kam peniaze naozaj odchádzajú \{#where-the-money-actually-goes}
 
-Štyri položky.
+Päť položiek.
 
 **Kontext.** Agenti čítajú stále dokola. Ten istý repozitár, ten istý korpus pravidiel, to isté zadanie sa
 posielajú znova pri každom pokuse a za každého agenta. Pri práci agentov býva kontext najväčšou samostatnou
@@ -54,9 +54,11 @@ tretí raz, stála trojnásobok toho, čo sa navonok zdalo.
 modelu a rastú s objemom výstupu, nie s veľkosťou tímu. Flotila, ktorá vygeneruje dvakrát toľko, zaplatí
 dvakrát toľko aj za kontrolu.
 
-**Čas ľudskej revízie.** Najdrahší vstup v celom systéme a jediný, ktorý sa výdavkami nedá zväčšiť.
+**Čas ľudskej revízie.** Často najdrahší vstup, ktorého priepustnosť nerastie tak rýchlo ako výdavky na volania modelu.
 [Úzke miesto overovania](../../part-1-foundation/verification-bottleneck.md) z I. časti je ekonomické tvrdenie
 rovnako ako inžinierske: rozhodujúce obmedzenie je ocenené v mzdách, nie v tokenoch.
+
+**Externé zdroje nástrojov.** Aj čítací dotaz do dátového skladu môže minúť stovky na výpočty bez zmeny jediného riadka. Externé výpočty, platené API, úložisko a obsadenú kapacitu meraj oddelene od tokenov modelu. Urči limity na operáciu aj úlohu v peniazoch, zdrojoch a čase. Vynucuj ich v obale nástroja a podľa možností aj kvótami externej služby; modelová brána neobmedzí prácu, ktorú nevidí. Pred odoslaním atómovo rezervuj hornú hranicu výdavkov zo zostatku úlohy, aby súbežné volania neminuli ten istý zostatok viackrát. Ak hornú hranicu nevieš vynútiť, operáciu odmietni alebo vyžiadaj schválenie. Zosúlaď skutočné poplatky a nevyužitú rezervu uvoľni až po konečnom výsledku; timeout čakania účtovanie nezastaví. Po dosiahnutí limitu zastav nové volania a pri bežiacich operáciách zisťuj výsledok alebo žiadaj zrušenie podľa určenej politiky. Výdavky priraď k rovnakej úlohe ako jej tokeny a opakované pokusy.
 
 ## Ako dostať náklady pod kontrolu \{#making-cost-accountable}
 

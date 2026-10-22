@@ -50,6 +50,19 @@ Druhý LLM v úlohe kontrolóra rozširuje pokrytie iba o chyby, ktoré prvému 
 
 Rovnaké vrstvenie používa tento kurz aj na vlastnú ochranu pred únikom informácií: lacná deterministická kontrola (grep podľa zoznamu slov spúšťaný pri každom commite) sa kombinuje s drahým posúdením (sémantickým auditom podľa neverejných pravidiel pre danú doménu). Vrstvia sa práve preto, že každá brána je slepá voči tomu, čo vidí druhá. grep nedokáže zachytiť únik doménových informácií vyjadrený neutrálnymi slovami a sémantický audit je príliš nákladný na to, aby sa spúšťal po každom stlačení klávesu. Ani jedna z nich sama osebe neposkytuje dostatočné pokrytie. Úplnú ochranu dáva až ich kombinácia.
 
+## Over obnovu po páde \{#crash-resume-verification}
+
+Úspešný priebeh nedokazuje, že po obnovení nevznikne druhá platba. Pre procesy s externými účinkami pridaj ohraničenú kontrolu s úmyselným pádom. Návrh vysvetľuje [lekcia o trvácnych behoch](/rag-agents/part-2-agents/durable-runs/deep-dive#proving-it-rather-than-claiming-it); táto kontrola skúša jeho záruky. Použi izolovanú testovaciu službu alebo evidenciu účinkov, stabilné identifikátory operácií a pri reštarte rovnaký uložený stav. Dvojité platby neskúšaj na skutočných zákazníkoch.
+
+| Okamih pádu | Čo overiť po reštarte |
+|---|---|
+| Pred odoslaním akcie | Účinok ešte nenastal; pokračovanie vyvolá jeden zamýšľaný účinok. |
+| Po prijatí služby, pred doručením výsledku volajúcemu | Výsledok sa zistí podľa identifikátora operácie; timeout nevyvolá druhý účinok. |
+| Po účinku, pred potvrdeným zápisom lokálneho záznamu o dokončení | Externá evidencia ukazuje presne jednu platbu; obnova tento výsledok zaznamená alebo použije. |
+| Po potvrdenom zápise dokončenia, pred ďalším krokom | Dokončený účinok sa neopakuje; pokračuje nasledujúci krok. |
+
+V každom zvolenom bode ukonči pracovný proces a spusti ho z trvalého stavu. Over postup aj počet účinkov a zaúčtovanú sumu podľa evidencie, nie iba úspešnú záverečnú odpoveď. Zaznamenaj testovacie dáta, verziu vykonávaného kódu, bod pádu, identifikátor operácie a pozorované záznamy. Úmyselne pokaz deduplikáciu alebo zisťovanie výsledku a over, že kontrola zlyhá. Ak externá služba nevie potvrdiť výsledok, očakávaj pozastavenie do zosúladenia, nie úspešné dokončenie. Kontrola skúša vybrané hranice a kontrakt služby; nedokazuje jediný účinok pri každom možnom zlyhaní.
+
 ## Tri úrovne zrelosti: soloista · malý tím · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 Základné pravidlo platí pri každej veľkosti: **jedna brána je jediným bodom zlyhania; pokrytie vzniká rozmanitosťou mechanizmov a slepé miesto každej brány musí byť pomenované.** Mení sa iba to, kto ho pomenuje a ako sa dodržiavanie pravidiel vynucuje.

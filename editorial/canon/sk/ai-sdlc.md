@@ -252,3 +252,8 @@ Riadok zdrojov: „Zdroje (prečítané v októbri 2026): OpenAI [názov](url), 
 | EN term | EN gloss | SK decision |
 |---|---|---|
 | Queue / merge queue / review queue / queue depth | Pending work waiting for a serial processing or verification step. | **REUSE — „fronta / ohraničená fronta / hĺbka fronty (queue)“** from [`rag.md`](./rag.md), Fáza 19 (Serving), with „fronta úloh“ in Fáza 22 (LLMOps). Feminine: „fronta na zlúčenie“, „dlhá fronta na revíziu“, „dlhšia fronta“, „sériová fronta“, „hĺbka fronty“. Same queue sense as the RAG ledger's „fronta úloh“; masculine „front“ is not the course's rendering for this sense. |
+
+### Externé výdavky a obnova po páde — 2026-10-22
+
+- **PROBATION — „externé zdroje nástrojov“**: výpočty, API, úložisko a kapacita v externých systémoch oddelene od tokenov modelu. Limity vynucuje obal nástroja a kvóty služby; rezerva zostáva viazaná do zistenia výsledku.
+- **PROBATION — „kontrola obnovy po páde“**: úmyselné ukončenie pracovného procesu okolo účinku a potvrdeného zápisu; overuje sa postup aj evidencia účinkov, nie iba finálna odpoveď.

@@ -298,3 +298,9 @@ NIST, VCR.py and LangChain references on those pages; the cascade entry retains 
 EN uses the concept-column forms (glossary title casing). The settled `replay` → «воспроизведение»
 sense in §1d is reused inside the new compound; its settled status is unchanged. Model routing
 selects an answering model; query routing selects a retrieval destination; tool selection stays separate.
+
+### Совместимость графа, ошибки инструментов и запись в память — 2026-10-22
+
+- **PROBATION — «совместимость исполнения»**: возможность продолжить старый чекпоинт на коде графа. Не смешивать с миграцией формы и смысла предметных данных.
+- **PROBATION — «исход пока не установлен»**: неизвестно, завершилась ли внешняя операция; это не подтверждённая ошибка и не подтверждённое выполнение. «Сверка с внешней системой» устанавливает исход; ключ идемпотентности сам по себе его не устанавливает.
+- **PROBATION — «проверка перед записью в постоянную память»**: код проверяет права и подтверждение фактов источниками до сохранения. «Производная запись» — сводка/вывод, который ссылается на исходные события и не заменяет их.

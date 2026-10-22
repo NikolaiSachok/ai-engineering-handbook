@@ -188,6 +188,8 @@ Sie sagen können, *was tatsächlich fertig geworden ist*. Die zweite Hälfte is
 eine Disziplin, und sie führt geradewegs zu dem Fall aus der Praxis, in dem der Fortschritt am tatsächlichen
 Zustand gemessen wird und nicht an einem Zeitstempel ([Planung und Schleifen](./planning-loops/index.md)).
 
+Prüfen Sie diese Disziplin an der Grenze zwischen Effekt und bestätigtem Speichern: mit der [Methode zur Wiederaufnahme nach einem Absturz](./durable-runs/deep-dive.md#proving-it-rather-than-claiming-it) und der [Prüfung im AI-SDLC-Kurs](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification).
+
 ## Hooks und Guardrails – Prüfungen vorschalten, statt der Schleife zu vertrauen \{#hooks-and-guardrails--interpose-checks-dont-trust-the-loop}
 
 Der Schleife vertrauen Sie nicht blind. Sie schalten Prüfungen um die Tool-Calls und um die Ein- und Ausgaben

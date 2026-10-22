@@ -179,6 +179,8 @@ OpenAI — состояние на сервере (`previous_response_id`/Conver
 прямая дорога к истории из практики про то, как судить о прогрессе по настоящему состоянию, а не по отметке
 времени.
 
+Проверь эту дисциплину на границе между эффектом и фиксацией: [метод сбоя и возобновления](./durable-runs/deep-dive.md#proving-it-rather-than-claiming-it) и [проверка в AI SDLC](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification).
+
 ## 5. Тормоза: хуки и ограничители \{#hooks-and-guardrails--interpose-checks-dont-trust-the-loop}
 
 Долговечный приём — циклу не доверяют вслепую: вокруг вызовов инструментов и ввода-вывода расставляют

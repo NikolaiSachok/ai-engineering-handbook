@@ -54,6 +54,14 @@ Why this matters for agents is the AI-delta again. Agent runs are long, non-dete
 
 And the restraint that comes with every capability on this page: a stateless single-shot agent needs none of this. No checkpointer, no backend, no durability mode. Durability earns its keep on long, resumable, or human-gated runs — don't stand up Postgres for a one-turn classifier.
 
+### Deploying a changed graph \{#deploying-a-changed-graph}
+
+Scope: LangGraph v1 Python Graph API documentation checked on 22 October 2026; this is not a guarantee for every library release. For a thread that has reached the graph's end, the documented migration rules allow arbitrary topology changes. For an interrupted thread, adding nodes or changing edges is supported, but removing or renaming nodes is not: the checkpoint may still name the node it must enter. Keeping the name alone does not preserve behaviour. Resume restarts the interrupted node, and reordering its `interrupt()` calls can associate an old answer with a different question because resume values match by position.
+
+Before a breaking deploy, choose a policy for existing threads. Retain the compatible graph code and dependencies and route old thread IDs to it; merely retaining the checkpoint does not pin execution code. Or stop admitting new runs to the old graph and drain its interrupted threads before replacing it; an unanswered approval can prevent draining indefinitely. Migrate only through an explicit, tested procedure that maps pending nodes and resume values and validates representative old checkpoints against the target graph. A fresh thread discards continuity rather than migrating it. Test both continuation and external-effect counts, using the [crash-resume gate](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification).
+
+This is execution compatibility. Changing the shape or meaning of persisted domain records needs a separate data-migration contract. The [durable-runs deep dive](../durable-runs/deep-dive.md#what-the-engines-settled) owns the broader deployment problem; Temporal's versioning mechanisms do not automatically apply to LangGraph.
+
 ## Two kinds of memory, and why they aren't the team \{#two-kinds-of-memory-and-why-they-arent-the-team}
 
 Framework memory splits along one axis into two scopes. Short-term, thread-scoped memory is the checkpointer's state — alive within a single thread, the conversation currently running, and gone when that thread ends. Long-term, cross-thread memory is a separate **store** that survives *across* threads, keyed by namespaces — one per user, say — so an agent can remember a person between sessions that share no thread. LangGraph calls that long-term side the Store.

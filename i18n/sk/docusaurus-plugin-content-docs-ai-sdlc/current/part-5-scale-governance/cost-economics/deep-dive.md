@@ -24,6 +24,8 @@ lacnejší prúd:
 attempt_cost = input_tokens × input_rate + output_tokens × output_rate
 ```
 
+Tu `attempt_cost` znamená iba náklady na tokeny modelu. Do úplných nákladov na prijatú zmenu pripočítaj externé zdroje nástrojov, overovanie a ľudskú revíziu.
+
 Výstupom jedného kroku agenta býva diff, volanie nástroja či odsek — stovky tokenov. Na vstupe je celý pracovný
 kontext — tisíce až desiatky tisíc tokenov. Veľký objem preváži nad nízkou sadzbou.
 
@@ -91,13 +93,7 @@ pokusov preváži nad cenníkovou cenou“, sa tak zmestí do jednej nerovnosti,
 
 ## Položka, ktorú zľava na tokenoch nezmení \{#the-line-a-token-discount-cannot-touch}
 
-Posledný súčet zasadí ostatné do správneho rámca. Zo štyroch nákladových položiek z prvej časti je mimo dosahu
-ceny tokenov jediná — **ľudská revízia**: oceňuje sa mzdou a žiadnym nákupom ju nezrýchliš. **Overovanie** je
-samo volaním modelu, takže ho zľava zníži tiež; čo zľava nedokáže, je znížiť počet kontrol, ktoré spustíš.
-Optimalizáciu ceny tokenov preto obmedzuje Amdahlov zákon rovnako ako každé iné zrýchlenie: ak ľudská revízia
-tvorí napríklad 40% celkových nákladov na zmenu, ani ľubovoľne veľká zľava na tokenoch nezníži celok o viac
-než zvyšných 60%. Keď prevláda revízia, šetrenie na tokenoch optimalizuje najmenšiu položku. Práve preto prvá
-časť tvrdila, že rozhodujúce obmedzenie je ocenené v mzdách, nie v tokenoch.
+Zľava na tokenoch zlacní generovanie a overovanie modelom, sama však nezníži cenu ľudskej revízie ani externých zdrojov nástrojov. Úsporu ohraničuje podiel účtu, ktorý sa skutočne platí v tokenoch. Ak revízia tvorí 40% a externé výpočty 30%, aj úplné odstránenie zvyšného účtu za tokeny ušetrí najviac 30%, pokiaľ ostatné náklady zostanú rovnaké. Priepustnosť môžu obmedzovať ľudia aj externé služby. Pred výberom optimalizácie zmeraj ich podiely.
 
 ## Čo si odniesť \{#what-to-take-away}
 
@@ -113,7 +109,6 @@ než zvyšných 60%. Keď prevláda revízia, šetrenie na tokenoch optimalizuje
   interaktívne kroky doň nepatria. Rozhoduje, či na výsledok čaká človek.
 - **Daň za opakovania:** `cost_per_accepted ≈ attempt_cost / p`. Lacnejší model sa oplatí iba vtedy, keď
   `p_cheap / p_expensive > price_cheap / price_expensive` — spoľahlivosť musí vyvážiť rozdiel v cene.
-- **Úsporu na tokenoch obmedzuje Amdahlov zákon** cez podiel ľudskej revízie, ktorý cena tokenov nemení. Ak
-  prevláda revízia, účet za tokeny je najmenšia páka.
+- **Úsporu na tokenoch obmedzuje ich podiel na účte.** Zľava nemení cenu ľudskej revízie ani externých zdrojov nástrojov.
 
 **[Nové pojmy](../../glossary.md#cost-and-the-economics-of-agent-work)**: rozklad nákladov pokusu, asymetria vstupnej a výstupnej sadzby, kvadratické opakované posielanie kontextu, prompt caching (stabilný prefix), zľava za batch, daň za opakovania, hranica rentability podľa úspešnosti, Amdahlovo obmedzenie úspor na tokenoch.

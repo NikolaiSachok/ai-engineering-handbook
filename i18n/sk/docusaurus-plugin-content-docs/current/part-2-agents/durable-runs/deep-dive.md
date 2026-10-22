@@ -102,7 +102,7 @@ A jedna prevádzková poznámka, ktorá uzatvára argument o uchovávaní z prve
 
 ## Dôkaz namiesto tvrdenia \{#proving-it-rather-than-claiming-it}
 
-Všetko na tejto stránke sú tvrdenia o správaní pri zlyhaní a pravdivosť im nezaručí nijaká dôslednosť pri návrhu. Rozhodujúci test musí pád vyvolať, nie naň čakať. Zabi workera na hranici kroku — konkrétne v okne po spustení spoplatneného vedľajšieho účinku a pred zápisom, ktorý ho zaznamená. Potom beh obnov a neoveruj iba jeho dokončenie, ale to, že vedľajší účinok nastal **práve raz**. Ide o techniku overovania, nie návrhu, preto patrí do kurzu o AI SDLC medzi ostatné [vrstvené brány a rozmanitosť mechanizmov](/ai-sdlc/part-3-verification/layered-gates). Keď máš návrh z týchto dvoch stránok hotový, je prirodzené pokračovať práve týmto testom.
+Všetko na tejto stránke sú tvrdenia o správaní pri zlyhaní a pravdivosť im nezaručí nijaká dôslednosť pri návrhu. Rozhodujúci test musí pád vyvolať, nie naň čakať. Zabi workera na hranici kroku — konkrétne v okne po spustení spoplatneného vedľajšieho účinku a pred zápisom, ktorý ho zaznamená. Potom beh obnov a neoveruj iba jeho dokončenie, ale to, že vedľajší účinok nastal **práve raz**. Ide o techniku overovania, nie návrhu, preto patrí do kurzu o AI SDLC medzi ostatné [vrstvené brány a rozmanitosť mechanizmov](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification). Keď máš návrh z týchto dvoch stránok hotový, je prirodzené pokračovať práve týmto testom.
 
 ## Čo si odniesť z lekcie \{#what-to-take-away}
 

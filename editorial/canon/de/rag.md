@@ -2024,3 +2024,9 @@ NIST, VCR.py and LangChain references on those pages; the cascade entry retains 
 The German prose forms above remain proposed, pending native/domain confirmation; they are not
 new SETTLED exceptions to `_language.md` §1.0. `Validator`, `on_fail`, `SFT` and
 `OpenTelemetry Collector` keep their API/product/acronym spellings.
+
+### Graphkompatibilität, Werkzeugfehler und Speicherschreibzugriffe — 2026-10-22
+
+- **PROBATION — „Ausführungskompatibilität“**: Fortsetzung alter Checkpoints mit dem Graphcode; von der Migration fachlicher Datensätze zu unterscheiden.
+- **PROBATION — „noch nicht festgestellter Ausgang“**: keine Aussage über Erfolg, Fehlschlag oder laufende Arbeit. Ein Abgleich stellt den Ausgang fest; Idempotenz allein bestätigt keinen Abschluss.
+- **PROBATION — „Prüfung vor der Aufnahme in den dauerhaften Speicher“**: Berechtigungen und Herkunftsbelege vor dem Speichern prüfen. „Abgeleiteter Eintrag“ bezeichnet eine Zusammenfassung oder Schlussfolgerung mit Verweis auf Quellereignisse.

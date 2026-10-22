@@ -279,7 +279,7 @@ herbei, statt auf ihn zu warten: Beenden Sie den Worker an einer Step-Grenze –
 nachdem ein kostenpflichtiger Seiteneffekt ausgelöst wurde und bevor der Commit ihn festhält –, setzen Sie
 dann fort und prüfen Sie nicht, ob der Durchlauf zu Ende gekommen ist, sondern ob der Seiteneffekt **genau
 einmal** eingetreten ist. Das ist eine Technik der Prüfung und keine des Entwurfs; sie gehört in den Kurs
-über den AI-SDLC, neben die übrigen [gestaffelten Kontrollpunkte](/ai-sdlc/part-3-verification/layered-gates)
+über den AI-SDLC, neben die übrigen [gestaffelten Kontrollpunkte](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification)
 (die Seite liegt nur auf Englisch vor), und sie ist das Naheliegende, sobald der Entwurf von diesen beiden
 Seiten steht.
 

@@ -69,6 +69,14 @@ Prečo na tom pri agentoch záleží? Opäť pre ten rozdiel, ktorý vnáša AI.
 
 A tá zdržanlivosť, ktorá sprevádza každú schopnosť na tejto stránke: bezstavový jednorazový agent nepotrebuje nič z toho. Žiadny checkpointer, žiadny backend, žiadny režim odolnosti. Odolnosť sa vyplatí na dlhých, obnoviteľných alebo človekom strážených behoch — nestavaj Postgres kvôli jednokrokovému klasifikátoru.
 
+### Nasadenie zmeneného grafu \{#deploying-a-changed-graph}
+
+Tieto pravidlá sa vzťahujú na Python Graph API LangGraph v1 podľa dokumentácie overenej 22. októbra 2026; pri konkrétnej verzii knižnice ich over znova. Vo vlákne, ktoré už dosiahlo koniec grafu, dokumentácia povoľuje ľubovoľnú zmenu topológie. Pri prerušenom vlákne podporuje pridávanie uzlov a zmeny hrán, nie však premenovanie či odstránenie uzlov: checkpoint môže stále odkazovať na nasledujúci uzol. Ani zachovanie názvu nezaručuje rovnaké správanie. Uzol sa pri pokračovaní spúšťa od začiatku a odpovede na `interrupt()` sa priraďujú podľa poradia. Zmenou poradia môžeš starú odpoveď priradiť k inej otázke.
+
+Pred nekompatibilným nasadením zvoľ postup pre otvorené vlákna. Zachovaj kompatibilný kód grafu aj závislosti a staré `thread_id` smeruj naň; samotný checkpoint verziu kódu neurčuje. Alebo zastav prijímanie nových behov do starého grafu a počkaj, kým sa existujúce dokončia. Nezodpovedané schválenie môže toto čakanie predĺžiť na neurčito. Migruj iba podľa výslovného, overeného postupu, ktorý mapuje čakajúce uzly a odpovede a skúša reprezentatívne staré checkpointy na novom grafe. Nové vlákno stráca nadväznosť; nie je migráciou. Over aj počet externých účinkov pomocou [kontroly obnovy po páde](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification).
+
+Toto je kompatibilita vykonávania. Zmena štruktúry či významu uložených doménových záznamov potrebuje samostatný migračný kontrakt. Širší problém nasadenia vysvetľuje [lekcia o trvácnych behoch](../durable-runs/deep-dive.md); mechanizmy verziovania Temporal sa na LangGraph automaticky nevzťahujú.
+
 ## Dva druhy pamäte — a prečo to nie je tím \{#two-kinds-of-memory-and-why-they-arent-the-team}
 
 Pamäť frameworku sa delí na jednej osi na dva rozsahy. Krátkodobá pamäť viazaná na thread je stav checkpointera — žije v rámci jedného threadu (rozhovoru, ktorý práve beží) a zaniká, keď thread skončí. Dlhodobá pamäť je samostatný **store** (dlhodobá pamäť frameworku), ktorý prežíva naprieč threadmi; jeho kľúčom sú menné priestory — povedzme jeden na používateľa — takže si agent zapamätá človeka aj medzi sedeniami, ktoré nezdieľajú žiadny thread. Tej dlhodobej strane hovorí LangGraph Store.

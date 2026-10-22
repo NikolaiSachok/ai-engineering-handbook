@@ -24,6 +24,8 @@ cheaper-per-token stream is the larger bill:
 attempt_cost = input_tokens × input_rate + output_tokens × output_rate
 ```
 
+Here `attempt_cost` is the model-token subtotal. Add external tool resources, verification, and human review when calculating the full cost per accepted change.
+
 The output side of an agent turn is a diff, a tool call, a paragraph — hundreds of tokens. The input side is
 the entire working context — thousands to tens of thousands. The multiplier on the small rate wins.
 
@@ -90,14 +92,7 @@ rate outweighs sticker price," reduced to one inequality you can actually measur
 
 ## The line a token discount cannot touch \{#the-line-a-token-discount-cannot-touch}
 
-One closing sum keeps the others honest. Of the four cost buckets from Part 1, only **human review** is
-beyond the reach of token price — it is paid in salary, and its throughput is not for sale.
-**Verification** is itself model calls, so a discount does lower it; what a discount cannot do is reduce
-how many checks you run. So a token-price optimisation is bounded the way Amdahl bounds any speedup: if
-human review is, say, 40% of the total cost of a change, then *no* token discount, however deep, can
-reduce the total by more than the remaining 60%. When review dominates, shaving the token bill optimises
-the smallest lever — which is exactly why Part 1 insisted the binding constraint is priced in salary, not
-tokens.
+Token discounts affect model-based generation and verification, but neither human review nor external tool resources become cheaper merely because tokens do. Bound the saving by the share of the total bill actually priced in tokens. If human review is 40% and external compute is 30%, even eliminating the remaining token bill saves at most 30%, assuming those costs stay fixed. Review capacity and external-service capacity can each limit throughput. Measure their shares before deciding which optimisation matters.
 
 ## What to take away \{#what-to-take-away}
 
@@ -112,7 +107,6 @@ tokens.
   batch. Latency for cost, split along whether a human is waiting.
 - **Retry tax:** `cost_per_accepted ≈ attempt_cost / p`. A cheaper model wins only if
   `p_cheap / p_expensive > price_cheap / price_expensive` — reliability has to beat the price gap.
-- **A token discount is Amdahl-bounded** by the human-review fraction, which no token price touches. When
-  review dominates, the token bill is the smallest lever.
+- **Token savings are bounded by the token-priced share.** Human review and external tool resources remain outside that discount.
 
 **[New terms](../../glossary.md#cost-and-the-economics-of-agent-work)**: attempt-cost decomposition, input/output rate asymmetry, quadratic context re-send, prompt caching (stable prefix), batch discount, retry tax, break-even success rate, Amdahl bound on token savings.

@@ -127,6 +127,10 @@ Praktická mechanika dlhej trajektórie je trojaká a oplatí sa ju pomenovať �
 
 Nič z toho nie je zadarmo a väčšina úloh to nepotrebuje. Epizodická pamäť pridáva celý vyhľadávací podsystém s vlastnými spôsobmi zlyhania — zastaraná alebo zle vybraná spomienka otrávi kontext a môže byť horšia než žiadna pamäť. Jednorazové úlohy si vystačia s pracovnou pamäťou. Dlhodobú pamäť pridaj vtedy, keď sa agent naozaj musí učiť naprieč sedeniami — osobný asistent, dlho bežiaci projekt — a ani o chvíľu skôr.
 
+Poučenie, ktoré model zapíše pri Reflexion, je hypotéza. Pred zápisom do trvalej pamäte preto zaraď kontrolu: model môže navrhnúť súhrn alebo stratégiu označenú ako odvodenú. Faktické tvrdenie o platbe, schválení či preferencii používateľa však musí odkazovať na autoritatívnu zdrojovú udalosť alebo výslovné vyjadrenie používateľa. So záznamom ulož identifikátory zdrojov, čas, príslušnosť k organizácii a používateľovi a stav overenia. Istota modelu nie je overenie. Nepodložené tvrdenia a pokyny vložené do vyhľadaného textu odmietni; oprávnenie volajúceho na zápis overuj kódom.
+
+Zdrojové udalosti uchovaj oddelene od priebežne prepisovaného súhrnu. Stručný prehľad potom môžeš znova zostaviť deterministicky alebo vygenerovať a znovu overiť. Inak sa chybná parafráza stane jediným záznamom a ďalšie modely ju budú považovať za potvrdenie. Urči platnosť a pravidlá opráv, pri zmene zdroja zneplatni odvodené záznamy a pri mazaní odstráň aj súhrny a záznamy vo vyhľadávacích indexoch. Otestuj kontrolu zápisu na vymyslenej udalosti, neaktuálnom fakte a zápise pre cudzieho používateľa: nič z toho sa nesmie dostať do dôveryhodnej pamäte. Pri ďalšom pokračovaní vyžaduj pôvod tvrdenia skôr, než ho prijmeš ako dôkaz. Samotná relevantnosť a uloženie nezaručujú pravdivosť ani oprávnenosť záznamu.
+
 ## Hodnotenie celej cesty \{#grading-the-whole-path}
 
 Prvá časť povedala, že evaluácia teraz meria trajektóriu. V konkrétnostiach je to hŕstka metrík — a nástraha spoľahlivosti, ktorá chytá tímy, čo zastanú pri jedinom úspešnom behu.

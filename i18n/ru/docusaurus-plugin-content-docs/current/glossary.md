@@ -793,7 +793,7 @@ AutoGen), CrewAI.
 возобновить и осмотреть.
 
 **State graph (граф состояния, StateGraph)** — агент, описанный как общий типизированный объект состояния
-плюс узлы и рёбра; конкретная форма «агента как графа» в LangGraph.
+плюс узлы и рёбра; конкретная форма «агента как графа» в LangGraph. ↗ [LangGraph v1: Graph migrations](https://docs.langchain.com/oss/python/langgraph/graph-api#graph-migrations).
 
 **Conditional edge (условное ребро)** — ребро графа, выбирающее следующий узел по текущему состоянию;
 именно оно кодирует ветку цикла (есть вызов инструмента → узел `tools`; готово → END).

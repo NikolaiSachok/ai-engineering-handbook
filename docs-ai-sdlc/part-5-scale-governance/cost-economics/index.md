@@ -40,7 +40,7 @@ context each one carries, and the human review time are.
 
 ## Where the money actually goes \{#where-the-money-actually-goes}
 
-Four buckets.
+Five buckets.
 
 **Context.** Agents re-read. The same repository, the same rules corpus, the same task brief get re-sent
 across attempts and across agents. Context is usually the largest single line item on an agentic workload's
@@ -55,9 +55,10 @@ cost three times its apparent price.
 calls, and they scale with output rather than with team size. A fleet that generates twice as much pays twice
 as much to check it.
 
-**Human review time.** The most expensive input in the system and the only one that does not scale with
-spend. Part I's [verification bottleneck](../../part-1-foundation/verification-bottleneck.md) is an economic claim
+**Human review time.** Often the most expensive input, with throughput that cannot grow as quickly as model-call spend. Part I's [verification bottleneck](../../part-1-foundation/verification-bottleneck.md) is an economic claim
 as much as an engineering one: the binding constraint is priced in salary, not in tokens.
+
+**External tool resources.** A read-only warehouse query can spend hundreds in compute without changing a row. Meter downstream compute, paid API calls, storage, and occupied capacity separately from model tokens, with per-operation and per-task limits in money and resource/time units. Enforce them in the tool wrapper and, where available, in the external service's own quota system; the model gateway cannot bound work it never sees. Before dispatch, atomically reserve an upper bound against the remaining task allowance so concurrent calls cannot each spend the same headroom. If no enforceable upper bound exists, reject or require approval for that operation. Reconcile actual charges and release the unused reserve only after a terminal outcome; a timed-out wait does not stop billing. At the cap, stop new dispatches and reconcile or cancel running work under a defined policy. Attribute these costs to the same task as its tokens and retries.
 
 ## Making cost accountable \{#making-cost-accountable}
 
