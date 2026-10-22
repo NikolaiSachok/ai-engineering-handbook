@@ -2107,3 +2107,13 @@ funktioniert — jede Sprache prüft für sich.
 - **„token tax" / „Token-Steuer"** — im Russischen bestätigt, im Slowakischen **ausdrücklich gestrichen**
   („daň" wurde ausgemustert). Für das Deutsche **nicht übernehmen**, bis ein eigener Kaltdurchgang darüber
   entschieden hat; bis dahin schlichte Prosa („die laufenden Kosten der Tool-Beschreibungen").
+
+## Vorrang von Verboten und Korpusbelegen
+
+**HOUSE — ein Verbot hat für den von ihm bezeichneten Begriff und Sinn Vorrang vor einem
+Korpusbeleg.** Eine veröffentlichte Seite kann einen älteren Fehler enthalten; sie hebt ein späteres
+Verbot nicht auf. Reparieren Sie die Seite, statt den Fehler in weitere Seiten zu übernehmen.
+Prüfen Sie zuerst den Referenten: Ein Verbot für Guardrails als Anwendungsschicht verbietet nicht
+jede Beschreibung modellinterner Schutzmechanismen. Ein bloßer Treffer entscheidet diese Frage nicht.
+Die maschinenlesbaren Ausnahmen und Prüfbereiche stehen in `scripts/locale-review/banlist.de.json`;
+Wortfeld-Hinweise verlangen eine Prüfung des Sinns und sind keine pauschalen Wortverbote.

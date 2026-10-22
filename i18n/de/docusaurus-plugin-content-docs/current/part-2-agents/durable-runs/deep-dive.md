@@ -63,7 +63,7 @@ einen neuen Key, hält das für eine neue beabsichtigte Operation und führt sie
 nicht – nicht weil sie kaputt wäre, sondern weil sie denselben Key nie zweimal bekommen hat. Der Knoten ist
 jetzt vollständig abgesichert gegen eine Wiederholung nach einem *Netzwerkfehler* – den Fall, den sein Autor
 im Sinn hatte – und vollkommen ungeschützt gegen ein *Replay*, das die Dauerhaftigkeit erst mit sich bringt. Zwei
-ähnlich aussehende Fehler, ein Key — und der wurde nur für einen der beiden entworfen.
+ähnlich aussehende Fehler, ein Key – und der wurde nur für einen der beiden entworfen.
 
 Die Rechnung kommt je nach Step in einer anderen Währung. Ist es ein Modellaufruf, zahlt die Charge aus
 Teil 1 ein zweites Mal: 12 000 Einheiten zu je 2 US-Cent sind 240 US-Dollar, und ein Absturz kurz vor Ende

@@ -111,6 +111,26 @@ def strip_markup(line: str) -> str:
     return line
 
 
+def prose_lines(text: str) -> list[str]:
+    """Shared shipping-prose extraction, retaining line numbers.
+
+    Mask fenced code and complete JSX/HTML tags (including multiline attributes),
+    then strip inline code and URL destinations with the census's markup policy.
+    A tag's child text and prose following its closing `>` remain inspectable.
+    Quoted `>` characters in attributes cannot end a tag prematurely.
+    """
+    lines = text.split("\n")
+    kinds = classify(text)
+    body = "\n".join("" if kind == FENCE else line
+                     for line, kind in zip(lines, kinds))
+    tag = re.compile(r"</?[A-Za-z][\w.:-]*\b(?:[^>\"']|\"[^\"]*\"|'[^']*')*>", re.DOTALL)
+    body = tag.sub(lambda m: re.sub(r"[^\n]", " ", m.group()), body)
+    # An explicit heading id is routing metadata; malformed unescaped ids remain
+    # visible so the absolute bare-anchor rule still catches them.
+    return [re.sub(r"\\\{#[^}]+}", " ", strip_markup(line))
+            for line in body.split("\n")]
+
+
 def outside_quotes(text: str) -> str:
     """Drop German-quoted spans („…“).
 
@@ -232,6 +252,7 @@ def main(argv: list[str]) -> int:
 
     kinds_of: dict[str, list[str] | None] = {}
     body_of: dict[str, list[str]] = {}
+    prose_of: dict[str, list[str]] = {}
     prose_rows: list[tuple[str, str]] = []
     skipped: collections.Counter = collections.Counter()
     stale: list[str] = []
@@ -243,6 +264,7 @@ def main(argv: list[str]) -> int:
                 body = p.read_text(encoding="utf-8")
                 body_of[path] = body.split("\n")
                 kinds_of[path] = classify(body)
+                prose_of[path] = prose_lines(body)
             else:
                 kinds_of[path] = None
         kinds = kinds_of[path]
@@ -255,8 +277,8 @@ def main(argv: list[str]) -> int:
         if body_of[path][no - 1] != text:
             stale.append(f"{path}:{no} — the diff's text is not the file's line at that number")
             continue
-        if kinds[no - 1] == PROSE:
-            prose_rows.append((path, strip_markup(text)))
+        if kinds[no - 1] != FENCE and prose_of[path][no - 1].strip():
+            prose_rows.append((path, prose_of[path][no - 1]))
         else:
             skipped[kinds[no - 1]] += 1
 

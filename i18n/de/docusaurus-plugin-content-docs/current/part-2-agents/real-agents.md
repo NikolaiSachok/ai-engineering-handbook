@@ -13,8 +13,8 @@ Mitspieler, die sich die Arbeit teilen, in [Multi-Agenten-Systeme](./multi-agent
 all das verpacken, in [Orchestrierungs-Frameworks](./orchestration-frameworks/index.md); und das Protokoll, das
 ihn mit der Welt verbindet, in [MCP und Agentenprotokolle](./mcp/index.md). Neu ist auf dieser Seite nichts. Sie
 veranschaulicht ausgewählte Muster anhand dreier Anbieterstacks – Anthropic Claude, OpenAI und Google Gemini –
-und zeigt: Jede Technik ist im Kern derselbe bleibende Handgriff, nur anders benannt und in einem anderen
-Nachrichtenformat über die Leitung geschickt.
+und zeigt: Die Anbieter setzen dieselben grundlegenden Techniken ein, auch wenn sie andere Namen und
+Nachrichtenformate verwenden.
 
 Genau darauf kommt es an, und deshalb ist jeder Abschnitt gleich gebaut. Am Anfang steht das **bleibende
 Muster** – der Teil, der jeden Umbau einer API überlebt. Dann folgt, wie es der einzelne Anbieter heute macht,
