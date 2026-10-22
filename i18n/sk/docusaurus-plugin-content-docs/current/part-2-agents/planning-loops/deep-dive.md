@@ -157,7 +157,7 @@ Predstav si vymyslený prípad oneskorenej zásielky, v ktorom agent môže prip
 
 | Povinnosť | Dôkaz a podmienka porušenia |
 |---|---|
-| Najprv čítanie, potom akcia | Pred presmerovaním musí agent získať aktuálny záznam dopravcu pre túto zásielku; skoršie čítanie inej zásielky nestačí. |
+| Najprv čítanie, potom akcia | Pred presmerovaním musí agent získať aktuálny záznam o skenovaní tejto zásielky dopravcom; skoršie čítanie inej zásielky nestačí. |
 | Povolená akcia | Pripísanie kreditu, presmerovanie alebo eskalácia musia byť povolené pre daný typ prípadu a rozsah oprávnení. |
 | Hranica schválenia | Kredit vo výške 100 jednotiek alebo viac vyžaduje schválenie pre tento prípad a túto sumu; hodnoty 99, 100 a 101 testuj osobitne. |
 | Bez opakovaného účinku | Pri opakovaní po časovom limite musí agent použiť rovnaký kľúč idempotencie; v potvrdenej evidencii smie byť iba jedno pripísanie kreditu. |

@@ -116,3 +116,31 @@ stiahli** — druhý riadok tabuľky je tu práve preto, aby sa stiahnutý tvar 
 **Pravidlo, kvôli ktorému je druhý riadok zapísaný.** Nálepka krížového odkazu sa stavia z **termínu, ktorý na
 cieľovej stránke doslova stojí**. Poradie výberu ostáva: inkumbent (register §1, cieľová stránka, glosár) — a
 až keď inkumbent neexistuje, nový tvar. Pre cudzí pojem nerazí nový termín.
+
+## Integration batch — evaluation, replay, routing and production (2026-10-22)
+
+Concept/sense records for the new glossary entries and their lesson footers. New prose forms are
+PROBATION; this batch does not settle them. Existing frozen decisions remain in force.
+
+| Concept (EN) | Form in this locale | Sense boundary / status |
+|---|---|---|
+| population audit | population audit (audit populácie) | PROBATION. Population-rate estimate; separate from targeted defect discovery. |
+| confidence interval for a failure rate | confidence interval (interval spoľahlivosti) | PROBATION. Sampling uncertainty for a rate; not detection probability or label validity. |
+| detection probability | detection probability (pravdepodobnosť zachytenia) | PROBATION. At least one specified failure; not power for a version-comparison test. |
+| tool-response replay | prehrávanie odpovedí nástrojov | PROBATION. Recorded tool observations in an isolated test; not live retry or deterministic model generation. |
+| trajectory invariant | invariant trajektórie | PROBATION. Constraint over applicable actions/state; not one required golden path. |
+| action–message consistency | súlad správy s akciami | PROBATION. Message claims versus confirmed action/state evidence; not retrieval faithfulness. |
+| model cascade | model cascade (kaskáda modelov) | PROBATION. Generate, check, then escalate on quality; distinct from availability fallback and pre-generation model routing. |
+| escalation rate | escalation rate (miera eskalácie) | PROBATION. Next-tier calls / requests entering that cascade; excludes bypass traffic. |
+| validator | validátor | PROBATION. Guardrails AI value check; `Validator` is the API literal, not every review gate. |
+| on_fail | `on_fail` | Literal token; new glossary sense recorded. Guardrails AI failure-action identifier; preserve spelling. |
+| OpenTelemetry Collector | OpenTelemetry Collector | Literal token; new glossary sense recorded. Telemetry service proper name; distinct from application instrumentation. |
+| SFT (supervised fine-tuning) | SFT (supervised fine-tuning) | PROBATION. Labelled input–output training; not context distillation or reinforcement fine-tuning. |
+
+Surfaces: `glossary.md`; evaluation and planning-loops deep dives; `llmops/routing.md`;
+`tooling-ecosystem/index.md`; `llmops/deep-dive.md`. The statistics and replay entries retain the
+NIST, VCR.py and LangChain references on those pages; the cascade entry retains FrugalGPT.
+
+Routing reuses `rag.md` Karta 8: model routing = „smerovanie medzi modelmi“; query routing and
+selection of a tool inside the loop remain separate. `SFT` and `OpenTelemetry Collector` retain the
+existing literal spellings in the frozen ledger; only the new glossary senses are recorded here.

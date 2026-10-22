@@ -37,10 +37,10 @@ Predstav si 100 dopytov troch druhov. Pri každom druhu porovnaj vybraný model 
 
 | Druh úlohy | Počet | Vybraný model: $/dopyt | Iba silný model: $/dopyt | Vybraný model: spolu $ | Iba silný model: spolu $ |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Vyhľadanie údaja | 70 | 0.001 | 0.010 | 0.070 | 0.700 |
-| Syntéza | 25 | 0.006 | 0.020 | 0.150 | 0.500 |
-| Dlhý text | 5 | 0.050 | 0.050 | 0.250 | 0.250 |
-| Spolu | 100 | — | — | 0.470 | 1.450 |
+| Vyhľadanie údaja | 70 | 0,001 | 0,010 | 0,070 | 0,700 |
+| Syntéza | 25 | 0,006 | 0,020 | 0,150 | 0,500 |
+| Dlhý text | 5 | 0,050 | 0,050 | 0,250 | 0,250 |
+| Spolu | 100 | — | — | 0,470 | 1,450 |
 
 Úspora je `(1.450 − 0.470) / 1.450`, približne 67,6%. Vyhľadanie údaja tvorí 70% dopytov, ale iba `0.070 / 0.470`, približne 14,9% výdavkov pri smerovaní. Každý z týchto podielov má iný menovateľ.
 
@@ -64,7 +64,7 @@ Tento výpočet predpokladá pevné náklady. Ak na silnejší model postupujú 
 
 Pri sériovej kaskáde so zadržaným výstupom čakáš pri prijatej odpovedi na malý model a kontrolu. Pri eskalovanom dopyte sa pripočíta veľký model a záverečné kontroly blokujúce zobrazenie. Najprv spočítaj skutočný uplynutý čas v každom trace, teda zázname priebehu jedného dopytu. Až z týchto celkov vypočítaj percentil. Súčet p95 jednotlivých spanov nie je p95 celého dopytu: jednotlivé percentily môžu patriť iným dopytom a záleží aj na koreláciách a na tom, ktoré dopyty eskalujú.
 
-V ďalšom hypotetickom príklade trvá malé generovanie vždy 450 ms a kontrola 100 ms. Veľké generovanie so záverečnou kontrolou pridá vždy 1200 ms. Ostatná réžia je nulová. Prijatú odpoveď preto zobrazíš po 550 ms, eskalovanú po 1750 ms. Zo 100 časov zoradených vzostupne berieme pre p95 hodnotu na 95. mieste — konvenciu nearest-rank.
+V ďalšom hypotetickom príklade trvá malé generovanie vždy 450 ms a kontrola 100 ms. Veľké generovanie so záverečnou kontrolou pridá vždy 1200 ms. Ostatná réžia je nulová. Prijatú odpoveď preto zobrazíš po 550 ms, eskalovanú po 1750 ms. Zo 100 časov zoradených vzostupne vezmi pre p95 hodnotu na 95. mieste — konvenciu nearest-rank.
 
 | Miera eskalácie | Dopyty s časom 550 ms | Dopyty s časom 1750 ms | p95 | Podiel do 800 ms |
 | --- | ---: | ---: | ---: | ---: |
@@ -72,7 +72,7 @@ V ďalšom hypotetickom príklade trvá malé generovanie vždy 450 ms a kontro
 | 5% | 95 | 5 | 550 ms | 95% |
 | 6% | 94 | 6 | 1750 ms | 94% |
 
-Pri takto úplne oddelených časoch oboch vetiev sa p95 presunie na pomalú vetvu, keď jej podiel prekročí 5%. Pri presne 5% ostáva podľa zvolenej konvencie na rýchlej vetve. Interpolácia alebo iné meracie okno môže hraničný výsledok zmeniť. Aj pri 4% však eskalovaní používatelia čakajú 1750 ms; p95 nesľubuje čas každému jednotlivému používateľovi.
+Pri takto úplne oddelených časoch oboch vetiev sa p95 presunie na pomalú vetvu, keď jej podiel prekročí 5%. Pri presne 5% ostáva podľa zvolenej konvencie na rýchlej vetve. Interpolácia alebo iné meracie okno môže hraničný výsledok zmeniť. Aj pri 4% však používatelia s eskalovanými dopytmi čakajú 1750 ms; p95 nesľubuje čas každému jednotlivému používateľovi.
 
 Všeobecnejšie označ `Fa(t)` podmienenú distribučnú funkciu času prijatých dopytov a `Fe(t)` podmienenú distribučnú funkciu času eskalovaných dopytov. Druhá zahŕňa celú sériovú cestu, nielen volanie veľkého modelu. Distribučná funkcia celku je:
 
@@ -90,7 +90,7 @@ Keď `r` rastie, preskúmaj zmeny vstupov, vyhľadávania, overovača a malého 
 
 Konfiguráciu verziuj a umožni jej načítanie za behu. Má určovať prípustné úrovne modelov, pravidlá pre jednotlivé druhy úloh, prahy, termíny, limity výdavkov aj postup pri vypršaní času na kontrolu. Pred použitím ju validuj a uplatni ju naraz, aby nevznikla zmes dvoch verzií. Do každého tracu zaznamenaj verziu konfigurácie a dôvod výberu. Zmenu over na oddelenej testovacej sade a potom na malej časti produkčnej premávky so sledovaním kvality. Predchádzajúcu konfiguráciu maj pripravenú na rollback.
 
-Každú úroveň musíš vedieť samostatne vypnúť. Vypnutie malej úrovne znamená obísť malé generovanie aj jeho kontrolu. Vypnutie silnej úrovne vyžaduje výslovné správanie, napríklad odmietnutie alebo odloženie odpovede. Rovnako urč bezpečný postup pri výpadku overovača. Ohranič počet pokusov aj celkový čas, aby systém neeskaloval donekonečna. Presmerovanie mení zaťaženie aj výdavky cieľovej úrovne; over jej kapacitu a rozpočet. Pri zhoršení podmienok sa systém má riadiť známou politikou s jasnými limitmi.
+Každú úroveň musíš vedieť samostatne vypnúť. Vypnutie malej úrovne znamená obísť malé generovanie aj jeho kontrolu. Pri vypnutí silnej úrovne výslovne urči, ako sa systém zachová, napríklad či odpoveď odmietne alebo odloží. Rovnako urč bezpečný postup pri výpadku overovača. Ohranič počet pokusov aj celkový čas, aby systém neeskaloval donekonečna. Presmerovanie mení zaťaženie aj výdavky cieľovej úrovne; over jej kapacitu a rozpočet. Pri zhoršení podmienok sa systém má riadiť známou politikou s jasnými limitmi.
 
 ## Čo si odniesť z lekcie \{#what-to-take-away}
 
@@ -99,6 +99,6 @@ Každú úroveň musíš vedieť samostatne vypnúť. Vypnutie malej úrovne zna
 - Percentily počítaj z časov celých dopytov. Samotná miera eskalácie nedokazuje, že splníš limit latencie.
 - Odhalenú chybu môžeš napraviť pred zobrazením odpovede alebo nezvratnou operáciou. Audituj aj prijaté odpovede a pre výpadky urč správanie s jasnými limitmi.
 
-**[Nové pojmy](../../glossary.md#llmops)**: model cascade, escalation rate.
+**[Nové pojmy](../../glossary.md#llmops)**: Model cascade (kaskáda modelov), Escalation rate (miera eskalácie).
 
 Pozri aj: [smerovanie medzi modelmi v LLMOps](./index.md#route-between-models) a [evaluácia — prehĺbenie](../../part-1-rag/cross-cutting/evaluation/deep-dive.md).

@@ -6,7 +6,7 @@ sidebar_position: 3
 
 # Model-Routing – Kosten und Latenz der gesamten Anfrage
 
-Wenn 70 % der Anfragen an ein kleines Modell gehen, sinken die Kosten deshalb noch nicht um 70 %.
+Wenn 70 % der Anfragen an ein kleines Modell gehen, sinken die Kosten deshalb noch nicht um 70 %.
 Und wenn ein Modell schnell das erste Token erzeugt, kann eine nachgeschaltete Prüfung trotzdem die
 für die erste sichtbare Ausgabe vorgesehene Zeit aufbrauchen. Beim
 [Routing zwischen Modellen](./index.md#route-between-models) müssen Qualität, Kosten und Latenz
@@ -15,7 +15,7 @@ zusammenpassen. Entscheidend ist jeweils die gesamte Anfrage.
 Alle Preise, Laufzeiten und Anteile auf dieser Seite sind frei gewählte Rechenbeispiele. Es handelt
 sich weder um Anbieterpreise noch um Messwerte eines Produktivsystems.
 
-## Vor der Generation wählen oder das Ergebnis prüfen \{#choose-before-generation-or-check-after-it}
+## Vor der Generation das Modell wählen oder das Ergebnis prüfen \{#choose-before-generation-or-check-after-it}
 
 Beginnen Sie mit Merkmalen, die Ihre Anwendung bereits kennt: der im Produkt gewählten Aktion,
 der Zahl abgerufener Passagen, fehlenden Zitaten, widersprüchlichen Quellen oder dem Abstand zwischen
@@ -73,11 +73,11 @@ folgende hypothetischen Kosten in Dollar an:
 | Lange Texte verfassen | 5 | 0,050 | 0,050 | 0,250 | 0,250 |
 | Gesamt | 100 | – | – | 0,470 | 1,450 |
 
-Die Ersparnis beträgt `(1.450 − 0.470) / 1.450`, also rund 67,6 %. Die Nachschlageanfragen machen
-70 % der Anfragen aus, aber nur `0.070 / 0.470`, also rund 14,9 % der Kosten mit Routing. Die beiden
+Die Ersparnis beträgt `(1.450 − 0.470) / 1.450`, also rund 67,6 %. Die Nachschlageanfragen machen
+70 % der Anfragen aus, aber nur `0.070 / 0.470`, also rund 14,9 % der Kosten mit Routing. Die beiden
 Anteile haben unterschiedliche Nenner. Kostet ein zusätzlicher Klassifikator 0,001 $ je Anfrage,
 kommen für die 100 Anfragen 0,100 $ hinzu. Die Gesamtkosten steigen auf 0,570 $, die Ersparnis sinkt
-auf rund 60,7 %.
+auf rund 60,7 %.
 
 Für eine Kaskade seien `Cs` die festen Kosten der kleinen Generation, `Cv` die der Prüfung und `Cl`
 die zusätzlichen Kosten der großen Generation. Dann gilt je Anfrage, die in die Kaskade eintritt:
@@ -86,7 +86,7 @@ die zusätzlichen Kosten der großen Generation. Dann gilt je Anfrage, die in di
 
 Bei `Cs = 0.002`, `Cv = 0.001`, `Cl = 0.010` und `r = 0.20` ergibt sich `E[C] = 0.005`: halb so viel
 wie die starke Generation allein. Kostengleichheit erreichen die beiden Varianten bei
-`r = (Cl − Cs − Cv) / Cl = 0.70`. Steigt `r` auf 80 %, kostet die Kaskade 0,011 $ und damit mehr als
+`r = (Cl − Cs − Cv) / Cl = 0.70`. Steigt `r` auf 80 %, kostet die Kaskade 0,011 $ und damit mehr als
 das starke Modell allein. Bei einer Eskalation bezahlen Sie beide Generationen; daraus folgt jedoch
 kein fester Faktor zwei.
 
@@ -113,21 +113,21 @@ nicht einfach addieren: Sie können von unterschiedlichen Anfragen stammen; Abh�
 Auswahl der eskalierten Anfragen verändern die Verteilung.
 
 Nehmen wir 100 Anfragen an: Die kleine Generation dauert immer 450 ms, die Prüfung 100 ms. Die
-zusätzliche große Generation einschließlich abschließender Prüfung dauert 1 200 ms. Alle übrigen
+zusätzliche große Generation einschließlich abschließender Prüfung dauert 1200 ms. Alle übrigen
 Zeitanteile setzen wir für dieses Beispiel auf null. Akzeptierte Antworten werden nach 550 ms
-freigegeben, eskalierte nach 1 750 ms. Für p95 verwenden wir die Nearest-Rank-Konvention: Nach dem
+freigegeben, eskalierte nach 1750 ms. Für p95 verwenden wir die Nearest-Rank-Konvention: Nach dem
 Sortieren der 100 Dauern zählt der 95. Wert.
 
-| Eskalationsrate | Anfragen mit 550 ms | Anfragen mit 1 750 ms | p95 | Innerhalb von 800 ms |
+| Eskalationsrate | Anfragen mit 550 ms | Anfragen mit 1750 ms | p95 | Innerhalb von 800 ms |
 |---|---:|---:|---:|---:|
-| 4 % | 96 | 4 | 550 ms | 96 % |
-| 5 % | 95 | 5 | 550 ms | 95 % |
-| 6 % | 94 | 6 | 1 750 ms | 94 % |
+| 4 % | 96 | 4 | 550 ms | 96 % |
+| 5 % | 95 | 5 | 550 ms | 95 % |
+| 6 % | 94 | 6 | 1750 ms | 94 % |
 
 In dieser vollständig getrennten Verteilung liegt p95 auf dem langsamen Pfad, sobald dessen Anteil
-über 5 % steigt. Bei genau 5 % bleibt der 95. Wert noch auf dem schnellen Pfad. Eine interpolierte
-Perzentilberechnung oder ein anderes Messfenster kann diese Grenze verschieben. Und selbst bei 4 %
-warten die eskalierten Anfragen weiterhin 1 750 ms: p95 garantiert keiner einzelnen Anfrage eine
+über 5 % steigt. Bei genau 5 % bleibt der 95. Wert noch auf dem schnellen Pfad. Eine interpolierte
+Perzentilberechnung oder ein anderes Messfenster kann diese Grenze verschieben. Und selbst bei 4 %
+warten die eskalierten Anfragen weiterhin 1750 ms: p95 garantiert keiner einzelnen Anfrage eine
 bestimmte Antwortzeit.
 
 Allgemeiner sei `Fa(t)` die bedingte Verteilungsfunktion der Gesamtdauer akzeptierter Anfragen und
@@ -136,9 +136,9 @@ Dann lautet die Verteilungsfunktion der Mischung:
 
 `F(t) = (1 − r) × Fa(t) + r × Fe(t)`
 
-Ein Ziel von 95 % innerhalb der Frist ist genau dann erfüllt, wenn `F(deadline) ≥ 0.95` gilt. Dafür
+Ein Ziel von 95 % innerhalb der Frist ist genau dann erfüllt, wenn `F(deadline) ≥ 0.95` gilt. Dafür
 müssen die beiden Pfade nicht unabhängig sein. Überlappen ihre Laufzeiten oder haben bereits einige
-akzeptierte Anfragen hohe Latenzen, sind 5 % Eskalation keine allgemeine sichere Obergrenze. Messen
+akzeptierte Anfragen hohe Latenzen, sind 5 % Eskalation keine allgemeine sichere Obergrenze. Messen
 Sie vollständige Traces unter Last: Gemeinsame Queues und Backpressure können bei steigender
 Eskalationsrate auch die akzeptierten Anfragen verlangsamen. Die
 [Vertiefung zur Observability](../../part-1-rag/cross-cutting/observability/deep-dive.md) behandelt die
@@ -184,7 +184,7 @@ Verkehr verschieben. Der eingeschränkte Betrieb muss innerhalb bekannter Grenze
 
 - Nutzen Sie zunächst vorhandene Merkmale. Prüfen Sie anschließend anhand repräsentativer Fälle, ob
   eine eigene Vorhersage der Eignung des günstigen Modells tragfähig ist.
-- Berechnen Sie jede Generation und jede Prüfung. Der Anteil einer Modellstufe an den Anfragen ist
+- Berücksichtigen Sie die Kosten jeder Antwortgenerierung und jeder Prüfung. Der Anteil einer Modellstufe an den Anfragen ist
   nicht ihr Anteil an den Kosten.
 - Berechnen Sie Perzentile über vollständige Anfragen. Die Eskalationsrate allein belegt nicht,
   dass das Latenzziel eingehalten wird.
