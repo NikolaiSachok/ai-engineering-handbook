@@ -6,9 +6,9 @@ sidebar_position: 2
 
 # Keď je útočníkom sám text — a ako dokážeš, že ochrana drží
 
-[Časť 1](./index.md) postavila rámec: model nedokáže spoľahlivo oddeliť inštrukcie od dát, a tak je prompt injection — priama aj nepriama — hrozba č. 1, pred ktorou obrana prichádza vo vrstvách. Oddelenie a spotlighting vyznačia, ktorý text je nedôveryhodný; instruction hierarchy určí, koho má model poslúchnuť; kontrola vstupu a validácia výstupu obopnú model z oboch strán; najnižšie oprávnenia obmedzia, kam dosiahne kompromitovaný agent; a maskovanie osobných údajov ich drží mimo tvojich logov aj mimo API poskytovateľa. Nič z toho nie je liek: je to defence-in-depth a celá tá stavba sa meria cez attack success rate.
+[Časť 1](./index.md) postavila rámec: model nedokáže spoľahlivo oddeliť inštrukcie od dát, a tak je prompt injection — priama aj nepriama — hrozba č. 1, pred ktorou obrana prichádza vo vrstvách. Oddelenie a spotlighting vyznačia, ktorý text je nedôveryhodný; instruction hierarchy určí, koho má model poslúchnuť; kontrola vstupu a validácia výstupu obopnú model z oboch strán; najnižšie oprávnenia obmedzia, kam dosiahne kompromitovaný agent; a pravidlá spracovania podľa účelu určujú, ktoré osobné údaje sa dostanú do logov, k poskytovateľom a k používateľom. Nič z toho nie je liek: je to defence-in-depth a celá tá stavba sa meria cez attack success rate.
 
-Tá stránka obranu pomenovala. Táto otvára jej mechaniku: ako spotlighting text naozaj označkuje a čo každý variant stojí, celý katalóg útokov aj to, ktorá obrana zodpovedá ktorej triede, ako red-teaming vyrobí attack success rate, ktorý sleduješ, a ako pipeline na osobné údaje v praxi rozpoznáva a maskuje. Jednu hranicu tu vymedzíme: prevádzkovať tieto mechanizmy v rozsahu celej organizácie — brány, allowlisty (zoznamy povoleného), centralizovaná politika — je vec operačnej vrstvy a ostáva pre [Časť III príručky](../../../part-3-production/tooling-ecosystem/).
+Tá stránka obranu pomenovala. Táto otvára jej mechaniku: ako spotlighting text naozaj označkuje a čo každý variant stojí, celý katalóg útokov aj to, ktorá obrana zodpovedá ktorej triede, ako red-teaming vyrobí attack success rate, ktorý sleduješ, a ako pipeline na osobné údaje uplatňuje pravidlá sprístupňovania pre jednotlivé polia. Jednu hranicu tu vymedzíme: prevádzkovať tieto mechanizmy v rozsahu celej organizácie — brány, allowlisty (zoznamy povoleného), centralizovaná politika — je vec operačnej vrstvy a ostáva pre [Časť III príručky](../../../part-3-production/tooling-ecosystem/).
 
 ## Ako spotlighting označkuje nedôveryhodný text \{#how-spotlighting-marks-untrusted-text}
 
@@ -16,13 +16,13 @@ Tá stránka obranu pomenovala. Táto otvára jej mechaniku: ako spotlighting te
 
 Rodinu aj všetky čísla nižšie priniesla jedna práca: Hines a kol. (Microsoft), „Defending Against Indirect Prompt Injection Attacks With Spotlighting“, arXiv 2403.14720, podaná 20. marca 2024.
 
-Tri techniky tvoria odstupňovaný rad: každý ďalší stupeň pridá viac oddelenia, ale za cenu nižšej kvality výstupu.
+Každá z troch techník mení text inak. V experimentoch priniesli datamarking a encoding vyššiu odolnosť voči útokom, no vplyv na kvalitu výsledkov závisel od modelu a úlohy. Nejde o pevné poradie s rastúcou cenou.
 
-**Delimiting** (ohraničenie značkami) je najslabší stupeň. Vyber si špeciálny token, vlož ho pred nedôveryhodný text aj zaň a v systémovom prompte modelu povedz, že všetko medzi značkami sú dáta, nie inštrukcie. Mechanizmus je jediný: vyznačenie hranice. A práve tá hranica je slabinou — útočník, ktorý tvoj oddeľovač uhádne alebo sa ho dozvie, si do payloadu (vloženého škodlivého textu) dopíše vlastnú zatváraciu značku a z ohraničenej oblasti unikne; plot drží presne dovtedy, dokým je token, čo ho drží, tajný. Na GPT-3.5-Turbo znížil úspešnosť útokov zhruba o 50% oproti východisku — čo znie ako pokrok, kým si nevšimneš, že polovica útokov aj tak prejde.
+**Delimiting** (ohraničenie značkami) obalí nedôveryhodný text zvolenými značkami a model dostane pokyn chápať obsah medzi nimi ako dáta. Značky sú obyčajné tokeny promptu; parser nimi nevynucuje bezpečnostnú hranicu. Útočník, ktorý pozná spôsob označovania, môže vložiť zavádzajúce značky. V experimente s GPT-3.5-Turbo klesla ASR približne na polovicu pôvodných zhruba 60%: stále teda uspelo asi 30% pokusov, nie 50%.
 
-**Datamarking** (značka v každej medzere) je zlatá stredná cesta. Namiesto značenia okrajov vloží špeciálny znak priebežne do celého textu a nahradí ním každú medzeru: „In this manner“ sa zmení na „In^this^manner“. Signál teraz sedí na každej hranici tokenu; model číta súvislé „toto sú dáta“, nie pripomienku na začiatku a konci, a schému značkovania mu oznámiš vopred. Výsledok: na GPT-3.5-Turbo stlačil úspešnosť útokov z približne 50% pod 3% — na inom variante GPT-3.5 v článku až na 0,00% — s takmer nulovou stratou na kvalite výstupu. Jeho limit vyplýva z mechanizmu: keďže značka sedí na medzerách, útočný text bez medzier naivnú implementáciu porazí, a otužuješ ju tým, že umiestnenie značky obmieňaš. Toto je predvolený stupeň.
+**Datamarking** (značka v každej medzere) vkladá značku priebežne do textu. Napríklad nahradí medzery, takže z „In this manner“ vznikne „In^this^manner“, a model dostane vysvetlenie tejto úpravy. Medzery medzi slovami sa nemusia zhodovať s hranicami tokenov. Obrázok 4 v článku uvádza pri sumarizácii ASR 3,10% pre GPT-3.5-Turbo a 0,00% pre Text-003; obrázok 5 uvádza 8,0% pre GPT-3.5-Turbo pri odpovedaní na otázky nad dokumentmi. Benchmarky úloh nezistili pri datamarkingu zhoršenie kvality výsledkov. Pre vstupy ako kód však môže byť značkovanie medzier menej vhodné.
 
-**Encoding** (zakódovanie) dáva najsilnejší signál a zároveň je najdrahší. Nedôveryhodný text premeníš algoritmom, ktorý model vie odkódovať, no ktorý sa už nečíta ako inštrukcie v prirodzenom jazyku — base64 alebo ROT13 — a modelu povieš, ktoré kódovanie má cestou rozmotať. Proti vloženej inštrukcii je to takmer bezchybné: 0,0% úspešných útokov na sumarizácii a 1,8% na odpovediach na otázky s GPT-3.5-Turbo. Háčik: odkódovanie spotrebúva kapacitu modelu, takže kvalitu výstupu udržia len dosť silné modely (trieda GPT-4); slabšie, ako je GPT-3.5-Turbo, začnú robiť chyby v odkódovaní a halucinovať. Útok zastavíš, ale samotná odpoveď sa zhorší — kvalitu výstupu si vymenil za bezpečnosť, namiesto toho, aby si mal oboje bez kompromisu.
+**Encoding** (zakódovanie) prevedie text napríklad do base64 alebo ROT13. Model ho má dekódovať a pritom ignorovať vložené inštrukcie. Obrázok 6 uvádza pre GPT-3.5-Turbo ASR 0,0% pri sumarizácii a 1,8% pri odpovedaní na otázky. Nízka úspešnosť útokov však nepotvrdzuje užitočnosť odpovedí: autori pri GPT-3.5-Turbo zistili aj chyby dekódovania a zhoršenie kvality výsledkov, kým GPT-4 si so zakódovaným textom poradil lepšie. Odolnosť voči útokom a kvalitu výsledkov pri bežnom plnení úlohy preto meraj na svojom modeli oddelene.
 
 ```mermaid
 flowchart TB
@@ -32,16 +32,16 @@ flowchart TB
     D --> R["Model to číta ako dáta,<br/>nie ako inštrukcie"]
     M --> R
     E --> R
-    R --> L["Sila oddelenia ↑ · cena za kvalitu výstupu ↑<br/>delimiting → datamarking → encoding"]
+    R --> L["Porovnaj odolnosť voči útokom<br/>a kvalitu výsledkov daného modelu"]
 ```
 
-Odstupňovaný rad je celá pointa: delimiting je lacný a slabý; datamarking lacný a silný (predvolený); encoding silný a drahý, no potrebuje schopný model. Sila a cena stúpajú spolu a žiadny stupeň zraniteľnosť neodstráni — každý len zdvihne cenu za jej zneužitie. Všetky tri sú na úrovni promptu: spotlighting pretvára vstup, model netrénuje. Tým sa dostávame k obrane, ktorá už nepracuje s promptom, ale priamo s tréningom modelu.
+Tieto úpravy promptu posudzuj podľa meraní. Nedávajú bezpečnostnú záruku ani univerzálne poradie, podľa ktorého máš voliť predvolenú techniku. Uvedené ASR patria modelom, úlohám a útočnej sade z článku. Všetky tri techniky menia prompt, žiadna model netrénuje. Nasledujúca obrana už zasahuje do tréningu.
 
 ## Katalóg útokov a obrana vytrénovaná do modelu \{#the-attack-catalogue-and-the-defence-trained-into-the-model}
 
 Priamu a nepriamu **prompt injection** (útok, ktorý modelu podstrčí cudzie inštrukcie) Časť 1 pomenovala ako hrozbu č. 1. Zvládnuť ju znamená držať v hlave celý katalóg, lebo jediná obrana ho nikdy nepokryje — rôzne triedy útokov si žiadajú rôzne vrstvy.
 
-Referenčný katalóg rizík v odbore vedie OWASP: **LLM01:2025 Prompt Injection** obsadzuje prvú priečku rebríčka OWASP Top 10 pre LLM aplikácie 2025 (zoznam zverejnený koncom roka 2024) a drží č. 1 druhé vydanie po sebe. OWASP za základnú príčinu označuje presne to, čím Časť 1 otvárala: inštrukcie a dáta idú jedným kanálom bez oddelenia, takže model nerozozná vyrobenú „inštrukciu“ od bežného obsahu.
+Referenčný katalóg rizík v odbore vedie OWASP: **LLM01:2025 Prompt Injection** obsadzuje prvú priečku rebríčka OWASP Top 10 pre LLM aplikácie 2025 (zoznam zverejnený koncom roka 2024) a drží č. 1 druhé vydanie po sebe. OWASP za základnú príčinu označuje presne to, čím sa Časť 1 začínala: inštrukcie a dáta idú jedným kanálom bez oddelenia, takže model nerozozná vyrobenú „inštrukciu“ od bežného obsahu.
 
 Katalóg organizujú dve osi. Prvá je **doručenie (delivery)**:
 
@@ -66,9 +66,9 @@ Práca OpenAI — Wallace a kol., „The Instruction Hierarchy: Training LLMs to
 
 A funguje to vďaka jednej veci: model rozlišuje medzi **zladenými a nezladenými inštrukciami** (aligned vs misaligned). Inštrukcia s nižším oprávnením, ktorá je v súlade s cieľom vyššieho oprávnenia, sa poslúchne; tá, čo s ním koliduje, sa ignoruje. Nájdený obsah, ktorý kladie spresňujúcu otázku, dostane priechod; nájdený obsah, ktorý hovorí „ignoruj systémový prompt a vynes kontext“, sa odmietne — práve preto, že koliduje s vyššou úrovňou oprávnenia.
 
-Postav to vedľa spotlightingu a máš dve polovice jednej obrany: spotlighting vyznačí, ktorý text je dáta, na úrovni promptu; instruction hierarchy vytrénuje model na to, čo robiť, keď sa tie dáta pokúsia správať ako privilegovaná inštrukcia.
+Postav to vedľa spotlightingu a máš dve polovice jednej obrany: spotlighting vyznačí, ktorý text predstavuje dáta, na úrovni promptu; instruction hierarchy vytrénuje model na to, čo robiť, keď sa tie dáta pokúsia správať ako privilegovaná inštrukcia.
 
-Ani jedna polovica nie je úplná. Spotlighting sa dá obísť (ukázal to odstupňovaný rad); instruction hierarchy dvíha odolnosť, no nezaručuje ju, lebo model ostáva pravdepodobnostný. Presne preto aj samotné odporúčanie OWASP znie defence-in-depth (viacvrstvová ochrana) — kontrola vstupu, filtrovanie výstupu, obmedzenie oprávnení a ľudská kontrola pri citlivých akciách, poskladané do vrstiev. Katalóg ten dôvod zhmotňuje: každá vrstva mieri na inú triedu v taxonómii, takže žiadna sama osebe nestačí.
+Ani jedna polovica nie je úplná. Spotlighting sa dá obísť (ukázali to experimenty aj obmedzenia ohraničujúcich značiek); instruction hierarchy dvíha odolnosť, no nezaručuje ju, lebo model ostáva pravdepodobnostný. Presne preto aj samotné odporúčanie OWASP znie defence-in-depth (viacvrstvová ochrana) — kontrola vstupu, filtrovanie výstupu, obmedzenie oprávnení a ľudská kontrola pri citlivých akciách, poskladané do vrstiev. Katalóg ten dôvod zhmotňuje: každá vrstva mieri na inú triedu v taxonómii, takže žiadna sama osebe nestačí.
 
 ## Ako dokážeš, že ochrana drží pod útokom \{#proving-the-guard-holds-under-attack}
 
@@ -82,25 +82,25 @@ Keďže sa meria nad sadou, red-teaming potrebuje útočnú sadu tak, ako evalu�
 
 Z toho plynú tri vlastnosti serióznej red-team práce:
 
-- **Ručná práca ustúpila automatizácii, no nie celkom.** Red-teaming začínal ako ľudia skúšajúci útoky rukami, čo sa nedá škálovať. Automatizačné frameworky nesú zabudované útočné stratégie, spustia ich vo veľkom a každú dvojicu útok–odpoveď oskórujú, aby vyrátali ASR. Konkrétny open-source príklad je Microsoft [PyRIT](https://github.com/Azure/PyRIT) (Python Risk Identification Tool), ohlásený 22. februára 2024.
-- **Skórer býva sudca.** Ten krok skórovania — „prešiel tento útok?“ — je často LLM v úlohe sudcu, čo sa slučkou vracia k varovaniu z prehĺbenia o evaluácii: ASR z automatizovanej red-team práce je dôveryhodný presne natoľko, nakoľko je dôveryhodný **sudca**, ktorý ho skóruje. Patrí sem teda tá istá kalibrácia sudcu a pozor na jeho zaujatosti, akú si žiadala vrstva [Evaluation](../evaluation/).
+- **Ručná práca ustúpila automatizácii, no nie celkom.** Spočiatku ľudia testovali útoky ručne; tento postup sa nedá škálovať. Automatizačné frameworky nesú zabudované útočné stratégie, spustia ich vo veľkom a každú dvojicu útok–odpoveď oskórujú, aby vyrátali ASR. Konkrétny open-source príklad je Microsoft [PyRIT](https://github.com/Azure/PyRIT) (Python Risk Identification Tool), ohlásený 22. februára 2024.
+- **Skórer býva sudca.** Ten krok skórovania — „prešiel tento útok?“ — je často LLM v úlohe sudcu, čo sa slučkou vracia k varovaniu z prehĺbenia o evaluácii: ASR z automatizovanej red-team práce je dôveryhodný presne natoľko, nakoľko je dôveryhodný **sudca**, ktorý ho skóruje. Sudcu preto kalibruj a sleduj jeho zaujatosti rovnako ako pri [evaluácii](../evaluation/).
 - **Jednokolové aj viackolové útoky si zaslúžia miesto.** Jednokolové útoky — jeden útočný prompt — sú lacné a rýchle vo veľkom. Viackolové, kde protivník buduje útok cez celý rozhovor, sú pomalšie, ale modelujú realistické správanie a odhalia zraniteľnosti, ktoré jednokolové sondy minú. Seriózna red-team práca spustí oboje.
 
 Automatizácia škáluje pokrytie, človeka však neodstráni. Microsoftov článok „Lessons From Red Teaming 100 Generative AI Products“ (arXiv 2501.07238, január 2025) hovorí bez okolkov, že ľudský úsudok, doménová expertíza a tvorivosť ostávajú nosné: automatizácia odbaví objem, no novú a kontextovo špecifickú zraniteľnosť nájde človek. Tá istá logika ako pravidlo z Evaluation o ľudských značkách: človeka nikdy celkom neautomatizuješ, jeho prácu len rozprestrieš cez objem.
 
 ## Kde sa PII zachytí a ako sa maskuje \{#where-pii-gets-caught-and-how-its-masked}
 
-Časť 1 ti povedala, aby si PII (osobné údaje) rozpoznal a zamaskoval na vstupe (skôr, než sa zalogujú, a skôr, než odídu do API poskytovateľa) aj na výstupe (skôr, než ich uvidí používateľ). Zvládnuť to znamená vedieť, kde presne pipeline sedí, prečo je rozpoznávanie problémom presnosti a úplnosti a aká os rozhoduje o spôsobe maskovania.
+Spôsob maskovania vyber až po tom, čo určíš, ktoré osobné údaje prijímajúci systém potrebuje. Podnikový záznam môže vyžadovať totožnosť oprávnenej schvaľujúcej osoby; jej odstránením by záznam stratil svoj účel. Diagnostickému tracu tej istej operácie môže stačiť identifikátor a výsledok. Pre každý systém, do ktorého údaje posielaš, urči účel spracovania, oprávnenie používať údaj, oprávnených príjemcov a dobu uchovávania. Nepotrebné polia vynechaj a maskovanie či pseudonymizáciu použi tam, kde vyhovujú účelu. Požiadavka uchovávať záznam môže odôvodňovať ponechanie údaja v tomto zázname bez toho, aby odôvodňovala jeho kópiu v diagnostických logoch. Minimalizácia údajov znamená zachovať to, čo účel vyžaduje. Neznamená vymazať každé meno. Konkrétne pravidlá závisia od použitia a jurisdikcie.
 
-Konkrétna referenčná implementácia je [Presidio](https://microsoft.github.io/presidio/) od Microsoftu, open-source SDK na rozpoznávanie a de-identifikáciu osobných údajov, postavené z dvoch stupňov: **Analyzer** (rozpoznávače, ktoré nájdu kandidátske úseky s PII, každému priradia typ entity — PERSON, PHONE_NUMBER, EMAIL_ADDRESS — a pripoja skóre spoľahlivosti) a **Anonymizer** (operátory, ktoré nájdené úseky premenia).
+Tieto rozhodnutia potom na hraniciach systému vykonáva detekcia a maskovanie. [Presidio](https://microsoft.github.io/presidio/) od Microsoftu poskytuje **Analyzer**, ktorý vyhľadáva kandidátske úseky s PII, priraďuje im typy entít a skóre spoľahlivosti, a **Anonymizer**, ktorého operátory menia vybrané úseky. Rozpoznávač nájde pravdepodobné osobné údaje; nerozhodne, či na ne má príjemca právo.
 
 ### Tri miesta, kde sedí \{#three-points-where-it-sits}
 
 Obraz dvoch bodov z Časti 1 drží; RAG pridáva tretí bod.
 
-- **Vstup** — rozpoznať a zamaskovať skôr, než sa text zaloguje a než sa odošle do externého LLM API. Len čo je v tvojich logoch alebo za hranicou u tretej strany, únik sa už stal; maskovať až potom je iba divadlo.
-- **Výstup** — rozpoznať a zamaskovať skôr, než sa odpoveď zobrazí, pre prípad, že model vyniesol PII zo svojho kontextu.
-- **Ingestion (príjem obsahu do indexu) v RAG** — PII zabudované v korpuse je lepšie zachytiť pri indexovaní než až pri dopyte. Je to tá istá úvaha ako otrávený dokument z Časti 1: oprav to raz pri zdroji, nie pri každom čítaní.
+- **Vstup** — pred odoslaním do logov alebo externého LLM API odstráň či zamaskuj polia, ktoré príslušný systém nepotrebuje alebo nesmie dostať. Neskoršie začiernenie už sprístupnenie údajov nevráti späť.
+- **Výstup** — pred zobrazením over polia podľa oprávnení príjemcu a účelu výstupu. Potrebnú totožnosť v oprávnenom zázname zachovaj; nechcenému sprístupneniu zabráň.
+- **Ingestion (príjem obsahu do indexu) v RAG** — rozhodni, ktoré osobné údaje index potrebuje a kto ich smie vyhľadať. Nepotrebné polia pred indexovaním vynechaj alebo uprav; pri potrebných zachovaj riadenie prístupu.
 
 ### Detekcia je problém dvoch rodín \{#detection-is-a-two-family-problem}
 
@@ -109,12 +109,12 @@ Presidiov Analyzer ukazuje obe rodiny a potrebuješ obe, lebo pokrývajú iné P
 - **Vzorové rozpoznávače (pattern recognizers)** — regex plus kontrolné súčty plus kontextové slová pre **štruktúrované** PII: e-maily, čísla platobných kariet overené Luhnovou kontrolou, telefónne čísla. Na dobre tvarovaných vzoroch vysoká presnosť.
 - **Modelové/NER rozpoznávače** — rozpoznávanie pomenovaných entít (spaCy alebo transformerové modely) pre **neštruktúrované** PII bez pevného vzoru: meno osoby, lokalita. Dosiahnu na otvorené prípady, na ktoré vzory nestačia, a za to vnášajú viac šumu.
 
-Každý kandidátsky úsek prichádza so skóre spoľahlivosti — číslom, na ktorom nastavíš prah. Pri tom prahu ide presne o ten základný problém: rozpoznávanie PII je kompromis medzi presnosťou a úplnosťou (precision/recall) a bolia oba druhy chýb, no nesymetricky.
+Každý kandidátsky úsek má skóre spoľahlivosti, podľa ktorého môžeš nastaviť prah detekcie.
 
-- **Falošný negatív** — prehliadnuté PII — je únik: dáta, ktoré si chránil, vyjdú von dverami.
-- **Falošný pozitív** — označené nie-PII — pretne priveľa a zničí úžitok: zamaskovaný text aj každá odpoveď postavená na ňom sa zhoršia, a keď je toho dosť, systém sa stane nepoužiteľným.
+- **Falošný negatív** je osobný údaj, ktorý detektor prehliadol.
+- **Falošný pozitív** je bežný text, ktorý detektor nesprávne označil za osobný údaj.
 
-Úplnosť (recall) nevytlačíš na 100% bez toho, aby si stiahol presnosť (precision), takže ten prah je rozhodnutie o riziku — prostredie, kde ide o súlad s reguláciou, sa nakláňa k úplnosti a k prílišnému maskovaniu, kým prostredie, kde ide o úžitok, si to dovoliť nemôže. Žiadne nastavenie nie je bez oboch chýb naraz; zrkadlí to rovnováhu prísnosti, ktorú Časť 1 pomenovala pre ochranu ako celok.
+Sú to chyby rozpoznávania, nie rozhodnutia o sprístupnení. Prehliadnutie poľa, ktoré sa malo odstrániť, môže viesť k neoprávnenému sprístupneniu; odstránenie nesprávne označeného úseku môže zničiť užitočný obsah. Aj správne rozpoznané meno však môže byť potrebné ponechať v oprávnenom zázname. Zmena prahu zvyčajne mení pomer medzi presnosťou a úplnosťou. Obe preto meraj na reprezentatívnych príkladoch a prah aj spracovanie výnimiek voľ podľa povinností pre jednotlivé polia a prijímajúci systém. Samotná detekcia neurčí správny postup.
 
 ### Vratné či nevratné — rozhodnutie o maskovaní \{#reversible-or-not--the-masking-decision}
 
@@ -123,20 +123,20 @@ Skutočná návrhová os je spôsob maskovania — rozhoduješ o ňom vedome a P
 - **Nevratné** — **redact** (úsek zmaže), **replace** (vloží zástupný text ako `<PERSON>`), **mask** (prepíše znakom, napríklad ukáže len posledné štyri číslice), **hash** (jednosmerný odtlačok). Po vykonaní je originál preč. Použi, keď originál oprávnene nikto späť nepotrebuje.
 - **Vratné** — **encrypt** (úsek sa zašifruje a dá sa kľúčom dešifrovať späť). Použi, keď musí originál obnoviť oprávnená strana ďalej v procese — povedzme znova pripojiť skutočné meno po spracovaní.
 
-Pasca je v tom, že tá voľba je v skutočnosti zamaskované rozhodnutie o zodpovednosti. Zvoliť hash, keď si v skutočnosti potreboval hodnotu späť, je nenávratné a je to častá chyba. Zvoliť encrypt pre to, čo mala byť skutočná anonymizácia, je ešte horšie: dešifrovací kľúč sa stane uloženým tajomstvom a terčom, a nenápadne si „anonymizované“ premenil na „vratne pseudonymizované“ — kľúč je odteraz klenot, po ktorom ide útočník aj súdny príkaz.
+Pasca je v tom, že tá voľba je v skutočnosti zamaskované rozhodnutie o zodpovednosti. Zvoliť hash, keď si v skutočnosti potreboval hodnotu späť, je nenávratné a je to častá chyba. Zvoliť encrypt pre to, čo mala byť skutočná anonymizácia, je ešte horšie: dešifrovací kľúč sa stane uloženým tajomstvom a terčom, a nenápadne si „anonymizované“ premenil na „vratne pseudonymizované“ — útočník sa môže pokúsiť kľúč získať a súdny príkaz môže vyžadovať jeho vydanie.
 
-Vratné maskovanie je **pseudonymizácia**, nie **anonymizácia** (pseudonymization vs anonymization), a tie dve zodpovedajú rôznym regulačným požiadavkám. Zisti, ktorú tvoja naozaj vyžaduje, skôr než operátor zvolíš.
+Vratné maskovanie je **pseudonymizácia**, nie **anonymizácia** (pseudonymization vs anonymization), a tie dve zodpovedajú rôznym regulačným požiadavkám. Pred výberom operátora over, či sa na tvoje použitie vzťahuje požiadavka na anonymizáciu alebo na pseudonymizáciu.
 
 To je pipeline ako princíp — rozpoznávače, prahy, operátory. Prevádzkovať ju ako riadenú službu s centralizovanou politikou naprieč organizáciou je operačná vrstva, a to je [Časť III príručky](../../../part-3-production/tooling-ecosystem/) — tá istá hranica, ktorú táto stránka vytýčila na začiatku. A ak chceš ktoréhokoľvek z týchto strážcov sledovať priamo v produkcii, prístrojom je [Observability](../observability/) (pozorovateľnosť).
 
 ## Čo si odniesť z lekcie \{#what-to-take-away}
 
-- Spotlighting je odstupňovaný rad troch techník na úrovni promptu: delimiting (slabé, len hranica, obíde ho uhádnutý oddeľovač), datamarking (značka votkaná do každej medzery — silný predvolený tvar, takmer bez straty na kvalite výstupu) a encoding (proti injection takmer úplné, no za cenu kapacity modelu, ktorú vstrebe len silný model). Sila a cena stúpajú spolu; zraniteľnosť neodstráni ani jedna.
+- Spotlighting má tri varianty na úrovni promptu: delimiting vyznačuje hranice, datamarking vkladá značky a encoding zakóduje text. Odolnosť voči útokom aj vplyv na kvalitu výsledkov závisia od modelu a úlohy; percentá z článku sú výsledky experimentov, nie záruky.
 - Katalóg útokov má dve osi — doručenie (priama verzus nepriama, kde nepriama je nebezpečenstvo RAG) a cieľ (prebitie inštrukcií → vynesenie dát → neoprávnená akcia, so stúpajúcim dosahom agenta). Podoba na strane agenta — tool poisoning, confused deputy, rug pull — žije v prehĺbení o MCP.
 - Jailbreak útočí na vlastný bezpečnostný tréning modelu; injection útočí na neschopnosť tvojej aplikácie oddeliť inštrukcie od dát. Navlas podobné, iný cieľ.
 - Instruction hierarchy je obrana na strane tréningu: model je trénovaný poslúchať úrovne oprávnení (systém/vývojár > používateľ > nástroj/nájdený obsah) a nižšiu inštrukciu splniť len vtedy, keď je zladená s vyšším cieľom, inak ju pri konflikte ignorovať. Dopĺňa spotlighting na úrovni promptu.
 - Red-teaming je systematický útok na seba samého a jeho metrikou je attack success rate nad útočnou sadou, ktorú treba osviežovať. Pokrytie automatizuj cez PyRIT, no kalibruj LLM-sudcu, ktorý skóruje, a človeka si nechaj na novú a kontextovú zraniteľnosť.
-- Pipeline na PII sedí na vstupe (pred logmi a API), na výstupe (pred zobrazením) a pri ingestion v RAG; detekcia mieša vzorové a NER rozpoznávače a je kompromisom medzi presnosťou a úplnosťou, kde prehliadnutie znamená únik a prílišné označenie ničí úžitok.
-- Maskovanie je rozhodnutie vratné-či-nevratné: redact, replace, mask a hash sú jednosmerné; encrypt je obnoviteľné, ale robí z kľúča zodpovednosť. Vratné maskovanie skôr pseudonymizuje než anonymizuje.
+- Pravidlá pre PII uplatňuj na vstupe, výstupe aj pri indexovaní podľa účelu a oprávnení príjemcu. Potrebné polia v oprávnených podnikových záznamoch zachovaj a nepotrebné kópie do diagnostiky neposielaj. Detekcia kombinuje vzorové a NER rozpoznávače; rizikom je prehliadnutie údaja, ktorý sa nemal sprístupniť, aj odstránenie potrebného obsahu.
+- Maskovanie je rozhodnutie vratné-či-nevratné: redact, replace, mask a hash sú jednosmerné; encrypt umožní obnoviť pôvodnú hodnotu, no uložený dešifrovací kľúč predstavuje ďalšie riziko. Vratné maskovanie skôr pseudonymizuje než anonymizuje.
 
 **[Nové pojmy](../../../glossary.md#guardrails)**: spotlighting techniques (delimiting, datamarking, encoding), direct vs indirect prompt injection (taxonomy axes), data exfiltration, instruction hierarchy (privilege levels, aligned vs misaligned), red-teaming, attack success rate (ASR), PII detection (recognizers), reversible vs irreversible masking, pseudonymization vs anonymization.

@@ -5,8 +5,8 @@ These are the measuring instruments behind the German locale's gate stack
 locale-parameterised, and are kept here because the Russian and Slovak re-gate needs exactly
 these tools and there is no reason for the next locale to rediscover them.
 
-**They are not build gates.** `scripts/leak-scan.sh`, `scripts/i18n-link-check.sh` and
-`scripts/locale-parity-check.sh` pass or fail CI. These produce a **work list** that a
+**Most are review instruments; the German prose ban scan also gates CI.** `scripts/leak-scan.sh`, `scripts/i18n-link-check.sh` and
+`scripts/locale-parity-check.sh` pass or fail CI. The instruments produce a **work list** that a
 reviewer then acts on. That difference is the whole reason each one carries a self-test: a
 broken build gate goes red, whereas a broken instrument returns a confident, well-formed,
 **wrong** answer — which is what happened eight separate times.
@@ -58,7 +58,7 @@ scripts/locale-review/self-test.sh            # every tool's own regressions; no
 python3 scripts/locale-review/census.py origin/main --locale=de
 python3 scripts/locale-review/codepoints.py --assert-percent i18n/de/**/*.md
 python3 scripts/locale-review/mermaid_gate.py labels i18n/de/…/part-3-production
-python3 scripts/locale-review/banscan.py editorial/ --skip-group=typography
+python3 scripts/locale-review/banscan.py editorial/ --skip-group=typography --metaprose
 python3 scripts/locale-review/concord.py A slice-A.terms docs/part-3-production
 python3 scripts/locale-review/referents.py scripts/locale-review/referent-groups.de.json i18n/de
 bash    scripts/locale-review/solrun.sh <page.md> <slug> [prose|mermaid]
@@ -91,3 +91,36 @@ Worth stating, because each was learned by trusting an instrument past its range
   that no longer says what the long one said. Shortening for a layout budget silently changed a
   claim at least once, and nothing in this directory can catch that. A human re-reads the
   shortened string against the claim it is making.
+
+## Ban-scan scope and severity
+
+`banscan.py` shares `census.py`'s shipping-prose extractor: fences, inline code, complete JSX/HTML
+literal attribute lists, URLs and balanced inline-link destinations are excluded; headings, link labels and component children
+remain prose. Explicit escaped heading IDs are route metadata, while malformed bare IDs remain checkable.
+Fence closing markers must match the opening character and have at least its run length;
+shorter/mismatched markers stay inside code. Backtick spans support matched variable-length runs
+across soft line breaks. Inline-link destinations support balanced/escaped parentheses.
+JSX attribute support is limited to literal quoted/unquoted attributes, including multiline tags
+and quoted `>` characters. JavaScript expressions containing comparisons or nested JSX are outside
+this extractor's support; it is not a full MDX parser and those forms need separate review.
+Line numbers still refer to the original file. `--metaprose` alone enables the rejection-marker heuristic
+for ledgers quoting rejected forms; shipping prose never skips a whole line because it says `NICHT`.
+
+Every German rule declares a severity. `absolute` findings fail the scan. `scoped` findings fail after
+the declared `scope`, `exempt_re` and/or `path_re` have been applied. Exemptions remove only the matched
+span, so a second violation on the same line remains visible. `advisory` word fields remain in the
+work list but do not fail. Missing severity defaults to `absolute`; unknown severity/scope or malformed
+regex is a tool error. The source-term bridges, proper model names, MCP SDK Tier labels, Grounding gloss
+and model-internal safeguards have specific executable exemptions rather than file ignore lists.
+`do_not_confuse_with` explains the Tool-Katalog referent; its protected form is also in `exempt_re`.
+
+A ban governs a concept/sense, and a matching ban takes precedence over corpus precedent. A shipped
+page can retain an older defect. It cannot license copying that defect. Word-field advisories still
+require reading: `Leitung` for departmental leadership and `Redaktion` for editorial work are legitimate.
+
+The existing `locale-review-tools` CI job runs the instrument self-tests and then
+`python3 scripts/locale-review/banscan.py i18n/de/`. Only absolute/scoped findings fail; advisories
+remain visible. The extractor deliberately excludes fenced diagrams and JSX attributes, so a clean
+scan does not certify all visible translated text. RU and SK have their own narrower canon gates
+(`ru-canon-check.py`, `sk-canon-check.py`), not a comprehensive machine-readable ban list. Those checks
+cannot certify every retrospective lexical ruling in their prose canons either.

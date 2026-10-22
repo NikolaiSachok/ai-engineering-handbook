@@ -14,15 +14,17 @@ poskytovateľa), no o výške účtu rozhoduje práve *tvar* týchto súčtov.
 
 ## Rozklad jedného pokusu \{#one-attempt-decomposed}
 
-Pri jednom pokuse sa účtujú dva prúdy s odlišnými sadzbami, sčítané za všetky jeho kroky: **vstup** (všetko, čo
+Pri generovaní v jednom pokuse sa tokeny účtujú ako dva prúdy s odlišnými sadzbami, sčítané za všetky jeho kroky: **vstup** (všetko, čo
 odosielaš — systémový prompt, pravidlá, zadanie, predchádzajúce kroky, výsledky nástrojov) a **výstup** (to, čo
 model vygeneruje). Výstup zvyčajne stojí za token niekoľkonásobne viac než vstup, a preto ľudia sledujú najmä
 jeho. Pri práci agentov je však objem vstupu násobne väčší než objem výstupu, takže vyšší účet napokon vytvorí
-lacnejší prúd:
+lacnejší prúd tokenov:
 
 ```text
 attempt_cost = input_tokens × input_rate + output_tokens × output_rate
 ```
+
+Tu `attempt_cost` znamená iba náklady na tokeny generovania. Do úplných nákladov na prijatú zmenu pripočítaj externé zdroje nástrojov, overovanie a ľudskú revíziu.
 
 Výstupom jedného kroku agenta býva diff, volanie nástroja či odsek — stovky tokenov. Na vstupe je celý pracovný
 kontext — tisíce až desiatky tisíc tokenov. Veľký objem preváži nad nízkou sadzbou.
@@ -68,41 +70,31 @@ generovanie prebiehalo interaktívne.
 
 ## Daň za opakovania a hranica, pri ktorej sa cenník obráti \{#the-retry-tax-and-the-break-even-that-inverts-the-price-list}
 
-Teraz presne vyjadrime hlavnú tézu z prvej časti. Ak zmena uspeje na prvý pokus s pravdepodobnosťou `p`,
-očakávaný počet pokusov je `1/p`, takže:
+Na ilustráciu nákladov na tokeny predpokladaj, že každý pokus stojí rovnakú sumu, výsledky pokusov sú nezávislé a pravdepodobnosť úspechu `p` je stále rovnaká, pričom `0 < p ≤ 1`. Ak opakuješ až do úspechu bez obmedzenia počtu pokusov, očakávaný počet pokusov je `1/p`. Samotná úspešnosť prvého pokusu tieto predpoklady nepotvrdzuje. V tomto zjednodušenom modeli platí:
 
 ```text
-cost_per_accepted ≈ attempt_cost / p
+token_cost_per_accepted = attempt_cost / p
 ```
 
-Porovnaj dva modely. Drahý model s cenou `C` a úspešnosťou prvého pokusu `0.8` stojí na prijatú zmenu `C / 0.8 =
-1.25 C`. Lacný model za polovicu, teda `0.5 C`, musí prekonať určitú hranicu úspešnosti:
+Tu `attempt_cost` stále zahŕňa iba tokeny pri generovaní. Porovnaj dva modely podľa tejto položky. Prvý stojí `C` za pokus a uspeje s pravdepodobnosťou `0.8`, takže očakávané náklady na tokeny generovania na prijatú zmenu sú `C / 0.8 = 1.25 C`. Druhý stojí `0.5 C` za pokus:
 
-| Úspešnosť lacnejšieho modelu | Náklady na prijatú zmenu | V porovnaní s 1,25 C |
+| Pravdepodobnosť úspechu lacnejšieho modelu za pokus | Očakávané náklady na tokeny generovania na prijatú zmenu | Oproti 1,25 C za tokeny |
 |---|---|---|
 | 0,40 | 0,5 C / 0,40 = 1,25 C | rovnaké náklady |
-| 0,50 | 0,5 C / 0,50 = 1,00 C | lacnejší model sa oplatí |
-| 0,30 | 0,5 C / 0,30 = 1,67 C | *vyššie* náklady |
+| 0,50 | 0,5 C / 0,50 = 1,00 C | nižšie náklady na tokeny |
+| 0,30 | 0,5 C / 0,30 = 1,67 C | vyššie náklady na tokeny |
 
-Hranica rentability je jednoznačná: lacnejší model sa oplatí iba vtedy, keď `p_cheap / p_expensive > price_cheap / price_expensive`
-— pomer jeho úspešnosti k drahšiemu modelu musí byť vyšší než pomer ich cien. Polovičná cena neprinesie nič
-pri presne polovičnej spoľahlivosti a pod ňou ťa už bude stáť viac. Celé tvrdenie, že „miera opakovaných
-pokusov preváži nad cenníkovou cenou“, sa tak zmestí do jednej nerovnosti, ktorú vieš merať.
+V tomto modeli sú náklady na tokeny na prijatú zmenu nižšie, keď `p_cheap / p_expensive > price_cheap / price_expensive`. Každá cena tu znamená náklady na tokeny generovania za pokus. Pri polovičnej cene musí pravdepodobnosť úspechu presiahnuť polovicu pravdepodobnosti druhého modelu, teda `0.40`. Táto hranica porovnáva náklady na tokeny, nie celkové náklady.
+
+Pri úplnom porovnaní zahrň všetkých päť položiek z prvej časti: kontext, opakované pokusy a prerábanie, overovanie, ľudskú revíziu a externé zdroje nástrojov. Zohľadni, kedy každý výdavok vzniká, a ten istý výdavok nezapočítaj dvakrát. Opakovaný pokus môže použiť kontext z cache, znova spustiť platené výpočty, vyžiadať ďalšie overenie alebo pomoc človeka. Tieto rozdiely môžu obrátiť poradie modelov podľa celkovej ceny. Ak je počet opakovaní obmedzený, náklady pokusov sa menia alebo sú ich výsledky závislé, meraj všetky výdavky za prijaté aj opustené behy na prijatú zmenu. Geometrický odhad vtedy nemôžeš použiť bez úpravy.
 
 ## Položka, ktorú zľava na tokenoch nezmení \{#the-line-a-token-discount-cannot-touch}
 
-Posledný súčet zasadí ostatné do správneho rámca. Zo štyroch nákladových položiek z prvej časti je mimo dosahu
-ceny tokenov jediná — **ľudská revízia**: oceňuje sa mzdou a žiadnym nákupom ju nezrýchliš. **Overovanie** je
-samo volaním modelu, takže ho zľava zníži tiež; čo zľava nedokáže, je znížiť počet kontrol, ktoré spustíš.
-Optimalizáciu ceny tokenov preto obmedzuje Amdahlov zákon rovnako ako každé iné zrýchlenie: ak ľudská revízia
-tvorí napríklad 40% celkových nákladov na zmenu, ani ľubovoľne veľká zľava na tokenoch nezníži celok o viac
-než zvyšných 60%. Keď prevláda revízia, šetrenie na tokenoch optimalizuje najmenšiu položku. Práve preto prvá
-časť tvrdila, že rozhodujúce obmedzenie je ocenené v mzdách, nie v tokenoch.
+Zľava na tokenoch zlacní generovanie a overovanie modelom, sama však nezníži cenu ľudskej revízie ani externých zdrojov nástrojov. Úsporu ohraničuje podiel účtu, ktorý sa skutočne platí v tokenoch. Ak revízia tvorí 40% a externé výpočty 30%, aj úplné odstránenie zvyšného účtu za tokeny ušetrí najviac 30%, pokiaľ ostatné náklady zostanú rovnaké. Priepustnosť môžu obmedzovať ľudia aj externé služby. Pred výberom optimalizácie zmeraj ich podiely.
 
 ## Čo si odniesť \{#what-to-take-away}
 
-- **Rozlož náklady pokusu:** `input_tokens × input_rate + output_tokens × output_rate`. Výstup stojí za token
-  viac, no objem vstupu je oveľa väčší, a preto účet určuje vstup.
+- **Rozlož náklady na tokeny generovania:** `input_tokens × input_rate + output_tokens × output_rate` je iba časť nákladov. Väčší objem vstupu môže v účte za tokeny prevážiť nad nižšou sadzbou.
 - **Opakované posielanie kontextu rastie ako `O(N²)`:** model bez stavu číta pri každom kroku celý prepis,
   takže zdvojnásobenie počtu krokov približne zoštvornásobí náklady na vstup. Najviac ušetríš skrátením
   kontextu.
@@ -111,9 +103,7 @@ než zvyšných 60%. Keď prevláda revízia, šetrenie na tokenoch optimalizuje
   riadi náklady aj kvalitu.
 - **Offline prácu spracuj cez batch** (hromadné evaly, transformácie korpusu) a využi výraznú zľavu;
   interaktívne kroky doň nepatria. Rozhoduje, či na výsledok čaká človek.
-- **Daň za opakovania:** `cost_per_accepted ≈ attempt_cost / p`. Lacnejší model sa oplatí iba vtedy, keď
-  `p_cheap / p_expensive > price_cheap / price_expensive` — spoľahlivosť musí vyvážiť rozdiel v cene.
-- **Úsporu na tokenoch obmedzuje Amdahlov zákon** cez podiel ľudskej revízie, ktorý cena tokenov nemení. Ak
-  prevláda revízia, účet za tokeny je najmenšia páka.
+- **Odhad nákladov na tokeny pri opakovaní:** `token_cost_per_accepted = attempt_cost / p` predpokladá nezávislé pokusy s rovnakou cenou, nemennou pravdepodobnosťou úspechu a bez limitu opakovaní. Nerovnosť cien a úspešnosti porovnáva iba tokeny; pre celkovú cenu porovnaj všetkých päť položiek aj ich náklady pri opakovaní.
+- **Úsporu na tokenoch obmedzuje ich podiel na účte.** Zľava nemení cenu ľudskej revízie ani externých zdrojov nástrojov.
 
 **[Nové pojmy](../../glossary.md#cost-and-the-economics-of-agent-work)**: rozklad nákladov pokusu, asymetria vstupnej a výstupnej sadzby, kvadratické opakované posielanie kontextu, prompt caching (stabilný prefix), zľava za batch, daň za opakovania, hranica rentability podľa úspešnosti, Amdahlovo obmedzenie úspor na tokenoch.

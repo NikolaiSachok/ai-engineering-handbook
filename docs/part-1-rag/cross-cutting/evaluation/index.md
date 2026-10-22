@@ -20,8 +20,7 @@ different ways and get fixed with different levers — so you have to measure th
 | What they measure | Did the needed chunk make it into the results, and at what rank | Does the answer rest on the context and actually answer the question |
 | The key ones | **Recall@K** (the main one for RAG), Precision@K, MRR, nDCG | **Faithfulness**, **Answer relevance**, Correctness |
 
-Why Recall@K is the main one: if the needed chunk isn't in the results, generation physically can't answer
-correctly. At the first stage recall matters more than precision — miss the relevant material and everything
+Why Recall@K is the main one: if the needed chunk isn't in the results, generation cannot produce a fully grounded answer from the retrieved evidence. At the first stage recall matters more than precision — miss the relevant material and everything
 downstream is already pointless.
 
 ## No dataset, no evaluation \{#no-dataset-no-evaluation}
@@ -78,7 +77,7 @@ The main practical power of eval: it shows you which stage the failure is in.
 | Symptom | Diagnosis | Where to fix |
 |---|---|---|
 | Answer wrong, the needed chunk **wasn't** in the results | retrieval failure → low Recall@K | chunking / hybrid / reranking |
-| Answer wrong, but the needed chunk **was** in the context | generation failure → low faithfulness | grounding / prompt |
+| Answer wrong, but the needed evidence **was** in the context | inspect generation correctness and faithfulness separately; wrong source material can also yield a faithful wrong answer | source quality / grounding / prompt |
 
 ## What to take away \{#what-to-take-away}
 

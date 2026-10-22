@@ -5,7 +5,7 @@ slug: /part-1-rag/cross-cutting/observability/
 
 # Vidieť, čo systém v produkcii naozaj robí
 
-Evaluácia ti povie, či je systém dobrý — offline, na dátovej sade; guardrails (bezpečnostné mantinely) ho držia v bezpečí. **Observability** (pozorovateľnosť) je tretia vec: vidieť, čo systém v produkcii naozaj robí, na živej prevádzke.
+Evaluácia meria kvalitu offline na dátových sadách aj online na vzorkách produkčnej prevádzky; guardrails (bezpečnostné mantinely) držia systém v bezpečí. **Observability** (pozorovateľnosť) je tretia vec: vidieť, čo systém v produkcii naozaj robí, na živej prevádzke.
 
 Bez nej sú problémy v produkcii neviditeľné. Nevieš, prečo odpoveď vyšla zle, čo sa vytiahlo z úložiska, koľko to stálo ani aké to bolo pomalé.
 

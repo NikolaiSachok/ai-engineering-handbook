@@ -700,7 +700,7 @@ hrana je tok riadenia.
 obnoviť a preskúmať.
 
 **State graph (graf stavu, StateGraph)** — agent modelovaný ako zdieľaný typovaný objekt stavu plus uzly
-a hrany; konkrétna podoba myšlienky „agent ako graf“ v LangGraphe.
+a hrany; konkrétna podoba myšlienky „agent ako graf“ v LangGraphe. ↗ [LangGraph v1: Graph migrations](https://docs.langchain.com/oss/python/langgraph/graph-api#graph-migrations).
 
 **Conditional edge (podmienená hrana)** — hrana grafu, ktorá smeruje na ďalší uzol podľa aktuálneho stavu;
 práve ona kóduje vetvu slučky (volanie nástroja → uzol `tools`; hotovo → END).

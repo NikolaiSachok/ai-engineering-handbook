@@ -376,7 +376,7 @@ sidebar_position: 7
 
 <a id="running-agent-fleets-isolation-and-parallelism"></a>
 
-## Флотилии агентов: изоляция и параллелизм \{#running-agent-fleets-isolation-and-parallelism}
+## Флот агентов: изоляция и параллелизм \{#running-agent-fleets-isolation-and-parallelism}
 
 **Флот агентов (agent fleet)** — несколько агентов, одновременно работающих над одной кодовой базой. Размер флота определяется не доступными вычислениями, а объёмом, который способна поглотить цепочка верификации.
 

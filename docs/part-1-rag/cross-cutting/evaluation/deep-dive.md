@@ -21,7 +21,9 @@ Four metrics, and the useful way to hold them is on two axes. The first is the o
 | | **Reference-free** (question + context + answer) | **Reference-based** (needs a ground-truth answer) |
 |---|---|---|
 | **Retrieval** | context precision (an LLM decides relevance) | context recall |
-| **Generation** | faithfulness, answer relevance | — |
+| **Generation** | faithfulness, answer relevance | correctness (outside this four-metric walkthrough) |
+
+Context precision also has reference-based variants; the table describes the reference-free variant used here. Part 1's Recall@K counts relevant retrieved items against all labelled relevant items, whereas context recall below counts supported claims in a reference answer. They are related coverage measures with different units. MRR measures the reciprocal rank of the first relevant result; nDCG measures ranked, possibly graded relevance with a discount for lower positions. Those ranking metrics complement this walkthrough rather than being replaced by its four metrics. Generation correctness remains a separate check against a reference or human judgement: faithfulness alone cannot establish it.
 
 The split has teeth. Faithfulness and answer relevance you can run on live production traffic with no labelled answer in sight; context recall you cannot compute at all without a reference. That axis decides what you can measure where, and it's the reason the golden set gets its own section at the end.
 
@@ -64,15 +66,17 @@ Context Precision@K = Σ_k (Precision@k · v_k) / (total relevant items in top-K
 
 where v_k is 1 when the chunk at rank k is relevant and 0 otherwise. What the formula buys you is sensitivity to *order*, and the documented behaviour shows how sharp it is. Take K = 2 with one relevant chunk followed by one irrelevant chunk: v = [1, 0], so the score is (1 × 1 + 0.5 × 0) / 1 = 1.0. Swap them: v = [0, 1], so the score is (0 × 0 + 0.5 × 1) / 1 = 0.5. Nothing enters or leaves the set; only the ordering changes. Rank position dominates. This is the metric that rewards the reranker's ordering work from the Retrieval layer: getting the right chunks into the set is necessary, and putting them first is what context precision actually scores.
 
+The blind spot is coverage: retrieving just one relevant chunk at rank 1 can score 1.0 even when many necessary chunks are missing. Context precision also inherits errors in the relevance labels supplied by its judge. Pair it with a coverage metric.
+
 ### Context recall is the one that needs a reference \{#context-recall-is-the-one-that-needs-a-reference}
 
 **Context recall** asks the question that matters most for retrieval: did we bring back *everything* the correct answer needs? It is the most direct measure of the retrieval failure Part 1 named — the needed chunk that never made it into the results. But answering "did we retrieve everything needed" requires knowing what "everything needed" is, and that knowledge isn't free: this is the one metric here that is reference-based. The computation is again LLM-driven. Break the reference answer — the ground-truth answer — into claims; for each reference claim, check whether it can be attributed to the retrieved context; then take the ratio.
 
 *context recall = (reference claims supported by the context) / (total reference claims)*
 
-Part 1 called recall "the main one for RAG," and this is why: a low context recall means generation *physically cannot* answer, however good the model is — the evidence simply isn't in front of it. That dependence on a reference answer is also why the golden set isn't a nicety for the retrieval side; it's the thing that makes this metric computable at all.
+A low context recall means the retrieved context does not support some of the reference answer. It does not prove the model cannot guess the right answer from memory; it shows that a fully grounded answer is missing evidence. Its blind spots are the reference and the attribution judge: an incomplete reference leaves required facts untested, and a mistaken support decision changes the score. Even a perfect score says nothing about how much irrelevant context was retrieved or whether generation used the evidence correctly.
 
-Step back and the pattern across the four is the point. Three of them — faithfulness, answer relevance, context recall — are themselves small LLM pipelines that decompose, verify, or generate. The metric is a judge. A number from Ragas is therefore only as trustworthy as the LLM computing it, which turns "trust the metric" into "trust the judge" — and the judge, Part 1 was blunt, is not to be trusted on faith. So the next question is unavoidable: how do you calibrate a judge you were told to distrust?
+Step back and the pattern across the four is the point. All four — including the LLM-based context-precision variant here — are themselves small LLM pipelines that decompose, verify, or generate. The metric is a judge. A number from Ragas is therefore only as trustworthy as the LLM computing it, which turns "trust the metric" into "trust the judge" — and the judge, Part 1 was blunt, is not to be trusted on faith. So the next question is unavoidable: how do you calibrate a judge you were told to distrust?
 
 ## Calibrating the judge you were told to distrust \{#calibrating-the-judge-you-were-told-to-distrust}
 
@@ -163,7 +167,7 @@ Spend targeted labels on repairs, then preserve adjudicated failures as frozen r
 
 - The four Ragas metrics stop being black boxes once you see the arithmetic: faithfulness is supported claims over total claims; answer relevance is the mean cosine between the original question and the questions an LLM regenerates from the answer; context precision is a rank-weighted precision; context recall is supported reference-claims over total reference-claims.
 - Two axes organise them — stage (retrieval versus generation) and reference-free versus reference-based. Faithfulness and answer relevance need no golden answer and run on live traffic; context recall can't be computed without a reference.
-- Three of the four metrics are themselves LLM pipelines, so the metric *is* a judge and inherits the judge's fallibility — which is the whole reason calibration isn't a nice-to-have.
+- All four variants described here use an LLM somewhere in the computation, so the metric *is* a judge and inherits the judge's fallibility — which is the whole reason calibration isn't a nice-to-have.
 - Reference-free metrics take you only so far: faithfulness certifies "grounded," answer relevance certifies "on-topic," and neither certifies "correct." Correctness needs a reference or a human.
 - Judge biases are systematic, so more examples won't wash them out: position bias (run both orders, require consistency), verbosity bias, and self-preference each need a protocol or a calibration fix.
 - Underneath the named biases sits the assumption none of them touch: a second model helps only if its errors are uncorrelated with the first's, and two frontier models trained on overlapping corpora are close to one mechanism — so independence comes from a different information source (a grounded check, a test, a schema, a human), not a different vendor.

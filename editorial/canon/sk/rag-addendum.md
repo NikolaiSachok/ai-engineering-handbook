@@ -144,3 +144,9 @@ NIST, VCR.py and LangChain references on those pages; the cascade entry retains 
 Routing reuses `rag.md` Karta 8: model routing = „smerovanie medzi modelmi“; query routing and
 selection of a tool inside the loop remain separate. `SFT` and `OpenTelemetry Collector` retain the
 existing literal spellings in the frozen ledger; only the new glossary senses are recorded here.
+
+### Kompatibilita grafu, chyby nástrojov a zápis do pamäte — 2026-10-22
+
+- **PROBATION — „kompatibilita vykonávania“**: pokračovanie starého checkpointu na kóde grafu; odlišné od migrácie štruktúry a významu doménových dát.
+- **PROBATION — „výsledok ešte nebol zistený“**: externá operácia môže bežať alebo byť dokončená; neznámy výsledok nie je potvrdené zlyhanie. „Zosúladenie s externým systémom“ zisťuje výsledok; idempotencia ho sama nepotvrdzuje.
+- **PROBATION — „kontrola pred zápisom do trvalej pamäte“**: overenie oprávnení a zdrojov faktov pred uložením. „Odvodený záznam“ zostáva naviazaný na zdrojové udalosti a nenahrádza ich.

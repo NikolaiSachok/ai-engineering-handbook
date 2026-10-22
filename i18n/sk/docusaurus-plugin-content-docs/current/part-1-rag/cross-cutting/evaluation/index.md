@@ -20,7 +20,7 @@ Rozklad zlyhania, ktorý sme si ukázali v prehľade časti — zlyhanie vyhľad
 | **Čo merajú.** Dostal sa potrebný chunk (kúsok dokumentu) do výsledkov a na akej pozícii v poradí. | **Čo merajú.** Opiera sa odpoveď o kontext a naozaj odpovedá na otázku. |
 | **Tie hlavné.** Recall@K (dostal sa potrebný chunk medzi K najlepších? — hlavná metrika pre RAG), Precision@K, MRR, nDCG. | **Tie hlavné.** faithfulness, answer relevance (relevancia odpovede), správnosť (correctness). |
 
-Prečo je Recall@K tá hlavná: keď sa potrebný chunk vôbec nedostane do výsledkov, generovanie fyzicky nemá z čoho zostaviť správnu odpoveď. V prvej fáze záleží na úplnosti (recall) viac než na presnosti (precision) — čo tu prepadne, to už žiadny neskorší krok nezachráni.
+Prečo je Recall@K tá hlavná: keď sa potrebný chunk vôbec nedostane do výsledkov, generovanie nemá z nájdených podkladov ako zostaviť úplne podloženú odpoveď. V prvej fáze záleží na úplnosti (recall) viac než na presnosti (precision) — čo tu prepadne, to už žiadny neskorší krok nezachráni.
 
 ## Bez dát niet čo hodnotiť \{#no-dataset-no-evaluation}
 
@@ -80,7 +80,7 @@ Najväčšia praktická sila hodnotenia: ukáže ti, v ktorej etape zlyhanie vä
 | Príznak | Diagnóza | Kde opraviť |
 |---|---|---|
 | Odpoveď je zlá a potrebný chunk NEBOL vo výsledkoch | zlyhanie vyhľadávania → nízky Recall@K | chunking / hybridné vyhľadávanie / reranking |
-| Odpoveď je zlá, hoci potrebný chunk v kontexte BOL | zlyhanie generovania → nízka faithfulness | grounding (opretie odpovede o kontext) / prompt |
+| Odpoveď je zlá, hoci potrebné podklady v kontexte BOLI | správnosť a faithfulness over oddelene; aj verne použitý chybný zdroj môže viesť k nesprávnej odpovedi | kvalita zdrojov / grounding (opretie odpovede o kontext) / prompt |
 
 ## Čo si odniesť z lekcie \{#what-to-take-away}
 

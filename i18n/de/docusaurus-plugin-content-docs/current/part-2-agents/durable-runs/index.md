@@ -293,7 +293,7 @@ Versionierung, auf die sich die Durable-Execution-Engines geeinigt haben.
 
 Siehe auch: der Checkpointer, die Threads und die `durability`-Modi, auf denen diese Seite aufbaut –
 [Orchestrierungs-Frameworks, Teil 2](../orchestration-frameworks/deep-dive.md); die Idempotenz als
-Eigenschaft eines Tools – [Tool-Einsatz, Teil 2](../tool-use/deep-dive.md); wie die Agentenlaufzeiten der
+Eigenschaft eines Tools – [Tool-Einsatz, Teil 2](../tool-use/deep-dive.md); wie die Agenten-Laufzeitumgebungen der
 Anbieter selbst mit Persistenz und Fortsetzung umgehen – [der Abschluss dieses Teils](../real-agents.md).
 
 :::

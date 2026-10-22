@@ -728,7 +728,7 @@ flow.
 **Checkpointing** — persisting agent state so a run can be paused, resumed, and inspected.
 
 **State graph (StateGraph)** — an agent modelled as a shared typed state object plus nodes and edges;
-LangGraph's concrete form of the agent-as-a-graph idea.
+LangGraph's concrete form of the agent-as-a-graph idea. ↗ [LangGraph v1: Graph migrations](https://docs.langchain.com/oss/python/langgraph/graph-api#graph-migrations).
 
 **Conditional edge** — a graph edge that routes to the next node based on the current state; it is what
 encodes the loop's branch (tool call → tools node; done → END).

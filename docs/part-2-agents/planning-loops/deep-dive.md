@@ -121,6 +121,10 @@ The practical mechanics for a long trajectory are three, and worth naming even b
 
 None of this is free, and most tasks do not need it. Episodic memory adds a whole retrieval subsystem with its own failure modes — a stale or mis-retrieved memory poisons the context and can be worse than having no memory at all. Single-shot tasks need only working memory. Add long-term memory when the agent genuinely has to learn across sessions — a personal assistant, a long-running project — and not a moment before.
 
+Reflexion's model-written lesson is a hypothesis, not a source event. Gate writes before they enter persistent memory: a model may propose a summary or strategy, labelled as derived, but a factual claim about a payment, approval, or user preference must cite the authoritative event or explicit user statement. Keep source IDs, time, tenant/user scope, and validation status with the entry; a model's confidence is not validation. Reject unsupported claims and instructions embedded in retrieved text, and enforce the caller's write permissions in code.
+
+Keep the source events separately from the rolling summary so you can rebuild a brief deterministically or regenerate and revalidate it. Otherwise one mistaken paraphrase becomes the only record and appears more authoritative each time another model reads it. Set expiry and correction rules, invalidate derived entries when their sources change, and make deletion reach summaries and retrieval indexes as well as originals. Test the write gate with a fabricated event, a stale fact, and a cross-user write; none may become trusted memory. On a later wake, require provenance before treating a recalled claim as evidence. Retrieval relevance and persistence alone provide neither truth nor authority.
+
 ## Grading the whole path \{#grading-the-whole-path}
 
 Eval now measures the trajectory, Part 1 said. What that comes to concretely is a handful of metrics — and a reliability trap that catches teams who stop at a single successful run.

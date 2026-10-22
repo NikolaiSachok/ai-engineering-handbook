@@ -239,7 +239,7 @@ claim true. The test that settles it is to inject the crash rather than wait for
 boundary — specifically in the window after a paid side effect has fired and before the commit that records
 it — then resume and assert not that the run completed, but that the side effect happened **exactly once**.
 That is a verification technique rather than a design one, it belongs to the AI SDLC course alongside the
-other [layered gates](/ai-sdlc/part-3-verification/layered-gates), and it is the natural next thing to reach
+other [layered gates](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification), and it is the natural next thing to reach
 for once the design on these two pages is in place.
 
 ## What to take away \{#what-to-take-away}

@@ -13,8 +13,8 @@ Mitspieler, die sich die Arbeit teilen, in [Multi-Agenten-Systeme](./multi-agent
 all das verpacken, in [Orchestrierungs-Frameworks](./orchestration-frameworks/index.md); und das Protokoll, das
 ihn mit der Welt verbindet, in [MCP und Agentenprotokolle](./mcp/index.md). Neu ist auf dieser Seite nichts. Sie
 veranschaulicht ausgewählte Muster anhand dreier Anbieterstacks – Anthropic Claude, OpenAI und Google Gemini –
-und zeigt: Jede Technik ist im Kern derselbe bleibende Handgriff, nur anders benannt und in einem anderen
-Nachrichtenformat über die Leitung geschickt.
+und zeigt: Die Anbieter setzen dieselben grundlegenden Techniken ein, auch wenn sie andere Namen und
+Nachrichtenformate verwenden.
 
 Genau darauf kommt es an, und deshalb ist jeder Abschnitt gleich gebaut. Am Anfang steht das **bleibende
 Muster** – der Teil, der jeden Umbau einer API überlebt. Dann folgt, wie es der einzelne Anbieter heute macht,
@@ -187,6 +187,8 @@ Sie nicht fortsetzen – und selbst wenn Sie ihn gespeichert haben, ist das Fort
 Sie sagen können, *was tatsächlich fertig geworden ist*. Die zweite Hälfte ist keine Funktion einer API, sondern
 eine Disziplin, und sie führt geradewegs zu dem Fall aus der Praxis, in dem der Fortschritt am tatsächlichen
 Zustand gemessen wird und nicht an einem Zeitstempel ([Planung und Schleifen](./planning-loops/index.md)).
+
+Prüfen Sie diese Disziplin an der Grenze zwischen Effekt und bestätigtem Speichern: mit der [Methode zur Wiederaufnahme nach einem Absturz](./durable-runs/deep-dive.md#proving-it-rather-than-claiming-it) und der [Prüfung im AI-SDLC-Kurs](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification).
 
 ## Hooks und Guardrails – Prüfungen vorschalten, statt der Schleife zu vertrauen \{#hooks-and-guardrails--interpose-checks-dont-trust-the-loop}
 

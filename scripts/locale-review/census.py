@@ -46,7 +46,7 @@ import sys
 
 # --------------------------------------------------------------------------- classification
 
-FENCE_RE = re.compile(r"^\s*(?:```|~~~)")
+FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 
 PROSE, FENCE, JSX = "prose", "fence", "jsx"
 
@@ -65,16 +65,19 @@ def classify(text: str) -> list[str]:
     Returns a list of length len(lines); index 0 is line 1.
     """
     out: list[str] = []
-    in_fence = False
+    fence_char, fence_length = None, 0
     depth = 0  # unclosed `<` of an opening tag, i.e. we are inside an attribute list
     for raw in text.split("\n"):
-        if FENCE_RE.match(raw):
-            # The marker line belongs to the fence in both directions.
+        marker = FENCE_RE.match(raw)
+        if fence_char is not None:
             out.append(FENCE)
-            in_fence = not in_fence
+            if (marker and marker[1][0] == fence_char
+                    and len(marker[1]) >= fence_length and not marker[2].strip()):
+                fence_char, fence_length = None, 0
             continue
-        if in_fence:
+        if marker and not (marker[1][0] == "`" and "`" in marker[2]):
             out.append(FENCE)
+            fence_char, fence_length = marker[1][0], len(marker[1])
             continue
         out.append(JSX if depth > 0 else PROSE)
         # Update the open-tag depth AFTER classifying, so the opening line reads as prose.
@@ -84,6 +87,74 @@ def classify(text: str) -> list[str]:
             elif depth > 0:
                 depth -= 1
     return out
+
+
+def blank_span(text: str) -> str:
+    """Mask markup while preserving physical line offsets."""
+    return re.sub(r"[^\n]", " ", text)
+
+
+def strip_code_spans(text: str) -> str:
+    """Matched backtick runs delimit code, including across physical lines.
+
+    A shorter/longer run inside code is literal. Unmatched openers remain prose.
+    Backslash-escaped opening backticks are literal, as in Markdown.
+    """
+    runs = list(re.finditer(r"`+", text))
+    out, cursor, i = [], 0, 0
+    while i < len(runs):
+        opener = runs[i]
+        preceding = text[:opener.start()]
+        if (len(preceding) - len(preceding.rstrip("\\"))) % 2:
+            i += 1
+            continue
+        closer = next((j for j in range(i + 1, len(runs))
+                       if len(runs[j].group()) == len(opener.group())
+                       and not re.search(r"\n[ \t]*\n", text[opener.end():runs[j].start()])), None)
+        if closer is None:
+            i += 1
+            continue
+        end = runs[closer].end()
+        out += [text[cursor:opener.start()], blank_span(text[opener.start():end])]
+        cursor, i = end, closer + 1
+    return "".join(out) + text[cursor:]
+
+
+def strip_link_destinations(text: str) -> str:
+    """Mask balanced inline-link destinations, retaining visible labels and tail.
+
+    Escaped parentheses and angle-bracket destinations cannot end the outer link.
+    Unclosed destinations stay visible rather than suppressing the remaining prose.
+    """
+    out, cursor, search = [], 0, 0
+    while (start := text.find("](", search)) >= 0:
+        depth, pos, angle, quote = 1, start + 2, False, None
+        while pos < len(text) and depth:
+            char = text[pos]
+            if char == "\\":
+                pos += 2
+                continue
+            if quote:
+                if char == quote:
+                    quote = None
+            elif angle:
+                if char == ">":
+                    angle = False
+            elif char == "<":
+                angle = True
+            elif char in "\"'" and pos > start + 2 and text[pos - 1].isspace():
+                quote = char
+            elif char == "(":
+                depth += 1
+            elif char == ")":
+                depth -= 1
+            pos += 1
+        if depth:
+            search = start + 2
+            continue
+        out += [text[cursor:start + 1], blank_span(text[start + 1:pos])]
+        cursor, search = pos, pos
+    return "".join(out) + text[cursor:]
 
 
 def strip_markup(line: str) -> str:
@@ -100,8 +171,8 @@ def strip_markup(line: str) -> str:
         prose, and the dash and percent rules do govern it.
     """
     line = re.sub(r"<[A-Za-z][^>]*>", " ", line)          # JSX/HTML tags incl. their attrs
-    line = re.sub(r"`[^`]*`", " ", line)                  # inline code
-    line = re.sub(r"\]\([^)]*\)", "] ", line)             # link targets
+    line = strip_code_spans(line)                         # inline code
+    line = strip_link_destinations(line)                  # balanced link targets
     line = re.sub(r"https?://\S+", " ", line)             # bare URLs
     line = re.sub(r'^(\s*[A-Za-z_][\w.-]*:\s*)"(.*)"\s*$', r"\1\2", line)
     line = line.replace('["', "[").replace('"]', "]")
@@ -109,6 +180,30 @@ def strip_markup(line: str) -> str:
     line = line.replace('{"', "{").replace('"}', "}")     # mermaid diamond nodes
     line = re.sub(r'--\s*"([^"]*)"\s*-->', r"-- \1 -->", line)  # mermaid edge labels
     return line
+
+
+def prose_lines(text: str) -> list[str]:
+    """Shared shipping-prose extraction, retaining line numbers.
+
+    Mask fenced code and complete JSX/HTML tags (including multiline attributes),
+    then strip inline code and URL destinations with the census's markup policy.
+    A tag's child text and prose following its closing `>` remain inspectable.
+    Quoted `>` characters in attributes cannot end a tag prematurely.
+    Attribute support is literal quoted/unquoted text, not JS expressions with
+    comparison operators or nested JSX; this is not a complete MDX parser.
+    """
+    lines = text.split("\n")
+    kinds = classify(text)
+    body = "\n".join("" if kind == FENCE else line
+                     for line, kind in zip(lines, kinds))
+    body = strip_code_spans(body)
+    body = strip_link_destinations(body)
+    tag = re.compile(r"</?[A-Za-z][\w.:-]*\b(?:[^>\"']|\"[^\"]*\"|'[^']*')*>", re.DOTALL)
+    body = tag.sub(lambda m: re.sub(r"[^\n]", " ", m.group()), body)
+    # An explicit heading id is routing metadata; malformed unescaped ids remain
+    # visible so the absolute bare-anchor rule still catches them.
+    return [re.sub(r"\\\{#[^}]+}", " ", strip_markup(line))
+            for line in body.split("\n")]
 
 
 def outside_quotes(text: str) -> str:
@@ -232,6 +327,7 @@ def main(argv: list[str]) -> int:
 
     kinds_of: dict[str, list[str] | None] = {}
     body_of: dict[str, list[str]] = {}
+    prose_of: dict[str, list[str]] = {}
     prose_rows: list[tuple[str, str]] = []
     skipped: collections.Counter = collections.Counter()
     stale: list[str] = []
@@ -243,6 +339,7 @@ def main(argv: list[str]) -> int:
                 body = p.read_text(encoding="utf-8")
                 body_of[path] = body.split("\n")
                 kinds_of[path] = classify(body)
+                prose_of[path] = prose_lines(body)
             else:
                 kinds_of[path] = None
         kinds = kinds_of[path]
@@ -255,8 +352,8 @@ def main(argv: list[str]) -> int:
         if body_of[path][no - 1] != text:
             stale.append(f"{path}:{no} — the diff's text is not the file's line at that number")
             continue
-        if kinds[no - 1] == PROSE:
-            prose_rows.append((path, strip_markup(text)))
+        if kinds[no - 1] != FENCE and prose_of[path][no - 1].strip():
+            prose_rows.append((path, prose_of[path][no - 1]))
         else:
             skipped[kinds[no - 1]] += 1
 

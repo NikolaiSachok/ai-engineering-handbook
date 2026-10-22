@@ -25,7 +25,9 @@ Pozeraj sa na tú štvoricu cez dve osi. **Os 1** (Časť 1 ju už načrtla): kt
 | | reference-free (bez etalónu) | reference-based (s etalónom) |
 |---|---|---|
 | **Vyhľadávanie** | context precision (o relevantnosti rozhoduje LLM) | context recall |
-| **Generovanie** | faithfulness, answer relevance | — |
+| **Generovanie** | faithfulness, answer relevance | správnosť (mimo tejto štvorice) |
+
+Context precision má aj varianty s referenciou; tabuľka uvádza variant bez etalónu, ktorý používame tu. Recall@K z Časti 1 počíta relevantné nájdené položky voči všetkým položkám označeným za relevantné. Context recall nižšie počíta podložené tvrdenia referenčnej odpovede. Obe merajú pokrytie, ale v iných jednotkách. MRR sleduje prevrátenú hodnotu pozície prvého relevantného výsledku; nDCG hodnotí poradie aj s odstupňovanou relevantnosťou a nižším pozíciám prisudzuje menšiu váhu. Tieto metriky poradia štvoricu dopĺňajú. Správnosť vygenerovanej odpovede naďalej overuj voči referencii alebo ľudskému úsudku: samotná faithfulness ju nepotvrdí.
 
 Ten rozdiel poriadne zaváži. Faithfulness a answer relevance bežia na živej produkčnej prevádzke bez jedinej označkovanej odpovede; context recall bez referencie nevypočítaš vôbec. Práve táto os rozhoduje, čo kde vieš odmerať — a preto golden set dostáva na konci vlastnú sekciu.
 
@@ -80,6 +82,8 @@ kde v_k je 1, keď je chunk na pozícii k relevantný, a 0 inak. Vezmi K = 2: re
 
 Toto je práve tá metrika, ktorá odmeňuje prácu rerankera z vrstvy Retrieval: dostať správne chunky do množiny je nevyhnutné, ale context precision skóruje až ich poradie — teda či naozaj skončia navrchu.
 
+Context precision však neodhalí chýbajúce podklady. Aj jediný relevantný chunk na prvej pozícii môže dostať skóre 1,0, hoci veľa potrebných chunkov chýba. Skóre navyše preberá chyby sudcu, ktorý priraďuje značky relevantnosti. Preto ho doplň metrikou pokrytia.
+
 ### Context recall — tá jediná, čo potrebuje etalón \{#context-recall-is-the-one-that-needs-a-reference}
 
 **Context recall** kladie otázku, na ktorej pri vyhľadávaní záleží najviac: priniesli sme späť všetko, čo správna odpoveď potrebuje? Je to najpriamejšia miera zlyhania vyhľadávania, ktoré Časť 1 pomenovala — potrebný chunk, čo sa nikdy nedostal do výsledkov.
@@ -88,9 +92,9 @@ Lenže odpovedať na otázku „vyhľadali sme všetko potrebné?“ si žiada v
 
 *context recall = supported reference claims / total reference claims*
 
-Časť 1 nazvala recall „hlavnou metrikou pre RAG“ a toto je dôvod: nízky context recall znamená, že generovanie fyzicky nemá ako odpovedať, nech je model akokoľvek dobrý — dôkaz jednoducho nemá pred sebou. A práve táto závislosť od referenčnej odpovede je aj dôvod, prečo golden set nie je pre stranu vyhľadávania luxus navyše: bez neho túto metriku vôbec nevypočítaš.
+Nízky context recall znamená, že nájdený kontext nepodporuje časť referenčnej odpovede. Model môže správnu odpoveď uhádnuť z pamäte; na úplne podloženú odpoveď mu však chýbajú dôkazy. Metrika má dve slabé miesta: neúplná referencia nechá potrebné fakty neoverené a chybný úsudok o podpore tvrdenia zmení skóre. Ani dokonalé skóre nehovorí, koľko nerelevantného kontextu si priniesol alebo či generátor podklady použil správne.
 
-Odstúp o krok a všimni si vzor v tej štvorici — v ňom je celá pointa. Tri z nich — faithfulness, answer relevance, context recall — sú samy malé LLM-pipeline, ktoré rozkladajú, overujú alebo generujú. *Metrika je sudca.* Číslo (skóre), ktoré ti Ragas vráti, je teda dôveryhodné presne natoľko, nakoľko je dôveryhodný LLM, čo ho počíta — a tým sa „ver metrike“ mení na „ver sudcovi“. Lenže sudcovi, ako Časť 1 povedala bez okolkov, sa na slovo veriť nedá. Ďalšia otázka je preto nevyhnutná: ako kalibruješ sudcu, ktorému ti kázali neveriť?
+Odstúp o krok a všimni si vzor v tej štvorici — v ňom je celá pointa. Všetky štyri opísané varianty metrík vrátane context precision používajú malé LLM-pipeline, ktoré rozkladajú, overujú alebo generujú. *Metrika je sudca.* Číslo (skóre), ktoré ti Ragas vráti, je teda dôveryhodné presne natoľko, nakoľko je dôveryhodný LLM, čo ho počíta — a tým sa „ver metrike“ mení na „ver sudcovi“. Lenže sudcovi, ako Časť 1 povedala bez okolkov, sa na slovo veriť nedá. Ďalšia otázka je preto nevyhnutná: ako kalibruješ sudcu, ktorému ti kázali neveriť?
 
 ## Kalibrácia sudcu, ktorému nemáš veriť \{#calibrating-the-judge-you-were-told-to-distrust}
 
@@ -201,7 +205,7 @@ Cielené značkovanie využi na opravy a prípady zlyhania po vyriešení nezhô
 
 - Štyri metriky Ragas prestanú byť čiernymi skrinkami, len čo uvidíš ich aritmetiku: faithfulness je podiel podložených tvrdení zo všetkých; answer relevance je priemerný kosínus medzi pôvodnou otázkou a otázkami, ktoré z odpovede zregeneruje LLM; context precision je presnosť vážená poradím; context recall je podiel podložených referenčných tvrdení zo všetkých.
 - Organizujú ich dve osi — etapa (vyhľadávanie verzus generovanie) a bez etalónu verzus s etalónom. Faithfulness a answer relevance nepotrebujú etalónovú odpoveď a bežia na živej prevádzke; context recall bez referencie nevypočítaš.
-- Tri zo štyroch metrík sú samy LLM-pipeline, takže metrika je sudca a dedí jeho omylnosť — a to je celý dôvod, prečo kalibrácia nie je nadštandard.
+- Všetky štyri opísané varianty používajú pri výpočte LLM, takže metrika je sudca a dedí jeho omylnosť — a to je celý dôvod, prečo kalibrácia nie je nadštandard.
 - Metriky bez etalónu ťa dovedú len po istú hranicu: faithfulness potvrdí „podložené“, answer relevance potvrdí „k veci“, správnosť nepotvrdí ani jedna. Na tú treba referenciu alebo človeka.
 - Zaujatosti sudcu sú systematické, takže viac príkladov ich nevymyje: position bias (spusti obe poradia a žiadaj zhodu), verbosity bias aj self-preference si každá pýta protokol alebo kalibračnú nápravu.
 - Pod pomenovanými zaujatosťami leží predpoklad, ktorého sa ani jedna z nich nedotkne: druhý model pomôže len vtedy, keď jeho chyby nekorelujú s chybami prvého — a dva hraničné modely trénované na prekrývajúcich sa korpusoch majú k jednému mechanizmu blízko. Nezávislosť preto prináša iný zdroj informácie (opretá kontrola, test, schéma, človek), nie iný dodávateľ.

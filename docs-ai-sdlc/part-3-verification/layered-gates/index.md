@@ -108,6 +108,19 @@ stacked precisely because each is blind to what the other sees — the grep cann
 neutral words, and the semantic audit is too costly to run on every keystroke. Neither is the gate. The
 composition is.
 
+## Verify recovery across a crash \{#crash-resume-verification}
+
+A happy-path test cannot show that a resumed run avoids charging twice. Add a bounded fault-injection gate for workflows with external effects. The [durable-runs lesson](/rag-agents/part-2-agents/durable-runs/deep-dive#proving-it-rather-than-claiming-it) owns the design; this gate tests its guarantees. Use an isolated test service or effect ledger, stable operation IDs, and the same persisted state on restart. Never test duplicate charges against real customers.
+
+| Crash point | What to inspect after restart |
+|---|---|
+| Before submitting the effect | No effect yet; continuing produces one intended effect. |
+| After acceptance, before the caller gets a result | Reconcile the operation ID; a timeout must not trigger a second effect. |
+| After the effect, before its local completion record is committed | The external ledger still shows exactly one charge; recovery records or reuses that outcome. |
+| After the completion record, before the next step | The completed effect is not repeated; the next step continues. |
+
+Kill the worker at each chosen point and restart it from durable state. Assert both progress and the ledger's effect count and charged amount, rather than trusting a successful final response. Record the fixture, execution-code version, crash point, operation ID, and observed ledger entries. Inject a broken deduplication or reconciliation path and show that the gate fails. If the external service cannot establish an outcome, the expected result is a parked run requiring reconciliation, not a green completion. This tests the selected boundaries and service contract; it does not prove exactly-once effects for every failure.
+
 ## The three tiers — soloist · small-team · enterprise \{#the-three-tiers--soloist--small-team--enterprise}
 
 The invariant holds at every scale: **one gate is a single point of failure; coverage comes from mechanism

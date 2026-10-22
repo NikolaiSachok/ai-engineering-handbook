@@ -14,15 +14,17 @@ are illustrative — plug in your provider's — but the *shape* of the sums is 
 
 ## One attempt, decomposed \{#one-attempt-decomposed}
 
-An attempt bills two streams at two rates, summed over every turn it takes: **input** (everything you
+The generation token subtotal bills two streams at two rates, summed over every turn it takes: **input** (everything you
 send — system prompt, rules, brief, prior turns, tool results) and **output** (what it generates).
 Output usually costs several times more per token than input, which fools people into watching the
 output. For agent work the trap is that input *volume* dwarfs output volume, so the
-cheaper-per-token stream is the larger bill:
+cheaper-per-token stream can dominate the token bill:
 
 ```text
 attempt_cost = input_tokens × input_rate + output_tokens × output_rate
 ```
+
+Here `attempt_cost` is the generation model-token subtotal. Add external tool resources, verification, and human review when calculating the full cost per accepted change.
 
 The output side of an agent turn is a diff, a tool call, a paragraph — hundreds of tokens. The input side is
 the entire working context — thousands to tens of thousands. The multiplier on the small rate wins.
@@ -66,43 +68,31 @@ Part III that run after the fact are often batchable even when the generation th
 
 ## The retry tax, and the break-even that inverts the price list \{#the-retry-tax-and-the-break-even-that-inverts-the-price-list}
 
-Now Part 1's headline claim, made exact. If a change lands on the first try with probability `p`, the expected
-number of attempts is `1/p`, so:
+For a token-cost illustration, assume each attempt costs the same model-token amount and succeeds independently with the same probability `p`, with `0 < p ≤ 1`. If you repeat until success without a retry cap, the expected number of attempts is `1/p`. A first-try success rate alone does not establish these assumptions. Under this simplified model:
 
 ```text
-cost_per_accepted ≈ attempt_cost / p
+token_cost_per_accepted = attempt_cost / p
 ```
 
-Put two models against each other. An expensive one at price `C` and first-try rate `0.8` costs `C / 0.8 =
-1.25 C` per accepted change. A cheap one at half the price, `0.5 C`, needs its success rate to clear a bar:
+Here `attempt_cost` remains the generation model-token subtotal. Compare two models on that subtotal: one costs `C` per attempt and succeeds with probability `0.8`, giving `C / 0.8 = 1.25 C` in expected generation token cost per accepted change. The other costs `0.5 C` per attempt:
 
-| Cheap model's success rate | Cost per accepted change | vs 1.25 C |
+| Cheaper model's success probability per attempt | Expected generation token cost per accepted change | vs 1.25 C in tokens |
 |---|---|---|
 | 0.40 | 0.5 C / 0.40 = 1.25 C | tie |
-| 0.50 | 0.5 C / 0.50 = 1.00 C | cheaper wins |
-| 0.30 | 0.5 C / 0.30 = 1.67 C | *more* expensive |
+| 0.50 | 0.5 C / 0.50 = 1.00 C | lower token cost |
+| 0.30 | 0.5 C / 0.30 = 1.67 C | higher token cost |
 
-The break-even is clean: the cheaper model wins only when `p_cheap / p_expensive > price_cheap / price_expensive`
-— it can afford to be less reliable, but only by the factor it is cheaper: at half the price its success
-rate must stay above half the expensive model's, which is 0.40. Half the price buys nothing at exactly
-half the reliability, and costs you more below it. This is the whole of "retry
-rate outweighs sticker price," reduced to one inequality you can actually measure.
+In this model, lower token cost per accepted change requires `p_cheap / p_expensive > price_cheap / price_expensive`, where each price is the generation token cost per attempt. At half the price, success probability must exceed half the other model's, or `0.40`. This break-even compares tokens, not total cost.
+
+For the full comparison, include all five buckets from Part 1: context, retries and rework, verification, human review, and external tool resources. Account for when each is incurred, without counting the same expense twice. A retry may reuse cached context, repeat paid compute, require another verification pass, or add human rescue time. Those differences can reverse the token-only ranking. With capped retries, changing attempt costs, or dependent outcomes, measure total spend across accepted and abandoned runs per accepted change rather than applying the geometric estimate unchanged.
 
 ## The line a token discount cannot touch \{#the-line-a-token-discount-cannot-touch}
 
-One closing sum keeps the others honest. Of the four cost buckets from Part 1, only **human review** is
-beyond the reach of token price — it is paid in salary, and its throughput is not for sale.
-**Verification** is itself model calls, so a discount does lower it; what a discount cannot do is reduce
-how many checks you run. So a token-price optimisation is bounded the way Amdahl bounds any speedup: if
-human review is, say, 40% of the total cost of a change, then *no* token discount, however deep, can
-reduce the total by more than the remaining 60%. When review dominates, shaving the token bill optimises
-the smallest lever — which is exactly why Part 1 insisted the binding constraint is priced in salary, not
-tokens.
+Token discounts affect model-based generation and verification, but neither human review nor external tool resources become cheaper merely because tokens do. Bound the saving by the share of the total bill actually priced in tokens. If human review is 40% and external compute is 30%, even eliminating the remaining token bill saves at most 30%, assuming those costs stay fixed. Review capacity and external-service capacity can each limit throughput. Measure their shares before deciding which optimisation matters.
 
 ## What to take away \{#what-to-take-away}
 
-- **Decompose the attempt:** `input_tokens × input_rate + output_tokens × output_rate`. Output costs more
-  per token, but input *volume* is far larger, so input is the bill.
+- **Decompose generation token cost:** `input_tokens × input_rate + output_tokens × output_rate` is a subtotal. Larger input volume can outweigh its lower rate within that subtotal.
 - **The context re-send is `O(N²)`:** a stateless model re-reads the whole transcript each turn, so doubling
   turns roughly quadruples input cost. Trimming context is the highest-leverage move.
 - **Prompt caching needs a stable prefix** — unchanging material first, volatile last, and kept unchanging. A
@@ -110,9 +100,7 @@ tokens.
   quality one.
 - **Batch the offline work** (bulk eval, corpus transforms) for a large discount; interactive turns can't
   batch. Latency for cost, split along whether a human is waiting.
-- **Retry tax:** `cost_per_accepted ≈ attempt_cost / p`. A cheaper model wins only if
-  `p_cheap / p_expensive > price_cheap / price_expensive` — reliability has to beat the price gap.
-- **A token discount is Amdahl-bounded** by the human-review fraction, which no token price touches. When
-  review dominates, the token bill is the smallest lever.
+- **Token-only retry estimate:** `token_cost_per_accepted = attempt_cost / p` assumes equal-cost independent attempts with fixed success probability and no retry cap. The price/success inequality compares token subtotals; compare all five cost buckets and their retry behaviour before choosing a model on total cost.
+- **Token savings are bounded by the token-priced share.** Human review and external tool resources remain outside that discount.
 
 **[New terms](../../glossary.md#cost-and-the-economics-of-agent-work)**: attempt-cost decomposition, input/output rate asymmetry, quadratic context re-send, prompt caching (stable prefix), batch discount, retry tax, break-even success rate, Amdahl bound on token savings.

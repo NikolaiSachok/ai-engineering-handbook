@@ -882,7 +882,7 @@ Tool aufrufen / entscheiden), eine Kante ist der Kontrollfluss.
 eingesehen werden kann.
 
 **`StateGraph`** – ein Agent, modelliert als gemeinsames getyptes Zustandsobjekt samt Knoten und Kanten; LangGraphs
-konkrete Form des Gedankens vom Agenten als Graph.
+konkrete Form des Gedankens vom Agenten als Graph. ↗ [LangGraph v1: Graph migrations](https://docs.langchain.com/oss/python/langgraph/graph-api#graph-migrations).
 
 **die bedingte Kante (conditional edge)** – eine Kante des Graphen, die anhand des aktuellen Zustands entscheidet,
 welcher Knoten als Nächstes läuft; in ihr steckt die Verzweigung der Schleife (Tool-Call → Knoten `tools`; fertig →

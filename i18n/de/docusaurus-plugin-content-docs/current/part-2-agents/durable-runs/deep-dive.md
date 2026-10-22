@@ -63,7 +63,7 @@ einen neuen Key, hält das für eine neue beabsichtigte Operation und führt sie
 nicht – nicht weil sie kaputt wäre, sondern weil sie denselben Key nie zweimal bekommen hat. Der Knoten ist
 jetzt vollständig abgesichert gegen eine Wiederholung nach einem *Netzwerkfehler* – den Fall, den sein Autor
 im Sinn hatte – und vollkommen ungeschützt gegen ein *Replay*, das die Dauerhaftigkeit erst mit sich bringt. Zwei
-ähnlich aussehende Fehler, ein Key — und der wurde nur für einen der beiden entworfen.
+ähnlich aussehende Fehler, ein Key – und der wurde nur für einen der beiden entworfen.
 
 Die Rechnung kommt je nach Step in einer anderen Währung. Ist es ein Modellaufruf, zahlt die Charge aus
 Teil 1 ein zweites Mal: 12 000 Einheiten zu je 2 US-Cent sind 240 US-Dollar, und ein Absturz kurz vor Ende
@@ -279,7 +279,7 @@ herbei, statt auf ihn zu warten: Beenden Sie den Worker an einer Step-Grenze –
 nachdem ein kostenpflichtiger Seiteneffekt ausgelöst wurde und bevor der Commit ihn festhält –, setzen Sie
 dann fort und prüfen Sie nicht, ob der Durchlauf zu Ende gekommen ist, sondern ob der Seiteneffekt **genau
 einmal** eingetreten ist. Das ist eine Technik der Prüfung und keine des Entwurfs; sie gehört in den Kurs
-über den AI-SDLC, neben die übrigen [gestaffelten Kontrollpunkte](/ai-sdlc/part-3-verification/layered-gates)
+über den AI-SDLC, neben die übrigen [gestaffelten Kontrollpunkte](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification)
 (die Seite liegt nur auf Englisch vor), und sie ist das Naheliegende, sobald der Entwurf von diesen beiden
 Seiten steht.
 

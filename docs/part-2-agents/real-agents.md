@@ -163,6 +163,8 @@ and even when you did persist it, "resume" is only safe if you can tell *what ac
 second half is not an API feature; it's a discipline, and it leads straight into the war-story on judging
 progress by real state rather than a timestamp ([planning-loops](./planning-loops/index.md)).
 
+Test that discipline at the effect/commit boundary with the [durable-runs crash-resume method](./durable-runs/deep-dive.md#proving-it-rather-than-claiming-it) and the [AI SDLC verification gate](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification).
+
 ## Hooks and guardrails — interpose checks, don't trust the loop \{#hooks-and-guardrails--interpose-checks-dont-trust-the-loop}
 
 You don't trust the loop blindly. You interpose checks around tool calls and I/O: a pre-hook that can block

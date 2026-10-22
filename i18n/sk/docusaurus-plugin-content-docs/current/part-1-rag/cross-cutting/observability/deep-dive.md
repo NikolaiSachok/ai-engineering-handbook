@@ -18,7 +18,7 @@ Nie je to opätovné rozvedenie tracu ako základného prvku (to má Časť 1), 
 
 Pri produkčnom objeme je uchovávať 100% tracov (trace — úplný záznam jednej požiadavky) neúnosne drahé — úložisko sa plní tak rýchlo, ako priteká premávka, a väčšina záznamov je nezaujímavá. Nechaj si teda reprezentatívnu a zaujímavú podmnožinu a zvyšok zahoď. To je vzorkovanie (sampling); celá otázka znie, ktoré tracy si necháš.
 
-**Head-based sampling** (vzorkovanie na začiatku tracu) rozhoduje o zachovaní alebo zahodení hneď na začiatku tracu, na koreňovom spane (jeden krok tracu), zvyčajne deterministickým pomerom podľa trace ID — jeden z desiatich si necháš, deväť zahodíš. Lacné, bezstavové, s objemom predvídateľným do posledného bajtu.
+**Head-based sampling** (vzorkovanie na začiatku tracu) rozhoduje o zachovaní alebo zahodení hneď na začiatku tracu, na koreňovom spane (jeden krok tracu), zvyčajne deterministickým pomerom podľa trace ID — jeden z desiatich si necháš, deväť zahodíš. Je lacné a bezstavové; určuje očakávaný podiel zachovaných tracov, ich veľkosť aj skutočný objem sa však menia.
 
 Jeho obmedzenie je pre tracy, na ktorých ti záleží, osudné: v čase rozhodovania ešte nevieš, ako sa požiadavka skončila. Nemôžeš prednostne držať tracy s chybou — zatiaľ žiadna nenastala. Čisté head sampling zahodí väčšinu tracov, ktoré by si bol chcel, a nechá si náhodnú desatinu tých nudných.
 
@@ -26,7 +26,7 @@ Jeho obmedzenie je pre tracy, na ktorých ti záleží, osudné: v čase rozhodo
 
 Cena: collector je teraz stavový — spany jedného tracu drží v pamäti a zoskupuje ich podľa trace ID, takže každý span daného tracu musí doraziť na tú istú inštanciu collectora (load-balancing, teda rozloženie záťaže podľa trace ID), a účet za pamäť a CPU rastie. OpenTelemetry Collector Contrib to dodáva ako procesor `tail_sampling`.
 
-Na čom sa skúsené tímy zhodnú: **priority sampling** (prioritné / hybridné vzorkovanie) — nechať si 100% tracov, ktoré nesmieš nikdy stratiť (chyby, prekročenia rozpočtu latencie, odpovede, ktoré používateľ alebo guardrails (bezpečnostné mantinely) označili za zlé), a nudné úspechy vzorkovať na nízkej základnej úrovni. Bežné usporiadanie tie dva reťazí: najprv head sampler zoškrtá surový prúd na únosný objem a potom tail sampling nad zvyškom spraví skutočné rozhodnutie o zachovaní podľa výsledku.
+**Priority sampling** (prioritné / hybridné vzorkovanie) má zachovať všetky dôležité tracy — chyby, prekročenia rozpočtu latencie a odpovede označené používateľom alebo guardrails (bezpečnostnými mantinelmi) za zlé — a bežné úspechy vzorkovať s nízkou pravdepodobnosťou. Pred tail sampler môžeš zaradiť head sampler, aby si chránil kapacitu collectora. Tail sampler však potom uvidí iba tracy, ktoré prešli prvým výberom: chyby vyradené na začiatku už nezachráni. Ak potrebuješ zachovať každý trace spĺňajúci podmienky, musí každý príslušný trace doraziť až k rozhodnutiu na konci. Počítaj pritom s pamäťou na odkladanie spanov aj s časovým oknom rozhodovania.
 
 LLM zvrat v tom, čo je „zaujímavé“: pri obyčajnej službe sú zaujímavé chyby a pomalé odpovede, oboje viditeľné v transportnej vrstve. Pri LLM systéme môže byť odpoveď so stavom 200 OK aj tak halucinácia, jemne nesprávna odpoveď alebo odmietnutie — kvalita je pre stav HTTP neviditeľná.
 
@@ -37,7 +37,7 @@ flowchart TB
   Q["Požiadavka prichádza"] --> H["Head sampler<br/>nechá X % podľa trace ID<br/>(lacné, rozhodnuté na začiatku)"]
   H --> C["Trace dobehol<br/>všetky spany pozbierané"]
   C --> T{"Tail / prioritná kontrola:<br/>chyba? pomalé? nízke skóre evaluácie?<br/>palec dole? blok od guardrails?"}
-  T -->|"áno — zaujímavé"| K["Nechať 100%"]
+  T -->|"áno — prijatý trace je zaujímavý"| K["Zachovať prijaté tracy<br/>spĺňajúce podmienky"]
   T -->|"nie — bežné"| D["Zahodiť (alebo nechať na nízkej úrovni)"]
   K --> S["Úložisko tracov"]
 ```
@@ -48,11 +48,11 @@ Najužitočnejšia vec pri ladení LLM aplikácie, celý odoslaný prompt a cel�
 
 Štandard to rieši priamo. V sémantických konvenciách OpenTelemetry GenAI je zachytávanie obsahu správ, teda vstupných správ a vygenerovaného výstupného textu, voliteľné a predvolene vypnuté, práve pre súkromie a veľkosť dát. Predvolene zapnuté ostávajú metadáta: model, počty tokenov, trvanie. Surový text je tá časť, ktorú vedome zapneš.
 
-(Tieto konvencie majú stav Development — experimentálny, ešte nie stabilný, k verzii Semantic Conventions v1.41.x v roku 2026 — a do aktuálnej experimentálnej sady sa prihlásiš cez `OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental`.)
+(Opis sa vzťahuje na Semantic Conventions v1.41.0, kde majú konvencie GenAI stav Development. Pre inštrumentácie emitujúce verziu v1.36.0 alebo staršiu dokumentácia uvádza migračné nastavenie `OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental`. Over, čo tvoja inštrumentácia podporuje: toto nastavenie nepripína konkrétnu verziu.)
 
 Ochrana prichádza vo vrstvách, ktoré sa skladajú:
 
-- **De-identifikácia pred úložiskom.** Osobné údaje odstrániť alebo anonymizovať skôr, než sa dostanú do úložiska tracov, tým istým detekčným aparátom, aký už používajú guardrails — rozpoznávač PII (osobné údaje), ktorý napája anonymizér, ako v pipeline Analyzer → Anonymizer od [Microsoft Presidia](https://microsoft.github.io/presidio) (mechaniku má [prehĺbenie o Guardrails](../guardrails/deep-dive.md)).
+- **Údaje podľa diagnostického účelu.** Urči, ktoré osobné údaje diagnostika potrebuje a smie uchovávať. Nepotrebné polia vynechaj. Začiernenie alebo pseudonymizáciu použi tam, kde postačia na diagnostický účel; pôvodný obsah ponechaj iba vtedy, keď je potrebný a máš na to oprávnenie, výslovné pravidlá prístupu aj uchovávania. Pseudonymizácia sama osebe neoprávňuje údaje zbierať. Pipeline Analyzer → Anonymizer od [Microsoft Presidia](https://microsoft.github.io/presidio) môže vykonať zvolené úpravy, ale pravidlá neurčí (mechaniku má [prehĺbenie o Guardrails](../guardrails/deep-dive.md)).
 - **Úrovne uchovávania (retention tiers).** Krátke TTL (čas do expirácie) na spany s obsahom, aby surový text rýchlo expiroval, kým lacné metadáta zostávajú ďalej pre analýzu trendov.
 - **Riadenie prístupu (access control) k samotnému UI tracov.** Produkčné prompty sú používateľské údaje a prehliadač tracov je oknom do nich.
 - **Vzorkovanie.** Pomáha aj tu, takmer zadarmo — čím menej uložených tracov, tým menej toho môže uniknúť.
@@ -71,9 +71,9 @@ Pilier špecifický pre LLM je **kvalita**, vykresľovaná ako prvoradá od zač
 
 Ten signál kvality ti dovolí čestne použiť spoľahlivostný rámec SRE. Vyber si SLI (service level indicator — čo meriaš), teda veci, ktoré naozaj meriaš: dostupnosť, p95 latenciu, pass-rate (podiel úspešných) kvality, hornú hranicu nákladu na požiadavku.
 
-Stanov SLO (service level objective — cieľ na SLI), teda cieľ na niektoré SLI za dané okno: „p95 latencia pod tri sekundy počas 30 dní“, „faithfulness pass-rate na úrovni 0,95 alebo vyššie“.
+Stanov SLO (service level objective — cieľ na SLI) pre určené obdobie: napríklad „p95 latencia pod tri sekundy počas 30 dní“ alebo „aspoň 95% vyhodnotených odpovedí za 30 dní dosiahne stanovený prah faithfulness“. Pri druhom cieli vopred urči prah pre jednotlivú odpoveď a pravidlá, ktoré odpovede patria do hodnotenia. Pass-rate vypočítaj ako počet odpovedí, ktoré prah dosiahli, delený počtom všetkých vyhodnotených odpovedí spĺňajúcich podmienky za dané obdobie. Podiel 95% úspešných odpovedí nie je priemerné skóre faithfulness 0,95.
 
-**Error budget** (rozpočet chýb — koľko chýb si smieš minúť) je vzdialenosť medzi tým cieľom a dokonalými 100% — množstvo chýb, ktoré smieš minúť, kým sa cieľ neprekročí.
+**Error budget** (rozpočet chýb) pre tento cieľ povoľuje 5% neúspešných odpovedí. Ukazovatele latencie a dostupnosti potrebujú vlastné definície udalostí aj menovatele. Ak hodnotíš vzorku, uvádzaj spôsob jej výberu a neistotu odhadu. Vzorka s prednostne zachovanými chybami bez váženia neodhaduje chybovosť celej prevádzky.
 
 Pre LLM systém pridaj jedno pravidlo navyše: trvaj na tom, aby aspoň jedno SLI bolo SLI kvality, ktoré vypočíta online evaluácia. Služba, ktorá je 100% dostupná a z 30% halucinuje, spĺňa SLO na dostupnosť a pritom sklame každého používateľa, čo jej dôveroval; bez cieľa na kvalitu ostáva dashboard zelený presne nad týmto.
 
@@ -125,7 +125,7 @@ Náklad sa začína jednou vecou — **token accounting** (účtovanie tokenov) 
 
 Konvencie OpenTelemetry GenAI dávajú presné nástroje. Atribúty: `gen_ai.usage.input_tokens` a `gen_ai.usage.output_tokens` (rozdelenie tokenov), `gen_ai.request.model` a `gen_ai.response.model` (čo si žiadal verzus čo odpovedalo), `gen_ai.operation.name`, `gen_ai.provider.name`. Metriky: `gen_ai.client.token.usage` v jednotkách `{token}` a `gen_ai.client.operation.duration` v sekundách.
 
-Ako pri obsahu správ, aj tieto majú stav Development v Semantic Conventions v1.41.x (2026), prihlásiš sa cez `OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental` — dosť stabilné, aby si na nich mohol postaviť systém, no ešte nie zmrazené.
+Aj tieto konvencie majú v použitej verzii Semantic Conventions v1.41.0 stav Development. Migračné pokyny pre staršie inštrumentácie používajú `OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental`. Sú použiteľné experimentálne, no stále sa môžu zmeniť nekompatibilne; pripni a otestuj verziu konvencií, ktorú tvoja inštrumentácia emituje.
 
 Spočítať tokeny ešte neznamená vedieť, kam idú — to je **cost attribution** (priradenie nákladov). Označ spany atribútmi feature, tenant, route, model; mesačný účet potom vie odpovedať, „ktorá funkcia — alebo ktorý zákazník — míňa rozpočet“, namiesto neužitočného súhrnu „minuli sme X USD“. A tým značkovacím mechanizmom sú tie isté OTel atribúty.
 
@@ -145,15 +145,15 @@ Spôsoby zlyhania sa oplatí povedať priamo, lebo na každom z nich sa už neja
 
 - **Pozorovať LLM aplikáciu môže stáť ako samotná LLM aplikácia.** Nechaj si 100% tracov s obsahom a účet za observability začne konkurovať účtu za inferenciu, ktorý mal strážiť. Pri veľkom rozsahu robí observability cenovo únosnou práve vzorkovanie; keď ho berieš ako optimalizáciu, ktorá počká, účet ti ujde.
 - **Ani tail sampling nie je zadarmo.** Pri obrovskom rozsahu je jeho stavové odkladanie a load-balancing podľa trace ID samo osebe drahé a prevádzkovo náročné a spraviť to dobre si žiada nemalú investíciu. Získaš tým schopnosť nechať si zaujímavé tracy; nezískaš ju však lacno.
-- **Logovať surové prompty a výstupy bez de-identifikácie je incident v oblasti súladu**, ktorý raz určite príde. Najlepšie odladiteľný log je ten, ktorý sa objaví v správe o úniku — maskuj na vstupe, alebo si to nenechávaj.
+- **Kopírovanie pôvodných promptov a výstupov do diagnostiky bez účelu pre jednotlivé polia, pravidiel prístupu a doby uchovávania zbytočne vystavuje údaje riziku.** Potrebné osobné údaje patria do oprávneného podnikového záznamu; diagnostické kópie potrebujú vlastné odôvodnenie a ochranu.
 - **Alerting na každú metriku končí v alert fatigue** a alert fatigue končí tým, že skutočná regresia prebehne neprečítaná. Viac alertov neznamená viac bezpečia za bodom, kde ich ešte niekto číta.
 - **SLO na kvalitu bez online evaluácie za chrbtom je divadlo dostupnosti:** stena zelených dashboardov nad službou, ktorá je sebavedomo a merateľne nesprávna. Cieľ má cenu presne takú, akú má meranie pod ním.
 
 ## Čo si odniesť z lekcie \{#what-to-take-away}
 
-- Vzorkovanie je pri veľkom rozsahu nevyhnutné a stratégia rozhoduje, čo si necháš: head-based je lacné a bezstavové, ale rozhoduje skôr, než je známy výsledok, takže nevie prednostne držať chyby; tail-based si odloží celý trace a rozhodne podľa výsledku, za cenu stavovej pamäte a load-balancingu (procesor `tail_sampling` v Collector Contrib); priority/hybrid si necháva 100% tracov, ktoré nesmieš stratiť, a zvyšok vzorkuje.
+- Vzorkovanie je pri veľkom rozsahu nevyhnutné a stratégia rozhoduje, čo si necháš: head-based je lacné a bezstavové, ale rozhoduje skôr, než je známy výsledok, takže nevie prednostne držať chyby; tail-based si odloží celý trace a rozhodne podľa výsledku, za cenu stavovej pamäte a load-balancingu (procesor `tail_sampling` v Collector Contrib); priority/hybrid má zachovať tracy spĺňajúce podmienky a zvyšok vzorkovať. Ak mu predchádza head sampler, zachovanie každej chyby už nemožno zaručiť.
 - Pri LLM systéme „zaujímavé“ zahŕňa kvalitu, nie len chyby a latenciu — odpoveď so stavom 200 OK môže byť halucinácia — takže rozhodnutie o zachovaní je napojené na skóre evaluácie, palec dole, blok od guardrails alebo odmietnutie.
-- Najlepšie odladiteľné dáta sú tie najcitlivejšie, preto je obsah správ v OTel GenAI konvenciách voliteľný a predvolene vypnutý, kým metadáta ostávajú zapnuté; bráň sa de-identifikáciou pred úložiskom, úrovňami uchovávania, riadením prístupu k UI tracov a tým, čo z expozície uberie už samotné vzorkovanie.
+- Najlepšie odladiteľné dáta sú tie najcitlivejšie, preto je obsah správ v OTel GenAI konvenciách voliteľný a predvolene vypnutý, kým metadáta ostávajú zapnuté; pre každé pole zvoľ vynechanie, úpravu alebo uchovanie pôvodného obsahu podľa diagnostického účelu, nevyhnutnosti a oprávnení. Pridaj úrovne uchovávania a riadenie prístupu. Vzorkovanie zmenšuje objem vystavených údajov, ale neoprávňuje ich zbierať.
 - Maskovanie je voľba podľa poľa a podľa úrovne: nevratné (hash, redact, replace) maximalizuje súkromie a zabíja odladiteľnosť; vratné (encrypt) necháva oprávnenú cestu späť, ale je to pseudonymizácia, nie anonymizácia, a kľúč sa stáva príťažou.
 - Vykresli golden signals plus prvoradý pilier kvality; stanov SLI, SLO a error budget s aspoň jedným SLI kvality, ktoré počíta online evaluácia; a alerty spúšťaj na burn rate a príznaky, ktoré používateľ pocíti, nie na každú metriku, inak alert fatigue pochová skutočnú regresiu.
 - Triáž regresie je najprv detekcia, potom priradenie: štatisticky skutočný pokles v rade kvality, latencie alebo nákladu, lokalizovaný na etapu naprieč spanmi tracu (klesli skóre vyhľadávania, pohol sa `gen_ai.response.model`, zmenil sa prompt, posunulo sa rozloženie vstupov), skorelovaný so zmenovou udalosťou — a zlyhávajúce tracy sa stávajú novými prípadmi v golden sete.

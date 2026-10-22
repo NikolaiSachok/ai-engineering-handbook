@@ -5,7 +5,7 @@ slug: /part-1-rag/cross-cutting/observability/
 
 # Dem System im Produktivbetrieb bei der Arbeit zusehen
 
-Die Evaluierung sagt Ihnen, ob das System gut ist – offline, auf einem Datensatz. Die **Guardrails**
+Die Evaluierung misst Qualität offline auf Datensätzen und online an Stichproben aus dem Produktivbetrieb. Die **Guardrails**
 (Leitplanken – Schutzregeln um das Modell) sorgen dafür, dass es sicher bleibt. **Die Observability** – auf
 Deutsch die Beobachtbarkeit – zeigt, was das System im Produktivbetrieb an echten Anfragen tatsächlich tut.
 Ohne sie bleiben die Probleme des Produktivbetriebs unsichtbar: Sie wissen nicht, *warum* eine bestimmte

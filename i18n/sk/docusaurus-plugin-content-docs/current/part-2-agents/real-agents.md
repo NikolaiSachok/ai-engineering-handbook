@@ -84,6 +84,8 @@ Zaujímavý rozdiel je v tom, kde stav žije. Claude ho drží v lokálnych súb
 
 Háčik sa štiepi na dvoje. Stav, ktorý si nikdy neuložil, sa nedá obnoviť — a aj keď si ho uložil, „obnova“ je bezpečná len vtedy, keď vieš povedať, čo sa naozaj dokončilo. Tá druhá polovica nie je fičúra API; je to disciplína, a vedie rovno k historke z praxe o tom, ako posudzovať postup podľa reálneho stavu, nie podľa časovej pečiatky (→ [plánovanie a slučky](./planning-loops/index.md)).
 
+Over tento postup na hranici medzi účinkom a potvrdeným zápisom: [metóda pádu a obnovy](./durable-runs/deep-dive.md#proving-it-rather-than-claiming-it) a [kontrola v AI SDLC](/ai-sdlc/part-3-verification/layered-gates#crash-resume-verification).
+
 ## Hooky a guardrails: vlož kontroly, never slučke naslepo \{#hooks-and-guardrails--interpose-checks-dont-trust-the-loop}
 
 Slučke neveríš naslepo. Okolo volaní nástrojov a I/O vkladáš kontroly: pre-hook, ktorý vie zablokovať alebo vyžiadať schválenie pred nebezpečnou akciou, post-hook, ktorý preverí výstup, vrstvu politík, ktorá určuje, čo je vôbec dovolené. Je to princíp najnižších oprávnení (least privilege) z používania nástrojov prevedený do konkrétnych mechanizmov (→ [používanie nástrojov](./tool-use/index.md)).
