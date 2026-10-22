@@ -1159,6 +1159,15 @@ obranné záťaže; hraničné modely tam často zaostávajú alebo chýbajú.
 
 ## Production — ekosystém nástrojov \{#tooling-ecosystem}
 
+**Validátor (validator)** — kontrola hodnoty v Guardrails AI, ktorá vráti úspech alebo zlyhanie.
+Vlastné pravidlá pre danú oblasť implementuješ cez API `Validator`.
+
+**on_fail** — nastavenie akcie po zlyhaní validátora v Guardrails AI: napríklad vyvolanie výnimky,
+opätovné vyžiadanie odpovede, oprava alebo zápis do logu.
+
+**OpenTelemetry Collector** — samostatná služba, ktorá prijíma, spracúva a exportuje telemetriu.
+Konfigurovateľná pipeline oddeľuje inštrumentáciu aplikácie od backendu na ukladanie a analýzu telemetrie.
+
 **Instrumentation (inštrumentácia)** — pridanie kódu alebo SDK-hookov, ktoré vysielajú trace, spany a metriky
 z pipeline; predpoklad pre observability.
 
@@ -1176,6 +1185,9 @@ zabudované v eval-nástrojoch a platformových red-team funkciách.
 <a id="llmops"></a>
 
 ## Production — LLMOps \{#llmops}
+
+**SFT (supervised fine-tuning)** — doladenie modelu na označených dvojiciach vstup–výstup.
+Mení jeho správanie, štýl, formát odpovedí alebo úspešnosť pri konkrétnych úlohách.
 
 **LLMOps** — operačná disciplína pre LLM-aplikácie: nasadzovanie, monitorovanie a riadenie nákladov
 systémov, ktorých správanie žije v promptoch, verziách modelov, indexoch a konfiguráciách, a nie len v kóde.

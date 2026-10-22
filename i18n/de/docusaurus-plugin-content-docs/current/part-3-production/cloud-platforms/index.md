@@ -64,7 +64,7 @@ Mitte 2026 sehen die drei großen Plattformen so aus.
 Microsoft und historisch der Weg, OpenAI-Modelle als hauseigenen Azure-Dienst zu beziehen; die Plattform darum
 herum wurde auf der Ignite im November 2025 von Azure AI Foundry in Microsoft Foundry umbenannt, und die Modelle
 darin werden inzwischen als „Foundry Models“ angeboten, aufgeteilt in „Models sold by Azure“ und Einträge aus
-dem Marktplatz. **[AWS Bedrock](https://aws.amazon.com/bedrock/)** ist das von Amazon – der einzige der drei
+dem Marktplatz. **[Amazon Bedrock](https://aws.amazon.com/bedrock/)** ist das von Amazon – der einzige der drei
 Namen, der unverändert geblieben ist. **[Vertex AI](https://cloud.google.com/vertex-ai)** ist das von Google
 Cloud und wird, während diese Seite entsteht, gerade umbenannt: in die Gemini Enterprise Agent Platform,
 angekündigt im April 2026. Die Umstellung der Konsole war im Mai 2026 abgeschlossen, die API-Endpunkte sind
@@ -97,7 +97,7 @@ Plattform um ihn herum bemerkenswerterweise überstanden hat.
 | Plattform | Eigenes Ankermodell | Breite des Katalogs |
 |---|---|---|
 | Microsoft Foundry (Azure OpenAI) | die GPT-Familie von OpenAI, angeboten als hauseigener Azure-Dienst | ~1900 Modelle: Microsoft, OpenAI, Anthropic, Mistral, xAI, Meta, DeepSeek, Hugging Face |
-| AWS Bedrock | Amazons eigene Nova-Familie | vom ersten Tag an mehrere Anbieter: Anthropic, Meta, Mistral, Cohere und weitere – inzwischen auch OpenAI |
+| Amazon Bedrock | Amazons eigene Nova-Familie | vom ersten Tag an mehrere Anbieter: Anthropic, Meta, Mistral, Cohere und weitere – inzwischen auch OpenAI |
 | Gemini Enterprise Agent Platform (Vertex AI) | Gemini | Model Garden: Modelle von Drittanbietern (darunter Claude) und Modelle mit offenen Gewichten |
 
 Wichtiger als jede einzelne Zeile ist, was daraus folgt. **Früher entschied die Wahl des Modells über die Wahl
@@ -174,16 +174,18 @@ Make-or-Buy-Frage, der sich [das Tooling-Ökosystem](../tooling-ecosystem/index.
 ## Durchsatz und Preismodelle \{#throughput-and-pricing-models}
 
 In diesem Abschnitt finden Sie keinen einzigen Preis, denn absolute Preise veralten schneller als die Namen der
-Plattformen. Die **Preismodelle** dagegen sind stabil – anders als die Preise selbst –, und jede Plattform
-bietet dieselben zwei Verbrauchsmodi. **On-Demand** heißt: Abrechnung je Token auf gemeinsam genutzter
+Plattformen. Für interaktive Inferenz ist die wesentliche Unterscheidung die zwischen gemeinsam genutzter
+On-Demand-Kapazität und reservierter Kapazität. **On-Demand** heißt: Abrechnung je Token auf gemeinsam genutzter
 Kapazität, begrenzt durch Rate Limits und Kontingente. Mit **reservierter Kapazität** kaufen Sie dedizierten
 Durchsatz mit planbarer Latenz für gleichbleibend hohe Last – allgemein **bereitgestellter Durchsatz**
 (*provisioned throughput*); bei den einzelnen Anbietern: PTU (*provisioned throughput units*) bei Azure,
-Provisioned Throughput bei Vertex und bei Bedrock der Tarif `Reserved`, nachdem Bedrock seine Preise im November
-2025 in die Stufen `Reserved`, `Priority`, `Standard` und `Flex` neu geordnet hat (der alte Name „Provisioned
-Throughput“ lebt für ältere und angepasste Modelle weiter).
+Provisioned Throughput bei Vertex und bei Bedrock der Tarif `Reserved` (daneben besteht das ältere Produkt
+„Provisioned Throughput“ für ältere und angepasste Modelle weiter). Bedrocks Tarife `Standard`, `Priority`
+und `Flex` bedienen dagegen On-Demand-Anfragen: Sie gewichten Antwortpriorität und Preis unterschiedlich,
+ohne Kapazität zu reservieren. Auch Google trennt die PayGo-Optionen `Standard`, `Priority` und `Flex` von
+Provisioned Throughput.
 
-Es gibt einen dritten Tarif, den Sie kennen sollten: den **Batch-Tarif** (*batch tier*). Alle drei Plattformen
+Für Aufgaben ohne interaktive Antwort gibt es einen weiteren Verarbeitungsmodus: **Batch**. Alle drei Plattformen
 dokumentieren, dass sie asynchron und vergünstigt verarbeiten, wenn niemand auf die Antwort wartet: Für die
 unterstützten Modelle kostet das rund den halben On-Demand-Preis (Azure Batch, Bedrock batch inference, Vertex
 batch predictions). Braucht eine Arbeitslast keine Antwort im Sekundenbereich – nächtliche Dokumentverarbeitung,

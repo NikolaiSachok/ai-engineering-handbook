@@ -64,7 +64,7 @@ With attribution in hand, two allocation models sit on top, and the FinOps Found
 
 The pressure to do any of this at all has stopped being optional. The FinOps Foundation's State of FinOps 2026 reports that 98% of respondents now manage AI spend, up from 31% two years earlier, and names granular monitoring of AI spend — tokens, LLM requests, GPU utilisation — the single most-requested tooling capability of the year. (The same body's finding that an unoptimised deployment can cost 30× to 200× an optimised one is cited in the cloud-platforms deep-dive; it is the reason the levers exist.)
 
-Three org-level controls do the bounding, and all three live where every request already passes — the LLM gateway from Part 1. The first is budgets with alerts: per-team and per-feature token budgets, with a soft cap that warns and a hard cap that rejects or downgrades. The runtime enforcement of those caps is the observability deep-dive's subject; the *policy* of who gets which budget is decided here. The second is model-tier routing promoted from a tactic to a rule — Part 1's model routing made into governance, so cheap traffic goes to a cheap model by default and the flagship is opt-in and justified. It is the lever that moves the bill most. The third is a spend review inside the deploy checklist: because a prompt change is a cost change, the release gate in the next section checks projected cost-per-request, not quality alone.
+Three org-level controls do the bounding, and all three live where every request already passes — the LLM gateway from Part 1. The first is budgets with alerts: per-team and per-feature spending limits, with a soft cap that warns and a hard cap that rejects or downgrades. The runtime enforcement of those caps is the observability deep-dive's subject; the *policy* of who gets which budget is decided here. The second is model-tier routing promoted from a tactic to a rule — Part 1's model routing made into governance, so cheap traffic goes to a cheap model by default and the flagship is opt-in and justified. It is the lever that moves the bill most. The third is a spend review inside the deploy checklist: because a prompt change is a cost change, the release gate in the next section checks projected cost-per-request, not quality alone.
 
 Each control fails in a predictable way when it is skipped. Chargeback billed before attribution is trustworthy turns into disputes and gaming. A budget with only soft caps produces alerts no one actions while the bill lands anyway. And with no default cheap-model route, every request pays flagship price out of pure inertia.
 
@@ -143,4 +143,7 @@ flowchart TB
 
 See also: the SLI/SLO/burn-rate mechanics and the detect→attribute→feed-eval loop live in the [observability deep dive](../../part-1-rag/cross-cutting/observability/deep-dive.md); per-platform pricing lives in the [cloud-platforms deep dive](../cloud-platforms/deep-dive.md).
 
-**[New terms](../../glossary.md#llmops)**: SFT, DPO, RFT, grader, LoRA / PEFT, showback, chargeback, error budget policy, release freeze, release gate, job queue, dead-letter queue (DLQ), backpressure, load shedding.
+**[New terms](../../glossary.md#llmops)**: SFT, grader, showback, chargeback, error budget policy, release freeze, release gate, job queue, dead-letter queue (DLQ).
+
+**Revisited terms**: [DPO, RFT, LoRA / PEFT](../../glossary.md#cloud-platforms);
+[backpressure, load shedding](../../glossary.md#serving).

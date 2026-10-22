@@ -1159,6 +1159,15 @@ mid-2026. ↗ [GitHub](https://github.com/open-telemetry/semantic-conventions-ge
 **Red-teaming** — deliberately attacking your own system to measure its defences (attack success rate);
 productized in eval tools and platform red-team features.
 
+**Validator** — in Guardrails AI, a check that returns a pass or failure for a value; custom validators
+implement a domain rule through the `Validator` API.
+
+**on_fail** — the Guardrails AI action attached to a validator that determines what happens after a failed
+check: for example, raise an exception, re-ask the model, apply a fix, or record the failure.
+
+**OpenTelemetry Collector** — a service that receives, processes, and exports telemetry, letting
+applications send traces to a configurable backend through a separate telemetry pipeline.
+
 <a id="llmops"></a>
 
 ## Production — LLMOps \{#llmops}
@@ -1199,6 +1208,9 @@ similarity; saves the whole request's cost at the risk of a false hit on a subtl
 
 **Drift** — the world shifting under a fixed configuration: input drift (traffic asks new kinds of
 questions), corpus drift (documents age), upstream model drift (the provider changes an unpinned model).
+
+**SFT (supervised fine-tuning)** — training a model on labelled input–output examples to change its
+behaviour, such as its style, formatting, or task performance.
 
 **Grader** — in reinforcement fine-tuning, the scorer you define that rates each candidate answer; its
 score is the reward signal the training optimises against.

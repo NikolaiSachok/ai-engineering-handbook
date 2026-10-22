@@ -154,9 +154,9 @@ you actually optimise is quality per dollar.
 Not every request deserves the flagship model. Classification, simple lookups, short factual questions —
 a cheap, fast model handles them; the expensive one earns its price on hard generation. **Model routing**
 sends each request to the cheapest model that can handle it, and the router can be a rule, a trained
-classifier, or a model itself. Mind the terminology: this is routing *between models* — the third routing
-sense in this book. Part I's query router picked an index, Part II's agent picked a tool; this one picks
-who answers.
+classifier, or a model itself. Mind the terminology: this is routing *between models*. Part I's query
+router picked an index, Part II's agent picked a tool, and cloud-platform routing can pick a region or
+endpoint; this router picks which model answers.
 
 ### Fallbacks and the gateway \{#fallbacks-and-the-gateway}
 
@@ -169,11 +169,11 @@ budgets, and per-team rate limits. [LiteLLM](https://www.litellm.ai) is the open
 ### Caching — twice \{#caching--twice}
 
 The first cache is the provider's. **Prompt caching** stores the repeated *prefix* of your prompt — the
-system prompt, few-shot examples, static context — so it isn't reprocessed on every call. Both major
-providers now bill cached input tokens at flat rates on the order of one tenth of the base input price
-(the exact multipliers live on their pricing pages). The honest clause: cache *writes* cost more than
-base input — Anthropic charges 1.25x or 2x depending on cache lifetime, OpenAI 1.25x on its newest
-models — so caching a prefix that's never re-read is a net loss. The design consequence: build prompts
+system prompt, few-shot examples, static context — so it isn't reprocessed on every call. Anthropic and OpenAI
+bill cache reads below fresh input, with discounts that depend on the model and cache policy; many models
+charge around one tenth of the base input price (check the exact multipliers on their pricing pages).
+The honest clause: cache *writes* can carry a premium over base input, depending on the provider, model,
+and cache lifetime. Where that premium applies, caching a prefix that is never re-read is a net loss. The design consequence: build prompts
 cache-first, static prefix then variable suffix, since anything dynamic ends the reusable prefix right
 where it appears.
 
@@ -200,7 +200,7 @@ classify the workload as offline and collect the discount.
 
 ### Budgets close the loop \{#budgets-close-the-loop}
 
-The mature practice — common, though not a standard — is per-team and per-feature token budgets with
+The mature practice — common, though not a standard — is per-team and per-feature spending limits with
 alerts, enforced where all traffic already flows: at the gateway. And cost review joins the deploy
 checklist, because the lesson's opening delta cuts both ways — a prompt change is a cost change. The loop
 you saw at the top of this page runs on quality *and* on dollars.

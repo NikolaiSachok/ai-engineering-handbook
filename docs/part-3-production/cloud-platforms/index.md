@@ -60,7 +60,7 @@ things to the model.
 As of mid-2026 the big three look like this. **[Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)** is Microsoft's offering, historically the way
 to consume OpenAI models as a first-party Azure service; the platform around it was renamed from Azure AI
 Foundry to Microsoft Foundry at Ignite in November 2025, and models in it are now offered as "Foundry
-Models," split between "Models sold by Azure" and marketplace listings. **[AWS Bedrock](https://aws.amazon.com/bedrock/)** is Amazon's — the
+Models," split between "Models sold by Azure" and marketplace listings. **[Amazon Bedrock](https://aws.amazon.com/bedrock/)** is Amazon's — the
 one name of the three that has held still. **[Vertex AI](https://cloud.google.com/vertex-ai)** is Google Cloud's, and it is mid-rename as this
 page is written: the Gemini Enterprise Agent Platform, announced in April 2026. The console migration
 finished in May 2026, the API endpoints didn't move, and the documentation is genuinely caught between the
@@ -91,7 +91,7 @@ that, notably, survived the platform rename around it.
 | Platform | First-party anchor | Catalogue breadth |
 |---|---|---|
 | Microsoft Foundry (Azure OpenAI) | OpenAI GPT family as a first-party Azure service | ~1,900 models: Microsoft, OpenAI, Anthropic, Mistral, xAI, Meta, DeepSeek, Hugging Face |
-| AWS Bedrock | Amazon's own Nova family | Multi-vendor from day one: Anthropic, Meta, Mistral, Cohere, and more — now including OpenAI |
+| Amazon Bedrock | Amazon's own Nova family | Multi-vendor from day one: Anthropic, Meta, Mistral, Cohere, and more — now including OpenAI |
 | Gemini Enterprise Agent Platform (Vertex AI) | Gemini | Model Garden: third-party models (including Claude) plus open models |
 
 The consequence is bigger than any single row. Model choice used to dictate cloud choice: if you needed GPT,
@@ -160,15 +160,16 @@ make-or-buy question that the [tooling ecosystem](../tooling-ecosystem/index.md)
 ## Throughput and pricing models \{#throughput-and-pricing-models}
 
 You will not find a single price in this section, because absolute prices rot faster than platform names.
-The pricing *models*, though, are stable, and every platform offers the same two consumption modes.
+The main distinction for interactive inference is shared on-demand capacity versus reserved capacity.
 On-demand is pay-per-token on shared capacity, subject to rate limits and quotas. Reserved capacity buys
 dedicated throughput with predictable latency for steady high load — generically, **provisioned
 throughput**; locally: PTU (provisioned throughput units) on Azure, Provisioned Throughput on Vertex, and on
-Bedrock the Reserved service tier, after Bedrock restructured its pricing into Reserved, Priority, Standard,
-and Flex tiers in November 2025 (the legacy "Provisioned Throughput" name survives for older and custom
-models).
+Bedrock the Reserved service tier (the separate legacy "Provisioned Throughput" product survives for older
+and custom models). Bedrock's Standard, Priority, and Flex tiers instead serve on-demand requests, trading
+response priority against price without a capacity reservation. Google likewise separates Standard,
+Priority, and Flex PayGo from Provisioned Throughput.
 
-There is a third tier worth knowing: batch. All three platforms document discounted asynchronous batch
+For non-interactive work, there is another processing mode: batch. All three platforms document discounted asynchronous batch
 processing for non-interactive workloads — roughly half the on-demand price, for supported models (Azure
 Batch, Bedrock batch inference, Vertex batch predictions). If a workload doesn't need an answer in seconds —
 nightly document processing, bulk classification, offline eval runs — batch mode is the cheapest tokens the

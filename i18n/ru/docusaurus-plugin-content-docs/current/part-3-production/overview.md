@@ -13,10 +13,11 @@ sidebar_label: Обзор части
 
 ## Что внутри \{#whats-inside}
 
+- **[Почему AI-системы ломаются в проде](./production-failures.md)** — карта сбоев и способов с ними справиться.
 - **[Serving — сервинг на FastAPI и Docker](./serving/index.md)** — как завернуть модель или агента в сервис:
   API, стриминг, контейнер, инференс-серверы.
 - **[Облачные AI-платформы](./cloud-platforms/index.md)** — [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service), [Amazon Bedrock](https://aws.amazon.com/bedrock/), Google Cloud Gemini
-  Enterprise Agent Platform (экс-Vertex AI): что они дают и чем отличаются.
+  Enterprise Agent Platform ([Vertex AI](https://cloud.google.com/vertex-ai) в более ранней документации): что они дают и чем отличаются.
 - **[Экосистема инструментов](./tooling-ecosystem/index.md)** — eval, guardrails, observability в проде: чем
   мерить, чем смотреть, чем защищать.
 - **[LLMOps — деплой, мониторинг, стоимость](./llmops/index.md)** — жизнь LLM-системы после релиза.

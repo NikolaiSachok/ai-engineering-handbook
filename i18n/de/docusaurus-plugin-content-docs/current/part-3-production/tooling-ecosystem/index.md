@@ -5,12 +5,11 @@ slug: /part-3-production/tooling-ecosystem/
 
 # Die Schuld aus Teil I begleichen
 
-Drei Lektionen in Teil I stellten am Ende denselben Schuldschein aus.
-[Evaluierung](../../part-1-rag/cross-cutting/evaluation/index.md),
-[Guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) und
-[Observability](../../part-1-rag/cross-cutting/observability/index.md) erklärten jeweils ein Prinzip und
-schoben die Frage nach den Produkten auf: „Die Werkzeuge sind eine eigene Schicht, die erst später an die Reihe kommt; hier
-geht es um das Prinzip.“ Später ist jetzt. Die Konzepte haben Sie aus Teil I – den Goldstandard, den Trace, die
+Teil I hat die Prinzipien der [Evaluierung](../../part-1-rag/cross-cutting/evaluation/index.md),
+der [Guardrails](../../part-1-rag/cross-cutting/guardrails/index.md) und der
+[Observability](../../part-1-rag/cross-cutting/observability/index.md) erklärt. Die Lektionen zu Guardrails
+und Observability haben die Werkzeuge ausdrücklich auf eine eigene Schicht vertagt. Diese Lektion behandelt
+die Werkzeuge für alle drei Themen. Die Konzepte haben Sie aus Teil I – den Goldstandard, den Trace, die
 Erfolgsrate der Angriffe. Diese Lektion bildet sie auf die Werkzeuglandschaft von 2026 ab und beantwortet die
 Frage, die die früheren Lektionen offengelassen haben: Was installieren Sie tatsächlich, und wann?
 
@@ -51,9 +50,9 @@ für das Red-Teaming mit – merken Sie sich das für den Abschnitt über die Gu
 
 Und jetzt der Teil, den kein Werkzeug mitliefert: der Goldstandard. Jedes dieser Werkzeuge berechnet seine
 Metriken anhand der Beispiele, die *Sie* beisteuern, und für die Qualität des Datensatzes bleiben Sie
-zuständig. Der Satz
-aus Teil I, „ein kleiner, sauberer Datensatz schlägt einen großen, verrauschten“, hört nicht auf zu gelten,
-nur weil die Metriken jetzt aus einer Bibliothek kommen. Ragas macht Ihnen Vorschläge für Beispiele, aber
+zuständig. Die Erkenntnis aus Teil I, dass ein kleiner, sauberer Datensatz einen großen, verrauschten
+schlägt, gilt weiterhin,
+auch wenn die Metriken jetzt aus einer Bibliothek kommen. Ragas macht Ihnen Vorschläge für Beispiele, aber
 über die Qualität entscheidet nach wie vor die Prüfung durch einen Menschen.
 
 ## Observability-Plattformen \{#observability-platforms}

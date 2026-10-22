@@ -30,7 +30,7 @@ The remedy is **backpressure**: deliberately bound concurrency with a semaphore 
 
 **Admission control** sharpens the same idea: do not even enqueue work that will already have blown the client's timeout by the time you reach it, because rejecting it up front is cheaper than spending a GPU slot computing an answer no one is still waiting for. And fairness needs structure — per-tenant queues and per-tenant concurrency caps stop one heavy user from starving everyone else — it is Part 1's per-user rate limit, now built into the admission path rather than bolted on.
 
-The principle underneath it all: bound at the scarce resource, not at the connection. The waiting connection is cheap, as Part 1 showed, but each in-flight request still consumes something scarce downstream — a GPU batch slot, or a slice of the provider's token budget. So the cap belongs there. In practice it lives at two levels: the app layer bounds with its own semaphore and queue, and the inference server enforces its own admission through `max_num_seqs` (below). Belt and braces.
+The principle underneath it all: bound at the scarce resource, not at the connection. The waiting connection is cheap, as Part 1 showed, but each in-flight request still consumes something scarce downstream — a GPU batch slot, or a slice of the provider's tokens-per-minute quota. So the cap belongs there. In practice it lives at two levels: the app layer bounds with its own semaphore and queue, and the inference server enforces its own admission through `max_num_seqs` (below). Belt and braces.
 
 ```mermaid
 flowchart TB

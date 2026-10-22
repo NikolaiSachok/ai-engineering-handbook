@@ -1385,6 +1385,16 @@ spielt mit den Guardrails-Frameworks zusammen, die die Prüfungen orchestrieren.
 **das Red-Teaming** – das eigene System absichtlich angreifen, um seine Abwehr zu messen (die Erfolgsrate der
 Angriffe); als Funktion in den Werkzeugen für die Evaluierung und in den Plattformen enthalten.
 
+**der Validator** – in Guardrails AI eine Prüfung, die für einen Wert Erfolg oder Fehlschlag
+zurückgibt; eigene Validatoren setzen über die `Validator`-API Regeln der jeweiligen Domäne um.
+
+**on_fail** – die einem Validator zugeordnete Aktion in Guardrails AI, die nach einer fehlgeschlagenen Prüfung
+ausgeführt wird: etwa eine Exception auslösen, das Modell erneut fragen, eine Korrektur anwenden oder den
+Fehler protokollieren.
+
+**der OpenTelemetry Collector** – ein Dienst, der Telemetrie empfängt, verarbeitet und exportiert. Über diese
+separate Telemetrie-Pipeline können Anwendungen ihre Traces an ein konfigurierbares Backend senden.
+
 <a id="llmops"></a>
 
 ## Produktivbetrieb – LLMOps \{#llmops}
@@ -1432,6 +1442,9 @@ semantische Cache.
 **der Drift** – die Welt verschiebt sich unter einer eingefrorenen Konfiguration: der Eingabedrift (der Verkehr
 fragt nach neuen Dingen), der Korpusdrift (Dokumente altern) und der vorgelagerte Modelldrift (der Anbieter ändert
 ein Modell ohne festgelegte Version).
+
+**SFT (Supervised Fine-Tuning)** – Training eines Modells mit gelabelten Eingabe-Ausgabe-Beispielen, um sein
+Verhalten zu verändern, etwa seinen Stil, seine Formatierung oder seine Leistung bei einer Aufgabe.
 
 **der Bewerter (grader)** – beim Reinforcement-Fine-Tuning der Bepunkter, den Sie selbst festlegen und der jeden
 Antwortkandidaten bewertet; seine Punktzahl ist das Belohnungssignal, gegen das das Training optimiert.

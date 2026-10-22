@@ -69,7 +69,7 @@ Nič z toho už nie je nepovinné. State of FinOps 2026 od FinOps Foundation uv�
 
 Ohraničenie robia tri kontroly na úrovni organizácie a všetky tri žijú tam, kadiaľ už každá požiadavka prechádza — na LLM-bráne.
 
-1. **Rozpočty s alertmi:** tokenové rozpočty na tím a na funkciu, s mäkkým stropom (soft cap), ktorý varuje, a tvrdým stropom (hard cap), ktorý odmietne alebo prepne na lacnejší variant. Vynucovanie tých stropov za behu je predmet prehĺbenia o observability; *politika* toho, kto akú kvótu dostane, sa rozhoduje tu.
+1. **Rozpočty s alertmi:** limity výdavkov na tím a na funkciu, s mäkkým stropom (soft cap), ktorý varuje, a tvrdým stropom (hard cap), ktorý odmietne alebo prepne na lacnejší variant. Vynucovanie tých stropov za behu je predmet prehĺbenia o observability; *politika* toho, kto aký rozpočet dostane, sa rozhoduje tu.
 2. **Smerovanie podľa úrovne modelu**, povýšené z taktiky na pravidlo — smerovanie medzi modelmi premenené na governance, aby nenáročné požiadavky šli na lacný model v predvolenom nastavení a vlajkový model bol vec, ktorú si vedome zvolíš a obhájiš. Páka, ktorá účtom pohne najviac.
 3. **Kontrola výdavkov v zozname pred nasadením:** keďže zmena promptu je zmena nákladov, releasová brána z ďalšej sekcie kontroluje aj predpokladaný náklad na požiadavku, nielen kvalitu.
 
@@ -152,4 +152,7 @@ flowchart TB
 
 Pozri aj: mechanika SLI/SLO a rýchlosti míňania rozpočtu chýb spolu so slučkou rozpoznaj → priraď → priveď do evalu žije v [prehĺbení o observability](../../part-1-rag/cross-cutting/observability/deep-dive.md); ceny jednotlivých platforiem nájdeš v [prehĺbení o cloudových platformách](../cloud-platforms/deep-dive.md).
 
-**[Nové pojmy](../../glossary.md#llmops)**: SFT, DPO, RFT, grader, LoRA / PEFT, showback, chargeback, error budget policy, release freeze, release gate, job queue, dead-letter queue (DLQ), backpressure, load shedding.
+**[Nové pojmy](../../glossary.md#llmops)**: SFT, grader, showback, chargeback, error budget policy, release freeze, release gate, job queue, dead-letter queue (DLQ).
+
+**Pripomenuté pojmy**: [DPO, RFT, LoRA / PEFT](../../glossary.md#cloud-platforms);
+[backpressure, load shedding](../../glossary.md#serving).
