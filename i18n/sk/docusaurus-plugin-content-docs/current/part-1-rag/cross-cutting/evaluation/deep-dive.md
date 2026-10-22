@@ -76,7 +76,7 @@ Počíta sa ako vážený priemer po pozíciách. Na každej pozícii k je Preci
 Context Precision@K = Σ_k (Precision@k · v_k) / (total relevant items in top-K)
 ```
 
-kde v_k je 1, keď je chunk na pozícii k relevantný, a 0 inak. Vzorcom získaš citlivosť na poradie: vezmi množinu výsledkov so skóre okolo 1,0 a presuň jediný nerelevantný chunk z pozície 2 na pozíciu 1 — do množiny nič nepribudlo ani z nej nič neubudlo, zmenilo sa len poradie — a skóre spadne zhruba na 0,5. Rozhoduje pozícia v poradí.
+kde v_k je 1, keď je chunk na pozícii k relevantný, a 0 inak. Vezmi K = 2: relevantný chunk a za ním nerelevantný. Pri v = [1, 0] je skóre (1 × 1 + 0,5 × 0) / 1 = 1,0. Prehoď ich: pri v = [0, 1] je skóre (0 × 0 + 0,5 × 1) / 1 = 0,5. Nič nepribudlo ani neubudlo, zmenilo sa len poradie. Rozhoduje pozícia v poradí.
 
 Toto je práve tá metrika, ktorá odmeňuje prácu rerankera z vrstvy Retrieval: dostať správne chunky do množiny je nevyhnutné, ale context precision skóruje až ich poradie — teda či naozaj skončia navrchu.
 

@@ -16,7 +16,7 @@ The word doing the work is *independent*. Parallelism is valid only when no call
 
 The knobs that control this differ by vendor, and the exact names matter.
 
-- **Anthropic Claude** batches by default — Claude 4 models fire parallel calls whenever a request benefits. You turn it off with `disable_parallel_tool_use: true` — and note where it lives: inside the `tool_choice` object, not as a top-level request parameter. With `tool_choice` type `auto`, the model calls at most one tool per response; with type `any` or `tool`, exactly one.
+- **Anthropic Claude** batches by default — Claude 4 models fire parallel calls whenever a request benefits. You turn it off with `disable_parallel_tool_use: true` — and note where it lives: inside the `tool_choice` object, not as a top-level request parameter. With that switch set, `tool_choice` type `auto` allows the model to call at most one tool per response; with type `any` or `tool`, exactly one.
 - **OpenAI** exposes `parallel_tool_calls`, which defaults to allowing several calls per turn; set it to `false` to force zero-or-one.
 - **Gemini** supports **parallel function calling** — several independent functions in one turn — and, kept deliberately distinct, **compositional function calling**, where calls chain in sequence and one's output feeds the next: `get_current_location()`, then `get_weather(location)`. The first is a batch; the second is a dependency chain, and telling them apart is the whole discipline of this section.
 
@@ -50,15 +50,15 @@ flowchart TB
 
 A tool's arguments are described by a **schema** — usually **JSON Schema** (Gemini uses an **OpenAPI-subset** schema). Part 1 treated that schema as the typed menu the model fills in. It is more than documentation: in **strict** mode the schema is *enforced*, and the model cannot emit arguments that violate it. What follows is how "cannot" is made literally true.
 
-The mechanism is **constrained decoding**. The provider compiles your schema into a **grammar** — a formal grammar, a context-free grammar in the general case. Then, at every decoding step, the sampler masks out every token that would break the grammar given what has been emitted so far, and samples only from what survives. A closing brace where the grammar demands a digit is not on the menu of next tokens at all. The output matches the schema by construction — not because the model tried hard and got lucky, and not because you validated it afterward and discarded the bad ones.
+The mechanism is **constrained decoding**. The provider compiles your schema into a **grammar** — a formal grammar, a context-free grammar in the general case. Then, at every decoding step, the token sampler masks out every token that would break the grammar given what has been emitted so far, and samples only from what survives. A closing brace where the grammar demands a digit is not on the menu of next tokens at all. The output matches the schema by construction — not because the model tried hard and got lucky, and not because you validated it afterward and discarded the bad ones.
 
 How each vendor exposes strict mode:
 
 - **OpenAI**: `strict: true` inside the function definition makes calls reliably adhere to the schema rather than best-effort, implemented through Structured Outputs — constrained decoding under the hood. It carries two requirements: `additionalProperties: false` on every object, and every property listed as `required`.
-- **Anthropic Claude**: strict tool use via `tool_choice` with `strict: true`.
+- **Anthropic Claude**: strict tool use sets `strict: true` on each tool definition, alongside `name`, `description`, and `input_schema`; it is not a `tool_choice` field.
 - **Gemini**: arguments are pinned to the OpenAPI-subset schema in the function declaration.
 
-Constrained decoding is not free. Here is what it costs, and when to skip it:
+Constrained decoding is not free. Here is what it costs:
 
 - **First-call compile cost.** The first request carrying a *new* schema pays a latency penalty while the grammar artefact is computed and preprocessed for sampling; later requests with the same schema hit a cache and run fast. OpenAI documents exactly this — schema to grammar on first sight, cached thereafter. The consequence is practical: churn a freshly generated schema on every call and you defeat the cache, paying the compile tax every single time.
 - **Unsupported schema features.** Strict mode covers only a subset of JSON Schema, and the `additionalProperties: false` plus all-required constraints mean some expressive features are unavailable or have to be reshaped to fit.
@@ -94,13 +94,13 @@ Not every failure is the model's fault, and those get different handling. For **
 
 And cap it. A **retry budget** — a hard ceiling on attempts, per call and per run — mirrors the step budget and token budget from the planning lesson. Without a ceiling, a call that fails deterministically becomes an **infinite retry loop**: the agent reissues the same doomed call forever and never terminates.
 
-Which points at the real distinction. Retrying earns its keep only when the input to the retry is *different* — a corrected argument, or a transient fault that has since settled. Retry the identical call after a deterministic failure and it fails identically; you have burned budget and money to relearn what you already knew. Recognise the non-progressing case and stop: surface the failure, hand it to a human, or try a different tool. And name it correctly — a loop that won't stop is a failure, a bug in the run, never a "refusal."
+Which points at the real distinction. Retrying earns its keep only when the input to the retry is *different* — a corrected argument, or a transient fault that has since settled. Retry the identical call after a deterministic failure and it fails identically; you have burned budget and money to relearn what you already knew. Recognise the non-progressing case and stop: surface the failure, hand it to a human, or try a different tool. A loop that cannot make progress is a runtime failure; stop it rather than spending the remaining budget on identical retries.
 
 That leaves two things not to retry. Do not retry a deterministic failure unchanged; nothing has changed, so the outcome won't either. And do not retry a side-effectful write that might have partially succeeded without an idempotency guarantee behind it — the retry can double-apply what the first attempt already did. Retries are for transient faults and self-corrected arguments; they are not a way to avoid fixing the call. The idempotency section below makes that concrete for writes.
 
 ## The context cost of dozens of tools \{#the-context-cost-of-dozens-of-tools}
 
-Every tool definition costs tokens in every request: the name, the description, and the full parameter schema of each tool are serialised into the prompt on every call, used or not. A dozen tools is a standing tax — tokens, latency, money — paid whether or not the model touches any of them. That is the concrete price behind Part 1's "few, non-overlapping tools."
+Every tool definition costs tokens in every request: the name, the description, and the full parameter schema of each tool are serialised into the prompt on every model request, used or not. A dozen tools is a standing tax — tokens, latency, money — paid whether or not the model touches any of them. That is the concrete price behind Part 1's "few, non-overlapping tools."
 
 The tax is not only fiscal. **Tool selection** degrades as the set grows: with many close-in-meaning tools the model picks the wrong tool more often, and fails to call when it should — the wrong-tool and no-call failures Part 1 named. A large flat toolset actively makes the agent worse at choosing.
 

@@ -137,8 +137,8 @@ Aussicht darauf, dass er *aus dem richtigen Grund* anhält.
 ## Der Coding-Agent macht diese Schicht sichtbar \{#the-coding-agent--this-layer-made-visible}
 
 Wenn Sie diese Schicht mit eigenen Augen sehen wollen, nehmen Sie einen **Coding-Agenten** – einen Agenten, der
-Programmieraufgaben erledigt. Geben Sie ihm eine solche Aufgabe und sehen Sie zu, wie seine ReAct-Kette
-`reason → act → observe` und seine Selbstkorrekturen in der Zwischenausgabe vorbeiziehen – die Schleife, die in
+Programmieraufgaben erledigt. Geben Sie ihm eine solche Aufgabe und sehen Sie zu, wie seine Agentenschleife
+`reason → decide → act → observe` und seine Selbstkorrekturen in der Zwischenausgabe vorbeiziehen – die Schleife, die in
 Agentic RAG abstrakt blieb, steht Schritt für Schritt auf dem Bildschirm.
 
 Schwächere oder ältere Modelle führen die Fehlerbilder besonders anschaulich vor. An einer schweren Aufgabe

@@ -18,7 +18,7 @@ Rozhodujúce je slovo *nezávislé*. Volania má zmysel púšťať paralelne iba
 
 Prepínače tohto správania sa líšia podľa poskytovateľa a na presných názvoch záleží.
 
-**Anthropic Claude** volania zoskupuje už v predvolenom nastavení — modely Claude 4 vytvoria paralelné volania vždy, keď sa to pri požiadavke oplatí. Vypneš to príznakom `disable_parallel_tool_use: true` — a všimni si, kam patrí: dovnútra objektu `tool_choice`, nie medzi parametre požiadavky na najvyššej úrovni. Pri `tool_choice` typu `auto` potom model zavolá v jednej odpovedi nanajvýš jeden nástroj; pri type `any` alebo `tool` práve jeden.
+**Anthropic Claude** volania zoskupuje už v predvolenom nastavení — modely Claude 4 vytvoria paralelné volania vždy, keď sa to pri požiadavke oplatí. Vypneš to príznakom `disable_parallel_tool_use: true` — a všimni si, kam patrí: dovnútra objektu `tool_choice`, nie medzi parametre požiadavky na najvyššej úrovni. S príznakom `disable_parallel_tool_use: true` pri `tool_choice` typu `auto` model zavolá v jednej odpovedi nanajvýš jeden nástroj; pri type `any` alebo `tool` práve jeden.
 
 **OpenAI** ponúka parameter `parallel_tool_calls`; v predvolenom stave dovoľuje viac volaní v jednom kroku, hodnotou `false` obmedzíš model na najviac jedno volanie.
 
@@ -50,15 +50,15 @@ flowchart TB
 
 Argumenty nástroja opisuje **schéma** (schema) — zvyčajne JSON Schema (Gemini používa schému z podmnožiny OpenAPI). Zatiaľ sme s ňou zaobchádzali ako s typovaným formulárom, ktorý model vypĺňa. Je to však viac než dokumentácia: v **prísnom režime** (strict mode) sa schéma *vynucuje* a model nedokáže vygenerovať argumenty, ktoré ju porušujú.
 
-Mechanizmom je **obmedzené dekódovanie** (constrained decoding). Poskytovateľ tvoju schému skompiluje na **gramatiku** — formálnu gramatiku, vo všeobecnom prípade bezkontextovú. Na každom kroku dekódovania potom vzorkovač zamaskuje každý token, ktorý by pri doterajšom výstupe gramatiku porušil, a vyberá už len spomedzi tokenov, ktoré ostali povolené. Zatváracia zložená zátvorka tam, kde gramatika žiada číslicu, sa medzi ďalšími možnými tokenmi vôbec neobjaví. Výstup zodpovedá schéme *už svojou konštrukciou* — nie preto, že sa model snažil a mal šťastie, ani preto, že si ho dodatočne overil a neplatné výstupy zahodil.
+Mechanizmom je **obmedzené dekódovanie** (constrained decoding). Poskytovateľ tvoju schému skompiluje na **gramatiku** — formálnu gramatiku, vo všeobecnom prípade bezkontextovú. Na každom kroku dekódovania potom vzorkovač tokenov zamaskuje každý token, ktorý by pri doterajšom výstupe gramatiku porušil, a vyberá už len spomedzi tokenov, ktoré ostali povolené. Zatváracia zložená zátvorka tam, kde gramatika žiada číslicu, sa medzi ďalšími možnými tokenmi vôbec neobjaví. Výstup zodpovedá schéme *už svojou konštrukciou* — nie preto, že sa model snažil a mal šťastie, ani preto, že si ho dodatočne overil a neplatné výstupy zahodil.
 
 V praxi to vyzerá takto:
 
 - **OpenAI**: `strict: true` vnútri definície funkcie prinúti volania schému spoľahlivo dodržiavať — namiesto toho, aby sa model o to iba pokúšal. Interne to zabezpečujú **Structured Outputs**, ktoré používajú obmedzené dekódovanie. Podmienky sú dve: `additionalProperties: false` na každom objekte a každá vlastnosť uvedená v `required`.
-- **Anthropic Claude**: nástroje v prísnom režime zapneš cez `tool_choice` so `strict: true`.
+- **Anthropic Claude**: prísny režim zapneš pomocou `strict: true` v definícii každého nástroja vedľa `name`, `description` a `input_schema`; toto pole nepatrí do `tool_choice`.
 - **Gemini**: argumenty musia zodpovedať schéme z podmnožiny OpenAPI uvedenej v deklarácii funkcie.
 
-Obmedzené dekódovanie nie je zadarmo. Má svoju cenu aj obmedzenia — a niekedy je lepšie ho vynechať:
+Obmedzené dekódovanie nie je zadarmo. Má svoju cenu aj obmedzenia:
 
 - **Cena kompilácie pri prvom volaní.** Prvá požiadavka s *novou* schémou je pomalšia: poskytovateľ z nej najprv zostaví gramatiku a pripraví ju na vzorkovanie. Ďalšie požiadavky s tou istou schémou už bežia rýchlo: použije sa gramatika uložená v cache (vyrovnávacej pamäti). Presne toto dokumentuje aj OpenAI: schéma sa na gramatiku skompiluje pri prvom výskyte a ďalej sa už berie z cache. Praktický dôsledok: ak schému pri každom volaní generuješ nanovo, cache ti nikdy nepomôže a úvodná latencia kompilácie sa opakuje pri každej požiadavke.
 - **Nepodporované konštrukcie schémy.** Prísny režim pokrýva len podmnožinu JSON Schema a povinné `additionalProperties: false` spolu s pravidlom „všetko `required`“ znamenajú, že niektoré konštrukcie schémy nepoužiješ vôbec a iné musíš preformulovať, aby zodpovedali podporovanej podmnožine.
@@ -92,13 +92,13 @@ Nie každú chybu spôsobí model; tie ostatné sa riešia inak. Pri **prechodn�
 
 Počet pokusov zároveň zhora obmedz. **Limit opakovaní** (retry budget) — tvrdý strop na počet pokusov, na jedno volanie aj na celý beh — je obdobou rozpočtu krokov a rozpočtu tokenov z lekcie o plánovaní. Bez stropu sa opakovanie volania, ktoré zlyháva deterministicky, zvrhne na **nezastaviteľnú slučku**: agent donekonečna odosiela to isté volanie odsúdené na neúspech a nikdy neskončí.
 
-Opakovať sa oplatí len vtedy, keď sa medzitým niečo zmenilo — model opravil argument alebo prechodná porucha pominula. Ak identické volanie zopakuješ po deterministickej chybe, zlyhá presne rovnako; spotreboval si pokusy aj peniaze a nedozvedel si sa nič nové. Keď opakovanie nič nemení, zastav sa: chybu ohlás, odovzdaj ju človeku alebo skús iný nástroj. A pomenuj to správne — slučka, ktorá sa nezastaví, je **chyba počas behu** (runtime error), nikdy nie „odmietnutie“ zo strany modelu.
+Opakovať sa oplatí len vtedy, keď sa medzitým niečo zmenilo — model opravil argument alebo prechodná porucha pominula. Ak identické volanie zopakuješ po deterministickej chybe, zlyhá presne rovnako; spotreboval si pokusy aj peniaze a nedozvedel si sa nič nové. Keď opakovanie nič nemení, zastav sa: chybu ohlás, odovzdaj ju človeku alebo skús iný nástroj. Slučka, ktorá už nepostupuje, je **chyba počas behu** (runtime error). Zastav ju, aby sa zvyšný rozpočet neminul na rovnaké pokusy.
 
 V dvoch prípadoch volanie neopakuj: po deterministickej chybe bez zmeny vstupu — nič sa nezmenilo, takže sa nezmení ani výsledok; a pri zápise s vedľajším účinkom, ktorý mohol čiastočne prebehnúť a nemá záruku idempotencie — opakovanie by tú istú operáciu mohlo vykonať druhý raz. Opakovania sú na prechodné poruchy a na argumenty, ktoré model opravil; nie sú náhradou za opravu volania. Ako to vyzerá pri zápisoch, rozoberá sekcia o idempotencii nižšie.
 
 ## Kontextová cena desiatok nástrojov \{#the-context-cost-of-dozens-of-tools}
 
-Každá definícia nástroja zaberá tokeny v každej požiadavke: názov, opis a celá schéma parametrov sa do promptu serializujú pri každom volaní, či sa použijú, alebo nie. Tucet nástrojov je **stála réžia** — tokeny, latencia, peniaze — a platíš ju bez ohľadu na to, či model niektorý z nástrojov vôbec použije. Presne túto cenu mala prvá časť na mysli, keď odporúčala „málo nástrojov, bez prekryvov“.
+Každá definícia nástroja zaberá tokeny v každej požiadavke: názov, opis a celá schéma parametrov sa do promptu serializujú pri každej požiadavke na model, či sa použijú, alebo nie. Tucet nástrojov je **stála réžia** — tokeny, latencia, peniaze — a platíš ju bez ohľadu na to, či model niektorý z nástrojov vôbec použije. Presne túto cenu mala prvá časť na mysli, keď odporúčala „málo nástrojov, bez prekryvov“.
 
 Réžia nie je len finančná. **Výber nástroja** (tool selection) sa s rastúcou sadou zhoršuje: pri mnohých významovo blízkych nástrojoch model častejšie siahne po nesprávnom alebo nepoužije nijaký, hoci by mal — presne zlyhania typu „nesprávny nástroj — alebo žiadny“, na ktoré upozornila prvá časť. Čím väčšia a plochšia (neštruktúrovaná) sada, tým horšie agent vyberá.
 

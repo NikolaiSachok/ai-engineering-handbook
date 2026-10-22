@@ -11,8 +11,7 @@ Part II built the agent one capability at a time: the loop that decides for itse
 actually stop in [planning-loops](./planning-loops/index.md), teammates to divide the work in
 [multi-agent](./multi-agent/index.md), the frameworks that package all of it in
 [orchestration-frameworks](./orchestration-frameworks/index.md), and the protocol that wires it to the world in
-[mcp](./mcp/index.md). This lesson teaches nothing new. It takes that whole toolkit to the three agents you meet
-first — Claude, OpenAI, and Gemini — and shows that each technique is the same durable move under a
+[mcp](./mcp/index.md). This lesson teaches nothing new. It illustrates selected patterns using three vendor stacks — Anthropic Claude, OpenAI, and Google Gemini — and shows that each technique is the same durable move under a
 different name and a different wire shape.
 
 That framing is the point, so read every section the same way. The **durable pattern** comes first — the
@@ -52,7 +51,7 @@ As of mid-2026, Claude declares tools in a `tools` array (`name`, `description`,
 Schema), and the exchange travels as **content blocks**: the model returns `stop_reason: "tool_use"` with
 `tool_use` blocks, and you reply with a user message carrying `tool_result` blocks. The `tool_choice`
 parameter runs `auto` / `any` / a forced single tool / `none`; strict tool use is
-`tool_choice:{type:"any"}` with `strict:true`; parallel tool use is on by default. OpenAI declares a tool as
+`strict:true` on each tool definition, alongside `input_schema`; `tool_choice:{type:"any"}` separately forces tool use on models supporting that mode. Parallel tool use is on by default. OpenAI declares a tool as
 `{type:"function", name, description, parameters, strict}`, and in the Responses API the exchange is
 **typed items** instead of blocks: the model emits `function_call` items (each with a `call_id`, a `name`,
 and JSON-string `arguments`), and you return `function_call_output` items keyed by the matching `call_id`.
@@ -148,7 +147,7 @@ message; the docs note it "will retry 2–3 times with corrections before apolog
 JSONL and offers *continue* (the most recent session), *resume* (an explicit session id), and *fork* (branch
 a copy) — and a run that stopped on `error_max_turns` or `error_max_budget_usd` can be resumed with a higher
 limit. OpenAI keeps continuity server-side instead: `previous_response_id` chains a call onto a prior
-response, and the Conversations API gives durable state without a 30-day store TTL. In its Agents SDK a
+response, and the Conversations API persists conversation items without the 30-day expiry that applies to stored Response objects. In its Agents SDK a
 tool's `failure_error_function` returns a model-visible error string so the model recovers or re-raises.
 Gemini's ADK wraps the same move in a `ReflectAndRetryToolPlugin` that intercepts a tool failure, feeds
 structured guidance back, and retries (default `max_retries = 3`); ADK Sessions hold events and state
@@ -241,8 +240,8 @@ collapse to N + M. The standard's own phrasing is "build once and integrate ever
 
 The governance is worth dating precisely, because it shows how fast this moved. Anthropic introduced [MCP](https://modelcontextprotocol.io) on
 25 November 2024 and, on 9 December 2025, donated it to the Agentic AI Foundation — a directed fund under
-the Linux Foundation — co-founded with Block and OpenAI. All three vendors are MCP *clients* today. Claude
-exposes an API **MCP connector** (remote HTTP only, tool-calls only) and Claude Code as an MCP client that
+the Linux Foundation — co-founded with Block and OpenAI. All three vendor stacks support MCP *hosts* today. Claude
+exposes an API **MCP connector** (remote HTTP only, tool-calls only) and Claude Code as an MCP host that
 also speaks local stdio. OpenAI's Agents SDK connects MCP servers (`MCPServerStdio` / `…StreamableHttp` /
 hosted) and the Responses API carries a hosted `{type:"mcp"}` tool over a catalogue of OpenAI-maintained
 connectors. Gemini/ADK connects through **`McpToolset`**, which converts a server's schemas into ADK tools,
@@ -262,7 +261,7 @@ The durable failure comes bundled with it. Every MCP server is a new attack surf
 instructions through tool poisoning, exfiltrate data, or over-reach its grant. The defence is unchanged from
 [mcp](./mcp/index.md): least privilege, only servers you trust, and human approval on sensitive actions.
 
-## The seven techniques, three agents \{#the-seven-techniques-three-agents}
+## Seven patterns across three vendor stacks \{#the-seven-techniques-three-agents}
 
 | Technique | Claude | OpenAI | Gemini |
 |---|---|---|---|
@@ -324,7 +323,7 @@ keep. Once you can see it, a new vendor's documentation is something you consult
 - Split into an orchestrator plus isolated workers only when one loop won't do: Claude subagents, OpenAI
   handoff versus agent-as-tool, ADK coordinator plus deterministic workflow agents.
 - MCP ties it together — authored by Anthropic in 2024, donated to the Linux Foundation's Agentic AI
-  Foundation in December 2025; all three are MCP clients today. Learn the durable pattern; the vendor is a
+  Foundation in December 2025; all three support MCP hosts today. Learn the durable pattern; the vendor is a
   dated case.
 
 **[New terms](../glossary.md#real-agents)**: extended thinking, interleaved thinking, reasoning effort, thinking budget, Claude Code hooks, ADK callbacks, permission modes.

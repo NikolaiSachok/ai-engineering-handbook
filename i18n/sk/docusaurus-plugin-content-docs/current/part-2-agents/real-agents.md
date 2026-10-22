@@ -6,7 +6,7 @@ sidebar_position: 8
 
 # Claude, OpenAI a Gemini nosia tie isté techniky pod inými menami
 
-Celá druhá časť príručky stavala agenta schopnosť po schopnosti: slučku, ktorá sa rozhoduje sama ([agentický RAG](./agentic-rag/index.md)), nástroje, ktorými koná ([používanie nástrojov](./tool-use/index.md)), spôsob, ako plánovať a naozaj sa zastaviť ([plánovanie a slučky](./planning-loops/index.md)), spoluhráčov na rozdelenie práce ([multiagentové systémy](./multi-agent/index.md)), frameworky, ktoré to celé zabalia ([orchestračné frameworky](./orchestration-frameworks/index.md)), a protokol, ktorý agenta prepojí so svetom ([MCP](./mcp/index.md)). Táto lekcia neučí nič nové. Prenáša celú túto výbavu na troch agentov, s ktorými sa inžinier stretne najskôr — Claude, OpenAI, Gemini — a ukazuje, že každá technika je tá istá trvácna vec pod iným menom a v inom tvare prenosu (v inej podobe, v akej volanie cestuje cez API).
+Celá druhá časť príručky stavala agenta schopnosť po schopnosti: slučku, ktorá sa rozhoduje sama ([agentický RAG](./agentic-rag/index.md)), nástroje, ktorými koná ([používanie nástrojov](./tool-use/index.md)), spôsob, ako plánovať a naozaj sa zastaviť ([plánovanie a slučky](./planning-loops/index.md)), spoluhráčov na rozdelenie práce ([multiagentové systémy](./multi-agent/index.md)), frameworky, ktoré to celé zabalia ([orchestračné frameworky](./orchestration-frameworks/index.md)), a protokol, ktorý agenta prepojí so svetom ([MCP](./mcp/index.md)). Táto lekcia neučí nič nové. Ukazuje vybrané vzory na troch dodávateľských stekoch — Anthropic Claude, OpenAI a Google Gemini — a ukazuje, že každá technika je tá istá trvácna vec pod iným menom a v inom tvare prenosu (v inej podobe, v akej volanie cestuje cez API).
 
 Každú sekciu čítaj rovnako. Najprv trvácny vzor — tú časť, ktorá prežije premeny API. Potom to, ako to dnes robí každý dodávateľ, zámerne s uvedeným dátumom, lebo konkrétnosti rýchlo zastarajú a táto stránka priznáva, že zostarne. Ďalej to, čo sa líši a prečo, lebo tam sídli samotné inžinierstvo. A napokon to, kde sa vec láme, previazané späť s lekciou, ktorá o tej chybe učila. Nauč sa vzor a dokumentácia ktoréhokoľvek dodávateľa sa zmení z opätovného štúdia na obyčajné vyhľadanie údaja. Všetko, čo sa tu píše o konkrétnej fičúre, platí k polovici roka 2026 a zajtra sa to môže pohnúť — API dodávateľov sa hýbu rýchlo. Preto si zapamätaj vzor a detail dodávateľa ber ako niečo, čo si vždy vieš znova overiť v dokumentácii.
 
@@ -32,7 +32,7 @@ flowchart TB
     M --> Ans["Odpoveď"]
 ```
 
-**Claude** deklaruje nástroje v poli `tools` (`name`, `description`, `input_schema` ako JSON Schema); výmena putuje ako bloky obsahu: model vráti `stop_reason: "tool_use"` s blokmi `tool_use` a ty odpovieš používateľskou správou, ktorá nesie bloky `tool_result`. `tool_choice` beží v režimoch `auto`/`any`/vynútený jediný nástroj/`none`; prísny režim (strict mode) je `tool_choice:{type:"any"}` so `strict:true`; paralelné volania nástrojov sú zapnuté predvolene.
+**Claude** deklaruje nástroje v poli `tools` (`name`, `description`, `input_schema` ako JSON Schema); výmena putuje ako bloky obsahu: model vráti `stop_reason: "tool_use"` s blokmi `tool_use` a ty odpovieš používateľskou správou, ktorá nesie bloky `tool_result`. `tool_choice` beží v režimoch `auto`/`any`/vynútený jediný nástroj/`none`; prísny režim (strict mode) nastavíš cez `strict:true` v definícii každého nástroja vedľa `input_schema`; `tool_choice:{type:"any"}` osobitne vynúti použitie nástroja na modeloch, ktoré tento režim podporujú; paralelné volania nástrojov sú zapnuté predvolene.
 
 **OpenAI** deklaruje nástroj ako `{type:"function", name, description, parameters, strict}`; v Responses API je výmena namiesto blokov postavená na typizovaných prvkoch: model vytvorí prvky `function_call` (každý s `call_id`, `name` a argumentmi ako JSON reťazec) a ty vrátiš prvky `function_call_output` napárované cez zhodný `call_id`. `strict:true` vynúti schému cez Structured Outputs; `tool_choice` prijíma `auto`/`required`/`none`/vynútený nástroj; `parallel_tool_calls` je predvolene `true`.
 
@@ -76,7 +76,7 @@ Dobrý agent sa zotaví, namiesto toho, aby spadol. Chyba nástroja sa podá sp�
 
 **Claude** vráti chybu nástroja cez `tool_result` s `is_error:true` a poučnou správou; dokumentácia poznamenáva, že „skúsi to s opravami 2- až 3-krát, než sa ospravedlní“. Agent SDK ukladá relácie ako lokálny JSONL a ponúka `continue` (najnovšia relácia), `resume` (výslovné id relácie) a `fork` (vetva-kópia) — a beh, ktorý sa zastavil na `error_max_turns` alebo `error_max_budget_usd`, sa dá obnoviť s vyšším limitom.
 
-**OpenAI** drží kontinuitu na strane servera: `previous_response_id` napojí volanie na predchádzajúcu odpoveď a Conversations API dáva trvácny stav bez 30-dňového TTL úložiska. V jeho Agents SDK `failure_error_function` nástroja vráti chybový reťazec viditeľný pre model, takže model sa zotaví alebo chybu vyhodí nanovo.
+**OpenAI** drží kontinuitu na strane servera: `previous_response_id` napojí volanie na predchádzajúcu odpoveď a Conversations API uchováva položky konverzácie bez 30-dňovej platnosti, ktorá sa vzťahuje na uložené objekty Response. V jeho Agents SDK `failure_error_function` nástroja vráti chybový reťazec viditeľný pre model, takže model sa zotaví alebo chybu vyhodí nanovo.
 
 **Gemini** balí ten istý postup do `ReflectAndRetryToolPlugin`, ktorý zachytí, keď nástroj zlyhá, podá späť štruktúrované usmernenie a skúsi znova (predvolene `max_retries = 3`); ADK Sessions držia udalosti a stav cez `SessionService`, a s perzistentným backendom (`DatabaseSessionService`/`VertexAiSessionService`) sa relácia znova načíta a pokračuje, namiesto toho, aby sa budovala odznova.
 
@@ -124,9 +124,9 @@ Zlyhaním je prehorlivé delenie. Nerozdeľuj, keď by stačil jeden agent — k
 
 Posledná technika je štandard, ktorý ti zabráni znova a znova lepiť každý nástroj ku každému agentovi. Nástroj obalíš raz ako MCP server a klienta implementuješ raz — a potom ktorýkoľvek agent hovorí s ktorýmkoľvek nástrojom: M × N párových konektorov sa scvrkne na N + M. Vlastné znenie štandardu je „postav raz a integruj všade“ a jeho obrazom je USB-C port pre AI aplikácie (→ [MCP](./mcp/index.md)).
 
-Za presné datovanie to stojí — ukazuje, ako rýchlo sa to pohlo. Anthropic predstavil [MCP](https://modelcontextprotocol.io) 25. novembra 2024 a 9. decembra 2025 ho daroval Agentic AI Foundation — účelovému fondu pod Linux Foundation — spoluzaloženému s Blockom a OpenAI. Všetci traja dodávatelia sú dnes MCP klientmi.
+Za presné datovanie to stojí — ukazuje, ako rýchlo sa to pohlo. Anthropic predstavil [MCP](https://modelcontextprotocol.io) 25. novembra 2024 a 9. decembra 2025 ho daroval Agentic AI Foundation — účelovému fondu pod Linux Foundation — spoluzaloženému s Blockom a OpenAI. Všetky tri dodávateľské steky dnes podporujú hostiteľov MCP.
 
-**Claude** vystavuje API MCP konektor (iba vzdialené HTTP, iba volania nástrojov) a Claude Code ako MCP klienta, ktorý hovorí aj lokálne cez stdio.
+**Claude** vystavuje API MCP konektor (iba vzdialené HTTP, iba volania nástrojov) a Claude Code ako hostiteľa MCP, ktorý hovorí aj lokálne cez stdio.
 
 **OpenAI** cez Agents SDK pripája MCP servery (`MCPServerStdio`/`…StreamableHttp`/hostované) a Responses API nesie hostovaný nástroj `{type:"mcp"}` nad katalógom konektorov spravovaných OpenAI.
 
@@ -138,7 +138,7 @@ Rozdiely sú v role. Anthropic MCP napísal a spoluspravuje ho; jeho API konekto
 
 Trvácne zlyhanie k nemu neodmysliteľne patrí. Každý MCP server je nová plocha útoku (attack surface) — nepriateľský server dokáže cez tool poisoning (otrávený opis nástroja) podstrčiť inštrukcie, vyniesť dáta alebo prekročiť udelené oprávnenia. Obrana sa oproti lekcii o MCP nemení: princíp najnižších oprávnení, iba servery, ktorým dôveruješ, a schválenie človekom pri citlivých akciách.
 
-## Sedem techník, tri agenti \{#the-seven-techniques-three-agents}
+## Sedem vzorov v troch dodávateľských stekoch \{#the-seven-techniques-three-agents}
 
 | Technika | Claude | OpenAI | Gemini |
 |---|---|---|---|
@@ -171,7 +171,7 @@ Tieto techniky nie sú abstraktné. Takto vyzerajú, keď spúšťaš agentov na
 - Zotav sa, nespadni: chyby nástrojov idú späť ako text na sebaopravu a stav uchovávaš, aby si mohol obnoviť — lokálne súbory relácie u Claude, serverový `previous_response_id` u OpenAI, backend SessionService v ADK.
 - Vkladaj kontroly: Claude Code hooks s režimami oprávnení, guardrails v SDK od OpenAI s Moderation API, ADK callbacks s bezpečnostnými nastaveniami a Model Armor. Najnižšie oprávnenia a schválenie človekom pri nebezpečných akciách sú konštanta.
 - Rozdeľ na orchestrátora a izolovaných vykonávateľov len vtedy, keď jedna slučka nestačí: subagenty u Claude, handoff verzus agent ako nástroj u OpenAI, koordinátor plus deterministickí workflow-agenti v ADK.
-- MCP to zväzuje dohromady — napísal ho Anthropic v roku 2024, v decembri 2025 ho daroval Agentic AI Foundation pod Linux Foundation; všetci traja sú dnes MCP klientmi. Nauč sa trvácny vzor; dodávateľ je datovaný prípad.
+- MCP to zväzuje dohromady — napísal ho Anthropic v roku 2024, v decembri 2025 ho daroval Agentic AI Foundation pod Linux Foundation; všetky tri steky dnes podporujú hostiteľov MCP. Nauč sa trvácny vzor; dodávateľ je datovaný prípad.
 
 **[Nové pojmy](../glossary.md#real-agents)**: extended thinking, interleaved thinking, reasoning effort, thinking budget, Claude Code hooks, ADK callbacks, permission modes.
 

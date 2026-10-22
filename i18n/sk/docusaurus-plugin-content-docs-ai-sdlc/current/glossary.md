@@ -380,7 +380,7 @@ Každý pojem, ktorý lekcie zavádzajú, je tu vymedzený raz. Každá lekcia s
 
 **Flotila agentov (agent fleet)** — viacero agentov pracujúcich súbežne nad jednou kódovou základňou. Jej veľkosť neurčuje dostupný výpočtový výkon, ale to, koľko toho vstrebe reťaz overovania.
 
-**Serializátor zdieľaného stavu (shared-state serialiser)** — čokoľvek meniteľné, na čo siahajú dvaja agenti naraz (pracovný strom, databáza, kvóta, dopĺňaný korpus). O tom, kto čaká, rozhoduje zdieľaná vec, takže skutočnú súbežnosť určuje ona, nie plánovač.
+**Serializátor zdieľaného stavu (shared-state serialiser)** — čokoľvek meniteľné, na čo siahajú dvaja agenti naraz (pracovný strom, databáza, kvóta, dopĺňaný korpus). Keď agenti súťažia o prístup k zdieľanému stavu, niektorí musia čakať. Skutočná súbežnosť preto závisí od tohto súperenia, nielen od nastavení plánovača. Odtiaľ pochádza metafora skutočného plánovača v lekcii o flotile: spoločný zdroj obmedzuje poradie vykonávania, aj keď orchestrátor už prácu naplánoval.
 
 **Izolácia pomocou worktree (worktree isolation)** — pridelenie vlastného checkoutu každému agentovi nad tým istým úložiskom objektov, aby jedno prepnutie vetvy ani jeden zatúlaný commit nerozhádzali suseda. Izolácia odstráni triedu rušenia, ktorú koordinácia dokáže iba spravovať.
 

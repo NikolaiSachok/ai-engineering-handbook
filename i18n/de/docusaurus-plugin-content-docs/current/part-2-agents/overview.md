@@ -37,7 +37,7 @@ Aufgabe wirklich braucht**.
   zweites Mal zu bezahlen.
 - **[MCP und Agentenprotokolle](./mcp/index.md)** – ein standardisierter Weg, über den ein Agent an Tools
   und Daten kommt; [MCP](https://modelcontextprotocol.io) gegen [A2A](https://a2a-protocol.org).
-- **[Echte Agenten – Claude, OpenAI, Gemini](./real-agents.md)** – der Abschluss dieses Teils: jede Technik
+- **[Echte Agenten – Claude, OpenAI, Gemini](./real-agents.md)** – der Abschluss dieses Teils: ausgewählte Techniken
   aus Teil II, bei allen drei Anbietern durchgespielt – hinter einem Dutzend inkompatibler APIs steckt
   jedes Mal dasselbe tragfähige Verfahren.
 
@@ -48,10 +48,6 @@ Der gesamte Teil I, vor allem die Schicht **Retrieval** – der Agent ruft sie a
 
 :::note[Bearbeitungsstand]
 
-Teil II liegt in seiner Grundfassung vollständig vor – jede Lektion ist veröffentlicht: Agentic RAG,
-Tool-Einsatz, Planung und Schleifen, Multi-Agenten-Systeme, Orchestrierungs-Frameworks, Durable Runs, MCP und der
-Abschluss dieses Teils über die echten Agenten (Claude, OpenAI, Gemini). 🚧 Ein zweiter Durchgang steht
-noch aus, der jede Schicht vertieft; die Themen dafür stehen auf den Lektionsseiten unter
-„Als Nächstes: die Vertiefung“.
+Die Grundlagen von Teil II sind vollständig: Agentic RAG, Tool-Nutzung, Planung und Schleifen, Multi-Agenten-Systeme, Orchestrierungs-Frameworks, Durable Runs, MCP und die abschließende Lektion sind veröffentlicht. Zu jeder der sechs ursprünglichen Kernlektionen gibt es eine Vertiefung. Die Abschlusslektion vergleicht ausgewählte Muster über die Anbieterstacks hinweg und nennt weitere Themen in ihrer abschließenden Notiz.
 
 :::

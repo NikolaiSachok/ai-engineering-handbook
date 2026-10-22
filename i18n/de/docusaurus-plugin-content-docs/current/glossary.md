@@ -978,7 +978,7 @@ N + M. ↗ [modelcontextprotocol.io](https://modelcontextprotocol.io)
 
 **der MCP-Server** – kapselt ein Tool oder eine Datenquelle und stellt deren Fähigkeiten einheitlich bereit.
 
-**der MCP-Client** – der Agent oder die Anwendung, die sich mit MCP-Servern verbindet und nutzt, was diese anbieten.
+**der MCP-Client** – ein vom MCP-Host erzeugter Konnektor, der eine 1:1-Verbindung zu genau einem MCP-Server hält und dessen Fähigkeiten nutzt.
 
 **die MCP-Ressourcen** – Daten und Kontext, die ein MCP-Server bereitstellt (ohne Gegenstück in OpenAPI oder auf einer
 Kommandozeile).

@@ -79,7 +79,7 @@ Prečo reflexia váži viac, než sa na prvý pohľad zdá. Rozpočet zlú sluč
 
 ## Kódovací agent: táto vrstva zblízka \{#the-coding-agent--this-layer-made-visible}
 
-Ak chceš celú túto riadiacu vrstvu vidieť na vlastné oči, sadni si ku kódovaciemu agentovi. Zadaj mu programátorskú úlohu a sleduj, ako sa mu v priebežnom výstupe odvíjajú jeho reťaz v štýle ReAct „úvaha → akcia → pozorovanie“ aj sebaoprava — slučka, ktorá bola v agentickom RAG abstraktná, je zrazu priamo na obrazovke, krok za krokom.
+Ak chceš celú túto riadiacu vrstvu vidieť na vlastné oči, sadni si ku kódovaciemu agentovi. Zadaj mu programátorskú úlohu a sleduj, ako sa mu v priebežnom výstupe odvíjajú jeho agentná slučka „úvaha → rozhodnutie → akcia → pozorovanie“ aj sebaoprava — slučka, ktorá bola v agentickom RAG abstraktná, je zrazu priamo na obrazovke, krok za krokom.
 
 Slabšie alebo staršie modely spravia spôsoby zlyhania názornými. Pri ťažkej úlohe sa občas zacyklia — skúšajú tú istú rozbitú opravu znova a znova, zakaždým s tou istou chybou — alebo sa odklonia od toho, o čo si naozaj žiadal. A čo urobíš, keď sa to stane? Prerušíš ich ručne.
 

@@ -62,7 +62,7 @@ Its blind spot is the honest limit of reference-free evaluation. Answer relevanc
 Context Precision@K = Σ_k (Precision@k · v_k) / (total relevant items in top-K)
 ```
 
-where v_k is 1 when the chunk at rank k is relevant and 0 otherwise. What the formula buys you is sensitivity to *order*, and the documented behaviour shows how sharp it is. Take a result set that scores near 1.0, then move a single irrelevant chunk from rank 2 up to rank 1 — nothing enters or leaves the set, only the ordering changes — and the score falls to roughly 0.5. Rank position dominates. This is the metric that rewards the reranker's ordering work from the Retrieval layer: getting the right chunks into the set is necessary, and putting them first is what context precision actually scores.
+where v_k is 1 when the chunk at rank k is relevant and 0 otherwise. What the formula buys you is sensitivity to *order*, and the documented behaviour shows how sharp it is. Take K = 2 with one relevant chunk followed by one irrelevant chunk: v = [1, 0], so the score is (1 × 1 + 0.5 × 0) / 1 = 1.0. Swap them: v = [0, 1], so the score is (0 × 0 + 0.5 × 1) / 1 = 0.5. Nothing enters or leaves the set; only the ordering changes. Rank position dominates. This is the metric that rewards the reranker's ordering work from the Retrieval layer: getting the right chunks into the set is necessary, and putting them first is what context precision actually scores.
 
 ### Context recall is the one that needs a reference \{#context-recall-is-the-one-that-needs-a-reference}
 

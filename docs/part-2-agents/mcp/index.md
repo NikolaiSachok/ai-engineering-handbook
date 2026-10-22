@@ -20,7 +20,7 @@ the new attack surface it opens.
 
 :::tip[▶ Video]
 
-<YouTube id="g9JIUM0MHgQ" title="CLI vs [MCP](https://modelcontextprotocol.io): How AI Agents Choose the Right Tool for the Job — IBM Technology" />
+<YouTube id="g9JIUM0MHgQ" title="CLI vs MCP: How AI Agents Choose the Right Tool for the Job — IBM Technology" />
 
 Watch this before the Swagger section below — it sets up the same question head-on: when the CLI and the API
 spec already describe what a tool does, what does MCP actually add?
@@ -32,10 +32,9 @@ spec already describe what a tool does, what does MCP actually add?
 **MCP (Model Context Protocol)** is an open standard introduced by Anthropic in late 2024 and donated in
 December 2025 to the Agentic AI Foundation under the Linux Foundation — neutral, community-driven
 governance. It is built on a
-client–server architecture. Two roles do the work. An **MCP server** wraps a single tool or data source — a
+host–client–server architecture. Three roles do the work. An **MCP host** is the agent application; it creates and manages a client for each server connection. An **MCP server** wraps a single tool or data source — a
 database, a file system, a SaaS API, a code repository — and exposes its capabilities in a uniform way. An
-**MCP client** is the agent or app on the other end: it connects to servers and consumes whatever they
-expose. One server can be reached by many clients; one client can hold connections to many servers.
+**MCP client** is a connector inside that host: each client maintains a 1:1 connection to one server and consumes what it exposes. One host can manage many clients; one server can serve many clients.
 
 What makes MCP more than a tool-calling convention is that it standardises three primitives, not one:
 
@@ -116,7 +115,7 @@ to *agent*, the communication you needed the moment you built [multi-agent](../m
 one agent hands off to another, what protocol carries that? MCP is the wrong tool; it connects an agent to
 its tools, not an agent to a peer.
 
-**[A2A](https://a2a-protocol.org) (Agent-to-Agent)** is the emerging answer — a standard proposed by Google and since moved under the
+**[A2A](https://a2a-protocol.org) (Agent2Agent)** is the emerging answer — a standard proposed by Google and since moved under the
 Linux Foundation — and it is not the only contender. The distinction worth committing to memory is clean:
 **MCP is agent-to-tools/context; A2A is agent-to-agent.** This corner of the field moves fast and the roster of contenders will have changed by the
 time you read this, so learn the *distinction* rather than the names. The two axes are real and durable; any
@@ -158,7 +157,7 @@ Gemini is the [closing capstone on real agents](../real-agents.md).
   Think **a USB-C port for AI applications**.
 - **MCP (Model Context Protocol)** is an open client–server standard (created by Anthropic in late 2024, a
   project of the Agentic AI Foundation under the Linux Foundation since December 2025). An **MCP server**
-  wraps a tool or data source; an **MCP client** is the agent that consumes it. It standardises three
+  wraps a tool or data source; an **MCP host** is the application, and each **MCP client** connects that host to one server. It standardises three
   primitives — **tools**, **resources**, and **prompts** — over stdio (local) or streamable HTTP (remote).
 - The AI delta: MCP **decouples building tools from building agents.** Author a server once, and any client
   reuses it — an ecosystem effect, not a feature.
@@ -167,13 +166,13 @@ Gemini is the [closing capstone on real agents](../real-agents.md).
   primitives beyond actions (resources, prompts), one uniform client, and a bidirectional session (sampling).
   MCP servers *tend* to be more model-legible — but by authoring convention, not because OpenAPI can't carry
   meaning.
-- **MCP is agent-to-tools; A2A (Agent-to-Agent) is agent-to-agent.** Two axes. The field churns — learn the
+- **MCP is agent-to-tools; A2A (Agent2Agent) is agent-to-agent.** Two axes. The field churns — learn the
   distinction, not the current names.
 - An MCP server is a **new attack surface**: indirect prompt injection, data exfiltration, permission
   over-reach. Defend with **least privilege**, vetted-only servers, and human approval for sensitive actions;
   treat all server-supplied content as untrusted input, never as instructions.
 
-**[New terms](../../glossary.md#mcp)**: MCP (Model Context Protocol), MCP server, MCP client, MCP resources, MCP prompts, M×N integration problem, A2A (Agent-to-Agent).
+**[New terms](../../glossary.md#mcp)**: MCP (Model Context Protocol), MCP server, MCP client, MCP resources, MCP prompts, M×N integration problem, A2A (Agent2Agent).
 
 ---
 

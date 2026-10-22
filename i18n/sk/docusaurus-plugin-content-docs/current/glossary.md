@@ -781,8 +781,7 @@ a dátami; štandardizuje nástroje, zdroje a prompty. M×N integrácií šitýc
 
 **MCP server (MCP-server)** — obaľuje nástroj alebo zdroj dát a jednotne sprístupňuje jeho schopnosti.
 
-**MCP client (MCP-klient)** — agent alebo aplikácia, ktorá sa pripája na MCP-servery a konzumuje ich
-schopnosti.
+**MCP client (MCP-klient)** — konektor vytvorený hostiteľom MCP, ktorý udržiava spojenie 1:1 s jedným MCP-serverom a využíva jeho schopnosti.
 
 **MCP resources (zdroje MCP)** — dáta a kontext, ktoré MCP-server sprístupňuje (bez ekvivalentu v OpenAPI/CLI).
 

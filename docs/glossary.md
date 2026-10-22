@@ -807,7 +807,7 @@ N+M. ↗ [modelcontextprotocol.io](https://modelcontextprotocol.io)
 
 **MCP server** — wraps a tool or data source and exposes its capabilities uniformly.
 
-**MCP client** — the agent or app that connects to MCP servers and consumes their capabilities.
+**MCP client** — a connector created by an MCP host, maintaining a 1:1 connection to one MCP server and consuming its capabilities.
 
 **MCP resources** — data and context an MCP server exposes (no OpenAPI/CLI equivalent).
 

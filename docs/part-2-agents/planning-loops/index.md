@@ -122,7 +122,7 @@ best shot at it stopping *for the right reason*.
 ## The coding agent — this layer made visible \{#the-coding-agent--this-layer-made-visible}
 
 If you want to watch this whole control layer with your own eyes, use a coding agent. Hand one a programming
-task and watch its ReAct chain `reason → act → observe` and its self-correction stream past in the intermediate output —
+task and watch its agent loop `reason → decide → act → observe` and its self-correction stream past in the intermediate output —
 the loop that was abstract in agentic-rag is right there on screen, step after step.
 
 Weaker or older models make the failure modes vivid. On a hard task they sometimes loop — retry the same
