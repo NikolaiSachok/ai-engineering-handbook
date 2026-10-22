@@ -92,14 +92,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      # The tools in scripts/locale-review/ are not build gates — they produce the work list a
-      # translator acts on. A broken build gate goes red; a broken INSTRUMENT returns a
+      # The review instruments produce a work list; the scoped German prose ban scan below
+      # also gates absolute/scoped findings. A broken INSTRUMENT returns a
       # confident, well-formed, wrong answer, which is what happened eight separate times
       # across the German waves. Each self-test below reproduces one of those failures, needs
       # no build and no network, and is the only thing standing between a silent regression and
       # rediscovering it the expensive way. See scripts/locale-review/README.md.
       - name: Locale-review instrument self-tests
         run: bash scripts/locale-review/self-test.sh
+      - name: German prose ban gate
+        run: python3 scripts/locale-review/banscan.py i18n/de/
 
   locale-parity:
     name: Locale structural parity

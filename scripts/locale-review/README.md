@@ -5,8 +5,8 @@ These are the measuring instruments behind the German locale's gate stack
 locale-parameterised, and are kept here because the Russian and Slovak re-gate needs exactly
 these tools and there is no reason for the next locale to rediscover them.
 
-**They are not build gates.** `scripts/leak-scan.sh`, `scripts/i18n-link-check.sh` and
-`scripts/locale-parity-check.sh` pass or fail CI. These produce a **work list** that a
+**Most are review instruments; the German prose ban scan also gates CI.** `scripts/leak-scan.sh`, `scripts/i18n-link-check.sh` and
+`scripts/locale-parity-check.sh` pass or fail CI. The instruments produce a **work list** that a
 reviewer then acts on. That difference is the whole reason each one carries a self-test: a
 broken build gate goes red, whereas a broken instrument returns a confident, well-formed,
 **wrong** answer — which is what happened eight separate times.
@@ -112,8 +112,9 @@ A ban governs a concept/sense, and a matching ban takes precedence over corpus p
 page can retain an older defect. It cannot license copying that defect. Word-field advisories still
 require reading: `Leitung` for departmental leadership and `Redaktion` for editorial work are legitimate.
 
-This remains a review instrument rather than a new corpus CI gate. Its self-tests already run in CI;
-the extractor deliberately excludes fenced diagrams and JSX attributes, so a clean scan does not
-certify all visible translated text. RU and SK have their own narrower canon gates
+The existing `locale-review-tools` CI job runs the instrument self-tests and then
+`python3 scripts/locale-review/banscan.py i18n/de/`. Only absolute/scoped findings fail; advisories
+remain visible. The extractor deliberately excludes fenced diagrams and JSX attributes, so a clean
+scan does not certify all visible translated text. RU and SK have their own narrower canon gates
 (`ru-canon-check.py`, `sk-canon-check.py`), not a comprehensive machine-readable ban list. Those checks
 cannot certify every retrospective lexical ruling in their prose canons either.
