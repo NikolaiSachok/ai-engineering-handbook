@@ -73,13 +73,13 @@ pracovný priestor.
 
 V najpraktickejšej podobe sa tu vracia téza I. časti:
 [úzkym miestom je overovanie](../part-1-foundation/verification-bottleneck.md). Dvojnásobok agentov znamená
-dvojnásobok výstupu *aj* dvojnásobne dlhá fronta na revíziu. Reťaz brán ani človek-smerovač sa s nimi
+dvojnásobok výstupu *aj* dvojnásobne dlhú frontu na revíziu. Reťaz brán ani človek-smerovač sa s nimi
 nezdvojnásobia, takže veľkosť flotily nie je daná počtom procesov, ktoré vieš spustiť, ale kapacitou na
 kontrolu.
 
 Z toho vyplýva poctivý spôsob, ako flotilu dimenzovať: zmeraj **sériovú časť (serial fraction)** — integráciu,
 revíziu a všetko ostatné, čo nemôže bežať súčasne — pretože strop celku určuje práve ona, nie počet agentov.
-Za ňou prinesú ďalší agenti už len **súperenie o prostriedky (contention)**, prerábanie a dlhšia fronta namiesto
+Za ňou prinesú ďalší agenti už len **súperenie o prostriedky (contention)**, prerábanie a dlhšiu frontu namiesto
 väčšieho množstva hotovej práce. Užitočná otázka nikdy neznie „koľkých agentov viem spustiť“, ale „koľko toho
 táto reťaz vstrebe“ — a poctivá odpoveď býva menšia než počet agentov, na ktorý máš peniaze.
 
