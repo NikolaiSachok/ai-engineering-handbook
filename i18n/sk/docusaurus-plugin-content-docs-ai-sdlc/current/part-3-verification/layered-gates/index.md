@@ -57,7 +57,7 @@ Rovnaké vrstvenie používa tento kurz aj na vlastnú ochranu pred únikom info
 | Okamih pádu | Čo overiť po reštarte |
 |---|---|
 | Pred odoslaním akcie | Účinok ešte nenastal; pokračovanie vyvolá jeden zamýšľaný účinok. |
-| Po prijatí služby, pred doručením výsledku volajúcemu | Výsledok sa zistí podľa identifikátora operácie; timeout nevyvolá druhý účinok. |
+| Po tom, čo služba prijme operáciu, ale skôr, než volajúci dostane výsledok | Výsledok sa zistí podľa identifikátora operácie; timeout nevyvolá druhý účinok. |
 | Po účinku, pred potvrdeným zápisom lokálneho záznamu o dokončení | Externá evidencia ukazuje presne jednu platbu; obnova tento výsledok zaznamená alebo použije. |
 | Po potvrdenom zápise dokončenia, pred ďalším krokom | Dokončený účinok sa neopakuje; pokračuje nasledujúci krok. |
 
