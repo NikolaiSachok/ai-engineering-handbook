@@ -28,7 +28,7 @@ denník rozhodnutí, kánon. Dva paralelné zápisy sa nezlúčia; druhý vyhrá
 
 ## Izolácia vyjde lacnejšie než koordinácia \{#isolation-is-cheaper-than-coordination}
 
-Prvý inštinkt býva koordinovať: zámky, front, „nech sa agenti proste striedajú“. Lacnejšia odpoveď je
+Prvý inštinkt býva koordinovať: zámky, fronta, „nech sa agenti proste striedajú“. Lacnejšia odpoveď je
 zdieľanie odstrániť. Daj každému agentovi vlastný checkout — `git worktree add` vytvorí samostatný pracovný
 adresár nad tým istým úložiskom objektov, takže v `git status` vidí každý agent iba svoje vlastné zmeny a
 žiadne prepnutie vetvy nemôže rozhádzať suseda.
@@ -51,7 +51,7 @@ flotila vyrobí prácu na prerobenie.
   (súbehová chyba), ktorú nechceš objaviť až v produkcii; postup
   [rozšíriť → migrovať → zúžiť](../part-4-platform/environments-migrations-data.md) zo IV. časti platí len
   vtedy, keď ho vedie jedna ruka.
-- **Integrácia.** Generovanie sa paralelizuje, zlučovanie nie. Reťaz brán a front na zlúčenie sú zámerne
+- **Integrácia.** Generovanie sa paralelizuje, zlučovanie nie. Reťaz brán a fronta na zlúčenie sú zámerne
   jednoprúdové — prechádza nimi vždy len jedna zmena, pretože práve tam sa protichodná práca uvádza do
   súladu.
 
@@ -73,13 +73,13 @@ pracovný priestor.
 
 V najpraktickejšej podobe sa tu vracia téza I. časti:
 [úzkym miestom je overovanie](../part-1-foundation/verification-bottleneck.md). Dvojnásobok agentov znamená
-dvojnásobok výstupu *aj* dvojnásobne dlhý front na revíziu. Reťaz brán ani človek-smerovač sa s nimi
+dvojnásobok výstupu *aj* dvojnásobne dlhá fronta na revíziu. Reťaz brán ani človek-smerovač sa s nimi
 nezdvojnásobia, takže veľkosť flotily nie je daná počtom procesov, ktoré vieš spustiť, ale kapacitou na
 kontrolu.
 
 Z toho vyplýva poctivý spôsob, ako flotilu dimenzovať: zmeraj **sériovú časť (serial fraction)** — integráciu,
 revíziu a všetko ostatné, čo nemôže bežať súčasne — pretože strop celku určuje práve ona, nie počet agentov.
-Za ňou prinesú ďalší agenti už len **súperenie o prostriedky (contention)**, prerábanie a dlhší front namiesto
+Za ňou prinesú ďalší agenti už len **súperenie o prostriedky (contention)**, prerábanie a dlhšia fronta namiesto
 väčšieho množstva hotovej práce. Užitočná otázka nikdy neznie „koľkých agentov viem spustiť“, ale „koľko toho
 táto reťaz vstrebe“ — a poctivá odpoveď býva menšia než počet agentov, na ktorý máš peniaze.
 
@@ -92,7 +92,7 @@ si koordinoval prístup k nemu, a veľkosť flotily prispôsob tomu, čo reťaz 
   zrevidovať na jedno posedenie. *Akému zlyhaniu to predchádza:* dvaja agenti v jednom checkoute vyrobia
   commit, ktorý mieša ich prácu, a upratovanie stojí viac, než koľko paralelný beh ušetril.
 - **Malý tím.** Izolácia zabudovaná do nástrojov namiesto spoliehania sa na to, že si na ňu niekto spomenie,
-  sériový front na zlúčenie a výslovný zoznam artefaktov, na ktoré smie v danom okamihu siahať iba jedna
+  sériová fronta na zlúčenie a výslovný zoznam artefaktov, na ktoré smie v danom okamihu siahať iba jedna
   úloha. *Akému zlyhaniu to predchádza:* dve paralelné úlohy dopisujú do toho istého zdieľaného korpusu a
   druhý zápis potichu zmaže prvý.
 - **Enterprise.** Kapacita flotily plánovaná podľa nameranej priepustnosti overovania, izolácia vynútená

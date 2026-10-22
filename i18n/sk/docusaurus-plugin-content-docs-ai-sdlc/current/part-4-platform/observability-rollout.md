@@ -15,7 +15,7 @@ Minimálna užitočná sada snímačov je malá a oplatí sa ju vymenovať, lebo
 
 - **Miera chýb**, podľa možnosti rozdelená podľa cesty novým kódom, aby sa regresia nestratila v priemere so zdravým menovateľom.
 - **Latencia vo vysokom percentile**, nie priemer — priemer skryje práve ten chvost, kde používatelia naozaj trpia.
-- **Saturácia** toho, čoho je málo: pripojení, hĺbky frontu, pamäte.
+- **Saturácia** toho, čoho je málo: pripojení, hĺbky fronty, pamäte.
 - **Jeden obchodný signál (business signal)**, ktorý by sa pohol, keby bola funkcia pokazená spôsobom, aký žiadna technická metrika nevidí — začaté platby, odoslané správy, obnovené relácie. Práve tento signál sa vynecháva najčastejšie a práve on zachytí zmenu, ktorá je technicky zdravá a funkčne na nič.
 
 Telemetria patrí do [podmienky dokončenia](../part-2-loop/vision-to-stages.md) úlohy. Agent sa riadi zadaním; signály, ktoré v ňom chýbajú, možno vôbec nevzniknú. Urči preto sadu telemetrických signálov vrátane obchodného signálu a nechaj [kritika](../part-2-loop/plan-review-implement-critic.md) overiť, že ich systém naozaj odosiela, nielen že funkcia pracuje správne. [Andrej Beloborodov](https://realaillusions.com/ru/materials/sovety_ai_praktika_part4/) odhaduje, že funkčnú pozorovateľnosť nemá takmer žiadny projekt vytvorený „vibe codingom“; ani u žiadneho zo svojich klientov ju podľa vlastných slov nenašiel riadne vyriešenú. Za náročné považuje najmä rozhodnutie, čo znamená „dobré“ na hranici medzi technikou a biznisom. Túto definíciu za teba agent neurčí. Kým zadanie nevymedzí, čo znamená „dobré“, nemáš čo užitočné merať.

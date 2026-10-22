@@ -246,3 +246,9 @@ Opakujúce sa reťazce: označenie zlyhania je `*Akému zlyhaniu to predchádza:
 | consumer vs commercial terms | Personal subscription terms vs business terms. | **NEW DECISION, PROBATION — „spotrebiteľské podmienky“; „obchodné podmienky“, „komerčné služby“**. |
 
 Riadok zdrojov: „Zdroje (prečítané v októbri 2026): OpenAI [názov](url), bez dátumu; …“; dátumy v zdrojoch a tabuľkách ISO. Položky „Nové pojmy“ malým písmenom, oddelené „, “, bez čiarky vnútri, s bodkou na konci. Bez autorského „my“ (napr. „Pri rešerši pre tento kurz … sa nenašlo…“). From time to time = „občas“, nie „pravidelne“ (regularly).
+
+### Queue — cross-course reuse
+
+| EN term | EN gloss | SK decision |
+|---|---|---|
+| Queue / merge queue / review queue / queue depth | Pending work waiting for a serial processing or verification step. | **REUSE — „fronta / ohraničená fronta / hĺbka fronty (queue)“** from [`rag.md`](./rag.md), Fáza 19 (Serving), with „fronta úloh“ in Fáza 22 (LLMOps). Feminine: „fronta na zlúčenie“, „dlhá fronta na revíziu“, „dlhšia fronta“, „sériová fronta“, „hĺbka fronty“. Same queue sense as the RAG ledger's „fronta úloh“; masculine „front“ is not the course's rendering for this sense. |
