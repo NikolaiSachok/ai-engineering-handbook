@@ -5,7 +5,7 @@ slug: /part-1-rag/cross-cutting/observability/
 
 # Seeing what the system does in production
 
-Eval tells you whether the system is good (offline, on a dataset). Guardrails keep it safe. **Observability**
+Eval measures quality offline on datasets and online on production samples. Guardrails keep it safe. **Observability**
 is seeing what the system actually does in production, on live traffic. Without it, production problems are
 invisible: you don't know *why* a given answer came out bad, what was pulled from the store, what it cost, or
 how slow it was.

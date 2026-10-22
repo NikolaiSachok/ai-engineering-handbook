@@ -9,14 +9,13 @@ Ingestion is the offline half of RAG: everything that happens to your documents 
 question is ever asked. This is where you prepare everything that search will later run over. The
 pipeline: parse documents → **chunking** → metadata → embed into a vector database.
 
-This page covers **chunking** and **embedding models** — the two pillars of ingestion. Document parsing is
-a second-pass topic — the layer's deepening; see the note at the end of the page.
+This first page covers **chunking** and **embedding models**, two decisions within that pipeline. Document
+parsing is taught in the [second part](./deep-dive.md#parsing-the-stage-that-caps-everything-downstream), linked again at the end of the page.
 
 :::info[How to read this]
 
-Each topic is presented first "as it works across the industry." Anything tied to a specific project
-(Strata-RAG) is moved out into separate case-study pages — so the theory doesn't get tangled up with
-implementation details.
+This page explains general ingestion mechanisms and tradeoffs. It does not document a particular
+project's implementation; the examples illustrate the theory rather than point to a published case study.
 
 :::
 
