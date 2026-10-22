@@ -285,6 +285,28 @@ def self_test():
         check("code, JSX attrs (including quoted >), inline code and URLs excluded",
               names('```python\nx = "—"\n```\n<YouTube\n title="A > B — film"\n/>\n'
                     '`—` [safe](https://example.org/—) https://example.org/—'), set())
+        # Reproduce real Markdown boundaries through the shipping scanner, not
+        # just regex unit tests. Exact line lists prove both exclusion and recall.
+        for label, source, expected in [
+            ("four-tick fence with shorter inner run", '````text\n```\n— code\n````\nProse —', [5]),
+            ("fence characters must match", '```text\n~~~\n— code\n```\nProse —', [5]),
+            ("closing fence must contain no info text", '~~~text\n~~~not-close\n— code\n~~~~\nProse —', [5]),
+            ("longer matching fence closes", '````text\n— code\n`````\nProse —', [4]),
+            ("shorter fence cannot close", '````text\n```\n— code\n````\nProse —', [5]),
+            ("two-tick code with literal inner ticks", '``—`x`—`` Prose —', [1]),
+            ("three-tick code with shorter inner run", '```—``x`—``` Prose —', [1]),
+            ("multiline code span", '`foo\n—\nbar`\nProse —', [4]),
+            ("unmatched code delimiter remains prose", '``Literal —`', [1]),
+            ("code span cannot cross paragraph break", '`open\n\nProse —\nclose`', [3]),
+            ("balanced parenthesised destination", '[label](https://example.org/foo(bar)—) Prose —', [1]),
+            ("nested destination preserves bad label and tail", '[Label —](https://example.org/a(b(c))—) Prose —', [1, 1]),
+            ("escaped destination parentheses", r'[label](https://example.org/a\(b\)—) Prose —', [1]),
+            ("multiline destination keeps following location", '[label](https://example.org/a(b)\n—)\nProse —', [3]),
+        ]:
+            fixture = dd / 'markdown.md'
+            fixture.write_text(source, encoding="utf-8")
+            actual = [hit[1] for hit in scan([fixture], rules).get(('typography', dash), [])]
+            check(label, actual, expected)
         check("child text and prose after multiline tag are still checked",
               has('<InfoCard\n title="quoted > —"\n>Text — bleibt</InfoCard>', dash), True)
         check("heading prose and link labels checked",

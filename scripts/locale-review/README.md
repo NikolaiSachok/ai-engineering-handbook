@@ -95,8 +95,14 @@ Worth stating, because each was learned by trusting an instrument past its range
 ## Ban-scan scope and severity
 
 `banscan.py` shares `census.py`'s shipping-prose extractor: fences, inline code, complete JSX/HTML
-attribute lists, URLs and link destinations are excluded; headings, link labels and component children
+literal attribute lists, URLs and balanced inline-link destinations are excluded; headings, link labels and component children
 remain prose. Explicit escaped heading IDs are route metadata, while malformed bare IDs remain checkable.
+Fence closing markers must match the opening character and have at least its run length;
+shorter/mismatched markers stay inside code. Backtick spans support matched variable-length runs
+across soft line breaks. Inline-link destinations support balanced/escaped parentheses.
+JSX attribute support is limited to literal quoted/unquoted attributes, including multiline tags
+and quoted `>` characters. JavaScript expressions containing comparisons or nested JSX are outside
+this extractor's support; it is not a full MDX parser and those forms need separate review.
 Line numbers still refer to the original file. `--metaprose` alone enables the rejection-marker heuristic
 for ledgers quoting rejected forms; shipping prose never skips a whole line because it says `NICHT`.
 
