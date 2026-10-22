@@ -384,6 +384,22 @@ rovnaké značky; nízka zhoda je signál zostriť hodnotiace kritériá, nie pr
 značkovanie tam, kde je najinformatívnejší (kde je sudca najmenej istý, kde sa sudcovia rozchádzajú alebo kde
 produkcia odhalila chybu), namiesto značkovania naslepo.
 
+**Population audit (audit populácie)** — ľudská kontrola pravdepodobnostnej vzorky z vymedzenej populácie,
+ktorou odhaduješ chybovosť v celej populácii. Potrebuješ zachovať náhodný výber alebo poznať pravdepodobnosti
+zaradenia a použiť zodpovedajúce váhy. Cielene vybrané rizikové prípady bez korekcie neposkytujú takýto odhad.
+
+**Confidence interval (interval spoľahlivosti)** — interval vypočítaný zo vzorky postupom, ktorý pri
+opakovanom vzorkovaní zahŕňa skutočnú hodnotu so stanovenou mierou pokrytia, napríklad 95%. Neznamená to,
+že pevná skutočná hodnota leží v konkrétnom vypočítanom intervale s 95% pravdepodobnosťou. Interval
+nezohľadňuje skreslený výber ani chyby v značkách. Pri malom počte chýb použi Wilsonov alebo exaktný
+binomický interval. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm)
+
+**Detection probability (pravdepodobnosť zachytenia)** — pravdepodobnosť, že vzorka obsahuje aspoň jedno
+zlyhanie. Pri *n* nezávislých výberoch s konštantnou pravdepodobnosťou zlyhania *p* je to
+`1 − (1 − p)^n`. Odlišuj ju od štatistickej sily testu pri porovnávaní verzií: zachytiť jednu chybu
+neznamená preukázať zmenu chybovosti.
+↗ [NIST](https://www.itl.nist.gov/div898/handbook/eda/section3/eda366i.htm)
+
 <a id="guardrails"></a>
 
 ## Guardrails \{#guardrails}
@@ -611,6 +627,12 @@ kontext).
 **Virtual context management (MemGPT)** — pamäťová hierarchia inšpirovaná operačnými systémami: model zaobchádza s kontextovým oknom ako s „hlavným kontextom“ (ako RAM) a s vonkajším úložiskom ako s „vonkajším kontextom“ (ako disk), pričom stránkuje údaje dnu a von volaniami nástrojov, aby pracoval za hranicami okna. ↗ [arXiv](https://arxiv.org/abs/2310.08560)
 
 **Trajectory evaluation (hodnotenie trajektórie)** — hodnotenie celej cesty, ktorou agent prešiel, nie iba záverečnej odpovede: výsledok (splnenie úlohy) oproti procesu (bol každý krok a volanie nástroja rozumný), plus efektívnosť po krokoch a zastavenie.
+
+**Prehrávanie odpovedí nástrojov (tool-response replay)** — pri opakovanom teste adaptér nahradí živé nástroje uloženými odpoveďami a izolovaným stavom, ktorý sa mení v súlade s vykonanými akciami. Zafixuje pozorovania agenta, nie jeho nové generovanie; nepokryté vetvy treba vykázať osobitne. ↗ [VCR.py — režimy záznamu a prehrávania](https://vcrpy.readthedocs.io/en/latest/usage.html#record-modes)
+
+**Invariant trajektórie (trajectory invariant)** — podmienka, ktorú musí prípustný beh agenta dodržať, napríklad schválenie pred zápisom alebo iba jedno vykonanie operácie pri opakovaných volaniach. Umožňuje hodnotiť rôzne správne postupy bez presnej zhody s jedinou vzorovou cestou; chýbajúci dôkaz znamená neznámy výsledok, nie splnenie pravidla. ↗ [LangChain — evaluácia agentov](https://www.langchain.com/resources/agent-evals)
+
+**Súlad správy s akciami (action–message consistency)** — zhoda toho, čo agent oznámi používateľovi, s potvrdenými akciami a stavom systému. Kontrola hľadá nepodložené tvrdenia aj vynechané podstatné výsledky a rozlišuje vyžiadanú, čakajúcu a dokončenú akciu; správna akcia sama osebe nezaručuje správnu správu. ↗ [LangChain — evaluácia agentov](https://www.langchain.com/resources/agent-evals)
 
 **pass^k** — podiel úloh, ktoré agent vyrieši vo všetkých k nezávislých pokusoch; metrika spoľahlivosti, ktorá odhalí rozptyl medzi behmi, aký jediné pass@1 skryje. ↗ [arXiv](https://arxiv.org/abs/2406.12045)
 

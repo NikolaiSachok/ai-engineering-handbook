@@ -329,6 +329,12 @@ executable test, a human label — not from a different vendor.
 (chain-of-verification). The second is the across-models property that correlated error takes away. Having
 the first does not give you the second.
 
+**Population audit** — a probability sample used to estimate a rate in a defined population. Preserve a uniform random slice or use known stratum weights; active-sampled and priority-retained records do not support an unweighted population rate.
+
+**Confidence interval for a failure rate** — an interval from a procedure with a stated long-run coverage rate. It describes sampling uncertainty, not selection bias or label correctness; Wilson or exact binomial intervals are useful for small failure counts. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm)
+
+**Detection probability** — the chance that a sampling procedure observes a specified signal. For at least one failure in independent draws at constant rate *p*, it is `1 − (1 − p)^n`; this differs from the statistical power of a test comparing rates. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/eda/section3/eda366i.htm)
+
 **Offline vs online eval** — evaluating on a golden set before deploy (regression in CI) versus measuring
 in production (user feedback, A/B).
 
@@ -649,6 +655,12 @@ store; long-term, unlike the ephemeral scratchpad.
 **Virtual context management (MemGPT)** — an OS-inspired memory hierarchy: the model treats the context
 window as "main context" (like RAM) and an external store as "external context" (like disk), paging data in
 and out with tool calls to work beyond the window. ↗ [arXiv](https://arxiv.org/abs/2310.08560)
+
+**Tool-response replay** — re-running agent decisions against versioned recorded tool observations, with live side effects disabled. Unmatched requests expose missing replay coverage; fixed tool responses do not make model generation deterministic. ↗ [VCR.py](https://vcrpy.readthedocs.io/en/latest/usage.html#record-modes)
+
+**Trajectory invariant** — an assertion that must hold over applicable actions and state, such as approval before an irreversible write. It permits alternative valid paths; exact sequence matching is appropriate only where that sequence is required. ↗ [LangChain](https://www.langchain.com/resources/agent-evals)
+
+**Action–message consistency** — agreement between user-facing claims about actions and confirmed action results or state. An attempted or pending write cannot support a claim of completion; check omitted material outcomes as well as invented ones.
 
 **Trajectory evaluation** — grading the whole path the agent took, not just its final answer: outcome (task
 success) versus process (was each step and tool call sound), plus step efficiency and termination.

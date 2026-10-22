@@ -137,9 +137,46 @@ Konkrétne metriky trajektórie, po jednej. **Úspešnosť pri úlohe (task succ
 
 Potom tá nástraha. Agenti sú nedeterministickí, takže jediný úspešný beh — **pass@1** — nadhodnocuje, aký spoľahlivý agent naozaj je. **pass^k** meria podiel úloh vyriešených vo všetkých k nezávislých pokusoch: konzistentnosť, nie najlepší prípad. Čísla z **τ-bench** (Shunyu Yao a kol., arXiv:2406.12045, 17. jún 2024), benchmarku pre nástroje, agenta a používateľa, ten rozdiel spravia názorným: špičkové modely skórujú pod 50% úspešnosti a **pass^8** padá pod 25% v doméne maloobchodu. Agent, ktorý raz vyzerá slušne, býva beh za behom nespoľahlivý — a produkcii záleží práve na behu za behom, lebo tvoji používatelia dostanú každý jeden beh. Meraj konzistentnosť, nie šťastný jediný prechod.
 
-Cestu naozaj oznámkuješ cez **LLM-as-a-judge (LLM ako sudca)** nad trajektóriou: schopný model prečíta zaznamenaný trace oproti hodnotiacim kritériám (rubric). To robí jednu podmienku nespochybniteľnou — trajektóriu, ktorú nevidíš, neoznámkuješ. Hodnotenie trajektórie si žiada úplný záznam behu, takže **Observability (pozorovateľnosť)** nie je doplnok, čo prilepíš neskôr; práve ona hodnotenie vôbec umožňuje a zaostruje bod, ktorý prvá časť spravila prvýkrát. Nástroje existujú: [Ragas](https://www.ragas.io) dokumentuje agentne zamerané metriky — presnosť dosiahnutia cieľa (agent goal accuracy), dodržanie témy (topic adherence) a správnosť volaní nástrojov — počítané nad behom. Siahaj po ňom s mierou; všeobecná disciplína evaluácie aj observability sú lekcie samy osebe.
+Jednou z možností hodnotenia trajektórie je **LLM-as-a-judge (LLM ako sudca)**: schopný model prečíta zaznamenaný trace a posúdi ho podľa hodnotiacich kritérií (rubric). Dopĺňajú ho deterministické kontroly volaní nástrojov, zmien stavu a záverečnej správy. To robí jednu podmienku nespochybniteľnou — trajektóriu, ktorú nevidíš, neoznámkuješ. Hodnotenie trajektórie si žiada úplný záznam behu, takže **Observability (pozorovateľnosť)** nie je doplnok, čo prilepíš neskôr; práve ona hodnotenie vôbec umožňuje a zaostruje bod, ktorý prvá časť spravila prvýkrát. Nástroje existujú: [Ragas](https://www.ragas.io) dokumentuje agentne zamerané metriky — presnosť dosiahnutia cieľa (agent goal accuracy), dodržanie témy (topic adherence) a správnosť volaní nástrojov — počítané nad behom. Siahaj po ňom s mierou; všeobecná disciplína evaluácie aj observability sú lekcie samy osebe.
 
 A ešte raz zdržanlivosť. Jednoduchý, krátky agent nepotrebuje plné známkovanie trajektórie — hodnotenie výsledku plus počet krokov býva bohato. Aparát na hodnotenie trajektórie je náklad, ktorý na seba berieš vtedy, keď existuje skutočná viackroková cesta, ktorej správnosť môže zlyhať nezávisle od konečnej odpovede. Keď existuje, [záverečná stránka časti](../real-agents.md) ukazuje celú slučku — plánovanie, rozpočty, pamäť a evaluáciu — v behu naprieč Claude, OpenAI a Gemini.
+
+### Pri opakovanom teste zachovaj pôvodné pozorovania agenta \{#replay-the-world-the-agent-actually-saw}
+
+Keď porovnávaš novú verziu agenta so starou, živé API ti môže medzitým vrátiť iný stav zásielky. Rozdiel vo výsledku potom nemusí spôsobiť agent. **Prehrávanie odpovedí nástrojov (tool-response replay)** preto začína záznamom prostredia: ulož počiatočný stav prípadu, normalizované argumenty volaní, výsledky aj chyby, poradie a čas, verzie nástrojov a potvrdené zápisy. Pred uložením odstráň citlivé údaje, ale zachovaj vzťahy medzi identifikátormi, aby sa prípad dal zmysluplne zopakovať.
+
+Pri teste nahraď živé nástroje adaptérom. Ten priradí volanie k uloženej testovacej odpovedi podľa nástroja, podstatných argumentov a poradia výskytu alebo verzie stavu. Ak zodpovedajúci záznam nenájde, test sa musí zastaviť s chybou; adaptér nesmie prejsť na skutočné API. Zápisové operácie menia iba izolovaný testovací stav a ďalšie čítania musia tieto zmeny odrážať. Verziuj testovacie záznamy aj hodnotiteľa a ku každému behu zaznamenaj prompt, model a nastavenia vzorkovania. Takto zafixuješ pozorovania, ktoré agent dostáva; jeho nové generovanie môže zostať nedeterministické. Ak namiesto toho prehráš uložené výstupy modelu, otestuješ testovací systém, nie rozhodnutia novej verzie agenta. Ani obnovenie behu z checkpointu samo osebe nie je novou evaluáciou.
+
+Záznam jedného behu navyše nepokrýva všetky vetvy, ktoré si nový agent môže zvoliť. Keď sa dostane k nezaznamenanému volaniu, označ chýbajúce pokrytie prehrávania. Nie je to dôkaz nesprávneho rozhodnutia ani dôvod vymyslieť úspešnú odpoveď nástroja. Spolu so skóre uvádzaj aj pokrytie. Ďalšie vetvy môžeš doplniť jasne označenými syntetickými prípadmi, ktorých odpovede zodpovedajú testovaciemu stavu, skúšať ich v sandboxe alebo spustiť tieňový beh s povoleným čítaním a potlačenými vedľajšími účinkami. Skonštruovaná vetva však nedokazuje, čo sa stalo v pôvodnom behu.
+
+### Hodnoť pravidlá trajektórie namiesto jedinej vzorovej cesty \{#score-invariants-instead-of-one-golden-path}
+
+K správnemu výsledku môže viesť viacero postupov. **Invariant trajektórie (trajectory invariant)** určuje podmienku, ktorú musí prípustný beh dodržať, aj keď agent zvolí iný sled krokov. Presnú zhodu s jednou vzorovou trajektóriou vyžaduj iba tam, kde záleží na konkrétnom poradí. Poistky počas behu a kontroly v offline evaluácii sa dopĺňajú: poistka môže zakázanú akciu zablokovať, kým evaluácia odhalí aj samotný pokus o ňu.
+
+Predstav si vymyslený prípad oneskorenej zásielky, v ktorom agent môže pripísať kredit, presmerovať zásielku alebo prípad eskalovať. Pravidlá, ich verziu, podmienky uplatnenia a závažnosť porušení stanov ešte pred hodnotením. Nasledujúca hranica 100 jednotiek je súčasťou príkladu, nie finančnou politikou pre skutočnú službu.
+
+| Povinnosť | Dôkaz a podmienka porušenia |
+|---|---|
+| Najprv čítanie, potom akcia | Pred presmerovaním musí agent získať aktuálny záznam dopravcu pre túto zásielku; skoršie čítanie inej zásielky nestačí. |
+| Povolená akcia | Pripísanie kreditu, presmerovanie alebo eskalácia musia byť povolené pre daný typ prípadu a rozsah oprávnení. |
+| Hranica schválenia | Kredit vo výške 100 jednotiek alebo viac vyžaduje schválenie pre tento prípad a túto sumu; hodnoty 99, 100 a 101 testuj osobitne. |
+| Bez opakovaného účinku | Pri opakovaní po časovom limite musí agent použiť rovnaký kľúč idempotencie; v potvrdenej evidencii smie byť iba jedno pripísanie kreditu. |
+| Bez protirečenia | Prípad s pripísaným kreditom nesmie byť zároveň zaznamenaný ako presmerovaný, ak pravidlá tieto výsledky navzájom vylučujú. |
+| Zhoda konečných stavov | Systém evidencie prípadov a evidencia kreditov si musia zodpovedať; chýbajúce potvrdenie znamená neznámy výsledok, nie úspech. |
+
+Pre každé pravidlo uveď jeden zo stavov: splnené, porušené, neuplatňuje sa alebo neznáme. Skóre vypočítaj ako podiel splnených pravidiel zo všetkých, ktoré sa na prípad vzťahujú a dajú sa vyhodnotiť. Osobitne vykáž neznáme výsledky, porušenia jednotlivých pravidiel a prípady s kritickým porušením. Chýbajúci dôkaz nestačí na uznanie úspechu; kritické porušenie musí zablokovať nasadenie aj pri vysokom priemernom skóre.
+
+Rozlišuj správny postup, prípustný, ale zbytočne drahý postup a zakázaný postup. Kontroly otestuj aj na zámerne chybných trajektóriách, aby si vedel, či porušenia naozaj zachytia. Hodnotenie výsledku pritom zachovaj: splnenie procesných pravidiel ešte nezaručuje, že agent vyriešil úlohu používateľa.
+
+### Porovnaj správu s potvrdenými akciami \{#check-the-message-against-confirmed-actions}
+
+Agent môže správne pripísať kredit a potom používateľovi napísať, že zásielku presmeroval. Vykonaná akcia je správna, ale záverečná správa zavádza. **Súlad správy s akciami (action–message consistency)** preto posudzuj osobitne. Pri faithfulness vo vyhľadávaní porovnávaš tvrdenia s vyhľadaným kontextom; tu ich porovnávaš s potvrdenými akciami a stavom systému.
+
+Podkladom nech sú typované polia potvrdeného výsledku: akcia, identifikátor prípadu, suma alebo cieľ presmerovania, stav a odkaz na potvrdenie. Vo výslednej správe hľadaj nepodložené tvrdenia aj vynechané podstatné výsledky. Rozlišuj, či je akcia iba vyžiadaná, čaká na dokončenie alebo je dokončená. Časový limit po odoslaní požiadavky nedokazuje dokončenie; samotné zhrnutie agenta nie je potvrdením.
+
+Ak správu zostavuješ šablónou z potvrdených polí, kontrolu týchto polí môžeš vykonať deterministicky. Vo voľnom texte musíš tvrdenia najprv identifikovať a priradiť k dôkazom; extrakcia aj LLM-as-a-judge sa pritom môžu pomýliť. Ich hodnotenie kalibruj na prípadoch posúdených ľuďmi a vlastné zhrnutie agenta nepovažuj za nezávislý dôkaz.
+
+Kontrolu zaraď pred odoslanie správy aj do opakovaných testov s prehrávanými odpoveďami nástrojov. Ak nemáš podklad pre tvrdenie o dokončení, správu s týmto tvrdením neodošli. Najprv over skutočný stav a zosúlaď záznamy alebo prípad eskaluj.
 
 ## Čo si odniesť z lekcie \{#what-to-take-away}
 
@@ -149,4 +186,4 @@ A ešte raz zdržanlivosť. Jednoduchý, krátky agent nepotrebuje plné známko
 - Pamäť je architektúra, nie scratchpad — pracovná pamäť v okne oproti epizodickej vo vonkajšom úložisku, plus sémantická a procedurálna. MemGPT stránkuje medzi oknom a úložiskom, takže pracovná pamäť prerastie limit kontextu; vyberaj relevantné spomienky namiesto napchávania celej histórie; a dlhodobú pamäť pridaj len vtedy, keď sa agent musí učiť naprieč sedeniami.
 - Známkuj celú cestu: výsledok verzus proces, efektívnosť po krokoch, správnosť volaní nástrojov, zastavenie. Spoľahlivosť meraj cez pass^k, nie cez jediný šťastný pass@1 — špičkové modely τ-benchu padnú raz pod 50% a pass^8 pod 25% v maloobchode. Všetko to potrebuje úplný záznam, takže Observability je predpoklad.
 
-**[Nové pojmy](../../glossary.md#planning-loops)**: Tree of Thoughts (ToT), Graph of Thoughts (GoT), LATS, Self-Refine, Reflexion, plan search, episodic memory, semantic memory, virtual context management (MemGPT), trajectory evaluation, pass^k.
+**[Nové pojmy](../../glossary.md#planning-loops)**: Tree of Thoughts (ToT), Graph of Thoughts (GoT), LATS, Self-Refine, Reflexion, plan search, episodic memory, semantic memory, virtual context management (MemGPT), trajectory evaluation, pass^k, prehrávanie odpovedí nástrojov (tool-response replay), invariant trajektórie (trajectory invariant), súlad správy s akciami (action–message consistency).

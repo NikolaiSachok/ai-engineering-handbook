@@ -443,6 +443,12 @@ Annotatoren. ↗ [Wikipedia](https://en.wikipedia.org/wiki/Fleiss%27_kappa)
 dort einsetzen, wo es am meisten einbringt (wo der Judge am unsichersten ist, wo Judges auseinanderlaufen oder
 wo der Produktivbetrieb ein Fehlerbild gezeigt hat), statt die Labels gleichmäßig zufällig zu vergeben.
 
+**Die Stichprobenprüfung der Grundgesamtheit** (*population audit*) – eine Prüfung anhand einer Zufallsstichprobe, mit der Sie eine Quote für eine festgelegte Grundgesamtheit schätzen. Sichern Sie dafür eine gleichmäßig zufällig gezogene Teilstichprobe oder verwenden Sie bei geschichteter Auswahl die bekannten Gewichte der Schichten. Gezielt per Active Sampling ausgewählte oder mit Vorrang gespeicherte Fälle erlauben keine ungewichtete Schätzung für die Grundgesamtheit.
+
+**Das Konfidenzintervall einer Fehlerquote** (*confidence interval*) – ein Intervall aus einem Verfahren mit angegebener langfristiger Überdeckungsrate. Es beschreibt die Unsicherheit durch die Stichprobenziehung, weder eine verzerrte Auswahl noch die Richtigkeit der Labels. Bei wenigen Fehlern eignen sich Wilson- oder exakte Binomialintervalle. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm)
+
+**Die Entdeckungswahrscheinlichkeit** (*detection probability*) – die Wahrscheinlichkeit, dass ein Sampling-Verfahren ein bestimmtes Signal erfasst. Für mindestens einen Fehler bei unabhängigen Ziehungen mit konstanter Fehlerwahrscheinlichkeit *p* beträgt sie `1 − (1 − p)^n`. Sie unterscheidet sich von der Teststärke eines statistischen Tests zum Vergleich von Quoten. ↗ [NIST](https://www.itl.nist.gov/div898/handbook/eda/section3/eda366i.htm)
+
 <a id="guardrails"></a>
 
 ## Guardrails \{#guardrails}
@@ -802,6 +808,12 @@ Schritt und jeder Tool-Call tragfähig), dazu die Effizienz in Schritten und die
 **pass^k** – der Anteil der Aufgaben, die ein Agent in *allen* k unabhängigen Versuchen löst; eine Messgröße für
 die Zuverlässigkeit, die die Streuung von Durchlauf zu Durchlauf offenlegt, die ein einzelnes pass@1 verdeckt.
 ↗ [arXiv](https://arxiv.org/abs/2406.12045)
+
+**Tool-Response-Replay** (*tool-response replay*) – aufgezeichnete Tool-Antworten für einen neuen Agentendurchlauf über einen isolierten Adapter bereitstellen. Eine versionierte Fixture hält Ausgangszustand, Anfragen, Ergebnisse, Fehler und bestätigte Schreibvorgänge fest; unbekannte Aufrufe dürfen keine echte API erreichen. Festgelegt sind die Beobachtungen, nicht die neuen Modellentscheidungen. Ein nicht aufgezeichneter Zweig bedeutet fehlende Replay-Abdeckung. ↗ [VCR.py: Record modes](https://vcrpy.readthedocs.io/en/latest/usage.html#record-modes)
+
+**Die Invariante eines Pfades** (*trajectory invariant*) – eine Verpflichtung, die jeder zulässige Pfad erfüllen muss, etwa eine Freigabe vor einer Gutschrift. Geprüft werden notwendige Abhängigkeiten und bestätigte Zustände; eine einzige exakte Aufrufsequenz ist dafür nicht erforderlich. Die Prüfung unterscheidet bestanden, fehlgeschlagen, nicht anwendbar und unbekannt. Kritische Verstöße verhindern die Freigabe; fehlende Belege erlauben kein positives Urteil. ↗ [LangChain: Agent evals](https://www.langchain.com/resources/agent-evals)
+
+**Die Übereinstimmung von Aktion und Nachricht** (*action–message consistency*) – prüfen, ob Aussagen über ausgeführte Handlungen in der abschließenden Nachricht mit bestätigten Aktionen und dem aktuellen Zustand übereinstimmen. Dazu gehören unbelegte Abschlussbehauptungen ebenso wie ausgelassene wesentliche Ergebnisse. Anders als bei Retrieval-Faithfulness dienen hier bestätigte Aktionsdaten als Beleg; die eigene Zusammenfassung des Agenten genügt nicht.
 
 <a id="multi-agent"></a>
 
