@@ -25,7 +25,7 @@ Pozeraj sa na tú štvoricu cez dve osi. **Os 1** (Časť 1 ju už načrtla): kt
 | | reference-free (bez etalónu) | reference-based (s etalónom) |
 |---|---|---|
 | **Vyhľadávanie** | context precision (o relevantnosti rozhoduje LLM) | context recall |
-| **Generovanie** | faithfulness, answer relevance | correctness (mimo tejto štvorice) |
+| **Generovanie** | faithfulness, answer relevance | správnosť (mimo tejto štvorice) |
 
 Context precision má aj varianty s referenciou; tabuľka uvádza variant bez etalónu, ktorý používame tu. Recall@K z Časti 1 počíta relevantné nájdené položky voči všetkým položkám označeným za relevantné. Context recall nižšie počíta podložené tvrdenia referenčnej odpovede. Obe merajú pokrytie, ale v iných jednotkách. MRR sleduje prevrátenú hodnotu pozície prvého relevantného výsledku; nDCG hodnotí poradie aj s odstupňovanou relevantnosťou a nižším pozíciám prisudzuje menšiu váhu. Tieto metriky poradia štvoricu dopĺňajú. Správnosť vygenerovanej odpovede naďalej overuj voči referencii alebo ľudskému úsudku: samotná faithfulness ju nepotvrdí.
 
